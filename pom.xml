@@ -7,6 +7,38 @@
     <groupId>org.curtis</groupId>
     <artifactId>musicxml</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
 
+    <properties>
+        <jdk.version>1.8</jdk.version>
+        <org.slf4j.version>1.8.0</org.slf4j.version>
+        <org.apache.log4j.version>1.2.17</org.apache.log4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>musicxml/original/**</exclude>
+                    <exclude>scripts/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
 </project>
