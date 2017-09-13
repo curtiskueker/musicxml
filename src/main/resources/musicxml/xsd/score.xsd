@@ -6,6 +6,7 @@
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
     <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
 
+    <xs:include schemaLocation="direction.xsd"/>
     <xs:include schemaLocation="remaining.xsd"/>
 
     <!-- score elements -->
@@ -185,24 +186,6 @@
         <xs:attribute name="page" type="xs:positiveInteger"/>
     </xs:complexType>
 
-    <xs:complexType name="formatted-text">
-        <xs:annotation>
-            <xs:documentation>The formatted-text type represents a text element with text-formatting attributes.</xs:documentation>
-        </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attributeGroup ref="text-formatting"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:complexType name="image">
-        <xs:annotation>
-            <xs:documentation>The image type is used to include graphical images in a score.</xs:documentation>
-        </xs:annotation>
-        <xs:attributeGroup ref="image-attributes"/>
-    </xs:complexType>
-
     <xs:complexType name="part-list">
         <xs:annotation>
             <xs:documentation>The part-list identifies the different musical parts in this movement. Each part has an ID that is used later within the musical data. Since parts may be encoded separately and combined later, identification elements are present at both the score and score-part levels. There must be at least one score-part, combined as desired with part-group elements that indicate braces and brackets. Parts are ordered from top to bottom in a score based on the order in which they appear in the part-list.</xs:documentation>
@@ -297,19 +280,6 @@
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:complexType name="name-display">
-        <xs:annotation>
-            <xs:documentation>The name-display type is used for exact formatting of multi-font text in part and group names to the left of the system. The print-object attribute can be used to determine what, if anything, is printed at the start of each system. Enclosure for the display-text element is none by default. Language for the display-text element is Italian ("it") by default.</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:choice minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="display-text" type="formatted-text"/>
-                <xs:element name="accidental-text" type="accidental-text"/>
-            </xs:choice>
-        </xs:sequence>
-        <xs:attributeGroup ref="print-object"/>
-    </xs:complexType>
-
     <xs:complexType name="group-symbol">
         <xs:annotation>
             <xs:documentation>The group-symbol type indicates how the symbol for a group is indicated in the score.</xs:documentation>
@@ -331,12 +301,6 @@
                 <xs:attributeGroup ref="color"/>
             </xs:extension>
         </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:complexType name="empty">
-        <xs:annotation>
-            <xs:documentation>The empty type represents an empty element with no attributes.</xs:documentation>
-        </xs:annotation>
     </xs:complexType>
 
     <xs:complexType name="score-instrument">
@@ -377,19 +341,6 @@
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
-
-    <xs:simpleType name="positive-integer-or-empty">
-        <xs:annotation>
-            <xs:documentation>The positive-integer-or-empty values can be either a positive integer or an empty string.</xs:documentation>
-        </xs:annotation>
-        <xs:union memberTypes="xs:positiveInteger">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value=""/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:union>
-    </xs:simpleType>
 
     <xs:complexType name="virtual-instrument">
         <xs:annotation>
