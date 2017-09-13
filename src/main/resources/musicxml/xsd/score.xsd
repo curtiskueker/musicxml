@@ -3,6 +3,410 @@
         elementFormDefault="qualified"
         attributeFormDefault="unqualified">
 
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
+
     <xs:include schemaLocation="remaining.xsd"/>
+
+    <!-- score elements -->
+
+    <xs:annotation>
+        <xs:documentation>The score is the root element for the schema. It includes the score-header group, followed either by a series of parts with measures inside (score-partwise) or a series of measures with parts inside (score-timewise). Having distinct top-level elements for partwise and timewise scores makes it easy to ensure that an XSLT stylesheet does not try to transform a document already in the desired format.</xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="score-partwise" block="extension substitution" final="#all">
+        <xs:annotation>
+            <xs:documentation>The score-partwise element is the root element for a partwise MusicXML score. It includes a score-header group followed by a series of parts with measures inside. The document-attributes attribute group includes the version attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="score-header"/>
+                <xs:element name="part" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="measure" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:group ref="music-data"/>
+                                    <xs:attributeGroup ref="measure-attributes"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attributeGroup ref="part-attributes"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attributeGroup ref="document-attributes"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="score-timewise" block="extension substitution" final="#all">
+        <xs:annotation>
+            <xs:documentation>The score-timewise element is the root element for a timewise MusicXML score. It includes a score-header group followed by a series of measures with parts inside. The document-attributes attribute group includes the version attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="score-header"/>
+                <xs:element name="measure" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="part" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:group ref="music-data"/>
+                                    <xs:attributeGroup ref="part-attributes"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attributeGroup ref="measure-attributes"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attributeGroup ref="document-attributes"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- score header elements -->
+
+    <xs:group name="score-header">
+        <xs:annotation>
+            <xs:documentation>The score-header group contains basic score metadata about the work and movement, score-wide defaults for layout and fonts, credits that appear on the first or following pages, and the part list.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="work" type="work" minOccurs="0"/>
+            <xs:element name="movement-number" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The movement-number element specifies the number of a movement.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="movement-title" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The movement-title element specifies the title of a movement, not including its number.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="identification" type="identification" minOccurs="0"/>
+            <xs:element name="defaults" type="defaults" minOccurs="0"/>
+            <xs:element name="credit" type="credit" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="part-list" type="part-list"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="work">
+        <xs:annotation>
+            <xs:documentation>Works are optionally identified by number and title. The work type also may indicate a link to the opus document that composes multiple scores into a collection.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="work-number" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The work-number element specifies the number of a work, such as its opus number.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="work-title" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The work-title element specifies the title of a work, not including its opus or other work number.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="opus" type="opus" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="opus">
+        <xs:annotation>
+            <xs:documentation>The opus type represents a link to a MusicXML opus document that composes multiple MusicXML scores into a collection.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="link-attributes"/>
+    </xs:complexType>
+
+    <xs:complexType name="defaults">
+        <xs:annotation>
+            <xs:documentation>The defaults type specifies score-wide defaults for scaling, layout, and appearance.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="scaling" type="scaling" minOccurs="0"/>
+            <xs:group ref="layout"/>
+            <xs:element name="appearance" type="appearance" minOccurs="0"/>
+            <xs:element name="music-font" type="empty-font" minOccurs="0"/>
+            <xs:element name="word-font" type="empty-font" minOccurs="0"/>
+            <xs:element name="lyric-font" type="lyric-font" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="lyric-language" type="lyric-language" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="empty-font">
+        <xs:annotation>
+            <xs:documentation>The empty-font type represents an empty element with font attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="font"/>
+    </xs:complexType>
+
+    <xs:complexType name="lyric-font">
+        <xs:annotation>
+            <xs:documentation>The lyric-font type specifies the default font for a particular name and number of lyric.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="number" type="xs:NMTOKEN"/>
+        <xs:attribute name="name" type="xs:token"/>
+        <xs:attributeGroup ref="font"/>
+    </xs:complexType>
+
+    <xs:complexType name="lyric-language">
+        <xs:annotation>
+            <xs:documentation>The lyric-language type specifies the default language for a particular name and number of lyric.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="number" type="xs:NMTOKEN"/>
+        <xs:attribute name="name" type="xs:token"/>
+        <xs:attribute ref="xml:lang" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="credit">
+        <xs:annotation>
+            <xs:documentation>The credit type represents the appearance of the title, composer, arranger, lyricist, copyright, dedication, and other text and graphics that commonly appears on the first page of a score. The credit-words and credit-image elements are similar to the words and image elements for directions. However, since the credit is not part of a measure, the default-x and default-y attributes adjust the origin relative to the bottom left-hand corner of the first page. The enclosure for credit-words is none by default.
+
+                By default, a series of credit-words elements within a single credit element follow one another in sequence visually. Non-positional formatting attributes are carried over from the previous element by default.
+
+                The page attribute for the credit element, new in Version 2.0, specifies the page number where the credit should appear. This is an integer value that starts with 1 for the first page. Its value is 1 by default. Since credits occur before the music, these page numbers do not refer to the page numbering specified by the print element's page-number attribute.
+
+                The credit-type element, new in Version 3.0, indicates the purpose behind a credit. Multiple types of data may be combined in a single credit, so multiple elements may be used. Standard values include page number, title, subtitle, composer, arranger, lyricist, and rights.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="credit-type" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:choice>
+                <xs:element name="credit-image" type="image"/>
+                <xs:sequence>
+                    <xs:element name="credit-words" type="formatted-text"/>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="credit-words" type="formatted-text"/>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="page" type="xs:positiveInteger"/>
+    </xs:complexType>
+
+    <xs:complexType name="formatted-text">
+        <xs:annotation>
+            <xs:documentation>The formatted-text type represents a text element with text-formatting attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="text-formatting"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="image">
+        <xs:annotation>
+            <xs:documentation>The image type is used to include graphical images in a score.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="image-attributes"/>
+    </xs:complexType>
+
+    <xs:complexType name="part-list">
+        <xs:annotation>
+            <xs:documentation>The part-list identifies the different musical parts in this movement. Each part has an ID that is used later within the musical data. Since parts may be encoded separately and combined later, identification elements are present at both the score and score-part levels. There must be at least one score-part, combined as desired with part-group elements that indicate braces and brackets. Parts are ordered from top to bottom in a score based on the order in which they appear in the part-list.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:group ref="part-group" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:group ref="score-part"/>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="part-group"/>
+                <xs:group ref="score-part"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="score-part">
+        <xs:annotation>
+            <xs:documentation>Each MusicXML part corresponds to a track in a Standard MIDI Format 1 file. The score-instrument elements are used when there are multiple instruments per track. The midi-device element is used to make a MIDI device or port assignment for the given track or specific MIDI instruments. Initial midi-instrument assignments may be made here as well.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="identification" type="identification" minOccurs="0"/>
+            <xs:element name="part-name" type="part-name"/>
+            <xs:element name="part-name-display" type="name-display" minOccurs="0"/>
+            <xs:element name="part-abbreviation" type="part-name" minOccurs="0"/>
+            <xs:element name="part-abbreviation-display" type="name-display" minOccurs="0"/>
+            <xs:element name="group" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>The group element allows the use of different versions of the part for different purposes. Typical values include score, parts, sound, and data. Ordering information that is directly encoded in MuseData can be derived from the ordering within a MusicXML score or opus.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="score-instrument" type="score-instrument" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="midi-device" type="midi-device" minOccurs="0"/>
+                <xs:element name="midi-instrument" type="midi-instrument" minOccurs="0"/>
+            </xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="part-name">
+        <xs:annotation>
+            <xs:documentation>The part-name type describes the name or abbreviation of a score-part element. Formatting attributes for the part-name element are deprecated in Version 2.0 in favor of the new part-name-display and part-abbreviation-display elements.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="part-name-text"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="part-group">
+        <xs:annotation>
+            <xs:documentation>The part-group element indicates groupings of parts in the score, usually indicated by braces and brackets. Braces that are used for multi-staff parts should be defined in the attributes element for that part. The part-group start element appears before the first score-part in the group. The part-group stop element appears after the last score-part in the group.
+
+                The number attribute is used to distinguish overlapping and nested part-groups, not the sequence of groups. As with parts, groups can have a name and abbreviation. Values for the child elements are ignored at the stop of a group.
+
+                A part-group element is not needed for a single multi-staff part. By default, multi-staff parts include a brace symbol and (if appropriate given the bar-style) common barlines. The symbol formatting for a multi-staff part can be more fully specified using the part-symbol element.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="group-name" type="group-name" minOccurs="0"/>
+            <xs:element name="group-name-display" type="name-display" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Formatting specified in the group-name-display element overrides formatting specified in the group-name element.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="group-abbreviation" type="group-name" minOccurs="0"/>
+            <xs:element name="group-abbreviation-display" type="name-display" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Formatting specified in the group-abbreviation-display element overrides formatting specified in the group-abbreviation element.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="group-symbol" type="group-symbol" minOccurs="0"/>
+            <xs:element name="group-barline" type="group-barline" minOccurs="0"/>
+            <xs:element name="group-time" type="empty" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The group-time element indicates that the displayed time signatures should stretch across all parts and staves in the group.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:group ref="editorial"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="start-stop" use="required"/>
+        <xs:attribute name="number" type="xs:token" default="1"/>
+    </xs:complexType>
+
+    <xs:complexType name="group-name">
+        <xs:annotation>
+            <xs:documentation>The group-name type describes the name or abbreviation of a part-group element. Formatting attributes in the group-name type are deprecated in Version 2.0 in favor of the new group-name-display and group-abbreviation-display elements.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="group-name-text"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="name-display">
+        <xs:annotation>
+            <xs:documentation>The name-display type is used for exact formatting of multi-font text in part and group names to the left of the system. The print-object attribute can be used to determine what, if anything, is printed at the start of each system. Enclosure for the display-text element is none by default. Language for the display-text element is Italian ("it") by default.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="display-text" type="formatted-text"/>
+                <xs:element name="accidental-text" type="accidental-text"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attributeGroup ref="print-object"/>
+    </xs:complexType>
+
+    <xs:complexType name="group-symbol">
+        <xs:annotation>
+            <xs:documentation>The group-symbol type indicates how the symbol for a group is indicated in the score.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="group-symbol-value">
+                <xs:attributeGroup ref="position"/>
+                <xs:attributeGroup ref="color"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="group-barline">
+        <xs:annotation>
+            <xs:documentation>The group-barline type indicates if the group should have common barlines.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="group-barline-value">
+                <xs:attributeGroup ref="color"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="empty">
+        <xs:annotation>
+            <xs:documentation>The empty type represents an empty element with no attributes.</xs:documentation>
+        </xs:annotation>
+    </xs:complexType>
+
+    <xs:complexType name="score-instrument">
+        <xs:annotation>
+            <xs:documentation>The score-instrument type represents a single instrument within a score-part. As with the score-part type, each score-instrument has a required ID attribute, a name, and an optional abbreviation.
+
+                A score-instrument type is also required if the score specifies MIDI 1.0 channels, banks, or programs. An initial midi-instrument assignment can also be made here. MusicXML software should be able to automatically assign reasonable channels and instruments without these elements in simple cases, such as where part names match General MIDI instrument names.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="instrument-name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>The instrument-name element is typically used within a software application, rather than appearing on the printed page of a score.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="instrument-abbreviation" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The optional instrument-abbreviation element is typically used within a software application, rather than appearing on the printed page of a score.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="instrument-sound" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The instrument-sound element describes the default timbre of the score-instrument. This description is independent of a particular virtual or MIDI instrument specification and allows playback to be shared more easily between applications and libraries.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice minOccurs="0">
+                <xs:element name="solo" type="empty">
+                    <xs:annotation>
+                        <xs:documentation>The solo element was added in Version 2.0. It is present if performance is intended by a solo instrument.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="ensemble" type="positive-integer-or-empty">
+                    <xs:annotation>
+                        <xs:documentation>The ensemble element was added in Version 2.0. It is present if performance is intended by an ensemble such as an orchestral section. The text of the ensemble element contains the size of the section, or is empty if the ensemble size is not specified.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element name="virtual-instrument" type="virtual-instrument" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="positive-integer-or-empty">
+        <xs:annotation>
+            <xs:documentation>The positive-integer-or-empty values can be either a positive integer or an empty string.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="xs:positiveInteger">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value=""/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+
+    <xs:complexType name="virtual-instrument">
+        <xs:annotation>
+            <xs:documentation>The virtual-instrument element defines a specific virtual instrument used for an instrument sound.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="virtual-library" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The virtual-library element indicates the virtual instrument library name.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="virtual-name" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The virtual-name element indicates the library-specific name for the virtual instrument.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 
 </xs:schema>
