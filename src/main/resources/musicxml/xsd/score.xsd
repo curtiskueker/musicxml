@@ -7,6 +7,7 @@
     <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
 
     <xs:include schemaLocation="direction.xsd"/>
+    <xs:include schemaLocation="barline.xsd"/>
     <xs:include schemaLocation="remaining.xsd"/>
 
     <!-- score elements -->

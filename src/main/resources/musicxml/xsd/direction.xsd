@@ -6,8 +6,9 @@
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
     <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
 
-    <!-- direction elements -->
+    <xs:include schemaLocation="remaining.xsd"/>
 
+    <!-- direction elements -->
 
     <xs:simpleType name="tip-direction">
         <xs:annotation>
