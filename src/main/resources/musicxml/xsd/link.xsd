@@ -1,0 +1,44 @@
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+
+    <xs:include schemaLocation="remaining.xsd"/>
+
+    <xs:attributeGroup name="link-attributes">
+        <xs:annotation>
+            <xs:documentation>The link-attributes group includes all the simple XLink attributes supported in the MusicXML format.</xs:documentation>
+        </xs:annotation>
+
+        <xs:attribute ref="xlink:href" use="required"/>
+        <xs:attribute ref="xlink:type" fixed="simple"/>
+        <xs:attribute ref="xlink:role"/>
+        <xs:attribute ref="xlink:title"/>
+        <xs:attribute ref="xlink:show" default="replace"/>
+        <xs:attribute ref="xlink:actuate" default="onRequest"/>
+    </xs:attributeGroup>
+
+    <xs:complexType name="link">
+        <xs:annotation>
+            <xs:documentation>The link type serves as an outgoing simple XLink. It is also used to connect a MusicXML score with a MusicXML opus. If a relative link is used within a document that is part of a compressed MusicXML file, the link is relative to the  root folder of the zip file.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="link-attributes"/>
+        <xs:attribute name="name" type="xs:token"/>
+        <xs:attributeGroup ref="element-position"/>
+        <xs:attributeGroup ref="position"/>
+    </xs:complexType>
+
+    <xs:complexType name="bookmark">
+        <xs:annotation>
+            <xs:documentation>The bookmark type serves as a well-defined target for an incoming simple XLink.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="name" type="xs:token"/>
+        <xs:attributeGroup ref="element-position"/>
+    </xs:complexType>
+
+</xs:schema>

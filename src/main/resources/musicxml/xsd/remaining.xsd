@@ -26,7 +26,7 @@ This file defines the MusicXML 3.0 XSD, including the score-partwise and score-t
 -->
 
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
-	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
+	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
 
 	<!-- Simple types derived from common.mod entities and elements -->
 
@@ -1622,19 +1622,6 @@ The staff-spacing attribute specifies spacing between multiple staves in tenths 
 		<xs:attribute name="position" type="xs:positiveInteger"/>
 	</xs:attributeGroup>
 
-	<xs:attributeGroup name="link-attributes">
-		<xs:annotation>
-			<xs:documentation>The link-attributes group includes all the simple XLink attributes supported in the MusicXML format.</xs:documentation>
-		</xs:annotation>
-		<!--<xs:attribute ref="xmnls:xlink" fixed="http://www.w3.org/1999/xlink"/>-->
-		<xs:attribute ref="xlink:href" use="required"/>
-		<xs:attribute ref="xlink:type" fixed="simple"/>
-		<xs:attribute ref="xlink:role"/>
-		<xs:attribute ref="xlink:title"/>
-		<xs:attribute ref="xlink:show" default="replace"/>
-		<xs:attribute ref="xlink:actuate" default="onRequest"/>
-	</xs:attributeGroup>
-	
 	<!-- Attribute groups derived from score.mod elements -->
 	
 	<xs:attributeGroup name="group-name-text">
@@ -2512,27 +2499,6 @@ Sometimes the sum of measure widths in a system may not equal the system width s
 			<xs:documentation>System margins are relative to the page margins. Positive values indent and negative values reduce the margin size.</xs:documentation>
 		</xs:annotation>
 		<xs:group ref="left-right-margins"/>
-	</xs:complexType>
-
-	<!-- Complex types derived from link.mod elements -->
-
-	<xs:complexType name="bookmark">
-		<xs:annotation>
-			<xs:documentation>The bookmark type serves as a well-defined target for an incoming simple XLink.</xs:documentation>
-		</xs:annotation>
-		<xs:attribute name="id" type="xs:ID" use="required"/>
-		<xs:attribute name="name" type="xs:token"/>
-		<xs:attributeGroup ref="element-position"/>
-	</xs:complexType>
-
-	<xs:complexType name="link">
-		<xs:annotation>
-			<xs:documentation>The link type serves as an outgoing simple XLink. It is also used to connect a MusicXML score with a MusicXML opus. If a relative link is used within a document that is part of a compressed MusicXML file, the link is relative to the  root folder of the zip file.</xs:documentation>
-		</xs:annotation>
-		<xs:attributeGroup ref="link-attributes"/>
-		<xs:attribute name="name" type="xs:token"/>
-		<xs:attributeGroup ref="element-position"/>
-		<xs:attributeGroup ref="position"/>
 	</xs:complexType>
 
 	<xs:complexType name="empty-line">

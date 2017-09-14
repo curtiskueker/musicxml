@@ -4,11 +4,11 @@
         attributeFormDefault="unqualified">
 
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
-    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
 
     <xs:include schemaLocation="direction.xsd"/>
     <xs:include schemaLocation="barline.xsd"/>
     <xs:include schemaLocation="note.xsd"/>
+    <xs:include schemaLocation="link.xsd"/>
     <xs:include schemaLocation="remaining.xsd"/>
 
     <!-- score elements -->
