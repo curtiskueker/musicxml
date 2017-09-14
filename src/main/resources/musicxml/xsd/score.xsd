@@ -8,6 +8,7 @@
 
     <xs:include schemaLocation="direction.xsd"/>
     <xs:include schemaLocation="barline.xsd"/>
+    <xs:include schemaLocation="note.xsd"/>
     <xs:include schemaLocation="remaining.xsd"/>
 
     <!-- score elements -->
