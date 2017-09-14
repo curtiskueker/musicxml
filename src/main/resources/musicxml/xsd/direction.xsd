@@ -7,6 +7,7 @@
 
     <xs:include schemaLocation="note.xsd"/>
     <xs:include schemaLocation="attributes.xsd"/>
+    <xs:include schemaLocation="layout.xsd"/>
     <xs:include schemaLocation="remaining.xsd"/>
 
     <!-- direction elements -->

@@ -11,6 +11,7 @@
     <xs:include schemaLocation="link.xsd"/>
     <xs:include schemaLocation="attributes.xsd"/>
     <xs:include schemaLocation="identity.xsd"/>
+    <xs:include schemaLocation="layout.xsd"/>
     <xs:include schemaLocation="remaining.xsd"/>
 
     <!-- score elements -->

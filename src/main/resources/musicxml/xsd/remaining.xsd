@@ -398,15 +398,6 @@ The values of start, stop, and continue refer to how an element appears in music
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="tenths">
-		<xs:annotation>
-			<xs:documentation>The tenths type is a number representing tenths of interline staff space (positive or negative). Both integer and decimal values are allowed, such as 5 for a half space and 2.5 for a quarter space. Interline space is measured from the middle of a staff line.
-
-Distances in a MusicXML file are measured in tenths of staff space. Tenths are then scaled to millimeters within the scaling element, used in the defaults element at the start of a score. Individual staves can apply a scaling factor to adjust staff size. When a MusicXML element or attribute refers to tenths, it means the global tenths defined by the scaling element, not the local tenths as adjusted by the staff-size element.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:decimal"/>
-	</xs:simpleType>
-
 	<xs:simpleType name="text-direction">
 		<xs:annotation>
 			<xs:documentation>The text-direction type is used to adjust and override the Unicode bidirectional text algorithm, similar to the W3C Internationalization Tag Set recommendation. Values are ltr (left-to-right embed), rtl (right-to-left embed), lro (left-to-right bidi-override), and rlo (right-to-left bidi-override). The default value is ltr. This type is typically used by applications that store text in left-to-right visual order rather than logical order. Such applications can use the lro value to better communicate with other applications that more fully support bidirectional text.</xs:documentation>
@@ -877,13 +868,6 @@ The "other" kind is used when the harmony is entirely composed of add elements. 
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="millimeters">
-		<xs:annotation>
-			<xs:documentation>The millimeters type is a number representing millimeters. This is used in the scaling element to provide a default scaling from tenths to physical units.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:decimal"/>
-	</xs:simpleType>
-	
 	<xs:simpleType name="note-size-type">
 		<xs:annotation>
 			<xs:documentation>The note-size-type type indicates the type of note being defined by a note-size element. The grace type is used for notes of cue size that that include a grace element. The cue type is used for all other notes with cue size, whether defined explicitly or implicitly via a cue element. The large type is used for notes of large size.</xs:documentation>
@@ -1831,151 +1815,6 @@ These letter dynamic symbols are separated from crescendo, decrescendo, and wedg
 		<xs:attributeGroup ref="color"/>
 	</xs:complexType>
 
-	<!-- Complex types derived from layout.mod elements -->
-
-	<xs:complexType name="appearance">
-		<xs:annotation>
-			<xs:documentation>The appearance type controls general graphical settings for the music's final form appearance on a printed page of display. This includes support for line widths, definitions for note sizes, and standard distances between notation elements, plus an extension element for other aspects of appearance.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="line-width" type="line-width" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="note-size" type="note-size" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="distance" type="distance" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="other-appearance" type="other-appearance" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="distance">
-		<xs:annotation>
-			<xs:documentation>The distance element represents standard distances between notation elements in tenths. The type attribute defines what type of distance is being defined. Valid values include hyphen (for hyphens in lyrics) and beam.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="tenths">
-				<xs:attribute name="type" type="distance-type" use="required"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-
-	<xs:complexType name="line-width">
-		<xs:annotation>
-			<xs:documentation>The line-width type indicates the width of a line type in tenths. The type attribute defines what type of line is being defined. Values include beam, bracket, dashes, enclosure, ending, extend, heavy barline, leger, light barline, octave shift, pedal, slur middle, slur tip, staff, stem, tie middle, tie tip, tuplet bracket, and wedge. The text content is expressed in tenths.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="tenths">
-				<xs:attribute name="type" type="line-width-type" use="required"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-
-	<xs:complexType name="measure-layout">
-		<xs:annotation>
-			<xs:documentation>The measure-layout type includes the horizontal distance from the previous measure.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="measure-distance" type="tenths" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The measure-distance element specifies the horizontal distance from the previous measure. This value is only used for systems where there is horizontal whitespace in the middle of a system, as in systems with codas. To specify the measure width, use the width attribute of the measure element.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="note-size">
-		<xs:annotation>
-			<xs:documentation>The note-size type indicates the percentage of the regular note size to use for notes with a cue and large size as defined in the type element. The grace type is used for notes of cue size that that include a grace element. The cue type is used for all other notes with cue size, whether defined explicitly or implicitly via a cue element. The large type is used for notes of large size. The text content represent the numeric percentage. A value of 100 would be identical to the size of a regular note as defined by the music font.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="non-negative-decimal">
-				<xs:attribute name="type" type="note-size-type" use="required"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-
-	<xs:complexType name="other-appearance">
-		<xs:annotation>
-			<xs:documentation>The other-appearance type is used to define any graphical settings not yet in the current version of the MusicXML format. This allows extended representation, though without application interoperability.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="type" type="xs:token" use="required"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-
-	<xs:complexType name="page-layout">
-		<xs:annotation>
-			<xs:documentation>Page layout can be defined both in score-wide defaults and in the print element. Page margins are specified either for both even and odd pages, or via separate odd and even page number values. The type is not needed when used as part of a print element. If omitted when used in the defaults element, "both" is the default.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:sequence minOccurs="0">
-				<xs:element name="page-height" type="tenths"/>
-				<xs:element name="page-width" type="tenths"/>
-			</xs:sequence>
-			<xs:element name="page-margins" type="page-margins" minOccurs="0" maxOccurs="2"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="page-margins">
-		<xs:annotation>
-			<xs:documentation>Page margins are specified either for both even and odd pages, or via separate odd and even page number values. The type attribute is not needed when used as part of a print element. If omitted when the page-margins type is used in the defaults element, "both" is the default value.</xs:documentation>
-		</xs:annotation>
-		<xs:group ref="all-margins"/>
-		<xs:attribute name="type" type="margin-type"/>
-	</xs:complexType>
-	
-	<xs:complexType name="scaling">
-		<xs:annotation>
-			<xs:documentation>Margins, page sizes, and distances are all measured in tenths to keep MusicXML data in a consistent coordinate system as much as possible. The translation to absolute units is done with the scaling type, which specifies how many millimeters are equal to how many tenths. For a staff height of 7 mm, millimeters would be set to 7 while tenths is set to 40. The ability to set a formula rather than a single scaling factor helps avoid roundoff errors.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="millimeters" type="millimeters"/>
-			<xs:element name="tenths" type="tenths"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="staff-layout">
-		<xs:annotation>
-			<xs:documentation>Staff layout includes the vertical distance from the bottom line of the previous staff in this system to the top line of the staff specified by the number attribute. The optional number attribute refers to staff numbers within the part, from top to bottom on the system. A value of 1 is assumed if not present. When used in the defaults element, the values apply to all parts. This value is ignored for the first staff in a system.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="staff-distance" type="tenths" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attribute name="number" type="staff-number"/>
-	</xs:complexType>
-
-	<xs:complexType name="system-dividers">
-		<xs:annotation>
-			<xs:documentation>The system-dividers element indicates the presence or absence of system dividers (also known as system separation marks) between systems displayed on the same page. Dividers on the left and right side of the page are controlled by the left-divider and right-divider elements respectively. The default vertical position is half the system-distance value from the top of the system that is below the divider. The default horizontal position is the left and right system margin, respectively.
-
-When used in the print element, the system-dividers element affects the dividers that would appear between the current system and the previous system.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="left-divider" type="empty-print-object-style-align"/>
-			<xs:element name="right-divider" type="empty-print-object-style-align"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="system-layout">
-		<xs:annotation>
-			<xs:documentation>A system is a group of staves that are read and played simultaneously. System layout includes left and right margins and the vertical distance from the previous system. The system distance is measured from the bottom line of the previous system to the top line of the current system. It is ignored for the first system on a page. The top system distance is measured from the page's top margin to the top line of the first system. It is ignored for all but the first system on a page.
-	
-Sometimes the sum of measure widths in a system may not equal the system width specified by the layout elements due to roundoff or other errors. The behavior when reading MusicXML files in these cases is application-dependent. For instance, applications may find that the system layout data is more reliable than the sum of the measure widths, and adjust the measure widths accordingly.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="system-margins" type="system-margins" minOccurs="0"/>
-			<xs:element name="system-distance" type="tenths" minOccurs="0"/>
-			<xs:element name="top-system-distance" type="tenths" minOccurs="0"/>
-			<xs:element name="system-dividers" type="system-dividers" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="system-margins">
-		<xs:annotation>
-			<xs:documentation>System margins are relative to the page margins. Positive values indent and negative values reduce the margin size.</xs:documentation>
-		</xs:annotation>
-		<xs:group ref="left-right-margins"/>
-	</xs:complexType>
-
 	<xs:complexType name="empty-line">
 		<xs:annotation>
 			<xs:documentation>The empty-line type represents an empty element with line-shape, line-type, dashed-formatting, print-style and placement attributes.</xs:documentation>
@@ -2141,19 +1980,6 @@ Sometimes the sum of measure widths in a system may not equal the system width s
 		</xs:sequence>
 	</xs:group>
 
-	<!-- Element groups derived from layout.mod entities and elements -->
-
-	<xs:group name="all-margins">
-		<xs:annotation>
-			<xs:documentation>The all-margins group specifies both horizontal and vertical margins in tenths.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:group ref="left-right-margins"/>
-			<xs:element name="top-margin" type="tenths"/>
-			<xs:element name="bottom-margin" type="tenths"/>
-		</xs:sequence>
-	</xs:group>
-
 	<xs:group name="layout">
 		<xs:annotation>
 			<xs:documentation>The layout group specifies the sequence of page, system, and staff layout elements that is common to both the defaults and print elements.</xs:documentation>
@@ -2162,16 +1988,6 @@ Sometimes the sum of measure widths in a system may not equal the system width s
 			<xs:element name="page-layout" type="page-layout" minOccurs="0"/>
 			<xs:element name="system-layout" type="system-layout" minOccurs="0"/>
 			<xs:element name="staff-layout" type="staff-layout" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:group>
-
-	<xs:group name="left-right-margins">
-		<xs:annotation>
-			<xs:documentation>The left-right-margins group specifies horizontal margins in tenths.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="left-margin" type="tenths"/>
-			<xs:element name="right-margin" type="tenths"/>
 		</xs:sequence>
 	</xs:group>
 
