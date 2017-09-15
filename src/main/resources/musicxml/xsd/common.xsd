@@ -1,0 +1,1270 @@
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+
+    <xs:simpleType name="yyyy-mm-dd">
+        <xs:annotation>
+            <xs:documentation>Calendar dates are represented yyyy-mm-dd format, following ISO 8601. This is a W3C XML Schema date type, but without the optional timezone data.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:date">
+            <xs:pattern value="[^:Z]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="tenths">
+        <xs:annotation>
+            <xs:documentation>The tenths type is a number representing tenths of interline staff space (positive or negative). Both integer and decimal values are allowed, such as 5 for a half space and 2.5 for a quarter space. Interline space is measured from the middle of a staff line.
+
+                Distances in a MusicXML file are measured in tenths of staff space. Tenths are then scaled to millimeters within the scaling element, used in the defaults element at the start of a score. Individual staves can apply a scaling factor to adjust staff size. When a MusicXML element or attribute refers to tenths, it means the global tenths defined by the scaling element, not the local tenths as adjusted by the staff-size element.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="start-stop">
+        <xs:annotation>
+            <xs:documentation>The start-stop type is used for an attribute of musical elements that can either start or stop, such as tuplets.
+
+                The values of start and stop refer to how an element appears in musical score order, not in MusicXML document order. An element with a stop attribute may precede the corresponding element with a start attribute within a MusicXML document. This is particularly common in multi-staff music. For example, the stopping point for a tuplet may appear in staff 1 before the starting point for the tuplet appears in staff 2 later in the document.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="start"/>
+            <xs:enumeration value="stop"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="start-stop-continue">
+        <xs:annotation>
+            <xs:documentation>The start-stop-continue type is used for an attribute of musical elements that can either start or stop, but also need to refer to an intermediate point in the symbol, as for complex slurs or for formatting of symbols across system breaks.
+
+                The values of start, stop, and continue refer to how an element appears in musical score order, not in MusicXML document order. An element with a stop attribute may precede the corresponding element with a start attribute within a MusicXML document. This is particularly common in multi-staff music. For example, the stopping point for a slur may appear in staff 1 before the starting point for the slur appears in staff 2 later in the document.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="start"/>
+            <xs:enumeration value="stop"/>
+            <xs:enumeration value="continue"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="start-stop-single">
+        <xs:annotation>
+            <xs:documentation>The start-stop-single type is used for an attribute of musical elements that can be used for either multi-note or single-note musical elements, as for tremolos.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="start"/>
+            <xs:enumeration value="stop"/>
+            <xs:enumeration value="single"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="yes-no">
+        <xs:annotation>
+            <xs:documentation>The yes-no type is used for boolean-like attributes. We cannot use W3C XML Schema booleans due to their restrictions on expression of boolean values.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="yes-no-number">
+        <xs:annotation>
+            <xs:documentation>The yes-no-number type is used for attributes that can be either boolean or numeric values.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="yes-no xs:decimal"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="symbol-size">
+        <xs:annotation>
+            <xs:documentation>The symbol-size type is used to indicate full vs. cue-sized vs. oversized symbols. The large value for oversized symbols was added in version 1.1.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="full"/>
+            <xs:enumeration value="cue"/>
+            <xs:enumeration value="large"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="above-below">
+        <xs:annotation>
+            <xs:documentation>The above-below type is used to indicate whether one element appears above or below another element.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="above"/>
+            <xs:enumeration value="below"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="up-down">
+        <xs:annotation>
+            <xs:documentation>The up-down type is used for the direction of arrows and other pointed symbols like vertical accents, indicating which way the tip is pointing.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="up"/>
+            <xs:enumeration value="down"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="top-bottom">
+        <xs:annotation>
+            <xs:documentation>The top-bottom type is used to indicate the top or bottom part of a vertical shape like non-arpeggiate.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="bottom"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="left-right">
+        <xs:annotation>
+            <xs:documentation>The left-right type is used to indicate whether one element appears to the left or the right of another element.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="on-off">
+        <xs:annotation>
+            <xs:documentation>The on-off type is used for notation elements such as string mutes.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="on"/>
+            <xs:enumeration value="off"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="number-of-lines">
+        <xs:annotation>
+            <xs:documentation>The number-of-lines type is used to specify the number of lines in text decoration attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="enclosure-shape">
+        <xs:annotation>
+            <xs:documentation>The enclosure-shape type describes the shape and presence / absence of an enclosure around text or symbols. A bracket enclosure is similar to a rectangle with the bottom line missing, as is common in jazz notation.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="rectangle"/>
+            <xs:enumeration value="square"/>
+            <xs:enumeration value="oval"/>
+            <xs:enumeration value="circle"/>
+            <xs:enumeration value="bracket"/>
+            <xs:enumeration value="triangle"/>
+            <xs:enumeration value="diamond"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="number-level">
+        <xs:annotation>
+            <xs:documentation>Slurs, tuplets, and many other features can be concurrent and overlapping within a single musical part. The number-level type distinguishes up to six concurrent objects of the same type. A reading program should be prepared to handle cases where the number-levels stop in an arbitrary order. Different numbers are needed when the features overlap in MusicXML document order. When a number-level value is implied, the value is 1 by default.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="position">
+        <xs:annotation>
+            <xs:documentation>The position attributes are based on MuseData print suggestions. For most elements, any program will compute a default x and y position. The position attributes let this be changed two ways.
+
+                The default-x and default-y attributes change the computation of the default position. For most elements, the origin is changed relative to the left-hand side of the note or the musical position within the bar (x) and the top line of the staff (y).
+
+                For the following elements, the default-x value changes the origin relative to the start of the current measure:
+
+                - note
+                - figured-bass
+                - harmony
+                - link
+                - directive
+                - measure-numbering
+                - all descendants of the part-list element
+                - all children of the direction-type element
+
+                This origin is from the start of the entire measure, at either the left barline or the start of the system.
+
+                When the default-x attribute is used within a child element of the part-name-display, part-abbreviation-display, group-name-display, or group-abbreviation-display elements, it changes the origin relative to the start of the first measure on the system. These values are used when the current measure or a succeeding measure starts a new system. The same change of origin is used for the group-symbol element.
+
+                For the note, figured-bass, and harmony elements, the default-x value is considered to have adjusted the musical position within the bar for its descendant elements.
+
+                Since the credit-words and credit-image elements are not related to a measure, in these cases the default-x and default-y attributes adjust the origin relative to the bottom left-hand corner of the specified page.
+
+                The relative-x and relative-y attributes change the position relative to the default position, either as computed by the individual program, or as overridden by the default-x and default-y attributes.
+
+                Positive x is right, negative x is left; positive y is up, negative y is down. All units are in tenths of interline space. For stems, positive relative-y lengthens a stem while negative relative-y shortens it.
+
+                The default-x and default-y position attributes provide higher-resolution positioning data than related features such as the placement attribute and the offset element. Applications reading a MusicXML file that can understand both features should generally rely on the default-x and default-y attributes for their greater accuracy. For the relative-x and relative-y attributes, the offset element, placement attribute, and directive attribute provide context for the relative position information, so the two features should be interpreted together.
+
+                As elsewhere in the MusicXML format, tenths are the global tenths defined by the scaling element, not the local tenths of a staff resized by the staff-size element.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="default-x" type="tenths"/>
+        <xs:attribute name="default-y" type="tenths"/>
+        <xs:attribute name="relative-x" type="tenths"/>
+        <xs:attribute name="relative-y" type="tenths"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="placement">
+        <xs:annotation>
+            <xs:documentation>The placement attribute indicates whether something is above or below another element, such as a note or a notation.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="placement" type="above-below"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="orientation">
+        <xs:annotation>
+            <xs:documentation>The orientation attribute indicates whether slurs and ties are overhand (tips down) or underhand (tips up). This is distinct from the placement attribute used by any notation type.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="orientation" type="over-under"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="over-under">
+        <xs:annotation>
+            <xs:documentation>The over-under type is used to indicate whether the tips of curved lines such as slurs and ties are overhand (tips down) or underhand (tips up).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="over"/>
+            <xs:enumeration value="under"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="directive">
+        <xs:annotation>
+            <xs:documentation>The directive attribute changes the default-x position of a direction. It indicates that the left-hand side of the direction is aligned with the left-hand side of the time signature. If no time signature is present, it is aligned with the left-hand side of the first music notational element in the measure. If a default-x, justify, or halign attribute is present, it overrides the directive attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="directive" type="yes-no"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="bezier">
+        <xs:annotation>
+            <xs:documentation>The bezier attribute group is used to indicate the curvature of slurs and ties, representing the control points for a cubic bezier curve. For ties, the bezier attribute group is used with the tied element.
+
+                Normal slurs, S-shaped slurs, and ties need only two bezier points: one associated with the start of the slur or tie, the other with the stop. Complex slurs and slurs divided over system breaks can specify additional bezier data at slur elements with a continue type.
+
+                The bezier-offset, bezier-x, and bezier-y attributes describe the outgoing bezier point for slurs and ties with a start type, and the incoming bezier point for slurs and ties with types of stop or continue. The attributes bezier-offset2, bezier-x2, and bezier-y2 are only valid with slurs of type continue, and describe the outgoing bezier point.
+
+                The bezier-offset and bezier-offset2 attributes are measured in terms of musical divisions, like the offset element. These are the recommended attributes for specifying horizontal position. The other attributes are specified in tenths, relative to any position settings associated with the slur or tied element.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="bezier-offset" type="divisions"/>
+        <xs:attribute name="bezier-offset2" type="divisions"/>
+        <xs:attribute name="bezier-x" type="tenths"/>
+        <xs:attribute name="bezier-y" type="tenths"/>
+        <xs:attribute name="bezier-x2" type="tenths"/>
+        <xs:attribute name="bezier-y2" type="tenths"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="divisions">
+        <xs:annotation>
+            <xs:documentation>The divisions type is used to express values in terms of the musical divisions defined by the divisions element. It is preferred that these be integer values both for MIDI interoperability and to avoid roundoff errors.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="font">
+        <xs:annotation>
+            <xs:documentation>The font attribute group gathers together attributes for determining the font within a credit or direction. They are based on the text styles for Cascading Style Sheets. The font-family is a comma-separated list of font names. These can be specific font styles such as Maestro or Opus, or one of several generic font styles: music, engraved, handwritten, text, serif, sans-serif, handwritten, cursive, fantasy, and monospace. The music, engraved, and handwritten values refer to music fonts; the rest refer to text fonts. The fantasy style refers to decorative text such as found in older German-style printing. The font-style can be normal or italic. The font-size can be one of the CSS sizes (xx-small, x-small, small, medium, large, x-large, xx-large) or a numeric point size. The font-weight can be normal or bold. The default is application-dependent, but is a text font vs. a music font.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="font-family" type="comma-separated-text"/>
+        <xs:attribute name="font-style" type="font-style"/>
+        <xs:attribute name="font-size" type="font-size"/>
+        <xs:attribute name="font-weight" type="font-weight"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="comma-separated-text">
+        <xs:annotation>
+            <xs:documentation>The comma-separated-text type is used to specify a comma-separated list of text elements, as is used by the font-family attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[^,]+(, ?[^,]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="font-style">
+        <xs:annotation>
+            <xs:documentation>The font-style type represents a simplified version of the CSS font-style property.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="italic"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="font-size">
+        <xs:annotation>
+            <xs:documentation>The font-size can be one of the CSS font sizes or a numeric point size.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="xs:decimal css-font-size"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="font-weight">
+        <xs:annotation>
+            <xs:documentation>The font-weight type represents a simplified version of the CSS font-weight property.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="bold"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="css-font-size">
+        <xs:annotation>
+            <xs:documentation>The css-font-size type includes the CSS font sizes used as an alternative to a numeric point size.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="xx-small"/>
+            <xs:enumeration value="x-small"/>
+            <xs:enumeration value="small"/>
+            <xs:enumeration value="medium"/>
+            <xs:enumeration value="large"/>
+            <xs:enumeration value="x-large"/>
+            <xs:enumeration value="xx-large"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="color">
+        <xs:annotation>
+            <xs:documentation>The color type indicates the color of an element. Color may be represented as hexadecimal RGB triples, as in HTML, or as hexadecimal ARGB tuples, with the A indicating alpha of transparency. An alpha value of 00 is totally transparent; FF is totally opaque. If RGB is used, the A value is assumed to be FF.
+
+                For instance, the RGB value "#800080" represents purple. An ARGB value of "#40800080" would be a transparent purple.
+
+                As in SVG 1.1, colors are defined in terms of the sRGB color space (IEC 61966).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="#[\dA-F]{6}([\dA-F][\dA-F])?"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="text-decoration">
+        <xs:annotation>
+            <xs:documentation>The text-decoration attribute group is based on the similar feature in XHTML and CSS. It allows for text to be underlined, overlined, or struck-through. It extends the CSS version by allow double or triple lines instead of just being on or off.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="underline" type="number-of-lines"/>
+        <xs:attribute name="overline" type="number-of-lines"/>
+        <xs:attribute name="line-through" type="number-of-lines"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="justify">
+        <xs:annotation>
+            <xs:documentation>The justify attribute is used to indicate left, center, or right justification. The default value varies for different elements. For elements where the justify attribute is present but the halign attribute is not, the justify attribute indicates horizontal alignment as well as justification.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="justify" type="left-center-right"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="halign">
+        <xs:annotation>
+            <xs:documentation>In cases where text extends over more than one line, horizontal alignment and justify values can be different. The most typical case is for credits, such as:
+
+                Words and music by
+                Pat Songwriter
+
+                Typically this type of credit is aligned to the right, so that the position information refers to the right-most part of the text. But in this example, the text is center-justified, not right-justified.
+
+                The halign attribute is used in these situations. If it is not present, its value is the same as for the justify attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="halign" type="left-center-right"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="left-center-right">
+        <xs:annotation>
+            <xs:documentation>The left-center-right type is used to define horizontal alignment and text justification.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="valign">
+        <xs:annotation>
+            <xs:documentation>The valign attribute is used to indicate vertical alignment to the top, middle, bottom, or baseline of the text. Defaults are implementation-dependent.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="valign" type="valign"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="valign">
+        <xs:annotation>
+            <xs:documentation>The valign type is used to indicate vertical alignment to the top, middle, bottom, or baseline of the text. Defaults are implementation-dependent.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="middle"/>
+            <xs:enumeration value="bottom"/>
+            <xs:enumeration value="baseline"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="valign-image">
+        <xs:annotation>
+            <xs:documentation>The valign-image attribute is used to indicate vertical alignment for images and graphics, so it removes the baseline value. Defaults are implementation-dependent.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="valign" type="valign-image"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="valign-image">
+        <xs:annotation>
+            <xs:documentation>The valign-image type is used to indicate vertical alignment for images and graphics, so it does not include a baseline value. Defaults are implementation-dependent.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="middle"/>
+            <xs:enumeration value="bottom"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="letter-spacing">
+        <xs:annotation>
+            <xs:documentation>The letter-spacing attribute specifies text tracking. Values are either "normal" or a number representing the number of ems to add between each letter. The number may be negative in order to subtract space. The default is normal, which allows flexibility of letter-spacing for purposes of text justification.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="letter-spacing" type="number-or-normal"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="number-or-normal">
+        <xs:annotation>
+            <xs:documentation>The number-or-normal values can be either a decimal number or the string "normal". This is used by the line-height and letter-spacing attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="xs:decimal">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="line-height">
+        <xs:annotation>
+            <xs:documentation>The line-height attribute specifies text leading. Values are either "normal" or a number representing the percentage of the current font height to use for leading. The default is "normal". The exact normal value is implementation-dependent, but values between 100 and 120 are recommended.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="line-height" type="number-or-normal"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="text-direction">
+        <xs:annotation>
+            <xs:documentation>The text-direction attribute is used to adjust and override the Unicode bidirectional text algorithm, similar to the W3C Internationalization Tag Set recommendation.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="dir" type="text-direction"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="text-direction">
+        <xs:annotation>
+            <xs:documentation>The text-direction type is used to adjust and override the Unicode bidirectional text algorithm, similar to the W3C Internationalization Tag Set recommendation. Values are ltr (left-to-right embed), rtl (right-to-left embed), lro (left-to-right bidi-override), and rlo (right-to-left bidi-override). The default value is ltr. This type is typically used by applications that store text in left-to-right visual order rather than logical order. Such applications can use the lro value to better communicate with other applications that more fully support bidirectional text.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="ltr"/>
+            <xs:enumeration value="rtl"/>
+            <xs:enumeration value="lro"/>
+            <xs:enumeration value="rlo"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="text-rotation">
+        <xs:annotation>
+            <xs:documentation>The rotation attribute is used to rotate text around the alignment point specified by the halign and valign attributes. Positive values are clockwise rotations, while negative values are counter-clockwise rotations.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="rotation" type="rotation-degrees"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="rotation-degrees">
+        <xs:annotation>
+            <xs:documentation>The rotation-degrees type specifies rotation, pan, and elevation values in degrees. Values range from -180 to 180.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="-180"/>
+            <xs:maxInclusive value="180"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="enclosure">
+        <xs:annotation>
+            <xs:documentation>The enclosure attribute group is used to specify the formatting of an enclosure around text or symbols.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="enclosure" type="enclosure-shape"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="print-style">
+        <xs:annotation>
+            <xs:documentation>The print-style attribute group collects the most popular combination of printing attributes: position, font, and color.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="position"/>
+        <xs:attributeGroup ref="font"/>
+        <xs:attributeGroup ref="color"/>
+    </xs:attributeGroup>
+
+    <xs:complexType name="empty-print-style">
+        <xs:annotation>
+            <xs:documentation>The empty-print-style type represents an empty element with print-style attribute group.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-style"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="color">
+        <xs:annotation>
+            <xs:documentation>The color attribute group indicates the color of an element.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="color" type="color"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="print-style-align">
+        <xs:annotation>
+            <xs:documentation>The print-style-align attribute group adds the halign and valign attributes to the position, font, and color attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-style"/>
+        <xs:attributeGroup ref="halign"/>
+        <xs:attributeGroup ref="valign"/>
+    </xs:attributeGroup>
+
+    <xs:complexType name="empty-print-style-align">
+        <xs:annotation>
+            <xs:documentation>The empty-print-style-align type represents an empty element with print-style-align attribute group.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-style-align"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="line-type">
+        <xs:annotation>
+            <xs:documentation>The line-type attribute distinguishes between solid, dashed, dotted, and wavy lines.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="line-type" type="line-type"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="line-type">
+        <xs:annotation>
+            <xs:documentation>The line-type type distinguishes between solid, dashed, dotted, and wavy lines.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="solid"/>
+            <xs:enumeration value="dashed"/>
+            <xs:enumeration value="dotted"/>
+            <xs:enumeration value="wavy"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="dashed-formatting">
+        <xs:annotation>
+            <xs:documentation>The dashed-formatting entity represents the length of dashes and spaces in a dashed line. Both the dash-length and space-length attributes are represented in tenths. These attributes are ignored if the corresponding line-type attribute is not dashed.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="dash-length" type="tenths"/>
+        <xs:attribute name="space-length" type="tenths"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="print-object">
+        <xs:annotation>
+            <xs:documentation>The print-object attribute specifies whether or not to print an object (e.g. a note or a rest). It is yes by default.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="print-object" type="yes-no"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="print-spacing">
+        <xs:annotation>
+            <xs:documentation>The print-spacing attribute controls whether or not spacing is left for an invisible note or object. It is used only if no note, dot, or lyric is being printed. The value is yes (leave spacing) by default.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="print-spacing" type="yes-no"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="printout">
+        <xs:annotation>
+            <xs:documentation>The printout attribute group collects the different controls over printing an object (e.g. a note or rest) and its parts, including augmentation dots and lyrics. This is especially useful for notes that overlap in different voices, or for chord sheets that contain lyrics and chords but no melody.
+
+                By default, all these attributes are set to yes. If print-object is set to no, the print-dot and print-lyric attributes are interpreted to also be set to no if they are not present.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-object"/>
+        <xs:attribute name="print-dot" type="yes-no"/>
+        <xs:attributeGroup ref="print-spacing"/>
+        <xs:attribute name="print-lyric" type="yes-no"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="text-formatting">
+        <xs:annotation>
+            <xs:documentation>The text-formatting attribute group collects the common formatting attributes for text elements. Default values may differ across the elements that use this group.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="justify"/>
+        <xs:attributeGroup ref="print-style-align"/>
+        <xs:attributeGroup ref="text-decoration"/>
+        <xs:attributeGroup ref="text-rotation"/>
+        <xs:attributeGroup ref="letter-spacing"/>
+        <xs:attributeGroup ref="line-height"/>
+        <xs:attribute ref="xml:lang"/>
+        <xs:attribute ref="xml:space"/>
+        <xs:attributeGroup ref="text-direction"/>
+        <xs:attributeGroup ref="enclosure"/>
+    </xs:attributeGroup>
+
+    <xs:complexType name="style-text">
+        <xs:annotation>
+            <xs:documentation>The style-text type represents a text element with a print-style attribute group.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="print-style"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:attributeGroup name="level-display">
+        <xs:annotation>
+            <xs:documentation>The level-display attribute group specifies three common ways to indicate editorial indications: putting parentheses or square brackets around a symbol, or making the symbol a different size. If not specified, they are left to application defaults. It is used by the level and accidental elements.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="parentheses" type="yes-no"/>
+        <xs:attribute name="bracket" type="yes-no"/>
+        <xs:attribute name="size" type="symbol-size"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="trill-sound">
+        <xs:annotation>
+            <xs:documentation>The trill-sound attribute group includes attributes used to guide the sound of trills, mordents, turns, shakes, and wavy lines, based on MuseData sound suggestions. The default choices are:
+
+                start-note = "upper"
+                trill-step = "whole"
+                two-note-turn = "none"
+                accelerate = "no"
+                beats = "4".
+
+                Second-beat and last-beat are percentages for landing on the indicated beat, with defaults of 25 and 75 respectively.
+
+                For mordent and inverted-mordent elements, the defaults are different:
+
+                The default start-note is "main", not "upper".
+                The default for beats is "3", not "4".
+                The default for second-beat is "12", not "25".
+                The default for last-beat is "24", not "75".</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="start-note" type="start-note"/>
+        <xs:attribute name="trill-step" type="trill-step"/>
+        <xs:attribute name="two-note-turn" type="two-note-turn"/>
+        <xs:attribute name="accelerate" type="yes-no"/>
+        <xs:attribute name="beats" type="trill-beats"/>
+        <xs:attribute name="second-beat" type="percent"/>
+        <xs:attribute name="last-beat" type="percent"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="start-note">
+        <xs:annotation>
+            <xs:documentation>The start-note type describes the starting note of trills and mordents for playback, relative to the current note.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="upper"/>
+            <xs:enumeration value="main"/>
+            <xs:enumeration value="below"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="trill-step">
+        <xs:annotation>
+            <xs:documentation>The trill-step type describes the alternating note of trills and mordents for playback, relative to the current note.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="whole"/>
+            <xs:enumeration value="half"/>
+            <xs:enumeration value="unison"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="two-note-turn">
+        <xs:annotation>
+            <xs:documentation>The two-note-turn type describes the ending notes of trills and mordents for playback, relative to the current note.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="whole"/>
+            <xs:enumeration value="half"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="trill-beats">
+        <xs:annotation>
+            <xs:documentation>The trill-beats type specifies the beats used in a trill-sound or bend-sound attribute group. It is a decimal value with a minimum value of 2.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="percent">
+        <xs:annotation>
+            <xs:documentation>The percent type specifies a percentage from 0 to 100.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="bend-sound">
+        <xs:annotation>
+            <xs:documentation>The bend-sound type is used for bend and slide elements, and is similar to the trill-sound attribute group. Here the beats element refers to the number of discrete elements (like MIDI pitch bends) used to represent a continuous bend or slide. The first-beat indicates the percentage of the direction for starting a bend; the last-beat the percentage for ending it. The default choices are:
+
+                accelerate = "no"
+                beats = "4"
+                first-beat = "25"
+                last-beat = "75"</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="accelerate" type="yes-no"/>
+        <xs:attribute name="beats" type="trill-beats"/>
+        <xs:attribute name="first-beat" type="percent"/>
+        <xs:attribute name="last-beat" type="percent"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="time-only">
+        <xs:annotation>
+            <xs:documentation>The time-only type is used to indicate that a particular playback-related element only applies particular times through a repeated section. The value is a comma-separated list of positive integers arranged in ascending order, indicating which times through the repeated section that the element applies.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[1-9][0-9]*(, ?[1-9][0-9]*)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="document-attributes">
+        <xs:annotation>
+            <xs:documentation>The document-attributes attribute group is used to specify the attributes for an entire MusicXML document. Currently this is used for the version attribute.
+
+                The version attribute was added in Version 1.1 for the score-partwise and score-timewise documents. It provides an easier way to get version information than through the MusicXML public ID. The default value is 1.0 to make it possible for programs that handle later versions to distinguish earlier version files reliably. Programs that write MusicXML 1.1 or later files should set this attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="version" type="xs:token" default="1.0"/>
+    </xs:attributeGroup>
+
+    <xs:group name="editorial">
+        <xs:annotation>
+            <xs:documentation>The editorial group specifies editorial information for a musical element.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:group ref="footnote" minOccurs="0"/>
+            <xs:group ref="level" minOccurs="0"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:group name="editorial-voice">
+        <xs:annotation>
+            <xs:documentation>The editorial-voice group supports the common combination of editorial and voice information for a musical element.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:group ref="footnote" minOccurs="0"/>
+            <xs:group ref="level" minOccurs="0"/>
+            <xs:group ref="voice" minOccurs="0"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:group name="footnote">
+        <xs:annotation>
+            <xs:documentation>The footnote element specifies editorial information that appears in footnotes in the printed score. It is defined within a group due to its multiple uses within the MusicXML schema.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="footnote" type="formatted-text"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="formatted-text">
+        <xs:annotation>
+            <xs:documentation>The formatted-text type represents a text element with text-formatting attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="text-formatting"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="level">
+        <xs:annotation>
+            <xs:documentation>The level type is used to specify editorial information for different MusicXML elements. If the reference attribute for the level element is yes, this indicates editorial information that is for display only and should not affect playback. For instance, a modern edition of older music may set reference="yes" on the attributes containing the music's original clef, key, and time signature. It is no by default.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="reference" type="yes-no"/>
+                <xs:attributeGroup ref="level-display"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:group name="level">
+        <xs:annotation>
+            <xs:documentation>The level element specifies editorial information for different MusicXML elements. It is defined within a group due to its multiple uses within the MusicXML schema.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="level" type="level"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:group name="voice">
+        <xs:annotation>
+            <xs:documentation>The voice is used to distinguish between multiple voices (what MuseData calls tracks) in individual parts. It is defined within a group due to its multiple uses within the MusicXML schema.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="voice" type="xs:string"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="fermata">
+        <xs:annotation>
+            <xs:documentation>The fermata text content represents the shape of the fermata sign. An empty fermata element represents a normal fermata. The fermata type is upright if not specified.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="fermata-shape">
+                <xs:attribute name="type" type="upright-inverted"/>
+                <xs:attributeGroup ref="print-style"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="fermata-shape">
+        <xs:annotation>
+            <xs:documentation>The fermata-shape type represents the shape of the fermata sign. The empty value is equivalent to the normal value.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="angled"/>
+            <xs:enumeration value="square"/>
+            <xs:enumeration value=""/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="upright-inverted">
+        <xs:annotation>
+            <xs:documentation>The upright-inverted type describes the appearance of a fermata element. The value is upright if not specified.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="upright"/>
+            <xs:enumeration value="inverted"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="wavy-line">
+        <xs:annotation>
+            <xs:documentation>Wavy lines are one way to indicate trills. When used with a measure element, they should always have type="continue" set.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="type" type="start-stop-continue" use="required"/>
+        <xs:attribute name="number" type="number-level"/>
+        <xs:attributeGroup ref="position"/>
+        <xs:attributeGroup ref="placement"/>
+        <xs:attributeGroup ref="color"/>
+        <xs:attributeGroup ref="trill-sound"/>
+    </xs:complexType>
+
+    <xs:group name="staff">
+        <xs:annotation>
+            <xs:documentation>The staff element is defined within a group due to its use by both notes and direction elements.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="staff" type="xs:positiveInteger">
+                <xs:annotation>
+                    <xs:documentation>Staff assignment is only needed for music notated on multiple staves. Used by both notes and directions. Staff values are numbers, with 1 referring to the top-most staff in a part.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:simpleType name="staff-number">
+        <xs:annotation>
+            <xs:documentation>The staff-number type indicates staff numbers within a multi-staff part. Staves are numbered from top to bottom, with 1 being the top staff on a part.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+
+    <xs:complexType name="dynamics">
+        <xs:annotation>
+            <xs:documentation>Dynamics can be associated either with a note or a general musical direction. To avoid inconsistencies between and amongst the letter abbreviations for dynamics (what is sf vs. sfz, standing alone or with a trailing dynamic that is not always piano), we use the actual letters as the names of these dynamic elements. The other-dynamics element allows other dynamic marks that are not covered here, but many of those should perhaps be included in a more general musical direction element. Dynamics elements may also be combined to create marks not covered by a single element, such as sfmp.
+
+                These letter dynamic symbols are separated from crescendo, decrescendo, and wedge indications. Dynamic representation is inconsistent in scores. Many things are assumed by the composer and left out, such as returns to original dynamics. Systematic representations are quite complex: for example, Humdrum has at least 3 representation formats related to dynamics. The MusicXML format captures what is in the score, but does not try to be optimal for analysis or synthesis of dynamics.</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="p" type="empty"/>
+            <xs:element name="pp" type="empty"/>
+            <xs:element name="ppp" type="empty"/>
+            <xs:element name="pppp" type="empty"/>
+            <xs:element name="ppppp" type="empty"/>
+            <xs:element name="pppppp" type="empty"/>
+            <xs:element name="f" type="empty"/>
+            <xs:element name="ff" type="empty"/>
+            <xs:element name="fff" type="empty"/>
+            <xs:element name="ffff" type="empty"/>
+            <xs:element name="fffff" type="empty"/>
+            <xs:element name="ffffff" type="empty"/>
+            <xs:element name="mp" type="empty"/>
+            <xs:element name="mf" type="empty"/>
+            <xs:element name="sf" type="empty"/>
+            <xs:element name="sfp" type="empty"/>
+            <xs:element name="sfpp" type="empty"/>
+            <xs:element name="fp" type="empty"/>
+            <xs:element name="rf" type="empty"/>
+            <xs:element name="rfz" type="empty"/>
+            <xs:element name="sfz" type="empty"/>
+            <xs:element name="sffz" type="empty"/>
+            <xs:element name="fz" type="empty"/>
+            <xs:element name="other-dynamics" type="xs:string"/>
+        </xs:choice>
+        <xs:attributeGroup ref="print-style-align"/>
+        <xs:attributeGroup ref="placement"/>
+        <xs:attributeGroup ref="text-decoration"/>
+        <xs:attributeGroup ref="enclosure"/>
+    </xs:complexType>
+
+    <xs:complexType name="empty">
+        <xs:annotation>
+            <xs:documentation>The empty type represents an empty element with no attributes.</xs:documentation>
+        </xs:annotation>
+    </xs:complexType>
+
+    <xs:simpleType name="positive-integer-or-empty">
+        <xs:annotation>
+            <xs:documentation>The positive-integer-or-empty values can be either a positive integer or an empty string.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="xs:positiveInteger">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value=""/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+
+    <xs:simpleType name="non-negative-decimal">
+        <xs:annotation>
+            <xs:documentation>The non-negative-decimal type specifies a non-negative decimal value.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="positive-decimal">
+        <xs:annotation>
+            <xs:documentation>The positive-decimal type specifies a positive decimal value.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="fingering">
+        <xs:annotation>
+            <xs:documentation>Fingering is typically indicated 1,2,3,4,5. Multiple fingerings may be given, typically to substitute fingerings in the middle of a note. The substitution and alternate values are "no" if the attribute is not present. For guitar and other fretted instruments, the fingering element represents the fretting finger; the pluck element represents the plucking finger.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="substitution" type="yes-no"/>
+                <xs:attribute name="alternate" type="yes-no"/>
+                <xs:attributeGroup ref="print-style"/>
+                <xs:attributeGroup ref="placement"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="fret">
+        <xs:annotation>
+            <xs:documentation>The fret element is used with tablature notation and chord diagrams. Fret numbers start with 0 for an open string and 1 for the first fret.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:nonNegativeInteger">
+                <xs:attributeGroup ref="font"/>
+                <xs:attributeGroup ref="color"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="string">
+        <xs:annotation>
+            <xs:documentation>The string type is used with tablature notation, regular notation (where it is often circled), and chord diagrams. String numbers start with 1 for the highest string.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="string-number">
+                <xs:attributeGroup ref="print-style"/>
+                <xs:attributeGroup ref="placement"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="string-number">
+        <xs:annotation>
+            <xs:documentation>The string-number type indicates a string number. Strings are numbered from high to low, with 1 being the highest pitched string.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+
+    <xs:group name="tuning">
+        <xs:annotation>
+            <xs:documentation>The tuning group contains the sequence of elements common to the staff-tuning and accord elements.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="tuning-step" type="step">
+                <xs:annotation>
+                    <xs:documentation>The tuning-step element is represented like the step element, with a different name to reflect is different function.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="tuning-alter" type="semitones" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The tuning-alter element is represented like the alter element, with a different name to reflect is different function.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="tuning-octave" type="octave">
+                <xs:annotation>
+                    <xs:documentation>The tuning-octave element is represented like the octave element, with a different name to reflect is different function.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:simpleType name="step">
+        <xs:annotation>
+            <xs:documentation>The step type represents a step of the diatonic scale, represented using the English letters A through G.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="D"/>
+            <xs:enumeration value="E"/>
+            <xs:enumeration value="F"/>
+            <xs:enumeration value="G"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="semitones">
+        <xs:annotation>
+            <xs:documentation>The semitones type is a number representing semitones, used for chromatic alteration. A value of -1 corresponds to a flat and a value of 1 to a sharp. Decimal values like 0.5 (quarter tone sharp) are used for microtones.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="octave">
+        <xs:annotation>
+            <xs:documentation>Octaves are represented by the numbers 0 to 9, where 4 indicates the octave started by middle C.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="accidental-text">
+        <xs:annotation>
+            <xs:documentation>The accidental-text type represents an element with an accidental value and text-formatting attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="accidental-value">
+                <xs:attributeGroup ref="text-formatting"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="accidental-value">
+        <xs:annotation>
+            <xs:documentation>The accidental-value type represents notated accidentals supported by MusicXML. In the MusicXML 2.0 DTD this was a string with values that could be included. The XSD strengthens the data typing to an enumerated list. The quarter- and three-quarters- accidentals are Tartini-style quarter-tone accidentals. The -down and -up accidentals are quarter-tone accidentals that include arrows pointing down or up. The slash- accidentals are used in Turkish classical music. The numbered sharp and flat accidentals are superscripted versions of the accidental signs, used in Turkish folk music. The sori and koron accidentals are microtonal sharp and flat accidentals used in Iranian and Persian music.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="sharp"/>
+            <xs:enumeration value="natural"/>
+            <xs:enumeration value="flat"/>
+            <xs:enumeration value="double-sharp"/>
+            <xs:enumeration value="sharp-sharp"/>
+            <xs:enumeration value="flat-flat"/>
+            <xs:enumeration value="natural-sharp"/>
+            <xs:enumeration value="natural-flat"/>
+            <xs:enumeration value="quarter-flat"/>
+            <xs:enumeration value="quarter-sharp"/>
+            <xs:enumeration value="three-quarters-flat"/>
+            <xs:enumeration value="three-quarters-sharp"/>
+            <xs:enumeration value="sharp-down"/>
+            <xs:enumeration value="sharp-up"/>
+            <xs:enumeration value="natural-down"/>
+            <xs:enumeration value="natural-up"/>
+            <xs:enumeration value="flat-down"/>
+            <xs:enumeration value="flat-up"/>
+            <xs:enumeration value="triple-sharp"/>
+            <xs:enumeration value="triple-flat"/>
+            <xs:enumeration value="slash-quarter-sharp"/>
+            <xs:enumeration value="slash-sharp"/>
+            <xs:enumeration value="slash-flat"/>
+            <xs:enumeration value="double-slash-flat"/>
+            <xs:enumeration value="sharp-1"/>
+            <xs:enumeration value="sharp-2"/>
+            <xs:enumeration value="sharp-3"/>
+            <xs:enumeration value="sharp-5"/>
+            <xs:enumeration value="flat-1"/>
+            <xs:enumeration value="flat-2"/>
+            <xs:enumeration value="flat-3"/>
+            <xs:enumeration value="flat-4"/>
+            <xs:enumeration value="sori"/>
+            <xs:enumeration value="koron"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="name-display">
+        <xs:annotation>
+            <xs:documentation>The name-display type is used for exact formatting of multi-font text in part and group names to the left of the system. The print-object attribute can be used to determine what, if anything, is printed at the start of each system. Enclosure for the display-text element is none by default. Language for the display-text element is Italian ("it") by default.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="display-text" type="formatted-text"/>
+                <xs:element name="accidental-text" type="accidental-text"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attributeGroup ref="print-object"/>
+    </xs:complexType>
+
+    <xs:complexType name="midi-device">
+        <xs:annotation>
+            <xs:documentation>The midi-device type corresponds to the DeviceName meta event in Standard MIDI Files. The optional port attribute is a number from 1 to 16 that can be used with the unofficial MIDI port (or cable) meta event. Unlike the DeviceName meta event, there can be multiple midi-device elements per MusicXML part starting in MusicXML 3.0. The optional id attribute refers to the score-instrument assigned to this device. If missing, the device assignment affects all score-instrument elements in the score-part.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="port" type="midi-16"/>
+                <xs:attribute name="id" type="xs:IDREF"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="midi-instrument">
+        <xs:annotation>
+            <xs:documentation>The midi-instrument type defines MIDI 1.0 instrument playback. The midi-instrument element can be a part of either the score-instrument element at the start of a part, or the sound element within a part. The id attribute refers to the score-instrument affected by the change.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="midi-channel" type="midi-16" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The midi-channel element specifies a MIDI 1.0 channel numbers ranging from 1 to 16.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="midi-name" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The midi-name element corresponds to a ProgramName meta-event within a Standard MIDI File.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="midi-bank" type="midi-16384" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The midi-bank element specified a MIDI 1.0 bank number ranging from 1 to 16,384.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="midi-program" type="midi-128" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The midi-program element specifies a MIDI 1.0 program number ranging from 1 to 128.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="midi-unpitched" type="midi-128" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>For unpitched instruments, the midi-unpitched element specifies a MIDI 1.0 note number ranging from 1 to 128. It is usually used with MIDI banks for percussion. Note that MIDI 1.0 note numbers are generally specified from 0 to 127 rather than the 1 to 128 numbering used in this element.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="volume" type="percent" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The volume element value is a percentage of the maximum ranging from 0 to 100, with decimal values allowed. This corresponds to a scaling value for the MIDI 1.0 channel volume controller.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="pan" type="rotation-degrees" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The pan and elevation elements allow placing of sound in a 3-D space relative to the listener. Both are expressed in degrees ranging from -180 to 180. For pan, 0 is straight ahead, -90 is hard left, 90 is hard right, and -180 and 180 are directly behind the listener.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="elevation" type="rotation-degrees" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The elevation and pan elements allow placing of sound in a 3-D space relative to the listener. Both are expressed in degrees ranging from -180 to 180. For elevation, 0 is level with the listener, 90 is directly above, and -90 is directly below.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:IDREF" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="midi-16">
+        <xs:annotation>
+            <xs:documentation>The midi-16 type is used to express MIDI 1.0 values that range from 1 to 16.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="16"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="midi-16384">
+        <xs:annotation>
+            <xs:documentation>The midi-16 type is used to express MIDI 1.0 values that range from 1 to 16,384.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="16384"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="midi-128">
+        <xs:annotation>
+            <xs:documentation>The midi-16 type is used to express MIDI 1.0 values that range from 1 to 128.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="128"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="play">
+        <xs:annotation>
+            <xs:documentation>The play type, new in Version 3.0, specifies playback techniques to be used in conjunction with the instrument-sound element. When used as part of a sound element, it applies to all notes going forward in score order. In multi-instrument parts, the affected instrument should be specified using the id attribute. When used as part of a note element, it applies to the current note only.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="ipa" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>The ipa element represents International Phonetic Alphabet (IPA) sounds for vocal music. String content is limited to IPA 2005 symbols represented in Unicode 6.0.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="mute" type="mute"/>
+                <xs:element name="semi-pitched" type="semi-pitched"/>
+                <xs:element name="other-play" type="other-play"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:IDREF"/>
+    </xs:complexType>
+
+    <xs:simpleType name="mute">
+        <xs:annotation>
+            <xs:documentation>The mute type represents muting for different instruments, including brass, winds, and strings. The on and off values are used for undifferentiated mutes. The remaining values represent specific mutes.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="on"/>
+            <xs:enumeration value="off"/>
+            <xs:enumeration value="straight"/>
+            <xs:enumeration value="cup"/>
+            <xs:enumeration value="harmon-no-stem"/>
+            <xs:enumeration value="harmon-stem"/>
+            <xs:enumeration value="bucket"/>
+            <xs:enumeration value="plunger"/>
+            <xs:enumeration value="hat"/>
+            <xs:enumeration value="solotone"/>
+            <xs:enumeration value="practice"/>
+            <xs:enumeration value="stop-mute"/>
+            <xs:enumeration value="stop-hand"/>
+            <xs:enumeration value="echo"/>
+            <xs:enumeration value="palm"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="semi-pitched">
+        <xs:annotation>
+            <xs:documentation>The semi-pitched type represents categories of indefinite pitch for percussion instruments.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="high"/>
+            <xs:enumeration value="medium-high"/>
+            <xs:enumeration value="medium"/>
+            <xs:enumeration value="medium-low"/>
+            <xs:enumeration value="low"/>
+            <xs:enumeration value="very-low"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="other-play">
+        <xs:annotation>
+            <xs:documentation>The other-play element represents other types of playback. The required type attribute indicates the type of playback to which the element content applies.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:token" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>

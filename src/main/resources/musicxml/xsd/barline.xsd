@@ -7,7 +7,6 @@
 
     <xs:include schemaLocation="attributes.xsd"/>
     <xs:include schemaLocation="layout.xsd"/>
-    <xs:include schemaLocation="remaining.xsd"/>
 
     <xs:complexType name="barline">
         <xs:annotation>
@@ -80,6 +79,26 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="ending-number">
+        <xs:annotation>
+            <xs:documentation>The ending-number type is used to specify either a comma-separated list of positive integers without leading zeros, or a string of zero or more spaces. It is used for the number attribute of the ending element. The zero or more spaces version is used when software knows that an ending is present, but cannot determine the type of the ending.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="([ ]*)|([1-9][0-9]*(, ?[1-9][0-9]*)*)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="start-stop-discontinue">
+        <xs:annotation>
+            <xs:documentation>The start-stop-discontinue type is used to specify ending types. Typically, the start type is associated with the left barline of the first measure in an ending. The stop and discontinue types are associated with the right barline of the last measure in an ending. Stop is used when the ending mark concludes with a downward jog, as is typical for first endings. Discontinue is used when there is no downward jog, as is typical for second endings that do not conclude a piece.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="start"/>
+            <xs:enumeration value="stop"/>
+            <xs:enumeration value="discontinue"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="repeat">
         <xs:annotation>
             <xs:documentation>The repeat type represents repeat marks. The start of the repeat has a forward direction while the end of the repeat has a backward direction. Backward repeats that are not part of an ending can use the times attribute to indicate the number of times the repeated section is played.</xs:documentation>
@@ -88,5 +107,39 @@
         <xs:attribute name="times" type="xs:nonNegativeInteger"/>
         <xs:attribute name="winged" type="winged"/>
     </xs:complexType>
+
+    <xs:simpleType name="backward-forward">
+        <xs:annotation>
+            <xs:documentation>The backward-forward type is used to specify repeat directions. The start of the repeat has a forward direction while the end of the repeat has a backward direction.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="backward"/>
+            <xs:enumeration value="forward"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="winged">
+        <xs:annotation>
+            <xs:documentation>The winged attribute indicates whether the repeat has winged extensions that appear above and below the barline. The straight and curved values represent single wings, while the double-straight and double-curved values represent double wings. The none value indicates no wings and is the default.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="straight"/>
+            <xs:enumeration value="curved"/>
+            <xs:enumeration value="double-straight"/>
+            <xs:enumeration value="double-curved"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="right-left-middle">
+        <xs:annotation>
+            <xs:documentation>The right-left-middle type is used to specify barline location.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="middle"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

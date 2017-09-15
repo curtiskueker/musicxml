@@ -12,7 +12,7 @@
     <xs:include schemaLocation="attributes.xsd"/>
     <xs:include schemaLocation="identity.xsd"/>
     <xs:include schemaLocation="layout.xsd"/>
-    <xs:include schemaLocation="remaining.xsd"/>
+    <xs:include schemaLocation="common.xsd"/>
 
     <!-- score elements -->
 
@@ -205,6 +205,29 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:group name="part-group">
+        <xs:annotation>
+            <xs:documentation>The part-group element is defined within a group due to its multiple uses within the part-list element.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="part-group" type="part-group">
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:group name="score-part">
+        <xs:annotation>
+            <xs:documentation>The score-part element is defined within a group due to its multiple uses within the part-list element.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="score-part" type="score-part">
+                <xs:annotation>
+                    <xs:documentation>Each MusicXML part corresponds to a track in a Standard MIDI Format 1 file. The score-instrument elements are used when there are multiple instruments per track. The midi-device element is used to make a MIDI device or port assignment for the given track. Initial midi-instrument assignments may be made here as well.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+
     <xs:complexType name="score-part">
         <xs:annotation>
             <xs:documentation>Each MusicXML part corresponds to a track in a Standard MIDI Format 1 file. The score-instrument elements are used when there are multiple instruments per track. The midi-device element is used to make a MIDI device or port assignment for the given track or specific MIDI instruments. Initial midi-instrument assignments may be made here as well.</xs:documentation>
@@ -239,6 +262,15 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:attributeGroup name="part-name-text">
+        <xs:annotation>
+            <xs:documentation>The part-name-text attribute group is used by the part-name and part-abbreviation elements. The print-style and justify attribute groups are deprecated in MusicXML 2.0 in favor of the new part-name-display and part-abbreviation-display elements.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-style"/>
+        <xs:attributeGroup ref="print-object"/>
+        <xs:attributeGroup ref="justify"/>
+    </xs:attributeGroup>
 
     <xs:complexType name="part-group">
         <xs:annotation>
@@ -285,6 +317,14 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:attributeGroup name="group-name-text">
+        <xs:annotation>
+            <xs:documentation>The group-name-text attribute group is used by the group-name and group-abbreviation elements. The print-style and justify attribute groups are deprecated in MusicXML 2.0 in favor of the new group-name-display and group-abbreviation-display elements.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-style"/>
+        <xs:attributeGroup ref="justify"/>
+    </xs:attributeGroup>
+
     <xs:complexType name="group-symbol">
         <xs:annotation>
             <xs:documentation>The group-symbol type indicates how the symbol for a group is indicated in the score.</xs:documentation>
@@ -307,6 +347,17 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="group-barline-value">
+        <xs:annotation>
+            <xs:documentation>The group-barline-value type indicates if the group should have common barlines.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+            <xs:enumeration value="Mensurstrich"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="score-instrument">
         <xs:annotation>
@@ -364,5 +415,53 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:group name="music-data">
+        <xs:annotation>
+            <xs:documentation>The music-data group contains the basic musical data that is either associated with a part or a measure, depending on whether the partwise or timewise hierarchy is used.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="note" type="note"/>
+                <xs:element name="backup" type="backup"/>
+                <xs:element name="forward" type="forward"/>
+                <xs:element name="direction" type="direction"/>
+                <xs:element name="attributes" type="attributes"/>
+                <xs:element name="harmony" type="harmony"/>
+                <xs:element name="figured-bass" type="figured-bass"/>
+                <xs:element name="print" type="print"/>
+                <xs:element name="sound" type="sound"/>
+                <xs:element name="barline" type="barline"/>
+                <xs:element name="grouping" type="grouping"/>
+                <xs:element name="link" type="link"/>
+                <xs:element name="bookmark" type="bookmark"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:attributeGroup name="part-attributes">
+        <xs:annotation>
+            <xs:documentation>In either partwise or timewise format, the part element has an id attribute that is an IDREF back to a score-part in the part-list.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="id" type="xs:IDREF" use="required"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="measure-attributes">
+        <xs:annotation>
+            <xs:documentation>The measure-attributes group is used by the measure element. Measures have a required number attribute (going from partwise to timewise, measures are grouped via the number).
+
+                The implicit attribute is set to "yes" for measures where the measure number should never appear, such as pickup measures and the last half of mid-measure repeats. The value is "no" if not specified.
+
+                The non-controlling attribute is intended for use in multimetric music like the Don Giovanni minuet. If set to "yes", the left barline in this measure does not coincide with the left barline of measures in other parts. The value is "no" if not specified.
+
+                In partwise files, the number attribute should be the same for measures in different parts that share the same left barline. While the number attribute is often numeric, it does not have to be. Non-numeric values are typically used together with the implicit or non-controlling attributes being set to "yes". For a pickup measure, the number attribute is typically set to "0" and the implicit attribute is typically set to "yes". Further details about measure numbering can be defined using the measure-numbering element.
+
+                Measure width is specified in tenths. These are the global tenths specified in the scaling element, not local tenths as modified by the staff-size element.	The width covers the entire measure from barline or system start to barline or system end.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="number" type="xs:token" use="required"/>
+        <xs:attribute name="implicit" type="yes-no"/>
+        <xs:attribute name="non-controlling" type="yes-no"/>
+        <xs:attribute name="width" type="tenths"/>
+    </xs:attributeGroup>
 
 </xs:schema>

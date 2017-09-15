@@ -6,7 +6,6 @@
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
     <xs:include schemaLocation="attributes.xsd"/>
-    <xs:include schemaLocation="remaining.xsd"/>
 
     <xs:complexType name="note">
         <xs:annotation>
@@ -106,31 +105,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="step">
-        <xs:annotation>
-            <xs:documentation>The step type represents a step of the diatonic scale, represented using the English letters A through G.</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="A"/>
-            <xs:enumeration value="B"/>
-            <xs:enumeration value="C"/>
-            <xs:enumeration value="D"/>
-            <xs:enumeration value="E"/>
-            <xs:enumeration value="F"/>
-            <xs:enumeration value="G"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="octave">
-        <xs:annotation>
-            <xs:documentation>Octaves are represented by the numbers 0 to 9, where 4 indicates the octave started by middle C.</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0"/>
-            <xs:maxInclusive value="9"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:complexType name="unpitched">
         <xs:annotation>
             <xs:documentation>The unpitched type represents musical elements that are notated on the staff but lack definite pitch, such as unpitched percussion and speaking voice.</xs:documentation>
@@ -200,6 +174,28 @@
     </xs:complexType>
 
 
+    <xs:simpleType name="note-type-value">
+        <xs:annotation>
+            <xs:documentation>The note-type type is used for the MusicXML type element and represents the graphic note type, from 1024th (shortest) to maxima (longest).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1024th"/>
+            <xs:enumeration value="512th"/>
+            <xs:enumeration value="256th"/>
+            <xs:enumeration value="128th"/>
+            <xs:enumeration value="64th"/>
+            <xs:enumeration value="32nd"/>
+            <xs:enumeration value="16th"/>
+            <xs:enumeration value="eighth"/>
+            <xs:enumeration value="quarter"/>
+            <xs:enumeration value="half"/>
+            <xs:enumeration value="whole"/>
+            <xs:enumeration value="breve"/>
+            <xs:enumeration value="long"/>
+            <xs:enumeration value="maxima"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="accidental">
         <xs:annotation>
             <xs:documentation>The accidental type represents actual notated accidentals. Editorial and cautionary indications are indicated by attributes. Values for these attributes are "no" if not present. Specific graphic display such as parentheses, brackets, and size are controlled by the level-display attribute group.</xs:documentation>
@@ -256,6 +252,18 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="stem-value">
+        <xs:annotation>
+            <xs:documentation>The stem type represents the notated stem direction.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="down"/>
+            <xs:enumeration value="up"/>
+            <xs:enumeration value="double"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="notehead">
         <xs:annotation>
             <xs:documentation>The notehead element indicates shapes other than the open and closed ovals associated with note durations.
@@ -273,6 +281,43 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="notehead-value">
+        <xs:annotation>
+            <xs:documentation>
+                The notehead type indicates shapes other than the open and closed ovals associated with note durations. The values do, re, mi, fa, fa up, so, la, and ti correspond to Aikin's 7-shape system.  The fa up shape is typically used with upstems; the fa shape is typically used with downstems or no stems.
+
+                The arrow shapes differ from triangle and inverted triangle by being centered on the stem. Slashed and back slashed notes include both the normal notehead and a slash. The triangle shape has the tip of the triangle pointing up; the inverted triangle shape has the tip of the triangle pointing down. The left triangle shape is a right triangle with the hypotenuse facing up and to the left.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="slash"/>
+            <xs:enumeration value="triangle"/>
+            <xs:enumeration value="diamond"/>
+            <xs:enumeration value="square"/>
+            <xs:enumeration value="cross"/>
+            <xs:enumeration value="x"/>
+            <xs:enumeration value="circle-x"/>
+            <xs:enumeration value="inverted triangle"/>
+            <xs:enumeration value="arrow down"/>
+            <xs:enumeration value="arrow up"/>
+            <xs:enumeration value="slashed"/>
+            <xs:enumeration value="back slashed"/>
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="cluster"/>
+            <xs:enumeration value="circle dot"/>
+            <xs:enumeration value="left triangle"/>
+            <xs:enumeration value="rectangle"/>
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="do"/>
+            <xs:enumeration value="re"/>
+            <xs:enumeration value="mi"/>
+            <xs:enumeration value="fa"/>
+            <xs:enumeration value="fa up"/>
+            <xs:enumeration value="so"/>
+            <xs:enumeration value="la"/>
+            <xs:enumeration value="ti"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="notehead-text">
         <xs:annotation>
@@ -305,6 +350,40 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="beam-value">
+        <xs:annotation>
+            <xs:documentation>The beam-value type represents the type of beam associated with each of 8 beam levels (up to 1024th notes) available for each note.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="begin"/>
+            <xs:enumeration value="continue"/>
+            <xs:enumeration value="end"/>
+            <xs:enumeration value="forward hook"/>
+            <xs:enumeration value="backward hook"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="beam-level">
+        <xs:annotation>
+            <xs:documentation>The MusicXML format supports six levels of beaming, up to 1024th notes. Unlike the number-level type, the beam-level type identifies concurrent beams in a beam group. It does not distinguish overlapping beams such as grace notes within regular notes, or beams used in different voices.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="fan">
+        <xs:annotation>
+            <xs:documentation>The fan type represents the type of beam fanning present on a note, used to represent accelerandos and ritardandos.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="accel"/>
+            <xs:enumeration value="rit"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="notations">
         <xs:annotation>
@@ -436,6 +515,34 @@
         <xs:attributeGroup ref="font"/>
         <xs:attributeGroup ref="color"/>
     </xs:complexType>
+
+    <xs:simpleType name="show-tuplet">
+        <xs:annotation>
+            <xs:documentation>The show-tuplet type indicates whether to show a part of a tuplet relating to the tuplet-actual element, both the tuplet-actual and tuplet-normal elements, or neither.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="actual"/>
+            <xs:enumeration value="both"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="line-shape">
+        <xs:annotation>
+            <xs:documentation>The line-shape attribute distinguishes between straight and curved lines.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="line-shape" type="line-shape"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="line-shape">
+        <xs:annotation>
+            <xs:documentation>The line-shape type distinguishes between straight and curved lines.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="straight"/>
+            <xs:enumeration value="curved"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="glissando">
         <xs:annotation>
@@ -584,6 +691,16 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="tremolo-marks">
+        <xs:annotation>
+            <xs:documentation>The number of tremolo marks is represented by a number from 0 to 8: the same as beam-level with 0 added.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="accidental-mark">
         <xs:annotation>
@@ -806,6 +923,29 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="hole-closed-value">
+        <xs:annotation>
+            <xs:documentation>The hole-closed-value type represents whether the hole is closed, open, or half-open.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+            <xs:enumeration value="half"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="hole-closed-location">
+        <xs:annotation>
+            <xs:documentation>The hole-closed-location type indicates which portion of the hole is filled in when the corresponding hole-closed-value is half.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="bottom"/>
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="top"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="arrow">
         <xs:annotation>
             <xs:documentation>The arrow element represents an arrow used for a musical technical indication..</xs:documentation>
@@ -878,6 +1018,25 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="handbell-value">
+        <xs:annotation>
+            <xs:documentation>The handbell-value type represents the type of handbell technique being notated.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="damp"/>
+            <xs:enumeration value="echo"/>
+            <xs:enumeration value="gyro"/>
+            <xs:enumeration value="hand martellato"/>
+            <xs:enumeration value="mallet lift"/>
+            <xs:enumeration value="mallet table"/>
+            <xs:enumeration value="martellato"/>
+            <xs:enumeration value="martellato lift"/>
+            <xs:enumeration value="muted martellato"/>
+            <xs:enumeration value="pluck lift"/>
+            <xs:enumeration value="swing"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="articulations">
         <xs:annotation>
@@ -985,6 +1144,17 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="breath-mark-value">
+        <xs:annotation>
+            <xs:documentation>The breath-mark-value type represents the symbol used for a breath mark.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+            <xs:enumeration value="comma"/>
+            <xs:enumeration value="tick"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="arpeggiate">
         <xs:annotation>
@@ -1094,6 +1264,40 @@
         <xs:attributeGroup ref="print-style"/>
     </xs:complexType>
 
+    <xs:complexType name="text-element-data">
+        <xs:annotation>
+            <xs:documentation>The text-element-data type represents a syllable or portion of a syllable for lyric text underlay. A hyphen in the string content should only be used for an actual hyphenated word. Language names for text elements come from ISO 639, with optional country subcodes from ISO 3166.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="font"/>
+                <xs:attributeGroup ref="color"/>
+                <xs:attributeGroup ref="text-decoration"/>
+                <xs:attributeGroup ref="text-rotation"/>
+                <xs:attributeGroup ref="letter-spacing"/>
+                <xs:attribute ref="xml:lang"/>
+                <xs:attributeGroup ref="text-direction"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="text-font-color">
+        <xs:annotation>
+            <xs:documentation>The text-font-color type represents text with optional font and color information. It is used for the elision element.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="font"/>
+                <xs:attributeGroup ref="color"/>
+                <xs:attributeGroup ref="text-decoration"/>
+                <xs:attributeGroup ref="text-rotation"/>
+                <xs:attributeGroup ref="letter-spacing"/>
+                <xs:attribute ref="xml:lang"/>
+                <xs:attributeGroup ref="text-direction"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:complexType name="figured-bass">
         <xs:annotation>
             <xs:documentation>The figured-bass element represents figured bass notation. Figured bass elements take their position from the first regular note (not a grace note or chord note) that follows in score order. The optional duration element is used to indicate changes of figures under a note.
@@ -1153,6 +1357,57 @@
             <xs:group ref="editorial-voice"/>
             <xs:group ref="staff" minOccurs="0"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="empty-placement">
+        <xs:annotation>
+            <xs:documentation>The empty-placement type represents an empty element with print-style and placement attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-style"/>
+        <xs:attributeGroup ref="placement"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="x-position">
+        <xs:annotation>
+            <xs:documentation>The x-position attribute group is used for elements like notes where specifying x position is common, but specifying y position is rare.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="default-x" type="tenths"/>
+        <xs:attribute name="default-y" type="tenths"/>
+        <xs:attribute name="relative-x" type="tenths"/>
+        <xs:attribute name="relative-y" type="tenths"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="y-position">
+        <xs:annotation>
+            <xs:documentation>The y-position attribute group is used for elements like stems where specifying y position is common, but specifying x position is rare.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="default-x" type="tenths"/>
+        <xs:attribute name="default-y" type="tenths"/>
+        <xs:attribute name="relative-x" type="tenths"/>
+        <xs:attribute name="relative-y" type="tenths"/>
+    </xs:attributeGroup>
+
+    <xs:complexType name="placement-text">
+        <xs:annotation>
+            <xs:documentation>The placement-text type represents a text element with print-style and placement attribute groups.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="print-style"/>
+                <xs:attributeGroup ref="placement"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="empty-line">
+        <xs:annotation>
+            <xs:documentation>The empty-line type represents an empty element with line-shape, line-type, dashed-formatting, print-style and placement attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="line-shape"/>
+        <xs:attributeGroup ref="line-type"/>
+        <xs:attributeGroup ref="dashed-formatting"/>
+        <xs:attributeGroup ref="print-style"/>
+        <xs:attributeGroup ref="placement"/>
     </xs:complexType>
 
 </xs:schema>

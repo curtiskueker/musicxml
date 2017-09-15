@@ -8,7 +8,7 @@
     <xs:include schemaLocation="note.xsd"/>
     <xs:include schemaLocation="attributes.xsd"/>
     <xs:include schemaLocation="layout.xsd"/>
-    <xs:include schemaLocation="remaining.xsd"/>
+    <xs:include schemaLocation="common.xsd"/>
 
     <!-- direction elements -->
 
@@ -185,6 +185,18 @@
         <xs:attributeGroup ref="color"/>
     </xs:complexType>
 
+    <xs:simpleType name="wedge-type">
+        <xs:annotation>
+            <xs:documentation>The wedge type is crescendo for the start of a wedge that is closed at the left side, diminuendo for the start of a wedge that is closed on the right side, and stop for the end of a wedge. The continue type is used for formatting wedges over a system break, or for other situations where a single wedge is divided into multiple segments.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="crescendo"/>
+            <xs:enumeration value="diminuendo"/>
+            <xs:enumeration value="stop"/>
+            <xs:enumeration value="continue"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="dashes">
         <xs:annotation>
             <xs:documentation>The dashes type represents dashes, used for instance with cresc. and dim. marks.</xs:documentation>
@@ -196,6 +208,33 @@
         <xs:attributeGroup ref="color"/>
     </xs:complexType>
 
+    <xs:complexType name="bracket">
+        <xs:annotation>
+            <xs:documentation>Brackets are combined with words in a variety of modern directions. The line-end attribute specifies if there is a jog up or down (or both), an arrow, or nothing at the start or end of the bracket. If the line-end is up or down, the length of the jog can be specified using the end-length attribute. The line-type is solid by default.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="type" type="start-stop-continue" use="required"/>
+        <xs:attribute name="number" type="number-level"/>
+        <xs:attribute name="line-end" type="line-end" use="required"/>
+        <xs:attribute name="end-length" type="tenths"/>
+        <xs:attributeGroup ref="line-type"/>
+        <xs:attributeGroup ref="dashed-formatting"/>
+        <xs:attributeGroup ref="position"/>
+        <xs:attributeGroup ref="color"/>
+    </xs:complexType>
+
+    <xs:simpleType name="line-end">
+        <xs:annotation>
+            <xs:documentation>The line-end type specifies if there is a jog up or down (or both), an arrow, or nothing at the start or end of a bracket.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="up"/>
+            <xs:enumeration value="down"/>
+            <xs:enumeration value="both"/>
+            <xs:enumeration value="arrow"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="pedal">
         <xs:annotation>
             <xs:documentation>The pedal type represents piano pedal marks. The line attribute is yes if pedal lines are used. The sign attribute is yes if Ped and * signs are used. For MusicXML 2.0 compatibility, the sign attribute is yes by default if the line attribute is no, and is no by default if the line attribute is yes. The change and continue types are used when the line attribute is yes. The change type indicates a pedal lift and retake indicated with an inverted V marking. The continue type allows more precise formatting across system breaks and for more complex pedaling lines. The alignment attributes are ignored if the line attribute is yes.</xs:documentation>
@@ -205,6 +244,18 @@
         <xs:attribute name="sign" type="yes-no"/>
         <xs:attributeGroup ref="print-style-align"/>
     </xs:complexType>
+
+    <xs:simpleType name="start-stop-change-continue">
+        <xs:annotation>
+            <xs:documentation>The start-stop-change-continue type is used to distinguish types of pedal directions.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="start"/>
+            <xs:enumeration value="stop"/>
+            <xs:enumeration value="change"/>
+            <xs:enumeration value="continue"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="metronome">
         <xs:annotation>
@@ -319,6 +370,18 @@
         <xs:attributeGroup ref="print-style"/>
     </xs:complexType>
 
+    <xs:simpleType name="up-down-stop-continue">
+        <xs:annotation>
+            <xs:documentation>The up-down-stop-continue type is used for octave-shift elements, indicating the direction of the shift from their true pitched values because of printing difficulty.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="up"/>
+            <xs:enumeration value="down"/>
+            <xs:enumeration value="stop"/>
+            <xs:enumeration value="continue"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="harp-pedals">
         <xs:annotation>
             <xs:documentation>The harp-pedals type is used to create harp pedal diagrams. The pedal-step and pedal-alter elements use the same values as the step and alter elements. For easiest reading, the pedal-tuning elements should follow standard harp pedal order, with pedal-step values of D, C, B, E, F, G, and A.</xs:documentation>
@@ -384,6 +447,18 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="principal-voice-symbol">
+        <xs:annotation>
+            <xs:documentation>The principal-voice-symbol type represents the type of symbol used to indicate the start of a principal or secondary voice. The "plain" value represents a plain square bracket. The value of "none" is used for analysis markup when the principal-voice element does not have a corresponding appearance in the score.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Hauptstimme"/>
+            <xs:enumeration value="Nebenstimme"/>
+            <xs:enumeration value="plain"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="accordion-registration">
         <xs:annotation>
@@ -570,6 +645,31 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="beater-value">
+        <xs:annotation>
+            <xs:documentation>The beater-value type represents pictograms for beaters, mallets, and sticks that do not have different materials represented in the pictogram. The finger and hammer values are in addition to Stone's list.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="bow"/>
+            <xs:enumeration value="chime hammer"/>
+            <xs:enumeration value="coin"/>
+            <xs:enumeration value="finger"/>
+            <xs:enumeration value="fingernail"/>
+            <xs:enumeration value="fist"/>
+            <xs:enumeration value="guiro scraper"/>
+            <xs:enumeration value="hammer"/>
+            <xs:enumeration value="hand"/>
+            <xs:enumeration value="jazz stick"/>
+            <xs:enumeration value="knitting needle"/>
+            <xs:enumeration value="metal hammer"/>
+            <xs:enumeration value="snare stick"/>
+            <xs:enumeration value="spoon mallet"/>
+            <xs:enumeration value="triangle beater"/>
+            <xs:enumeration value="triangle beater plain"/>
+            <xs:enumeration value="wire brush"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="stick">
         <xs:annotation>
             <xs:documentation>The stick type represents pictograms where the material of the stick, mallet, or beater is included.</xs:documentation>
@@ -653,6 +753,17 @@
         <xs:attributeGroup ref="print-style"/>
         <xs:attributeGroup ref="placement"/>
     </xs:complexType>
+
+    <xs:simpleType name="harmony-type">
+        <xs:annotation>
+            <xs:documentation>The harmony-type type differentiates different types of harmonies when alternate harmonies are possible. Explicit harmonies have all note present in the music; implied have some notes missing but implied; alternate represents alternate analyses.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="explicit"/>
+            <xs:enumeration value="implied"/>
+            <xs:enumeration value="alternate"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:group name="harmony-chord">
         <xs:annotation>
@@ -743,6 +854,90 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="kind-value">
+        <xs:annotation>
+            <xs:documentation>A kind-value indicates the type of chord. Degree elements can then add, subtract, or alter from these starting points. Values include:
+
+                Triads:
+                major (major third, perfect fifth)
+                minor (minor third, perfect fifth)
+                augmented (major third, augmented fifth)
+                diminished (minor third, diminished fifth)
+                Sevenths:
+                dominant (major triad, minor seventh)
+                major-seventh (major triad, major seventh)
+                minor-seventh (minor triad, minor seventh)
+                diminished-seventh (diminished triad, diminished seventh)
+                augmented-seventh (augmented triad, minor seventh)
+                half-diminished (diminished triad, minor seventh)
+                major-minor (minor triad, major seventh)
+                Sixths:
+                major-sixth (major triad, added sixth)
+                minor-sixth (minor triad, added sixth)
+                Ninths:
+                dominant-ninth (dominant-seventh, major ninth)
+                major-ninth (major-seventh, major ninth)
+                minor-ninth (minor-seventh, major ninth)
+                11ths (usually as the basis for alteration):
+                dominant-11th (dominant-ninth, perfect 11th)
+                major-11th (major-ninth, perfect 11th)
+                minor-11th (minor-ninth, perfect 11th)
+                13ths (usually as the basis for alteration):
+                dominant-13th (dominant-11th, major 13th)
+                major-13th (major-11th, major 13th)
+                minor-13th (minor-11th, major 13th)
+                Suspended:
+                suspended-second (major second, perfect fifth)
+                suspended-fourth (perfect fourth, perfect fifth)
+                Functional sixths:
+                Neapolitan
+                Italian
+                French
+                German
+                Other:
+                pedal (pedal-point bass)
+                power (perfect fifth)
+                Tristan
+
+                The "other" kind is used when the harmony is entirely composed of add elements. The "none" kind is used to explicitly encode absence of chords or functional harmony.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="major"/>
+            <xs:enumeration value="minor"/>
+            <xs:enumeration value="augmented"/>
+            <xs:enumeration value="diminished"/>
+            <xs:enumeration value="dominant"/>
+            <xs:enumeration value="major-seventh"/>
+            <xs:enumeration value="minor-seventh"/>
+            <xs:enumeration value="diminished-seventh"/>
+            <xs:enumeration value="augmented-seventh"/>
+            <xs:enumeration value="half-diminished"/>
+            <xs:enumeration value="major-minor"/>
+            <xs:enumeration value="major-sixth"/>
+            <xs:enumeration value="minor-sixth"/>
+            <xs:enumeration value="dominant-ninth"/>
+            <xs:enumeration value="major-ninth"/>
+            <xs:enumeration value="minor-ninth"/>
+            <xs:enumeration value="dominant-11th"/>
+            <xs:enumeration value="major-11th"/>
+            <xs:enumeration value="minor-11th"/>
+            <xs:enumeration value="dominant-13th"/>
+            <xs:enumeration value="major-13th"/>
+            <xs:enumeration value="minor-13th"/>
+            <xs:enumeration value="suspended-second"/>
+            <xs:enumeration value="suspended-fourth"/>
+            <xs:enumeration value="Neapolitan"/>
+            <xs:enumeration value="Italian"/>
+            <xs:enumeration value="French"/>
+            <xs:enumeration value="German"/>
+            <xs:enumeration value="pedal"/>
+            <xs:enumeration value="power"/>
+            <xs:enumeration value="Tristan"/>
+            <xs:enumeration value="other"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="inversion">
         <xs:annotation>
             <xs:documentation>The inversion type represents harmony inversions. The value is a number indicating which inversion is used: 0 for root position, 1 for first inversion, etc.</xs:documentation>
@@ -816,6 +1011,19 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="degree-symbol-value">
+        <xs:annotation>
+            <xs:documentation>The degree-symbol-value type indicates indicates that a symbol should be used in specifying the degree.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="major"/>
+            <xs:enumeration value="minor"/>
+            <xs:enumeration value="augmented"/>
+            <xs:enumeration value="diminished"/>
+            <xs:enumeration value="half-diminished"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="degree-alter">
         <xs:annotation>
             <xs:documentation>The degree-alter type represents the chromatic alteration for the current degree. If the degree-type value is alter or subtract, the degree-alter value is relative to the degree already in the chord based on its kind element. If the degree-type value is add, the degree-alter is relative to a dominant chord (major and perfect intervals except for a minor seventh). The plus-minus attribute is used to indicate if plus and minus symbols should be used instead of sharp and flat symbols to display the degree alteration; it is no by default.</xs:documentation>
@@ -839,6 +1047,17 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="degree-type-value">
+        <xs:annotation>
+            <xs:documentation>The degree-type-value type indicates whether the current degree element is an addition, alteration, or subtraction to the kind of the current chord in the harmony element.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="add"/>
+            <xs:enumeration value="alter"/>
+            <xs:enumeration value="subtract"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="frame">
         <xs:annotation>
@@ -940,6 +1159,19 @@
         <xs:attributeGroup ref="print-attributes"/>
     </xs:complexType>
 
+    <xs:attributeGroup name="print-attributes">
+        <xs:annotation>
+            <xs:documentation>The print-attributes group is used by the print element. The new-system and new-page attributes indicate whether to force a system or page break, or to force the current music onto the same system or page as the preceding music. Normally this is the first music data within a measure. If used in multi-part music, they should be placed in the same positions within each part, or the results are undefined. The page-number attribute sets the number of a new page; it is ignored if new-page is not "yes". Version 2.0 adds a blank-page attribute. This is a positive integer value that specifies the number of blank pages to insert before the current measure. It is ignored if new-page is not "yes". These blank pages have no music, but may have text or images specified by the credit element. This is used to allow a combination of pages that are all text, or all text and images, together with pages of music.
+
+                The staff-spacing attribute specifies spacing between multiple staves in tenths of staff space. This is deprecated as of Version 1.1; the staff-layout element should be used instead. If both are present, the staff-layout values take priority.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="staff-spacing" type="tenths"/>
+        <xs:attribute name="new-system" type="yes-no"/>
+        <xs:attribute name="new-page" type="yes-no"/>
+        <xs:attribute name="blank-page" type="xs:positiveInteger"/>
+        <xs:attribute name="page-number" type="xs:token"/>
+    </xs:attributeGroup>
+
     <xs:complexType name="measure-numbering">
         <xs:annotation>
             <xs:documentation>The measure-numbering type describes how frequently measure numbers are displayed on this part. The number attribute from the measure element is used for printing. Measures with an implicit attribute set to "yes" never display a measure number, regardless of the measure-numbering setting.</xs:documentation>
@@ -950,5 +1182,27 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="measure-numbering-value">
+        <xs:annotation>
+            <xs:documentation>The measure-numbering-value type describes how measure numbers are displayed on this part: no numbers, numbers every measure, or numbers every system.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="measure"/>
+            <xs:enumeration value="system"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:group name="editorial-voice-direction">
+        <xs:annotation>
+            <xs:documentation>The editorial-voice-direction group supports the common combination of editorial and voice information for a direction element. It is separate from the editorial-voice element because extensions and restrictions might be different for directions than for the note and forward elements.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:group ref="footnote" minOccurs="0"/>
+            <xs:group ref="level" minOccurs="0"/>
+            <xs:group ref="voice" minOccurs="0"/>
+        </xs:sequence>
+    </xs:group>
 
 </xs:schema>

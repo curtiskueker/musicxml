@@ -6,7 +6,6 @@
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
     <xs:include schemaLocation="direction.xsd"/>
-    <xs:include schemaLocation="remaining.xsd"/>
 
     <xs:simpleType name="time-separator">
         <xs:annotation>
@@ -119,13 +118,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="divisions">
-        <xs:annotation>
-            <xs:documentation>The divisions type is used to express values in terms of the musical divisions defined by the divisions element. It is preferred that these be integer values both for MIDI interoperability and to avoid roundoff errors.</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:decimal"/>
-    </xs:simpleType>
-
     <xs:simpleType name="positive-divisions">
         <xs:annotation>
             <xs:documentation>The positive-divisions type restricts divisions values to positive numbers.</xs:documentation>
@@ -176,6 +168,17 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="cancel-location">
+        <xs:annotation>
+            <xs:documentation>The cancel-location type is used to indicate where a key signature cancellation appears relative to a new key signature: to the left, to the right, or before the barline and to the left. It is left by default. For mid-measure key elements, a cancel-location of before-barline should be treated like a cancel-location of left.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="before-barline"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="fifths">
         <xs:annotation>
@@ -308,6 +311,19 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="group-symbol-value">
+        <xs:annotation>
+            <xs:documentation>The group-symbol-value type indicates how the symbol for a group is indicated in the score. The default value is none.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="brace"/>
+            <xs:enumeration value="line"/>
+            <xs:enumeration value="bracket"/>
+            <xs:enumeration value="square"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="clef">
         <xs:annotation>
             <xs:documentation>Clefs are represented by a combination of sign, line, and clef-octave-change elements. The optional number attribute refers to staff numbers within the part. A value of 1 is assumed if not present.
@@ -414,6 +430,16 @@
         <xs:group ref="tuning"/>
         <xs:attribute name="line" type="staff-line"/>
     </xs:complexType>
+
+    <xs:simpleType name="show-frets">
+        <xs:annotation>
+            <xs:documentation>The show-frets type indicates whether to show tablature frets as numbers (0, 1, 2) or letters (a, b, c). The default choice is numbers.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="numbers"/>
+            <xs:enumeration value="letters"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="transpose">
         <xs:annotation>
@@ -525,5 +551,23 @@
             </xs:element>
         </xs:sequence>
     </xs:group>
+
+    <xs:complexType name="image">
+        <xs:annotation>
+            <xs:documentation>The image type is used to include graphical images in a score.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="image-attributes"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="image-attributes">
+        <xs:annotation>
+            <xs:documentation>The image-attributes group is used to include graphical images in a score. The required source attribute is the URL for the image file. The required type attribute is the MIME type for the image file format. Typical choices include application/postscript, image/gif, image/jpeg, image/png, and image/tiff.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="source" type="xs:anyURI" use="required"/>
+        <xs:attribute name="type" type="xs:token" use="required"/>
+        <xs:attributeGroup ref="position"/>
+        <xs:attributeGroup ref="halign"/>
+        <xs:attributeGroup ref="valign-image"/>
+    </xs:attributeGroup>
 
 </xs:schema>

@@ -5,6 +5,19 @@
 
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
+    <xs:include schemaLocation="common.xsd"/>
+
+    <xs:group name="layout">
+        <xs:annotation>
+            <xs:documentation>The layout group specifies the sequence of page, system, and staff layout elements that is common to both the defaults and print elements.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="page-layout" type="page-layout" minOccurs="0"/>
+            <xs:element name="system-layout" type="system-layout" minOccurs="0"/>
+            <xs:element name="staff-layout" type="staff-layout" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:group>
+
     <xs:complexType name="scaling">
         <xs:annotation>
             <xs:documentation>Margins, page sizes, and distances are all measured in tenths to keep MusicXML data in a consistent coordinate system as much as possible. The translation to absolute units is done with the scaling type, which specifies how many millimeters are equal to how many tenths. For a staff height of 7 mm, millimeters would be set to 7 while tenths is set to 40. The ability to set a formula rather than a single scaling factor helps avoid roundoff errors.</xs:documentation>
@@ -18,15 +31,6 @@
     <xs:simpleType name="millimeters">
         <xs:annotation>
             <xs:documentation>The millimeters type is a number representing millimeters. This is used in the scaling element to provide a default scaling from tenths to physical units.</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:decimal"/>
-    </xs:simpleType>
-
-    <xs:simpleType name="tenths">
-        <xs:annotation>
-            <xs:documentation>The tenths type is a number representing tenths of interline staff space (positive or negative). Both integer and decimal values are allowed, such as 5 for a half space and 2.5 for a quarter space. Interline space is measured from the middle of a staff line.
-
-                Distances in a MusicXML file are measured in tenths of staff space. Tenths are then scaled to millimeters within the scaling element, used in the defaults element at the start of a score. Individual staves can apply a scaling factor to adjust staff size. When a MusicXML element or attribute refers to tenths, it means the global tenths defined by the scaling element, not the local tenths as adjusted by the staff-size element.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:decimal"/>
     </xs:simpleType>
@@ -51,6 +55,17 @@
         <xs:group ref="all-margins"/>
         <xs:attribute name="type" type="margin-type"/>
     </xs:complexType>
+
+    <xs:simpleType name="margin-type">
+        <xs:annotation>
+            <xs:documentation>The margin-type type specifies whether margins apply to even page, odd pages, or both.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="odd"/>
+            <xs:enumeration value="even"/>
+            <xs:enumeration value="both"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:group name="all-margins">
         <xs:annotation>
@@ -106,6 +121,14 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="empty-print-object-style-align">
+        <xs:annotation>
+            <xs:documentation>The empty-print-style-align-object type represents an empty element with print-object and print-style-align attribute groups.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="print-object"/>
+        <xs:attributeGroup ref="print-style-align"/>
+    </xs:complexType>
+
     <xs:complexType name="staff-layout">
         <xs:annotation>
             <xs:documentation>Staff layout includes the vertical distance from the bottom line of the previous staff in this system to the top line of the staff specified by the number attribute. The optional number attribute refers to staff numbers within the part, from top to bottom on the system. A value of 1 is assumed if not present. When used in the defaults element, the values apply to all parts. This value is ignored for the first staff in a system.</xs:documentation>
@@ -152,6 +175,13 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="line-width-type">
+        <xs:annotation>
+            <xs:documentation>The line-width-type defines what type of line is being defined in a line-width element. Values include beam, bracket, dashes, enclosure, ending, extend, heavy barline, leger, light barline, octave shift, pedal, slur middle, slur tip, staff, stem, tie middle, tie tip, tuplet bracket, and wedge. This is left as a string so that other application-specific types can be defined, but it is made a separate type so that it can be redefined more strictly.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
+
     <xs:complexType name="note-size">
         <xs:annotation>
             <xs:documentation>The note-size type indicates the percentage of the regular note size to use for notes with a cue and large size as defined in the type element. The grace type is used for notes of cue size that that include a grace element. The cue type is used for all other notes with cue size, whether defined explicitly or implicitly via a cue element. The large type is used for notes of large size. The text content represent the numeric percentage. A value of 100 would be identical to the size of a regular note as defined by the music font.</xs:documentation>
@@ -163,6 +193,17 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="note-size-type">
+        <xs:annotation>
+            <xs:documentation>The note-size-type type indicates the type of note being defined by a note-size element. The grace type is used for notes of cue size that that include a grace element. The cue type is used for all other notes with cue size, whether defined explicitly or implicitly via a cue element. The large type is used for notes of large size.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="cue"/>
+            <xs:enumeration value="grace"/>
+            <xs:enumeration value="large"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:complexType name="distance">
         <xs:annotation>
             <xs:documentation>The distance element represents standard distances between notation elements in tenths. The type attribute defines what type of distance is being defined. Valid values include hyphen (for hyphens in lyrics) and beam.</xs:documentation>
@@ -173,6 +214,13 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="distance-type">
+        <xs:annotation>
+            <xs:documentation>The distance-type defines what type of distance is being defined in a distance element. Values include beam and hyphen. This is left as a string so that other application-specific types can be defined, but it is made a separate type so that it can be redefined more strictly.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
 
     <xs:complexType name="other-appearance">
         <xs:annotation>

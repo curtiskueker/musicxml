@@ -5,7 +5,7 @@
 
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
-    <xs:include schemaLocation="remaining.xsd"/>
+    <xs:include schemaLocation="common.xsd"/>
 
     <xs:complexType name="identification">
         <xs:annotation>
@@ -76,6 +76,17 @@
         <xs:simpleContent>
             <xs:extension base="xs:string">
                 <xs:attribute name="name" type="xs:token" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typed-text">
+        <xs:annotation>
+            <xs:documentation>The typed-text type represents a text element with a type attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:token"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
