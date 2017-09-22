@@ -1,17 +1,17 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.direction.Sound;
+
+import java.util.List;
+
 public class Measure {
+    private List<MusicData> musicDataList;
     // TODO: note
     // TODO: backup
     // TODO: forward
-    // TODO: direction
     // TODO: attributes
-    // TODO: harmony
     // TODO: figured-bass
-    // TODO: print
-    // TODO: sound
     // TODO: barline
-    // TODO: grouping
     // TODO: link
     // TODO: bookmark
     private String number;
@@ -21,6 +21,14 @@ public class Measure {
 
     public Measure() {
 
+    }
+
+    public List<MusicData> getMusicDataList() {
+        return musicDataList;
+    }
+
+    public void setMusicDataList(List<MusicData> musicDataList) {
+        this.musicDataList = musicDataList;
     }
 
     public String getNumber() {
