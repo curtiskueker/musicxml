@@ -11,7 +11,6 @@ public class Measure {
     // TODO: forward
     // TODO: attributes
     // TODO: figured-bass
-    // TODO: barline
     // TODO: link
     // TODO: bookmark
     private String number;
