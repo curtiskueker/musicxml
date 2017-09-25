@@ -6,11 +6,7 @@ import java.util.List;
 
 public class Measure {
     private List<MusicData> musicDataList;
-    // TODO: note
-    // TODO: backup
-    // TODO: forward
     // TODO: attributes
-    // TODO: figured-bass
     // TODO: link
     // TODO: bookmark
     private String number;

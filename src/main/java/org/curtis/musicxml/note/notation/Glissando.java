@@ -1,0 +1,14 @@
+package org.curtis.musicxml.note.notation;
+
+public class Glissando extends Notation {
+    private String value;
+    // TODO: type
+    // TODO: number
+    // TODO: line type
+    // TODO: dashed formatting
+    // TODO: print style
+
+    public Glissando() {
+
+    }
+}

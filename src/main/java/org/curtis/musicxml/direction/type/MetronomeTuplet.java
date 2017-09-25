@@ -4,9 +4,17 @@ public class MetronomeTuplet {
     // TODO: time modification
     // TODO: type
     // TODO: bracket
-    // TODO: show number
+    private String showNumber;
 
     public MetronomeTuplet() {
 
+    }
+
+    public String getShowNumber() {
+        return showNumber;
+    }
+
+    public void setShowNumber(String showNumber) {
+        this.showNumber = showNumber;
     }
 }

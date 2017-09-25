@@ -1,0 +1,22 @@
+package org.curtis.musicxml.note.notation;
+
+public class OtherNotation extends Notation {
+    private String value;
+    // TODO: type
+    // TODO: number
+    // TODO: print object
+    // TODO: print style
+    // TODO: placement
+
+    public OtherNotation() {
+
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+}

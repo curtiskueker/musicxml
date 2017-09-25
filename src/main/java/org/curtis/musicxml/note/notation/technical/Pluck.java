@@ -1,0 +1,19 @@
+package org.curtis.musicxml.note.notation.technical;
+
+import org.curtis.musicxml.note.PlacementText;
+
+public class Pluck extends Technical {
+    private PlacementText value;
+
+    public Pluck() {
+
+    }
+
+    public PlacementText getValue() {
+        return value;
+    }
+
+    public void setValue(PlacementText value) {
+        this.value = value;
+    }
+}
