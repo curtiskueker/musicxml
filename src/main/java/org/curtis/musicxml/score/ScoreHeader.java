@@ -1,11 +1,13 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.link.LinkAttributes;
+
 import java.util.List;
 
 public class ScoreHeader {
     private String workNumber;
     private String workTitle;
-    // TODO: opus link attributes
+    private LinkAttributes opus;
     private String movementNumber;
     private String movementTitle;
     // TODO: identification
@@ -31,6 +33,14 @@ public class ScoreHeader {
 
     public void setWorkTitle(String workTitle) {
         this.workTitle = workTitle;
+    }
+
+    public LinkAttributes getOpus() {
+        return opus;
+    }
+
+    public void setOpus(LinkAttributes opus) {
+        this.opus = opus;
     }
 
     public String getMovementNumber() {

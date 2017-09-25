@@ -7,8 +7,6 @@ import java.util.List;
 public class Measure {
     private List<MusicData> musicDataList;
     // TODO: attributes
-    // TODO: link
-    // TODO: bookmark
     private String number;
     // TODO: implicit
     // TODO: non-controlling
