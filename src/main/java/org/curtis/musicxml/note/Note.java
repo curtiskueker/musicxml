@@ -3,13 +3,14 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.score.MusicData;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Note extends MusicData {
     private Grace grace;
     // TODO: cue
     private FullNote fullNote;
-    // TODO: duration
+    private BigDecimal duration;
     private List<Tie> ties;
     private String instrument;
     // TODO: editorial voice
@@ -54,6 +55,14 @@ public class Note extends MusicData {
 
     public void setFullNote(FullNote fullNote) {
         this.fullNote = fullNote;
+    }
+
+    public BigDecimal getDuration() {
+        return duration;
+    }
+
+    public void setDuration(BigDecimal duration) {
+        this.duration = duration;
     }
 
     public List<Tie> getTies() {

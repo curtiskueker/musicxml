@@ -1,11 +1,13 @@
-package org.curtis.musicxml.score;
+package org.curtis.musicxml.attributes;
 
-public class GroupSymbol {
+public class PartSymbol {
     private String groupSymbolValue;
+    // TODO: top staff
+    // TODO: bottom staff
     // TODO: position
     // TODO: color
 
-    public GroupSymbol() {
+    public PartSymbol() {
 
     }
 
