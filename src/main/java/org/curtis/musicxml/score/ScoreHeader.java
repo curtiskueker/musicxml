@@ -1,5 +1,6 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.link.LinkAttributes;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public class ScoreHeader {
     private LinkAttributes opus;
     private String movementNumber;
     private String movementTitle;
-    // TODO: identification
+    private Identification identification;
     private Defaults defaults;
     private List<Credit> credits;
     private PartList partList;
@@ -57,6 +58,14 @@ public class ScoreHeader {
 
     public void setMovementTitle(String movementTitle) {
         this.movementTitle = movementTitle;
+    }
+
+    public Identification getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(Identification identification) {
+        this.identification = identification;
     }
 
     public Defaults getDefaults() {

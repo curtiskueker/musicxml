@@ -1,10 +1,12 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.identity.Identification;
+
 import java.util.List;
 
 public class ScorePart {
     private String id;
-    // TODO: identification
+    private Identification identification;
     private PartName partName;
     // TODO: part name displays
     private List<PartName> partAbbreviations;
@@ -24,6 +26,14 @@ public class ScorePart {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Identification getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(Identification identification) {
+        this.identification = identification;
     }
 
     public PartName getPartName() {
