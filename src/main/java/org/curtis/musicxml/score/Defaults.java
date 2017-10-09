@@ -1,10 +1,13 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.layout.Appearance;
+import org.curtis.musicxml.layout.Scaling;
+
 import java.util.List;
 
 public class Defaults {
-    // TODO: scaling
-    // TODO: appearance
+    private Scaling scaling;
+    private Appearance appearance;
     private BasicFont musicFont;
     private BasicFont wordFont;
     private List<LyricFont> lyricFonts;
@@ -12,6 +15,22 @@ public class Defaults {
 
     public Defaults() {
 
+    }
+
+    public Scaling getScaling() {
+        return scaling;
+    }
+
+    public void setScaling(Scaling scaling) {
+        this.scaling = scaling;
+    }
+
+    public Appearance getAppearance() {
+        return appearance;
+    }
+
+    public void setAppearance(Appearance appearance) {
+        this.appearance = appearance;
     }
 
     public BasicFont getMusicFont() {
