@@ -2,7 +2,7 @@ package org.curtis.musicxml.note.notation;
 
 public class OtherNotation extends Notation {
     private String value;
-    // TODO: type
+    private String type;
     // TODO: number
     // TODO: print object
     // TODO: print style
@@ -18,5 +18,13 @@ public class OtherNotation extends Notation {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

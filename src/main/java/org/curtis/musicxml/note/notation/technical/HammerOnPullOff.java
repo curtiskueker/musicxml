@@ -2,7 +2,7 @@ package org.curtis.musicxml.note.notation.technical;
 
 public abstract class HammerOnPullOff extends Technical {
     private String value;
-    // TODO: type
+    private String type;
     // TODO: number
     // TODO: print style
     // TODO: placement
@@ -13,5 +13,13 @@ public abstract class HammerOnPullOff extends Technical {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

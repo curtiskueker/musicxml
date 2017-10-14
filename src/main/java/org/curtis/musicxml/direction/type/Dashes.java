@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.type;
 
 public class Dashes extends DirectionType {
-    // TODO: type
+    private String type;
     // TODO: number
     // TODO: dashed formatting
     // TODO: position
@@ -9,5 +9,13 @@ public class Dashes extends DirectionType {
 
     public Dashes() {
 
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

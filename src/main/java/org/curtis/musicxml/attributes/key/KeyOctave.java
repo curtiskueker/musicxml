@@ -3,7 +3,7 @@ package org.curtis.musicxml.attributes.key;
 public class KeyOctave {
     // TODO: octave
     private Integer number;
-    // TODO: cancel
+    private Boolean cancel;
 
     public KeyOctave() {
 
@@ -15,5 +15,13 @@ public class KeyOctave {
 
     public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    public Boolean getCancel() {
+        return cancel;
+    }
+
+    public void setCancel(Boolean cancel) {
+        this.cancel = cancel;
     }
 }

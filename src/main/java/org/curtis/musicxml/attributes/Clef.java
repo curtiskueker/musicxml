@@ -5,9 +5,9 @@ public class Clef {
     private Integer line;
     private Integer clefOctaveChange;
     // TODO: number
-    // TODO: additional
+    private Boolean additional;
     // TODO: size
-    // TODO: after barline
+    private Boolean afterBarline;
     // TODO: print style
     // TODO: print object
 
@@ -37,5 +37,21 @@ public class Clef {
 
     public void setClefOctaveChange(Integer clefOctaveChange) {
         this.clefOctaveChange = clefOctaveChange;
+    }
+
+    public Boolean getAdditional() {
+        return additional;
+    }
+
+    public void setAdditional(Boolean additional) {
+        this.additional = additional;
+    }
+
+    public Boolean getAfterBarline() {
+        return afterBarline;
+    }
+
+    public void setAfterBarline(Boolean afterBarline) {
+        this.afterBarline = afterBarline;
     }
 }

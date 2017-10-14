@@ -2,8 +2,8 @@ package org.curtis.musicxml.direction.type;
 
 public class Pedal extends DirectionType {
     private String type;
-    // TODO: line
-    // TODO: sign
+    private Boolean line;
+    private Boolean sign;
     // TODO: print style align
 
     public Pedal() {
@@ -16,5 +16,21 @@ public class Pedal extends DirectionType {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getLine() {
+        return line;
+    }
+
+    public void setLine(Boolean line) {
+        this.line = line;
+    }
+
+    public Boolean getSign() {
+        return sign;
+    }
+
+    public void setSign(Boolean sign) {
+        this.sign = sign;
     }
 }

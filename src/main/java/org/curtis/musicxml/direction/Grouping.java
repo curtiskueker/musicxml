@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Grouping extends MusicData {
     private List<Feature> features;
-    // TODO: type
+    private String type;
     private String number = "1";
     private String numberOf;
 
@@ -20,6 +20,14 @@ public class Grouping extends MusicData {
 
     public void setFeatures(List<Feature> features) {
         this.features = features;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getNumber() {

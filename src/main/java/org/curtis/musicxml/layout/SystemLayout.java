@@ -1,9 +1,11 @@
 package org.curtis.musicxml.layout;
 
+import java.math.BigDecimal;
+
 public class SystemLayout {
     private SystemMargins systemMargins;
-    // TODO: system distance
-    // TODO: top system distance
+    private BigDecimal systemDistance;
+    private BigDecimal topSystemDistance;
     private SystemDividers systemDividers;
 
     public SystemLayout() {
@@ -16,6 +18,22 @@ public class SystemLayout {
 
     public void setSystemMargins(SystemMargins systemMargins) {
         this.systemMargins = systemMargins;
+    }
+
+    public BigDecimal getSystemDistance() {
+        return systemDistance;
+    }
+
+    public void setSystemDistance(BigDecimal systemDistance) {
+        this.systemDistance = systemDistance;
+    }
+
+    public BigDecimal getTopSystemDistance() {
+        return topSystemDistance;
+    }
+
+    public void setTopSystemDistance(BigDecimal topSystemDistance) {
+        this.topSystemDistance = topSystemDistance;
     }
 
     public SystemDividers getSystemDividers() {

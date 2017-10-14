@@ -11,7 +11,7 @@ public class PartGroup {
     private GroupBarline groupBarline;
     // TODO: group time
     // TODO: editorial
-    // TODO: type
+    private String type;
     private String number = "1";
 
     public PartGroup() {
@@ -48,6 +48,14 @@ public class PartGroup {
 
     public void setGroupBarline(GroupBarline groupBarline) {
         this.groupBarline = groupBarline;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getNumber() {

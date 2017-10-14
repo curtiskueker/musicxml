@@ -1,14 +1,16 @@
 package org.curtis.musicxml.barline;
 
+import java.math.BigDecimal;
+
 public class Ending {
     private String value;
     private String number;
     private String type;
     // TODO: print object
     // TODO: print style
-    // TODO: end length
-    // TODO: text x
-    // TODO: text y
+    private BigDecimal endLength;
+    private BigDecimal textX;
+    private BigDecimal textY;
 
     public Ending() {
 
@@ -36,5 +38,29 @@ public class Ending {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public BigDecimal getEndLength() {
+        return endLength;
+    }
+
+    public void setEndLength(BigDecimal endLength) {
+        this.endLength = endLength;
+    }
+
+    public BigDecimal getTextX() {
+        return textX;
+    }
+
+    public void setTextX(BigDecimal textX) {
+        this.textX = textX;
+    }
+
+    public BigDecimal getTextY() {
+        return textY;
+    }
+
+    public void setTextY(BigDecimal textY) {
+        this.textY = textY;
     }
 }

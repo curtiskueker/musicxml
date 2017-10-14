@@ -3,7 +3,7 @@ package org.curtis.musicxml.note.notation;
 public class Tuplet extends Notation {
     private TupletPortion tupletActual;
     private TupletPortion tupletNormal;
-    // TODO: type
+    private String type;
     // TODO: number
     // TODO: bracket
     private String showNumber;
@@ -30,6 +30,14 @@ public class Tuplet extends Notation {
 
     public void setTupletNormal(TupletPortion tupletNormal) {
         this.tupletNormal = tupletNormal;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getShowNumber() {

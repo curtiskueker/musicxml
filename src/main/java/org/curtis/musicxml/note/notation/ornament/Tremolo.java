@@ -2,7 +2,7 @@ package org.curtis.musicxml.note.notation.ornament;
 
 public class Tremolo extends Ornament {
     private Integer tremoloMarks;
-    // TODO: type
+    private String type = "single";
     // TODO: print style
     // TODO: placement
 
@@ -16,5 +16,13 @@ public class Tremolo extends Ornament {
 
     public void setTremoloMarks(Integer tremoloMarks) {
         this.tremoloMarks = tremoloMarks;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

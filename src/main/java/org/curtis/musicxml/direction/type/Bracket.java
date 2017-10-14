@@ -1,10 +1,12 @@
 package org.curtis.musicxml.direction.type;
 
+import java.math.BigDecimal;
+
 public class Bracket extends DirectionType {
-    // TODO: type
+    private String type;
     // TODO: number
     private String lineEnd;
-    // TODO: end length
+    private BigDecimal endLength;
     // TODO: line type
     // TODO: dashed formatting
     // TODO: position
@@ -14,11 +16,27 @@ public class Bracket extends DirectionType {
 
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getLineEnd() {
         return lineEnd;
     }
 
     public void setLineEnd(String lineEnd) {
         this.lineEnd = lineEnd;
+    }
+
+    public BigDecimal getEndLength() {
+        return endLength;
+    }
+
+    public void setEndLength(BigDecimal endLength) {
+        this.endLength = endLength;
     }
 }

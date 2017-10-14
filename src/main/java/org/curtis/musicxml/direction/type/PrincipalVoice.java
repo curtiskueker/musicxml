@@ -2,7 +2,7 @@ package org.curtis.musicxml.direction.type;
 
 public class PrincipalVoice extends DirectionType {
     private String principalVoice;
-    // TODO: type
+    private String type;
     private String symbol;
     // TODO: print style align
 
@@ -16,6 +16,14 @@ public class PrincipalVoice extends DirectionType {
 
     public void setPrincipalVoice(String principalVoice) {
         this.principalVoice = principalVoice;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSymbol() {

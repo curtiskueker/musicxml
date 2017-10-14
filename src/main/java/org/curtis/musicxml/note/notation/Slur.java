@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.notation;
 
 public class Slur extends Notation {
-    // TODO: type
+    private String type;
     // TODO: number
     // TODO: line type
     // TODO: dashed formatting
@@ -13,5 +13,13 @@ public class Slur extends Notation {
 
     public Slur() {
 
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -3,6 +3,7 @@ package org.curtis.musicxml.direction;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Print extends MusicData {
@@ -11,7 +12,7 @@ public class Print extends MusicData {
     private List<MeasureNumbering> measureNumberings;
     // TODO: part name display
     // TODO: part abbreviation display
-    // TODO: staff spacing
+    private BigDecimal staffSpacing;
     // TODO: new system
     // TODO: new page
     private Integer blankPage;
@@ -35,6 +36,14 @@ public class Print extends MusicData {
 
     public void setMeasureNumberings(List<MeasureNumbering> measureNumberings) {
         this.measureNumberings = measureNumberings;
+    }
+
+    public BigDecimal getStaffSpacing() {
+        return staffSpacing;
+    }
+
+    public void setStaffSpacing(BigDecimal staffSpacing) {
+        this.staffSpacing = staffSpacing;
     }
 
     public Integer getBlankPage() {

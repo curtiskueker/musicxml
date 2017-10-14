@@ -9,16 +9,16 @@ public class Sound extends MusicData {
     private Offset offset;
     // TODO: tempo
     // TODO: dynamics
-    // TODO: dacapo
+    private Boolean dacapo;
     private String segno;
     private String dalsegno;
     private String coda;
     private String tocoda;
     // TODO: divisions
-    // TODO: forward-repeat
+    private Boolean forwardRepeat;
     private String fine;
     // TODO: time only
-    // TODO: pizzicato
+    private Boolean pizzicato;
     // TODO: pan
     // TODO: elevation
     // TODO: damper pedal
@@ -35,6 +35,14 @@ public class Sound extends MusicData {
 
     public void setOffset(Offset offset) {
         this.offset = offset;
+    }
+
+    public Boolean getDacapo() {
+        return dacapo;
+    }
+
+    public void setDacapo(Boolean dacapo) {
+        this.dacapo = dacapo;
     }
 
     public String getSegno() {
@@ -69,11 +77,27 @@ public class Sound extends MusicData {
         this.tocoda = tocoda;
     }
 
+    public Boolean getForwardRepeat() {
+        return forwardRepeat;
+    }
+
+    public void setForwardRepeat(Boolean forwardRepeat) {
+        this.forwardRepeat = forwardRepeat;
+    }
+
     public String getFine() {
         return fine;
     }
 
     public void setFine(String fine) {
         this.fine = fine;
+    }
+
+    public Boolean getPizzicato() {
+        return pizzicato;
+    }
+
+    public void setPizzicato(Boolean pizzicato) {
+        this.pizzicato = pizzicato;
     }
 }

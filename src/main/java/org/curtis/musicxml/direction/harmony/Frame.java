@@ -1,5 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Frame {
@@ -11,8 +12,8 @@ public class Frame {
     // TODO: color
     // TODO: halign
     // TODO: valign image
-    // TODO: height
-    // TODO: width
+    private BigDecimal height;
+    private BigDecimal width;
     private String unployed;
 
     public Frame() {
@@ -49,6 +50,22 @@ public class Frame {
 
     public void setFrameNotes(List<FrameNote> frameNotes) {
         this.frameNotes = frameNotes;
+    }
+
+    public BigDecimal getHeight() {
+        return height;
+    }
+
+    public void setHeight(BigDecimal height) {
+        this.height = height;
+    }
+
+    public BigDecimal getWidth() {
+        return width;
+    }
+
+    public void setWidth(BigDecimal width) {
+        this.width = width;
     }
 
     public String getUnployed() {

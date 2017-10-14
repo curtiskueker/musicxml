@@ -1,14 +1,31 @@
 package org.curtis.musicxml.layout;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class PageLayout {
-    // TODO: page height
-    // TODO: page width
+    private BigDecimal pageHeight;
+    private BigDecimal pageWidth;
     private List<PageMargins> pageMarginsList;
 
     public PageLayout() {
 
+    }
+
+    public BigDecimal getPageHeight() {
+        return pageHeight;
+    }
+
+    public void setPageHeight(BigDecimal pageHeight) {
+        this.pageHeight = pageHeight;
+    }
+
+    public BigDecimal getPageWidth() {
+        return pageWidth;
+    }
+
+    public void setPageWidth(BigDecimal pageWidth) {
+        this.pageWidth = pageWidth;
     }
 
     public List<PageMargins> getPageMarginsList() {

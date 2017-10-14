@@ -2,9 +2,17 @@ package org.curtis.musicxml.attributes.measure;
 
 public class MultipleRest extends MeasureStyle {
     // TODO: value
-    // TODO: use symbols
+    private Boolean useSymbols;
 
     public MultipleRest() {
 
+    }
+
+    public Boolean getUseSymbols() {
+        return useSymbols;
+    }
+
+    public void setUseSymbols(Boolean useSymbols) {
+        this.useSymbols = useSymbols;
     }
 }

@@ -11,7 +11,7 @@ public class Metronome extends DirectionType {
     private List<MetronomeNote> metronomeNotes2;
     // TODO: print align
     // TODO: justify
-    // TODO: parentheses
+    private Boolean parentheses;
 
     public Metronome() {
 
@@ -63,5 +63,13 @@ public class Metronome extends DirectionType {
 
     public void setMetronomeNotes2(List<MetronomeNote> metronomeNotes2) {
         this.metronomeNotes2 = metronomeNotes2;
+    }
+
+    public Boolean getParentheses() {
+        return parentheses;
+    }
+
+    public void setParentheses(Boolean parentheses) {
+        this.parentheses = parentheses;
     }
 }

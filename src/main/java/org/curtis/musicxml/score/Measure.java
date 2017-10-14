@@ -1,7 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.musicxml.direction.Sound;
-
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Measure {
@@ -10,7 +9,7 @@ public class Measure {
     private String number;
     // TODO: implicit
     // TODO: non-controlling
-    // TODO: width
+    private BigDecimal width;
 
     public Measure() {
 
@@ -30,5 +29,13 @@ public class Measure {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public BigDecimal getWidth() {
+        return width;
+    }
+
+    public void setWidth(BigDecimal width) {
+        this.width = width;
     }
 }
