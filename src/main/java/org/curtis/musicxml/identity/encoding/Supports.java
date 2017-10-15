@@ -1,13 +1,21 @@
 package org.curtis.musicxml.identity.encoding;
 
 public class Supports extends Encoding {
-    // TODO: type
+    private Boolean type;
     private String element;
     private String attribute;
     private String value;
 
     public Supports() {
 
+    }
+
+    public Boolean getType() {
+        return type;
+    }
+
+    public void setType(Boolean type) {
+        this.type = type;
     }
 
     public String getElement() {

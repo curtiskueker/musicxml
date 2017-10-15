@@ -1,10 +1,12 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.PrintStyleAlign;
+
 public class Pedal extends DirectionType {
     private String type;
     private Boolean line;
     private Boolean sign;
-    // TODO: print style align
+    private PrintStyleAlign printStyleAlign;
 
     public Pedal() {
 
@@ -32,5 +34,13 @@ public class Pedal extends DirectionType {
 
     public void setSign(Boolean sign) {
         this.sign = sign;
+    }
+
+    public PrintStyleAlign getPrintStyleAlign() {
+        return printStyleAlign;
+    }
+
+    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        this.printStyleAlign = printStyleAlign;
     }
 }

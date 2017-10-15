@@ -1,5 +1,7 @@
 package org.curtis.musicxml.attributes.key;
 
+import org.curtis.musicxml.common.PrintStyle;
+
 import java.util.List;
 
 public class Key {
@@ -7,8 +9,8 @@ public class Key {
     private List<NonTraditionalKey> nonTraditionalKeys;
     private List<KeyOctave> keyOctaves;
     // TODO: number
-    // TODO: print style
-    // TODO: print object
+    private PrintStyle printStyle;
+    private Boolean printObject;
 
     public Key() {
 
@@ -36,5 +38,21 @@ public class Key {
 
     public void setKeyOctaves(List<KeyOctave> keyOctaves) {
         this.keyOctaves = keyOctaves;
+    }
+
+    public PrintStyle getPrintStyle() {
+        return printStyle;
+    }
+
+    public void setPrintStyle(PrintStyle printStyle) {
+        this.printStyle = printStyle;
+    }
+
+    public Boolean getPrintObject() {
+        return printObject;
+    }
+
+    public void setPrintObject(Boolean printObject) {
+        this.printObject = printObject;
     }
 }

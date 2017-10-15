@@ -1,16 +1,18 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Position;
+
 public class Tuplet extends Notation {
     private TupletPortion tupletActual;
     private TupletPortion tupletNormal;
     private String type;
-    // TODO: number
-    // TODO: bracket
+    private Integer number;
+    private Boolean bracket;
     private String showNumber;
     private String showType;
     private String lineShape;
-    // TODO: position
-    // TODO: placement
+    private Position position;
+    private String placement;
 
     public Tuplet() {
 
@@ -40,6 +42,22 @@ public class Tuplet extends Notation {
         this.type = type;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Boolean getBracket() {
+        return bracket;
+    }
+
+    public void setBracket(Boolean bracket) {
+        this.bracket = bracket;
+    }
+
     public String getShowNumber() {
         return showNumber;
     }
@@ -62,5 +80,21 @@ public class Tuplet extends Notation {
 
     public void setLineShape(String lineShape) {
         this.lineShape = lineShape;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public String getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(String placement) {
+        this.placement = placement;
     }
 }

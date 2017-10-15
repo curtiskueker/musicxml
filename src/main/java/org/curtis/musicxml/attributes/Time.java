@@ -1,5 +1,7 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.musicxml.common.PrintStyleAlign;
+
 import java.util.List;
 
 public class Time {
@@ -9,8 +11,8 @@ public class Time {
     // TODO: number
     private String symbol;
     private String separator;
-    // TODO: print style align
-    // TODO: print object
+    private PrintStyleAlign printStyleAlign;
+    private Boolean printObject;
 
     public Time() {
 
@@ -54,5 +56,21 @@ public class Time {
 
     public void setSeparator(String separator) {
         this.separator = separator;
+    }
+
+    public PrintStyleAlign getPrintStyleAlign() {
+        return printStyleAlign;
+    }
+
+    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        this.printStyleAlign = printStyleAlign;
+    }
+
+    public Boolean getPrintObject() {
+        return printObject;
+    }
+
+    public void setPrintObject(Boolean printObject) {
+        this.printObject = printObject;
     }
 }

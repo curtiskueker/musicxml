@@ -1,8 +1,10 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.musicxml.common.PrintStyleAlign;
+
 public class MeasureNumbering {
     private String measureNumberingValue;
-    // TODO: print style align
+    private PrintStyleAlign printStyleAlign;
 
     public MeasureNumbering() {
 
@@ -14,5 +16,13 @@ public class MeasureNumbering {
 
     public void setMeasureNumberingValue(String measureNumberingValue) {
         this.measureNumberingValue = measureNumberingValue;
+    }
+
+    public PrintStyleAlign getPrintStyleAlign() {
+        return printStyleAlign;
+    }
+
+    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        this.printStyleAlign = printStyleAlign;
     }
 }

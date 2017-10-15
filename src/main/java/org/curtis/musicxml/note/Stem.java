@@ -3,7 +3,7 @@ package org.curtis.musicxml.note;
 public class Stem {
     private String value;
     private YPosition yPosition;
-    // TODO: color
+    private String color;
 
     public Stem() {
 
@@ -23,5 +23,13 @@ public class Stem {
 
     public void setyPosition(YPosition yPosition) {
         this.yPosition = yPosition;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -1,8 +1,10 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.musicxml.common.PrintStyle;
+
 public class Directive {
     private String value;
-    // TODO: print style
+    private PrintStyle printStyle;
     private String lang;
 
     public Directive() {
@@ -15,6 +17,14 @@ public class Directive {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public PrintStyle getPrintStyle() {
+        return printStyle;
+    }
+
+    public void setPrintStyle(PrintStyle printStyle) {
+        this.printStyle = printStyle;
     }
 
     public String getLang() {

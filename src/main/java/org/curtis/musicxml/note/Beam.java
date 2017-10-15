@@ -3,9 +3,9 @@ package org.curtis.musicxml.note;
 public class Beam {
     private String value;
     private Integer number;
-    // TODO: repeater
+    private Boolean repeater;
     private String fan;
-    // TODO: color
+    private String color;
 
     public Beam() {
 
@@ -27,11 +27,27 @@ public class Beam {
         this.number = number;
     }
 
+    public Boolean getRepeater() {
+        return repeater;
+    }
+
+    public void setRepeater(Boolean repeater) {
+        this.repeater = repeater;
+    }
+
     public String getFan() {
         return fan;
     }
 
     public void setFan(String fan) {
         this.fan = fan;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

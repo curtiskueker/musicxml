@@ -4,7 +4,7 @@ import org.curtis.musicxml.note.EmptyPlacement;
 
 public class StrongAccent extends Articulation {
     private EmptyPlacement value;
-    // TODO: type
+    private String type = "up";
 
     public StrongAccent() {
 
@@ -16,5 +16,13 @@ public class StrongAccent extends Articulation {
 
     public void setValue(EmptyPlacement value) {
         this.value = value;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

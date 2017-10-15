@@ -2,7 +2,7 @@ package org.curtis.musicxml.note;
 
 public class NoteType {
     private String value;
-    // TODO: size
+    private String size;
 
     public NoteType() {
 
@@ -14,5 +14,13 @@ public class NoteType {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

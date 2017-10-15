@@ -1,10 +1,12 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.PrintStyleAlign;
+
 public class AccordionRegistration {
     // TODO: accordion high
     private Integer accordionMiddle;
     // TODO: accordion low
-    // TODO: print style align
+    private PrintStyleAlign printStyleAlign;
 
     public AccordionRegistration() {
 
@@ -16,5 +18,13 @@ public class AccordionRegistration {
 
     public void setAccordionMiddle(Integer accordionMiddle) {
         this.accordionMiddle = accordionMiddle;
+    }
+
+    public PrintStyleAlign getPrintStyleAlign() {
+        return printStyleAlign;
+    }
+
+    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        this.printStyleAlign = printStyleAlign;
     }
 }

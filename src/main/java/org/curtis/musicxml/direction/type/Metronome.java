@@ -1,5 +1,7 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.PrintStyleAlign;
+
 import java.util.List;
 
 public class Metronome extends DirectionType {
@@ -9,8 +11,8 @@ public class Metronome extends DirectionType {
     private List<MetronomeNote> metronomeNotes1;
     private String metronomeRelation;
     private List<MetronomeNote> metronomeNotes2;
-    // TODO: print align
-    // TODO: justify
+    private PrintStyleAlign printStyleAlign;
+    private String justify;
     private Boolean parentheses;
 
     public Metronome() {
@@ -63,6 +65,22 @@ public class Metronome extends DirectionType {
 
     public void setMetronomeNotes2(List<MetronomeNote> metronomeNotes2) {
         this.metronomeNotes2 = metronomeNotes2;
+    }
+
+    public PrintStyleAlign getPrintStyleAlign() {
+        return printStyleAlign;
+    }
+
+    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        this.printStyleAlign = printStyleAlign;
+    }
+
+    public String getJustify() {
+        return justify;
+    }
+
+    public void setJustify(String justify) {
+        this.justify = justify;
     }
 
     public Boolean getParentheses() {

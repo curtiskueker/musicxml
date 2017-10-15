@@ -1,11 +1,21 @@
 package org.curtis.musicxml.direction;
 
+import java.math.BigDecimal;
+
 public class Offset {
-    // TODO: divisions
+    private BigDecimal divisions;
     private Boolean sound;
 
     public Offset() {
 
+    }
+
+    public BigDecimal getDivisions() {
+        return divisions;
+    }
+
+    public void setDivisions(BigDecimal divisions) {
+        this.divisions = divisions;
     }
 
     public Boolean getSound() {

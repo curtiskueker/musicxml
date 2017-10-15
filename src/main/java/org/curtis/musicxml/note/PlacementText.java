@@ -1,9 +1,11 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.PrintStyle;
+
 public class PlacementText {
     private String value;
-    // TODO: print style
-    // TODO: placement
+    private PrintStyle printStyle;
+    private String placement;
 
     public PlacementText() {
 
@@ -15,5 +17,21 @@ public class PlacementText {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public PrintStyle getPrintStyle() {
+        return printStyle;
+    }
+
+    public void setPrintStyle(PrintStyle printStyle) {
+        this.printStyle = printStyle;
+    }
+
+    public String getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(String placement) {
+        this.placement = placement;
     }
 }

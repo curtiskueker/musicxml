@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.score.MusicData;
 
@@ -27,15 +28,15 @@ public class Note extends MusicData {
     private List<Lyric> lyrics;
     // TODO: play
     private XPosition xPosition;
-    // TODO: font
-    // TODO: color
+    private Font font;
+    private String color;
     // TODO: printout
     // TODO: dynamics
     // TODO: end dynamics
-    // TODO: attack
-    // TODO: release
+    private BigDecimal attack;
+    private BigDecimal release;
     // TODO: time only
-    // TODO: pizzicato
+    private Boolean pizzicato;
 
     public Note() {
 
@@ -167,5 +168,45 @@ public class Note extends MusicData {
 
     public void setxPosition(XPosition xPosition) {
         this.xPosition = xPosition;
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public BigDecimal getAttack() {
+        return attack;
+    }
+
+    public void setAttack(BigDecimal attack) {
+        this.attack = attack;
+    }
+
+    public BigDecimal getRelease() {
+        return release;
+    }
+
+    public void setRelease(BigDecimal release) {
+        this.release = release;
+    }
+
+    public Boolean getPizzicato() {
+        return pizzicato;
+    }
+
+    public void setPizzicato(Boolean pizzicato) {
+        this.pizzicato = pizzicato;
     }
 }

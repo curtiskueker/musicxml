@@ -4,6 +4,7 @@ public class Degree {
     private DegreeValue degreeValue;
     private DegreeAlter degreeAlter;
     private DegreeType degreeType;
+    private Boolean printObject;
 
     public Degree() {
 
@@ -31,5 +32,13 @@ public class Degree {
 
     public void setDegreeType(DegreeType degreeType) {
         this.degreeType = degreeType;
+    }
+
+    public Boolean getPrintObject() {
+        return printObject;
+    }
+
+    public void setPrintObject(Boolean printObject) {
+        this.printObject = printObject;
     }
 }

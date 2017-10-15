@@ -1,8 +1,10 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.Font;
+
 public class PerMinute {
     private String perMinute;
-    // TODO: font
+    private Font font;
 
     public PerMinute() {
 
@@ -14,5 +16,13 @@ public class PerMinute {
 
     public void setPerMinute(String perMinute) {
         this.perMinute = perMinute;
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
     }
 }

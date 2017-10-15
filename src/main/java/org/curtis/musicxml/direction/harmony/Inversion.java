@@ -1,8 +1,10 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.PrintStyle;
+
 public class Inversion {
     private Integer value;
-    // TODO: print style
+    private PrintStyle printStyle;
 
     public Inversion() {
 
@@ -14,5 +16,13 @@ public class Inversion {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public PrintStyle getPrintStyle() {
+        return printStyle;
+    }
+
+    public void setPrintStyle(PrintStyle printStyle) {
+        this.printStyle = printStyle;
     }
 }

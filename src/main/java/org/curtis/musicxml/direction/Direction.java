@@ -13,8 +13,8 @@ public class Direction extends MusicData {
     // TODO: voice
     // TODO: staff
     private Sound sound;
-    // TODO: placement
-    // TODO: directive
+    private String placement;
+    private Boolean directive;
 
     public Direction() {
 
@@ -42,5 +42,21 @@ public class Direction extends MusicData {
 
     public void setSound(Sound sound) {
         this.sound = sound;
+    }
+
+    public String getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(String placement) {
+        this.placement = placement;
+    }
+
+    public Boolean getDirective() {
+        return directive;
+    }
+
+    public void setDirective(Boolean directive) {
+        this.directive = directive;
     }
 }

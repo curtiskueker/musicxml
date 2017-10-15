@@ -3,7 +3,7 @@ package org.curtis.musicxml.direction.type;
 public class MetronomeTuplet {
     // TODO: time modification
     private String type;
-    // TODO: bracket
+    private Boolean bracket;
     private String showNumber;
 
     public MetronomeTuplet() {
@@ -16,6 +16,14 @@ public class MetronomeTuplet {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getBracket() {
+        return bracket;
+    }
+
+    public void setBracket(Boolean bracket) {
+        this.bracket = bracket;
     }
 
     public String getShowNumber() {

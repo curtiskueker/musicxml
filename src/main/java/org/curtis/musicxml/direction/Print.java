@@ -13,8 +13,8 @@ public class Print extends MusicData {
     // TODO: part name display
     // TODO: part abbreviation display
     private BigDecimal staffSpacing;
-    // TODO: new system
-    // TODO: new page
+    private Boolean newSystem;
+    private Boolean newPage;
     private Integer blankPage;
     private String pageNumber;
 
@@ -44,6 +44,22 @@ public class Print extends MusicData {
 
     public void setStaffSpacing(BigDecimal staffSpacing) {
         this.staffSpacing = staffSpacing;
+    }
+
+    public Boolean getNewSystem() {
+        return newSystem;
+    }
+
+    public void setNewSystem(Boolean newSystem) {
+        this.newSystem = newSystem;
+    }
+
+    public Boolean getNewPage() {
+        return newPage;
+    }
+
+    public void setNewPage(Boolean newPage) {
+        this.newPage = newPage;
     }
 
     public Integer getBlankPage() {

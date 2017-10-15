@@ -3,7 +3,7 @@ package org.curtis.musicxml.note.notation;
 import java.util.List;
 
 public class TupletPortion {
-    private Integer tupletNumber;
+    private TupletNumber tupletNumber;
     private TupletType tupletType;
     private List<TupletDot> tupletDots;
 
@@ -11,11 +11,11 @@ public class TupletPortion {
 
     }
 
-    public Integer getTupletNumber() {
+    public TupletNumber getTupletNumber() {
         return tupletNumber;
     }
 
-    public void setTupletNumber(Integer tupletNumber) {
+    public void setTupletNumber(TupletNumber tupletNumber) {
         this.tupletNumber = tupletNumber;
     }
 

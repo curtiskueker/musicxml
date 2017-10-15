@@ -1,20 +1,23 @@
 package org.curtis.musicxml.barline;
 
+import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.score.MusicData;
+
+import java.math.BigDecimal;
 
 public class Barline extends MusicData {
     private BarStyleColor barStyle;
     // TODO: editorial
     // TODO: wavy line
-    // TODO: segno print
-    // TODO: coda print
+    private PrintStyleAlign segnoPrint;
+    private PrintStyleAlign codaPrint;
     // TODO: fermata
     private Ending ending;
     private Repeat repeat;
     private String location;
     private String segno;
     private String coda;
-    // TODO: divisions
+    private BigDecimal divisions;
 
     public Barline() {
 
@@ -26,6 +29,22 @@ public class Barline extends MusicData {
 
     public void setBarStyle(BarStyleColor barStyle) {
         this.barStyle = barStyle;
+    }
+
+    public PrintStyleAlign getSegnoPrint() {
+        return segnoPrint;
+    }
+
+    public void setSegnoPrint(PrintStyleAlign segnoPrint) {
+        this.segnoPrint = segnoPrint;
+    }
+
+    public PrintStyleAlign getCodaPrint() {
+        return codaPrint;
+    }
+
+    public void setCodaPrint(PrintStyleAlign codaPrint) {
+        this.codaPrint = codaPrint;
     }
 
     public Ending getEnding() {
@@ -66,5 +85,13 @@ public class Barline extends MusicData {
 
     public void setCoda(String coda) {
         this.coda = coda;
+    }
+
+    public BigDecimal getDivisions() {
+        return divisions;
+    }
+
+    public void setDivisions(BigDecimal divisions) {
+        this.divisions = divisions;
     }
 }

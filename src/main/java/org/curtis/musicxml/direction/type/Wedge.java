@@ -1,16 +1,19 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.common.Position;
+
 import java.math.BigDecimal;
 
 public class Wedge extends DirectionType {
     private String type;
-    // TODO: number
+    private Integer number;
     private BigDecimal spread;
     private Boolean niente;
-    // TODO: line type
-    // TODO: dashed formatting
-    // TODO: position
-    // TODO: color
+    private String lineType;
+    private DashedFormatting dashedFormatting;
+    private Position position;
+    private String color;
 
     public Wedge() {
 
@@ -22,6 +25,14 @@ public class Wedge extends DirectionType {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public BigDecimal getSpread() {
@@ -38,5 +49,37 @@ public class Wedge extends DirectionType {
 
     public void setNiente(Boolean niente) {
         this.niente = niente;
+    }
+
+    public String getLineType() {
+        return lineType;
+    }
+
+    public void setLineType(String lineType) {
+        this.lineType = lineType;
+    }
+
+    public DashedFormatting getDashedFormatting() {
+        return dashedFormatting;
+    }
+
+    public void setDashedFormatting(DashedFormatting dashedFormatting) {
+        this.dashedFormatting = dashedFormatting;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

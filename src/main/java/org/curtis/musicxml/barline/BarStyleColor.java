@@ -2,7 +2,7 @@ package org.curtis.musicxml.barline;
 
 public class BarStyleColor {
     private String barStyle;
-    // TODO: color
+    private String color;
 
     public BarStyleColor() {
 
@@ -14,5 +14,13 @@ public class BarStyleColor {
 
     public void setBarStyle(String barStyle) {
         this.barStyle = barStyle;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

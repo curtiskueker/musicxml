@@ -2,7 +2,7 @@ package org.curtis.musicxml.score;
 
 public class GroupBarline {
     private String groupBarlineValue;
-    // TODO: color
+    private String color;
 
     public GroupBarline() {
 
@@ -14,5 +14,13 @@ public class GroupBarline {
 
     public void setGroupBarlineValue(String groupBarlineValue) {
         this.groupBarlineValue = groupBarlineValue;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

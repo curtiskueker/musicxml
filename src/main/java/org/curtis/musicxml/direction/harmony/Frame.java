@@ -1,5 +1,7 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.Position;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -8,10 +10,10 @@ public class Frame {
     private Integer frameFrets;
     private FirstFret firstFret;
     private List<FrameNote> frameNotes;
-    // TODO: position
-    // TODO: color
-    // TODO: halign
-    // TODO: valign image
+    private Position position;
+    private String color;
+    private String halign;
+    private String valignImage;
     private BigDecimal height;
     private BigDecimal width;
     private String unployed;
@@ -50,6 +52,38 @@ public class Frame {
 
     public void setFrameNotes(List<FrameNote> frameNotes) {
         this.frameNotes = frameNotes;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getHalign() {
+        return halign;
+    }
+
+    public void setHalign(String halign) {
+        this.halign = halign;
+    }
+
+    public String getValignImage() {
+        return valignImage;
+    }
+
+    public void setValignImage(String valignImage) {
+        this.valignImage = valignImage;
     }
 
     public BigDecimal getHeight() {

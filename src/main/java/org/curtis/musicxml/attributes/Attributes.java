@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Attributes extends MusicData {
     // TODO: editorial
-    // TODO: divisions reference has been taken care of in this file
     private BigDecimal divisions;
     private List<Key> keys;
     private List<Time> time;

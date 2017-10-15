@@ -1,10 +1,12 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.common.PrintStyle;
+
 public class PartName {
     private String partName;
-    // TODO: part name print style
-    // TODO: part name print object
-    // TODO: part name justify
+    private PrintStyle partNamePrintStyle;
+    private Boolean partNamePrintObject;
+    private String partNameJustify;
 
     public PartName() {
 
@@ -16,5 +18,29 @@ public class PartName {
 
     public void setPartName(String partName) {
         this.partName = partName;
+    }
+
+    public PrintStyle getPartNamePrintStyle() {
+        return partNamePrintStyle;
+    }
+
+    public void setPartNamePrintStyle(PrintStyle partNamePrintStyle) {
+        this.partNamePrintStyle = partNamePrintStyle;
+    }
+
+    public Boolean getPartNamePrintObject() {
+        return partNamePrintObject;
+    }
+
+    public void setPartNamePrintObject(Boolean partNamePrintObject) {
+        this.partNamePrintObject = partNamePrintObject;
+    }
+
+    public String getPartNameJustify() {
+        return partNameJustify;
+    }
+
+    public void setPartNameJustify(String partNameJustify) {
+        this.partNameJustify = partNameJustify;
     }
 }

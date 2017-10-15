@@ -2,6 +2,8 @@ package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.score.MusicData;
 
+import java.math.BigDecimal;
+
 public class Sound extends MusicData {
     // TODO: midi device
     // TODO: midi instrument
@@ -14,16 +16,16 @@ public class Sound extends MusicData {
     private String dalsegno;
     private String coda;
     private String tocoda;
-    // TODO: divisions
+    private BigDecimal divisions;
     private Boolean forwardRepeat;
     private String fine;
     // TODO: time only
     private Boolean pizzicato;
-    // TODO: pan
-    // TODO: elevation
-    // TODO: damper pedal
-    // TODO: soft pedal
-    // TODO: sostenuto pedal
+    private BigDecimal pan;
+    private BigDecimal elevation;
+    private BigDecimal damperPedal;
+    private BigDecimal softPedal;
+    private BigDecimal sostenutoPedal;
 
     public Sound() {
 
@@ -77,6 +79,14 @@ public class Sound extends MusicData {
         this.tocoda = tocoda;
     }
 
+    public BigDecimal getDivisions() {
+        return divisions;
+    }
+
+    public void setDivisions(BigDecimal divisions) {
+        this.divisions = divisions;
+    }
+
     public Boolean getForwardRepeat() {
         return forwardRepeat;
     }
@@ -99,5 +109,45 @@ public class Sound extends MusicData {
 
     public void setPizzicato(Boolean pizzicato) {
         this.pizzicato = pizzicato;
+    }
+
+    public BigDecimal getPan() {
+        return pan;
+    }
+
+    public void setPan(BigDecimal pan) {
+        this.pan = pan;
+    }
+
+    public BigDecimal getElevation() {
+        return elevation;
+    }
+
+    public void setElevation(BigDecimal elevation) {
+        this.elevation = elevation;
+    }
+
+    public BigDecimal getDamperPedal() {
+        return damperPedal;
+    }
+
+    public void setDamperPedal(BigDecimal damperPedal) {
+        this.damperPedal = damperPedal;
+    }
+
+    public BigDecimal getSoftPedal() {
+        return softPedal;
+    }
+
+    public void setSoftPedal(BigDecimal softPedal) {
+        this.softPedal = softPedal;
+    }
+
+    public BigDecimal getSostenutoPedal() {
+        return sostenutoPedal;
+    }
+
+    public void setSostenutoPedal(BigDecimal sostenutoPedal) {
+        this.sostenutoPedal = sostenutoPedal;
     }
 }

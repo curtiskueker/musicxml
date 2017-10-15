@@ -11,7 +11,7 @@ public class StaffDetails {
     private BigDecimal staffSize;
     // TODO: number
     private String showFrets;
-    // TODO: print object
+    private Boolean printObject;
     // TODO: print spacing;
 
     public StaffDetails() {
@@ -64,5 +64,13 @@ public class StaffDetails {
 
     public void setShowFrets(String showFrets) {
         this.showFrets = showFrets;
+    }
+
+    public Boolean getPrintObject() {
+        return printObject;
+    }
+
+    public void setPrintObject(Boolean printObject) {
+        this.printObject = printObject;
     }
 }

@@ -1,13 +1,20 @@
-package org.curtis.musicxml.note.notation;
+package org.curtis.musicxml.common;
 
-import org.curtis.musicxml.common.Font;
-
-public class TupletDot {
+public class PrintStyle {
+    private Position position;
     private Font font;
     private String color;
 
-    public TupletDot() {
+    public PrintStyle() {
 
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Font getFont() {

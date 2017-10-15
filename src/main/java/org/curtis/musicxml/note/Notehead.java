@@ -1,13 +1,55 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Font;
+
 public class Notehead {
     private String value;
-    // TODO: filled
-    // TODO: parentheses
-    // TODO: font
-    // TODO: color
+    private Boolean filled;
+    private Boolean parentheses;
+    private Font font;
+    private String color;
 
     public Notehead() {
 
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Boolean getFilled() {
+        return filled;
+    }
+
+    public void setFilled(Boolean filled) {
+        this.filled = filled;
+    }
+
+    public Boolean getParentheses() {
+        return parentheses;
+    }
+
+    public void setParentheses(Boolean parentheses) {
+        this.parentheses = parentheses;
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

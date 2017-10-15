@@ -1,9 +1,19 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.PrintStyleAlign;
+
 public class Segno extends DirectionType {
-    // TODO: empty print style align
+    private PrintStyleAlign printStyleAlign;
 
     public Segno() {
 
+    }
+
+    public PrintStyleAlign getPrintStyleAlign() {
+        return printStyleAlign;
+    }
+
+    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        this.printStyleAlign = printStyleAlign;
     }
 }

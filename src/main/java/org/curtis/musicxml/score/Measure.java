@@ -7,8 +7,8 @@ public class Measure {
     private List<MusicData> musicDataList;
     // TODO: attributes
     private String number;
-    // TODO: implicit
-    // TODO: non-controlling
+    private Boolean implicit;
+    private Boolean nonControlling;
     private BigDecimal width;
 
     public Measure() {
@@ -29,6 +29,22 @@ public class Measure {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Boolean getImplicit() {
+        return implicit;
+    }
+
+    public void setImplicit(Boolean implicit) {
+        this.implicit = implicit;
+    }
+
+    public Boolean getNonControlling() {
+        return nonControlling;
+    }
+
+    public void setNonControlling(Boolean nonControlling) {
+        this.nonControlling = nonControlling;
     }
 
     public BigDecimal getWidth() {
