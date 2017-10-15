@@ -8,7 +8,7 @@ public class Time {
     private List<TimeSignature> timeSignatures;
     private Interchangeable interchangeable;
     private String senzaMisura;
-    // TODO: number
+    private Integer number;
     private String symbol;
     private String separator;
     private PrintStyleAlign printStyleAlign;
@@ -40,6 +40,14 @@ public class Time {
 
     public void setSenzaMisura(String senzaMisura) {
         this.senzaMisura = senzaMisura;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public String getSymbol() {

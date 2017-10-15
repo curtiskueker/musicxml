@@ -1,12 +1,20 @@
 package org.curtis.musicxml.attributes.key;
 
 public class KeyOctave {
-    // TODO: octave
+    private Integer octave;
     private Integer number;
     private Boolean cancel;
 
     public KeyOctave() {
 
+    }
+
+    public Integer getOctave() {
+        return octave;
+    }
+
+    public void setOctave(Integer octave) {
+        this.octave = octave;
     }
 
     public Integer getNumber() {

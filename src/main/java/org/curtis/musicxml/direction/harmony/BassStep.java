@@ -3,12 +3,20 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class BassStep {
-    // TODO: step
+    private String step;
     private String text;
     private PrintStyle printStyle;
 
     public BassStep() {
 
+    }
+
+    public String getStep() {
+        return step;
+    }
+
+    public void setStep(String step) {
+        this.step = step;
     }
 
     public String getText() {

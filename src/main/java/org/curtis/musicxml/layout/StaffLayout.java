@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class StaffLayout {
     private BigDecimal staffDistance;
-    // TODO: number
+    private Integer number;
 
     public StaffLayout() {
 
@@ -16,5 +16,13 @@ public class StaffLayout {
 
     public void setStaffDistance(BigDecimal staffDistance) {
         this.staffDistance = staffDistance;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

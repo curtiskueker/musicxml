@@ -1,16 +1,20 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.musicxml.common.MidiDevice;
+import org.curtis.musicxml.common.MidiInstrument;
+import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Sound extends MusicData {
-    // TODO: midi device
-    // TODO: midi instrument
-    // TODO: play
+    private List<MidiDevice> midiDevices;
+    private List<MidiInstrument> midiInstruments;
+    private List<Play> playList;
     private Offset offset;
-    // TODO: tempo
-    // TODO: dynamics
+    private BigDecimal tempo;
+    private BigDecimal dynamics;
     private Boolean dacapo;
     private String segno;
     private String dalsegno;
@@ -19,7 +23,7 @@ public class Sound extends MusicData {
     private BigDecimal divisions;
     private Boolean forwardRepeat;
     private String fine;
-    // TODO: time only
+    private String timeOnly;
     private Boolean pizzicato;
     private BigDecimal pan;
     private BigDecimal elevation;
@@ -31,12 +35,52 @@ public class Sound extends MusicData {
 
     }
 
+    public List<MidiDevice> getMidiDevices() {
+        return midiDevices;
+    }
+
+    public void setMidiDevices(List<MidiDevice> midiDevices) {
+        this.midiDevices = midiDevices;
+    }
+
+    public List<MidiInstrument> getMidiInstruments() {
+        return midiInstruments;
+    }
+
+    public void setMidiInstruments(List<MidiInstrument> midiInstruments) {
+        this.midiInstruments = midiInstruments;
+    }
+
+    public List<Play> getPlayList() {
+        return playList;
+    }
+
+    public void setPlayList(List<Play> playList) {
+        this.playList = playList;
+    }
+
     public Offset getOffset() {
         return offset;
     }
 
     public void setOffset(Offset offset) {
         this.offset = offset;
+    }
+
+    public BigDecimal getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(BigDecimal tempo) {
+        this.tempo = tempo;
+    }
+
+    public BigDecimal getDynamics() {
+        return dynamics;
+    }
+
+    public void setDynamics(BigDecimal dynamics) {
+        this.dynamics = dynamics;
     }
 
     public Boolean getDacapo() {
@@ -101,6 +145,14 @@ public class Sound extends MusicData {
 
     public void setFine(String fine) {
         this.fine = fine;
+    }
+
+    public String getTimeOnly() {
+        return timeOnly;
+    }
+
+    public void setTimeOnly(String timeOnly) {
+        this.timeOnly = timeOnly;
     }
 
     public Boolean getPizzicato() {

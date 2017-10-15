@@ -5,8 +5,7 @@ import java.util.List;
 public class Score {
     private ScoreHeader scoreHeader;
     private List<Part> parts;
-
-    private String version;
+    private String version = "1.0";
 
     public Score() {
 

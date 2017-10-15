@@ -1,11 +1,21 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.musicxml.common.Tuning;
+
 public class StaffTuning {
-    // TODO: tuning
+    private Tuning tuning;
     private Integer line;
 
     public StaffTuning() {
 
+    }
+
+    public Tuning getTuning() {
+        return tuning;
+    }
+
+    public void setTuning(Tuning tuning) {
+        this.tuning = tuning;
     }
 
     public Integer getLine() {

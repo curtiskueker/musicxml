@@ -1,17 +1,21 @@
 package org.curtis.musicxml.barline;
 
+import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Barline extends MusicData {
     private BarStyleColor barStyle;
-    // TODO: editorial
-    // TODO: wavy line
+    private Editorial editorial;
+    private WavyLine wavyLine;
     private PrintStyleAlign segnoPrint;
     private PrintStyleAlign codaPrint;
-    // TODO: fermata
+    private List<Fermata> fermataList;
     private Ending ending;
     private Repeat repeat;
     private String location;
@@ -31,6 +35,22 @@ public class Barline extends MusicData {
         this.barStyle = barStyle;
     }
 
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
+
+    public WavyLine getWavyLine() {
+        return wavyLine;
+    }
+
+    public void setWavyLine(WavyLine wavyLine) {
+        this.wavyLine = wavyLine;
+    }
+
     public PrintStyleAlign getSegnoPrint() {
         return segnoPrint;
     }
@@ -45,6 +65,14 @@ public class Barline extends MusicData {
 
     public void setCodaPrint(PrintStyleAlign codaPrint) {
         this.codaPrint = codaPrint;
+    }
+
+    public List<Fermata> getFermataList() {
+        return fermataList;
+    }
+
+    public void setFermataList(List<Fermata> fermataList) {
+        this.fermataList = fermataList;
     }
 
     public Ending getEnding() {

@@ -8,7 +8,7 @@ public class Key {
     private TraditionalKey traditionalKey;
     private List<NonTraditionalKey> nonTraditionalKeys;
     private List<KeyOctave> keyOctaves;
-    // TODO: number
+    private Integer number;
     private PrintStyle printStyle;
     private Boolean printObject;
 
@@ -38,6 +38,14 @@ public class Key {
 
     public void setKeyOctaves(List<KeyOctave> keyOctaves) {
         this.keyOctaves = keyOctaves;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public PrintStyle getPrintStyle() {

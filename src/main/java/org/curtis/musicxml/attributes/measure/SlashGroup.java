@@ -2,7 +2,7 @@ package org.curtis.musicxml.attributes.measure;
 
 public class SlashGroup {
     private String slashType;
-    // TODO: slash dot
+    private Integer slashDots;
 
     public SlashGroup() {
 
@@ -14,5 +14,13 @@ public class SlashGroup {
 
     public void setSlashType(String slashType) {
         this.slashType = slashType;
+    }
+
+    public Integer getSlashDots() {
+        return slashDots;
+    }
+
+    public void setSlashDots(Integer slashDots) {
+        this.slashDots = slashDots;
     }
 }

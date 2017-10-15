@@ -3,12 +3,20 @@ package org.curtis.musicxml.note.notation;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class AccidentalMark extends Notation {
-    // TODO: accidental value
+    private String accidentalValue;
     private PrintStyle printStyle;
     private String placement;
 
     public AccidentalMark() {
 
+    }
+
+    public String getAccidentalValue() {
+        return accidentalValue;
+    }
+
+    public void setAccidentalValue(String accidentalValue) {
+        this.accidentalValue = accidentalValue;
     }
 
     public PrintStyle getPrintStyle() {

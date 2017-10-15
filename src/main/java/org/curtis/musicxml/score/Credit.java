@@ -1,6 +1,7 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.musicxml.attributes.Image;
+import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 
@@ -11,10 +12,10 @@ public class Credit {
     private List<Link> links;
     private List<Bookmark> bookmarks;
     private Image creditImage;
-    // TODO: credit words
+    private FormattedText creditWords;
     private List<Link> creditWordsLinks;
     private List<Bookmark> creditWordsBookmarks;
-    // TODO: additional credit words
+    private List<FormattedText> additionalCreditWords;
     private Integer page;
 
     public Credit() {
@@ -53,6 +54,14 @@ public class Credit {
         this.creditImage = creditImage;
     }
 
+    public FormattedText getCreditWords() {
+        return creditWords;
+    }
+
+    public void setCreditWords(FormattedText creditWords) {
+        this.creditWords = creditWords;
+    }
+
     public List<Link> getCreditWordsLinks() {
         return creditWordsLinks;
     }
@@ -67,6 +76,14 @@ public class Credit {
 
     public void setCreditWordsBookmarks(List<Bookmark> creditWordsBookmarks) {
         this.creditWordsBookmarks = creditWordsBookmarks;
+    }
+
+    public List<FormattedText> getAdditionalCreditWords() {
+        return additionalCreditWords;
+    }
+
+    public void setAdditionalCreditWords(List<FormattedText> additionalCreditWords) {
+        this.additionalCreditWords = additionalCreditWords;
     }
 
     public Integer getPage() {

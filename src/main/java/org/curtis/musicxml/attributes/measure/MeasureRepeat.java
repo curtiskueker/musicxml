@@ -1,12 +1,20 @@
 package org.curtis.musicxml.attributes.measure;
 
 public class MeasureRepeat extends MeasureStyle {
-    // TODO: value
+    private Integer value;
     private String type;
     private Integer slashes;
 
     public MeasureRepeat() {
 
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
     }
 
     public String getType() {

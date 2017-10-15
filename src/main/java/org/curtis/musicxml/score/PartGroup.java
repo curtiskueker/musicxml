@@ -1,16 +1,16 @@
 package org.curtis.musicxml.score;
 
-import java.util.List;
+import org.curtis.musicxml.common.Editorial;
 
 public class PartGroup {
     private GroupName groupName;
-    // TODO: group name display
+    private PartName groupNameDisplay;
     private GroupName groupAbbreviation;
-    // TODO: group abbreviation display
+    private PartName groupAbbreviationDisplay;
     private GroupSymbol groupSymbol;
     private GroupBarline groupBarline;
-    // TODO: group time
-    // TODO: editorial
+    private Boolean groupTime;
+    private Editorial editorial;
     private String type;
     private String number = "1";
 
@@ -26,12 +26,28 @@ public class PartGroup {
         this.groupName = groupName;
     }
 
+    public PartName getGroupNameDisplay() {
+        return groupNameDisplay;
+    }
+
+    public void setGroupNameDisplay(PartName groupNameDisplay) {
+        this.groupNameDisplay = groupNameDisplay;
+    }
+
     public GroupName getGroupAbbreviation() {
         return groupAbbreviation;
     }
 
     public void setGroupAbbreviation(GroupName groupAbbreviation) {
         this.groupAbbreviation = groupAbbreviation;
+    }
+
+    public PartName getGroupAbbreviationDisplay() {
+        return groupAbbreviationDisplay;
+    }
+
+    public void setGroupAbbreviationDisplay(PartName groupAbbreviationDisplay) {
+        this.groupAbbreviationDisplay = groupAbbreviationDisplay;
     }
 
     public GroupSymbol getGroupSymbol() {
@@ -48,6 +64,22 @@ public class PartGroup {
 
     public void setGroupBarline(GroupBarline groupBarline) {
         this.groupBarline = groupBarline;
+    }
+
+    public Boolean getGroupTime() {
+        return groupTime;
+    }
+
+    public void setGroupTime(Boolean groupTime) {
+        this.groupTime = groupTime;
+    }
+
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
     }
 
     public String getType() {

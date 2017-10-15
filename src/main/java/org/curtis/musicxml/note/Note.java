@@ -1,6 +1,9 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.common.Printout;
+import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.score.MusicData;
 
@@ -9,12 +12,12 @@ import java.util.List;
 
 public class Note extends MusicData {
     private Grace grace;
-    // TODO: cue
+    private Boolean cue;
     private FullNote fullNote;
     private BigDecimal duration;
     private List<Tie> ties;
     private String instrument;
-    // TODO: editorial voice
+    private EditorialVoice editorialVoice;
     private NoteType type;
     private List<EmptyPlacement> dots;
     private Accidental accidental;
@@ -22,20 +25,20 @@ public class Note extends MusicData {
     private Stem stem;
     private Notehead notehead;
     private NoteheadText noteheadText;
-    // TODO: staff
+    private Integer staff;
     private List<Beam> beams;
     private List<Notations> notationsList;
     private List<Lyric> lyrics;
-    // TODO: play
+    private Play play;
     private XPosition xPosition;
     private Font font;
     private String color;
-    // TODO: printout
-    // TODO: dynamics
-    // TODO: end dynamics
+    private Printout printout;
+    private BigDecimal dynamics;
+    private BigDecimal endDynamics;
     private BigDecimal attack;
     private BigDecimal release;
-    // TODO: time only
+    private String timeOnly;
     private Boolean pizzicato;
 
     public Note() {
@@ -48,6 +51,14 @@ public class Note extends MusicData {
 
     public void setGrace(Grace grace) {
         this.grace = grace;
+    }
+
+    public Boolean getCue() {
+        return cue;
+    }
+
+    public void setCue(Boolean cue) {
+        this.cue = cue;
     }
 
     public FullNote getFullNote() {
@@ -80,6 +91,14 @@ public class Note extends MusicData {
 
     public void setInstrument(String instrument) {
         this.instrument = instrument;
+    }
+
+    public EditorialVoice getEditorialVoice() {
+        return editorialVoice;
+    }
+
+    public void setEditorialVoice(EditorialVoice editorialVoice) {
+        this.editorialVoice = editorialVoice;
     }
 
     public NoteType getType() {
@@ -138,6 +157,14 @@ public class Note extends MusicData {
         this.noteheadText = noteheadText;
     }
 
+    public Integer getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Integer staff) {
+        this.staff = staff;
+    }
+
     public List<Beam> getBeams() {
         return beams;
     }
@@ -160,6 +187,14 @@ public class Note extends MusicData {
 
     public void setLyrics(List<Lyric> lyrics) {
         this.lyrics = lyrics;
+    }
+
+    public Play getPlay() {
+        return play;
+    }
+
+    public void setPlay(Play play) {
+        this.play = play;
     }
 
     public XPosition getxPosition() {
@@ -186,6 +221,30 @@ public class Note extends MusicData {
         this.color = color;
     }
 
+    public Printout getPrintout() {
+        return printout;
+    }
+
+    public void setPrintout(Printout printout) {
+        this.printout = printout;
+    }
+
+    public BigDecimal getDynamics() {
+        return dynamics;
+    }
+
+    public void setDynamics(BigDecimal dynamics) {
+        this.dynamics = dynamics;
+    }
+
+    public BigDecimal getEndDynamics() {
+        return endDynamics;
+    }
+
+    public void setEndDynamics(BigDecimal endDynamics) {
+        this.endDynamics = endDynamics;
+    }
+
     public BigDecimal getAttack() {
         return attack;
     }
@@ -200,6 +259,14 @@ public class Note extends MusicData {
 
     public void setRelease(BigDecimal release) {
         this.release = release;
+    }
+
+    public String getTimeOnly() {
+        return timeOnly;
+    }
+
+    public void setTimeOnly(String timeOnly) {
+        this.timeOnly = timeOnly;
     }
 
     public Boolean getPizzicato() {

@@ -1,12 +1,28 @@
 package org.curtis.musicxml.note;
 
 public class Rest {
-    // TODO: display step
-    // TODO: display octave
+    private String displayStep;
+    private Integer displayOctave;
     private Boolean measure;
 
     public Rest() {
 
+    }
+
+    public String getDisplayStep() {
+        return displayStep;
+    }
+
+    public void setDisplayStep(String displayStep) {
+        this.displayStep = displayStep;
+    }
+
+    public Integer getDisplayOctave() {
+        return displayOctave;
+    }
+
+    public void setDisplayOctave(Integer displayOctave) {
+        this.displayOctave = displayOctave;
     }
 
     public Boolean getMeasure() {

@@ -4,7 +4,7 @@ public class TimeModification {
     private Integer actualNotes;
     private Integer normalNotes;
     private String normalType;
-    // TODO: normal dot
+    private Integer normalDots;
 
     public TimeModification() {
 
@@ -32,5 +32,13 @@ public class TimeModification {
 
     public void setNormalType(String normalType) {
         this.normalType = normalType;
+    }
+
+    public Integer getNormalDots() {
+        return normalDots;
+    }
+
+    public void setNormalDots(Integer normalDots) {
+        this.normalDots = normalDots;
     }
 }

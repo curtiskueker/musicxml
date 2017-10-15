@@ -3,13 +3,21 @@ package org.curtis.musicxml.direction.type;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
 public class AccordionRegistration {
-    // TODO: accordion high
+    private Boolean accordionHigh;
     private Integer accordionMiddle;
-    // TODO: accordion low
+    private Boolean accordionLow;
     private PrintStyleAlign printStyleAlign;
 
     public AccordionRegistration() {
 
+    }
+
+    public Boolean getAccordionHigh() {
+        return accordionHigh;
+    }
+
+    public void setAccordionHigh(Boolean accordionHigh) {
+        this.accordionHigh = accordionHigh;
     }
 
     public Integer getAccordionMiddle() {
@@ -18,6 +26,14 @@ public class AccordionRegistration {
 
     public void setAccordionMiddle(Integer accordionMiddle) {
         this.accordionMiddle = accordionMiddle;
+    }
+
+    public Boolean getAccordionLow() {
+        return accordionLow;
+    }
+
+    public void setAccordionLow(Boolean accordionLow) {
+        this.accordionLow = accordionLow;
     }
 
     public PrintStyleAlign getPrintStyleAlign() {

@@ -1,6 +1,10 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.common.MidiDevice;
+import org.curtis.musicxml.common.MidiInstrument;
+import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.identity.Identification;
+import org.curtis.musicxml.score.instrument.ScoreInstrument;
 
 import java.util.List;
 
@@ -8,13 +12,13 @@ public class ScorePart {
     private String id;
     private Identification identification;
     private PartName partName;
-    // TODO: part name displays
-    private List<PartName> partAbbreviations;
-    // TODO: part abbreviaton displays
+    private NameDisplay partNameDisplay;
+    private PartName partAbbreviation;
+    private NameDisplay partAbbreviationDisplay;
     private List<String> groups;
     private List<ScoreInstrument> scoreInstruments;
-    // TODO: midi devices
-    // TODO: midi instruments
+    private List<MidiDevice> midiDevices;
+    private List<MidiInstrument> midiInstruments;
 
     public ScorePart() {
 
@@ -44,12 +48,28 @@ public class ScorePart {
         this.partName = partName;
     }
 
-    public List<PartName> getPartAbbreviations() {
-        return partAbbreviations;
+    public NameDisplay getPartNameDisplay() {
+        return partNameDisplay;
     }
 
-    public void setPartAbbreviations(List<PartName> partAbbreviations) {
-        this.partAbbreviations = partAbbreviations;
+    public void setPartNameDisplay(NameDisplay partNameDisplay) {
+        this.partNameDisplay = partNameDisplay;
+    }
+
+    public PartName getPartAbbreviation() {
+        return partAbbreviation;
+    }
+
+    public void setPartAbbreviation(PartName partAbbreviation) {
+        this.partAbbreviation = partAbbreviation;
+    }
+
+    public NameDisplay getPartAbbreviationDisplay() {
+        return partAbbreviationDisplay;
+    }
+
+    public void setPartAbbreviationDisplay(NameDisplay partAbbreviationDisplay) {
+        this.partAbbreviationDisplay = partAbbreviationDisplay;
     }
 
     public List<String> getGroups() {
@@ -66,5 +86,21 @@ public class ScorePart {
 
     public void setScoreInstruments(List<ScoreInstrument> scoreInstruments) {
         this.scoreInstruments = scoreInstruments;
+    }
+
+    public List<MidiDevice> getMidiDevices() {
+        return midiDevices;
+    }
+
+    public void setMidiDevices(List<MidiDevice> midiDevices) {
+        this.midiDevices = midiDevices;
+    }
+
+    public List<MidiInstrument> getMidiInstruments() {
+        return midiInstruments;
+    }
+
+    public void setMidiInstruments(List<MidiInstrument> midiInstruments) {
+        this.midiInstruments = midiInstruments;
     }
 }

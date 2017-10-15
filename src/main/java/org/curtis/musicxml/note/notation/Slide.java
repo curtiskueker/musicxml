@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.BendSound;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
@@ -10,7 +11,7 @@ public class Slide extends Notation {
     private String lineType;
     private DashedFormatting dashedFormatting;
     private PrintStyle printStyle;
-    // TODO: bend sound
+    private BendSound bendSound;
 
     public Slide() {
 
@@ -62,5 +63,13 @@ public class Slide extends Notation {
 
     public void setPrintStyle(PrintStyle printStyle) {
         this.printStyle = printStyle;
+    }
+
+    public BendSound getBendSound() {
+        return bendSound;
+    }
+
+    public void setBendSound(BendSound bendSound) {
+        this.bendSound = bendSound;
     }
 }

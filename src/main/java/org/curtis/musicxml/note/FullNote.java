@@ -1,13 +1,21 @@
 package org.curtis.musicxml.note;
 
 public class FullNote {
-    // TODO: chord
+    private Boolean chord;
     private Pitch pitch;
     private Unpitched unpitched;
     private Rest rest;
 
     public FullNote() {
 
+    }
+
+    public Boolean getChord() {
+        return chord;
+    }
+
+    public void setChord(Boolean chord) {
+        this.chord = chord;
     }
 
     public Pitch getPitch() {

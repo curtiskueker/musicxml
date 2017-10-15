@@ -1,10 +1,12 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.StyleText;
+
 import java.util.List;
 
 public class HarmonyChord {
     private Root root;
-    // TODO: function
+    private StyleText function;
     private Kind kind;
     private Inversion inversion;
     private Bass bass;
@@ -20,6 +22,14 @@ public class HarmonyChord {
 
     public void setRoot(Root root) {
         this.root = root;
+    }
+
+    public StyleText getFunction() {
+        return function;
+    }
+
+    public void setFunction(StyleText function) {
+        this.function = function;
     }
 
     public Kind getKind() {

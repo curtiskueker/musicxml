@@ -3,7 +3,7 @@ package org.curtis.musicxml.note.lyric;
 public class LyricSyllable extends LyricItem {
     private String syllabic;
     private TextElementData text;
-    private TextFontColor elision;
+    private LyricElision lyricElision;
     private Extend extend;
 
     public LyricSyllable() {
@@ -26,12 +26,12 @@ public class LyricSyllable extends LyricItem {
         this.text = text;
     }
 
-    public TextFontColor getElision() {
-        return elision;
+    public LyricElision getLyricElision() {
+        return lyricElision;
     }
 
-    public void setElision(TextFontColor elision) {
-        this.elision = elision;
+    public void setLyricElision(LyricElision lyricElision) {
+        this.lyricElision = lyricElision;
     }
 
     public Extend getExtend() {

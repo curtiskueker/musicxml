@@ -1,5 +1,7 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.direction.type.DirectionType;
 import org.curtis.musicxml.score.MusicData;
 
@@ -8,10 +10,10 @@ import java.util.List;
 public class Direction extends MusicData {
     private List<DirectionType> directionTypes;
     private Offset offset;
-    // TODO: footnote
-    // TODO: level
-    // TODO: voice
-    // TODO: staff
+    private FormattedText footnote;
+    private Level level;
+    private String voice;
+    private Integer staff;
     private Sound sound;
     private String placement;
     private Boolean directive;
@@ -34,6 +36,38 @@ public class Direction extends MusicData {
 
     public void setOffset(Offset offset) {
         this.offset = offset;
+    }
+
+    public FormattedText getFootnote() {
+        return footnote;
+    }
+
+    public void setFootnote(FormattedText footnote) {
+        this.footnote = footnote;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public String getVoice() {
+        return voice;
+    }
+
+    public void setVoice(String voice) {
+        this.voice = voice;
+    }
+
+    public Integer getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Integer staff) {
+        this.staff = staff;
     }
 
     public Sound getSound() {

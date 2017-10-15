@@ -2,13 +2,14 @@ package org.curtis.musicxml.attributes;
 
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.measure.MeasureStyle;
+import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class Attributes extends MusicData {
-    // TODO: editorial
+    private Editorial editorial;
     private BigDecimal divisions;
     private List<Key> keys;
     private List<Time> time;
@@ -23,6 +24,14 @@ public class Attributes extends MusicData {
 
     public Attributes() {
 
+    }
+
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
     }
 
     public BigDecimal getDivisions() {

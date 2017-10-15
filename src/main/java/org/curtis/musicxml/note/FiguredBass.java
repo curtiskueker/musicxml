@@ -1,6 +1,8 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
@@ -9,9 +11,9 @@ import java.util.List;
 public class FiguredBass extends MusicData {
     private List<Figure> figures;
     private BigDecimal duration;
-    // TODO: editorial
+    private Editorial editorial;
     private PrintStyle printStyle;
-    // TODO: printout
+    private Printout printout;
     private Boolean parentheses;
 
     public FiguredBass() {
@@ -34,12 +36,28 @@ public class FiguredBass extends MusicData {
         this.duration = duration;
     }
 
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
+
     public PrintStyle getPrintStyle() {
         return printStyle;
     }
 
     public void setPrintStyle(PrintStyle printStyle) {
         this.printStyle = printStyle;
+    }
+
+    public Printout getPrintout() {
+        return printout;
+    }
+
+    public void setPrintout(Printout printout) {
+        this.printout = printout;
     }
 
     public Boolean getParentheses() {

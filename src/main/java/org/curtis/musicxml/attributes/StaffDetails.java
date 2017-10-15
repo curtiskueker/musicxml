@@ -9,10 +9,10 @@ public class StaffDetails {
     private List<StaffTuning> staffTunings;
     private Integer capo;
     private BigDecimal staffSize;
-    // TODO: number
+    private Integer number;
     private String showFrets;
     private Boolean printObject;
-    // TODO: print spacing;
+    private Boolean printSpacing;
 
     public StaffDetails() {
 
@@ -58,6 +58,14 @@ public class StaffDetails {
         this.staffSize = staffSize;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
     public String getShowFrets() {
         return showFrets;
     }
@@ -72,5 +80,13 @@ public class StaffDetails {
 
     public void setPrintObject(Boolean printObject) {
         this.printObject = printObject;
+    }
+
+    public Boolean getPrintSpacing() {
+        return printSpacing;
+    }
+
+    public void setPrintSpacing(Boolean printSpacing) {
+        this.printSpacing = printSpacing;
     }
 }

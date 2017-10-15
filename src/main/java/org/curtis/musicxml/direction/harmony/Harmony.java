@@ -1,15 +1,18 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.score.MusicData;
 
+import java.util.List;
+
 public class Harmony extends MusicData {
-    private HarmonyChord harmonyChord;
+    private List<HarmonyChord> harmonyChords;
     private Frame frame;
     private Offset offset;
-    // TODO: editorial
-    // TODO: staff
+    private Editorial editorial;
+    private Integer staff;
     private String type;
     private Boolean printObject;
     private Boolean printFrame;
@@ -20,12 +23,12 @@ public class Harmony extends MusicData {
 
     }
 
-    public HarmonyChord getHarmonyChord() {
-        return harmonyChord;
+    public List<HarmonyChord> getHarmonyChords() {
+        return harmonyChords;
     }
 
-    public void setHarmonyChord(HarmonyChord harmonyChord) {
-        this.harmonyChord = harmonyChord;
+    public void setHarmonyChords(List<HarmonyChord> harmonyChords) {
+        this.harmonyChords = harmonyChords;
     }
 
     public Frame getFrame() {
@@ -42,6 +45,22 @@ public class Harmony extends MusicData {
 
     public void setOffset(Offset offset) {
         this.offset = offset;
+    }
+
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
+
+    public Integer getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Integer staff) {
+        this.staff = staff;
     }
 
     public String getType() {

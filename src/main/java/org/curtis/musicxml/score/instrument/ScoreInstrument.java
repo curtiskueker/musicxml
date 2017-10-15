@@ -1,11 +1,10 @@
-package org.curtis.musicxml.score;
+package org.curtis.musicxml.score.instrument;
 
 public class ScoreInstrument {
     private String instrumentName;
     private String instrumentAbbreviation;
     private String instrumentSound;
-    // TODO: solo
-    // TODO: ensemble
+    private InstrumentType instrumentType;
     private String virtualLibrary;
     private String virtualName;
 
@@ -35,6 +34,14 @@ public class ScoreInstrument {
 
     public void setInstrumentSound(String instrumentSound) {
         this.instrumentSound = instrumentSound;
+    }
+
+    public InstrumentType getInstrumentType() {
+        return instrumentType;
+    }
+
+    public void setInstrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
     }
 
     public String getVirtualLibrary() {

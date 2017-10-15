@@ -1,8 +1,18 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Editorial;
+
 public abstract class Notation {
-    // TODO: editorial
+    private Editorial editorial;
     private Boolean printObject;
+
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
 
     public Boolean getPrintObject() {
         return printObject;

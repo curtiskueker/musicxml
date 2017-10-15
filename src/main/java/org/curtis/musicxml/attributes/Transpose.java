@@ -1,11 +1,13 @@
 package org.curtis.musicxml.attributes;
 
+import java.math.BigDecimal;
+
 public class Transpose {
     private Integer diatonic;
-    // TODO: chromatic
+    private BigDecimal chromatic;
     private Integer octaveChange;
-    // TODO: double
-    // TODO: number
+    private Boolean doubled;
+    private Integer number;
 
     public Transpose() {
 
@@ -19,11 +21,35 @@ public class Transpose {
         this.diatonic = diatonic;
     }
 
+    public BigDecimal getChromatic() {
+        return chromatic;
+    }
+
+    public void setChromatic(BigDecimal chromatic) {
+        this.chromatic = chromatic;
+    }
+
     public Integer getOctaveChange() {
         return octaveChange;
     }
 
     public void setOctaveChange(Integer octaveChange) {
         this.octaveChange = octaveChange;
+    }
+
+    public Boolean getDoubled() {
+        return doubled;
+    }
+
+    public void setDoubled(Boolean doubled) {
+        this.doubled = doubled;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

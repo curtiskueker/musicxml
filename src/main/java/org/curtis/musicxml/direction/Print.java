@@ -1,5 +1,6 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
 
@@ -10,8 +11,8 @@ public class Print extends MusicData {
     // TODO: layout
     private MeasureLayout measureLayout;
     private List<MeasureNumbering> measureNumberings;
-    // TODO: part name display
-    // TODO: part abbreviation display
+    private NameDisplay partNameDisplay;
+    private NameDisplay partAbbreviationDisplay;
     private BigDecimal staffSpacing;
     private Boolean newSystem;
     private Boolean newPage;
@@ -36,6 +37,22 @@ public class Print extends MusicData {
 
     public void setMeasureNumberings(List<MeasureNumbering> measureNumberings) {
         this.measureNumberings = measureNumberings;
+    }
+
+    public NameDisplay getPartNameDisplay() {
+        return partNameDisplay;
+    }
+
+    public void setPartNameDisplay(NameDisplay partNameDisplay) {
+        this.partNameDisplay = partNameDisplay;
+    }
+
+    public NameDisplay getPartAbbreviationDisplay() {
+        return partAbbreviationDisplay;
+    }
+
+    public void setPartAbbreviationDisplay(NameDisplay partAbbreviationDisplay) {
+        this.partAbbreviationDisplay = partAbbreviationDisplay;
     }
 
     public BigDecimal getStaffSpacing() {

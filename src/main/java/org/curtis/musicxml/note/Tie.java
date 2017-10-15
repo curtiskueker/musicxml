@@ -2,7 +2,7 @@ package org.curtis.musicxml.note;
 
 public class Tie {
     private String type;
-    // TODO: time only
+    private String timeOnly;
 
     public Tie() {
 
@@ -14,5 +14,13 @@ public class Tie {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getTimeOnly() {
+        return timeOnly;
+    }
+
+    public void setTimeOnly(String timeOnly) {
+        this.timeOnly = timeOnly;
     }
 }

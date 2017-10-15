@@ -2,26 +2,21 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.PrintStyle;
 
-public class Harmonic extends Technical {
-    // TODO: natural
-    // TODO: artificial
-    // TODO: base pitch
-    // TODO: touching pitch
-    // TODO: sounding pitch
-    private Boolean printObject;
+public class StringNumber extends Technical {
+    private Integer stringNumber;
     private PrintStyle printStyle;
     private String placement;
 
-    public Harmonic() {
+    public StringNumber() {
 
     }
 
-    public Boolean getPrintObject() {
-        return printObject;
+    public Integer getStringNumber() {
+        return stringNumber;
     }
 
-    public void setPrintObject(Boolean printObject) {
-        this.printObject = printObject;
+    public void setStringNumber(Integer stringNumber) {
+        this.stringNumber = stringNumber;
     }
 
     public PrintStyle getPrintStyle() {

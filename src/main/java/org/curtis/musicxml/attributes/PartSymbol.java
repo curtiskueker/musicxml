@@ -4,8 +4,8 @@ import org.curtis.musicxml.common.Position;
 
 public class PartSymbol {
     private String groupSymbolValue;
-    // TODO: top staff
-    // TODO: bottom staff
+    private Integer topStaff;
+    private Integer bottomStaff;
     private Position position;
     private String color;
 
@@ -19,6 +19,22 @@ public class PartSymbol {
 
     public void setGroupSymbolValue(String groupSymbolValue) {
         this.groupSymbolValue = groupSymbolValue;
+    }
+
+    public Integer getTopStaff() {
+        return topStaff;
+    }
+
+    public void setTopStaff(Integer topStaff) {
+        this.topStaff = topStaff;
+    }
+
+    public Integer getBottomStaff() {
+        return bottomStaff;
+    }
+
+    public void setBottomStaff(Integer bottomStaff) {
+        this.bottomStaff = bottomStaff;
     }
 
     public Position getPosition() {

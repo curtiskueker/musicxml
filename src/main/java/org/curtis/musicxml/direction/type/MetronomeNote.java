@@ -4,7 +4,7 @@ import java.util.List;
 
 public class MetronomeNote {
     private String metronomeType;
-    // TODO: metronome dot
+    private Integer metronomeDots;
     private List<MetronomeBeam> metronomeBeams;
     private MetronomeTuplet metronomeTuplet;
 
@@ -18,6 +18,14 @@ public class MetronomeNote {
 
     public void setMetronomeType(String metronomeType) {
         this.metronomeType = metronomeType;
+    }
+
+    public Integer getMetronomeDots() {
+        return metronomeDots;
+    }
+
+    public void setMetronomeDots(Integer metronomeDots) {
+        this.metronomeDots = metronomeDots;
     }
 
     public List<MetronomeBeam> getMetronomeBeams() {

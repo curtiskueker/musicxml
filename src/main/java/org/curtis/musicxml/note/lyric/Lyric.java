@@ -1,14 +1,13 @@
 package org.curtis.musicxml.note.lyric;
 
+import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Position;
 
-import java.util.List;
-
 public class Lyric {
-    private List<LyricItem> lyricItems;
-    // TODO: end line
-    // TODO: end paragraph
-    // TODO: editorial
+    private LyricItem lyricItem;
+    private Boolean endLine;
+    private Boolean endParagraph;
+    private Editorial editorial;
     private String number;
     private String name;
     private String justify;
@@ -21,12 +20,36 @@ public class Lyric {
 
     }
 
-    public List<LyricItem> getLyricItems() {
-        return lyricItems;
+    public LyricItem getLyricItem() {
+        return lyricItem;
     }
 
-    public void setLyricItems(List<LyricItem> lyricItems) {
-        this.lyricItems = lyricItems;
+    public void setLyricItem(LyricItem lyricItem) {
+        this.lyricItem = lyricItem;
+    }
+
+    public Boolean getEndLine() {
+        return endLine;
+    }
+
+    public void setEndLine(Boolean endLine) {
+        this.endLine = endLine;
+    }
+
+    public Boolean getEndParagraph() {
+        return endParagraph;
+    }
+
+    public void setEndParagraph(Boolean endParagraph) {
+        this.endParagraph = endParagraph;
+    }
+
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
     }
 
     public String getNumber() {

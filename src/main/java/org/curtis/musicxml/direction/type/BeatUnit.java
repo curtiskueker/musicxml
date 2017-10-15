@@ -2,7 +2,7 @@ package org.curtis.musicxml.direction.type;
 
 public class BeatUnit {
     private String beatUnit;
-    // TODO: beat unit dot
+    private Integer beatUnitDots;
 
     public BeatUnit() {
 
@@ -14,5 +14,13 @@ public class BeatUnit {
 
     public void setBeatUnit(String beatUnit) {
         this.beatUnit = beatUnit;
+    }
+
+    public Integer getBeatUnitDots() {
+        return beatUnitDots;
+    }
+
+    public void setBeatUnitDots(Integer beatUnitDots) {
+        this.beatUnitDots = beatUnitDots;
     }
 }
