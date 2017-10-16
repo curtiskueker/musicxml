@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note.notation.technical.bend;
 
-import org.curtis.musicxml.common.BendSound;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.notation.technical.Technical;

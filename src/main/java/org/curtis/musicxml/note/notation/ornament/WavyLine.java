@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.common.Position;
-import org.curtis.musicxml.common.TrillSound;
 
 public class WavyLine extends Ornament {
     private String type;

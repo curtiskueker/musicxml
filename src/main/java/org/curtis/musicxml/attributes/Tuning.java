@@ -1,4 +1,4 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.attributes;
 
 import java.math.BigDecimal;
 

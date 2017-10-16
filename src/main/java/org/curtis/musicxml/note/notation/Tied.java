@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note.notation;
 
-import org.curtis.musicxml.common.Bezier;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
 

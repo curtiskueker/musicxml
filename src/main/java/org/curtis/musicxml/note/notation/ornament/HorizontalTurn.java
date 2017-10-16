@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.common.TrillSound;
 
 public abstract class HorizontalTurn extends Ornament {
     private PrintStyle printStyle;

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.type;
 
-import org.curtis.musicxml.common.Tuning;
+import org.curtis.musicxml.attributes.Tuning;
 
 public class Accord {
     private Tuning tuning;

@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.musicxml.common.AccidentalText;
 import org.curtis.musicxml.common.FormattedText;
 
 import java.util.List;

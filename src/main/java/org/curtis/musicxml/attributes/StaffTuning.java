@@ -1,7 +1,5 @@
 package org.curtis.musicxml.attributes;
 
-import org.curtis.musicxml.common.Tuning;
-
 public class StaffTuning {
     private Tuning tuning;
     private Integer line;

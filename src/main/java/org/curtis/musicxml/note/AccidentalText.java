@@ -1,4 +1,6 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.note;
+
+import org.curtis.musicxml.common.TextFormatting;
 
 public class AccidentalText {
     private String accidentalValue;

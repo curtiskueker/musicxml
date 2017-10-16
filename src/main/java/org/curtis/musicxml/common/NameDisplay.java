@@ -1,5 +1,7 @@
 package org.curtis.musicxml.common;
 
+import org.curtis.musicxml.note.AccidentalText;
+
 import java.util.List;
 
 public class NameDisplay {

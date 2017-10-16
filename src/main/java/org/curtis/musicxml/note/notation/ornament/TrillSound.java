@@ -1,4 +1,4 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.note.notation.ornament;
 
 import java.math.BigDecimal;
 
