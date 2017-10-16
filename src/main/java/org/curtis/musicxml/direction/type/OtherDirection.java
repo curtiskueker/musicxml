@@ -3,12 +3,20 @@ package org.curtis.musicxml.direction.type;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
 public class OtherDirection extends DirectionType {
-    // TODO: value
+    private String value;
     private Boolean printObject;
     private PrintStyleAlign printStyleAlign;
 
     public OtherDirection() {
 
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Boolean getPrintObject() {

@@ -6,15 +6,6 @@ import java.util.List;
 
 public class Technicals extends Notation {
     private List<Technical> technicals;
-    // TODO: thumb position
-    // TODO: fingering
-    // TODO: double tongue
-    // TODO: triple tongue
-    // TODO: stopped
-    // TODO: snap pizzicato
-    // TODO: fret
-    // TODO: string
-    // TODO: fingernails
 
     public Technicals() {
 

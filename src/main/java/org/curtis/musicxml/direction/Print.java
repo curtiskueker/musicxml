@@ -1,6 +1,7 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.NameDisplay;
+import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
 
@@ -8,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Print extends MusicData {
-    // TODO: layout
+    private Layout layout;
     private MeasureLayout measureLayout;
     private List<MeasureNumbering> measureNumberings;
     private NameDisplay partNameDisplay;
@@ -21,6 +22,14 @@ public class Print extends MusicData {
 
     public Print() {
 
+    }
+
+    public Layout getLayout() {
+        return layout;
+    }
+
+    public void setLayout(Layout layout) {
+        this.layout = layout;
     }
 
     public MeasureLayout getMeasureLayout() {

@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Measure {
     private List<MusicData> musicDataList;
-    // TODO: attributes
     private String number;
     private Boolean implicit;
     private Boolean nonControlling;

@@ -8,9 +8,7 @@ import java.util.List;
 public class Notations {
     private Editorial editorial;
     private List<Notation> notations;
-    // TODO: dynamics
-    // TODO: fermata
-    // TODO: print object
+    private Boolean printObject;
 
     public Notations() {
 
@@ -30,5 +28,13 @@ public class Notations {
 
     public void setNotations(List<Notation> notations) {
         this.notations = notations;
+    }
+
+    public Boolean getPrintObject() {
+        return printObject;
+    }
+
+    public void setPrintObject(Boolean printObject) {
+        this.printObject = printObject;
     }
 }

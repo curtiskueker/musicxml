@@ -1,13 +1,23 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.note.TimeModification;
+
 public class MetronomeTuplet {
-    // TODO: time modification
+    private TimeModification timeModification;
     private String type;
     private Boolean bracket;
     private String showNumber;
 
     public MetronomeTuplet() {
 
+    }
+
+    public TimeModification getTimeModification() {
+        return timeModification;
+    }
+
+    public void setTimeModification(TimeModification timeModification) {
+        this.timeModification = timeModification;
     }
 
     public String getType() {
