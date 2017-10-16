@@ -19,7 +19,7 @@ public class Note extends MusicData {
     private String instrument;
     private EditorialVoice editorialVoice;
     private NoteType type;
-    private List<EmptyPlacement> dots;
+    private List<Placement> dots;
     private Accidental accidental;
     private TimeModification timeModification;
     private Stem stem;
@@ -109,11 +109,11 @@ public class Note extends MusicData {
         this.type = type;
     }
 
-    public List<EmptyPlacement> getDots() {
+    public List<Placement> getDots() {
         return dots;
     }
 
-    public void setDots(List<EmptyPlacement> dots) {
+    public void setDots(List<Placement> dots) {
         this.dots = dots;
     }
 

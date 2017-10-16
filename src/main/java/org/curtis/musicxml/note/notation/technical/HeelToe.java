@@ -1,16 +1,16 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.note.EmptyPlacement;
+import org.curtis.musicxml.note.Placement;
 
 public abstract class HeelToe extends Technical {
-    private EmptyPlacement value;
+    private Placement value;
     private Boolean substitution;
 
-    public EmptyPlacement getValue() {
+    public Placement getValue() {
         return value;
     }
 
-    public void setValue(EmptyPlacement value) {
+    public void setValue(Placement value) {
         this.value = value;
     }
 

@@ -1,19 +1,19 @@
 package org.curtis.musicxml.note.notation.articulation;
 
-import org.curtis.musicxml.note.EmptyPlacement;
+import org.curtis.musicxml.note.Placement;
 
 public class Staccatissimo extends Articulation {
-    private EmptyPlacement value;
+    private Placement value;
 
     public Staccatissimo() {
 
     }
 
-    public EmptyPlacement getValue() {
+    public Placement getValue() {
         return value;
     }
 
-    public void setValue(EmptyPlacement value) {
+    public void setValue(Placement value) {
         this.value = value;
     }
 }

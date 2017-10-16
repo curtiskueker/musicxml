@@ -1,20 +1,16 @@
 package org.curtis.musicxml.note.notation.ornament;
 
-public class AbstractMordent extends Ornament {
-    private EmptyTrillSound emptyTrillSound;
+public abstract class AbstractMordent extends Ornament {
+    private PlacedTrillSound emptyTrillSound;
     private Boolean longMordent;
     private String approach;
     private String departure;
 
-    public AbstractMordent() {
-
-    }
-
-    public EmptyTrillSound getEmptyTrillSound() {
+    public PlacedTrillSound getEmptyTrillSound() {
         return emptyTrillSound;
     }
 
-    public void setEmptyTrillSound(EmptyTrillSound emptyTrillSound) {
+    public void setEmptyTrillSound(PlacedTrillSound emptyTrillSound) {
         this.emptyTrillSound = emptyTrillSound;
     }
 

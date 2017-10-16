@@ -3,7 +3,7 @@ package org.curtis.musicxml.note.notation.ornament;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.TrillSound;
 
-public abstract class EmptyTrillSound extends Ornament {
+public abstract class PlacedTrillSound extends Ornament {
     private PrintStyle printStyle;
     private String placement;
     private TrillSound trillSound;

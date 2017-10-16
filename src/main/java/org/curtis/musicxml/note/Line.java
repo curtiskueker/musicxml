@@ -3,14 +3,14 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
-public class EmptyLine {
+public class Line {
     private String lineShape;
     private String lineType;
     private DashedFormatting dashedFormatting;
     private PrintStyle printStyle;
     private String placement;
 
-    public EmptyLine() {
+    public Line() {
 
     }
 

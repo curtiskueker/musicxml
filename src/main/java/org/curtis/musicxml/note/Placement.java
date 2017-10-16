@@ -2,11 +2,11 @@ package org.curtis.musicxml.note;
 
 import org.curtis.musicxml.common.PrintStyle;
 
-public class EmptyPlacement {
+public class Placement {
     private PrintStyle printStyle;
     private String placement;
 
-    public EmptyPlacement() {
+    public Placement() {
 
     }
 

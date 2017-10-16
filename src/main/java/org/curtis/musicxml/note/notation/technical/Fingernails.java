@@ -1,19 +1,19 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.note.EmptyPlacement;
+import org.curtis.musicxml.note.Placement;
 
 public class Fingernails extends Technical {
-    private EmptyPlacement value;
+    private Placement value;
 
     public Fingernails() {
 
     }
 
-    public EmptyPlacement getValue() {
+    public Placement getValue() {
         return value;
     }
 
-    public void setValue(EmptyPlacement value) {
+    public void setValue(Placement value) {
         this.value = value;
     }
 }
