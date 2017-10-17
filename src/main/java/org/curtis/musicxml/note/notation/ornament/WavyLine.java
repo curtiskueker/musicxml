@@ -1,12 +1,14 @@
 package org.curtis.musicxml.note.notation.ornament;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Connection;
 
 public class WavyLine extends Ornament {
-    private String type;
+    private Connection type;
     private Integer number;
     private Position position;
-    private String placement;
+    private Location placement;
     private String color;
     private TrillSound trillSound;
 
@@ -14,11 +16,11 @@ public class WavyLine extends Ornament {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -38,11 +40,11 @@ public class WavyLine extends Ornament {
         this.position = position;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 

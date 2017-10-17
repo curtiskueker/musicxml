@@ -1,18 +1,20 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.Connection;
+
 public class Barre {
-    private String type;
+    private Connection type;
     private String color;
 
     public Barre() {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

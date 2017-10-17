@@ -1,10 +1,11 @@
 package org.curtis.musicxml.note.notation.articulation;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.Placement;
 
 public class StrongAccent extends Articulation {
     private Placement value;
-    private String type = "up";
+    private Location type = Location.UP;
 
     public StrongAccent() {
 
@@ -18,11 +19,11 @@ public class StrongAccent extends Articulation {
         this.value = value;
     }
 
-    public String getType() {
+    public Location getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Location type) {
         this.type = type;
     }
 }

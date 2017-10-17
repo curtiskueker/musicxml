@@ -1,6 +1,7 @@
 package org.curtis.musicxml.barline;
 
 import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
@@ -18,7 +19,7 @@ public class Barline extends MusicData {
     private List<Fermata> fermataList;
     private Ending ending;
     private Repeat repeat;
-    private String location;
+    private Location location;
     private String segno;
     private String coda;
     private BigDecimal divisions;
@@ -91,11 +92,11 @@ public class Barline extends MusicData {
         this.repeat = repeat;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 

@@ -1,12 +1,14 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.TimeModification;
+import org.curtis.musicxml.note.notation.ShowTuplet;
 
 public class MetronomeTuplet {
     private TimeModification timeModification;
-    private String type;
+    private Connection type;
     private Boolean bracket;
-    private String showNumber;
+    private ShowTuplet showNumber;
 
     public MetronomeTuplet() {
 
@@ -20,11 +22,11 @@ public class MetronomeTuplet {
         this.timeModification = timeModification;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -36,11 +38,11 @@ public class MetronomeTuplet {
         this.bracket = bracket;
     }
 
-    public String getShowNumber() {
+    public ShowTuplet getShowNumber() {
         return showNumber;
     }
 
-    public void setShowNumber(String showNumber) {
+    public void setShowNumber(ShowTuplet showNumber) {
         this.showNumber = showNumber;
     }
 }

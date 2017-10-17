@@ -1,11 +1,12 @@
 package org.curtis.musicxml.direction.type.percussion;
 
+import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.direction.type.DirectionType;
 
 public abstract class Percussion extends DirectionType {
     private PrintStyleAlign printStyleAlign;
-    private String enclosure;
+    private EnclosureShape enclosure;
 
     public PrintStyleAlign getPrintStyleAlign() {
         return printStyleAlign;
@@ -15,11 +16,11 @@ public abstract class Percussion extends DirectionType {
         this.printStyleAlign = printStyleAlign;
     }
 
-    public String getEnclosure() {
+    public EnclosureShape getEnclosure() {
         return enclosure;
     }
 
-    public void setEnclosure(String enclosure) {
+    public void setEnclosure(EnclosureShape enclosure) {
         this.enclosure = enclosure;
     }
 }

@@ -1,11 +1,12 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class StringNumber extends Technical {
     private Integer stringNumber;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public StringNumber() {
 
@@ -27,11 +28,11 @@ public class StringNumber extends Technical {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

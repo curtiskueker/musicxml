@@ -1,9 +1,10 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
 public class Pedal extends DirectionType {
-    private String type;
+    private Connection type;
     private Boolean line;
     private Boolean sign;
     private PrintStyleAlign printStyleAlign;
@@ -12,11 +13,11 @@ public class Pedal extends DirectionType {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

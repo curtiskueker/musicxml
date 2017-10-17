@@ -1,17 +1,17 @@
 package org.curtis.musicxml.common.play;
 
 public class Mute extends PlayType {
-    private String value;
+    private MuteType value;
 
     public Mute() {
 
     }
 
-    public String getValue() {
+    public MuteType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(MuteType value) {
         this.value = value;
     }
 }

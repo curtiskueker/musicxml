@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Glass extends Percussion {
-    private String value;
+    private GlassType value;
 
     public Glass() {
 
     }
 
-    public String getValue() {
+    public GlassType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(GlassType value) {
         this.value = value;
     }
 }

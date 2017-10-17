@@ -1,5 +1,6 @@
 package org.curtis.musicxml.barline;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyle;
 
 import java.math.BigDecimal;
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
 public class Ending {
     private String value;
     private String number;
-    private String type;
+    private Connection type;
     private Boolean printObject;
     private PrintStyle printStyle;
     private BigDecimal endLength;
@@ -34,11 +35,11 @@ public class Ending {
         this.number = number;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

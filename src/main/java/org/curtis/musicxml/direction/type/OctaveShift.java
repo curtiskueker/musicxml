@@ -4,7 +4,7 @@ import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class OctaveShift extends DirectionType {
-    private String type;
+    private OctaveShiftType type;
     private Integer number;
     private Integer size;
     private DashedFormatting dashedFormatting;
@@ -14,11 +14,11 @@ public class OctaveShift extends DirectionType {
 
     }
 
-    public String getType() {
+    public OctaveShiftType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(OctaveShiftType type) {
         this.type = type;
     }
 

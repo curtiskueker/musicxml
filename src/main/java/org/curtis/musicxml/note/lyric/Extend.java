@@ -1,20 +1,21 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.Connection;
 
 public class Extend extends LyricItem {
-    private String type;
+    private Connection type;
     private PrintStyle printStyle;
 
     public Extend() {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

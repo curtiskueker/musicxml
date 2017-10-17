@@ -1,9 +1,10 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.note.Step;
 
 public class RootStep {
-    private String step;
+    private Step step;
     private String text;
     private PrintStyle printStyle;
 
@@ -11,11 +12,11 @@ public class RootStep {
 
     }
 
-    public String getStep() {
+    public Step getStep() {
         return step;
     }
 
-    public void setStep(String step) {
+    public void setStep(Step step) {
         this.step = step;
     }
 

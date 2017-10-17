@@ -1,10 +1,11 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Placement {
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public Placement() {
 
@@ -18,11 +19,11 @@ public class Placement {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

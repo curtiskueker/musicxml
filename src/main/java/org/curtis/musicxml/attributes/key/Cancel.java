@@ -2,7 +2,7 @@ package org.curtis.musicxml.attributes.key;
 
 public class Cancel {
     private Integer fifths;
-    private String location;
+    private CancelLocation location;
 
     public Cancel() {
 
@@ -16,11 +16,11 @@ public class Cancel {
         this.fifths = fifths;
     }
 
-    public String getLocation() {
+    public CancelLocation getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(CancelLocation location) {
         this.location = location;
     }
 }

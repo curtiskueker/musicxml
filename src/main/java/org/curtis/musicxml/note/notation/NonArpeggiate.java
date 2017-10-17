@@ -1,23 +1,24 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Location;
 
 public class NonArpeggiate extends Notation {
-    private String type;
+    private Location type;
     private Integer number;
     private Position position;
-    private String placement;
+    private Location placement;
     private String color;
 
     public NonArpeggiate() {
 
     }
 
-    public String getType() {
+    public Location getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Location type) {
         this.type = type;
     }
 
@@ -37,11 +38,11 @@ public class NonArpeggiate extends Notation {
         this.position = position;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 

@@ -1,21 +1,22 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Handbell extends Technical {
-    private String handbellValue;
+    private HandbellType handbellValue;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public Handbell() {
 
     }
 
-    public String getHandbellValue() {
+    public HandbellType getHandbellValue() {
         return handbellValue;
     }
 
-    public void setHandbellValue(String handbellValue) {
+    public void setHandbellValue(HandbellType handbellValue) {
         this.handbellValue = handbellValue;
     }
 
@@ -27,11 +28,11 @@ public class Handbell extends Technical {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

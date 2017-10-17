@@ -1,18 +1,18 @@
 package org.curtis.musicxml.barline;
 
 public class BarStyleColor {
-    private String barStyle;
+    private BarStyle barStyle;
     private String color;
 
     public BarStyleColor() {
 
     }
 
-    public String getBarStyle() {
+    public BarStyle getBarStyle() {
         return barStyle;
     }
 
-    public void setBarStyle(String barStyle) {
+    public void setBarStyle(BarStyle barStyle) {
         this.barStyle = barStyle;
     }
 

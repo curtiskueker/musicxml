@@ -1,5 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 import java.math.BigDecimal;
@@ -8,7 +9,7 @@ public class BassAlter {
     private BigDecimal semitones;
     private Boolean printObject;
     private PrintStyle printStyle;
-    private String location;
+    private Location location;
 
     public BassAlter() {
 
@@ -38,11 +39,11 @@ public class BassAlter {
         this.printStyle = printStyle;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 }

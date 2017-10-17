@@ -1,14 +1,15 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Hole extends Technical {
     private String holeType;
-    private String holeClosedValue;
-    private String holeClosedLocation;
+    private HoleClosedType holeClosedValue;
+    private HoleClosedLocation holeClosedLocation;
     private String holeShape;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public Hole() {
 
@@ -22,19 +23,19 @@ public class Hole extends Technical {
         this.holeType = holeType;
     }
 
-    public String getHoleClosedValue() {
+    public HoleClosedType getHoleClosedValue() {
         return holeClosedValue;
     }
 
-    public void setHoleClosedValue(String holeClosedValue) {
+    public void setHoleClosedValue(HoleClosedType holeClosedValue) {
         this.holeClosedValue = holeClosedValue;
     }
 
-    public String getHoleClosedLocation() {
+    public HoleClosedLocation getHoleClosedLocation() {
         return holeClosedLocation;
     }
 
-    public void setHoleClosedLocation(String holeClosedLocation) {
+    public void setHoleClosedLocation(HoleClosedLocation holeClosedLocation) {
         this.holeClosedLocation = holeClosedLocation;
     }
 
@@ -54,11 +55,11 @@ public class Hole extends Technical {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

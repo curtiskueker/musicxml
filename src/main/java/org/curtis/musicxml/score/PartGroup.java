@@ -1,6 +1,7 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.common.Connection;
 
 public class PartGroup {
     private GroupName groupName;
@@ -11,7 +12,7 @@ public class PartGroup {
     private GroupBarline groupBarline;
     private Boolean groupTime;
     private Editorial editorial;
-    private String type;
+    private Connection type;
     private String number = "1";
 
     public PartGroup() {
@@ -82,11 +83,11 @@ public class PartGroup {
         this.editorial = editorial;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

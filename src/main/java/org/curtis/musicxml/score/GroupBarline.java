@@ -1,18 +1,18 @@
 package org.curtis.musicxml.score;
 
 public class GroupBarline {
-    private String groupBarlineValue;
+    private GroupBarlineType groupBarlineValue;
     private String color;
 
     public GroupBarline() {
 
     }
 
-    public String getGroupBarlineValue() {
+    public GroupBarlineType getGroupBarlineValue() {
         return groupBarlineValue;
     }
 
-    public void setGroupBarlineValue(String groupBarlineValue) {
+    public void setGroupBarlineValue(GroupBarlineType groupBarlineValue) {
         this.groupBarlineValue = groupBarlineValue;
     }
 

@@ -1,21 +1,21 @@
 package org.curtis.musicxml.note;
 
 public class Beam {
-    private String value;
+    private BeamType value;
     private Integer number;
     private Boolean repeater;
-    private String fan;
+    private BeamFan fan;
     private String color;
 
     public Beam() {
 
     }
 
-    public String getValue() {
+    public BeamType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(BeamType value) {
         this.value = value;
     }
 
@@ -35,11 +35,11 @@ public class Beam {
         this.repeater = repeater;
     }
 
-    public String getFan() {
+    public BeamFan getFan() {
         return fan;
     }
 
-    public void setFan(String fan) {
+    public void setFan(BeamFan fan) {
         this.fan = fan;
     }
 

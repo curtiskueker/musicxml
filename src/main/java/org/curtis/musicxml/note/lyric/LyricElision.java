@@ -2,7 +2,7 @@ package org.curtis.musicxml.note.lyric;
 
 public class LyricElision {
     private TextFontColor elision;
-    private String syllabic;
+    private Syllabic syllabic;
     private TextElementData text;
 
     public LyricElision() {
@@ -17,11 +17,11 @@ public class LyricElision {
         this.elision = elision;
     }
 
-    public String getSyllabic() {
+    public Syllabic getSyllabic() {
         return syllabic;
     }
 
-    public void setSyllabic(String syllabic) {
+    public void setSyllabic(Syllabic syllabic) {
         this.syllabic = syllabic;
     }
 

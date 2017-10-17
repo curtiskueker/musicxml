@@ -1,4 +1,4 @@
-package org.curtis.musicxml;
+package org.curtis.musicxml.exception;
 
 import org.curtis.exception.BaseException;
 

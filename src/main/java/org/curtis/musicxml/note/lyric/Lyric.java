@@ -2,6 +2,7 @@ package org.curtis.musicxml.note.lyric;
 
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Location;
 
 public class Lyric {
     private LyricItem lyricItem;
@@ -10,9 +11,9 @@ public class Lyric {
     private Editorial editorial;
     private String number;
     private String name;
-    private String justify;
+    private Location justify;
     private Position position;
-    private String placement;
+    private Location placement;
     private String color;
     private Boolean printObject;
 
@@ -68,11 +69,11 @@ public class Lyric {
         this.name = name;
     }
 
-    public String getJustify() {
+    public Location getJustify() {
         return justify;
     }
 
-    public void setJustify(String justify) {
+    public void setJustify(Location justify) {
         this.justify = justify;
     }
 
@@ -84,11 +85,11 @@ public class Lyric {
         this.position = position;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 

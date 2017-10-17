@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class NoteSize {
     private BigDecimal value;
-    private String type;
+    private NoteSizeType type;
 
     public NoteSize() {
 
@@ -18,11 +18,11 @@ public class NoteSize {
         this.value = value;
     }
 
-    public String getType() {
+    public NoteSizeType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(NoteSizeType type) {
         this.type = type;
     }
 }

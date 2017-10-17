@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class StickLocation extends Percussion {
-    private String value;
+    private StickLocationType value;
 
     public StickLocation() {
 
     }
 
-    public String getValue() {
+    public StickLocationType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(StickLocationType value) {
         this.value = value;
     }
 }

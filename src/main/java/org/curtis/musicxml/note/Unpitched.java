@@ -1,18 +1,18 @@
 package org.curtis.musicxml.note;
 
 public class Unpitched {
-    private String displayStep;
+    private Step displayStep;
     private Integer displayOctave;
 
     public Unpitched() {
 
     }
 
-    public String getDisplayStep() {
+    public Step getDisplayStep() {
         return displayStep;
     }
 
-    public void setDisplayStep(String displayStep) {
+    public void setDisplayStep(Step displayStep) {
         this.displayStep = displayStep;
     }
 

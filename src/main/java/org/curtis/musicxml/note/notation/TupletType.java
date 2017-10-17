@@ -1,9 +1,10 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.note.NoteTypeValue;
 
 public class TupletType {
-    private String noteTypeValue;
+    private NoteTypeValue noteTypeValue;
     private Font font;
     private String color;
 
@@ -11,11 +12,11 @@ public class TupletType {
 
     }
 
-    public String getNoteTypeValue() {
+    public NoteTypeValue getNoteTypeValue() {
         return noteTypeValue;
     }
 
-    public void setNoteTypeValue(String noteTypeValue) {
+    public void setNoteTypeValue(NoteTypeValue noteTypeValue) {
         this.noteTypeValue = noteTypeValue;
     }
 

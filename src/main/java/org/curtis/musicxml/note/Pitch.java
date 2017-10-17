@@ -3,7 +3,7 @@ package org.curtis.musicxml.note;
 import java.math.BigDecimal;
 
 public class Pitch {
-    private String step;
+    private Step step;
     private BigDecimal alter;
     private Integer octave;
 
@@ -11,11 +11,11 @@ public class Pitch {
 
     }
 
-    public String getStep() {
+    public Step getStep() {
         return step;
     }
 
-    public void setStep(String step) {
+    public void setStep(Step step) {
         this.step = step;
     }
 

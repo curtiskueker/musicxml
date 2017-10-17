@@ -2,9 +2,9 @@ package org.curtis.musicxml.common;
 
 public class Font {
     private String fontFamily;
-    private String fontStyle;
-    private String fontSize;
-    private String fontWeight;
+    private FontStyle fontStyle;
+    private FontSize fontSize;
+    private FontWeight fontWeight;
 
     public Font() {
 
@@ -18,27 +18,27 @@ public class Font {
         this.fontFamily = fontFamily;
     }
 
-    public String getFontStyle() {
+    public FontStyle getFontStyle() {
         return fontStyle;
     }
 
-    public void setFontStyle(String fontStyle) {
+    public void setFontStyle(FontStyle fontStyle) {
         this.fontStyle = fontStyle;
     }
 
-    public String getFontSize() {
+    public FontSize getFontSize() {
         return fontSize;
     }
 
-    public void setFontSize(String fontSize) {
+    public void setFontSize(FontSize fontSize) {
         this.fontSize = fontSize;
     }
 
-    public String getFontWeight() {
+    public FontWeight getFontWeight() {
         return fontWeight;
     }
 
-    public void setFontWeight(String fontWeight) {
+    public void setFontWeight(FontWeight fontWeight) {
         this.fontWeight = fontWeight;
     }
 }

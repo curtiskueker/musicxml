@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note.notation.technical.harmonic;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.notation.technical.Technical;
 
@@ -8,7 +9,7 @@ public class Harmonic extends Technical {
     private HarmonicPitch harmonicPitch;
     private Boolean printObject;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public Harmonic() {
 
@@ -46,11 +47,11 @@ public class Harmonic extends Technical {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

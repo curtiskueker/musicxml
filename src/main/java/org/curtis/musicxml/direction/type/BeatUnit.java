@@ -1,18 +1,20 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.note.NoteTypeValue;
+
 public class BeatUnit {
-    private String beatUnit;
+    private NoteTypeValue beatUnit;
     private Integer beatUnitDots;
 
     public BeatUnit() {
 
     }
 
-    public String getBeatUnit() {
+    public NoteTypeValue getBeatUnit() {
         return beatUnit;
     }
 
-    public void setBeatUnit(String beatUnit) {
+    public void setBeatUnit(NoteTypeValue beatUnit) {
         this.beatUnit = beatUnit;
     }
 

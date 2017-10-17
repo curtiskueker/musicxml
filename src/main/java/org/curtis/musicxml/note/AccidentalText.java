@@ -3,18 +3,18 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.common.TextFormatting;
 
 public class AccidentalText {
-    private String accidentalValue;
+    private AccidentalValue accidentalValue;
     private TextFormatting textFormatting;
 
     public AccidentalText() {
 
     }
 
-    public String getAccidentalValue() {
+    public AccidentalValue getAccidentalValue() {
         return accidentalValue;
     }
 
-    public void setAccidentalValue(String accidentalValue) {
+    public void setAccidentalValue(AccidentalValue accidentalValue) {
         this.accidentalValue = accidentalValue;
     }
 

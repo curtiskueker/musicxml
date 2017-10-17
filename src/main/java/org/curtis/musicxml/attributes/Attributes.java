@@ -4,6 +4,7 @@ import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.measure.MeasureStyle;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.PartSymbol;
 
 import java.math.BigDecimal;
 import java.util.List;

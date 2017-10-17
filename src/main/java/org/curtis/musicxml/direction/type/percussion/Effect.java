@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Effect extends Percussion {
-    private String value;
+    private EffectType value;
 
     public Effect() {
 
     }
 
-    public String getValue() {
+    public EffectType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(EffectType value) {
         this.value = value;
     }
 }

@@ -1,19 +1,19 @@
 package org.curtis.musicxml.barline;
 
 public class Repeat {
-    private String direction;
+    private RepeatDirection direction;
     private Integer times;
-    private String winged;
+    private Winged winged;
 
     public Repeat() {
 
     }
 
-    public String getDirection() {
+    public RepeatDirection getDirection() {
         return direction;
     }
 
-    public void setDirection(String direction) {
+    public void setDirection(RepeatDirection direction) {
         this.direction = direction;
     }
 
@@ -25,11 +25,11 @@ public class Repeat {
         this.times = times;
     }
 
-    public String getWinged() {
+    public Winged getWinged() {
         return winged;
     }
 
-    public void setWinged(String winged) {
+    public void setWinged(Winged winged) {
         this.winged = winged;
     }
 }

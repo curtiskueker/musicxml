@@ -1,20 +1,22 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.note.Step;
+
 import java.math.BigDecimal;
 
 public class PedalTuning {
-    private String pedalStep;
+    private Step pedalStep;
     private BigDecimal pedalAlter;
 
     public PedalTuning() {
 
     }
 
-    public String getPedalStep() {
+    public Step getPedalStep() {
         return pedalStep;
     }
 
-    public void setPedalStep(String pedalStep) {
+    public void setPedalStep(Step pedalStep) {
         this.pedalStep = pedalStep;
     }
 

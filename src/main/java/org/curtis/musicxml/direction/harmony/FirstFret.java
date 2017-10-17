@@ -1,9 +1,11 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.Location;
+
 public class FirstFret {
     private Integer value;
     private String text;
-    private String location;
+    private Location location;
 
     public FirstFret() {
 
@@ -25,11 +27,11 @@ public class FirstFret {
         this.text = text;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 }

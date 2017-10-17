@@ -9,8 +9,8 @@ public class Time {
     private Interchangeable interchangeable;
     private String senzaMisura;
     private Integer number;
-    private String symbol;
-    private String separator;
+    private TimeSymbol symbol;
+    private TimeSeparator separator;
     private PrintStyleAlign printStyleAlign;
     private Boolean printObject;
 
@@ -50,19 +50,19 @@ public class Time {
         this.number = number;
     }
 
-    public String getSymbol() {
+    public TimeSymbol getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public void setSymbol(TimeSymbol symbol) {
         this.symbol = symbol;
     }
 
-    public String getSeparator() {
+    public TimeSeparator getSeparator() {
         return separator;
     }
 
-    public void setSeparator(String separator) {
+    public void setSeparator(TimeSeparator separator) {
         this.separator = separator;
     }
 

@@ -1,14 +1,15 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.SymbolSize;
 
 public class Clef {
-    private String sign;
+    private ClefSign sign;
     private Integer line;
     private Integer clefOctaveChange;
     private Integer number;
     private Boolean additional;
-    private String size;
+    private SymbolSize size;
     private Boolean afterBarline;
     private PrintStyle printStyle;
     private Boolean printObject;
@@ -17,11 +18,11 @@ public class Clef {
 
     }
 
-    public String getSign() {
+    public ClefSign getSign() {
         return sign;
     }
 
-    public void setSign(String sign) {
+    public void setSign(ClefSign sign) {
         this.sign = sign;
     }
 
@@ -57,11 +58,11 @@ public class Clef {
         this.additional = additional;
     }
 
-    public String getSize() {
+    public SymbolSize getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(SymbolSize size) {
         this.size = size;
     }
 

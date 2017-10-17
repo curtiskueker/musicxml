@@ -1,26 +1,28 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.SymbolSize;
+
 public class NoteType {
-    private String value;
-    private String size;
+    private NoteTypeValue value;
+    private SymbolSize size;
 
     public NoteType() {
 
     }
 
-    public String getValue() {
+    public NoteTypeValue getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(NoteTypeValue value) {
         this.value = value;
     }
 
-    public String getSize() {
+    public SymbolSize getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(SymbolSize size) {
         this.size = size;
     }
 }

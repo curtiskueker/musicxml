@@ -1,9 +1,9 @@
-package org.curtis.musicxml.attributes;
+package org.curtis.musicxml.score;
 
 import org.curtis.musicxml.common.Position;
 
 public class PartSymbol {
-    private String groupSymbolValue;
+    private GroupSymbolValue groupSymbolValue;
     private Integer topStaff;
     private Integer bottomStaff;
     private Position position;
@@ -13,11 +13,11 @@ public class PartSymbol {
 
     }
 
-    public String getGroupSymbolValue() {
+    public GroupSymbolValue getGroupSymbolValue() {
         return groupSymbolValue;
     }
 
-    public void setGroupSymbolValue(String groupSymbolValue) {
+    public void setGroupSymbolValue(GroupSymbolValue groupSymbolValue) {
         this.groupSymbolValue = groupSymbolValue;
     }
 

@@ -3,7 +3,7 @@ package org.curtis.musicxml.note;
 public class TimeModification {
     private Integer actualNotes;
     private Integer normalNotes;
-    private String normalType;
+    private NoteTypeValue normalType;
     private Integer normalDots;
 
     public TimeModification() {
@@ -26,11 +26,11 @@ public class TimeModification {
         this.normalNotes = normalNotes;
     }
 
-    public String getNormalType() {
+    public NoteTypeValue getNormalType() {
         return normalType;
     }
 
-    public void setNormalType(String normalType) {
+    public void setNormalType(NoteTypeValue normalType) {
         this.normalType = normalType;
     }
 

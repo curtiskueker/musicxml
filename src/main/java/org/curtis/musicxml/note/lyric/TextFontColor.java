@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextDecoration;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ public class TextFontColor {
     private BigDecimal textRotation;
     private String letterSpacing;
     private String lang;
-    private String textDirection;
+    private Location textDirection;
 
     public TextFontColor() {
 
@@ -75,11 +76,11 @@ public class TextFontColor {
         this.lang = lang;
     }
 
-    public String getTextDirection() {
+    public Location getTextDirection() {
         return textDirection;
     }
 
-    public void setTextDirection(String textDirection) {
+    public void setTextDirection(Location textDirection) {
         this.textDirection = textDirection;
     }
 }

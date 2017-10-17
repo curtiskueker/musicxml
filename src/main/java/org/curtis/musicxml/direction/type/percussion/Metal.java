@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Metal extends Percussion {
-    private String value;
+    private MetalType value;
 
     public Metal() {
 
     }
 
-    public String getValue() {
+    public MetalType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(MetalType value) {
         this.value = value;
     }
 }

@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Pitched extends Percussion {
-    private String value;
+    private PitchedType value;
 
     public Pitched() {
 
     }
 
-    public String getValue() {
+    public PitchedType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(PitchedType value) {
         this.value = value;
     }
 }

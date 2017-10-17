@@ -2,15 +2,17 @@ package org.curtis.musicxml.direction.type;
 
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.LineType;
 
 import java.math.BigDecimal;
 
 public class Bracket extends DirectionType {
-    private String type;
+    private Connection type;
     private Integer number;
-    private String lineEnd;
+    private LineEnd lineEnd;
     private BigDecimal endLength;
-    private String lineType;
+    private LineType lineType;
     private DashedFormatting dashedFormatting;
     private Position position;
     private String color;
@@ -19,11 +21,11 @@ public class Bracket extends DirectionType {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -35,11 +37,11 @@ public class Bracket extends DirectionType {
         this.number = number;
     }
 
-    public String getLineEnd() {
+    public LineEnd getLineEnd() {
         return lineEnd;
     }
 
-    public void setLineEnd(String lineEnd) {
+    public void setLineEnd(LineEnd lineEnd) {
         this.lineEnd = lineEnd;
     }
 
@@ -51,11 +53,11 @@ public class Bracket extends DirectionType {
         this.endLength = endLength;
     }
 
-    public String getLineType() {
+    public LineType getLineType() {
         return lineType;
     }
 
-    public void setLineType(String lineType) {
+    public void setLineType(LineType lineType) {
         this.lineType = lineType;
     }
 

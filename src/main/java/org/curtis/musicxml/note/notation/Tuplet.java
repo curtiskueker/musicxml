@@ -1,18 +1,21 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.LineShape;
 
 public class Tuplet extends Notation {
     private TupletPortion tupletActual;
     private TupletPortion tupletNormal;
-    private String type;
+    private Connection type;
     private Integer number;
     private Boolean bracket;
-    private String showNumber;
-    private String showType;
-    private String lineShape;
+    private ShowTuplet showNumber;
+    private ShowTuplet showType;
+    private LineShape lineShape;
     private Position position;
-    private String placement;
+    private Location placement;
 
     public Tuplet() {
 
@@ -34,11 +37,11 @@ public class Tuplet extends Notation {
         this.tupletNormal = tupletNormal;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -58,27 +61,27 @@ public class Tuplet extends Notation {
         this.bracket = bracket;
     }
 
-    public String getShowNumber() {
+    public ShowTuplet getShowNumber() {
         return showNumber;
     }
 
-    public void setShowNumber(String showNumber) {
+    public void setShowNumber(ShowTuplet showNumber) {
         this.showNumber = showNumber;
     }
 
-    public String getShowType() {
+    public ShowTuplet getShowType() {
         return showType;
     }
 
-    public void setShowType(String showType) {
+    public void setShowType(ShowTuplet showType) {
         this.showType = showType;
     }
 
-    public String getLineShape() {
+    public LineShape getLineShape() {
         return lineShape;
     }
 
-    public void setLineShape(String lineShape) {
+    public void setLineShape(LineShape lineShape) {
         this.lineShape = lineShape;
     }
 
@@ -90,11 +93,11 @@ public class Tuplet extends Notation {
         this.position = position;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

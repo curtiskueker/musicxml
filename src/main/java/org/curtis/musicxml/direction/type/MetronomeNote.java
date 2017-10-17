@@ -1,9 +1,11 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.note.NoteTypeValue;
+
 import java.util.List;
 
 public class MetronomeNote {
-    private String metronomeType;
+    private NoteTypeValue metronomeType;
     private Integer metronomeDots;
     private List<MetronomeBeam> metronomeBeams;
     private MetronomeTuplet metronomeTuplet;
@@ -12,11 +14,11 @@ public class MetronomeNote {
 
     }
 
-    public String getMetronomeType() {
+    public NoteTypeValue getMetronomeType() {
         return metronomeType;
     }
 
-    public void setMetronomeType(String metronomeType) {
+    public void setMetronomeType(NoteTypeValue metronomeType) {
         this.metronomeType = metronomeType;
     }
 

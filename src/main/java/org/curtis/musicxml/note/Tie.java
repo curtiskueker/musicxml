@@ -1,18 +1,20 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Connection;
+
 public class Tie {
-    private String type;
+    private Connection type;
     private String timeOnly;
 
     public Tie() {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

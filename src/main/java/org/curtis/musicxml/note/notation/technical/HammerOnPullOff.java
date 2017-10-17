@@ -1,13 +1,15 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.Connection;
 
 public abstract class HammerOnPullOff extends Technical {
     private String value;
-    private String type;
+    private Connection type;
     private Integer number = 1;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public String getValue() {
         return value;
@@ -17,11 +19,11 @@ public abstract class HammerOnPullOff extends Technical {
         this.value = value;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -41,11 +43,11 @@ public abstract class HammerOnPullOff extends Technical {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

@@ -1,16 +1,19 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.LineType;
 
 public class Tied extends Notation {
-    private String type;
+    private Connection type;
     private Integer number;
-    private String lineType;
+    private LineType lineType;
     private DashedFormatting dashedFormatting;
     private Position position;
-    private String placement;
-    private String orientation;
+    private Location placement;
+    private Location orientation;
     private Bezier bezier;
     private String color;
 
@@ -18,11 +21,11 @@ public class Tied extends Notation {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -34,11 +37,11 @@ public class Tied extends Notation {
         this.number = number;
     }
 
-    public String getLineType() {
+    public LineType getLineType() {
         return lineType;
     }
 
-    public void setLineType(String lineType) {
+    public void setLineType(LineType lineType) {
         this.lineType = lineType;
     }
 
@@ -58,19 +61,19 @@ public class Tied extends Notation {
         this.position = position;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 
-    public String getOrientation() {
+    public Location getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(String orientation) {
+    public void setOrientation(Location orientation) {
         this.orientation = orientation;
     }
 

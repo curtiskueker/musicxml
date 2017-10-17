@@ -1,26 +1,28 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
 
 import java.util.List;
 
 public class Dynamics extends Notation {
-    private List<String> values;
+    private List<DynamicsValue> values;
     private PrintStyleAlign printStyleAlign;
-    private String placement;
+    private Location placement;
     private TextDecoration textDecoration;
-    private String enclosure;
+    private EnclosureShape enclosure;
 
     public Dynamics() {
 
     }
 
-    public List<String> getValues() {
+    public List<DynamicsValue> getValues() {
         return values;
     }
 
-    public void setValues(List<String> values) {
+    public void setValues(List<DynamicsValue> values) {
         this.values = values;
     }
 
@@ -32,11 +34,11 @@ public class Dynamics extends Notation {
         this.printStyleAlign = printStyleAlign;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 
@@ -48,11 +50,11 @@ public class Dynamics extends Notation {
         this.textDecoration = textDecoration;
     }
 
-    public String getEnclosure() {
+    public EnclosureShape getEnclosure() {
         return enclosure;
     }
 
-    public void setEnclosure(String enclosure) {
+    public void setEnclosure(EnclosureShape enclosure) {
         this.enclosure = enclosure;
     }
 }

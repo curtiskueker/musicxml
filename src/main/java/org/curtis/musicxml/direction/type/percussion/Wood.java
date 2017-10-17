@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Wood extends Percussion {
-    private String value;
+    private WoodType value;
 
     public Wood() {
 
     }
 
-    public String getValue() {
+    public WoodType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(WoodType value) {
         this.value = value;
     }
 }

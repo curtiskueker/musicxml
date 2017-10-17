@@ -3,7 +3,7 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class DegreeType {
-    private String value;
+    private DegreeTypeValue value;
     private String text;
     private PrintStyle printStyle;
 
@@ -11,11 +11,11 @@ public class DegreeType {
 
     }
 
-    public String getValue() {
+    public DegreeTypeValue getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(DegreeTypeValue value) {
         this.value = value;
     }
 

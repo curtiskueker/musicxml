@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.lyric;
 
 public class LyricSyllable extends LyricItem {
-    private String syllabic;
+    private Syllabic syllabic;
     private TextElementData text;
     private LyricElision lyricElision;
     private Extend extend;
@@ -10,11 +10,11 @@ public class LyricSyllable extends LyricItem {
 
     }
 
-    public String getSyllabic() {
+    public Syllabic getSyllabic() {
         return syllabic;
     }
 
-    public void setSyllabic(String syllabic) {
+    public void setSyllabic(Syllabic syllabic) {
         this.syllabic = syllabic;
     }
 

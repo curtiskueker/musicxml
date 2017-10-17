@@ -1,12 +1,13 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.score.MusicData;
 
 import java.util.List;
 
 public class Grouping extends MusicData {
     private List<Feature> features;
-    private String type;
+    private Connection type;
     private String number = "1";
     private String numberOf;
 
@@ -22,11 +23,11 @@ public class Grouping extends MusicData {
         this.features = features;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

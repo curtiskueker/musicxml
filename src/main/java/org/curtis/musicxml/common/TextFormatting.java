@@ -3,7 +3,7 @@ package org.curtis.musicxml.common;
 import java.math.BigDecimal;
 
 public class TextFormatting {
-    private String justify;
+    private Location justify;
     private PrintStyleAlign printStyleAlign;
     private TextDecoration textDecoration;
     private BigDecimal textRotation;
@@ -11,18 +11,18 @@ public class TextFormatting {
     private String lineHeight;
     private String lang;
     private String space;
-    private String textDirection;
-    private String enclosure;
+    private Location textDirection;
+    private EnclosureShape enclosure;
 
     public TextFormatting() {
 
     }
 
-    public String getJustify() {
+    public Location getJustify() {
         return justify;
     }
 
-    public void setJustify(String justify) {
+    public void setJustify(Location justify) {
         this.justify = justify;
     }
 
@@ -82,19 +82,19 @@ public class TextFormatting {
         this.space = space;
     }
 
-    public String getTextDirection() {
+    public Location getTextDirection() {
         return textDirection;
     }
 
-    public void setTextDirection(String textDirection) {
+    public void setTextDirection(Location textDirection) {
         this.textDirection = textDirection;
     }
 
-    public String getEnclosure() {
+    public EnclosureShape getEnclosure() {
         return enclosure;
     }
 
-    public void setEnclosure(String enclosure) {
+    public void setEnclosure(EnclosureShape enclosure) {
         this.enclosure = enclosure;
     }
 }

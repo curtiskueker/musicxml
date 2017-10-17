@@ -1,32 +1,33 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Line {
-    private String lineShape;
-    private String lineType;
+    private LineShape lineShape;
+    private LineType lineType;
     private DashedFormatting dashedFormatting;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public Line() {
 
     }
 
-    public String getLineShape() {
+    public LineShape getLineShape() {
         return lineShape;
     }
 
-    public void setLineShape(String lineShape) {
+    public void setLineShape(LineShape lineShape) {
         this.lineShape = lineShape;
     }
 
-    public String getLineType() {
+    public LineType getLineType() {
         return lineType;
     }
 
-    public void setLineType(String lineType) {
+    public void setLineType(LineType lineType) {
         this.lineType = lineType;
     }
 
@@ -46,11 +47,11 @@ public class Line {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

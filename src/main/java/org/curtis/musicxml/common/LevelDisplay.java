@@ -3,7 +3,7 @@ package org.curtis.musicxml.common;
 public class LevelDisplay {
     private Boolean parentheses;
     private Boolean bracket;
-    private String size;
+    private SymbolSize size;
 
     public LevelDisplay() {
 
@@ -25,11 +25,11 @@ public class LevelDisplay {
         this.bracket = bracket;
     }
 
-    public String getSize() {
+    public SymbolSize getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(SymbolSize size) {
         this.size = size;
     }
 }

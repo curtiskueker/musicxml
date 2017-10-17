@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 public class Stem {
-    private String value;
+    private StemType value;
     private YPosition yPosition;
     private String color;
 
@@ -9,11 +9,11 @@ public class Stem {
 
     }
 
-    public String getValue() {
+    public StemType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(StemType value) {
         this.value = value;
     }
 

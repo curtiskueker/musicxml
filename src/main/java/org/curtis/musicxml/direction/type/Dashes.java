@@ -2,9 +2,10 @@ package org.curtis.musicxml.direction.type;
 
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Connection;
 
 public class Dashes extends DirectionType {
-    private String type;
+    private Connection type;
     private Integer number;
     private DashedFormatting dashedFormatting;
     private Position position;
@@ -14,11 +15,11 @@ public class Dashes extends DirectionType {
 
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

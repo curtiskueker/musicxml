@@ -1,11 +1,12 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.Location;
 
 public class GroupName {
     private String groupName;
     private PrintStyle printStyle;
-    private String justify;
+    private Location justify;
 
     public GroupName() {
 
@@ -27,11 +28,11 @@ public class GroupName {
         this.printStyle = printStyle;
     }
 
-    public String getJustify() {
+    public Location getJustify() {
         return justify;
     }
 
-    public void setJustify(String justify) {
+    public void setJustify(Location justify) {
         this.justify = justify;
     }
 }

@@ -1,8 +1,10 @@
 package org.curtis.musicxml.attributes.measure;
 
+import org.curtis.musicxml.common.Connection;
+
 public class Slash extends MeasureStyle {
     private SlashGroup slashGroup;
-    private String type;
+    private Connection type;
     private Boolean useDots;
     private Boolean useStems;
 
@@ -18,11 +20,11 @@ public class Slash extends MeasureStyle {
         this.slashGroup = slashGroup;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

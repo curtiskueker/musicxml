@@ -3,18 +3,18 @@ package org.curtis.musicxml.direction.type;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
 public class StringMute extends DirectionType {
-    private String type;
+    private StringMuteDirection type;
     private PrintStyleAlign printStyleAlign;
 
     public StringMute() {
 
     }
 
-    public String getType() {
+    public StringMuteDirection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(StringMuteDirection type) {
         this.type = type;
     }
 

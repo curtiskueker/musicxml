@@ -1,21 +1,23 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.note.AccidentalValue;
 
 public class AccidentalMark extends Notation {
-    private String accidentalValue;
+    private AccidentalValue accidentalValue;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public AccidentalMark() {
 
     }
 
-    public String getAccidentalValue() {
+    public AccidentalValue getAccidentalValue() {
         return accidentalValue;
     }
 
-    public void setAccidentalValue(String accidentalValue) {
+    public void setAccidentalValue(AccidentalValue accidentalValue) {
         this.accidentalValue = accidentalValue;
     }
 
@@ -27,11 +29,11 @@ public class AccidentalMark extends Notation {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

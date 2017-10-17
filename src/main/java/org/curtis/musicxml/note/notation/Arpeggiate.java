@@ -1,12 +1,13 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.common.Location;
 
 public class Arpeggiate extends Notation {
     private Integer number;
-    private String direction;
+    private Location direction;
     private Position position;
-    private String placement;
+    private Location placement;
     private String color;
 
     public Arpeggiate() {
@@ -21,11 +22,11 @@ public class Arpeggiate extends Notation {
         this.number = number;
     }
 
-    public String getDirection() {
+    public Location getDirection() {
         return direction;
     }
 
-    public void setDirection(String direction) {
+    public void setDirection(Location direction) {
         this.direction = direction;
     }
 
@@ -37,11 +38,11 @@ public class Arpeggiate extends Notation {
         this.position = position;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 

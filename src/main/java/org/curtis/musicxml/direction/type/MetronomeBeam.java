@@ -1,18 +1,20 @@
 package org.curtis.musicxml.direction.type;
 
+import org.curtis.musicxml.note.BeamType;
+
 public class MetronomeBeam {
-    private String beamValue;
+    private BeamType beamValue;
     private Integer number;
 
     public MetronomeBeam() {
 
     }
 
-    public String getBeamValue() {
+    public BeamType getBeamValue() {
         return beamValue;
     }
 
-    public void setBeamValue(String beamValue) {
+    public void setBeamValue(BeamType beamValue) {
         this.beamValue = beamValue;
     }
 

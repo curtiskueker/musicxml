@@ -3,18 +3,18 @@ package org.curtis.musicxml.direction;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
 public class MeasureNumbering {
-    private String measureNumberingValue;
+    private MeasureNumberingType measureNumberingValue;
     private PrintStyleAlign printStyleAlign;
 
     public MeasureNumbering() {
 
     }
 
-    public String getMeasureNumberingValue() {
+    public MeasureNumberingType getMeasureNumberingValue() {
         return measureNumberingValue;
     }
 
-    public void setMeasureNumberingValue(String measureNumberingValue) {
+    public void setMeasureNumberingValue(MeasureNumberingType measureNumberingValue) {
         this.measureNumberingValue = measureNumberingValue;
     }
 

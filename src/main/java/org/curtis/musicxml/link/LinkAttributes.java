@@ -2,11 +2,11 @@ package org.curtis.musicxml.link;
 
 public class LinkAttributes {
     private String href;
-    private String type;
+    private LinkType type;
     private String role;
     private String title;
-    private String show = "replace";
-    private String actuate = "onRequest";
+    private Show show = Show.REPLACE;
+    private Actuate actuate = Actuate.ON_REQUEST;
 
     public LinkAttributes() {
 
@@ -20,11 +20,11 @@ public class LinkAttributes {
         this.href = href;
     }
 
-    public String getType() {
+    public LinkType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(LinkType type) {
         this.type = type;
     }
 
@@ -44,19 +44,19 @@ public class LinkAttributes {
         this.title = title;
     }
 
-    public String getShow() {
+    public Show getShow() {
         return show;
     }
 
-    public void setShow(String show) {
+    public void setShow(Show show) {
         this.show = show;
     }
 
-    public String getActuate() {
+    public Actuate getActuate() {
         return actuate;
     }
 
-    public void setActuate(String actuate) {
+    public void setActuate(Actuate actuate) {
         this.actuate = actuate;
     }
 }

@@ -1,26 +1,26 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Beater extends Percussion {
-    private String beaterValue;
-    private String tip;
+    private BeaterValue beaterValue;
+    private TipDirection tip;
 
     public Beater() {
 
     }
 
-    public String getBeaterValue() {
+    public BeaterValue getBeaterValue() {
         return beaterValue;
     }
 
-    public void setBeaterValue(String beaterValue) {
+    public void setBeaterValue(BeaterValue beaterValue) {
         this.beaterValue = beaterValue;
     }
 
-    public String getTip() {
+    public TipDirection getTip() {
         return tip;
     }
 
-    public void setTip(String tip) {
+    public void setTip(TipDirection tip) {
         this.tip = tip;
     }
 }

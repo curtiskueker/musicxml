@@ -3,20 +3,20 @@ package org.curtis.musicxml.attributes;
 import java.util.List;
 
 public class Interchangeable {
-    private String timeRelation;
+    private TimeRelation timeRelation;
     private List<TimeSignature> timeSignatures;
-    private String symbol;
-    private String separator;
+    private TimeSymbol symbol;
+    private TimeSeparator separator;
 
     public Interchangeable() {
 
     }
 
-    public String getTimeRelation() {
+    public TimeRelation getTimeRelation() {
         return timeRelation;
     }
 
-    public void setTimeRelation(String timeRelation) {
+    public void setTimeRelation(TimeRelation timeRelation) {
         this.timeRelation = timeRelation;
     }
 
@@ -28,19 +28,19 @@ public class Interchangeable {
         this.timeSignatures = timeSignatures;
     }
 
-    public String getSymbol() {
+    public TimeSymbol getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public void setSymbol(TimeSymbol symbol) {
         this.symbol = symbol;
     }
 
-    public String getSeparator() {
+    public TimeSeparator getSeparator() {
         return separator;
     }
 
-    public void setSeparator(String separator) {
+    public void setSeparator(TimeSeparator separator) {
         this.separator = separator;
     }
 }

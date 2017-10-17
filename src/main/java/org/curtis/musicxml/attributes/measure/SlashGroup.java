@@ -1,18 +1,20 @@
 package org.curtis.musicxml.attributes.measure;
 
+import org.curtis.musicxml.note.NoteTypeValue;
+
 public class SlashGroup {
-    private String slashType;
+    private NoteTypeValue slashType;
     private Integer slashDots;
 
     public SlashGroup() {
 
     }
 
-    public String getSlashType() {
+    public NoteTypeValue getSlashType() {
         return slashType;
     }
 
-    public void setSlashType(String slashType) {
+    public void setSlashType(NoteTypeValue slashType) {
         this.slashType = slashType;
     }
 

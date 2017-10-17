@@ -1,10 +1,11 @@
 package org.curtis.musicxml.note.notation.ornament;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public abstract class HorizontalTurn extends Ornament {
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
     private TrillSound trillSound;
     private Boolean slash;
 
@@ -16,11 +17,11 @@ public abstract class HorizontalTurn extends Ornament {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 

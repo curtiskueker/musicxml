@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 public class Rest {
-    private String displayStep;
+    private Step displayStep;
     private Integer displayOctave;
     private Boolean measure;
 
@@ -9,11 +9,11 @@ public class Rest {
 
     }
 
-    public String getDisplayStep() {
+    public Step getDisplayStep() {
         return displayStep;
     }
 
-    public void setDisplayStep(String displayStep) {
+    public void setDisplayStep(Step displayStep) {
         this.displayStep = displayStep;
     }
 

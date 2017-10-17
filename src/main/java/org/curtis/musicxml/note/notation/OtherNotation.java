@@ -1,14 +1,16 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.Connection;
 
 public class OtherNotation extends Notation {
     private String value;
-    private String type;
+    private Connection type;
     private Integer number = 1;
     private Boolean printObject;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public OtherNotation() {
 
@@ -22,11 +24,11 @@ public class OtherNotation extends Notation {
         this.value = value;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -56,11 +58,11 @@ public class OtherNotation extends Notation {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

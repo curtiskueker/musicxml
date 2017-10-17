@@ -4,7 +4,7 @@ import org.curtis.musicxml.common.PrintStyle;
 
 public class DegreeValue {
     private Integer value;
-    private String symbol;
+    private DegreeSymbol symbol;
     private String text;
     private PrintStyle printStyle;
 
@@ -20,11 +20,11 @@ public class DegreeValue {
         this.value = value;
     }
 
-    public String getSymbol() {
+    public DegreeSymbol getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public void setSymbol(DegreeSymbol symbol) {
         this.symbol = symbol;
     }
 

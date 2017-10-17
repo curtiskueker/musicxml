@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Membrane extends Percussion {
-    private String value;
+    private MembraneType value;
 
     public Membrane() {
 
     }
 
-    public String getValue() {
+    public MembraneType getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(MembraneType value) {
         this.value = value;
     }
 }

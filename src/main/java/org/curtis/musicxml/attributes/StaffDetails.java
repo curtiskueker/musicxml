@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class StaffDetails {
-    private String staffType;
+    private StaffType staffType;
     private Integer staffLines;
     private List<StaffTuning> staffTunings;
     private Integer capo;
     private BigDecimal staffSize;
     private Integer number;
-    private String showFrets;
+    private ShowFrets showFrets;
     private Boolean printObject;
     private Boolean printSpacing;
 
@@ -18,11 +18,11 @@ public class StaffDetails {
 
     }
 
-    public String getStaffType() {
+    public StaffType getStaffType() {
         return staffType;
     }
 
-    public void setStaffType(String staffType) {
+    public void setStaffType(StaffType staffType) {
         this.staffType = staffType;
     }
 
@@ -66,11 +66,11 @@ public class StaffDetails {
         this.number = number;
     }
 
-    public String getShowFrets() {
+    public ShowFrets getShowFrets() {
         return showFrets;
     }
 
-    public void setShowFrets(String showFrets) {
+    public void setShowFrets(ShowFrets showFrets) {
         this.showFrets = showFrets;
     }
 

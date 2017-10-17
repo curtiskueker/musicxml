@@ -1,14 +1,16 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.notation.technical.bend.BendSound;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Slide extends Notation {
     private String value;
-    private String type;
+    private Connection type;
     private Integer number = 1;
-    private String lineType;
+    private LineType lineType;
     private DashedFormatting dashedFormatting;
     private PrintStyle printStyle;
     private BendSound bendSound;
@@ -25,11 +27,11 @@ public class Slide extends Notation {
         this.value = value;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
@@ -41,11 +43,11 @@ public class Slide extends Notation {
         this.number = number;
     }
 
-    public String getLineType() {
+    public LineType getLineType() {
         return lineType;
     }
 
-    public void setLineType(String lineType) {
+    public void setLineType(LineType lineType) {
         this.lineType = lineType;
     }
 

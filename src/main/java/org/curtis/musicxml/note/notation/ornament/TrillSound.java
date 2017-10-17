@@ -3,9 +3,9 @@ package org.curtis.musicxml.note.notation.ornament;
 import java.math.BigDecimal;
 
 public class TrillSound {
-    private String startNote;
-    private String trillStep;
-    private String twoNoteTurn;
+    private StartNote startNote;
+    private TrillStep trillStep;
+    private TwoNoteTurn twoNoteTurn;
     private Boolean accelerate;
     private BigDecimal beats;
     private BigDecimal secondBeat;
@@ -15,27 +15,27 @@ public class TrillSound {
 
     }
 
-    public String getStartNote() {
+    public StartNote getStartNote() {
         return startNote;
     }
 
-    public void setStartNote(String startNote) {
+    public void setStartNote(StartNote startNote) {
         this.startNote = startNote;
     }
 
-    public String getTrillStep() {
+    public TrillStep getTrillStep() {
         return trillStep;
     }
 
-    public void setTrillStep(String trillStep) {
+    public void setTrillStep(TrillStep trillStep) {
         this.trillStep = trillStep;
     }
 
-    public String getTwoNoteTurn() {
+    public TwoNoteTurn getTwoNoteTurn() {
         return twoNoteTurn;
     }
 
-    public void setTwoNoteTurn(String twoNoteTurn) {
+    public void setTwoNoteTurn(TwoNoteTurn twoNoteTurn) {
         this.twoNoteTurn = twoNoteTurn;
     }
 

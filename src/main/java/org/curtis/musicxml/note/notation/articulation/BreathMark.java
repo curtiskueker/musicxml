@@ -1,21 +1,22 @@
 package org.curtis.musicxml.note.notation.articulation;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class BreathMark extends Articulation {
-    private String breathMarkValue;
+    private BreathMarkType breathMarkValue;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public BreathMark() {
 
     }
 
-    public String getBreathMarkValue() {
+    public BreathMarkType getBreathMarkValue() {
         return breathMarkValue;
     }
 
-    public void setBreathMarkValue(String breathMarkValue) {
+    public void setBreathMarkValue(BreathMarkType breathMarkValue) {
         this.breathMarkValue = breathMarkValue;
     }
 
@@ -27,11 +28,11 @@ public class BreathMark extends Articulation {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

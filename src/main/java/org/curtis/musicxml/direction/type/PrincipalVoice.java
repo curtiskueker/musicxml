@@ -1,11 +1,12 @@
 package org.curtis.musicxml.direction.type;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.common.Connection;
 
 public class PrincipalVoice extends DirectionType {
     private String principalVoice;
-    private String type;
-    private String symbol;
+    private Connection type;
+    private PrincipalVoiceSymbol symbol;
     private PrintStyleAlign printStyleAlign;
 
     public PrincipalVoice() {
@@ -20,19 +21,19 @@ public class PrincipalVoice extends DirectionType {
         this.principalVoice = principalVoice;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 
-    public String getSymbol() {
+    public PrincipalVoiceSymbol getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public void setSymbol(PrincipalVoiceSymbol symbol) {
         this.symbol = symbol;
     }
 

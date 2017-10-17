@@ -1,5 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.Offset;
@@ -13,11 +14,11 @@ public class Harmony extends MusicData {
     private Offset offset;
     private Editorial editorial;
     private Integer staff;
-    private String type;
+    private HarmonyType type;
     private Boolean printObject;
     private Boolean printFrame;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public Harmony() {
 
@@ -63,11 +64,11 @@ public class Harmony extends MusicData {
         this.staff = staff;
     }
 
-    public String getType() {
+    public HarmonyType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(HarmonyType type) {
         this.type = type;
     }
 
@@ -95,11 +96,11 @@ public class Harmony extends MusicData {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

@@ -2,8 +2,8 @@ package org.curtis.musicxml.common;
 
 public class PrintStyleAlign {
     private PrintStyle printStyle;
-    private String halign;
-    private String valign;
+    private Location halign;
+    private Location valign;
 
     public PrintStyleAlign() {
 
@@ -17,19 +17,19 @@ public class PrintStyleAlign {
         this.printStyle = printStyle;
     }
 
-    public String getHalign() {
+    public Location getHalign() {
         return halign;
     }
 
-    public void setHalign(String halign) {
+    public void setHalign(Location halign) {
         this.halign = halign;
     }
 
-    public String getValign() {
+    public Location getValign() {
         return valign;
     }
 
-    public void setValign(String valign) {
+    public void setValign(Location valign) {
         this.valign = valign;
     }
 }

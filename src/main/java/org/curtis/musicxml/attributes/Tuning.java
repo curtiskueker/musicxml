@@ -1,9 +1,11 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.musicxml.note.Step;
+
 import java.math.BigDecimal;
 
 public class Tuning {
-    private String tuningStep;
+    private Step tuningStep;
     private BigDecimal tuningAlter;
     private Integer tuningOctave;
 
@@ -11,11 +13,11 @@ public class Tuning {
 
     }
 
-    public String getTuningStep() {
+    public Step getTuningStep() {
         return tuningStep;
     }
 
-    public void setTuningStep(String tuningStep) {
+    public void setTuningStep(Step tuningStep) {
         this.tuningStep = tuningStep;
     }
 

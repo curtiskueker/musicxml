@@ -1,5 +1,6 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.direction.type.DirectionType;
@@ -15,7 +16,7 @@ public class Direction extends MusicData {
     private String voice;
     private Integer staff;
     private Sound sound;
-    private String placement;
+    private Location placement;
     private Boolean directive;
 
     public Direction() {
@@ -78,11 +79,11 @@ public class Direction extends MusicData {
         this.sound = sound;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 

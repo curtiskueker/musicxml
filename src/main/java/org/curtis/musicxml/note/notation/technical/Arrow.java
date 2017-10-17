@@ -1,39 +1,40 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Arrow extends Technical {
-    private String arrowDirection;
-    private String arrowStyle;
-    private String circularArrow;
+    private ArrowDirection arrowDirection;
+    private ArrowStyle arrowStyle;
+    private CircularArrow circularArrow;
     private PrintStyle printStyle;
-    private String placement;
+    private Location placement;
 
     public Arrow() {
 
     }
 
-    public String getArrowDirection() {
+    public ArrowDirection getArrowDirection() {
         return arrowDirection;
     }
 
-    public void setArrowDirection(String arrowDirection) {
+    public void setArrowDirection(ArrowDirection arrowDirection) {
         this.arrowDirection = arrowDirection;
     }
 
-    public String getArrowStyle() {
+    public ArrowStyle getArrowStyle() {
         return arrowStyle;
     }
 
-    public void setArrowStyle(String arrowStyle) {
+    public void setArrowStyle(ArrowStyle arrowStyle) {
         this.arrowStyle = arrowStyle;
     }
 
-    public String getCircularArrow() {
+    public CircularArrow getCircularArrow() {
         return circularArrow;
     }
 
-    public void setCircularArrow(String circularArrow) {
+    public void setCircularArrow(CircularArrow circularArrow) {
         this.circularArrow = circularArrow;
     }
 
@@ -45,11 +46,11 @@ public class Arrow extends Technical {
         this.printStyle = printStyle;
     }
 
-    public String getPlacement() {
+    public Location getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(Location placement) {
         this.placement = placement;
     }
 }

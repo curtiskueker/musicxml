@@ -4,7 +4,7 @@ import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Accidental {
-    private String accidentalValue;
+    private AccidentalValue accidentalValue;
     private Boolean cautionary;
     private Boolean editorial;
     private LevelDisplay levelDisplay;
@@ -14,11 +14,11 @@ public class Accidental {
 
     }
 
-    public String getAccidentalValue() {
+    public AccidentalValue getAccidentalValue() {
         return accidentalValue;
     }
 
-    public void setAccidentalValue(String accidentalValue) {
+    public void setAccidentalValue(AccidentalValue accidentalValue) {
         this.accidentalValue = accidentalValue;
     }
 

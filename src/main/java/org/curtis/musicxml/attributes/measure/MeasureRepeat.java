@@ -1,8 +1,10 @@
 package org.curtis.musicxml.attributes.measure;
 
+import org.curtis.musicxml.common.Connection;
+
 public class MeasureRepeat extends MeasureStyle {
     private Integer value;
-    private String type;
+    private Connection type;
     private Integer slashes;
 
     public MeasureRepeat() {
@@ -17,11 +19,11 @@ public class MeasureRepeat extends MeasureStyle {
         this.value = value;
     }
 
-    public String getType() {
+    public Connection getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Connection type) {
         this.type = type;
     }
 

@@ -1,35 +1,35 @@
 package org.curtis.musicxml.direction.type.percussion;
 
 public class Stick extends Percussion {
-    private String stickType;
-    private String stickMaterial;
-    private String tip;
+    private StickType stickType;
+    private StickMaterial stickMaterial;
+    private TipDirection tip;
 
     public Stick() {
 
     }
 
-    public String getStickType() {
+    public StickType getStickType() {
         return stickType;
     }
 
-    public void setStickType(String stickType) {
+    public void setStickType(StickType stickType) {
         this.stickType = stickType;
     }
 
-    public String getStickMaterial() {
+    public StickMaterial getStickMaterial() {
         return stickMaterial;
     }
 
-    public void setStickMaterial(String stickMaterial) {
+    public void setStickMaterial(StickMaterial stickMaterial) {
         this.stickMaterial = stickMaterial;
     }
 
-    public String getTip() {
+    public TipDirection getTip() {
         return tip;
     }
 
-    public void setTip(String tip) {
+    public void setTip(TipDirection tip) {
         this.tip = tip;
     }
 }
