@@ -2,6 +2,7 @@ package org.curtis.musicxml.bin;
 
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.util.FileUtil;
 import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
@@ -14,14 +15,14 @@ public class MusicXml2Ly {
             Document xmlDocument = XmlUtil.fileToDocument(xmlFilename);
 
             // output file
-            if (outputFilename.indexOf(".") > 0) {
-                outputFilename = outputFilename.substring(0, outputFilename.lastIndexOf("."));
-            }
-            outputFilename += ".xml";
+            outputFilename += ".ly";
 
             SchemaValidator.getInstance().validate(xmlDocument);
 
-            FileUtil.stringToFile(XmlUtil.elementToString(xmlDocument.getDocumentElement()), outputFilename);
+            ScoreHandler scoreHandler = new ScoreHandler(xmlDocument.getDocumentElement());
+            StringBuilder stringBuilder = scoreHandler.handle();
+
+            FileUtil.stringToFile(stringBuilder.toString(), outputFilename);
         } catch (XmlException | FileException e) {
             throw new MusicXmlException(e);
         }
