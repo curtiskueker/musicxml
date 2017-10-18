@@ -15,8 +15,13 @@ public class ScoreHandler extends AbstractHandler {
 
         // temporary output
         scoreStringBuilder.append("{c' e' g' e'}\n");
+
         // end score
         scoreStringBuilder.append("}\n");
+
+        // score header
+        ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(getElement());
+        scoreStringBuilder.append(scoreHeaderHandler.handle());
 
         return scoreStringBuilder;
     }

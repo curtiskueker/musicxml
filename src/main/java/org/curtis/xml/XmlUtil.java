@@ -3,6 +3,9 @@ package org.curtis.xml;
 import org.curtis.util.StringUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,44 +19,44 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class XmlUtil {
     public static Document stringToDocument(String xmlString) throws XmlException {
-        if(xmlString == null){
+        if (xmlString == null) {
             throw new XmlException("Null Xml String");
         }
 
         xmlString = stringToXml(xmlString);
 
-        try{
+        try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             builder.setErrorHandler(new XmlErrorHandler());
 
             return builder.parse(new InputSource(new ByteArrayInputStream(xmlString.getBytes())));
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new XmlException(e.getMessage());
         }
     }
 
     public static Document fileToDocument(String xmlFilename) throws XmlException {
-        if(StringUtil.isEmpty(xmlFilename)){
+        if (StringUtil.isEmpty(xmlFilename)) {
             throw new XmlException("Invalid filename");
         }
 
         // Read file as an xml document
         StringBuilder xmlStringBuilder = new StringBuilder();
 
-        try{
+        try {
             BufferedReader reader = new BufferedReader(new FileReader(xmlFilename));
             String line;
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 xmlStringBuilder.append(line);
                 xmlStringBuilder.append("\n");
             }
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             throw new XmlException(e.getMessage());
         }
 
@@ -61,25 +64,24 @@ public class XmlUtil {
     }
 
     public static String elementToString(Element element) throws XmlException {
-        if(element == null){
+        if (element == null) {
             throw new XmlException("Null Element");
         }
 
-        try{
+        try {
             TransformerFactory transFactory = TransformerFactory.newInstance();
             Transformer trans = transFactory.newTransformer();
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             trans.transform(new DOMSource(element), new StreamResult(outputStream));
 
             return outputStream.toString();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new XmlException(e.getMessage());
         }
     }
 
-    public static String stringToXml(String xmlString){
-        if(xmlString == null){
+    public static String stringToXml(String xmlString) {
+        if (xmlString == null) {
             return null;
         }
 
@@ -88,5 +90,83 @@ public class XmlUtil {
         xmlString = xmlString.replaceAll("&", "&amp;");
 
         return xmlString;
+    }
+
+    public static Element getChildElement(Element element, String childElementName) {
+        if (element == null || childElementName == null) {
+            return null;
+        }
+
+        NodeList children = element.getElementsByTagNameNS("*", childElementName);
+
+        if (children.getLength() == 0) {
+            children = element.getElementsByTagName(childElementName);
+        }
+
+        // No such child, return null
+        if (children.getLength() == 0) {
+            return null;
+        }
+
+        return (Element) children.item(0);
+    }
+
+    public static boolean hasChildElement(Element element, String childElementName) {
+        return getChildElement(element, childElementName) != null;
+    }
+
+    public static List<Element> getChildElements(Element element, String childElementName) {
+        if (element == null || childElementName == null) {
+            return null;
+        }
+
+        NodeList children = element.getElementsByTagNameNS("*", childElementName);
+
+        if (children.getLength() == 0) {
+            children = element.getElementsByTagName(childElementName);
+        }
+
+        List<Element> elements = new ArrayList<Element>();
+
+        int length = children.getLength();
+
+        for (int i = 0; i < length; i++) {
+            elements.add((Element) children.item(i));
+        }
+
+        return elements;
+    }
+
+    public static String getElementText(Element element) {
+        if (element == null) {
+            return "";
+        }
+
+        String elementText = "";
+
+        NodeList children = element.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            Node node = children.item(i);
+            if (node.getNodeType() == Node.TEXT_NODE) {
+                elementText = ((Text) node).getData();
+            }
+        }
+
+        return elementText;
+    }
+
+    public static String getChildElementText(Element element, String childElementName) {
+        if (element == null || childElementName == null) {
+            return "";
+        }
+
+        Element childElement = getChildElement(element, childElementName);
+
+        // No such child, return an empty String
+        if (childElement == null) {
+            return "";
+        }
+
+        return getElementText(childElement);
     }
 }
