@@ -3,7 +3,7 @@ package org.curtis.musicxml.score;
 import java.util.List;
 
 public class Score {
-    private ScoreHeader scoreHeader;
+    private ScoreHeader scoreHeader = new ScoreHeader();
     private List<Part> parts;
     private String version = "1.0";
 

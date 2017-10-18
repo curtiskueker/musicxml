@@ -1,5 +1,7 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.builder.ScoreBuilder;
+import org.curtis.musicxml.score.Score;
 import org.w3c.dom.Element;
 
 public class ScoreHandler extends AbstractHandler {
@@ -8,20 +10,15 @@ public class ScoreHandler extends AbstractHandler {
     }
 
     public StringBuilder handle() {
+        Score score = new Score();
         StringBuilder scoreStringBuilder = getStringBuilder();
 
-        // begin score
-        scoreStringBuilder.append("\\score {\n");
-
-        // temporary output
-        scoreStringBuilder.append("{c' e' g' e'}\n");
-
-        // end score
-        scoreStringBuilder.append("}\n");
-
         // score header
-        ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(getElement());
+        ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(getElement(), score.getScoreHeader());
         scoreStringBuilder.append(scoreHeaderHandler.handle());
+
+        ScoreBuilder scoreBuilder = new ScoreBuilder(score);
+        scoreStringBuilder.append(scoreBuilder.build().toString());
 
         return scoreStringBuilder;
     }

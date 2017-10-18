@@ -11,7 +11,7 @@ public class ScoreHeader {
     private LinkAttributes opus;
     private String movementNumber;
     private String movementTitle;
-    private Identification identification;
+    private Identification identification = new Identification();
     private Defaults defaults;
     private List<Credit> credits;
     private PartList partList;

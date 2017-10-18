@@ -1,29 +1,23 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.identity.Identification;
+import org.curtis.musicxml.identity.TypedText;
+import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.util.StringUtil;
 
 public class ScoreHeaderBuilder extends AbstractBuilder {
-    private String movementTitle;
-    private String composer;
+    private ScoreHeader scoreHeader;
 
-    public ScoreHeaderBuilder() {
-
+    public ScoreHeaderBuilder(ScoreHeader scoreHeader) {
+        this.scoreHeader = scoreHeader;
     }
 
-    public String getMovementTitle() {
-        return movementTitle;
+    public ScoreHeader getScoreHeader() {
+        return scoreHeader;
     }
 
-    public void setMovementTitle(String movementTitle) {
-        this.movementTitle = movementTitle;
-    }
-
-    public String getComposer() {
-        return composer;
-    }
-
-    public void setComposer(String composer) {
-        this.composer = composer;
+    public void setScoreHeader(ScoreHeader scoreHeader) {
+        this.scoreHeader = scoreHeader;
     }
 
     public StringBuilder build() {
@@ -31,15 +25,19 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
 
         stringBuilder.append("\\header {\n");
 
-        if(StringUtil.isNotEmpty(movementTitle)) {
+        if(StringUtil.isNotEmpty(scoreHeader.getMovementTitle())) {
             stringBuilder.append("title = \"");
-            stringBuilder.append(movementTitle);
+            stringBuilder.append(scoreHeader.getMovementTitle());
             stringBuilder.append("\"\n");
         }
-        if(StringUtil.isNotEmpty(composer)) {
-            stringBuilder.append("composer = \"");
-            stringBuilder.append(composer);
-            stringBuilder.append("\"\n");
+
+        Identification identification = scoreHeader.getIdentification();
+        for (TypedText typedText : identification.getCreators()) {
+            if(typedText.getType().equals("composer")) {
+                stringBuilder.append("composer = \"");
+                stringBuilder.append(typedText.getValue());
+                stringBuilder.append("\"\n");
+            }
         }
 
         stringBuilder.append("}\n");

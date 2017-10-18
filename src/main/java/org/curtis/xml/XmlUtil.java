@@ -116,8 +116,10 @@ public class XmlUtil {
     }
 
     public static List<Element> getChildElements(Element element, String childElementName) {
+        List<Element> elements = new ArrayList<Element>();
+
         if (element == null || childElementName == null) {
-            return null;
+            return elements;
         }
 
         NodeList children = element.getElementsByTagNameNS("*", childElementName);
@@ -125,8 +127,6 @@ public class XmlUtil {
         if (children.getLength() == 0) {
             children = element.getElementsByTagName(childElementName);
         }
-
-        List<Element> elements = new ArrayList<Element>();
 
         int length = children.getLength();
 
