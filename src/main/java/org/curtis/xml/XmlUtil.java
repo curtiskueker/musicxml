@@ -116,7 +116,7 @@ public class XmlUtil {
     }
 
     public static List<Element> getChildElements(Element element, String childElementName) {
-        List<Element> elements = new ArrayList<Element>();
+        List<Element> elements = new ArrayList<>();
 
         if (element == null || childElementName == null) {
             return elements;
@@ -132,6 +132,25 @@ public class XmlUtil {
 
         for (int i = 0; i < length; i++) {
             elements.add((Element) children.item(i));
+        }
+
+        return elements;
+    }
+
+    public static List<Element> getChildElements(Element element) {
+        List<Element> elements = new ArrayList<>();
+
+        if (element == null) {
+            return elements;
+        }
+
+        Node childNode = element.getFirstChild();
+        while(childNode.getNextSibling() != null) {
+            childNode = childNode.getNextSibling();
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element childElement = (Element) childNode;
+                elements.add(childElement);
+            }
         }
 
         return elements;

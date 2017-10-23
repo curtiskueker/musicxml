@@ -3,7 +3,7 @@ package org.curtis.musicxml.score;
 import org.curtis.musicxml.common.Position;
 
 public class GroupSymbol {
-    private GroupSymbolValue groupSymbolValue;
+    private GroupSymbolType groupSymbolType;
     private Position position;
     private String color;
 
@@ -11,12 +11,12 @@ public class GroupSymbol {
 
     }
 
-    public GroupSymbolValue getGroupSymbolValue() {
-        return groupSymbolValue;
+    public GroupSymbolType getGroupSymbolType() {
+        return groupSymbolType;
     }
 
-    public void setGroupSymbolValue(GroupSymbolValue groupSymbolValue) {
-        this.groupSymbolValue = groupSymbolValue;
+    public void setGroupSymbolType(GroupSymbolType groupSymbolType) {
+        this.groupSymbolType = groupSymbolType;
     }
 
     public Position getPosition() {

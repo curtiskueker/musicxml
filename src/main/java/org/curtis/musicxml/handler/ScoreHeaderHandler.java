@@ -2,7 +2,10 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.builder.ScoreHeaderBuilder;
 import org.curtis.musicxml.identity.TypedText;
+import org.curtis.musicxml.score.PartGroup;
+import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.ScoreHeader;
+import org.curtis.musicxml.score.ScorePart;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -42,6 +45,12 @@ public class ScoreHeaderHandler extends AbstractHandler {
             }
             scoreHeader.getIdentification().setCreators(typedTextList);
         }
+
+        // part list: required
+        Element partListElement = XmlUtil.getChildElement(element, "part-list");
+        PartList partList = scoreHeader.getPartList();
+        PartListHandler partListHandler = new PartListHandler(partListElement, partList);
+        partListHandler.handle();
 
         stringBuilder.append(scoreHeaderBuilder.build().toString());
 

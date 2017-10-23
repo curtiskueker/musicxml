@@ -21,26 +21,24 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
     }
 
     public StringBuilder build() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("\\header {\n");
+        appendLine("\\header {");
 
         if(StringUtil.isNotEmpty(scoreHeader.getMovementTitle())) {
-            stringBuilder.append("title = \"");
-            stringBuilder.append(scoreHeader.getMovementTitle());
-            stringBuilder.append("\"\n");
+            append("title = \"");
+            append(scoreHeader.getMovementTitle());
+            appendLine("\"");
         }
 
         Identification identification = scoreHeader.getIdentification();
         for (TypedText typedText : identification.getCreators()) {
             if(typedText.getType().equals("composer")) {
-                stringBuilder.append("composer = \"");
-                stringBuilder.append(typedText.getValue());
-                stringBuilder.append("\"\n");
+                append("composer = \"");
+                append(typedText.getValue());
+                append("\"");
             }
         }
 
-        stringBuilder.append("}\n");
+        appendLine("}");
 
         return stringBuilder;
     }

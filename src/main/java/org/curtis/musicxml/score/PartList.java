@@ -1,10 +1,11 @@
 package org.curtis.musicxml.score;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PartList {
-    private List<PartGroup> partGroups;
-    private List<ScorePart> scoreParts;
+    private List<PartGroup> partGroups = new ArrayList<>();
+    private List<ScorePart> scoreParts = new ArrayList<>();
 
     public PartList() {
 

@@ -14,7 +14,7 @@ public class ScoreHeader {
     private Identification identification = new Identification();
     private Defaults defaults;
     private List<Credit> credits;
-    private PartList partList;
+    private PartList partList = new PartList();
 
     public ScoreHeader() {
 
