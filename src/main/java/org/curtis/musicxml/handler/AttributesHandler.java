@@ -22,7 +22,7 @@ public class AttributesHandler extends AbstractHandler {
         this.musicDataList = musicDataList;
     }
 
-    public StringBuilder handle() {
+    public void handle() {
         Attributes attributes = new Attributes();
 
         List<Element> attributesSubelements = XmlUtil.getChildElements(getElement());
@@ -90,7 +90,5 @@ public class AttributesHandler extends AbstractHandler {
         }
 
         musicDataList.add(attributes);
-
-        return stringBuilder;
     }
 }

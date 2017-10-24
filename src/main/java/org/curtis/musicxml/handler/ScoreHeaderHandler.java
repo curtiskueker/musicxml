@@ -1,11 +1,8 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.builder.ScoreHeaderBuilder;
 import org.curtis.musicxml.identity.TypedText;
-import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.ScoreHeader;
-import org.curtis.musicxml.score.ScorePart;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -20,7 +17,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
         this.scoreHeader = scoreHeader;
     }
 
-    public StringBuilder handle() {
+    public void handle() {
         Element element = getElement();
 
         scoreHeader.setMovementTitle(XmlUtil.getChildElementText(element, "movement-title"));
@@ -47,10 +44,5 @@ public class ScoreHeaderHandler extends AbstractHandler {
         PartList partList = scoreHeader.getPartList();
         PartListHandler partListHandler = new PartListHandler(partListElement, partList);
         partListHandler.handle();
-
-        ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(scoreHeader);
-        stringBuilder.append(scoreHeaderBuilder.build().toString());
-
-        return stringBuilder;
     }
 }

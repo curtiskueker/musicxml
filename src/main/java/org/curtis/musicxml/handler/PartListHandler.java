@@ -21,7 +21,7 @@ public class PartListHandler extends AbstractHandler {
         this.partList = partList;
     }
 
-    public StringBuilder handle() {
+    public void handle() {
         List<Element> partListSubelements = XmlUtil.getChildElements(getElement());
         PartGroup currentPartGroup = null;
         Boolean hasCurrentPartGroup = false;
@@ -80,7 +80,5 @@ public class PartListHandler extends AbstractHandler {
                     break;
             }
         }
-
-        return new StringBuilder();
     }
 }

@@ -15,7 +15,7 @@ public class MeasureHandler extends AbstractHandler {
         this.measures = measures;
     }
 
-    public StringBuilder handle() {
+    public void handle() {
         Measure measure = new Measure();
         measure.setNumber(getElement().getAttribute("number"));
 
@@ -37,7 +37,5 @@ public class MeasureHandler extends AbstractHandler {
         }
 
         measures.add(measure);
-
-        return stringBuilder;
     }
 }

@@ -15,7 +15,7 @@ public class PartHandler extends AbstractHandler {
         this.parts = parts;
     }
 
-    public StringBuilder handle() {
+    public void handle() {
         Part part = new Part();
 
         part.setId(getElement().getAttribute("id"));
@@ -28,6 +28,5 @@ public class PartHandler extends AbstractHandler {
         }
 
         parts.add(part);
-        return stringBuilder;
     }
 }

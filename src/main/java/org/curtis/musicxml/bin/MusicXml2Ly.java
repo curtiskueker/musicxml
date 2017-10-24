@@ -20,9 +20,10 @@ public class MusicXml2Ly {
             SchemaValidator.getInstance().validate(xmlDocument);
 
             ScoreHandler scoreHandler = new ScoreHandler(xmlDocument.getDocumentElement());
-            StringBuilder stringBuilder = scoreHandler.handle();
+            scoreHandler.handle();
+            StringBuilder results = scoreHandler.getResults();
 
-            FileUtil.stringToFile(stringBuilder.toString(), outputFilename);
+            FileUtil.stringToFile(results.toString(), outputFilename);
         } catch (XmlException | FileException e) {
             throw new MusicXmlException(e);
         }

@@ -13,8 +13,7 @@ public class NoteHandler extends AbstractHandler {
         this.musicDataList = musicDataList;
     }
 
-    public StringBuilder handle() {
+    public void handle() {
 
-        return stringBuilder;
     }
 }
