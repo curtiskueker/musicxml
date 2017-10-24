@@ -21,11 +21,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
     }
 
     public StringBuilder handle() {
-        StringBuilder stringBuilder = new StringBuilder();
-
         Element element = getElement();
-
-        ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(scoreHeader);
 
         scoreHeader.setMovementTitle(XmlUtil.getChildElementText(element, "movement-title"));
 
@@ -52,6 +48,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
         PartListHandler partListHandler = new PartListHandler(partListElement, partList);
         partListHandler.handle();
 
+        ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(scoreHeader);
         stringBuilder.append(scoreHeaderBuilder.build().toString());
 
         return stringBuilder;

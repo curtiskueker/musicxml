@@ -1,10 +1,11 @@
 package org.curtis.musicxml.score;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Measure {
-    private List<MusicData> musicDataList;
+    private List<MusicData> musicDataList = new ArrayList<>();
     private String number;
     private Boolean implicit;
     private Boolean nonControlling;

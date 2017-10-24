@@ -1,10 +1,11 @@
 package org.curtis.musicxml.score;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Score {
     private ScoreHeader scoreHeader = new ScoreHeader();
-    private List<Part> parts;
+    private List<Part> parts = new ArrayList<>();
     private String version = "1.0";
 
     public Score() {

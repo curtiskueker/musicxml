@@ -1,10 +1,11 @@
 package org.curtis.musicxml.score;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Part {
     private String id;
-    private List<Measure> measures;
+    private List<Measure> measures = new ArrayList<>();
 
     public Part() {
 

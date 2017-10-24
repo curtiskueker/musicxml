@@ -5,7 +5,7 @@ import org.curtis.musicxml.common.PrintStyle;
 import java.util.List;
 
 public class Key {
-    private TraditionalKey traditionalKey;
+    private TraditionalKey traditionalKey = new TraditionalKey();
     private List<NonTraditionalKey> nonTraditionalKeys;
     private List<KeyOctave> keyOctaves;
     private Integer number;

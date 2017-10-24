@@ -7,13 +7,14 @@ import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.PartSymbol;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Attributes extends MusicData {
     private Editorial editorial;
     private BigDecimal divisions;
-    private List<Key> keys;
-    private List<Time> time;
+    private List<Key> keys = new ArrayList<>();
+    private List<Time> timeList = new ArrayList<>();
     private Integer staves;
     private PartSymbol partSymbol;
     private Integer instruments;
@@ -51,12 +52,12 @@ public class Attributes extends MusicData {
         this.keys = keys;
     }
 
-    public List<Time> getTime() {
-        return time;
+    public List<Time> getTimeList() {
+        return timeList;
     }
 
-    public void setTime(List<Time> time) {
-        this.time = time;
+    public void setTimeList(List<Time> timeList) {
+        this.timeList = timeList;
     }
 
     public Integer getStaves() {

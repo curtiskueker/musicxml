@@ -2,10 +2,11 @@ package org.curtis.musicxml.attributes;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Time {
-    private List<TimeSignature> timeSignatures;
+    private List<TimeSignature> timeSignatures = new ArrayList<>();
     private Interchangeable interchangeable;
     private String senzaMisura;
     private Integer number;

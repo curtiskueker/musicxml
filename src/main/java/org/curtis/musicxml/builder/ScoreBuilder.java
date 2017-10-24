@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.Score;
@@ -45,8 +46,16 @@ public class ScoreBuilder extends AbstractBuilder {
 
                 appendLine("}");
 
-                // TODO; temporary output
-                appendLine("{c' e' g' e'}");
+                // part data
+                String partId = scorePart.getId();
+                for(Part part : score.getParts()) {
+                    if(partId.equals(part.getId())) {
+                        PartBuilder partBuilder = new PartBuilder(part);
+                        append(partBuilder.build().toString());
+
+                        break;
+                    }
+                }
             }
 
             // end staff group
