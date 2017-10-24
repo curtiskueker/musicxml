@@ -25,7 +25,6 @@ public class MeasureBuilder extends AbstractBuilder {
             currentDivisions = musicDataBuilder.getCurrentDivisions();
         }
 
-        appendLine("c'4 e'4 g'4");
         appendLine("\\bar \"|\"");
 
         return stringBuilder;

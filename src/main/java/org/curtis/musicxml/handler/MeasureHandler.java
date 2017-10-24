@@ -30,6 +30,8 @@ public class MeasureHandler extends AbstractHandler {
                     attributesHandler.handle();
                     break;
                 case "note":
+                    NoteHandler noteHandler = new NoteHandler(measureSubelement, musicDataList);
+                    noteHandler.handle();
                     break;
                 case "direction":
                     break;
