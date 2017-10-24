@@ -32,31 +32,29 @@ public class AttributesHandler extends AbstractHandler {
                     attributes.setDivisions(new BigDecimal(XmlUtil.getElementText(attributeSubelement)));
                     break;
                 case "key":
-                    Element keyElement = XmlUtil.getChildElement(attributeSubelement, "key");
                     List<Key> keys = attributes.getKeys();
                     Key key = new Key();
-                    TraditionalKey traditionalKey = key.getTraditionalKey();
-                    traditionalKey.setFifths(Integer.parseInt(XmlUtil.getChildElementText(keyElement, "fifths")));
-                    traditionalKey.setMode(XmlUtil.getChildElementText(keyElement, "mode"));
+                    TraditionalKey traditionalKey = new TraditionalKey();
+                    traditionalKey.setFifths(Integer.parseInt(XmlUtil.getChildElementText(attributeSubelement, "fifths")));
+                    traditionalKey.setMode(XmlUtil.getChildElementText(attributeSubelement, "mode"));
+                    key.setTraditionalKey(traditionalKey);
                     keys.add(key);
                     attributes.setKeys(keys);
                     break;
                 case "time":
-                    Element timeElement = XmlUtil.getChildElement(attributeSubelement, "time");
                     List<Time> timeList = attributes.getTimeList();
                     Time time = new Time();
                     List<TimeSignature> timeSignatures = time.getTimeSignatures();
                     TimeSignature timeSignature = new TimeSignature();
-                    timeSignature.setBeats(XmlUtil.getChildElementText(timeElement, "beats"));
-                    timeSignature.setBeatType(XmlUtil.getChildElementText(timeElement, "beat-type"));
+                    timeSignature.setBeats(XmlUtil.getChildElementText(attributeSubelement, "beats"));
+                    timeSignature.setBeatType(XmlUtil.getChildElementText(attributeSubelement, "beat-type"));
                     timeSignatures.add(timeSignature);
                     timeList.add(time);
                     attributes.setTimeList(timeList);
                     break;
                 case "clef":
-                    Element clefElement = XmlUtil.getChildElement(attributeSubelement, "clef");
                     Clef clef = new Clef();
-                    String sign = XmlUtil.getChildElementText(clefElement, "sign");
+                    String sign = XmlUtil.getChildElementText(attributeSubelement, "sign");
                     ClefSign clefSign;
                     switch (sign) {
                         case "G":
@@ -84,7 +82,7 @@ public class AttributesHandler extends AbstractHandler {
                             clefSign = null;
                     }
                     clef.setSign(clefSign);
-                    clef.setLine(Integer.parseInt(XmlUtil.getChildElementText(clefElement, "line")));
+                    clef.setLine(Integer.parseInt(XmlUtil.getChildElementText(attributeSubelement, "line")));
                     attributes.setClef(clef);
 
                     break;

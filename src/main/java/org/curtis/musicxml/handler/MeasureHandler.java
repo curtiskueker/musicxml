@@ -17,8 +17,9 @@ public class MeasureHandler extends AbstractHandler {
 
     public StringBuilder handle() {
         Measure measure = new Measure();
-        List<MusicData> musicDataList = measure.getMusicDataList();
+        measure.setNumber(getElement().getAttribute("number"));
 
+        List<MusicData> musicDataList = measure.getMusicDataList();
         List<Element> measureSubelements = XmlUtil.getChildElements(getElement());
 
         for (Element measureSubelement : measureSubelements) {
