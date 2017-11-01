@@ -1,6 +1,8 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.identity.TypedText;
+import org.curtis.musicxml.identity.encoding.Encoding;
+import org.curtis.musicxml.identity.encoding.Software;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.xml.XmlUtil;
@@ -37,6 +39,21 @@ public class ScoreHeaderHandler extends AbstractHandler {
                 typedTextList.add(typedText);
             }
             scoreHeader.getIdentification().setCreators(typedTextList);
+
+            Element encodingElement = XmlUtil.getChildElement(identification, "encoding");
+            if(encodingElement != null) {
+                List<Element> encodingSubelements = XmlUtil.getChildElements(encodingElement);
+                List<Encoding> encodings = new ArrayList<>();
+                for(Element encodingSubelement : encodingSubelements) {
+                    switch (encodingSubelement.getTagName()) {
+                        case "software":
+                            Software software = new Software();
+                            software.setSoftware(XmlUtil.getElementText(encodingSubelement));
+                            encodings.add(software);
+                            break;
+                    }
+                }
+            }
         }
 
         // part list: required

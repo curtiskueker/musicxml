@@ -7,6 +7,7 @@ public class ScoreInstrument {
     private InstrumentType instrumentType;
     private String virtualLibrary;
     private String virtualName;
+    private String id;
 
     public ScoreInstrument() {
 
@@ -58,5 +59,13 @@ public class ScoreInstrument {
 
     public void setVirtualName(String virtualName) {
         this.virtualName = virtualName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

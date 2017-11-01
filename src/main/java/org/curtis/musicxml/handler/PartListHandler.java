@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.score.GroupName;
 import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.GroupSymbolType;
@@ -7,9 +8,11 @@ import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.musicxml.score.instrument.ScoreInstrument;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +73,26 @@ public class PartListHandler extends AbstractHandler {
                     PartName partAbbreviation = new PartName();
                     partAbbreviation.setPartName(XmlUtil.getChildElementText(partListSubelement, "part-abbreviation"));
                     scorePart.setPartAbbreviation(partAbbreviation);
+
+                    List<Element> scoreInstrumentElements = XmlUtil.getChildElements(partListSubelement, "score-instrument");
+                    List<ScoreInstrument> scoreInstruments = new ArrayList<>();
+                    for(Element scoreInstrumentElement : scoreInstrumentElements) {
+                        ScoreInstrument scoreInstrument = new ScoreInstrument();
+                        scoreInstrument.setId(scoreInstrumentElement.getAttribute("id"));
+                        scoreInstrument.setInstrumentName(XmlUtil.getChildElementText(scoreInstrumentElement, "instrument-name"));
+
+                        scoreInstruments.add(scoreInstrument);
+                    }
+                    scorePart.setScoreInstruments(scoreInstruments);
+
+                    List<Element> midiInstrumentElements = XmlUtil.getChildElements(partListSubelement, "midi-instrument");
+                    List<MidiInstrument> midiInstruments = new ArrayList<>();
+                    for(Element midiInstrumentElement : midiInstrumentElements) {
+                        MidiInstrument midiInstrument = new MidiInstrument();
+                        midiInstrument.setId(midiInstrumentElement.getAttribute("id"));
+                        midiInstrument.setMidiChannel(Integer.parseInt(XmlUtil.getChildElementText(midiInstrumentElement, "midi-channel")));
+                        midiInstrument.setMidiProgram(Integer.parseInt(XmlUtil.getChildElementText(midiInstrumentElement, "midi-program")));
+                    }
 
                     if(hasCurrentPartGroup) {
                         currentPartGroup.getScoreParts().add(scorePart);
