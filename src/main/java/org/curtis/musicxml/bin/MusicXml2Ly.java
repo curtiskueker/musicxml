@@ -2,12 +2,15 @@ package org.curtis.musicxml.bin;
 
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.musicxml.handler.NoteHandler;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.util.FileUtil;
 import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Document;
+
+import java.util.Iterator;
 
 public class MusicXml2Ly {
     private void execute(String xmlFilename, String outputFilename) throws MusicXmlException {

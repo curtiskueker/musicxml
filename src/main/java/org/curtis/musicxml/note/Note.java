@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Note extends MusicData {
@@ -15,19 +16,19 @@ public class Note extends MusicData {
     private Boolean cue;
     private FullNote fullNote;
     private BigDecimal duration;
-    private List<Tie> ties;
+    private List<Tie> ties = new ArrayList<>();
     private String instrument;
-    private EditorialVoice editorialVoice;
+    private EditorialVoice editorialVoice = new EditorialVoice();
     private NoteType type;
-    private List<Placement> dots;
+    private List<Placement> dots = new ArrayList<>();
     private Accidental accidental;
     private TimeModification timeModification;
     private Stem stem;
     private Notehead notehead;
     private NoteheadText noteheadText;
     private Integer staff;
-    private List<Beam> beams;
-    private List<Notations> notationsList;
+    private List<Beam> beams = new ArrayList<>();
+    private List<Notations> notationsList = new ArrayList<>();
     private List<Lyric> lyrics;
     private Play play;
     private XPosition xPosition;

@@ -3,11 +3,12 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.note.notation.Notation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Notations {
     private Editorial editorial;
-    private List<Notation> notations;
+    private List<Notation> notations = new ArrayList<>();
     private Boolean printObject;
 
     public Notations() {
