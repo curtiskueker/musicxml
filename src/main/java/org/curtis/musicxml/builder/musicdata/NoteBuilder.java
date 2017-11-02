@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Step;
@@ -16,6 +17,11 @@ public class NoteBuilder extends MusicDataBuilder {
     public StringBuilder build() {
         FullNote fullNote = note.getFullNote();
         if(fullNote != null) {
+            Grace grace = note.getGrace();
+            if(grace != null) {
+                append("\\grace ");
+            }
+
             Pitch pitch = fullNote.getPitch();
             if(pitch != null) {
                 Step step = pitch.getStep();

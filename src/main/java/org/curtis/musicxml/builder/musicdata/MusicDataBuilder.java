@@ -5,11 +5,8 @@ import org.curtis.musicxml.builder.AbstractBuilder;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.MusicData;
 
-import java.math.BigDecimal;
-
 public class MusicDataBuilder extends AbstractBuilder {
     private MusicData musicData;
-    private BigDecimal currentDivisions;
 
     public MusicDataBuilder(MusicData musicData) {
         this.musicData = musicData;
@@ -25,13 +22,5 @@ public class MusicDataBuilder extends AbstractBuilder {
         }
 
         return stringBuilder;
-    }
-
-    public BigDecimal getCurrentDivisions() {
-        return currentDivisions;
-    }
-
-    public void setCurrentDivisions(BigDecimal currentDivisions) {
-        this.currentDivisions = currentDivisions;
     }
 }

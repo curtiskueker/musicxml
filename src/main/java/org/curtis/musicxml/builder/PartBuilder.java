@@ -8,7 +8,6 @@ import java.util.List;
 
 public class PartBuilder extends AbstractBuilder {
     private Part part;
-    private BigDecimal currentDivisions;
 
     public PartBuilder(Part part) {
         this.part = part;
@@ -20,9 +19,7 @@ public class PartBuilder extends AbstractBuilder {
         List<Measure> measures = part.getMeasures();
         for(Measure measure : measures) {
             MeasureBuilder measureBuilder = new MeasureBuilder(measure);
-            measureBuilder.setCurrentDivisions(currentDivisions);
             append(measureBuilder.build().toString());
-            currentDivisions = measureBuilder.getCurrentDivisions();
         }
 
         appendLine("}");

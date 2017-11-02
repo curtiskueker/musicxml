@@ -4,12 +4,10 @@ import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;
-    private BigDecimal currentDivisions;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -20,21 +18,11 @@ public class MeasureBuilder extends AbstractBuilder {
 
         for (MusicData musicData : musicDataList) {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(musicData);
-            musicDataBuilder.setCurrentDivisions(currentDivisions);
             append(musicDataBuilder.build().toString());
-            currentDivisions = musicDataBuilder.getCurrentDivisions();
         }
 
         appendLine("");
 
         return stringBuilder;
-    }
-
-    public BigDecimal getCurrentDivisions() {
-        return currentDivisions;
-    }
-
-    public void setCurrentDivisions(BigDecimal currentDivisions) {
-        this.currentDivisions = currentDivisions;
     }
 }

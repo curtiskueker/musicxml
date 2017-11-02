@@ -7,9 +7,7 @@ import org.curtis.musicxml.attributes.Time;
 import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
-import org.curtis.util.MathUtil;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,11 +55,6 @@ public class AttributesBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
-        BigDecimal attributesDivisions = attributes.getDivisions();
-        if(MathUtil.isPositive(attributesDivisions)) {
-            setCurrentDivisions(attributesDivisions);
-        }
-
         List<Key> keys = attributes.getKeys();
         for(Key key : keys) {
             TraditionalKey traditionalKey = key.getTraditionalKey();
