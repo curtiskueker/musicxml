@@ -3,7 +3,7 @@ package org.curtis.musicxml.note;
 public class Rest {
     private Step displayStep;
     private Integer displayOctave;
-    private Boolean measure;
+    private Boolean measure = false;
 
     public Rest() {
 

@@ -82,12 +82,13 @@ public class NoteHandler extends AbstractHandler {
                             break;
                     }
                     pitch.setStep(step);
-                    pitch.setOctave(Integer.parseInt(XmlUtil.getChildElementText(noteSubelement, "octave")));
 
                     Element alterElement = XmlUtil.getChildElement(noteSubelement, "alter");
                     if(alterElement != null) {
                         pitch.setAlter(MathUtil.newBigDecimal(XmlUtil.getElementText(alterElement)));
                     }
+
+                    pitch.setOctave(Integer.parseInt(XmlUtil.getChildElementText(noteSubelement, "octave")));
 
                     fullNote.setPitch(pitch);
                     note.setFullNote(fullNote);

@@ -15,10 +15,10 @@ public class MusicDataBuilder extends AbstractBuilder {
     public StringBuilder build() {
         if(musicData instanceof Attributes) {
             AttributesBuilder attributesBuilder = new AttributesBuilder((Attributes)musicData);
-            return attributesBuilder.build();
+            stringBuilder = attributesBuilder.build();
         } else if(musicData instanceof Note) {
             NoteBuilder noteBuilder = new NoteBuilder((Note)musicData);
-            return noteBuilder.build();
+            stringBuilder =  noteBuilder.build();
         }
 
         return stringBuilder;
