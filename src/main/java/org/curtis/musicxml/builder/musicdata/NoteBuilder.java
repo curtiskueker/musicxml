@@ -27,20 +27,18 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
-        /*
         Stem stem = note.getStem();
         if(stem != null) {
             StemType stemType = stem.getType();
             switch (stemType) {
                 case DOWN:
-                    append("\\StemDown ");
+                    append("\\stemDown ");
                     break;
                 case UP:
-                    append("\\StemUp ");
+                    append("\\stemUp ");
                     break;
             }
         }
-        */
 
         FullNote fullNote = note.getFullNote();
         if(fullNote != null) {
