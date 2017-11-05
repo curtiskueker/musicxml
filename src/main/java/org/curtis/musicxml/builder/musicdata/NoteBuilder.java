@@ -1,6 +1,5 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.ScoreBuilder;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Note;
@@ -26,9 +25,19 @@ public class NoteBuilder extends MusicDataBuilder {
         this.note = note;
     }
 
+    public Note getNote() {
+        return note;
+    }
+
+    public void setNote(Note note) {
+        this.note = note;
+    }
+
     public StringBuilder build() {
+        FullNote fullNote = note.getFullNote();
+
         Stem stem = note.getStem();
-        if(stem != null) {
+        if(stem != null && !fullNote.isContinueChord() && !fullNote.isEndChord()) {
             StemType stemType = stem.getType();
             switch (stemType) {
                 case DOWN:
@@ -40,79 +49,86 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        FullNote fullNote = note.getFullNote();
-        if(fullNote != null) {
-            Grace grace = note.getGrace();
-            if(grace != null) {
-                append("\\grace ");
+        if(fullNote.isBeginChord()) {
+            append("<");
+        }
+
+        Grace grace = note.getGrace();
+        if(grace != null) {
+            append("\\grace ");
+        }
+
+        Pitch pitch = fullNote.getPitch();
+        if(pitch != null) {
+            Step step = pitch.getStep();
+            switch (step) {
+                case A:
+                    append("a");
+                    break;
+                case B:
+                    append("b");
+                    break;
+                case C:
+                    append("c");
+                    break;
+                case D:
+                    append("d");
+                    break;
+                case E:
+                    append("e");
+                    break;
+                case F:
+                    append("f");
+                    break;
+                case G:
+                    append("g");
+                    break;
             }
 
-            Pitch pitch = fullNote.getPitch();
-            if(pitch != null) {
-                Step step = pitch.getStep();
-                switch (step) {
-                    case A:
-                        append("a");
-                        break;
-                    case B:
-                        append("b");
-                        break;
-                    case C:
-                        append("c");
-                        break;
-                    case D:
-                        append("d");
-                        break;
-                    case E:
-                        append("e");
-                        break;
-                    case F:
-                        append("f");
-                        break;
-                    case G:
-                        append("g");
-                        break;
-                }
-
-                //TODO: alter single and double accidentals only
-                BigDecimal alter = pitch.getAlter();
-                if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(-2))) {
-                    append("eses");
-                } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(-1))) {
-                    append("es");
-                } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(1))) {
-                    append("is");
-                } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(2))) {
-                    append("isis");
-                }
-
-                Integer octave = pitch.getOctave();
-                if(octave > 3) {
-                    int iterations = octave - 3;
-                    for(int i = 1; i <= iterations; i++) {
-                        append("'");
-                    }
-                } else if(octave < 3) {
-                    int iterations = 3 - octave;
-                    for(int i = 1; i <= iterations; i++) {
-                        append(",");
-                    }
-                }
+            //TODO: alter single and double accidentals only
+            BigDecimal alter = pitch.getAlter();
+            if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(-2))) {
+                append("eses");
+            } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(-1))) {
+                append("es");
+            } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(1))) {
+                append("is");
+            } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(2))) {
+                append("isis");
             }
 
-            NoteType noteType = note.getType();
-
-            Rest rest = fullNote.getRest();
-            if(rest != null) {
-                Boolean measure = rest.getMeasure();
-                if(measure || noteType == null) {
-                    append("R");
-                    append(TimeSignatureUtil.getWholeMeasureNoteRepresentation(getCurrentTimeSignature()));
-                } else {
-                    append("r");
+            Integer octave = pitch.getOctave();
+            if(octave > 3) {
+                int iterations = octave - 3;
+                for(int i = 1; i <= iterations; i++) {
+                    append("'");
+                }
+            } else if(octave < 3) {
+                int iterations = 3 - octave;
+                for(int i = 1; i <= iterations; i++) {
+                    append(",");
                 }
             }
+        }
 
+        NoteType noteType = note.getType();
+
+        Rest rest = fullNote.getRest();
+        if(rest != null) {
+            Boolean measure = rest.getMeasure();
+            if(measure || noteType == null) {
+                append("R");
+                append(TimeSignatureUtil.getWholeMeasureNoteRepresentation(getCurrentTimeSignature()));
+            } else {
+                append("r");
+            }
+        }
+
+        if(fullNote.isEndChord()) {
+            append(">");
+        }
+
+        if (!fullNote.isBeginChord() && !fullNote.isContinueChord()) {
             if (noteType != null) {
                 NoteTypeValue noteTypeValue = noteType.getValue();
                 switch (noteTypeValue) {
@@ -160,11 +176,11 @@ public class NoteBuilder extends MusicDataBuilder {
                         break;
                 }
             }
-        }
 
-        List<Placement> dots = note.getDots();
-        for(Placement dot : dots) {
-            append(".");
+            List<Placement> dots = note.getDots();
+            for(Placement dot : dots) {
+                append(".");
+            }
         }
 
         append(" ");

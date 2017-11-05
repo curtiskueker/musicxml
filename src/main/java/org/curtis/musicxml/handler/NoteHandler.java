@@ -45,6 +45,7 @@ public class NoteHandler extends AbstractHandler {
 
     public void handle() {
         Note note = new Note();
+        FullNote fullNote = new FullNote();
 
         List<Element> noteSubelements = XmlUtil.getChildElements(getElement());
         for(Element noteSubelement : noteSubelements) {
@@ -53,8 +54,10 @@ public class NoteHandler extends AbstractHandler {
                     Grace grace = new Grace();
                     note.setGrace(grace);
                     break;
+                case "chord":
+                    fullNote.setChord(true);
+                    break;
                 case "pitch":
-                    FullNote fullNote = new FullNote();
                     Pitch pitch = new Pitch();
                     Step step = null;
                     String stepValue = XmlUtil.getChildElementText(noteSubelement, "step");
@@ -89,15 +92,11 @@ public class NoteHandler extends AbstractHandler {
                     }
 
                     pitch.setOctave(Integer.parseInt(XmlUtil.getChildElementText(noteSubelement, "octave")));
-
                     fullNote.setPitch(pitch);
-                    note.setFullNote(fullNote);
                     break;
                 case "rest":
-                    FullNote fullNote1 = new FullNote();
                     Rest rest = new Rest();
-                    fullNote1.setRest(rest);
-                    note.setFullNote(fullNote1);
+                    fullNote.setRest(rest);
                     break;
                 case "duration":
                     note.setDuration(MathUtil.newBigDecimal(XmlUtil.getElementText(noteSubelement)));
@@ -295,6 +294,7 @@ public class NoteHandler extends AbstractHandler {
             }
         }
 
+        note.setFullNote(fullNote);
         musicDataList.add(note);
     }
 }
