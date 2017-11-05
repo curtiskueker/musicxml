@@ -18,7 +18,9 @@ public class MeasureBuilder extends AbstractBuilder {
 
         for (MusicData musicData : musicDataList) {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(musicData);
+            musicDataBuilder.setValues(getCurrentTimeSignature());
             append(musicDataBuilder.build().toString());
+            setValues(musicDataBuilder.getCurrentTimeSignature());
         }
 
         appendLine("");

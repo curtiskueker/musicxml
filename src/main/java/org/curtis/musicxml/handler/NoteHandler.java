@@ -184,16 +184,16 @@ public class NoteHandler extends AbstractHandler {
                     Stem stem = new Stem();
                     switch (XmlUtil.getElementText(noteSubelement)) {
                         case "down":
-                            stem.setValue(StemType.DOWN);
+                            stem.setType(StemType.DOWN);
                             break;
                         case "up":
-                            stem.setValue(StemType.UP);
+                            stem.setType(StemType.UP);
                             break;
                         case "double":
-                            stem.setValue(StemType.DOUBLE);
+                            stem.setType(StemType.DOUBLE);
                             break;
                         case "none":
-                            stem.setValue(StemType.NONE);
+                            stem.setType(StemType.NONE);
                             break;
                     }
                     note.setStem(stem);

@@ -13,12 +13,17 @@ public class MusicDataBuilder extends AbstractBuilder {
     }
 
     public StringBuilder build() {
+        MusicDataBuilder builder = null;
         if(musicData instanceof Attributes) {
-            AttributesBuilder attributesBuilder = new AttributesBuilder((Attributes)musicData);
-            stringBuilder = attributesBuilder.build();
+            builder = new AttributesBuilder((Attributes)musicData);
         } else if(musicData instanceof Note) {
-            NoteBuilder noteBuilder = new NoteBuilder((Note)musicData);
-            stringBuilder =  noteBuilder.build();
+            builder = new NoteBuilder((Note)musicData);
+        }
+
+        if (builder != null) {
+            builder.setValues(getCurrentTimeSignature());
+            stringBuilder = builder.build();
+            setValues(builder.getCurrentTimeSignature());
         }
 
         return stringBuilder;

@@ -9,7 +9,10 @@ import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
+import org.curtis.musicxml.note.Stem;
+import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
+import org.curtis.musicxml.util.TimeSignatureUtil;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
@@ -24,6 +27,21 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
+        /*
+        Stem stem = note.getStem();
+        if(stem != null) {
+            StemType stemType = stem.getType();
+            switch (stemType) {
+                case DOWN:
+                    append("\\StemDown ");
+                    break;
+                case UP:
+                    append("\\StemUp ");
+                    break;
+            }
+        }
+        */
+
         FullNote fullNote = note.getFullNote();
         if(fullNote != null) {
             Grace grace = note.getGrace();
@@ -91,7 +109,7 @@ public class NoteBuilder extends MusicDataBuilder {
                 Boolean measure = rest.getMeasure();
                 if(measure || noteType == null) {
                     append("R");
-                    append(ScoreBuilder.WHOLE_MEASURE_NOTE_REPRESENATAION);
+                    append(TimeSignatureUtil.getWholeMeasureNoteRepresentation(getCurrentTimeSignature()));
                 } else {
                     append("r");
                 }

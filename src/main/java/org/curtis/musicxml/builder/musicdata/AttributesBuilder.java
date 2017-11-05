@@ -7,10 +7,7 @@ import org.curtis.musicxml.attributes.Time;
 import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
-import org.curtis.musicxml.builder.ScoreBuilder;
-import org.curtis.util.MathUtil;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,25 +76,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         for(Time time : timeList) {
             List<TimeSignature> timeSignatures = time.getTimeSignatures();
             for(TimeSignature timeSignature : timeSignatures) {
-                // calculate value of whole measure
-                BigDecimal numerator = MathUtil.newBigDecimal(timeSignature.getBeats());
-                BigDecimal denominator = MathUtil.newBigDecimal(timeSignature.getBeatType());
-                BigDecimal totalBeats = MathUtil.divide(MathUtil.multiply(MathUtil.newBigDecimal(4), numerator), denominator);
-                BigDecimal wholeMeasureNote = MathUtil.newBigDecimal(1);
-                BigDecimal noteTest = MathUtil.newBigDecimal(1);
-                while (MathUtil.smallerThan(wholeMeasureNote, totalBeats)) {
-                    noteTest = MathUtil.multiply(noteTest, MathUtil.newBigDecimal(2));
-                    if(MathUtil.largerThan(noteTest, totalBeats)) {
-                        break;
-                    }
-                    wholeMeasureNote = MathUtil.multiply(wholeMeasureNote, MathUtil.newBigDecimal(2));
-                }
-
-                String wholeMeasureNoteRepresentation = String.valueOf(4 / wholeMeasureNote.intValueExact());
-                if(MathUtil.isPositive(MathUtil.subtract(totalBeats, wholeMeasureNote))) {
-                    wholeMeasureNoteRepresentation += ".";
-                }
-                ScoreBuilder.WHOLE_MEASURE_NOTE_REPRESENATAION = wholeMeasureNoteRepresentation;
+                setCurrentTimeSignature(timeSignature);
 
                 append("\\time ");
                 append(timeSignature.getBeats());
