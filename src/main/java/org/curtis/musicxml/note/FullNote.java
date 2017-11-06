@@ -2,6 +2,7 @@ package org.curtis.musicxml.note;
 
 public abstract class FullNote {
     private Boolean chord = false;
+    //TODO: chord type as enum
     private boolean isBeginChord;
     private boolean isContinueChord;
     private boolean isEndChord;

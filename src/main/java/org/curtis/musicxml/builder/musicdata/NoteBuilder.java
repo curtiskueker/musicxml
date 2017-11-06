@@ -54,8 +54,11 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         Grace grace = note.getGrace();
-        if(grace != null) {
+        if (note.isBeginGrace() || note.isSingleGrace()) {
             append("\\grace ");
+        }
+        if(note.isBeginGrace() && !note.isSingleGrace()) {
+            append("{ ");
         }
 
         if (fullNote instanceof Pitch) {
@@ -187,6 +190,10 @@ public class NoteBuilder extends MusicDataBuilder {
             append("[");
         } else if(note.getEndBeam()) {
             append("]");
+        }
+
+        if(note.isEndGrace() && !note.isSingleGrace()) {
+            append(" }");
         }
 
         append(" ");

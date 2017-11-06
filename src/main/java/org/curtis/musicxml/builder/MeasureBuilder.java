@@ -36,19 +36,33 @@ public class MeasureBuilder extends AbstractBuilder {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
 
-                //TODO: handle grace notes
-                if(currentNote.getGrace() != null) {
-                    continue;
-                }
-
                 musicDataBuilder = new NoteBuilder(currentNote);
+
                 if (previousNote != null) {
+                    // chords
                     if(fullNote.getChord() && !previousNote.getFullNote().getChord()) {
                         previousNote.getFullNote().setBeginChord(true);
                     } else if(fullNote.getChord() && previousNote.getFullNote().getChord()) {
                         previousNote.getFullNote().setContinueChord(true);
                     } else if(!fullNote.getChord() && previousNote.getFullNote().getChord()) {
                         previousNote.getFullNote().setEndChord(true);
+                    }
+
+                    // grace notes
+                    if (currentNote.getGrace() != null) {
+                        if(previousNote.getGrace() == null) {
+                            currentNote.setBeginGrace(true);
+                        } else {
+                            currentNote.setEndGrace(true);
+                            if(previousNote.isEndGrace()) {
+                                previousNote.setEndGrace(false);
+                                previousNote.setContinueGrace(true);
+                            }
+                        }
+                    } else {
+                        if(previousNote.getGrace() != null) {
+                            previousNote.setEndGrace(true);
+                        }
                     }
                 }
 
