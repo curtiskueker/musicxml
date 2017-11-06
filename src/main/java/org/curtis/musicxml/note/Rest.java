@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-public class Rest {
+public class Rest extends FullNote {
     private Step displayStep;
     private Integer displayOctave;
     private Boolean measure = false;

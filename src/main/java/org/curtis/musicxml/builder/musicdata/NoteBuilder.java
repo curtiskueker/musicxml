@@ -58,8 +58,8 @@ public class NoteBuilder extends MusicDataBuilder {
             append("\\grace ");
         }
 
-        Pitch pitch = fullNote.getPitch();
-        if(pitch != null) {
+        if (fullNote instanceof Pitch) {
+            Pitch pitch = (Pitch)fullNote;
             Step step = pitch.getStep();
             switch (step) {
                 case A:
@@ -113,8 +113,8 @@ public class NoteBuilder extends MusicDataBuilder {
 
         NoteType noteType = note.getType();
 
-        Rest rest = fullNote.getRest();
-        if(rest != null) {
+        if (fullNote instanceof Rest) {
+            Rest rest = (Rest)fullNote;
             Boolean measure = rest.getMeasure();
             if(measure || noteType == null) {
                 append("R");
