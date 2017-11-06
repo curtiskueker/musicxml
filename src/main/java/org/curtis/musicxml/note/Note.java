@@ -28,6 +28,8 @@ public class Note extends MusicData {
     private NoteheadText noteheadText;
     private Integer staff;
     private List<Beam> beams = new ArrayList<>();
+    private Boolean isBeginBeam = false;
+    private Boolean isEndBeam = false;
     private List<Notations> notationsList = new ArrayList<>();
     private List<Lyric> lyrics;
     private Play play;
@@ -172,6 +174,22 @@ public class Note extends MusicData {
 
     public void setBeams(List<Beam> beams) {
         this.beams = beams;
+    }
+
+    public Boolean getBeginBeam() {
+        return isBeginBeam;
+    }
+
+    public void setBeginBeam(Boolean beginBeam) {
+        isBeginBeam = beginBeam;
+    }
+
+    public Boolean getEndBeam() {
+        return isEndBeam;
+    }
+
+    public void setEndBeam(Boolean endBeam) {
+        isEndBeam = endBeam;
     }
 
     public List<Notations> getNotationsList() {

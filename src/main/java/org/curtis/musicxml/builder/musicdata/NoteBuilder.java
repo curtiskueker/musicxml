@@ -183,6 +183,12 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
+        if(note.getBeginBeam()) {
+            append("[");
+        } else if(note.getEndBeam()) {
+            append("]");
+        }
+
         append(" ");
 
         return stringBuilder;

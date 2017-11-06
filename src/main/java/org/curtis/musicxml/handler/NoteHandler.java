@@ -201,19 +201,19 @@ public class NoteHandler extends AbstractHandler {
                     beam.setNumber(Integer.parseInt(noteSubelement.getAttribute("number")));
                     switch (XmlUtil.getElementText(noteSubelement)) {
                         case "begin":
-                            beam.setValue(BeamType.BEGIN);
+                            beam.setType(BeamType.BEGIN);
                             break;
                         case "continue":
-                            beam.setValue(BeamType.CONTINUE);
+                            beam.setType(BeamType.CONTINUE);
                             break;
                         case "end":
-                            beam.setValue(BeamType.END);
+                            beam.setType(BeamType.END);
                             break;
                         case "forward hook":
-                            beam.setValue(BeamType.FORWARD_HOOK);
+                            beam.setType(BeamType.FORWARD_HOOK);
                             break;
                         case "backward hook":
-                            beam.setValue(BeamType.BACKWARD_HOOK);
+                            beam.setType(BeamType.BACKWARD_HOOK);
                             break;
                     }
                     beams.add(beam);

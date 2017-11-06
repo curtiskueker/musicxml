@@ -1,8 +1,8 @@
 package org.curtis.musicxml.note;
 
 public class Beam {
-    private BeamType value;
-    private Integer number;
+    private BeamType type;
+    private Integer number = 1;
     private Boolean repeater;
     private BeamFan fan;
     private String color;
@@ -11,12 +11,12 @@ public class Beam {
 
     }
 
-    public BeamType getValue() {
-        return value;
+    public BeamType getType() {
+        return type;
     }
 
-    public void setValue(BeamType value) {
-        this.value = value;
+    public void setType(BeamType type) {
+        this.type = type;
     }
 
     public Integer getNumber() {
