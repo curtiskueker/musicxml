@@ -1,7 +1,9 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Grace;
+import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.NoteTypeValue;
@@ -11,6 +13,8 @@ import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
+import org.curtis.musicxml.note.notation.Notation;
+import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.util.TimeSignatureUtil;
 import org.curtis.util.MathUtil;
 
@@ -194,6 +198,20 @@ public class NoteBuilder extends MusicDataBuilder {
 
         if(note.isEndGrace() && !note.isSingleGrace()) {
             append(" }");
+        }
+
+        for(Notations notations : note.getNotationsList()) {
+            for(Notation notation : notations.getNotations()) {
+                if(notation instanceof Tied) {
+                    Connection connection = ((Tied) notation).getType();
+                    switch (connection) {
+                        case START:
+                        case CONTINUE:
+                            append("~");
+                            break;
+                    }
+                }
+            }
         }
 
         append(" ");
