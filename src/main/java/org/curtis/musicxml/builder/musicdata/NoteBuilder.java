@@ -1,8 +1,8 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.FullNote;
-import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
@@ -14,6 +14,7 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.notation.Notation;
+import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.util.TimeSignatureUtil;
 import org.curtis.util.MathUtil;
@@ -57,7 +58,6 @@ public class NoteBuilder extends MusicDataBuilder {
             append("<");
         }
 
-        Grace grace = note.getGrace();
         if (note.isBeginGrace() || note.isSingleGrace()) {
             append("\\grace ");
         }
@@ -196,22 +196,45 @@ public class NoteBuilder extends MusicDataBuilder {
             append("]");
         }
 
-        if(note.isEndGrace() && !note.isSingleGrace()) {
-            append(" }");
-        }
-
         for(Notations notations : note.getNotationsList()) {
             for(Notation notation : notations.getNotations()) {
                 if(notation instanceof Tied) {
-                    Connection connection = ((Tied) notation).getType();
-                    switch (connection) {
+                    Tied tied = (Tied)notation;
+                    Connection tieType = tied.getType();
+                    switch (tieType) {
                         case START:
                         case CONTINUE:
                             append("~");
                             break;
                     }
+                } else if (notation instanceof Slur) {
+                    Slur slur = (Slur)notation;
+                    Connection slurType = slur.getType();
+                    switch (slurType) {
+                        case START:
+                            Location slurPlacement = slur.getPlacement();
+                            if (slurPlacement != null) {
+                                switch (slurPlacement) {
+                                    case ABOVE:
+                                        append("^");
+                                        break;
+                                    case BELOW:
+                                        append("_");
+                                        break;
+                                }
+                            }
+                            append("(");
+                            break;
+                        case STOP:
+                            append(")");
+                            break;
+                    }
                 }
             }
+        }
+
+        if(note.isEndGrace() && !note.isSingleGrace()) {
+            append(" }");
         }
 
         append(" ");
