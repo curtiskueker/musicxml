@@ -32,4 +32,19 @@ public class EnumUtil {
                 return null;
         }
     }
+
+    public static String getPlacement(Location placement) {
+        if(placement == null) {
+            return "";
+        }
+
+        switch (placement) {
+            case ABOVE:
+                return "^";
+            case BELOW:
+                return "_";
+            default:
+                return "";
+        }
+    }
 }

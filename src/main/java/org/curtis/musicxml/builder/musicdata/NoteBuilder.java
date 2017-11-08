@@ -1,7 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
@@ -16,6 +15,8 @@ import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
+import org.curtis.musicxml.note.notation.ornament.TrillMark;
+import org.curtis.musicxml.util.EnumUtil;
 import org.curtis.musicxml.util.TimeSignatureUtil;
 import org.curtis.util.MathUtil;
 
@@ -212,23 +213,17 @@ public class NoteBuilder extends MusicDataBuilder {
                     Connection slurType = slur.getType();
                     switch (slurType) {
                         case START:
-                            Location slurPlacement = slur.getPlacement();
-                            if (slurPlacement != null) {
-                                switch (slurPlacement) {
-                                    case ABOVE:
-                                        append("^");
-                                        break;
-                                    case BELOW:
-                                        append("_");
-                                        break;
-                                }
-                            }
+                            append(EnumUtil.getPlacement(slur.getPlacement()));
                             append("(");
                             break;
                         case STOP:
                             append(")");
                             break;
                     }
+                } else if(notation instanceof TrillMark) {
+                    TrillMark trillMark = (TrillMark)notation;
+                    append(EnumUtil.getPlacement(trillMark.getPlacement()));
+                    append("\\trill");
                 }
             }
         }
