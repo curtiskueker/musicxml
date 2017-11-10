@@ -12,9 +12,12 @@ import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
+import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
+import org.curtis.musicxml.note.notation.articulation.Staccato;
+import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.util.EnumUtil;
 import org.curtis.musicxml.util.TimeSignatureUtil;
@@ -224,6 +227,22 @@ public class NoteBuilder extends MusicDataBuilder {
                     TrillMark trillMark = (TrillMark)notation;
                     append(EnumUtil.getPlacement(trillMark.getPlacement()));
                     append("\\trill");
+                } else if(notation instanceof Staccato) {
+                    Staccato staccato = (Staccato)notation;
+                    Placement staccatoPlacement = staccato.getPlacement();
+                    if (staccatoPlacement != null) {
+                        append(EnumUtil.getPlacement(staccatoPlacement.getPlacement()));
+                    }
+                    append("\\staccato");
+                } else if(notation instanceof Tenuto) {
+                    Tenuto tenuto = (Tenuto)notation;
+                    Placement tenutoPlacement = tenuto.getPlacement();
+                    if (tenutoPlacement != null) {
+                        append(EnumUtil.getPlacement(tenutoPlacement.getPlacement()));
+                    }
+                    append("\\tenuto");
+                } else if(notation instanceof Fermata) {
+                    append("\\fermata");
                 }
             }
         }

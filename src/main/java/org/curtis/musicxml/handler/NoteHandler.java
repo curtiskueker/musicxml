@@ -257,16 +257,16 @@ public class NoteHandler extends AbstractHandler {
                                     switch (articulationsSubelement.getTagName()) {
                                         case "staccato":
                                             Staccato staccato = new Staccato();
-                                            Placement placement = new Placement();
-                                            placement.setPlacement(EnumUtil.getLocation(articulationsSubelement.getAttribute("placement")));
-                                            staccato.setValue(placement);
+                                            Placement staccatoPlacement = new Placement();
+                                            staccatoPlacement.setPlacement(EnumUtil.getLocation(articulationsSubelement.getAttribute("placement")));
+                                            staccato.setPlacement(staccatoPlacement);
                                             notationList.add(staccato);
                                             break;
                                         case "tenuto":
                                             Tenuto tenuto = new Tenuto();
-                                            Placement placement1 = new Placement();
-                                            placement1.setPlacement(EnumUtil.getLocation(articulationsSubelement.getAttribute("placement")));
-                                            tenuto.setValue(placement1);
+                                            Placement tenutoPlacement = new Placement();
+                                            tenutoPlacement.setPlacement(EnumUtil.getLocation(articulationsSubelement.getAttribute("placement")));
+                                            tenuto.setPlacement(tenutoPlacement);
                                             notationList.add(tenuto);
                                             break;
                                     }
