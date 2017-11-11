@@ -1,7 +1,9 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
+import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
@@ -20,6 +22,8 @@ public class MeasureBuilder extends AbstractBuilder {
     private Note previousNote;
     private Set<Integer> currentBeams = new HashSet<>();
     private boolean deferEndBeam = false;
+    private List<Direction> currentDirections = new ArrayList<>();
+    private List<DirectionBuilder> currentDirectionBuilders = new ArrayList<>();
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -32,7 +36,6 @@ public class MeasureBuilder extends AbstractBuilder {
         for(MusicData musicData : musicDataList) {
             MusicDataBuilder musicDataBuilder;
             if(musicData instanceof Note) {
-                // chords
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
 
@@ -88,10 +91,18 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
 
                 previousNote = currentNote;
+            } else if(musicData instanceof Direction) {
+                // defer directions until end of next note
+                Direction direction = (Direction)musicData;
+                currentDirections.add(direction);
+                continue;
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);
             }
+
             musicDataBuilders.add(musicDataBuilder);
+
+            transferDirections();
         }
 
         // set chord at end of measure
@@ -115,6 +126,33 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
+        // adjust the music data builders so that directions appear after chords
+        List<MusicDataBuilder> musicDataBuildersTemp = new ArrayList<>();
+        Note currentNote = null;
+        for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
+            if(musicDataBuilder instanceof NoteBuilder) {
+                NoteBuilder noteBuilder = (NoteBuilder)musicDataBuilder;
+                currentNote = noteBuilder.getNote();
+                musicDataBuildersTemp.add(noteBuilder);
+                if(!currentNote.getFullNote().isBeginChord() && !currentNote.getFullNote().isContinueChord()) {
+                    for(DirectionBuilder directionBuilder : currentDirectionBuilders) {
+                        musicDataBuildersTemp.add(directionBuilder);
+                    }
+                    currentDirectionBuilders.clear();
+                }
+            } else if(musicDataBuilder instanceof DirectionBuilder) {
+                DirectionBuilder directionBuilder = (DirectionBuilder)musicDataBuilder;
+                if(currentNote != null && (currentNote.getFullNote().isBeginChord() || currentNote.getFullNote().isContinueChord())) {
+                    currentDirectionBuilders.add(directionBuilder);
+                } else {
+                    musicDataBuildersTemp.add(directionBuilder);
+                }
+            } else {
+                musicDataBuildersTemp.add(musicDataBuilder);
+            }
+        }
+        musicDataBuilders = new ArrayList<>(musicDataBuildersTemp);
+
         // main music data handling loop
         for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
             musicDataBuilder.setValues(getCurrentTimeSignature());
@@ -125,5 +163,14 @@ public class MeasureBuilder extends AbstractBuilder {
         appendLine("");
 
         return stringBuilder;
+    }
+
+    private void transferDirections() {
+        for(Direction direction : currentDirections) {
+            DirectionBuilder directionBuilder = new DirectionBuilder(direction);
+            musicDataBuilders.add(directionBuilder);
+        }
+
+        currentDirections.clear();
     }
 }

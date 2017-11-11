@@ -6,10 +6,11 @@ import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.direction.type.DirectionType;
 import org.curtis.musicxml.score.MusicData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Direction extends MusicData {
-    private List<DirectionType> directionTypes;
+    private List<DirectionType> directionTypes = new ArrayList<>();
     private Offset offset;
     private FormattedText footnote;
     private Level level;

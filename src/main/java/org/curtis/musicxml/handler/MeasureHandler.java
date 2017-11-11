@@ -25,15 +25,19 @@ public class MeasureHandler extends AbstractHandler {
         for (Element measureSubelement : measureSubelements) {
             String elementName = measureSubelement.getTagName();
             switch (elementName) {
-                case "attributes":
-                    AttributesHandler attributesHandler = new AttributesHandler(measureSubelement, musicDataList);
-                    attributesHandler.handle();
-                    break;
                 case "note":
                     NoteHandler noteHandler = new NoteHandler(measureSubelement, musicDataList);
                     noteHandler.handle();
                     break;
                 case "direction":
+                    DirectionHandler directionHandler = new DirectionHandler(measureSubelement, musicDataList);
+                    directionHandler.handle();
+                    break;
+                case "attributes":
+                    AttributesHandler attributesHandler = new AttributesHandler(measureSubelement, musicDataList);
+                    attributesHandler.handle();
+                    break;
+                case "barline":
                     break;
             }
         }

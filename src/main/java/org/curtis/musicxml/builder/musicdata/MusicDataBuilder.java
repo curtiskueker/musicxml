@@ -2,6 +2,7 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.builder.AbstractBuilder;
+import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.MusicData;
 
@@ -18,6 +19,8 @@ public class MusicDataBuilder extends AbstractBuilder {
             builder = new AttributesBuilder((Attributes)musicData);
         } else if(musicData instanceof Note) {
             builder = new NoteBuilder((Note)musicData);
+        } else if(musicData instanceof Direction) {
+            builder = new DirectionBuilder((Direction)musicData);
         }
 
         if (builder != null) {

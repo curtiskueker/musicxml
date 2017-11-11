@@ -17,7 +17,6 @@ public class ScoreHandler extends AbstractHandler {
     public void handle() {
         Score score = new Score();
 
-
         // score header
         ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(getElement(), score.getScoreHeader());
         scoreHeaderHandler.handle();

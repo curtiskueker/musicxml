@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.builder.util.BuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Notations;
@@ -19,7 +20,6 @@ import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.articulation.Staccato;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
-import org.curtis.musicxml.util.EnumUtil;
 import org.curtis.musicxml.util.TimeSignatureUtil;
 import org.curtis.util.MathUtil;
 
@@ -43,6 +43,8 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
+        append(" ");
+
         FullNote fullNote = note.getFullNote();
 
         Stem stem = note.getStem();
@@ -216,7 +218,7 @@ public class NoteBuilder extends MusicDataBuilder {
                     Connection slurType = slur.getType();
                     switch (slurType) {
                         case START:
-                            append(EnumUtil.getPlacement(slur.getPlacement()));
+                            append(BuildUtil.getPlacement(slur.getPlacement()));
                             append("(");
                             break;
                         case STOP:
@@ -225,20 +227,20 @@ public class NoteBuilder extends MusicDataBuilder {
                     }
                 } else if(notation instanceof TrillMark) {
                     TrillMark trillMark = (TrillMark)notation;
-                    append(EnumUtil.getPlacement(trillMark.getPlacement()));
+                    append(BuildUtil.getPlacement(trillMark.getPlacement()));
                     append("\\trill");
                 } else if(notation instanceof Staccato) {
                     Staccato staccato = (Staccato)notation;
                     Placement staccatoPlacement = staccato.getPlacement();
                     if (staccatoPlacement != null) {
-                        append(EnumUtil.getPlacement(staccatoPlacement.getPlacement()));
+                        append(BuildUtil.getPlacement(staccatoPlacement.getPlacement()));
                     }
                     append("\\staccato");
                 } else if(notation instanceof Tenuto) {
                     Tenuto tenuto = (Tenuto)notation;
                     Placement tenutoPlacement = tenuto.getPlacement();
                     if (tenutoPlacement != null) {
-                        append(EnumUtil.getPlacement(tenutoPlacement.getPlacement()));
+                        append(BuildUtil.getPlacement(tenutoPlacement.getPlacement()));
                     }
                     append("\\tenuto");
                 } else if(notation instanceof Fermata) {
@@ -250,8 +252,6 @@ public class NoteBuilder extends MusicDataBuilder {
         if(note.isEndGrace() && !note.isSingleGrace()) {
             append(" }");
         }
-
-        append(" ");
 
         return stringBuilder;
     }
