@@ -105,6 +105,9 @@ public class MeasureBuilder extends AbstractBuilder {
             transferDirections();
         }
 
+        // clear any directions at the end of the measure
+        transferDirections();
+
         // set chord at end of measure
         if(previousNote != null && previousNote.getFullNote().getChord()) {
             previousNote.getFullNote().setEndChord(true);
@@ -126,10 +129,10 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        // adjust the music data builders so that directions appear after chords
         List<MusicDataBuilder> musicDataBuildersTemp = new ArrayList<>();
         Note currentNote = null;
         for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
+            // adjust the music data builders so that directions appear after chords
             if(musicDataBuilder instanceof NoteBuilder) {
                 NoteBuilder noteBuilder = (NoteBuilder)musicDataBuilder;
                 currentNote = noteBuilder.getNote();

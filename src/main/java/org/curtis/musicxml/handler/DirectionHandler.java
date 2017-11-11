@@ -11,6 +11,8 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.type.DirectionType;
+import org.curtis.musicxml.direction.type.Wedge;
+import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.util.EnumUtil;
@@ -92,6 +94,33 @@ public class DirectionHandler extends AbstractHandler {
                                 directionTypes.add(words);
                                 break;
                             case "wedge":
+                                Wedge wedge = new Wedge();
+                                String wedgeType = directionTypeSubelement.getAttribute("type");
+                                switch (wedgeType) {
+                                    case "crescendo":
+                                        wedge.setType(WedgeType.CRESCENDO);
+                                        break;
+                                    case "diminuendo":
+                                        wedge.setType(WedgeType.DIMINUENDO);
+                                        break;
+                                    case "stop":
+                                        wedge.setType(WedgeType.STOP);
+                                        break;
+                                    case "continue":
+                                        wedge.setType(WedgeType.CONTINUE);
+                                        break;
+                                }
+                                String spread = directionTypeSubelement.getAttribute("spread");
+                                if(StringUtil.isNotEmpty(spread)) {
+                                    wedge.setSpread(MathUtil.newBigDecimal(spread));
+                                }
+                                Position wedgePosition = new Position();
+                                String wedgeRelativeY = directionTypeSubelement.getAttribute("relative-y");
+                                if(StringUtil.isNotEmpty(wedgeRelativeY)) {
+                                    wedgePosition.setRelativeY(MathUtil.newBigDecimal(wedgeRelativeY));
+                                }
+                                wedge.setPosition(wedgePosition);
+                                directionTypes.add(wedge);
                                 break;
                             case "dynamics":
                                 break;

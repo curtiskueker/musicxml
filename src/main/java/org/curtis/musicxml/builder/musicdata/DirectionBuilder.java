@@ -8,6 +8,8 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.type.DirectionType;
+import org.curtis.musicxml.direction.type.Wedge;
+import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
 
 import java.util.List;
@@ -25,7 +27,6 @@ public class DirectionBuilder extends MusicDataBuilder {
         for(DirectionType directionType : directionTypes) {
             if(directionType instanceof Words) {
                 append(BuildUtil.getPlacement(direction.getPlacement()));
-
                 Words words = (Words)directionType;
                 append("\\markup { ");
 
@@ -52,6 +53,24 @@ public class DirectionBuilder extends MusicDataBuilder {
                 append(formattedText.getValue());
 
                 append(" }");
+            } else if(directionType instanceof Wedge) {
+                /*
+                Wedge wedge = (Wedge)directionType;
+                WedgeType wedgeType = wedge.getType();
+                switch (wedgeType) {
+                    case CRESCENDO:
+                        append(BuildUtil.getPlacement(direction.getPlacement()));
+                        append("\\<");
+                        break;
+                    case DIMINUENDO:
+                        append(BuildUtil.getPlacement(direction.getPlacement()));
+                        append("\\>");
+                        break;
+                    case STOP:
+                        append("\\!");
+                        break;
+                }
+                */
             }
         }
 
