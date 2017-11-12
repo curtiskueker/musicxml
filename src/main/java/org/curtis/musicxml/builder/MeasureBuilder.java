@@ -4,6 +4,8 @@ import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.type.DirectionType;
+import org.curtis.musicxml.direction.type.Dynamics;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
@@ -92,10 +94,23 @@ public class MeasureBuilder extends AbstractBuilder {
 
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
-                // defer directions until end of next note
                 Direction direction = (Direction)musicData;
-                currentDirections.add(direction);
-                continue;
+                // defer directions until end of next note
+                // unless it's a dynamics
+                List<DirectionType> directionTypes = direction.getDirectionTypes();
+                boolean isDynamics = false;
+                for(DirectionType directionType : directionTypes) {
+                    if(directionType instanceof Dynamics) {
+                        isDynamics = true;
+                        break;
+                    }
+                }
+                if (!isDynamics) {
+                    currentDirections.add(direction);
+                    continue;
+                }
+
+                musicDataBuilder = new DirectionBuilder(direction);
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);
             }

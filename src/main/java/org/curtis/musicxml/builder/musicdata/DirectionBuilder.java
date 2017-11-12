@@ -8,6 +8,8 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.type.DirectionType;
+import org.curtis.musicxml.direction.type.Dynamics;
+import org.curtis.musicxml.direction.type.DynamicsType;
 import org.curtis.musicxml.direction.type.Wedge;
 import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
@@ -71,6 +73,31 @@ public class DirectionBuilder extends MusicDataBuilder {
                         break;
                 }
                 */
+            } else if(directionType instanceof Dynamics) {
+                Dynamics dynamics = (Dynamics)directionType;
+                List<DynamicsType> dynamicsTypes = dynamics.getTypes();
+                for(DynamicsType dynamicsType : dynamicsTypes) {
+                    switch (dynamicsType) {
+                        case P:
+                            append("\\p");
+                            break;
+                        case PP:
+                            append("\\pp");
+                            break;
+                        case F:
+                            append("\\f");
+                            break;
+                        case FF:
+                            append("\\ff");
+                            break;
+                        case SF:
+                            append("\\sf");
+                            break;
+                        case FP:
+                            append("\\fp");
+                            break;
+                    }
+                }
             }
         }
 

@@ -10,7 +10,11 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.Offset;
+import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.type.DirectionType;
+import org.curtis.musicxml.direction.type.Dynamics;
+import org.curtis.musicxml.direction.type.DynamicsType;
 import org.curtis.musicxml.direction.type.Wedge;
 import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
@@ -123,13 +127,60 @@ public class DirectionHandler extends AbstractHandler {
                                 directionTypes.add(wedge);
                                 break;
                             case "dynamics":
+                                Dynamics dynamics = new Dynamics();
+                                PrintStyleAlign dynamicsPrintStyleAlign = new PrintStyleAlign();
+                                PrintStyle dynamicsPrintStyle = new PrintStyle();
+                                Position dynamicsPosition = new Position();
+                                String dynamicsRelativeX = directionTypeSubelement.getAttribute("relative-x");
+                                if(StringUtil.isNotEmpty(dynamicsRelativeX)) {
+                                    dynamicsPosition.setRelativeX(MathUtil.newBigDecimal(dynamicsRelativeX));
+                                }
+                                String dynamicsRelativeY = directionTypeSubelement.getAttribute("relative-y");
+                                if(StringUtil.isNotEmpty(dynamicsRelativeY)) {
+                                    dynamicsPosition.setRelativeY(MathUtil.newBigDecimal(dynamicsRelativeY));
+                                }
+                                dynamicsPrintStyle.setPosition(dynamicsPosition);
+                                dynamicsPrintStyleAlign.setPrintStyle(dynamicsPrintStyle);
+                                dynamics.setPrintStyleAlign(dynamicsPrintStyleAlign);
+                                List<Element> dynamicsElements = XmlUtil.getChildElements(directionTypeSubelement);
+                                List<DynamicsType> dynamicsTypes = dynamics.getTypes();
+                                for(Element dynamicsElement : dynamicsElements) {
+                                    String dynamecsElementName = dynamicsElement.getTagName();
+                                    switch (dynamecsElementName) {
+                                        case "p":
+                                            dynamicsTypes.add(DynamicsType.P);
+                                            break;
+                                        case "pp":
+                                            dynamicsTypes.add(DynamicsType.PP);
+                                            break;
+                                        case "f":
+                                            dynamicsTypes.add(DynamicsType.F);
+                                            break;
+                                        case "ff":
+                                            dynamicsTypes.add(DynamicsType.FF);
+                                            break;
+                                        case "sf":
+                                            dynamicsTypes.add(DynamicsType.SF);
+                                            break;
+                                        case "fp":
+                                            dynamicsTypes.add(DynamicsType.FP);
+                                            break;
+                                    }
+                                }
+                                directionTypes.add(dynamics);
                                 break;
                         }
                     }
                     break;
                 case "offset":
+                    Offset offset = new Offset();
+                    offset.setDivisions(MathUtil.newBigDecimal(XmlUtil.getElementText(directionSubelement)));
+                    direction.setOffset(offset);
                     break;
                 case "sound":
+                    Sound sound = new Sound();
+                    sound.setDynamics(MathUtil.newBigDecimal(directionSubelement.getAttribute("dynamics")));
+                    direction.setSound(sound);
                     break;
             }
         }

@@ -1,6 +1,6 @@
-package org.curtis.musicxml.note.notation;
+package org.curtis.musicxml.direction.type;
 
-public enum DynamicsValue {
+public enum DynamicsType {
     P,
     PP,
     PPP,

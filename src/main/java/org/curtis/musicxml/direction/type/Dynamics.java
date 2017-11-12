@@ -1,14 +1,15 @@
-package org.curtis.musicxml.note.notation;
+package org.curtis.musicxml.direction.type;
 
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Dynamics extends Notation {
-    private List<DynamicsValue> values;
+public class Dynamics extends DirectionType {
+    private List<DynamicsType> types = new ArrayList<>();
     private PrintStyleAlign printStyleAlign;
     private Location placement;
     private TextDecoration textDecoration;
@@ -18,12 +19,12 @@ public class Dynamics extends Notation {
 
     }
 
-    public List<DynamicsValue> getValues() {
-        return values;
+    public List<DynamicsType> getTypes() {
+        return types;
     }
 
-    public void setValues(List<DynamicsValue> values) {
-        this.values = values;
+    public void setTypes(List<DynamicsType> types) {
+        this.types = types;
     }
 
     public PrintStyleAlign getPrintStyleAlign() {
