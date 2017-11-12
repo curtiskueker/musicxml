@@ -2,8 +2,8 @@ package org.curtis.musicxml.builder.util;
 
 import org.curtis.musicxml.common.Location;
 
-public class BuildUtil {
-    private BuildUtil() {
+public class BuilderUtil {
+    private BuilderUtil() {
 
     }
 

@@ -38,6 +38,8 @@ public class MeasureHandler extends AbstractHandler {
                     attributesHandler.handle();
                     break;
                 case "barline":
+                    BarlineHandler barlineHandler = new BarlineHandler(measureSubelement, musicDataList);
+                    barlineHandler.handle();
                     break;
             }
         }

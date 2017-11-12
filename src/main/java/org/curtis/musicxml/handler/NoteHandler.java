@@ -27,7 +27,7 @@ import org.curtis.musicxml.note.notation.articulation.Staccato;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.score.MusicData;
-import org.curtis.musicxml.util.EnumUtil;
+import org.curtis.musicxml.handler.util.HandlerUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -101,7 +101,7 @@ public class NoteHandler extends AbstractHandler {
                     break;
                 case "tie":
                     Tie tie = new Tie();
-                    tie.setType(EnumUtil.getConnection(noteSubelement.getAttribute("type")));
+                    tie.setType(HandlerUtil.getConnection(noteSubelement.getAttribute("type")));
                     List<Tie> ties = note.getTies();
                     ties.add(tie);
                     break;
@@ -227,12 +227,12 @@ public class NoteHandler extends AbstractHandler {
                         switch (notationsSubelement.getTagName()) {
                             case "tied":
                                 Tied tied = new Tied();
-                                tied.setType(EnumUtil.getConnection(notationsSubelement.getAttribute("type")));
+                                tied.setType(HandlerUtil.getConnection(notationsSubelement.getAttribute("type")));
                                 notationList.add(tied);
                                 break;
                             case "slur":
                                 Slur slur = new Slur();
-                                slur.setType(EnumUtil.getConnection(notationsSubelement.getAttribute("type")));
+                                slur.setType(HandlerUtil.getConnection(notationsSubelement.getAttribute("type")));
                                 String number = notationsSubelement.getAttribute("number");
                                 if (StringUtil.isNotEmpty(number)) {
                                     slur.setNumber(Integer.parseInt(number));
@@ -245,7 +245,7 @@ public class NoteHandler extends AbstractHandler {
                                     switch (ornamentsSubelement.getTagName()) {
                                         case "trill-mark":
                                             TrillMark trillMark = new TrillMark();
-                                            trillMark.setPlacement(EnumUtil.getLocation(ornamentsSubelement.getAttribute("placement")));
+                                            trillMark.setPlacement(HandlerUtil.getLocation(ornamentsSubelement.getAttribute("placement")));
                                             notationList.add(trillMark);
                                             break;
                                     }
@@ -258,14 +258,14 @@ public class NoteHandler extends AbstractHandler {
                                         case "staccato":
                                             Staccato staccato = new Staccato();
                                             Placement staccatoPlacement = new Placement();
-                                            staccatoPlacement.setPlacement(EnumUtil.getLocation(articulationsSubelement.getAttribute("placement")));
+                                            staccatoPlacement.setPlacement(HandlerUtil.getLocation(articulationsSubelement.getAttribute("placement")));
                                             staccato.setPlacement(staccatoPlacement);
                                             notationList.add(staccato);
                                             break;
                                         case "tenuto":
                                             Tenuto tenuto = new Tenuto();
                                             Placement tenutoPlacement = new Placement();
-                                            tenutoPlacement.setPlacement(EnumUtil.getLocation(articulationsSubelement.getAttribute("placement")));
+                                            tenutoPlacement.setPlacement(HandlerUtil.getLocation(articulationsSubelement.getAttribute("placement")));
                                             tenuto.setPlacement(tenutoPlacement);
                                             notationList.add(tenuto);
                                             break;

@@ -19,7 +19,7 @@ import org.curtis.musicxml.direction.type.Wedge;
 import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
 import org.curtis.musicxml.score.MusicData;
-import org.curtis.musicxml.util.EnumUtil;
+import org.curtis.musicxml.handler.util.HandlerUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -37,7 +37,7 @@ public class DirectionHandler extends AbstractHandler {
 
     public void handle() {
         Direction direction = new Direction();
-        direction.setPlacement(EnumUtil.getLocation(getElement().getAttribute("placement")));
+        direction.setPlacement(HandlerUtil.getLocation(getElement().getAttribute("placement")));
         if(direction.getPlacement() == null) direction.setPlacement(Location.BELOW);
         List<DirectionType> directionTypes = direction.getDirectionTypes();
 

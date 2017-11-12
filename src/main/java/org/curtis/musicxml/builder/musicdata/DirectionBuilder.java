@@ -1,6 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.util.BuildUtil;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.PrintStyle;
@@ -11,7 +11,6 @@ import org.curtis.musicxml.direction.type.DirectionType;
 import org.curtis.musicxml.direction.type.Dynamics;
 import org.curtis.musicxml.direction.type.DynamicsType;
 import org.curtis.musicxml.direction.type.Wedge;
-import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class DirectionBuilder extends MusicDataBuilder {
         List<DirectionType> directionTypes = direction.getDirectionTypes();
         for(DirectionType directionType : directionTypes) {
             if(directionType instanceof Words) {
-                append(BuildUtil.getPlacement(direction.getPlacement()));
+                append(BuilderUtil.getPlacement(direction.getPlacement()));
                 Words words = (Words)directionType;
                 append("\\markup { ");
 

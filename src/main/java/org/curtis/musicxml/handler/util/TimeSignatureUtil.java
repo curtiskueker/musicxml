@@ -1,4 +1,4 @@
-package org.curtis.musicxml.util;
+package org.curtis.musicxml.handler.util;
 
 import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.util.MathUtil;

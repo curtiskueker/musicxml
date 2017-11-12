@@ -1,10 +1,10 @@
-package org.curtis.musicxml.util;
+package org.curtis.musicxml.handler.util;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 
-public class EnumUtil {
-    private EnumUtil() {
+public class HandlerUtil {
+    private HandlerUtil() {
 
     }
 
@@ -28,6 +28,12 @@ public class EnumUtil {
                 return Location.ABOVE;
             case "below":
                 return Location.BELOW;
+            case "left":
+                return Location.LEFT;
+            case "right":
+                return Location.RIGHT;
+            case "middle":
+                return Location.MIDDLE;
             default:
                 return null;
         }

@@ -1,5 +1,7 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
@@ -111,6 +113,9 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
 
                 musicDataBuilder = new DirectionBuilder(direction);
+            } else if(musicData instanceof Barline) {
+                Barline barline = (Barline)musicData;
+                musicDataBuilder = new BarlineBuilder(barline);
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);
             }
