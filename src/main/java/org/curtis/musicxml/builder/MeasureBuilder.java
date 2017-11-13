@@ -6,11 +6,10 @@ import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
 import org.curtis.musicxml.direction.Direction;
-import org.curtis.musicxml.direction.type.DirectionType;
-import org.curtis.musicxml.direction.type.Dynamics;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
@@ -28,6 +27,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean deferEndBeam = false;
     private List<Direction> currentDirections = new ArrayList<>();
     private List<DirectionBuilder> currentDirectionBuilders = new ArrayList<>();
+    private List<Notations> currentNotationsList = new ArrayList<>();
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -54,22 +54,22 @@ public class MeasureBuilder extends AbstractBuilder {
                     } else if(!fullNote.getChord() && previousNote.getFullNote().getChord()) {
                         previousNote.getFullNote().setEndChord(true);
                     }
+                }
 
-                    // grace notes
-                    if (currentNote.getGrace() != null) {
-                        if(previousNote.getGrace() == null) {
-                            currentNote.setBeginGrace(true);
-                        } else {
-                            currentNote.setEndGrace(true);
-                            if(previousNote.isEndGrace()) {
-                                previousNote.setEndGrace(false);
-                                previousNote.setContinueGrace(true);
-                            }
-                        }
+                // grace notes
+                if (currentNote.getGrace() != null) {
+                    if(previousNote == null || previousNote.getGrace() == null) {
+                        currentNote.setBeginGrace(true);
                     } else {
-                        if(previousNote.getGrace() != null) {
-                            previousNote.setEndGrace(true);
+                        currentNote.setEndGrace(true);
+                        if(previousNote.isEndGrace()) {
+                            previousNote.setEndGrace(false);
+                            previousNote.setContinueGrace(true);
                         }
+                    }
+                } else {
+                    if(previousNote != null && previousNote.getGrace() != null) {
+                        previousNote.setEndGrace(true);
                     }
                 }
 
@@ -98,21 +98,8 @@ public class MeasureBuilder extends AbstractBuilder {
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
                 // defer directions until end of next note
-                // unless it's a dynamics
-                List<DirectionType> directionTypes = direction.getDirectionTypes();
-                boolean isDynamics = false;
-                for(DirectionType directionType : directionTypes) {
-                    if(directionType instanceof Dynamics) {
-                        isDynamics = true;
-                        break;
-                    }
-                }
-                if (!isDynamics) {
-                    currentDirections.add(direction);
-                    continue;
-                }
-
-                musicDataBuilder = new DirectionBuilder(direction);
+                currentDirections.add(direction);
+                continue;
             } else if(musicData instanceof Barline) {
                 Barline barline = (Barline)musicData;
                 musicDataBuilder = new BarlineBuilder(barline);
@@ -133,18 +120,35 @@ public class MeasureBuilder extends AbstractBuilder {
             previousNote.getFullNote().setEndChord(true);
         }
 
-        // adjust end beams so they don't end up within chord
+        // end grace notes at end of measure
+        if(previousNote != null && previousNote.getGrace() != null) {
+            previousNote.setEndGrace(true);
+        }
+
+        // adjust end beams and notations so they don't end up within chord
         for(MusicData musicData : musicDataList) {
             if(musicData instanceof Note) {
                 Note note = (Note)musicData;
                 FullNote fullNote = note.getFullNote();
-                if((fullNote.isBeginChord() || fullNote.isContinueChord()) && note.getEndBeam()) {
-                    note.setEndBeam(false);
-                    deferEndBeam = true;
+                if((fullNote.isBeginChord() || fullNote.isContinueChord())) {
+                    if (note.getEndBeam()) {
+                        note.setEndBeam(false);
+                        deferEndBeam = true;
+                    }
+
+                    List<Notations> notationsList = note.getNotationsList();
+                    currentNotationsList.addAll(notationsList);
+                    notationsList.clear();
                 }
-                if(fullNote.isEndChord() && deferEndBeam) {
-                    note.setEndBeam(true);
-                    deferEndBeam = false;
+                if(fullNote.isEndChord()) {
+                    if (deferEndBeam) {
+                        note.setEndBeam(true);
+                        deferEndBeam = false;
+                    }
+
+                    List<Notations> notationsList = note.getNotationsList();
+                    notationsList.addAll(currentNotationsList);
+                    currentNotationsList.clear();
                 }
             }
         }

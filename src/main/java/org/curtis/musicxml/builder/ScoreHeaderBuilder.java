@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.score.ScoreHeader;
@@ -21,6 +22,11 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
     }
 
     public StringBuilder build() {
+        append("\\version \"");
+        append(MusicXml2Ly.LILYPOND_VERSION);
+        appendLine("\"");
+        appendLine("");
+
         appendLine("\\header {");
 
         if(StringUtil.isNotEmpty(scoreHeader.getMovementTitle())) {
