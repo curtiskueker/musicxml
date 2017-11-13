@@ -24,6 +24,10 @@ public class MathUtil {
     }
 
     public static BigDecimal newBigDecimal(String val) {
+        if(StringUtil.isEmpty(val)) {
+            return null;
+        }
+
         BigDecimal newValue = new BigDecimal(val);
         return round(newValue);
     }

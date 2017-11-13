@@ -6,6 +6,7 @@ import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScorePart {
@@ -18,7 +19,7 @@ public class ScorePart {
     private List<String> groups;
     private List<ScoreInstrument> scoreInstruments;
     private List<MidiDevice> midiDevices;
-    private List<MidiInstrument> midiInstruments;
+    private List<MidiInstrument> midiInstruments = new ArrayList<>();
 
     public ScorePart() {
 

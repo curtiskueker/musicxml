@@ -9,12 +9,12 @@ import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
+import org.curtis.util.MathUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class PartListHandler extends AbstractHandler {
     private PartList partList;
@@ -86,12 +86,14 @@ public class PartListHandler extends AbstractHandler {
                     scorePart.setScoreInstruments(scoreInstruments);
 
                     List<Element> midiInstrumentElements = XmlUtil.getChildElements(partListSubelement, "midi-instrument");
-                    List<MidiInstrument> midiInstruments = new ArrayList<>();
+                    List<MidiInstrument> midiInstruments = scorePart.getMidiInstruments();
                     for(Element midiInstrumentElement : midiInstrumentElements) {
                         MidiInstrument midiInstrument = new MidiInstrument();
                         midiInstrument.setId(midiInstrumentElement.getAttribute("id"));
                         midiInstrument.setMidiChannel(Integer.parseInt(XmlUtil.getChildElementText(midiInstrumentElement, "midi-channel")));
                         midiInstrument.setMidiProgram(Integer.parseInt(XmlUtil.getChildElementText(midiInstrumentElement, "midi-program")));
+                        midiInstrument.setVolume(MathUtil.newBigDecimal(XmlUtil.getChildElementText(midiInstrumentElement, "volume")));
+                        midiInstrument.setPan(MathUtil.newBigDecimal(XmlUtil.getChildElementText(midiInstrumentElement, "pan")));
                     }
 
                     if(hasCurrentPartGroup) {

@@ -3,6 +3,7 @@ package org.curtis.musicxml.score;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.link.LinkAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreHeader {
@@ -13,7 +14,7 @@ public class ScoreHeader {
     private String movementTitle;
     private Identification identification = new Identification();
     private Defaults defaults;
-    private List<Credit> credits;
+    private List<Credit> credits = new ArrayList<>();
     private PartList partList = new PartList();
 
     public ScoreHeader() {

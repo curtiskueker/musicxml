@@ -17,14 +17,14 @@ public class ScoreHandler extends AbstractHandler {
     public void handle() {
         Score score = new Score();
 
-        // score header
+        // handle and build score header
         ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(getElement(), score.getScoreHeader());
         scoreHeaderHandler.handle();
 
         ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(score.getScoreHeader());
         results.append(scoreHeaderBuilder.build().toString());
 
-        // TODO: uses part list from part group for now
+        // handle the parts
         for(PartGroup partGroup : score.getScoreHeader().getPartList().getPartGroups()) {
             for(ScorePart scorePart : partGroup.getScoreParts()) {
                 String partId = scorePart.getId();
@@ -39,7 +39,7 @@ public class ScoreHandler extends AbstractHandler {
             }
         }
 
-        // score
+        // build the score
         ScoreBuilder scoreBuilder = new ScoreBuilder(score);
         results.append(scoreBuilder.build().toString());
     }

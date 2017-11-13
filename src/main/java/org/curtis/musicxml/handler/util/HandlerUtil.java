@@ -30,10 +30,18 @@ public class HandlerUtil {
                 return Location.BELOW;
             case "left":
                 return Location.LEFT;
+            case "center":
+                return Location.CENTER;
             case "right":
                 return Location.RIGHT;
+            case "top":
+                return Location.TOP;
             case "middle":
                 return Location.MIDDLE;
+            case "bottom":
+                return Location.BOTTOM;
+            case "baseline":
+                return Location.BASELINE;
             default:
                 return null;
         }

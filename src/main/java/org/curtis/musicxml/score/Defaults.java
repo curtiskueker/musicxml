@@ -1,12 +1,14 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.musicxml.layout.Appearance;
+import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Scaling;
 
 import java.util.List;
 
 public class Defaults {
     private Scaling scaling;
+    private Layout layout;
     private Appearance appearance;
     private BasicFont musicFont;
     private BasicFont wordFont;
@@ -23,6 +25,14 @@ public class Defaults {
 
     public void setScaling(Scaling scaling) {
         this.scaling = scaling;
+    }
+
+    public Layout getLayout() {
+        return layout;
+    }
+
+    public void setLayout(Layout layout) {
+        this.layout = layout;
     }
 
     public Appearance getAppearance() {

@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Credit {
@@ -12,10 +13,9 @@ public class Credit {
     private List<Link> links;
     private List<Bookmark> bookmarks;
     private Image creditImage;
-    private FormattedText creditWords;
+    private List<FormattedText> creditWordsList = new ArrayList<>();
     private List<Link> creditWordsLinks;
     private List<Bookmark> creditWordsBookmarks;
-    private List<FormattedText> additionalCreditWords;
     private Integer page;
 
     public Credit() {
@@ -54,12 +54,12 @@ public class Credit {
         this.creditImage = creditImage;
     }
 
-    public FormattedText getCreditWords() {
-        return creditWords;
+    public List<FormattedText> getCreditWordsList() {
+        return creditWordsList;
     }
 
-    public void setCreditWords(FormattedText creditWords) {
-        this.creditWords = creditWords;
+    public void setCreditWordsList(List<FormattedText> creditWordsList) {
+        this.creditWordsList = creditWordsList;
     }
 
     public List<Link> getCreditWordsLinks() {
@@ -76,14 +76,6 @@ public class Credit {
 
     public void setCreditWordsBookmarks(List<Bookmark> creditWordsBookmarks) {
         this.creditWordsBookmarks = creditWordsBookmarks;
-    }
-
-    public List<FormattedText> getAdditionalCreditWords() {
-        return additionalCreditWords;
-    }
-
-    public void setAdditionalCreditWords(List<FormattedText> additionalCreditWords) {
-        this.additionalCreditWords = additionalCreditWords;
     }
 
     public Integer getPage() {
