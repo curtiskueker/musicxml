@@ -52,6 +52,8 @@ public class NoteHandler extends AbstractHandler {
         XPosition xPosition = new XPosition();
         xPosition.setDefaultX(MathUtil.newBigDecimal(getElement().getAttribute("default-x")));
         xPosition.setDefaultY(MathUtil.newBigDecimal(getElement().getAttribute("default-y")));
+        xPosition.setRelativeX(MathUtil.newBigDecimal(getElement().getAttribute("relative-x")));
+        xPosition.setRelativeY(MathUtil.newBigDecimal(getElement().getAttribute("relative-y")));
         note.setxPosition(xPosition);
 
         List<Element> noteSubelements = XmlUtil.getChildElements(getElement());
