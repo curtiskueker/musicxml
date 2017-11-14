@@ -11,6 +11,7 @@ import org.curtis.musicxml.direction.type.DirectionType;
 import org.curtis.musicxml.direction.type.Dynamics;
 import org.curtis.musicxml.direction.type.DynamicsType;
 import org.curtis.musicxml.direction.type.Wedge;
+import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
 
 import java.util.List;
@@ -55,24 +56,21 @@ public class DirectionBuilder extends MusicDataBuilder {
 
                 append(" }");
             } else if(directionType instanceof Wedge) {
-                /*
-                append(BuilderUtil.getPlacement(direction.getPlacement()));
                 Wedge wedge = (Wedge)directionType;
                 WedgeType wedgeType = wedge.getType();
                 switch (wedgeType) {
                     case CRESCENDO:
-                        append(BuildUtil.getPlacement(direction.getPlacement()));
+                        append(BuilderUtil.getPlacement(direction.getPlacement()));
                         append("\\<");
                         break;
                     case DIMINUENDO:
-                        append(BuildUtil.getPlacement(direction.getPlacement()));
+                        append(BuilderUtil.getPlacement(direction.getPlacement()));
                         append("\\>");
                         break;
                     case STOP:
                         append("\\!");
                         break;
                 }
-                */
             } else if(directionType instanceof Dynamics) {
                 append(BuilderUtil.getPlacement(direction.getPlacement()));
                 Dynamics dynamics = (Dynamics)directionType;
