@@ -35,6 +35,8 @@ public class BarlineHandler extends AbstractHandler {
                         case "light-heavy":
                             barStyleColor.setBarStyle(BarStyle.LIGHT_HEAVY);
                             break;
+                        case "heavy-light":
+                            barStyleColor.setBarStyle(BarStyle.HEAVY_LIGHT);
                     }
                     barline.setBarStyle(barStyleColor);
                     break;

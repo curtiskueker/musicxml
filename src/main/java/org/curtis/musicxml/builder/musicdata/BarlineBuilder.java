@@ -32,6 +32,9 @@ public class BarlineBuilder extends MusicDataBuilder {
                case LIGHT_HEAVY:
                    append("|.");
                    break;
+               case HEAVY_LIGHT:
+                   append(".|");
+                   break;
            }
         }
 

@@ -18,6 +18,7 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.Tie;
+import org.curtis.musicxml.note.XPosition;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.FermataType;
 import org.curtis.musicxml.note.notation.Notation;
@@ -46,6 +47,11 @@ public class NoteHandler extends AbstractHandler {
     public void handle() {
         Note note = new Note();
         FullNote fullNote = new Pitch();
+
+        XPosition xPosition = new XPosition();
+        xPosition.setDefaultX(MathUtil.newBigDecimal(getElement().getAttribute("default-x")));
+        xPosition.setDefaultY(MathUtil.newBigDecimal(getElement().getAttribute("default-y")));
+        note.setxPosition(xPosition);
 
         List<Element> noteSubelements = XmlUtil.getChildElements(getElement());
         for(Element noteSubelement : noteSubelements) {
