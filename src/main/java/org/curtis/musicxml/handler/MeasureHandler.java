@@ -2,6 +2,7 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.util.MathUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -18,6 +19,7 @@ public class MeasureHandler extends AbstractHandler {
     public void handle() {
         Measure measure = new Measure();
         measure.setNumber(getElement().getAttribute("number"));
+        measure.setWidth(MathUtil.newBigDecimal(getElement().getAttribute("width")));
 
         List<MusicData> musicDataList = measure.getMusicDataList();
         List<Element> measureSubelements = XmlUtil.getChildElements(getElement());
@@ -36,6 +38,10 @@ public class MeasureHandler extends AbstractHandler {
                 case "attributes":
                     AttributesHandler attributesHandler = new AttributesHandler(measureSubelement, musicDataList);
                     attributesHandler.handle();
+                    break;
+                case "print":
+                    PrintHandler printHandler = new PrintHandler(measureSubelement, musicDataList);
+                    printHandler.handle();
                     break;
                 case "barline":
                     BarlineHandler barlineHandler = new BarlineHandler(measureSubelement, musicDataList);

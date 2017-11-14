@@ -159,11 +159,20 @@ public class DirectionHandler extends AbstractHandler {
                                         case "ff":
                                             dynamicsTypes.add(DynamicsType.FF);
                                             break;
+                                        case "mp":
+                                            dynamicsTypes.add(DynamicsType.MP);
+                                            break;
+                                        case "mf":
+                                            dynamicsTypes.add(DynamicsType.MF);
+                                            break;
                                         case "sf":
                                             dynamicsTypes.add(DynamicsType.SF);
                                             break;
                                         case "fp":
                                             dynamicsTypes.add(DynamicsType.FP);
+                                            break;
+                                        case "fz":
+                                            dynamicsTypes.add(DynamicsType.FZ);
                                             break;
                                     }
                                 }

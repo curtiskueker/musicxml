@@ -89,11 +89,20 @@ public class DirectionBuilder extends MusicDataBuilder {
                         case FF:
                             append("\\ff");
                             break;
+                        case MP:
+                            append("\\mp");
+                            break;
+                        case MF:
+                            append("\\mf");
+                            break;
                         case SF:
                             append("\\sf");
                             break;
                         case FP:
                             append("\\fp");
+                            break;
+                        case FZ:
+                            append("\\fz");
                             break;
                     }
                 }
