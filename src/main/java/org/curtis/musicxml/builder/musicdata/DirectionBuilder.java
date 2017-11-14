@@ -56,6 +56,7 @@ public class DirectionBuilder extends MusicDataBuilder {
                 append(" }");
             } else if(directionType instanceof Wedge) {
                 /*
+                append(BuilderUtil.getPlacement(direction.getPlacement()));
                 Wedge wedge = (Wedge)directionType;
                 WedgeType wedgeType = wedge.getType();
                 switch (wedgeType) {
@@ -73,6 +74,7 @@ public class DirectionBuilder extends MusicDataBuilder {
                 }
                 */
             } else if(directionType instanceof Dynamics) {
+                append(BuilderUtil.getPlacement(direction.getPlacement()));
                 Dynamics dynamics = (Dynamics)directionType;
                 List<DynamicsType> dynamicsTypes = dynamics.getTypes();
                 for(DynamicsType dynamicsType : dynamicsTypes) {

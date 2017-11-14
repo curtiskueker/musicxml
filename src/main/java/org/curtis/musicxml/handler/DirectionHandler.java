@@ -1,14 +1,9 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.Font;
-import org.curtis.musicxml.common.FontStyle;
-import org.curtis.musicxml.common.FontWeight;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
-import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
-import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.Sound;
@@ -18,8 +13,9 @@ import org.curtis.musicxml.direction.type.DynamicsType;
 import org.curtis.musicxml.direction.type.Wedge;
 import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
+import org.curtis.musicxml.factory.FormatFactory;
 import org.curtis.musicxml.score.MusicData;
-import org.curtis.musicxml.handler.util.HandlerUtil;
+import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -37,7 +33,7 @@ public class DirectionHandler extends AbstractHandler {
 
     public void handle() {
         Direction direction = new Direction();
-        direction.setPlacement(HandlerUtil.getLocation(getElement().getAttribute("placement")));
+        direction.setPlacement(PlacementUtil.getLocation(getElement().getAttribute("placement")));
         if(direction.getPlacement() == null) direction.setPlacement(Location.BELOW);
         List<DirectionType> directionTypes = direction.getDirectionTypes();
 
@@ -52,48 +48,7 @@ public class DirectionHandler extends AbstractHandler {
                         switch (directionTypeElementName) {
                             case "words":
                                 Words words = new Words();
-                                FormattedText formattedText = new FormattedText();
-                                formattedText.setValue(XmlUtil.getElementText(directionTypeSubelement));
-                                TextFormatting textFormatting = new TextFormatting();
-                                PrintStyleAlign printStyleAlign = new PrintStyleAlign();
-                                PrintStyle printStyle = new PrintStyle();
-                                Position position = new Position();
-                                String relativeX = directionTypeSubelement.getAttribute("relative-x");
-                                if(StringUtil.isNotEmpty(relativeX)) {
-                                    position.setRelativeX(MathUtil.newBigDecimal(relativeX));
-                                }
-                                String relativeY = directionTypeSubelement.getAttribute("relative-y");
-                                if(StringUtil.isNotEmpty(relativeY)) {
-                                    position.setRelativeY(MathUtil.newBigDecimal(relativeY));
-                                }
-                                printStyle.setPosition(position);
-                                Font font = new Font();
-                                String fontStyle = directionTypeSubelement.getAttribute("font-style");
-                                if(StringUtil.isNotEmpty(fontStyle)) {
-                                    switch (fontStyle) {
-                                        case "normal":
-                                            font.setFontStyle(FontStyle.NORMAL);
-                                            break;
-                                        case "italic":
-                                            font.setFontStyle(FontStyle.ITALIC);
-                                            break;
-                                    }
-                                }
-                                String fontWeight = directionTypeSubelement.getAttribute("font-weight");
-                                if(StringUtil.isNotEmpty(fontWeight)) {
-                                    switch (fontWeight) {
-                                        case "normal":
-                                            font.setFontWeight(FontWeight.NORMAL);
-                                            break;
-                                        case "bold":
-                                            font.setFontWeight(FontWeight.BOLD);
-                                            break;
-                                    }
-                                }
-                                printStyle.setFont(font);
-                                printStyleAlign.setPrintStyle(printStyle);
-                                textFormatting.setPrintStyleAlign(printStyleAlign);
-                                formattedText.setTextFormatting(textFormatting);
+                                FormattedText formattedText = FormatFactory.newFormattedText(directionTypeSubelement);
                                 words.setFormattedText(formattedText);
                                 directionTypes.add(words);
                                 break;
@@ -118,30 +73,16 @@ public class DirectionHandler extends AbstractHandler {
                                 if(StringUtil.isNotEmpty(spread)) {
                                     wedge.setSpread(MathUtil.newBigDecimal(spread));
                                 }
-                                Position wedgePosition = new Position();
-                                String wedgeRelativeY = directionTypeSubelement.getAttribute("relative-y");
-                                if(StringUtil.isNotEmpty(wedgeRelativeY)) {
-                                    wedgePosition.setRelativeY(MathUtil.newBigDecimal(wedgeRelativeY));
-                                }
+                                Position wedgePosition = FormatFactory.newPosition(directionTypeSubelement);
                                 wedge.setPosition(wedgePosition);
                                 directionTypes.add(wedge);
                                 break;
                             case "dynamics":
                                 Dynamics dynamics = new Dynamics();
-                                PrintStyleAlign dynamicsPrintStyleAlign = new PrintStyleAlign();
-                                PrintStyle dynamicsPrintStyle = new PrintStyle();
-                                Position dynamicsPosition = new Position();
-                                String dynamicsRelativeX = directionTypeSubelement.getAttribute("relative-x");
-                                if(StringUtil.isNotEmpty(dynamicsRelativeX)) {
-                                    dynamicsPosition.setRelativeX(MathUtil.newBigDecimal(dynamicsRelativeX));
-                                }
-                                String dynamicsRelativeY = directionTypeSubelement.getAttribute("relative-y");
-                                if(StringUtil.isNotEmpty(dynamicsRelativeY)) {
-                                    dynamicsPosition.setRelativeY(MathUtil.newBigDecimal(dynamicsRelativeY));
-                                }
-                                dynamicsPrintStyle.setPosition(dynamicsPosition);
-                                dynamicsPrintStyleAlign.setPrintStyle(dynamicsPrintStyle);
+
+                                PrintStyleAlign dynamicsPrintStyleAlign = FormatFactory.newPrintStyleAlign(directionTypeSubelement);
                                 dynamics.setPrintStyleAlign(dynamicsPrintStyleAlign);
+
                                 List<Element> dynamicsElements = XmlUtil.getChildElements(directionTypeSubelement);
                                 List<DynamicsType> dynamicsTypes = dynamics.getTypes();
                                 for(Element dynamicsElement : dynamicsElements) {

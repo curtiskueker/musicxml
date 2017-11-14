@@ -1,6 +1,7 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.EditorialVoice;
+import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.AccidentalValue;
 import org.curtis.musicxml.note.Beam;
@@ -28,7 +29,7 @@ import org.curtis.musicxml.note.notation.articulation.Staccato;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.score.MusicData;
-import org.curtis.musicxml.handler.util.HandlerUtil;
+import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -107,7 +108,7 @@ public class NoteHandler extends AbstractHandler {
                     break;
                 case "tie":
                     Tie tie = new Tie();
-                    tie.setType(HandlerUtil.getConnection(noteSubelement.getAttribute("type")));
+                    tie.setType(PlacementUtil.getConnection(noteSubelement.getAttribute("type")));
                     List<Tie> ties = note.getTies();
                     ties.add(tie);
                     break;
@@ -165,7 +166,7 @@ public class NoteHandler extends AbstractHandler {
                     break;
                 case "dot":
                     List<Placement> dots = note.getDots();
-                    Placement dotPlacement = new Placement();
+                    Placement dotPlacement = PlacementFactory.newPlacement(noteSubelement);
                     dots.add(dotPlacement);
                     break;
                 case "accidental":
@@ -233,12 +234,12 @@ public class NoteHandler extends AbstractHandler {
                         switch (notationsSubelement.getTagName()) {
                             case "tied":
                                 Tied tied = new Tied();
-                                tied.setType(HandlerUtil.getConnection(notationsSubelement.getAttribute("type")));
+                                tied.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
                                 notationList.add(tied);
                                 break;
                             case "slur":
                                 Slur slur = new Slur();
-                                slur.setType(HandlerUtil.getConnection(notationsSubelement.getAttribute("type")));
+                                slur.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
                                 String number = notationsSubelement.getAttribute("number");
                                 if (StringUtil.isNotEmpty(number)) {
                                     slur.setNumber(Integer.parseInt(number));
@@ -251,7 +252,7 @@ public class NoteHandler extends AbstractHandler {
                                     switch (ornamentsSubelement.getTagName()) {
                                         case "trill-mark":
                                             TrillMark trillMark = new TrillMark();
-                                            trillMark.setPlacement(HandlerUtil.getLocation(ornamentsSubelement.getAttribute("placement")));
+                                            trillMark.setPlacement(PlacementUtil.getLocation(ornamentsSubelement.getAttribute("placement")));
                                             notationList.add(trillMark);
                                             break;
                                     }
@@ -263,15 +264,13 @@ public class NoteHandler extends AbstractHandler {
                                     switch (articulationsSubelement.getTagName()) {
                                         case "staccato":
                                             Staccato staccato = new Staccato();
-                                            Placement staccatoPlacement = new Placement();
-                                            staccatoPlacement.setPlacement(HandlerUtil.getLocation(articulationsSubelement.getAttribute("placement")));
+                                            Placement staccatoPlacement = PlacementFactory.newPlacement(noteSubelement);
                                             staccato.setPlacement(staccatoPlacement);
                                             notationList.add(staccato);
                                             break;
                                         case "tenuto":
                                             Tenuto tenuto = new Tenuto();
-                                            Placement tenutoPlacement = new Placement();
-                                            tenutoPlacement.setPlacement(HandlerUtil.getLocation(articulationsSubelement.getAttribute("placement")));
+                                            Placement tenutoPlacement = PlacementFactory.newPlacement(noteSubelement);
                                             tenuto.setPlacement(tenutoPlacement);
                                             notationList.add(tenuto);
                                             break;

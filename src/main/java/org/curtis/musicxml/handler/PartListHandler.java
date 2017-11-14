@@ -94,6 +94,7 @@ public class PartListHandler extends AbstractHandler {
                         midiInstrument.setMidiProgram(Integer.parseInt(XmlUtil.getChildElementText(midiInstrumentElement, "midi-program")));
                         midiInstrument.setVolume(MathUtil.newBigDecimal(XmlUtil.getChildElementText(midiInstrumentElement, "volume")));
                         midiInstrument.setPan(MathUtil.newBigDecimal(XmlUtil.getChildElementText(midiInstrumentElement, "pan")));
+                        midiInstruments.add(midiInstrument);
                     }
 
                     if(hasCurrentPartGroup) {

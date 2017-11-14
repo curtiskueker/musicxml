@@ -5,7 +5,7 @@ import org.curtis.musicxml.barline.BarStyleColor;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.barline.RepeatDirection;
-import org.curtis.musicxml.handler.util.HandlerUtil;
+import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -22,7 +22,7 @@ public class BarlineHandler extends AbstractHandler {
 
     public void handle() {
         Barline barline = new Barline();
-        barline.setLocation(HandlerUtil.getLocation(getElement().getAttribute("location")));
+        barline.setLocation(PlacementUtil.getLocation(getElement().getAttribute("location")));
 
         List<Element> barlineSubelements = XmlUtil.getChildElements(getElement());
         for(Element barlineSubelement : barlineSubelements) {

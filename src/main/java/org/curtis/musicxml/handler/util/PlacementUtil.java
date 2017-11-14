@@ -3,8 +3,8 @@ package org.curtis.musicxml.handler.util;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 
-public class HandlerUtil {
-    private HandlerUtil() {
+public class PlacementUtil {
+    private PlacementUtil() {
 
     }
 

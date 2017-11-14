@@ -1,13 +1,7 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.Font;
-import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FormattedText;
-import org.curtis.musicxml.common.Position;
-import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.common.PrintStyleAlign;
-import org.curtis.musicxml.common.TextFormatting;
-import org.curtis.musicxml.handler.util.HandlerUtil;
+import org.curtis.musicxml.factory.FormatFactory;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.identity.encoding.Encoding;
@@ -118,25 +112,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
                     List<FormattedText> creditWordsList = credit.getCreditWordsList();
                     List<Element> creditWordsElements = XmlUtil.getChildElements(subelement, "credit-words");
                     for(Element creditWordsElement : creditWordsElements) {
-                        FormattedText creditWords = new FormattedText();
-                        creditWords.setValue(XmlUtil.getElementText(creditWordsElement));
-                        TextFormatting textFormatting = new TextFormatting();
-                        textFormatting.setJustify(HandlerUtil.getLocation(creditWordsElement.getAttribute("justify")));
-                        PrintStyleAlign printStyleAlign = new PrintStyleAlign();
-                        printStyleAlign.setValign(HandlerUtil.getLocation(creditWordsElement.getAttribute("valign")));
-                        PrintStyle printStyle = new PrintStyle();
-                        Position position = new Position();
-                        position.setDefaultX(MathUtil.newBigDecimal(creditWordsElement.getAttribute("default-x")));
-                        position.setDefaultY(MathUtil.newBigDecimal(creditWordsElement.getAttribute("default-y")));
-                        printStyle.setPosition(position);
-                        Font font = new Font();
-                        FontSize fontSize = new FontSize();
-                        fontSize.setFontSize(MathUtil.newBigDecimal(creditWordsElement.getAttribute("font-size")));
-                        font.setFontSize(fontSize);
-                        printStyle.setFont(font);
-                        printStyleAlign.setPrintStyle(printStyle);
-                        textFormatting.setPrintStyleAlign(printStyleAlign);
-                        creditWords.setTextFormatting(textFormatting);
+                        FormattedText creditWords = FormatFactory.newFormattedText(creditWordsElement);
                         creditWordsList.add(creditWords);
                     }
                     credits.add(credit);
