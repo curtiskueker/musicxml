@@ -65,7 +65,11 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         if (note.isBeginGrace() || note.isSingleGrace()) {
-            append("\\grace ");
+            if(note.getGrace().getSlash()) {
+                append("\\slashedGrace ");
+            } else {
+                append("\\grace ");
+            }
         }
         if(note.isBeginGrace() && !note.isSingleGrace()) {
             append("{ ");

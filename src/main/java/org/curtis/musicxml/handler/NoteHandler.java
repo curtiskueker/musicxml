@@ -2,6 +2,7 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.factory.PlacementFactory;
+import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.AccidentalValue;
 import org.curtis.musicxml.note.Beam;
@@ -61,6 +62,10 @@ public class NoteHandler extends AbstractHandler {
             switch (noteSubelement.getTagName()) {
                 case "grace":
                     Grace grace = new Grace();
+                    grace.setStealTimePrevious(MathUtil.newBigDecimal(noteSubelement.getAttribute("steal-time-previous")));
+                    grace.setStealTimeFollowing(MathUtil.newBigDecimal(noteSubelement.getAttribute("steal-time-following")));
+                    grace.setMakeTime(MathUtil.newBigDecimal(noteSubelement.getAttribute("make-time")));
+                    grace.setSlash(TypeUtil.getYesNo(noteSubelement.getAttribute("slash")));
                     note.setGrace(grace);
                     break;
                 case "chord":
