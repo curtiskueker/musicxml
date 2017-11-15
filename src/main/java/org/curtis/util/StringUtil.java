@@ -11,4 +11,8 @@ public class StringUtil {
     public static boolean isNotEmpty(String string) {
         return !isEmpty(string);
     }
+
+    public static String nullToString(String string) {
+        return string == null ? "" : string;
+    }
 }
