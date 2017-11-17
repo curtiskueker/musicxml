@@ -1,26 +1,26 @@
 package org.curtis.musicxml.layout;
 
 public class PageMargins {
-    private AllMargins allMargins;
-    private String type;
+    private Margins margins;
+    private MarginType type;
 
     public PageMargins() {
 
     }
 
-    public AllMargins getAllMargins() {
-        return allMargins;
+    public Margins getMargins() {
+        return margins;
     }
 
-    public void setAllMargins(AllMargins allMargins) {
-        this.allMargins = allMargins;
+    public void setMargins(Margins margins) {
+        this.margins = margins;
     }
 
-    public String getType() {
+    public MarginType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(MarginType type) {
         this.type = type;
     }
 }

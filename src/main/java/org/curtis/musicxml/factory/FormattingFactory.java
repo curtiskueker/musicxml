@@ -18,8 +18,8 @@ import org.w3c.dom.Element;
 
 import java.math.BigDecimal;
 
-public class FormatFactory {
-    private FormatFactory() {
+public class FormattingFactory {
+    private FormattingFactory() {
 
     }
 
@@ -57,15 +57,47 @@ public class FormatFactory {
     }
 
     public static PrintStyle newPrintStyle(Element printStyleElement) {
+        if(printStyleElement == null) {
+            return null;
+        }
+
         PrintStyle printStyle = new PrintStyle();
 
         Position position = newPosition(printStyleElement);
         printStyle.setPosition(position);
 
-        Font font = new Font();
-        font.setFontFamily(printStyleElement.getAttribute("font-family"));
+        Font font = newFont(printStyleElement);
+        printStyle.setFont(font);
 
-        String fontStyle = printStyleElement.getAttribute("font-style");
+        printStyle.setColor(printStyleElement.getAttribute("color"));
+
+        return printStyle;
+    }
+
+    public static Position newPosition(Element positionElement) {
+        if(positionElement == null) {
+            return null;
+        }
+
+        Position position = new Position();
+
+        position.setDefaultX(MathUtil.newBigDecimal(positionElement.getAttribute("default-x")));
+        position.setDefaultY(MathUtil.newBigDecimal(positionElement.getAttribute("default-y")));
+        position.setRelativeX(MathUtil.newBigDecimal(positionElement.getAttribute("relative-x")));
+        position.setRelativeY(MathUtil.newBigDecimal(positionElement.getAttribute("relative-y")));
+
+        return position;
+    }
+
+    public static Font newFont(Element fontElement) {
+        if(fontElement == null) {
+            return null;
+        }
+
+        Font font = new Font();
+        font.setFontFamily(fontElement.getAttribute("font-family"));
+
+        String fontStyle = fontElement.getAttribute("font-style");
         if(StringUtil.isNotEmpty(fontStyle)) {
             switch (fontStyle) {
                 case "normal":
@@ -78,7 +110,7 @@ public class FormatFactory {
         }
 
         FontSize fontSize = new FontSize();
-        String fontSizeValue = printStyleElement.getAttribute("font-size");
+        String fontSizeValue = fontElement.getAttribute("font-size");
         if (StringUtil.isNotEmpty(fontSizeValue)) {
             switch (fontSizeValue) {
                 case "xx-small":
@@ -109,7 +141,7 @@ public class FormatFactory {
         }
         font.setFontSize(fontSize);
 
-        String fontWeight = printStyleElement.getAttribute("font-weight");
+        String fontWeight = fontElement.getAttribute("font-weight");
         if (StringUtil.isNotEmpty(fontWeight)) {
             switch (fontWeight) {
                 case "normal":
@@ -121,25 +153,6 @@ public class FormatFactory {
             }
         }
 
-        printStyle.setFont(font);
-
-        printStyle.setColor(printStyleElement.getAttribute("color"));
-
-        return printStyle;
-    }
-
-    public static Position newPosition(Element positionElement) {
-        if(positionElement == null) {
-            return null;
-        }
-
-        Position position = new Position();
-
-        position.setDefaultX(MathUtil.newBigDecimal(positionElement.getAttribute("default-x")));
-        position.setDefaultY(MathUtil.newBigDecimal(positionElement.getAttribute("default-y")));
-        position.setRelativeX(MathUtil.newBigDecimal(positionElement.getAttribute("relative-x")));
-        position.setRelativeY(MathUtil.newBigDecimal(positionElement.getAttribute("relative-y")));
-
-        return position;
+        return font;
     }
 }

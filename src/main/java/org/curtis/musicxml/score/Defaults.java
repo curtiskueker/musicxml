@@ -1,19 +1,21 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Scaling;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Defaults {
     private Scaling scaling;
     private Layout layout;
     private Appearance appearance;
-    private BasicFont musicFont;
-    private BasicFont wordFont;
-    private List<LyricFont> lyricFonts;
-    private List<LyricLanguage> lyricLanguages;
+    private Font musicFont;
+    private Font wordFont;
+    private List<LyricFont> lyricFonts = new ArrayList<>();
+    private List<LyricLanguage> lyricLanguages = new ArrayList<>();
 
     public Defaults() {
 
@@ -43,19 +45,19 @@ public class Defaults {
         this.appearance = appearance;
     }
 
-    public BasicFont getMusicFont() {
+    public Font getMusicFont() {
         return musicFont;
     }
 
-    public void setMusicFont(BasicFont musicFont) {
+    public void setMusicFont(Font musicFont) {
         this.musicFont = musicFont;
     }
 
-    public BasicFont getWordFont() {
+    public Font getWordFont() {
         return wordFont;
     }
 
-    public void setWordFont(BasicFont wordFont) {
+    public void setWordFont(Font wordFont) {
         this.wordFont = wordFont;
     }
 

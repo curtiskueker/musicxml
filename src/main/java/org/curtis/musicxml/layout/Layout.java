@@ -1,11 +1,12 @@
 package org.curtis.musicxml.layout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Layout {
     private PageLayout pageLayout;
     private SystemLayout systemLayout;
-    private List<StaffLayout> staffLayouts;
+    private List<StaffLayout> staffLayouts = new ArrayList<>();
 
     public Layout() {
 

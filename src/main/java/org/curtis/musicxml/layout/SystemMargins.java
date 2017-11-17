@@ -1,17 +1,29 @@
 package org.curtis.musicxml.layout;
 
+import java.math.BigDecimal;
+
 public class SystemMargins {
-    private LeftRightMargins leftRightMargins;
+    private BigDecimal leftMargin;
+    private BigDecimal rightMargin;
+
 
     public SystemMargins() {
 
     }
 
-    public LeftRightMargins getLeftRightMargins() {
-        return leftRightMargins;
+    public BigDecimal getLeftMargin() {
+        return leftMargin;
     }
 
-    public void setLeftRightMargins(LeftRightMargins leftRightMargins) {
-        this.leftRightMargins = leftRightMargins;
+    public void setLeftMargin(BigDecimal leftMargin) {
+        this.leftMargin = leftMargin;
+    }
+
+    public BigDecimal getRightMargin() {
+        return rightMargin;
+    }
+
+    public void setRightMargin(BigDecimal rightMargin) {
+        this.rightMargin = rightMargin;
     }
 }

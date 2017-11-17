@@ -13,7 +13,7 @@ public class PlacementFactory {
     public static Placement newPlacement(Element placementElement) {
         Placement placement = new Placement();
 
-        PrintStyle printStyle = FormatFactory.newPrintStyle(placementElement);
+        PrintStyle printStyle = FormattingFactory.newPrintStyle(placementElement);
         placement.setPrintStyle(printStyle);
 
         placement.setPlacement(PlacementUtil.getLocation(placementElement.getAttribute("placement")));

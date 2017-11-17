@@ -13,7 +13,7 @@ import org.curtis.musicxml.direction.type.DynamicsType;
 import org.curtis.musicxml.direction.type.Wedge;
 import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
-import org.curtis.musicxml.factory.FormatFactory;
+import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
@@ -48,7 +48,7 @@ public class DirectionHandler extends AbstractHandler {
                         switch (directionTypeElementName) {
                             case "words":
                                 Words words = new Words();
-                                FormattedText formattedText = FormatFactory.newFormattedText(directionTypeSubelement);
+                                FormattedText formattedText = FormattingFactory.newFormattedText(directionTypeSubelement);
                                 words.setFormattedText(formattedText);
                                 directionTypes.add(words);
                                 break;
@@ -73,14 +73,14 @@ public class DirectionHandler extends AbstractHandler {
                                 if(StringUtil.isNotEmpty(spread)) {
                                     wedge.setSpread(MathUtil.newBigDecimal(spread));
                                 }
-                                Position wedgePosition = FormatFactory.newPosition(directionTypeSubelement);
+                                Position wedgePosition = FormattingFactory.newPosition(directionTypeSubelement);
                                 wedge.setPosition(wedgePosition);
                                 directionTypes.add(wedge);
                                 break;
                             case "dynamics":
                                 Dynamics dynamics = new Dynamics();
 
-                                PrintStyleAlign dynamicsPrintStyleAlign = FormatFactory.newPrintStyleAlign(directionTypeSubelement);
+                                PrintStyleAlign dynamicsPrintStyleAlign = FormattingFactory.newPrintStyleAlign(directionTypeSubelement);
                                 dynamics.setPrintStyleAlign(dynamicsPrintStyleAlign);
 
                                 List<Element> dynamicsElements = XmlUtil.getChildElements(directionTypeSubelement);

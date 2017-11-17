@@ -2,21 +2,30 @@ package org.curtis.musicxml.layout;
 
 import java.math.BigDecimal;
 
-public class AllMargins {
-    private LeftRightMargins leftRightMargins;
+public class Margins {
+    private BigDecimal leftMargin;
+    private BigDecimal rightMargin;
     private BigDecimal topMargin;
     private BigDecimal bottomMargin;
 
-    public AllMargins() {
+    public Margins() {
 
     }
 
-    public LeftRightMargins getLeftRightMargins() {
-        return leftRightMargins;
+    public BigDecimal getLeftMargin() {
+        return leftMargin;
     }
 
-    public void setLeftRightMargins(LeftRightMargins leftRightMargins) {
-        this.leftRightMargins = leftRightMargins;
+    public void setLeftMargin(BigDecimal leftMargin) {
+        this.leftMargin = leftMargin;
+    }
+
+    public BigDecimal getRightMargin() {
+        return rightMargin;
+    }
+
+    public void setRightMargin(BigDecimal rightMargin) {
+        this.rightMargin = rightMargin;
     }
 
     public BigDecimal getTopMargin() {

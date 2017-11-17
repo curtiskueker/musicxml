@@ -1,7 +1,9 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FormattedText;
-import org.curtis.musicxml.factory.FormatFactory;
+import org.curtis.musicxml.factory.FormattingFactory;
+import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.identity.encoding.Encoding;
@@ -12,6 +14,8 @@ import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
+import org.curtis.musicxml.score.LyricFont;
+import org.curtis.musicxml.score.LyricLanguage;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.util.DateUtil;
@@ -80,6 +84,10 @@ public class ScoreHeaderHandler extends AbstractHandler {
                     break;
                 case "defaults":
                     Defaults defaults = new Defaults();
+
+                    Layout layout = LayoutFactory.newLayout(subelement);
+                    defaults.setLayout(layout);
+
                     List<Element> defaultsSubelements = XmlUtil.getChildElements(subelement);
                     for(Element defaultsSubelement : defaultsSubelements) {
                         String defaultsSubelementName = defaultsSubelement.getTagName();
@@ -90,13 +98,28 @@ public class ScoreHeaderHandler extends AbstractHandler {
                                 scaling.setTenths(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "tenths")));
                                 defaults.setScaling(scaling);
                                 break;
-                            case "page-layout":
-                                Layout layout = new Layout();
-                                PageLayout pageLayout = new PageLayout();
-                                pageLayout.setPageHeight(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "page-height")));
-                                pageLayout.setPageWidth(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "page-width")));
-                                layout.setPageLayout(pageLayout);
+                            case "appearance":
                                 break;
+                            case "music-font":
+                                defaults.setMusicFont(FormattingFactory.newFont(defaultsSubelement));
+                                break;
+                            case "word-font":
+                                defaults.setWordFont(FormattingFactory.newFont(defaultsSubelement));
+                                break;
+                            case "lyric-font":
+                                List<LyricFont> lyricFonts = defaults.getLyricFonts();
+                                LyricFont lyricFont = new LyricFont();
+                                lyricFont.setNumber(defaultsSubelement.getAttribute("number"));
+                                lyricFont.setName(defaultsSubelement.getAttribute("name"));
+                                lyricFont.setFont(FormattingFactory.newFont(defaultsSubelement));
+                                lyricFonts.add(lyricFont);
+                            case "lyric-language":
+                                List<LyricLanguage> lyricLanguages = defaults.getLyricLanguages();
+                                LyricLanguage lyricLanguage = new LyricLanguage();
+                                lyricLanguage.setNumber(defaultsSubelement.getAttribute("number"));
+                                lyricLanguage.setName(defaultsSubelement.getAttribute("name"));
+                                lyricLanguage.setLang(defaultsSubelement.getAttribute("lang"));
+                                lyricLanguages.add(lyricLanguage);
                         }
                     }
                     scoreHeader.setDefaults(defaults);
@@ -112,7 +135,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
                     List<FormattedText> creditWordsList = credit.getCreditWordsList();
                     List<Element> creditWordsElements = XmlUtil.getChildElements(subelement, "credit-words");
                     for(Element creditWordsElement : creditWordsElements) {
-                        FormattedText creditWords = FormatFactory.newFormattedText(creditWordsElement);
+                        FormattedText creditWords = FormattingFactory.newFormattedText(creditWordsElement);
                         creditWordsList.add(creditWords);
                     }
                     credits.add(credit);
