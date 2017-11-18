@@ -13,10 +13,6 @@ import java.util.List;
 
 public class Note extends MusicData {
     private Grace grace;
-    //TODO: grace note type as enum
-    private boolean isBeginGrace;
-    private boolean isContinueGrace;
-    private boolean isEndGrace;
     private Boolean cue;
     private FullNote fullNote;
     private BigDecimal duration;
@@ -60,32 +56,8 @@ public class Note extends MusicData {
         this.grace = grace;
     }
 
-    public boolean isBeginGrace() {
-        return isBeginGrace;
-    }
-
-    public void setBeginGrace(boolean beginGrace) {
-        isBeginGrace = beginGrace;
-    }
-
-    public boolean isContinueGrace() {
-        return isContinueGrace;
-    }
-
-    public boolean isSingleGrace() {
-        return isBeginGrace && isEndGrace;
-    }
-
-    public void setContinueGrace(boolean continueGrace) {
-        isContinueGrace = continueGrace;
-    }
-
-    public boolean isEndGrace() {
-        return isEndGrace;
-    }
-
-    public void setEndGrace(boolean endGrace) {
-        isEndGrace = endGrace;
+    public boolean isGraceNote() {
+        return grace != null;
     }
 
     public Boolean getCue() {

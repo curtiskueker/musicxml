@@ -1,7 +1,5 @@
 package org.curtis.musicxml.builder;
 
-import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
@@ -9,6 +7,7 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.GraceType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
@@ -57,19 +56,22 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
 
                 // grace notes
-                if (currentNote.getGrace() != null) {
-                    if(previousNote == null || previousNote.getGrace() == null) {
-                        currentNote.setBeginGrace(true);
+                if (currentNote.isGraceNote()) {
+                    if(previousNote == null || !previousNote.isGraceNote()) {
+                        currentNote.getGrace().setGraceType(GraceType.BEGIN);
                     } else {
-                        currentNote.setEndGrace(true);
-                        if(previousNote.isEndGrace()) {
-                            previousNote.setEndGrace(false);
-                            previousNote.setContinueGrace(true);
+                        currentNote.getGrace().setGraceType(GraceType.END);
+                        if(previousNote.getGrace().getGraceType() == GraceType.END) {
+                            previousNote.getGrace().setGraceType(GraceType.CONTINUE);
                         }
                     }
                 } else {
-                    if(previousNote != null && previousNote.getGrace() != null) {
-                        previousNote.setEndGrace(true);
+                    if(previousNote != null && previousNote.isGraceNote()) {
+                        if(previousNote.getGrace().getGraceType() == GraceType.BEGIN) {
+                            previousNote.getGrace().setGraceType(GraceType.SINGLE);
+                        } else {
+                            previousNote.getGrace().setGraceType(GraceType.END);
+                        }
                     }
                 }
 
@@ -118,8 +120,12 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         // end grace notes at end of measure
-        if(previousNote != null && previousNote.getGrace() != null) {
-            previousNote.setEndGrace(true);
+        if(previousNote != null && previousNote.isGraceNote()) {
+            if(previousNote.getGrace().getGraceType() == GraceType.BEGIN) {
+                previousNote.getGrace().setGraceType(GraceType.SINGLE);
+            } else {
+                previousNote.getGrace().setGraceType(GraceType.END);
+            }
         }
 
         // adjust end beams and notations so they don't end up within chord

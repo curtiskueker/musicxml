@@ -3,6 +3,7 @@ package org.curtis.musicxml.note;
 import java.math.BigDecimal;
 
 public class Grace {
+    private GraceType graceType;
     private BigDecimal stealTimePrevious;
     private BigDecimal stealTimeFollowing;
     private BigDecimal makeTime;
@@ -10,6 +11,14 @@ public class Grace {
 
     public Grace() {
 
+    }
+
+    public GraceType getGraceType() {
+        return graceType;
+    }
+
+    public void setGraceType(GraceType graceType) {
+        this.graceType = graceType;
     }
 
     public BigDecimal getStealTimePrevious() {

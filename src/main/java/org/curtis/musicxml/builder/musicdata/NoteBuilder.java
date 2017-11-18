@@ -3,6 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.GraceType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
@@ -64,15 +65,17 @@ public class NoteBuilder extends MusicDataBuilder {
             append("<");
         }
 
-        if (note.isBeginGrace() || note.isSingleGrace()) {
-            if(note.getGrace().getSlash()) {
-                append("\\slashedGrace ");
-            } else {
-                append("\\grace ");
+        if (note.isGraceNote()) {
+            if (note.getGrace().getGraceType() == GraceType.BEGIN || note.getGrace().getGraceType() == GraceType.SINGLE) {
+                if(note.getGrace().getSlash()) {
+                    append("\\slashedGrace ");
+                } else {
+                    append("\\grace ");
+                }
             }
-        }
-        if(note.isBeginGrace() && !note.isSingleGrace()) {
-            append("{ ");
+            if(note.getGrace().getGraceType() == GraceType.BEGIN) {
+                append("{ ");
+            }
         }
 
         if (fullNote instanceof Pitch) {
@@ -253,7 +256,7 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        if(note.isEndGrace() && !note.isSingleGrace()) {
+        if(note.isGraceNote() && note.getGrace().getGraceType() == GraceType.END) {
             append(" }");
         }
 
