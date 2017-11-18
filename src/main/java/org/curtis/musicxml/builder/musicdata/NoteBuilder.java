@@ -3,7 +3,6 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
-import org.curtis.musicxml.note.GraceType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
@@ -49,7 +48,7 @@ public class NoteBuilder extends MusicDataBuilder {
         FullNote fullNote = note.getFullNote();
 
         Stem stem = note.getStem();
-        if(stem != null && !fullNote.isContinueChord() && !fullNote.isEndChord()) {
+        if(stem != null && (!fullNote.getChord() || fullNote.getChordType() == Connection.START)) {
             StemType stemType = stem.getType();
             switch (stemType) {
                 case DOWN:
@@ -61,19 +60,19 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        if(fullNote.isBeginChord()) {
+        if(fullNote.getChordType() == Connection.START) {
             append("<");
         }
 
         if (note.isGraceNote()) {
-            if (note.getGrace().getGraceType() == GraceType.BEGIN || note.getGrace().getGraceType() == GraceType.SINGLE) {
+            if (note.getGrace().getGraceType() == Connection.START || note.getGrace().getGraceType() == Connection.SINGLE) {
                 if(note.getGrace().getSlash()) {
                     append("\\slashedGrace ");
                 } else {
                     append("\\grace ");
                 }
             }
-            if(note.getGrace().getGraceType() == GraceType.BEGIN) {
+            if(note.getGrace().getGraceType() == Connection.START) {
                 append("{ ");
             }
         }
@@ -144,11 +143,11 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        if(fullNote.isEndChord()) {
+        if(fullNote.getChordType() == Connection.STOP) {
             append(">");
         }
 
-        if (!fullNote.isBeginChord() && !fullNote.isContinueChord()) {
+        if (!fullNote.getChord() || fullNote.getChordType() == Connection.STOP) {
             if (noteType != null) {
                 NoteTypeValue noteTypeValue = noteType.getValue();
                 switch (noteTypeValue) {
@@ -256,7 +255,7 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        if(note.isGraceNote() && note.getGrace().getGraceType() == GraceType.END) {
+        if(note.isGraceNote() && note.getGrace().getGraceType() == Connection.STOP) {
             append(" }");
         }
 

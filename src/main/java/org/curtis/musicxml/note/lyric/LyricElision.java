@@ -1,8 +1,10 @@
 package org.curtis.musicxml.note.lyric;
 
+import org.curtis.musicxml.common.Connection;
+
 public class LyricElision {
     private TextFontColor elision;
-    private Syllabic syllabic;
+    private Connection syllabic;
     private TextElementData text;
 
     public LyricElision() {
@@ -17,11 +19,11 @@ public class LyricElision {
         this.elision = elision;
     }
 
-    public Syllabic getSyllabic() {
+    public Connection getSyllabic() {
         return syllabic;
     }
 
-    public void setSyllabic(Syllabic syllabic) {
+    public void setSyllabic(Connection syllabic) {
         this.syllabic = syllabic;
     }
 

@@ -1,11 +1,10 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Connection;
+
 public abstract class FullNote {
     private Boolean chord = false;
-    //TODO: chord type as enum
-    private boolean isBeginChord;
-    private boolean isContinueChord;
-    private boolean isEndChord;
+    private Connection chordType;
 
     public Boolean getChord() {
         return chord;
@@ -15,27 +14,11 @@ public abstract class FullNote {
         this.chord = chord;
     }
 
-    public boolean isBeginChord() {
-        return isBeginChord;
+    public Connection getChordType() {
+        return chordType;
     }
 
-    public void setBeginChord(boolean beginChord) {
-        isBeginChord = beginChord;
-    }
-
-    public boolean isContinueChord() {
-        return isContinueChord;
-    }
-
-    public void setContinueChord(boolean continueChord) {
-        isContinueChord = continueChord;
-    }
-
-    public boolean isEndChord() {
-        return isEndChord;
-    }
-
-    public void setEndChord(boolean endChord) {
-        isEndChord = endChord;
+    public void setChordType(Connection chordType) {
+        this.chordType = chordType;
     }
 }

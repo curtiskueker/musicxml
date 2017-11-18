@@ -1,9 +1,11 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Connection;
+
 import java.math.BigDecimal;
 
 public class Grace {
-    private GraceType graceType;
+    private Connection graceType;
     private BigDecimal stealTimePrevious;
     private BigDecimal stealTimeFollowing;
     private BigDecimal makeTime;
@@ -13,11 +15,11 @@ public class Grace {
 
     }
 
-    public GraceType getGraceType() {
+    public Connection getGraceType() {
         return graceType;
     }
 
-    public void setGraceType(GraceType graceType) {
+    public void setGraceType(Connection graceType) {
         this.graceType = graceType;
     }
 

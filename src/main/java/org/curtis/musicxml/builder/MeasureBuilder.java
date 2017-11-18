@@ -3,11 +3,11 @@ package org.curtis.musicxml.builder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
-import org.curtis.musicxml.note.GraceType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
@@ -47,30 +47,31 @@ public class MeasureBuilder extends AbstractBuilder {
                 if (previousNote != null) {
                     // chords
                     if(fullNote.getChord() && !previousNote.getFullNote().getChord()) {
-                        previousNote.getFullNote().setBeginChord(true);
+                        previousNote.getFullNote().setChord(true);
+                        previousNote.getFullNote().setChordType(Connection.START);
                     } else if(fullNote.getChord() && previousNote.getFullNote().getChord()) {
-                        previousNote.getFullNote().setContinueChord(true);
+                        previousNote.getFullNote().setChordType(Connection.CONTINUE);
                     } else if(!fullNote.getChord() && previousNote.getFullNote().getChord()) {
-                        previousNote.getFullNote().setEndChord(true);
+                        previousNote.getFullNote().setChordType(Connection.STOP);
                     }
                 }
 
                 // grace notes
                 if (currentNote.isGraceNote()) {
                     if(previousNote == null || !previousNote.isGraceNote()) {
-                        currentNote.getGrace().setGraceType(GraceType.BEGIN);
+                        currentNote.getGrace().setGraceType(Connection.START);
                     } else {
-                        currentNote.getGrace().setGraceType(GraceType.END);
-                        if(previousNote.getGrace().getGraceType() == GraceType.END) {
-                            previousNote.getGrace().setGraceType(GraceType.CONTINUE);
+                        currentNote.getGrace().setGraceType(Connection.STOP);
+                        if(previousNote.getGrace().getGraceType() == Connection.STOP) {
+                            previousNote.getGrace().setGraceType(Connection.CONTINUE);
                         }
                     }
                 } else {
                     if(previousNote != null && previousNote.isGraceNote()) {
-                        if(previousNote.getGrace().getGraceType() == GraceType.BEGIN) {
-                            previousNote.getGrace().setGraceType(GraceType.SINGLE);
+                        if(previousNote.getGrace().getGraceType() == Connection.START) {
+                            previousNote.getGrace().setGraceType(Connection.SINGLE);
                         } else {
-                            previousNote.getGrace().setGraceType(GraceType.END);
+                            previousNote.getGrace().setGraceType(Connection.STOP);
                         }
                     }
                 }
@@ -116,15 +117,15 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // set chord at end of measure
         if(previousNote != null && previousNote.getFullNote().getChord()) {
-            previousNote.getFullNote().setEndChord(true);
+            previousNote.getFullNote().setChordType(Connection.STOP);
         }
 
         // end grace notes at end of measure
         if(previousNote != null && previousNote.isGraceNote()) {
-            if(previousNote.getGrace().getGraceType() == GraceType.BEGIN) {
-                previousNote.getGrace().setGraceType(GraceType.SINGLE);
+            if(previousNote.getGrace().getGraceType() == Connection.START) {
+                previousNote.getGrace().setGraceType(Connection.SINGLE);
             } else {
-                previousNote.getGrace().setGraceType(GraceType.END);
+                previousNote.getGrace().setGraceType(Connection.STOP);
             }
         }
 
@@ -133,7 +134,7 @@ public class MeasureBuilder extends AbstractBuilder {
             if(musicData instanceof Note) {
                 Note note = (Note)musicData;
                 FullNote fullNote = note.getFullNote();
-                if((fullNote.isBeginChord() || fullNote.isContinueChord())) {
+                if((fullNote.getChordType() == Connection.START || fullNote.getChordType() == Connection.CONTINUE)) {
                     if (note.getEndBeam()) {
                         note.setEndBeam(false);
                         deferEndBeam = true;
@@ -143,7 +144,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     currentNotationsList.addAll(notationsList);
                     notationsList.clear();
                 }
-                if(fullNote.isEndChord()) {
+                if(fullNote.getChordType() == Connection.STOP) {
                     if (deferEndBeam) {
                         note.setEndBeam(true);
                         deferEndBeam = false;
@@ -164,7 +165,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 NoteBuilder noteBuilder = (NoteBuilder)musicDataBuilder;
                 currentNote = noteBuilder.getNote();
                 musicDataBuildersTemp.add(noteBuilder);
-                if(!currentNote.getFullNote().isBeginChord() && !currentNote.getFullNote().isContinueChord()) {
+                if(!currentNote.getFullNote().getChord() || currentNote.getFullNote().getChordType() == Connection.STOP) {
                     for(DirectionBuilder directionBuilder : currentDirectionBuilders) {
                         musicDataBuildersTemp.add(directionBuilder);
                     }
@@ -172,7 +173,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
             } else if(musicDataBuilder instanceof DirectionBuilder) {
                 DirectionBuilder directionBuilder = (DirectionBuilder)musicDataBuilder;
-                if(currentNote != null && (currentNote.getFullNote().isBeginChord() || currentNote.getFullNote().isContinueChord())) {
+                if(currentNote != null && (currentNote.getFullNote().getChordType() == Connection.START || currentNote.getFullNote().getChordType() == Connection.CONTINUE)) {
                     currentDirectionBuilders.add(directionBuilder);
                 } else {
                     musicDataBuildersTemp.add(directionBuilder);
