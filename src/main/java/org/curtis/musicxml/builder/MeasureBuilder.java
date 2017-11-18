@@ -100,9 +100,6 @@ public class MeasureBuilder extends AbstractBuilder {
                 // defer directions until end of next note
                 currentDirections.add(direction);
                 continue;
-            } else if(musicData instanceof Barline) {
-                Barline barline = (Barline)musicData;
-                musicDataBuilder = new BarlineBuilder(barline);
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);
             }

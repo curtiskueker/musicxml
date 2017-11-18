@@ -15,8 +15,8 @@ public class Print extends MusicData {
     private NameDisplay partNameDisplay;
     private NameDisplay partAbbreviationDisplay;
     private BigDecimal staffSpacing;
-    private Boolean newSystem;
-    private Boolean newPage;
+    private Boolean newSystem = false;
+    private Boolean newPage = false;
     private Integer blankPage;
     private String pageNumber;
 
