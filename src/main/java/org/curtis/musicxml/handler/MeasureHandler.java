@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -19,6 +20,8 @@ public class MeasureHandler extends AbstractHandler {
     public void handle() {
         Measure measure = new Measure();
         measure.setNumber(getElement().getAttribute("number"));
+        measure.setImplicit(TypeUtil.getYesNo(getElement().getAttribute("implicit")));
+        measure.setNonControlling(TypeUtil.getYesNo(getElement().getAttribute("non-controlling")));
         measure.setWidth(MathUtil.newBigDecimal(getElement().getAttribute("width")));
 
         List<MusicData> musicDataList = measure.getMusicDataList();

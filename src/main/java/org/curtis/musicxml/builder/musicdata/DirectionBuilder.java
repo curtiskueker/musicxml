@@ -1,6 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.PrintStyle;
@@ -28,7 +28,7 @@ public class DirectionBuilder extends MusicDataBuilder {
         List<DirectionType> directionTypes = direction.getDirectionTypes();
         for(DirectionType directionType : directionTypes) {
             if(directionType instanceof Words) {
-                append(BuilderUtil.getPlacement(direction.getPlacement()));
+                append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
                 Words words = (Words)directionType;
                 append("\\markup { ");
 
@@ -60,11 +60,11 @@ public class DirectionBuilder extends MusicDataBuilder {
                 WedgeType wedgeType = wedge.getType();
                 switch (wedgeType) {
                     case CRESCENDO:
-                        append(BuilderUtil.getPlacement(direction.getPlacement()));
+                        append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
                         append("\\<");
                         break;
                     case DIMINUENDO:
-                        append(BuilderUtil.getPlacement(direction.getPlacement()));
+                        append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
                         append("\\>");
                         break;
                     case STOP:
@@ -72,7 +72,7 @@ public class DirectionBuilder extends MusicDataBuilder {
                         break;
                 }
             } else if(directionType instanceof Dynamics) {
-                append(BuilderUtil.getPlacement(direction.getPlacement()));
+                append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
                 Dynamics dynamics = (Dynamics)directionType;
                 List<DynamicsType> dynamicsTypes = dynamics.getTypes();
                 for(DynamicsType dynamicsType : dynamicsTypes) {

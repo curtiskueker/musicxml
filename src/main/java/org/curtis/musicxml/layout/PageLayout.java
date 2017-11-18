@@ -1,13 +1,13 @@
 package org.curtis.musicxml.layout;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PageLayout {
     private BigDecimal pageHeight;
     private BigDecimal pageWidth;
-    private List<PageMargins> pageMarginsList = new ArrayList<>();
+    private Map<MarginType, PageMargins> pageMargins = new HashMap<>();
 
     public PageLayout() {
 
@@ -29,11 +29,11 @@ public class PageLayout {
         this.pageWidth = pageWidth;
     }
 
-    public List<PageMargins> getPageMarginsList() {
-        return pageMarginsList;
+    public Map<MarginType, PageMargins> getPageMargins() {
+        return pageMargins;
     }
 
-    public void setPageMarginsList(List<PageMargins> pageMarginsList) {
-        this.pageMarginsList = pageMarginsList;
+    public void setPageMargins(Map<MarginType, PageMargins> pageMargins) {
+        this.pageMargins = pageMargins;
     }
 }

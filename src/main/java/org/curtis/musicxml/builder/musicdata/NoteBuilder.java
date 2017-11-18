@@ -1,6 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Notations;
@@ -222,7 +222,7 @@ public class NoteBuilder extends MusicDataBuilder {
                     Connection slurType = slur.getType();
                     switch (slurType) {
                         case START:
-                            append(BuilderUtil.getPlacement(slur.getPlacement()));
+                            append(PlacementBuildUtil.getPlacement(slur.getPlacement()));
                             append("(");
                             break;
                         case STOP:
@@ -231,20 +231,20 @@ public class NoteBuilder extends MusicDataBuilder {
                     }
                 } else if(notation instanceof TrillMark) {
                     TrillMark trillMark = (TrillMark)notation;
-                    append(BuilderUtil.getPlacement(trillMark.getPlacement()));
+                    append(PlacementBuildUtil.getPlacement(trillMark.getPlacement()));
                     append("\\trill");
                 } else if(notation instanceof Staccato) {
                     Staccato staccato = (Staccato)notation;
                     Placement staccatoPlacement = staccato.getPlacement();
                     if (staccatoPlacement != null) {
-                        append(BuilderUtil.getPlacement(staccatoPlacement.getPlacement()));
+                        append(PlacementBuildUtil.getPlacement(staccatoPlacement.getPlacement()));
                     }
                     append("\\staccato");
                 } else if(notation instanceof Tenuto) {
                     Tenuto tenuto = (Tenuto)notation;
                     Placement tenutoPlacement = tenuto.getPlacement();
                     if (tenutoPlacement != null) {
-                        append(BuilderUtil.getPlacement(tenutoPlacement.getPlacement()));
+                        append(PlacementBuildUtil.getPlacement(tenutoPlacement.getPlacement()));
                     }
                     append("\\tenuto");
                 } else if(notation instanceof Fermata) {

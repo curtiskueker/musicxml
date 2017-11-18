@@ -5,6 +5,7 @@ import org.curtis.musicxml.layout.MarginType;
 import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
+import org.curtis.musicxml.layout.StaffLayout;
 import org.curtis.musicxml.layout.SystemLayout;
 import org.curtis.musicxml.layout.SystemMargins;
 import org.curtis.util.MathUtil;
@@ -13,6 +14,7 @@ import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
 import java.util.List;
+import java.util.Map;
 
 public class LayoutFactory {
     private LayoutFactory() {
@@ -32,7 +34,7 @@ public class LayoutFactory {
                     pageLayout.setPageWidth(MathUtil.newBigDecimal(XmlUtil.getChildElementText(layoutSubelement, "page-width")));
 
                     List<Element> pageMarginsElements = XmlUtil.getChildElements(layoutSubelement, "page-margins");
-                    List<PageMargins> pageMarginsList = pageLayout.getPageMarginsList();
+                    Map<MarginType, PageMargins> pageMarginsMap = pageLayout.getPageMargins();
                     for(Element pageMarginsElement : pageMarginsElements) {
                         PageMargins pageMargins = new PageMargins();
 
@@ -58,7 +60,7 @@ public class LayoutFactory {
                             }
                         }
 
-                        pageMarginsList.add(pageMargins);
+                        pageMarginsMap.put(pageMargins.getType(), pageMargins);
                     }
                     layout.setPageLayout(pageLayout);
                     break;
@@ -78,6 +80,16 @@ public class LayoutFactory {
                     layout.setSystemLayout(systemLayout);
                     break;
                 case "staff-layout":
+                    List<StaffLayout> staffLayouts = layout.getStaffLayouts();
+
+                    StaffLayout staffLayout = new StaffLayout();
+                    staffLayout.setStaffDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(layoutSubelement, "staff-distance")));
+                    String staffNumber = layoutSubelement.getAttribute("number");
+                    if (StringUtil.isNotEmpty(staffNumber)) {
+                        staffLayout.setNumber(Integer.parseInt(staffNumber));
+                    }
+
+                    staffLayouts.add(staffLayout);
                     break;
             }
         }

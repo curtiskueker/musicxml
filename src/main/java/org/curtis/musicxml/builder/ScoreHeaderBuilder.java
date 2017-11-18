@@ -1,18 +1,24 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.bin.MusicXml2Ly;
+import org.curtis.musicxml.builder.util.ScoreDefaults;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
+import org.curtis.musicxml.layout.MarginType;
+import org.curtis.musicxml.layout.PageLayout;
+import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.ScoreHeader;
+import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ScoreHeaderBuilder extends AbstractBuilder {
     private ScoreHeader scoreHeader;
@@ -35,6 +41,49 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
         appendLine("\"");
         appendLine("");
 
+        ScoreDefaults.getInstance().setScoreDefaults(scoreHeader.getDefaults());
+
+        if(ScoreDefaults.getInstance().hasScaling()) {
+            appendLine("\\paper {");
+
+            PageLayout pageLayout = scoreHeader.getDefaults().getLayout().getPageLayout();
+            BigDecimal pageHeight = pageLayout.getPageHeight();
+            BigDecimal pageWidth = pageLayout.getPageWidth();
+            if(MathUtil.isPositive(pageHeight)) {
+                append("paper-height = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(pageHeight).toString());
+            }
+            if(MathUtil.isPositive(pageWidth)) {
+                append("paper-width = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(pageWidth).toString());
+            }
+
+            Map<MarginType, PageMargins> pageMarginsMap = pageLayout.getPageMargins();
+            PageMargins alternatePageMargins = pageMarginsMap.get(MarginType.ODD);
+            PageMargins fixedPageMargins = pageMarginsMap.get(MarginType.BOTH);
+            if(alternatePageMargins != null) {
+                append("top-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getTopMargin()).toString());
+                append("bottom-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getBottomMargin()).toString());
+                append("inner-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getLeftMargin()).toString());
+                append("outer-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getRightMargin()).toString());
+            } else if(fixedPageMargins != null) {
+                append("top-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getTopMargin()).toString());
+                append("bottom-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getBottomMargin()).toString());
+                append("left-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getLeftMargin()).toString());
+                append("right-margin = ");
+                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getRightMargin()).toString());
+            }
+
+            appendLine("}");
+        }
+
         appendLine("\\header {");
 
         if(StringUtil.isNotEmpty(scoreHeader.getMovementTitle())) {
@@ -52,7 +101,6 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
             }
         }
 
-        // title = \markup { \column { \italic "value" \bold "Another value" } }
         List<Credit> credits = scoreHeader.getCredits();
         List<FormattedText> creditWordsList = new ArrayList<>();
         for(Credit credit : credits) {

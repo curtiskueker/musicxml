@@ -5,7 +5,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class MathUtil {
-    public static int SCALE = 2;
+    public static int SCALE = 4;
     public static RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
     public static BigDecimal ZERO = newBigDecimal(0);
 
