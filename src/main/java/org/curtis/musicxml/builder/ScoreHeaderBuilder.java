@@ -115,16 +115,18 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
             for(FormattedText creditWord : creditWordsList) {
                 TextFormatting textFormatting = creditWord.getTextFormatting();
                 Location justify = textFormatting.getJustify();
-                switch (justify) {
-                    case LEFT:
-                        append("\\left-align");
-                        break;
-                    case CENTER:
-                        append("\\center-align");
-                        break;
-                    case RIGHT:
-                        append("\\right-align");
-                        break;
+                if (justify != null) {
+                    switch (justify) {
+                        case LEFT:
+                            append("\\left-align");
+                            break;
+                        case CENTER:
+                            append("\\center-align");
+                            break;
+                        case RIGHT:
+                            append("\\right-align");
+                            break;
+                    }
                 }
 
                 append(" { ");

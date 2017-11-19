@@ -1,5 +1,7 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
@@ -27,6 +29,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private List<Direction> currentDirections = new ArrayList<>();
     private List<DirectionBuilder> currentDirectionBuilders = new ArrayList<>();
     private List<Notations> currentNotationsList = new ArrayList<>();
+    private Barline currentBarline = null;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -35,9 +38,17 @@ public class MeasureBuilder extends AbstractBuilder {
     public StringBuilder build() {
         List<MusicData> musicDataList = measure.getMusicDataList();
 
+        // pre-processing loop
         // go through notes and mark begins and ends
         for(MusicData musicData : musicDataList) {
             MusicDataBuilder musicDataBuilder;
+
+            if(currentBarline != null) {
+                musicDataBuilder = new BarlineBuilder(currentBarline);
+                musicDataBuilders.add(musicDataBuilder);
+                currentBarline = null;
+            }
+
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
@@ -103,6 +114,10 @@ public class MeasureBuilder extends AbstractBuilder {
                 // defer directions until end of next note
                 currentDirections.add(direction);
                 continue;
+            } else if(musicData instanceof Barline) {
+                // hold on the barline until the next iteration or at the very end
+                currentBarline = (Barline)musicData;
+                continue;
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);
             }
@@ -115,7 +130,13 @@ public class MeasureBuilder extends AbstractBuilder {
         // clear any directions at the end of the measure
         transferDirections();
 
-        // set chord at end of measure
+        // put any barline at the end
+        if(currentBarline != null) {
+            BarlineBuilder barlineBuilder = new BarlineBuilder(currentBarline);
+            musicDataBuilders.add(barlineBuilder);
+        }
+
+        // close chord at end of measure
         if(previousNote != null && previousNote.getFullNote().getChord()) {
             previousNote.getFullNote().setChordType(Connection.STOP);
         }
@@ -184,7 +205,7 @@ public class MeasureBuilder extends AbstractBuilder {
         }
         musicDataBuilders = new ArrayList<>(musicDataBuildersTemp);
 
-        // main music data handling loop
+        // Process the database builders
         for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
             musicDataBuilder.setValues(getCurrentTimeSignature());
             append(musicDataBuilder.build().toString());

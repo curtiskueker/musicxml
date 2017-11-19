@@ -26,10 +26,7 @@ public class PrintHandler extends AbstractHandler {
         print.setStaffSpacing(MathUtil.newBigDecimal(getElement().getAttribute("staff-spacing")));
         print.setNewSystem(TypeUtil.getYesNo(getElement().getAttribute("new-system")));
         print.setNewPage(TypeUtil.getYesNo(getElement().getAttribute("new-page")));
-        String blankPage = getElement().getAttribute("blank-page");
-        if(StringUtil.isNotEmpty(blankPage)) {
-            print.setBlankPage(Integer.parseInt(blankPage));
-        }
+        print.setBlankPage(StringUtil.getInteger(getElement().getAttribute("blank-page")));
         print.setPageNumber(getElement().getAttribute("page-number"));
 
         print.setLayout(layout);

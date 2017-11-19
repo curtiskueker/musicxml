@@ -8,6 +8,7 @@ import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -35,7 +36,7 @@ public class AttributesHandler extends AbstractHandler {
                     List<Key> keys = attributes.getKeys();
                     Key key = new Key();
                     TraditionalKey traditionalKey = new TraditionalKey();
-                    traditionalKey.setFifths(Integer.parseInt(XmlUtil.getChildElementText(attributeSubelement, "fifths")));
+                    traditionalKey.setFifths(StringUtil.getInteger(XmlUtil.getChildElementText(attributeSubelement, "fifths")));
                     traditionalKey.setMode(XmlUtil.getChildElementText(attributeSubelement, "mode"));
                     key.setTraditionalKey(traditionalKey);
                     keys.add(key);
@@ -82,7 +83,7 @@ public class AttributesHandler extends AbstractHandler {
                             clefSign = null;
                     }
                     clef.setSign(clefSign);
-                    clef.setLine(Integer.parseInt(XmlUtil.getChildElementText(attributeSubelement, "line")));
+                    clef.setLine(StringUtil.getInteger(XmlUtil.getChildElementText(attributeSubelement, "line")));
                     attributes.setClef(clef);
 
                     break;

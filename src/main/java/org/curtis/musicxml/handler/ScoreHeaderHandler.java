@@ -127,10 +127,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
                 case "credit":
                     List<Credit> credits = scoreHeader.getCredits();
                     Credit credit = new Credit();
-                    String page = subelement.getAttribute("page");
-                    if(StringUtil.isNotEmpty(page)) {
-                        credit.setPage(Integer.parseInt(page));
-                    }
+                    credit.setPage(StringUtil.getInteger(subelement.getAttribute("page")));
 
                     List<FormattedText> creditWordsList = credit.getCreditWordsList();
                     List<Element> creditWordsElements = XmlUtil.getChildElements(subelement, "credit-words");

@@ -105,7 +105,7 @@ public class NoteHandler extends AbstractHandler {
                         pitch.setAlter(MathUtil.newBigDecimal(XmlUtil.getElementText(alterElement)));
                     }
 
-                    pitch.setOctave(Integer.parseInt(XmlUtil.getChildElementText(noteSubelement, "octave")));
+                    pitch.setOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "octave")));
                     break;
                 case "rest":
                     fullNote = new Rest();
@@ -212,7 +212,7 @@ public class NoteHandler extends AbstractHandler {
                 case "beam":
                     List<Beam> beams = note.getBeams();
                     Beam beam = new Beam();
-                    beam.setNumber(Integer.parseInt(noteSubelement.getAttribute("number")));
+                    beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
                     switch (XmlUtil.getElementText(noteSubelement)) {
                         case "begin":
                             beam.setType(BeamType.BEGIN);
@@ -247,10 +247,7 @@ public class NoteHandler extends AbstractHandler {
                             case "slur":
                                 Slur slur = new Slur();
                                 slur.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
-                                String number = notationsSubelement.getAttribute("number");
-                                if (StringUtil.isNotEmpty(number)) {
-                                    slur.setNumber(Integer.parseInt(number));
-                                }
+                                slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                                 notationList.add(slur);
                                 break;
                             case "ornaments":

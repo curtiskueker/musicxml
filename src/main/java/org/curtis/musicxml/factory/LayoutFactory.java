@@ -84,10 +84,7 @@ public class LayoutFactory {
 
                     StaffLayout staffLayout = new StaffLayout();
                     staffLayout.setStaffDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(layoutSubelement, "staff-distance")));
-                    String staffNumber = layoutSubelement.getAttribute("number");
-                    if (StringUtil.isNotEmpty(staffNumber)) {
-                        staffLayout.setNumber(Integer.parseInt(staffNumber));
-                    }
+                    staffLayout.setNumber(StringUtil.getInteger(layoutSubelement.getAttribute("number")));
 
                     staffLayouts.add(staffLayout);
                     break;
