@@ -20,13 +20,12 @@ import java.util.List;
 public class PartListHandler extends AbstractHandler {
     private PartList partList;
 
-    public PartListHandler(Element element, PartList partList) {
-        super(element);
+    public PartListHandler(PartList partList) {
         this.partList = partList;
     }
 
-    public void handle() {
-        List<Element> partListSubelements = XmlUtil.getChildElements(getElement());
+    public void handle(Element element) {
+        List<Element> partListSubelements = XmlUtil.getChildElements(element);
         PartGroup currentPartGroup = null;
         Boolean hasCurrentPartGroup = false;
         for(Element partListSubelement : partListSubelements) {

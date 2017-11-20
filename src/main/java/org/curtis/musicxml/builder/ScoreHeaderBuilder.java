@@ -104,6 +104,10 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
         List<Credit> credits = scoreHeader.getCredits();
         List<FormattedText> creditWordsList = new ArrayList<>();
         for(Credit credit : credits) {
+            if(credit.getPage() > 1) {
+                continue;
+            }
+
             creditWordsList.addAll(credit.getCreditWordsList());
         }
 

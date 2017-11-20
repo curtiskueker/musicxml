@@ -6,15 +6,20 @@ import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
+import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.util.MathUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +35,8 @@ public class MeasureBuilder extends AbstractBuilder {
     private List<DirectionBuilder> currentDirectionBuilders = new ArrayList<>();
     private List<Notations> currentNotationsList = new ArrayList<>();
     private Barline currentBarline = null;
+    private BigDecimal currentBackupDuration = MathUtil.ZERO;
+    private boolean lastNoteSkipped = false;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -43,15 +50,18 @@ public class MeasureBuilder extends AbstractBuilder {
         for(MusicData musicData : musicDataList) {
             MusicDataBuilder musicDataBuilder;
 
-            if(currentBarline != null) {
-                musicDataBuilder = new BarlineBuilder(currentBarline);
-                musicDataBuilders.add(musicDataBuilder);
-                currentBarline = null;
-            }
-
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
+
+                boolean skipNote = MathUtil.isPositive(currentBackupDuration);
+                if (skipNote || (lastNoteSkipped && fullNote.getChord())) {
+                    if (!fullNote.getChord()) {
+                        currentBackupDuration = MathUtil.subtract(currentBackupDuration, currentNote.getDuration());
+                    }
+                    lastNoteSkipped = true;
+                    continue;
+                }
 
                 musicDataBuilder = new NoteBuilder(currentNote);
 
@@ -108,6 +118,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     }
                 }
 
+                lastNoteSkipped = false;
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
@@ -115,8 +126,22 @@ public class MeasureBuilder extends AbstractBuilder {
                 currentDirections.add(direction);
                 continue;
             } else if(musicData instanceof Barline) {
-                // hold on the barline until the next iteration or at the very end
-                currentBarline = (Barline)musicData;
+                // hold on the final barline until the very end
+                Barline barline = (Barline)musicData;
+                Location barlineLocation = barline.getLocation();
+                if (barlineLocation == Location.RIGHT) {
+                    currentBarline = barline;
+                    continue;
+                }
+
+                musicDataBuilder = new MusicDataBuilder(barline);
+            } else if (musicData instanceof Backup) {
+                Backup backup = (Backup)musicData;
+                currentBackupDuration = MathUtil.add(currentBackupDuration, backup.getDuration());
+                continue;
+            } else if (musicData instanceof Forward) {
+                Forward forward = (Forward)musicData;
+                currentBackupDuration = MathUtil.subtract(currentBackupDuration, forward.getDuration());
                 continue;
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);

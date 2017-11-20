@@ -10,21 +10,20 @@ import java.util.List;
 public class PartHandler extends AbstractHandler {
     private List<Part> parts;
 
-    public PartHandler(Element element, List<Part> parts) {
-        super(element);
+    public PartHandler(List<Part> parts) {
         this.parts = parts;
     }
 
-    public void handle() {
+    public void handle(Element element) {
         Part part = new Part();
 
-        part.setId(getElement().getAttribute("id"));
+        part.setId(element.getAttribute("id"));
 
         List<Measure> measures = part.getMeasures();
-        List<Element> measureElements = XmlUtil.getChildElements(getElement(), "measure");
+        List<Element> measureElements = XmlUtil.getChildElements(element, "measure");
         for(Element measureElenent : measureElements) {
-            MeasureHandler measureHandler = new MeasureHandler(measureElenent, measures);
-            measureHandler.handle();
+            MeasureHandler measureHandler = new MeasureHandler(measures);
+            measureHandler.handle(measureElenent);
         }
 
         parts.add(part);

@@ -1,6 +1,5 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
@@ -10,7 +9,6 @@ import org.curtis.musicxml.identity.encoding.Encoding;
 import org.curtis.musicxml.identity.encoding.EncodingDate;
 import org.curtis.musicxml.identity.encoding.Software;
 import org.curtis.musicxml.layout.Layout;
-import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
@@ -29,14 +27,11 @@ import java.util.List;
 public class ScoreHeaderHandler extends AbstractHandler {
     private ScoreHeader scoreHeader;
 
-    public ScoreHeaderHandler(Element element, ScoreHeader scoreHeader) {
-        super(element);
+    public ScoreHeaderHandler(ScoreHeader scoreHeader) {
         this.scoreHeader = scoreHeader;
     }
 
-    public void handle() {
-        Element element = getElement();
-
+    public void handle(Element element) {
         scoreHeader.setMovementTitle(XmlUtil.getChildElementText(element, "movement-title"));
 
         List<Element> subelements = XmlUtil.getChildElements(element);
@@ -144,7 +139,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
         // processed last
         Element partListElement = XmlUtil.getChildElement(element, "part-list");
         PartList partList = scoreHeader.getPartList();
-        PartListHandler partListHandler = new PartListHandler(partListElement, partList);
-        partListHandler.handle();
+        PartListHandler partListHandler = new PartListHandler(partList);
+        partListHandler.handle(partListElement);
     }
 }

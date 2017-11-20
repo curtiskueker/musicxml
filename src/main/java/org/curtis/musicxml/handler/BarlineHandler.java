@@ -14,19 +14,16 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class BarlineHandler extends AbstractHandler {
-    private List<MusicData> musicDataList;
+public class BarlineHandler extends MusicDataHandler {
+    public BarlineHandler() {
 
-    public BarlineHandler(Element element, List<MusicData> musicDataList) {
-        super(element);
-        this.musicDataList = musicDataList;
     }
 
-    public void handle() {
+    public MusicData handle(Element element) {
         Barline barline = new Barline();
-        barline.setLocation(PlacementUtil.getLocation(getElement().getAttribute("location")));
+        barline.setLocation(PlacementUtil.getLocation(element.getAttribute("location")));
 
-        List<Element> barlineSubelements = XmlUtil.getChildElements(getElement());
+        List<Element> barlineSubelements = XmlUtil.getChildElements(element);
         for(Element barlineSubelement : barlineSubelements) {
             String barlineSubelementName = barlineSubelement.getTagName();
             switch (barlineSubelementName) {
@@ -108,6 +105,6 @@ public class BarlineHandler extends AbstractHandler {
             }
         }
 
-        musicDataList.add(barline);
+        return barline;
     }
 }

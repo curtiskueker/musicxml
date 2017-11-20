@@ -12,44 +12,56 @@ import java.util.List;
 public class MeasureHandler extends AbstractHandler {
     private List<Measure> measures;
 
-    public MeasureHandler(Element element, List<Measure> measures) {
-        super(element);
+    public MeasureHandler(List<Measure> measures) {
         this.measures = measures;
     }
 
-    public void handle() {
+    public void handle(Element element) {
         Measure measure = new Measure();
-        measure.setNumber(getElement().getAttribute("number"));
-        measure.setImplicit(TypeUtil.getYesNo(getElement().getAttribute("implicit")));
-        measure.setNonControlling(TypeUtil.getYesNo(getElement().getAttribute("non-controlling")));
-        measure.setWidth(MathUtil.newBigDecimal(getElement().getAttribute("width")));
+        measure.setNumber(element.getAttribute("number"));
+        measure.setImplicit(TypeUtil.getYesNo(element.getAttribute("implicit")));
+        measure.setNonControlling(TypeUtil.getYesNo(element.getAttribute("non-controlling")));
+        measure.setWidth(MathUtil.newBigDecimal(element.getAttribute("width")));
 
         List<MusicData> musicDataList = measure.getMusicDataList();
-        List<Element> measureSubelements = XmlUtil.getChildElements(getElement());
+        List<Element> measureSubelements = XmlUtil.getChildElements(element);
 
         for (Element measureSubelement : measureSubelements) {
+            MusicData musicData = null;
             String elementName = measureSubelement.getTagName();
             switch (elementName) {
                 case "note":
-                    NoteHandler noteHandler = new NoteHandler(measureSubelement, musicDataList);
-                    noteHandler.handle();
+                    NoteHandler noteHandler = new NoteHandler();
+                    musicData = noteHandler.handle(measureSubelement);
+                    break;
+                case "backup":
+                    BackupHandler backupHandler = new BackupHandler();
+                    musicData = backupHandler.handle(measureSubelement);
+                    break;
+                case "forward":
+                    ForwardHandler forwardHandler = new ForwardHandler();
+                    musicData = forwardHandler.handle(measureSubelement);
                     break;
                 case "direction":
-                    DirectionHandler directionHandler = new DirectionHandler(measureSubelement, musicDataList);
-                    directionHandler.handle();
+                    DirectionHandler directionHandler = new DirectionHandler();
+                    musicData = directionHandler.handle(measureSubelement);
                     break;
                 case "attributes":
-                    AttributesHandler attributesHandler = new AttributesHandler(measureSubelement, musicDataList);
-                    attributesHandler.handle();
+                    AttributesHandler attributesHandler = new AttributesHandler();
+                    musicData = attributesHandler.handle(measureSubelement);
                     break;
                 case "print":
-                    PrintHandler printHandler = new PrintHandler(measureSubelement, musicDataList);
-                    printHandler.handle();
+                    PrintHandler printHandler = new PrintHandler();
+                    musicData = printHandler.handle(measureSubelement);
                     break;
                 case "barline":
-                    BarlineHandler barlineHandler = new BarlineHandler(measureSubelement, musicDataList);
-                    barlineHandler.handle();
+                    BarlineHandler barlineHandler = new BarlineHandler();
+                    musicData = barlineHandler.handle(measureSubelement);
                     break;
+            }
+
+            if(musicData != null) {
+                musicDataList.add(musicData);
             }
         }
 

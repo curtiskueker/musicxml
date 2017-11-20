@@ -23,21 +23,18 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class DirectionHandler extends AbstractHandler {
-    private List<MusicData> musicDataList;
+public class DirectionHandler extends MusicDataHandler {
+    public DirectionHandler() {
 
-    public DirectionHandler(Element element, List<MusicData> musicDataList) {
-        super(element);
-        this.musicDataList = musicDataList;
     }
 
-    public void handle() {
+    public MusicData handle(Element element) {
         Direction direction = new Direction();
-        direction.setPlacement(PlacementUtil.getLocation(getElement().getAttribute("placement")));
+        direction.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
         if(direction.getPlacement() == null) direction.setPlacement(Location.BELOW);
         List<DirectionType> directionTypes = direction.getDirectionTypes();
 
-        List<Element> directionSubelements = XmlUtil.getChildElements(getElement());
+        List<Element> directionSubelements = XmlUtil.getChildElements(element);
         for(Element directionSubelement : directionSubelements) {
             String directionElementName = directionSubelement.getTagName();
             switch (directionElementName) {
@@ -135,6 +132,6 @@ public class DirectionHandler extends AbstractHandler {
             }
         }
 
-        musicDataList.add(direction);
+        return direction;
     }
 }

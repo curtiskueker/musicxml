@@ -15,18 +15,14 @@ import org.w3c.dom.Element;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class AttributesHandler extends AbstractHandler {
-    private List<MusicData> musicDataList;
-
-    public AttributesHandler(Element element, List<MusicData> musicDataList) {
-        super(element);
-        this.musicDataList = musicDataList;
+public class AttributesHandler extends MusicDataHandler {
+    public AttributesHandler() {
     }
 
-    public void handle() {
+    public MusicData handle(Element element) {
         Attributes attributes = new Attributes();
 
-        List<Element> attributesSubelements = XmlUtil.getChildElements(getElement());
+        List<Element> attributesSubelements = XmlUtil.getChildElements(element);
         for(Element attributeSubelement : attributesSubelements) {
             switch (attributeSubelement.getTagName()) {
                 case "divisions":
@@ -90,6 +86,6 @@ public class AttributesHandler extends AbstractHandler {
             }
         }
 
-        musicDataList.add(attributes);
+        return attributes;
     }
 }

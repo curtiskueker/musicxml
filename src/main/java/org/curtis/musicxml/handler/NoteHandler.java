@@ -1,6 +1,7 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.EditorialVoice;
+import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
@@ -38,26 +39,30 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class NoteHandler extends AbstractHandler {
-    private List<MusicData> musicDataList;
+public class NoteHandler extends MusicDataHandler {
+    public NoteHandler() {
 
-    public NoteHandler(Element element, List<MusicData> musicDataList) {
-        super(element);
-        this.musicDataList = musicDataList;
     }
 
-    public void handle() {
+    public MusicData handle(Element element) {
         Note note = new Note();
         FullNote fullNote = new Pitch();
 
         XPosition xPosition = new XPosition();
-        xPosition.setDefaultX(MathUtil.newBigDecimal(getElement().getAttribute("default-x")));
-        xPosition.setDefaultY(MathUtil.newBigDecimal(getElement().getAttribute("default-y")));
-        xPosition.setRelativeX(MathUtil.newBigDecimal(getElement().getAttribute("relative-x")));
-        xPosition.setRelativeY(MathUtil.newBigDecimal(getElement().getAttribute("relative-y")));
+        xPosition.setDefaultX(MathUtil.newBigDecimal(element.getAttribute("default-x")));
+        xPosition.setDefaultY(MathUtil.newBigDecimal(element.getAttribute("default-y")));
+        xPosition.setRelativeX(MathUtil.newBigDecimal(element.getAttribute("relative-x")));
+        xPosition.setRelativeY(MathUtil.newBigDecimal(element.getAttribute("relative-y")));
         note.setxPosition(xPosition);
 
-        List<Element> noteSubelements = XmlUtil.getChildElements(getElement());
+        Printout printout = new Printout();
+        printout.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+        printout.setPrintDot(TypeUtil.getYesNo(element.getAttribute("print-dot")));
+        printout.setPrintSpacing(TypeUtil.getYesNo(element.getAttribute("print-spacing")));
+        printout.setPrintLyric(TypeUtil.getYesNo(element.getAttribute("print-lyric")));
+        note.setPrintout(printout);
+
+        List<Element> noteSubelements = XmlUtil.getChildElements(element);
         for(Element noteSubelement : noteSubelements) {
             switch (noteSubelement.getTagName()) {
                 case "grace":
@@ -302,6 +307,6 @@ public class NoteHandler extends AbstractHandler {
         }
 
         note.setFullNote(fullNote);
-        musicDataList.add(note);
+        return note;
     }
 }

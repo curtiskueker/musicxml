@@ -21,8 +21,8 @@ public class MusicXml2Ly {
 
             SchemaValidator.getInstance().validate(xmlDocument);
 
-            ScoreHandler scoreHandler = new ScoreHandler(xmlDocument.getDocumentElement());
-            scoreHandler.handle();
+            ScoreHandler scoreHandler = new ScoreHandler();
+            scoreHandler.handle(xmlDocument.getDocumentElement());
             StringBuilder results = scoreHandler.getResults();
 
             FileUtil.stringToFile(results.toString(), outputFilename);

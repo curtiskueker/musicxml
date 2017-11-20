@@ -99,6 +99,7 @@ public class AttributesBuilder extends MusicDataBuilder {
                     break;
                 case C:
                     if(line == 3) appendLine("alto");
+                    else if (line == 4) appendLine("tenor");
                     break;
             }
         }

@@ -9,17 +9,18 @@ import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
 public class ScoreHandler extends AbstractHandler {
-    public ScoreHandler(Element element) {
-        super(element);
+    public ScoreHandler() {
+        
     }
+    
     private StringBuilder results = new StringBuilder();
 
-    public void handle() {
+    public void handle(Element element) {
         Score score = new Score();
 
         // handle and build score header
-        ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(getElement(), score.getScoreHeader());
-        scoreHeaderHandler.handle();
+        ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(score.getScoreHeader());
+        scoreHeaderHandler.handle(element);
 
         ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(score.getScoreHeader());
         results.append(scoreHeaderBuilder.build().toString());
@@ -28,10 +29,10 @@ public class ScoreHandler extends AbstractHandler {
         for(PartGroup partGroup : score.getScoreHeader().getPartList().getPartGroups()) {
             for(ScorePart scorePart : partGroup.getScoreParts()) {
                 String partId = scorePart.getId();
-                for(Element partElement : XmlUtil.getChildElements(getElement(), "part")) {
+                for(Element partElement : XmlUtil.getChildElements(element, "part")) {
                     if(partId.equals(partElement.getAttribute("id"))) {
-                        PartHandler partHandler = new PartHandler(partElement, score.getParts());
-                        partHandler.handle();
+                        PartHandler partHandler = new PartHandler(score.getParts());
+                        partHandler.handle(partElement);
 
                         break;
                     }
