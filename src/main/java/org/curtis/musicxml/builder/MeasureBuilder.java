@@ -49,6 +49,9 @@ public class MeasureBuilder extends AbstractBuilder {
     public StringBuilder build() {
         List<MusicData> musicDataList = measure.getMusicDataList();
 
+        append("% measure ");
+        appendLine(measure.getNumber());
+
         // pre-processing loop
         // go through notes and mark begins and ends
         for(MusicData musicData : musicDataList) {
@@ -209,6 +212,12 @@ public class MeasureBuilder extends AbstractBuilder {
             if(musicData instanceof Note) {
                 Note note = (Note)musicData;
                 FullNote fullNote = note.getFullNote();
+
+                // TODO; skip tuplets, will be handled later
+                if(note.getTuplet() != null) {
+                    continue;
+                }
+
                 if((fullNote.getChordType() == Connection.START || fullNote.getChordType() == Connection.CONTINUE)) {
                     if (note.getEndBeam()) {
                         note.setEndBeam(false);
