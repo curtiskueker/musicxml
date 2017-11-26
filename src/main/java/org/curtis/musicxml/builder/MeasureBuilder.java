@@ -5,6 +5,7 @@ import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
+import org.curtis.musicxml.builder.musicdata.TupletBuilder;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
@@ -15,6 +16,7 @@ import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -37,6 +39,8 @@ public class MeasureBuilder extends AbstractBuilder {
     private Barline currentBarline = null;
     private BigDecimal currentBackupDuration = MathUtil.ZERO;
     private boolean lastNoteSkipped = false;
+    private List<MusicData> tuplets = new ArrayList<>();
+    private boolean tupletsOn = false;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -120,6 +124,31 @@ public class MeasureBuilder extends AbstractBuilder {
 
                 lastNoteSkipped = false;
                 previousNote = currentNote;
+
+                // TODO: one tuplet at a time for now, so the tuplet number isn't being checked
+                if(currentNote.isStartTuplet()) {
+                    tupletsOn = true;
+                }
+                if (tupletsOn) {
+                    if(currentNote.getFullNote().getChord()) {
+                        continue;
+                    }
+
+                    tuplets.add(currentNote);
+                    tuplets.addAll(currentDirections);
+                    currentDirections.clear();
+                }
+                if(currentNote.isEndTuplet()) {
+                    List<MusicData> tupletNoteList = new ArrayList<>(tuplets);
+                    TupletNotes tupletNotes = new TupletNotes(tupletNoteList);
+                    musicDataBuilder = new TupletBuilder(tupletNotes);
+                    tuplets.clear();
+                    tupletsOn = false;
+                }
+                if(tupletsOn) {
+                    continue;
+                }
+
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
                 // defer directions until end of next note

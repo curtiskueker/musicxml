@@ -6,6 +6,7 @@ import org.curtis.musicxml.builder.AbstractBuilder;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.MusicData;
 
 public class MusicDataBuilder extends AbstractBuilder {
@@ -27,6 +28,8 @@ public class MusicDataBuilder extends AbstractBuilder {
             builder = new BarlineBuilder((Barline)musicData);
         } else if(musicData instanceof Print) {
             builder = new PrintBuilder((Print)musicData);
+        } else if(musicData instanceof TupletNotes) {
+            builder = new TupletBuilder((TupletNotes)musicData);
         }
 
         if (builder != null) {

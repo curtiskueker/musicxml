@@ -1,11 +1,12 @@
 package org.curtis.musicxml.note.notation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TupletPortion {
     private TupletNumber tupletNumber;
     private TupletType tupletType;
-    private List<TupletDot> tupletDots;
+    private List<TupletDot> tupletDots = new ArrayList<>();
 
     public TupletPortion() {
 

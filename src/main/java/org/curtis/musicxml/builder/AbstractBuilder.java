@@ -6,7 +6,7 @@ public abstract class AbstractBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();
     protected TimeSignature currentTimeSignature;
 
-    protected void setValues(TimeSignature timeSignature) {
+    public void setValues(TimeSignature timeSignature) {
         currentTimeSignature = timeSignature;
     }
 

@@ -2,6 +2,7 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Printout;
+import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
@@ -13,7 +14,6 @@ import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
-import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
@@ -27,6 +27,7 @@ import org.curtis.musicxml.note.notation.FermataType;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
+import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.articulation.Staccato;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
@@ -130,50 +131,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "type":
                     NoteType noteType = new NoteType();
-                    switch (XmlUtil.getElementText(noteSubelement)) {
-                        case "1024th":
-                            noteType.setValue(NoteTypeValue._1024TH);
-                            break;
-                        case "512th":
-                            noteType.setValue(NoteTypeValue._512TH);
-                            break;
-                        case "256th":
-                            noteType.setValue(NoteTypeValue._256TH);
-                            break;
-                        case "128th":
-                            noteType.setValue(NoteTypeValue._128TH);
-                            break;
-                        case "64th":
-                            noteType.setValue(NoteTypeValue._64TH);
-                            break;
-                        case "32nd":
-                            noteType.setValue(NoteTypeValue._32ND);
-                            break;
-                        case "16th":
-                            noteType.setValue(NoteTypeValue._16TH);
-                            break;
-                        case "eighth":
-                            noteType.setValue(NoteTypeValue.EIGHTH);
-                            break;
-                        case "quarter":
-                            noteType.setValue(NoteTypeValue.QUARTER);
-                            break;
-                        case "half":
-                            noteType.setValue(NoteTypeValue.HALF);
-                            break;
-                        case "whole":
-                            noteType.setValue(NoteTypeValue.WHOLE);
-                            break;
-                        case "breve":
-                            noteType.setValue(NoteTypeValue.BREVE);
-                            break;
-                        case "long":
-                            noteType.setValue(NoteTypeValue.LONG);
-                            break;
-                        case "maxima":
-                            noteType.setValue(NoteTypeValue.MAXIMA);
-                            break;
-                    }
+                    noteType.setValue(NotationFactory.newNoteTypeValue(noteSubelement));
                     note.setType(noteType);
                     break;
                 case "dot":
@@ -254,6 +212,10 @@ public class NoteHandler extends MusicDataHandler {
                                 slur.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
                                 slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                                 notationList.add(slur);
+                                break;
+                            case "tuplet":
+                                Tuplet tuplet = NotationFactory.newTuplet(notationsSubelement);
+                                notationList.add(tuplet);
                                 break;
                             case "ornaments":
                                 List<Element> ornamentsSubelements = XmlUtil.getChildElements(notationsSubelement);

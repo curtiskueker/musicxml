@@ -1,10 +1,13 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.note.lyric.Lyric;
+import org.curtis.musicxml.note.notation.Notation;
+import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
@@ -202,6 +205,28 @@ public class Note extends MusicData {
 
     public void setNotationsList(List<Notations> notationsList) {
         this.notationsList = notationsList;
+    }
+
+    public boolean isStartTuplet() {
+        Tuplet tuplet = getTuplet();
+        return tuplet != null && tuplet.getType() == Connection.START;
+    }
+
+    public boolean isEndTuplet() {
+        Tuplet tuplet = getTuplet();
+        return tuplet != null && tuplet.getType() == Connection.STOP;
+    }
+
+    public Tuplet getTuplet() {
+        for(Notations notations : notationsList) {
+            for(Notation notation : notations.getNotations()) {
+                if(notation instanceof Tuplet) {
+                    return (Tuplet)notation;
+                }
+            }
+        }
+
+        return null;
     }
 
     public List<Lyric> getLyrics() {
