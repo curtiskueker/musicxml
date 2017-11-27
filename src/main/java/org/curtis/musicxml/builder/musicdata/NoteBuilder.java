@@ -43,41 +43,30 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
-        append(" ");
+        preChordBuild();
+        mainBuild();
+        postChordBuild();
+
+        if(note.getBeginBeam()) {
+            append("[");
+        } else if(note.getEndBeam()) {
+            append("]");
+        }
+
+        notationsBuild();
+        postGraceBuild();
+
+        return stringBuilder;
+    }
+
+    protected StringBuilder mainBuild() {
+        preGraceBuild();
 
         FullNote fullNote = note.getFullNote();
 
-        Stem stem = note.getStem();
-        if(stem != null && (!fullNote.getChord() || fullNote.getChordType() == Connection.START)) {
-            StemType stemType = stem.getType();
-            switch (stemType) {
-                case DOWN:
-                    append("\\stemDown ");
-                    break;
-                case UP:
-                    append("\\stemUp ");
-                    break;
-            }
-        }
-
-        if(fullNote.getChordType() == Connection.START) {
-            append("<");
-        }
-
-        if (note.isGraceNote()) {
-            if (note.getGrace().getGraceType() == Connection.START || note.getGrace().getGraceType() == Connection.SINGLE) {
-                if(note.getGrace().getSlash()) {
-                    append("\\slashedGrace ");
-                } else {
-                    append("\\grace ");
-                }
-            }
-            if(note.getGrace().getGraceType() == Connection.START) {
-                append("{ ");
-            }
-        }
-
         if (fullNote instanceof Pitch) {
+            append(" ");
+
             Pitch pitch = (Pitch)fullNote;
             Step step = pitch.getStep();
             switch (step) {
@@ -143,57 +132,76 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        if(fullNote.getChordType() == Connection.STOP) {
-            append(">");
+        return stringBuilder;
+    }
+
+    protected StringBuilder preChordBuild() {
+        append(" ");
+
+        Stem stem = note.getStem();
+        if(stem != null) {
+            StemType stemType = stem.getType();
+            switch (stemType) {
+                case DOWN:
+                    append("\\stemDown ");
+                    break;
+                case UP:
+                    append("\\stemUp ");
+                    break;
+            }
         }
 
-        if (!fullNote.getChord() || fullNote.getChordType() == Connection.STOP) {
-            if (noteType != null) {
-                NoteTypeValue noteTypeValue = noteType.getValue();
-                switch (noteTypeValue) {
-                    case _1024TH:
-                        append("1024");
-                        break;
-                    case _512TH:
-                        append("512");
-                        break;
-                    case _256TH:
-                        append("256");
-                        break;
-                    case _128TH:
-                        append("128");
-                        break;
-                    case _64TH:
-                        append("64");
-                        break;
-                    case _32ND:
-                        append("32");
-                        break;
-                    case _16TH:
-                        append("16");
-                        break;
-                    case EIGHTH:
-                        append("8");
-                        break;
-                    case QUARTER:
-                        append("4");
-                        break;
-                    case HALF:
-                        append("2");
-                        break;
-                    case WHOLE:
-                        append("1");
-                        break;
-                    case BREVE:
-                        append("\\breve");
-                        break;
-                    case LONG:
-                        append("\\longa");
-                        break;
-                    case MAXIMA:
-                        append("\\maxima");
-                        break;
-                }
+        return stringBuilder;
+    }
+
+    protected StringBuilder postChordBuild() {
+        NoteType noteType = note.getType();
+
+        if (noteType != null) {
+            NoteTypeValue noteTypeValue = noteType.getValue();
+            switch (noteTypeValue) {
+                case _1024TH:
+                    append("1024");
+                    break;
+                case _512TH:
+                    append("512");
+                    break;
+                case _256TH:
+                    append("256");
+                    break;
+                case _128TH:
+                    append("128");
+                    break;
+                case _64TH:
+                    append("64");
+                    break;
+                case _32ND:
+                    append("32");
+                    break;
+                case _16TH:
+                    append("16");
+                    break;
+                case EIGHTH:
+                    append("8");
+                    break;
+                case QUARTER:
+                    append("4");
+                    break;
+                case HALF:
+                    append("2");
+                    break;
+                case WHOLE:
+                    append("1");
+                    break;
+                case BREVE:
+                    append("\\breve");
+                    break;
+                case LONG:
+                    append("\\longa");
+                    break;
+                case MAXIMA:
+                    append("\\maxima");
+                    break;
             }
 
             List<Placement> dots = note.getDots();
@@ -202,12 +210,35 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        if(note.getBeginBeam()) {
-            append("[");
-        } else if(note.getEndBeam()) {
-            append("]");
+        return stringBuilder;
+    }
+
+    protected StringBuilder preGraceBuild() {
+        if (note.isGraceNote()) {
+            if (note.getGrace().getGraceType() == Connection.START || note.getGrace().getGraceType() == Connection.SINGLE) {
+                if(note.getGrace().getSlash()) {
+                    append("\\slashedGrace ");
+                } else {
+                    append("\\grace ");
+                }
+            }
+            if(note.getGrace().getGraceType() == Connection.START) {
+                append("{ ");
+            }
         }
 
+        return stringBuilder;
+    }
+
+    protected StringBuilder postGraceBuild() {
+        if(note.isGraceNote() && note.getGrace().getGraceType() == Connection.STOP) {
+            append(" }");
+        }
+
+        return stringBuilder;
+    }
+
+    protected StringBuilder notationsBuild() {
         for(Notations notations : note.getNotationsList()) {
             for(Notation notation : notations.getNotations()) {
                 if(notation instanceof Tied) {
@@ -253,10 +284,6 @@ public class NoteBuilder extends MusicDataBuilder {
                     append("\\fermata");
                 }
             }
-        }
-
-        if(note.isGraceNote() && note.getGrace().getGraceType() == Connection.STOP) {
-            append(" }");
         }
 
         return stringBuilder;

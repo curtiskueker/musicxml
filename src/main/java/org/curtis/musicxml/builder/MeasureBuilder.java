@@ -2,6 +2,7 @@ package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
+import org.curtis.musicxml.builder.musicdata.ChordBuilder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
@@ -12,9 +13,9 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
+import org.curtis.musicxml.note.ChordNotes;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
-import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.Measure;
@@ -32,15 +33,13 @@ public class MeasureBuilder extends AbstractBuilder {
     private List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
     private Note previousNote;
     private Set<Integer> currentBeams = new HashSet<>();
-    private boolean deferEndBeam = false;
     private List<Direction> currentDirections = new ArrayList<>();
-    private List<DirectionBuilder> currentDirectionBuilders = new ArrayList<>();
-    private List<Notations> currentNotationsList = new ArrayList<>();
     private Barline currentBarline = null;
     private BigDecimal currentBackupDuration = MathUtil.ZERO;
     private boolean lastNoteSkipped = false;
     private List<MusicData> tuplets = new ArrayList<>();
     private boolean tupletsOn = false;
+    private ChordNotes currentChord = null;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -76,11 +75,16 @@ public class MeasureBuilder extends AbstractBuilder {
                     // chords
                     if(fullNote.getChord() && !previousNote.getFullNote().getChord()) {
                         previousNote.getFullNote().setChord(true);
-                        previousNote.getFullNote().setChordType(Connection.START);
+                        currentChord = new ChordNotes();
+                        currentChord.getNotes().add(previousNote);
                     } else if(fullNote.getChord() && previousNote.getFullNote().getChord()) {
-                        previousNote.getFullNote().setChordType(Connection.CONTINUE);
+                        currentChord.getNotes().add(previousNote);
                     } else if(!fullNote.getChord() && previousNote.getFullNote().getChord()) {
-                        previousNote.getFullNote().setChordType(Connection.STOP);
+                        currentChord.getNotes().add(previousNote);
+                        currentChord.getDirections().addAll(currentDirections);
+                        currentDirections.clear();
+                        musicDataBuilder = new ChordBuilder(currentChord);
+                        currentChord = null;
                     }
                 }
 
@@ -129,6 +133,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 previousNote = currentNote;
 
                 // TODO: one tuplet at a time for now, so the tuplet number isn't being checked
+                /*
                 if(currentNote.isStartTuplet()) {
                     tupletsOn = true;
                 }
@@ -151,7 +156,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 if(tupletsOn) {
                     continue;
                 }
-
+                */
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
                 // defer directions until end of next note
@@ -195,7 +200,10 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // close chord at end of measure
         if(previousNote != null && previousNote.getFullNote().getChord()) {
-            previousNote.getFullNote().setChordType(Connection.STOP);
+            currentChord.getNotes().add(previousNote);
+            currentChord.getDirections().addAll(currentDirections);
+            ChordBuilder chordBuilder = new ChordBuilder(currentChord);
+            musicDataBuilders.add(chordBuilder);
         }
 
         // end grace notes at end of measure
@@ -207,68 +215,7 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        // adjust end beams and notations so they don't end up within chord
-        for(MusicData musicData : musicDataList) {
-            if(musicData instanceof Note) {
-                Note note = (Note)musicData;
-                FullNote fullNote = note.getFullNote();
-
-                // TODO; skip tuplets, will be handled later
-                if(note.getTuplet() != null) {
-                    continue;
-                }
-
-                if((fullNote.getChordType() == Connection.START || fullNote.getChordType() == Connection.CONTINUE)) {
-                    if (note.getEndBeam()) {
-                        note.setEndBeam(false);
-                        deferEndBeam = true;
-                    }
-
-                    List<Notations> notationsList = note.getNotationsList();
-                    currentNotationsList.addAll(notationsList);
-                    notationsList.clear();
-                }
-                if(fullNote.getChordType() == Connection.STOP) {
-                    if (deferEndBeam) {
-                        note.setEndBeam(true);
-                        deferEndBeam = false;
-                    }
-
-                    List<Notations> notationsList = note.getNotationsList();
-                    notationsList.addAll(currentNotationsList);
-                    currentNotationsList.clear();
-                }
-            }
-        }
-
-        List<MusicDataBuilder> musicDataBuildersTemp = new ArrayList<>();
-        Note currentNote = null;
-        for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
-            // adjust the music data builders so that directions appear after chords
-            if(musicDataBuilder instanceof NoteBuilder) {
-                NoteBuilder noteBuilder = (NoteBuilder)musicDataBuilder;
-                currentNote = noteBuilder.getNote();
-                musicDataBuildersTemp.add(noteBuilder);
-                if(!currentNote.getFullNote().getChord() || currentNote.getFullNote().getChordType() == Connection.STOP) {
-                    for(DirectionBuilder directionBuilder : currentDirectionBuilders) {
-                        musicDataBuildersTemp.add(directionBuilder);
-                    }
-                    currentDirectionBuilders.clear();
-                }
-            } else if(musicDataBuilder instanceof DirectionBuilder) {
-                DirectionBuilder directionBuilder = (DirectionBuilder)musicDataBuilder;
-                if(currentNote != null && (currentNote.getFullNote().getChordType() == Connection.START || currentNote.getFullNote().getChordType() == Connection.CONTINUE)) {
-                    currentDirectionBuilders.add(directionBuilder);
-                } else {
-                    musicDataBuildersTemp.add(directionBuilder);
-                }
-            } else {
-                musicDataBuildersTemp.add(musicDataBuilder);
-            }
-        }
-        musicDataBuilders = new ArrayList<>(musicDataBuildersTemp);
-
-        // Process the database builders
+        // Process the data builders
         for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
             musicDataBuilder.setValues(getCurrentTimeSignature());
             append(musicDataBuilder.build().toString());
