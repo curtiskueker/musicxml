@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.ChordNotes;
 import org.curtis.musicxml.note.Note;
@@ -17,9 +18,12 @@ public class ChordBuilder extends MusicDataBuilder {
     public StringBuilder build() {
         List<Note> notes = chordNotes.getNotes();
 
-        for(Note note : notes) {
-            NoteBuilder noteBuilder = new NoteBuilder(note);
-            append(noteBuilder.preChordBuild().toString());
+        for (Note note : notes) {
+            Connection chordType = note.getFullNote().getChordType();
+            if (chordType == Connection.START || chordType == Connection.SINGLE) {
+                NoteBuilder noteBuilder = new NoteBuilder(note);
+                append(noteBuilder.preChordBuild().toString());
+            }
         }
 
         append("<");
@@ -35,9 +39,13 @@ public class ChordBuilder extends MusicDataBuilder {
 
         append(">");
 
-        Note firstNote = notes.get(0);
-        NoteBuilder firstNoteBuilder = new NoteBuilder(firstNote);
-        append(firstNoteBuilder.postChordBuild().toString());
+        for (Note note : notes) {
+            Connection chordType = note.getFullNote().getChordType();
+            if (chordType == Connection.SINGLE || chordType == Connection.STOP) {
+                NoteBuilder noteBuilder = new NoteBuilder(note);
+                append(noteBuilder.postChordBuild().toString());
+            }
+        }
 
         for (Note note : notes) {
             if(note.getEndBeam()) {

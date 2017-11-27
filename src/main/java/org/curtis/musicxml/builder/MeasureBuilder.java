@@ -54,7 +54,34 @@ public class MeasureBuilder extends AbstractBuilder {
         // pre-processing loop
         // go through notes and mark begins and ends
         for(MusicData musicData : musicDataList) {
-            MusicDataBuilder musicDataBuilder;
+            // chord type
+            if(musicData instanceof Note) {
+                Note currentNote = (Note)musicData;
+                FullNote fullNote = currentNote.getFullNote();
+
+                if (previousNote != null) {
+                    if(fullNote.getChord() && !previousNote.getFullNote().getChord()) {
+                        previousNote.getFullNote().setChord(true);
+                        previousNote.getFullNote().setChordType(Connection.START);
+                    } else if(fullNote.getChord() && previousNote.getFullNote().getChord()) {
+                        previousNote.getFullNote().setChordType(Connection.CONTINUE);
+                    } else if(!fullNote.getChord() && previousNote.getFullNote().getChord()) {
+                        previousNote.getFullNote().setChordType(Connection.STOP);
+                    }
+                }
+
+                previousNote = currentNote;
+            }
+        }
+
+        // close last chord note at end of measure
+        if(previousNote != null && previousNote.getFullNote().getChord()) {
+            previousNote.getFullNote().setChordType(Connection.STOP);
+        }
+
+        // create data builder list for processing
+        for(MusicData musicData : musicDataList) {
+            MusicDataBuilder musicDataBuilder = null;
 
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
@@ -69,23 +96,27 @@ public class MeasureBuilder extends AbstractBuilder {
                     continue;
                 }
 
-                musicDataBuilder = new NoteBuilder(currentNote);
-
-                if (previousNote != null) {
-                    // chords
-                    if(fullNote.getChord() && !previousNote.getFullNote().getChord()) {
-                        previousNote.getFullNote().setChord(true);
-                        currentChord = new ChordNotes();
-                        currentChord.getNotes().add(previousNote);
-                    } else if(fullNote.getChord() && previousNote.getFullNote().getChord()) {
-                        currentChord.getNotes().add(previousNote);
-                    } else if(!fullNote.getChord() && previousNote.getFullNote().getChord()) {
-                        currentChord.getNotes().add(previousNote);
-                        currentChord.getDirections().addAll(currentDirections);
-                        currentDirections.clear();
-                        musicDataBuilder = new ChordBuilder(currentChord);
-                        currentChord = null;
+                // chords
+                Connection chordType = fullNote.getChordType();
+                if (chordType != null) {
+                    switch (chordType) {
+                        case START:
+                            currentChord = new ChordNotes();
+                            currentChord.getNotes().add(currentNote);
+                            continue;
+                        case CONTINUE:
+                            currentChord.getNotes().add(currentNote);
+                            continue;
+                        case STOP:
+                            currentChord.getNotes().add(currentNote);
+                            currentChord.getDirections().addAll(currentDirections);
+                            currentDirections.clear();
+                            musicDataBuilder = new ChordBuilder(currentChord);
+                            currentChord = null;
+                            break;
                     }
+                } else {
+                    musicDataBuilder = new NoteBuilder(currentNote);
                 }
 
                 // grace notes
@@ -184,7 +215,9 @@ public class MeasureBuilder extends AbstractBuilder {
                 musicDataBuilder = new MusicDataBuilder(musicData);
             }
 
-            musicDataBuilders.add(musicDataBuilder);
+            if (musicDataBuilder != null) {
+                musicDataBuilders.add(musicDataBuilder);
+            }
 
             transferDirections();
         }
@@ -196,14 +229,6 @@ public class MeasureBuilder extends AbstractBuilder {
         if(currentBarline != null) {
             BarlineBuilder barlineBuilder = new BarlineBuilder(currentBarline);
             musicDataBuilders.add(barlineBuilder);
-        }
-
-        // close chord at end of measure
-        if(previousNote != null && previousNote.getFullNote().getChord()) {
-            currentChord.getNotes().add(previousNote);
-            currentChord.getDirections().addAll(currentDirections);
-            ChordBuilder chordBuilder = new ChordBuilder(currentChord);
-            musicDataBuilders.add(chordBuilder);
         }
 
         // end grace notes at end of measure
