@@ -1,15 +1,19 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.builder.musicdata.AttributesBuilder;
 import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
 import org.curtis.musicxml.builder.musicdata.ChordBuilder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
+import org.curtis.musicxml.builder.musicdata.PrintBuilder;
 import org.curtis.musicxml.builder.musicdata.TupletBuilder;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
@@ -227,7 +231,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     continue;
                 }
 
-                musicDataBuilder = new MusicDataBuilder(barline);
+                musicDataBuilder = new BarlineBuilder(barline);
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
                 currentBackupDuration = MathUtil.add(currentBackupDuration, backup.getDuration());
@@ -236,8 +240,12 @@ public class MeasureBuilder extends AbstractBuilder {
                 Forward forward = (Forward)musicData;
                 currentBackupDuration = MathUtil.subtract(currentBackupDuration, forward.getDuration());
                 continue;
-            } else {
-                musicDataBuilder = new MusicDataBuilder(musicData);
+            } else if(musicData instanceof Attributes) {
+                Attributes attributes = (Attributes)musicData;
+                musicDataBuilder = new AttributesBuilder(attributes);
+            } else if(musicData instanceof Print) {
+                Print print = (Print) musicData;
+                musicDataBuilder = new PrintBuilder(print);
             }
 
             if (musicDataBuilder != null) {
