@@ -21,6 +21,7 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.Tie;
+import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.XPosition;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.FermataType;
@@ -153,6 +154,15 @@ public class NoteHandler extends MusicDataHandler {
                             break;
                     }
                     note.setAccidental(accidental);
+                    break;
+                case "time-modification":
+                    TimeModification timeModification = new TimeModification();
+                    timeModification.setActualNotes(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "actual-notes")));
+                    timeModification.setNormalNotes(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "normal-notes")));
+                    timeModification.setNormalType(NotationFactory.newNoteTypeValue(XmlUtil.getChildElement(noteSubelement, "normal-type")));
+                    List<Element> dotElements = XmlUtil.getChildElements(noteSubelement, "normal-dot");
+                    timeModification.setNormalDots(dotElements.size());
+                    note.setTimeModification(timeModification);
                     break;
                 case "stem":
                     Stem stem = new Stem();

@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.ChordNotes;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
@@ -13,8 +14,6 @@ import java.util.List;
 
 public class TupletBuilder extends MusicDataBuilder {
     private TupletNotes tupletNotes;
-    private static int count = 1;
-    private Integer noteCount = 0;
 
     public TupletBuilder(TupletNotes tupletNotes) {
         super(tupletNotes);
@@ -27,26 +26,32 @@ public class TupletBuilder extends MusicDataBuilder {
             return stringBuilder;
         }
 
-        Tuplet startTuplet = null;
+        Note startNote = null;
         for(MusicData musicData : musicDataList) {
             if(musicData instanceof Note) {
-                noteCount++;
                 Note note = (Note)musicData;
                 Tuplet tuplet = note.getTuplet();
-                if (startTuplet == null && tuplet != null && tuplet.getType() == Connection.START) {
-                    startTuplet = note.getTuplet();
+                if (tuplet != null && tuplet.getType() == Connection.START) {
+                    startNote = note;
+                    break;
                 }
             } else if(musicData instanceof ChordNotes) {
                 ChordNotes chordNotes = (ChordNotes)musicData;
-                noteCount++;
                 for(Note note : chordNotes.getNotes()) {
                     Tuplet tuplet = note.getTuplet();
-                    if (startTuplet == null && tuplet != null && tuplet.getType() == Connection.START) {
-                        startTuplet = note.getTuplet();
+                    if (tuplet != null && tuplet.getType() == Connection.START) {
+                        startNote = note;
+                        break;
                     }
                 }
             }
         }
+
+        if(startNote == null) {
+            return stringBuilder;
+        }
+
+        Tuplet startTuplet = startNote.getTuplet();
         if(startTuplet == null) {
             return stringBuilder;
         }
@@ -63,21 +68,13 @@ public class TupletBuilder extends MusicDataBuilder {
 
         append(" \\tuplet");
 
-        // tuplet fraction: value is between 1 and two
-        Integer numerator = musicDataList.size();
+        // tuplet fraction: value is between 1 and 2
+        // dependent on time-modification subelements actual-notes and normal-notes
+        TimeModification timeModification = startNote.getTimeModification();
         append(" ");
-        append(String.valueOf(numerator));
+        append(String.valueOf(timeModification.getActualNotes()));
         append("/");
-        // denominator is greatest power of 2 less than numerator
-        // TODO: values taken from duration
-        int result = 1;
-        for(int i = 0; i < 12; i++) {
-            int current = 1 << i;
-            if (current > numerator) break;
-
-            result = current;
-        }
-        append(String.valueOf(result));
+        append(String.valueOf(timeModification.getNormalNotes()));
 
         append(" {");
 
