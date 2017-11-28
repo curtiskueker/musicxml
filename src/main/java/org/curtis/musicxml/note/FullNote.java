@@ -6,7 +6,7 @@ public abstract class FullNote {
     private Boolean chord = false;
     private Connection chordType;
 
-    public Boolean getChord() {
+    public Boolean isChord() {
         return chord;
     }
 

@@ -2,13 +2,14 @@ package org.curtis.musicxml.note;
 
 import org.curtis.musicxml.score.MusicData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TupletNotes extends MusicData {
-    private List<MusicData> musicDataList;
+    private List<MusicData> musicDataList = new ArrayList<>();
 
-    public TupletNotes(List<MusicData> musicDataList) {
-        this.musicDataList = musicDataList;
+    public TupletNotes() {
+
     }
 
     public List<MusicData> getMusicDataList() {

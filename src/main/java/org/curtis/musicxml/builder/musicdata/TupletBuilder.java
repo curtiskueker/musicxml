@@ -1,7 +1,9 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.note.ChordNotes;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.notation.Tuplet;
@@ -25,13 +27,24 @@ public class TupletBuilder extends MusicDataBuilder {
             return stringBuilder;
         }
 
-        // TODO: tuplets with chords
         Tuplet startTuplet = null;
         for(MusicData musicData : musicDataList) {
             if(musicData instanceof Note) {
                 noteCount++;
                 Note note = (Note)musicData;
-                startTuplet = note.getTuplet();
+                Tuplet tuplet = note.getTuplet();
+                if (startTuplet == null && tuplet != null && tuplet.getType() == Connection.START) {
+                    startTuplet = note.getTuplet();
+                }
+            } else if(musicData instanceof ChordNotes) {
+                ChordNotes chordNotes = (ChordNotes)musicData;
+                noteCount++;
+                for(Note note : chordNotes.getNotes()) {
+                    Tuplet tuplet = note.getTuplet();
+                    if (startTuplet == null && tuplet != null && tuplet.getType() == Connection.START) {
+                        startTuplet = note.getTuplet();
+                    }
+                }
             }
         }
         if(startTuplet == null) {
@@ -78,6 +91,11 @@ public class TupletBuilder extends MusicDataBuilder {
                 NoteBuilder noteBuilder = new NoteBuilder(note);
                 noteBuilder.setValues(getCurrentTimeSignature());
                 append(noteBuilder.build().toString());
+            } else if(musicData instanceof ChordNotes) {
+                ChordNotes chordNotes = (ChordNotes)musicData;
+                ChordBuilder chordBuilder = new ChordBuilder(chordNotes);
+                chordBuilder.setValues(getCurrentTimeSignature());
+                append(chordBuilder.build().toString());
             }
         }
 

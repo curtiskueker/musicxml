@@ -34,6 +34,7 @@ public class Note extends MusicData {
     private Boolean isBeginBeam = false;
     private Boolean isEndBeam = false;
     private List<Notations> notationsList = new ArrayList<>();
+    private Connection tupletType;
     private List<Lyric> lyrics;
     private Play play;
     private XPosition xPosition;
@@ -207,14 +208,12 @@ public class Note extends MusicData {
         this.notationsList = notationsList;
     }
 
-    public boolean isStartTuplet() {
-        Tuplet tuplet = getTuplet();
-        return tuplet != null && tuplet.getType() == Connection.START;
+    public Connection getTupletType() {
+        return tupletType;
     }
 
-    public boolean isEndTuplet() {
-        Tuplet tuplet = getTuplet();
-        return tuplet != null && tuplet.getType() == Connection.STOP;
+    public void setTupletType(Connection tupletType) {
+        this.tupletType = tupletType;
     }
 
     public Tuplet getTuplet() {

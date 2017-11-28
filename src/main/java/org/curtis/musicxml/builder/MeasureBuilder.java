@@ -18,6 +18,7 @@ import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
+import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -37,9 +38,9 @@ public class MeasureBuilder extends AbstractBuilder {
     private Barline currentBarline = null;
     private BigDecimal currentBackupDuration = MathUtil.ZERO;
     private boolean lastNoteSkipped = false;
-    private List<MusicData> tuplets = new ArrayList<>();
     private boolean tupletsOn = false;
     private ChordNotes currentChord = null;
+    private TupletNotes currentTuplet = null;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -54,20 +55,42 @@ public class MeasureBuilder extends AbstractBuilder {
         // pre-processing loop
         // go through notes and mark begins and ends
         for(MusicData musicData : musicDataList) {
-            // chord type
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
 
                 if (previousNote != null) {
-                    if(fullNote.getChord() && !previousNote.getFullNote().getChord()) {
+                    // chord type
+                    if(fullNote.isChord() && !previousNote.getFullNote().isChord()) {
                         previousNote.getFullNote().setChord(true);
                         previousNote.getFullNote().setChordType(Connection.START);
-                    } else if(fullNote.getChord() && previousNote.getFullNote().getChord()) {
+                    } else if(fullNote.isChord() && previousNote.getFullNote().isChord()) {
                         previousNote.getFullNote().setChordType(Connection.CONTINUE);
-                    } else if(!fullNote.getChord() && previousNote.getFullNote().getChord()) {
+                    } else if(!fullNote.isChord() && previousNote.getFullNote().isChord()) {
                         previousNote.getFullNote().setChordType(Connection.STOP);
                     }
+                }
+
+                // tuplet type
+                Tuplet tuplet = currentNote.getTuplet();
+                if(tuplet != null) {
+                    Connection tupletType = tuplet.getType();
+                    switch (tupletType) {
+                        case START:
+                            currentNote.setTupletType(Connection.START);
+                            tupletsOn = true;
+                            break;
+                        case STOP:
+                            currentNote.setTupletType(Connection.STOP);
+                            tupletsOn = false;
+                            break;
+                    }
+                } else if(currentNote.getFullNote().isChord() && previousNote.getFullNote().isChord() && previousNote.getTupletType() == Connection.STOP) {
+                    // adjust end tuplet on chords
+                    previousNote.setTupletType(Connection.CONTINUE);
+                    currentNote.setTupletType(Connection.STOP);
+                } else if(tupletsOn) {
+                    currentNote.setTupletType(Connection.CONTINUE);
                 }
 
                 previousNote = currentNote;
@@ -75,7 +98,7 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         // close last chord note at end of measure
-        if(previousNote != null && previousNote.getFullNote().getChord()) {
+        if(previousNote != null && previousNote.getFullNote().isChord()) {
             previousNote.getFullNote().setChordType(Connection.STOP);
         }
 
@@ -88,32 +111,60 @@ public class MeasureBuilder extends AbstractBuilder {
                 FullNote fullNote = currentNote.getFullNote();
 
                 boolean skipNote = MathUtil.isPositive(currentBackupDuration);
-                if (skipNote || (lastNoteSkipped && fullNote.getChord())) {
-                    if (!fullNote.getChord()) {
+                if (skipNote || (lastNoteSkipped && fullNote.isChord())) {
+                    if (!fullNote.isChord()) {
                         currentBackupDuration = MathUtil.subtract(currentBackupDuration, currentNote.getDuration());
                     }
                     lastNoteSkipped = true;
                     continue;
                 }
 
-                // chords
+                // chords and tuplets
                 Connection chordType = fullNote.getChordType();
-                if (chordType != null) {
-                    switch (chordType) {
-                        case START:
-                            currentChord = new ChordNotes();
-                            currentChord.getNotes().add(currentNote);
-                            continue;
-                        case CONTINUE:
-                            currentChord.getNotes().add(currentNote);
-                            continue;
-                        case STOP:
-                            currentChord.getNotes().add(currentNote);
-                            currentChord.getDirections().addAll(currentDirections);
-                            currentDirections.clear();
-                            musicDataBuilder = new ChordBuilder(currentChord);
-                            currentChord = null;
-                            break;
+                Connection tupletType = currentNote.getTupletType();
+                if (chordType != null || tupletType != null) {
+                    if (chordType != null) {
+                        switch (chordType) {
+                            case START:
+                                currentChord = new ChordNotes();
+                            case CONTINUE:
+                                currentChord.getNotes().add(currentNote);
+                                break;
+                            case STOP:
+                                currentChord.getNotes().add(currentNote);
+                                currentChord.getDirections().addAll(currentDirections);
+                                currentDirections.clear();
+                                if (tupletType == Connection.STOP || tupletType == Connection.CONTINUE) {
+                                    currentTuplet.getMusicDataList().add(currentChord);
+                                } else {
+                                    musicDataBuilder = new ChordBuilder(currentChord);
+                                }
+                                currentChord = null;
+                                break;
+                        }
+                    }
+
+                    if (tupletType != null) {
+                        switch (tupletType) {
+                            case START:
+                                currentTuplet = new TupletNotes();
+                            case CONTINUE:
+                                if (chordType == null) {
+                                    currentTuplet.getMusicDataList().add(currentNote);
+                                    currentTuplet.getMusicDataList().addAll(currentDirections);
+                                    currentDirections.clear();
+                                }
+                                break;
+                            case STOP:
+                                if (chordType == null) {
+                                    currentTuplet.getMusicDataList().add(currentNote);
+                                    currentTuplet.getMusicDataList().addAll(currentDirections);
+                                    currentDirections.clear();
+                                }
+                                musicDataBuilder = new TupletBuilder(currentTuplet);
+                                currentTuplet = null;
+                                break;
+                        }
                     }
                 } else {
                     musicDataBuilder = new NoteBuilder(currentNote);
@@ -162,32 +213,6 @@ public class MeasureBuilder extends AbstractBuilder {
 
                 lastNoteSkipped = false;
                 previousNote = currentNote;
-
-                // TODO: one tuplet at a time for now, so the tuplet number isn't being checked
-                /*
-                if(currentNote.isStartTuplet()) {
-                    tupletsOn = true;
-                }
-                if (tupletsOn) {
-                    if(currentNote.getFullNote().getChord()) {
-                        continue;
-                    }
-
-                    tuplets.add(currentNote);
-                    tuplets.addAll(currentDirections);
-                    currentDirections.clear();
-                }
-                if(currentNote.isEndTuplet()) {
-                    List<MusicData> tupletNoteList = new ArrayList<>(tuplets);
-                    TupletNotes tupletNotes = new TupletNotes(tupletNoteList);
-                    musicDataBuilder = new TupletBuilder(tupletNotes);
-                    tuplets.clear();
-                    tupletsOn = false;
-                }
-                if(tupletsOn) {
-                    continue;
-                }
-                */
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
                 // defer directions until end of next note
@@ -217,9 +242,8 @@ public class MeasureBuilder extends AbstractBuilder {
 
             if (musicDataBuilder != null) {
                 musicDataBuilders.add(musicDataBuilder);
+                transferDirections();
             }
-
-            transferDirections();
         }
 
         // clear any directions at the end of the measure
