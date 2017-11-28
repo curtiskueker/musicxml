@@ -5,6 +5,7 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.ChordNotes;
 import org.curtis.musicxml.note.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChordBuilder extends MusicDataBuilder {
@@ -17,19 +18,27 @@ public class ChordBuilder extends MusicDataBuilder {
 
     public StringBuilder build() {
         List<Note> notes = chordNotes.getNotes();
+        List<NoteBuilder> noteBuilders = new ArrayList<>();
 
-        for (Note note : notes) {
+        for(Note note : notes) {
+            NoteBuilder noteBuilder = new NoteBuilder(note);
+            noteBuilders.add(noteBuilder);
+        }
+
+        for (NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            Note note = noteBuilder.getNote();
             Connection chordType = note.getFullNote().getChordType();
             if (chordType == Connection.START || chordType == Connection.SINGLE) {
-                NoteBuilder noteBuilder = new NoteBuilder(note);
                 append(noteBuilder.preChordBuild().toString());
             }
         }
 
         append("<");
 
-        for(Note note : notes) {
-            NoteBuilder noteBuilder = new NoteBuilder(note);
+        for(NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            Note note = noteBuilder.getNote();
             append(noteBuilder.mainBuild().toString());
 
             if(note.getBeginBeam()) {
@@ -39,22 +48,24 @@ public class ChordBuilder extends MusicDataBuilder {
 
         append(">");
 
-        for (Note note : notes) {
+        for (NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            Note note = noteBuilder.getNote();
             Connection chordType = note.getFullNote().getChordType();
             if (chordType == Connection.SINGLE || chordType == Connection.STOP) {
-                NoteBuilder noteBuilder = new NoteBuilder(note);
                 append(noteBuilder.postChordBuild().toString());
             }
         }
 
-        for (Note note : notes) {
+        for (NoteBuilder noteBuilder : noteBuilders) {
+            Note note = noteBuilder.getNote();
             if(note.getEndBeam()) {
                 append("]");
             }
         }
 
-        for(Note note : notes) {
-            NoteBuilder noteBuilder = new NoteBuilder(note);
+        for(NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
             append(noteBuilder.notationsBuild().toString());
         }
 
@@ -63,8 +74,8 @@ public class ChordBuilder extends MusicDataBuilder {
             append(directionBuilder.build().toString());
         }
 
-        for(Note note : notes) {
-            NoteBuilder noteBuilder = new NoteBuilder(note);
+        for(NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
             append(noteBuilder.postGraceBuild().toString());
         }
 

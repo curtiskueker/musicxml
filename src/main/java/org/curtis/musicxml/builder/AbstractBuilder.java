@@ -28,4 +28,8 @@ public abstract class AbstractBuilder {
     public void setCurrentTimeSignature(TimeSignature currentTimeSignature) {
         this.currentTimeSignature = currentTimeSignature;
     }
+
+    public void clear() {
+        stringBuilder = new StringBuilder();
+    }
 }
