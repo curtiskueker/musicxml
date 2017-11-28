@@ -1,28 +1,35 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.EditorialVoice;
+import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Printout;
+import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
-import org.curtis.musicxml.note.AccidentalValue;
+import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Beam;
+import org.curtis.musicxml.note.BeamFan;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
+import org.curtis.musicxml.note.Notehead;
+import org.curtis.musicxml.note.NoteheadText;
+import org.curtis.musicxml.note.NoteheadType;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
-import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.TimeModification;
+import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.XPosition;
+import org.curtis.musicxml.note.YPosition;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.FermataType;
 import org.curtis.musicxml.note.notation.Notation;
@@ -48,7 +55,7 @@ public class NoteHandler extends MusicDataHandler {
 
     public MusicData handle(Element element) {
         Note note = new Note();
-        FullNote fullNote = new Pitch();
+        FullNote fullNote = new FullNote();
 
         XPosition xPosition = new XPosition();
         xPosition.setDefaultX(MathUtil.newBigDecimal(element.getAttribute("default-x")));
@@ -57,12 +64,22 @@ public class NoteHandler extends MusicDataHandler {
         xPosition.setRelativeY(MathUtil.newBigDecimal(element.getAttribute("relative-y")));
         note.setxPosition(xPosition);
 
+        note.setFont(FormattingFactory.newFont(element));
+        note.setColor(element.getAttribute("color"));
+
         Printout printout = new Printout();
         printout.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
         printout.setPrintDot(TypeUtil.getYesNo(element.getAttribute("print-dot")));
         printout.setPrintSpacing(TypeUtil.getYesNo(element.getAttribute("print-spacing")));
         printout.setPrintLyric(TypeUtil.getYesNo(element.getAttribute("print-lyric")));
         note.setPrintout(printout);
+
+        note.setDynamics(MathUtil.newBigDecimal(element.getAttribute("dynamics")));
+        note.setEndDynamics(MathUtil.newBigDecimal(element.getAttribute("end-dynamics")));
+        note.setAttack(MathUtil.newBigDecimal(element.getAttribute("attack")));
+        note.setRelease(MathUtil.newBigDecimal(element.getAttribute("release")));
+        note.setTimeOnly(element.getAttribute("time-only"));
+        note.setPizzicato(TypeUtil.getYesNo(element.getAttribute("pizzicato")));
 
         List<Element> noteSubelements = XmlUtil.getChildElements(element);
         for(Element noteSubelement : noteSubelements) {
@@ -79,43 +96,22 @@ public class NoteHandler extends MusicDataHandler {
                     fullNote.setChord(true);
                     break;
                 case "pitch":
-                    Pitch pitch = (Pitch)fullNote;
-                    Step step = null;
-                    String stepValue = XmlUtil.getChildElementText(noteSubelement, "step");
-                    switch (stepValue) {
-                        case "A":
-                            step = Step.A;
-                            break;
-                        case "B":
-                            step = Step.B;
-                            break;
-                        case "C":
-                            step = Step.C;
-                            break;
-                        case "D":
-                            step = Step.D;
-                            break;
-                        case "E":
-                            step = Step.E;
-                            break;
-                        case "F":
-                            step = Step.F;
-                            break;
-                        case "G":
-                            step = Step.G;
-                            break;
-                    }
-                    pitch.setStep(step);
-
-                    Element alterElement = XmlUtil.getChildElement(noteSubelement, "alter");
-                    if(alterElement != null) {
-                        pitch.setAlter(MathUtil.newBigDecimal(XmlUtil.getElementText(alterElement)));
-                    }
-
+                    Pitch pitch = new Pitch();
+                    pitch.setStep(NotationFactory.newStep(XmlUtil.getChildElement(noteSubelement, "step")));
+                    pitch.setAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(noteSubelement, "alter")));
                     pitch.setOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "octave")));
+                    fullNote.setFullNoteType(pitch);
                     break;
+                case "unpitched":
+                    Unpitched unpitched = new Unpitched();
+                    unpitched.setDisplayStep(NotationFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
+                    unpitched.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
+                    fullNote.setFullNoteType(unpitched);
                 case "rest":
-                    fullNote = new Rest();
+                    Rest rest = new Rest();
+                    rest.setDisplayStep(NotationFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
+                    rest.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
+                    fullNote.setFullNoteType(rest);
                     break;
                 case "duration":
                     note.setDuration(MathUtil.newBigDecimal(XmlUtil.getElementText(noteSubelement)));
@@ -123,17 +119,21 @@ public class NoteHandler extends MusicDataHandler {
                 case "tie":
                     Tie tie = new Tie();
                     tie.setType(PlacementUtil.getConnection(noteSubelement.getAttribute("type")));
+                    tie.setTimeOnly(noteSubelement.getAttribute("time-only"));
                     List<Tie> ties = note.getTies();
                     ties.add(tie);
                     break;
-                case "voice":
-                    EditorialVoice editorialVoice = note.getEditorialVoice();
-                    editorialVoice.setVoice(XmlUtil.getElementText(noteSubelement));
+                case "cue":
+                    note.setCue(true);
                     break;
+                case "instrument":
+                    note.setInstrument(noteSubelement.getAttribute("id"));
                 case "type":
                     NoteType noteType = new NoteType();
                     noteType.setValue(NotationFactory.newNoteTypeValue(noteSubelement));
                     note.setType(noteType);
+                    String noteTypeSize = noteSubelement.getAttribute("size");
+                    noteType.setSize(FormattingFactory.newSymbolSize(noteSubelement));
                     break;
                 case "dot":
                     List<Placement> dots = note.getDots();
@@ -142,17 +142,15 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "accidental":
                     Accidental accidental = new Accidental();
-                    switch (XmlUtil.getElementText(noteSubelement)) {
-                        case "sharp":
-                            accidental.setAccidentalValue(AccidentalValue.SHARP);
-                            break;
-                        case "natural":
-                            accidental.setAccidentalValue(AccidentalValue.NATURAL);
-                            break;
-                        case "flat":
-                            accidental.setAccidentalValue(AccidentalValue.FLAT);
-                            break;
-                    }
+                    accidental.setAccidentalType(NotationFactory.newAccidentalType(noteSubelement));
+                    accidental.setCautionary(TypeUtil.getYesNo(noteSubelement.getAttribute("cautionary")));
+                    accidental.setEditorial(TypeUtil.getYesNo(noteSubelement.getAttribute("editorial")));
+                    LevelDisplay levelDisplay = new LevelDisplay();
+                    levelDisplay.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
+                    levelDisplay.setBracket(TypeUtil.getYesNo(noteSubelement.getAttribute("bracket")));
+                    levelDisplay.setSize(FormattingFactory.newSymbolSize(noteSubelement));
+                    accidental.setLevelDisplay(levelDisplay);
+                    accidental.setPrintStyle(FormattingFactory.newPrintStyle(noteSubelement));
                     note.setAccidental(accidental);
                     break;
                 case "time-modification":
@@ -180,12 +178,130 @@ public class NoteHandler extends MusicDataHandler {
                             stem.setType(StemType.NONE);
                             break;
                     }
+                    YPosition yPosition = new YPosition();
+                    yPosition.setDefaultX(MathUtil.newBigDecimal(noteSubelement.getAttribute("default-x")));
+                    yPosition.setDefaultY(MathUtil.newBigDecimal(noteSubelement.getAttribute("default-y")));
+                    yPosition.setRelativeX(MathUtil.newBigDecimal(noteSubelement.getAttribute("relative-x")));
+                    yPosition.setRelativeX(MathUtil.newBigDecimal(noteSubelement.getAttribute("relative-x")));
+                    stem.setyPosition(yPosition);
+                    stem.setColor(noteSubelement.getAttribute("color"));
                     note.setStem(stem);
+                    break;
+                case "notehead":
+                    Notehead notehead = new Notehead();
+                    String noteheadType = XmlUtil.getElementText(noteSubelement);
+                    if(StringUtil.isNotEmpty(noteheadType)) {
+                        switch (noteheadType) {
+                            case "slash":
+                                notehead.setType(NoteheadType.SLASH);
+                                break;
+                            case "triangle":
+                                notehead.setType(NoteheadType.TRIANGLE);
+                                break;
+                            case "diamond":
+                                notehead.setType(NoteheadType.DIAMOND);
+                                break;
+                            case "square":
+                                notehead.setType(NoteheadType.SQUARE);
+                                break;
+                            case "cross":
+                                notehead.setType(NoteheadType.CROSS);
+                                break;
+                            case "x":
+                                notehead.setType(NoteheadType.X);
+                                break;
+                            case "circle-x":
+                                notehead.setType(NoteheadType.CIRCLE_X);
+                                break;
+                            case "inverted-triangle":
+                                notehead.setType(NoteheadType.INVERTED_TRIANGLE);
+                                break;
+                            case "arrow-down":
+                                notehead.setType(NoteheadType.ARROW_DOWN);
+                                break;
+                            case "arrow-up":
+                                notehead.setType(NoteheadType.ARROW_UP);
+                                break;
+                            case "slashed":
+                                notehead.setType(NoteheadType.SLASHED);
+                                break;
+                            case "back-slashed":
+                                notehead.setType(NoteheadType.BACK_SLASHED);
+                                break;
+                            case "normal":
+                                notehead.setType(NoteheadType.NORMAL);
+                                break;
+                            case "cluster":
+                                notehead.setType(NoteheadType.CLUSTER);
+                                break;
+                            case "circle-dot":
+                                notehead.setType(NoteheadType.CIRCLE_DOT);
+                                break;
+                            case "left-triangle":
+                                notehead.setType(NoteheadType.LEFT_TRIANGLE);
+                                break;
+                            case "none":
+                                notehead.setType(NoteheadType.NONE);
+                                break;
+                            case "do":
+                                notehead.setType(NoteheadType.DO);
+                                break;
+                            case "re":
+                                notehead.setType(NoteheadType.RE);
+                                break;
+                            case "mi":
+                                notehead.setType(NoteheadType.MI);
+                                break;
+                            case "fa":
+                                notehead.setType(NoteheadType.FA);
+                                break;
+                            case "fa-up":
+                                notehead.setType(NoteheadType.FA_UP);
+                                break;
+                            case "so":
+                                notehead.setType(NoteheadType.SO);
+                                break;
+                            case "la":
+                                notehead.setType(NoteheadType.LA);
+                                break;
+                            case "ti":
+                                notehead.setType(NoteheadType.TI);
+                                break;
+                        }
+                    }
+                    notehead.setFilled(TypeUtil.getYesNo(noteSubelement.getAttribute("filled")));
+                    notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
+                    notehead.setFont(FormattingFactory.newFont(noteSubelement));
+                    notehead.setColor(noteSubelement.getAttribute("color"));
+                    note.setNotehead(notehead);
+                    break;
+                case "notehead-text":
+                    NoteheadText noteheadText = new NoteheadText();
+                    List<Element> noteheadTextSubelements = XmlUtil.getChildElements(noteSubelement);
+                    for(Element noteheadTextSubelement : noteheadTextSubelements) {
+                        String noteheadTextSubelementName = noteheadTextSubelement.getTagName();
+                        switch (noteheadTextSubelementName) {
+                            case "display-text":
+                                List<FormattedText> displayTextList = noteheadText.getDisplayTextList();
+                                displayTextList.add(FormattingFactory.newFormattedText(noteheadTextSubelement));
+                                break;
+                            case "accidental-text":
+                                List<AccidentalText> accidentalTextList = noteheadText.getAccidentalTextList();
+                                AccidentalText accidentalText = new AccidentalText();
+                                accidentalText.setAccidentalType(NotationFactory.newAccidentalType(noteheadTextSubelement));
+                                accidentalText.setTextFormatting(FormattingFactory.newTextFormatting(noteheadTextSubelement));
+                                accidentalTextList.add(accidentalText);
+                                break;
+                        }
+                    }
+                    note.setNoteheadText(noteheadText);
+                    break;
+                case "staff":
+                    note.setStaff(StringUtil.getInteger(XmlUtil.getElementText(noteSubelement)));
                     break;
                 case "beam":
                     List<Beam> beams = note.getBeams();
                     Beam beam = new Beam();
-                    beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
                     switch (XmlUtil.getElementText(noteSubelement)) {
                         case "begin":
                             beam.setType(BeamType.BEGIN);
@@ -203,6 +319,23 @@ public class NoteHandler extends MusicDataHandler {
                             beam.setType(BeamType.BACKWARD_HOOK);
                             break;
                     }
+                    beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
+                    beam.setRepeater(TypeUtil.getYesNo(noteSubelement.getAttribute("repeater")));
+                    String beamFan = noteSubelement.getAttribute("fan");
+                    if(StringUtil.isNotEmpty(beamFan)) {
+                        switch (beamFan) {
+                            case "accel":
+                                beam.setFan(BeamFan.ACCEL);
+                                break;
+                            case "rit":
+                                beam.setFan(BeamFan.RIT);
+                                break;
+                            case "none":
+                                beam.setFan(BeamFan.NONE);
+                                break;
+                        }
+                    }
+                    beam.setColor(noteSubelement.getAttribute("color"));
                     beams.add(beam);
                     break;
                 case "notations":

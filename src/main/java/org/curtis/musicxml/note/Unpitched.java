@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-public class Unpitched extends FullNote {
+public class Unpitched extends FullNoteType {
     private Step displayStep;
     private Integer displayOctave;
 

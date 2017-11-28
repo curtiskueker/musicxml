@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Note extends MusicData {
     private Grace grace;
-    private Boolean cue;
+    private Boolean cue = false;
     private FullNote fullNote;
     private BigDecimal duration;
     private List<Tie> ties = new ArrayList<>();

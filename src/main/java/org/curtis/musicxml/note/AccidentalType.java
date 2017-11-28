@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-public enum AccidentalValue {
+public enum AccidentalType {
     SHARP,
     NATURAL,
     FLAT,

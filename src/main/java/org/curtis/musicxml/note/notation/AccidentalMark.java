@@ -2,10 +2,10 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.note.AccidentalValue;
+import org.curtis.musicxml.note.AccidentalType;
 
 public class AccidentalMark extends Notation {
-    private AccidentalValue accidentalValue;
+    private AccidentalType accidentalType;
     private PrintStyle printStyle;
     private Location placement;
 
@@ -13,12 +13,12 @@ public class AccidentalMark extends Notation {
 
     }
 
-    public AccidentalValue getAccidentalValue() {
-        return accidentalValue;
+    public AccidentalType getAccidentalType() {
+        return accidentalType;
     }
 
-    public void setAccidentalValue(AccidentalValue accidentalValue) {
-        this.accidentalValue = accidentalValue;
+    public void setAccidentalType(AccidentalType accidentalType) {
+        this.accidentalType = accidentalType;
     }
 
     public PrintStyle getPrintStyle() {

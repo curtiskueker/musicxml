@@ -2,7 +2,7 @@ package org.curtis.musicxml.note;
 
 import java.math.BigDecimal;
 
-public class Pitch extends FullNote {
+public class Pitch extends FullNoteType {
     private Step step;
     private BigDecimal alter;
     private Integer octave;

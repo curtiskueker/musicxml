@@ -9,6 +9,7 @@ import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
@@ -31,14 +32,20 @@ public class FormattingFactory {
         FormattedText formattedText = new FormattedText();
         formattedText.setValue(XmlUtil.getElementText(formattedTextElement));
 
-        TextFormatting textFormatting = new TextFormatting();
-        textFormatting.setJustify(PlacementUtil.getLocation(formattedTextElement.getAttribute("justify")));
+        TextFormatting textFormatting = newTextFormatting(formattedTextElement);
 
         PrintStyleAlign printStyleAlign = newPrintStyleAlign(formattedTextElement);
         textFormatting.setPrintStyleAlign(printStyleAlign);
         formattedText.setTextFormatting(textFormatting);
 
         return formattedText;
+    }
+
+    public static TextFormatting newTextFormatting(Element textFormattingElement) {
+        TextFormatting textFormatting = new TextFormatting();
+        textFormatting.setJustify(PlacementUtil.getLocation(textFormattingElement.getAttribute("justify")));
+
+        return textFormatting;
     }
 
     public static PrintStyleAlign newPrintStyleAlign(Element printStyleAlignElement) {
@@ -154,5 +161,27 @@ public class FormattingFactory {
         }
 
         return font;
+    }
+
+    public static SymbolSize newSymbolSize(Element symbolSizeElement) {
+        if(symbolSizeElement == null) {
+            return null;
+        }
+
+        String size = symbolSizeElement.getAttribute("size");
+        if(StringUtil.isEmpty(size)) {
+            return null;
+        }
+
+        switch (size) {
+            case "full":
+                return SymbolSize.FULL;
+            case "cue":
+                return SymbolSize.CUE;
+            case "large":
+                return SymbolSize.LARGE;
+            default:
+                return null;
+        }
     }
 }

@@ -3,7 +3,7 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.common.Font;
 
 public class Notehead {
-    private NoteheadType value;
+    private NoteheadType type;
     private Boolean filled;
     private Boolean parentheses;
     private Font font;
@@ -13,12 +13,12 @@ public class Notehead {
 
     }
 
-    public NoteheadType getValue() {
-        return value;
+    public NoteheadType getType() {
+        return type;
     }
 
-    public void setValue(NoteheadType value) {
-        this.value = value;
+    public void setType(NoteheadType type) {
+        this.type = type;
     }
 
     public Boolean getFilled() {

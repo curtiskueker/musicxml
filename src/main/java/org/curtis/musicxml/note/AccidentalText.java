@@ -3,19 +3,19 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.common.TextFormatting;
 
 public class AccidentalText {
-    private AccidentalValue accidentalValue;
+    private AccidentalType accidentalType;
     private TextFormatting textFormatting;
 
     public AccidentalText() {
 
     }
 
-    public AccidentalValue getAccidentalValue() {
-        return accidentalValue;
+    public AccidentalType getAccidentalType() {
+        return accidentalType;
     }
 
-    public void setAccidentalValue(AccidentalValue accidentalValue) {
-        this.accidentalValue = accidentalValue;
+    public void setAccidentalType(AccidentalType accidentalType) {
+        this.accidentalType = accidentalType;
     }
 
     public TextFormatting getTextFormatting() {

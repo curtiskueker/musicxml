@@ -3,6 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
@@ -63,11 +64,12 @@ public class NoteBuilder extends MusicDataBuilder {
         preGraceBuild();
 
         FullNote fullNote = note.getFullNote();
+        FullNoteType fullNoteType = fullNote.getFullNoteType();
 
-        if (fullNote instanceof Pitch) {
+        if (fullNoteType instanceof Pitch) {
             append(" ");
 
-            Pitch pitch = (Pitch)fullNote;
+            Pitch pitch = (Pitch)fullNoteType;
             Step step = pitch.getStep();
             switch (step) {
                 case A:
@@ -121,8 +123,8 @@ public class NoteBuilder extends MusicDataBuilder {
 
         NoteType noteType = note.getType();
 
-        if (fullNote instanceof Rest) {
-            Rest rest = (Rest)fullNote;
+        if (fullNoteType instanceof Rest) {
+            Rest rest = (Rest)fullNoteType;
             Boolean measure = rest.getMeasure();
             if(measure || noteType == null) {
                 append("R");

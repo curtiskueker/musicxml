@@ -2,11 +2,12 @@ package org.curtis.musicxml.note;
 
 import org.curtis.musicxml.common.FormattedText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoteheadText {
-    private List<FormattedText> displayTextList;
-    private List<AccidentalText> accidentalTextList;
+    private List<FormattedText> displayTextList = new ArrayList<>();
+    private List<AccidentalText> accidentalTextList = new ArrayList<>();
 
     public NoteheadText() {
 

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.key;
 
-import org.curtis.musicxml.note.AccidentalValue;
+import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.Step;
 
 import java.math.BigDecimal;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class NonTraditionalKey {
     private Step keyStep;
     private BigDecimal keyAlter;
-    private AccidentalValue keyAccidental;
+    private AccidentalType keyAccidental;
 
     public NonTraditionalKey() {
 
@@ -30,11 +30,11 @@ public class NonTraditionalKey {
         this.keyAlter = keyAlter;
     }
 
-    public AccidentalValue getKeyAccidental() {
+    public AccidentalType getKeyAccidental() {
         return keyAccidental;
     }
 
-    public void setKeyAccidental(AccidentalValue keyAccidental) {
+    public void setKeyAccidental(AccidentalType keyAccidental) {
         this.keyAccidental = keyAccidental;
     }
 }
