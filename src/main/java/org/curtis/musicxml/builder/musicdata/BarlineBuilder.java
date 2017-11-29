@@ -15,6 +15,9 @@ public class BarlineBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
+        BarStyleColor barStyleColor = barline.getBarStyle();
+        if(barStyleColor == null) return stringBuilder;
+
         Repeat repeat = barline.getRepeat();
         RepeatDirection repeatDirection = repeat == null ? null : repeat.getDirection();
 
@@ -25,23 +28,20 @@ public class BarlineBuilder extends MusicDataBuilder {
         }
 
         // bar style
-        BarStyleColor barStyleColor = barline.getBarStyle();
-        if (barStyleColor != null) {
-            BarStyle barStyle = barStyleColor.getBarStyle();
-            if(barStyle != null) {
-               switch (barStyle) {
-                   case LIGHT_LIGHT:
-                       append("||");
-                       break;
-                   case LIGHT_HEAVY:
-                       append("|.");
-                       break;
-                   case HEAVY_LIGHT:
-                       append(".|");
-                       break;
-                   case HEAVY_HEAVY:
-                       append("..");
-               }
+        BarStyle barStyle = barStyleColor.getBarStyle();
+        if(barStyle != null) {
+            switch (barStyle) {
+                case LIGHT_LIGHT:
+                    append("||");
+                    break;
+                case LIGHT_HEAVY:
+                    append("|.");
+                    break;
+                case HEAVY_LIGHT:
+                    append(".|");
+                    break;
+                case HEAVY_HEAVY:
+                    append("..");
             }
         }
 
