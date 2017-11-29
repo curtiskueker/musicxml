@@ -19,12 +19,17 @@ public class PlacementUtil {
                 return Connection.START;
             case "stop":
                 return Connection.STOP;
+            case "change":
+                return Connection.CHANGE;
             case "continue":
                 return Connection.CONTINUE;
+            case "discontinue":
+                return Connection.DISCONTINUE;
+            case "single":
+                return Connection.SINGLE;
             default:
                 return null;
         }
-
     }
 
     public static Location getLocation(String value) {

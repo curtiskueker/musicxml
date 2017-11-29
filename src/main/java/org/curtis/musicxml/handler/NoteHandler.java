@@ -5,6 +5,8 @@ import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
+import org.curtis.musicxml.factory.NoteFactory;
+import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
@@ -31,7 +33,6 @@ import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.XPosition;
 import org.curtis.musicxml.note.YPosition;
 import org.curtis.musicxml.note.notation.Fermata;
-import org.curtis.musicxml.note.notation.FermataType;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
@@ -39,6 +40,7 @@ import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.articulation.Staccato;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
+import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
@@ -97,19 +99,19 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "pitch":
                     Pitch pitch = new Pitch();
-                    pitch.setStep(NotationFactory.newStep(XmlUtil.getChildElement(noteSubelement, "step")));
+                    pitch.setStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "step")));
                     pitch.setAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(noteSubelement, "alter")));
                     pitch.setOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "octave")));
                     fullNote.setFullNoteType(pitch);
                     break;
                 case "unpitched":
                     Unpitched unpitched = new Unpitched();
-                    unpitched.setDisplayStep(NotationFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
+                    unpitched.setDisplayStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
                     unpitched.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
                     fullNote.setFullNoteType(unpitched);
                 case "rest":
                     Rest rest = new Rest();
-                    rest.setDisplayStep(NotationFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
+                    rest.setDisplayStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
                     rest.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
                     fullNote.setFullNoteType(rest);
                     break;
@@ -130,7 +132,7 @@ public class NoteHandler extends MusicDataHandler {
                     note.setInstrument(noteSubelement.getAttribute("id"));
                 case "type":
                     NoteType noteType = new NoteType();
-                    noteType.setValue(NotationFactory.newNoteTypeValue(noteSubelement));
+                    noteType.setValue(NoteFactory.newNoteTypeValue(noteSubelement));
                     note.setType(noteType);
                     String noteTypeSize = noteSubelement.getAttribute("size");
                     noteType.setSize(FormattingFactory.newSymbolSize(noteSubelement));
@@ -142,7 +144,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "accidental":
                     Accidental accidental = new Accidental();
-                    accidental.setAccidentalType(NotationFactory.newAccidentalType(noteSubelement));
+                    accidental.setAccidentalType(NoteFactory.newAccidentalType(noteSubelement));
                     accidental.setCautionary(TypeUtil.getYesNo(noteSubelement.getAttribute("cautionary")));
                     accidental.setEditorial(TypeUtil.getYesNo(noteSubelement.getAttribute("editorial")));
                     LevelDisplay levelDisplay = new LevelDisplay();
@@ -157,7 +159,7 @@ public class NoteHandler extends MusicDataHandler {
                     TimeModification timeModification = new TimeModification();
                     timeModification.setActualNotes(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "actual-notes")));
                     timeModification.setNormalNotes(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "normal-notes")));
-                    timeModification.setNormalType(NotationFactory.newNoteTypeValue(XmlUtil.getChildElement(noteSubelement, "normal-type")));
+                    timeModification.setNormalType(NoteFactory.newNoteTypeValue(XmlUtil.getChildElement(noteSubelement, "normal-type")));
                     List<Element> dotElements = XmlUtil.getChildElements(noteSubelement, "normal-dot");
                     timeModification.setNormalDots(dotElements.size());
                     note.setTimeModification(timeModification);
@@ -288,7 +290,7 @@ public class NoteHandler extends MusicDataHandler {
                             case "accidental-text":
                                 List<AccidentalText> accidentalTextList = noteheadText.getAccidentalTextList();
                                 AccidentalText accidentalText = new AccidentalText();
-                                accidentalText.setAccidentalType(NotationFactory.newAccidentalType(noteheadTextSubelement));
+                                accidentalText.setAccidentalType(NoteFactory.newAccidentalType(noteheadTextSubelement));
                                 accidentalText.setTextFormatting(FormattingFactory.newTextFormatting(noteheadTextSubelement));
                                 accidentalTextList.add(accidentalText);
                                 break;
@@ -348,11 +350,13 @@ public class NoteHandler extends MusicDataHandler {
                             case "tied":
                                 Tied tied = new Tied();
                                 tied.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
+                                tied.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
                                 notationList.add(tied);
                                 break;
                             case "slur":
                                 Slur slur = new Slur();
                                 slur.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
+                                slur.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
                                 slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                                 notationList.add(slur);
                                 break;
@@ -369,6 +373,9 @@ public class NoteHandler extends MusicDataHandler {
                                             trillMark.setPlacement(PlacementUtil.getLocation(ornamentsSubelement.getAttribute("placement")));
                                             notationList.add(trillMark);
                                             break;
+                                        case "wavy-line":
+                                            WavyLine wavyLine = OrnamentFactory.newWavyLine(ornamentsSubelement);
+                                            notationList.add(wavyLine);
                                     }
                             }
                                 break;
@@ -392,15 +399,7 @@ public class NoteHandler extends MusicDataHandler {
                                 }
                                 break;
                             case "fermata":
-                                Fermata fermata = new Fermata();
-                                switch (notationsSubelement.getAttribute("type")) {
-                                    case "upright":
-                                        fermata.setType(FermataType.UPRIGHT);
-                                        break;
-                                    case "inverted":
-                                        fermata.setType(FermataType.INVERTED);
-                                        break;
-                                }
+                                Fermata fermata = NotationFactory.newFermata(notationsSubelement);
                                 notationList.add(fermata);
                                 break;
                         }

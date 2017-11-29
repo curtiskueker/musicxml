@@ -249,6 +249,7 @@ public class NoteBuilder extends MusicDataBuilder {
                     switch (tieType) {
                         case START:
                         case CONTINUE:
+                            append(PlacementBuildUtil.getPlacement(tied.getPlacement()));
                             append("~");
                             break;
                     }

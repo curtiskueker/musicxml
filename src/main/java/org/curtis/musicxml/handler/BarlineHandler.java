@@ -3,11 +3,18 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.barline.BarStyle;
 import org.curtis.musicxml.barline.BarStyleColor;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.barline.RepeatDirection;
 import org.curtis.musicxml.barline.Winged;
+import org.curtis.musicxml.factory.FormattingFactory;
+import org.curtis.musicxml.factory.NotationFactory;
+import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
+import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -22,6 +29,9 @@ public class BarlineHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Barline barline = new Barline();
         barline.setLocation(PlacementUtil.getLocation(element.getAttribute("location")));
+        barline.setSegno(element.getAttribute("segno"));
+        barline.setCoda(element.getAttribute("coda"));
+        barline.setDivisions(MathUtil.newBigDecimal(element.getAttribute("divisions")));
 
         List<Element> barlineSubelements = XmlUtil.getChildElements(element);
         for(Element barlineSubelement : barlineSubelements) {
@@ -67,6 +77,32 @@ public class BarlineHandler extends MusicDataHandler {
                     }
                     barStyleColor.setColor(barlineSubelement.getAttribute("color"));
                     barline.setBarStyle(barStyleColor);
+                    break;
+                case "wavy-line":
+                    barline.setWavyLine(OrnamentFactory.newWavyLine(barlineSubelement));
+                    break;
+                case "segno":
+                    barline.setSegnoPrint(FormattingFactory.newPrintStyleAlign(barlineSubelement));
+                    break;
+                case "coda":
+                    barline.setCodaPrint(FormattingFactory.newPrintStyleAlign(barlineSubelement));
+                    break;
+                case "fermata":
+                    List<Fermata> fermataList = barline.getFermataList();
+                    fermataList.add(NotationFactory.newFermata(barlineSubelement));
+                    break;
+                case "ending":
+                    Ending ending = new Ending();
+                    ending.setValue(XmlUtil.getElementText(barlineSubelement));
+                    // TODO: comma-separated ending numbers
+                    ending.setNumber(barlineSubelement.getAttribute("number"));
+                    ending.setType(PlacementUtil.getConnection(barlineSubelement.getAttribute("type")));
+                    ending.setPrintObject(TypeUtil.getYesNo(barlineSubelement.getAttribute("print-object")));
+                    ending.setPrintStyle(FormattingFactory.newPrintStyle(barlineSubelement));
+                    ending.setEndLength(MathUtil.newBigDecimal(barlineSubelement.getAttribute("end-length")));
+                    ending.setTextX(MathUtil.newBigDecimal(barlineSubelement.getAttribute("text-x")));
+                    ending.setTextY(MathUtil.newBigDecimal(barlineSubelement.getAttribute("text-y")));
+                    barline.setEnding(ending);
                     break;
                 case "repeat":
                     Repeat repeat = new Repeat();

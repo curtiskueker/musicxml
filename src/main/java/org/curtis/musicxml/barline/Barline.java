@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Barline extends MusicData {
@@ -16,7 +17,7 @@ public class Barline extends MusicData {
     private WavyLine wavyLine;
     private PrintStyleAlign segnoPrint;
     private PrintStyleAlign codaPrint;
-    private List<Fermata> fermataList;
+    private List<Fermata> fermataList = new ArrayList<>();
     private Ending ending;
     private Repeat repeat;
     private Location location;
