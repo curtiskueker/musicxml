@@ -7,6 +7,7 @@ import org.curtis.musicxml.note.ChordNotes;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.TupletNotes;
+import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
 
@@ -56,8 +57,12 @@ public class TupletBuilder extends MusicDataBuilder {
             return stringBuilder;
         }
 
+        if(startTuplet.getShowNumber() == ShowTuplet.NONE) {
+            append(" \\once \\omit TupletNumber");
+        }
+
         if(!startTuplet.getBracket()) {
-            append (" \\override TupletBracket.bracket-visibility = ##f");
+            append (" \\once \\override TupletBracket.bracket-visibility = ##f");
         }
 
         if(startTuplet.getPlacement() == Location.ABOVE) {
@@ -97,10 +102,6 @@ public class TupletBuilder extends MusicDataBuilder {
         }
 
         append(" }");
-
-        if(!startTuplet.getBracket()) {
-            append (" \\override TupletBracket.bracket-visibility = ##t");
-        }
 
         return stringBuilder;
     }
