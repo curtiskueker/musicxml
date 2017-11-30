@@ -271,7 +271,11 @@ public class NoteHandler extends MusicDataHandler {
                                 break;
                         }
                     }
-                    notehead.setFilled(TypeUtil.getYesNo(noteSubelement.getAttribute("filled")));
+
+                    String filledNotehead = noteSubelement.getAttribute("filled");
+                    if (StringUtil.isNotEmpty(filledNotehead)) {
+                        notehead.setFilled(TypeUtil.getYesNo(filledNotehead));
+                    }
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
                     notehead.setFont(FormattingFactory.newFont(noteSubelement));
                     notehead.setColor(noteSubelement.getAttribute("color"));
