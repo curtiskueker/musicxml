@@ -2,7 +2,6 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Offset;
@@ -14,10 +13,10 @@ import org.curtis.musicxml.direction.type.Wedge;
 import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
 import org.curtis.musicxml.factory.FormattingFactory;
+import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
-import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -66,12 +65,10 @@ public class DirectionHandler extends MusicDataHandler {
                                         wedge.setType(WedgeType.CONTINUE);
                                         break;
                                 }
-                                String spread = directionTypeSubelement.getAttribute("spread");
-                                if(StringUtil.isNotEmpty(spread)) {
-                                    wedge.setSpread(MathUtil.newBigDecimal(spread));
-                                }
-                                Position wedgePosition = FormattingFactory.newPosition(directionTypeSubelement);
-                                wedge.setPosition(wedgePosition);
+                                wedge.setSpread(MathUtil.newBigDecimal(directionTypeSubelement.getAttribute("spread")));
+                                wedge.setLineType(NotationFactory.newLineType(directionTypeSubelement));
+                                wedge.setDashedFormatting(FormattingFactory.newDashedFormatting(directionTypeSubelement));
+                                wedge.setPosition(FormattingFactory.newPosition(directionTypeSubelement));
                                 directionTypes.add(wedge);
                                 break;
                             case "dynamics":

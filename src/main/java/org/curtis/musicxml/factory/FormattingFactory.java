@@ -1,6 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.CssFontSize;
+import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FontStyle;
@@ -183,5 +184,13 @@ public class FormattingFactory {
             default:
                 return null;
         }
+    }
+
+    public static DashedFormatting newDashedFormatting(Element dashedFormattingElement) {
+        DashedFormatting dashedFormatting = new DashedFormatting();
+        dashedFormatting.setDashLength(MathUtil.newBigDecimal(dashedFormattingElement.getAttribute("dash-length")));
+        dashedFormatting.setSpaceLength(MathUtil.newBigDecimal(dashedFormattingElement.getAttribute("space-length")));
+
+        return dashedFormatting;
     }
 }

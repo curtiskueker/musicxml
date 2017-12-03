@@ -4,19 +4,19 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.Placement;
 
 public class StrongAccent extends Articulation {
-    private Placement value;
+    private Placement placement;
     private Location type = Location.UP;
 
     public StrongAccent() {
 
     }
 
-    public Placement getValue() {
-        return value;
+    public Placement getPlacement() {
+        return placement;
     }
 
-    public void setValue(Placement value) {
-        this.value = value;
+    public void setPlacement(Placement placement) {
+        this.placement = placement;
     }
 
     public Location getType() {

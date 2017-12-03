@@ -1,6 +1,5 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
@@ -14,13 +13,7 @@ import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
-import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Notation;
-import org.curtis.musicxml.note.notation.Slur;
-import org.curtis.musicxml.note.notation.Tied;
-import org.curtis.musicxml.note.notation.articulation.Staccato;
-import org.curtis.musicxml.note.notation.articulation.Tenuto;
-import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.handler.util.TimeSignatureUtil;
 import org.curtis.util.MathUtil;
 
@@ -243,49 +236,8 @@ public class NoteBuilder extends MusicDataBuilder {
     protected StringBuilder notationsBuild() {
         for(Notations notations : note.getNotationsList()) {
             for(Notation notation : notations.getNotations()) {
-                if(notation instanceof Tied) {
-                    Tied tied = (Tied)notation;
-                    Connection tieType = tied.getType();
-                    switch (tieType) {
-                        case START:
-                        case CONTINUE:
-                            append(PlacementBuildUtil.getPlacement(tied.getPlacement()));
-                            append("~");
-                            break;
-                    }
-                } else if (notation instanceof Slur) {
-                    Slur slur = (Slur)notation;
-                    Connection slurType = slur.getType();
-                    switch (slurType) {
-                        case START:
-                            append(PlacementBuildUtil.getPlacement(slur.getPlacement()));
-                            append("(");
-                            break;
-                        case STOP:
-                            append(")");
-                            break;
-                    }
-                } else if(notation instanceof TrillMark) {
-                    TrillMark trillMark = (TrillMark)notation;
-                    append(PlacementBuildUtil.getPlacement(trillMark.getPlacement()));
-                    append("\\trill");
-                } else if(notation instanceof Staccato) {
-                    Staccato staccato = (Staccato)notation;
-                    Placement staccatoPlacement = staccato.getPlacement();
-                    if (staccatoPlacement != null) {
-                        append(PlacementBuildUtil.getPlacement(staccatoPlacement.getPlacement()));
-                    }
-                    append("\\staccato");
-                } else if(notation instanceof Tenuto) {
-                    Tenuto tenuto = (Tenuto)notation;
-                    Placement tenutoPlacement = tenuto.getPlacement();
-                    if (tenutoPlacement != null) {
-                        append(PlacementBuildUtil.getPlacement(tenutoPlacement.getPlacement()));
-                    }
-                    append("\\tenuto");
-                } else if(notation instanceof Fermata) {
-                    append("\\fermata");
-                }
+                NotationBuilder notationBuilder = new NotationBuilder(notation);
+                append(notationBuilder.build().toString());
             }
         }
 

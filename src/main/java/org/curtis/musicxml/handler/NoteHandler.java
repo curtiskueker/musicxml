@@ -4,9 +4,7 @@ import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.factory.FormattingFactory;
-import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.NoteFactory;
-import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
@@ -32,15 +30,6 @@ import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.XPosition;
 import org.curtis.musicxml.note.YPosition;
-import org.curtis.musicxml.note.notation.Fermata;
-import org.curtis.musicxml.note.notation.Notation;
-import org.curtis.musicxml.note.notation.Slur;
-import org.curtis.musicxml.note.notation.Tied;
-import org.curtis.musicxml.note.notation.Tuplet;
-import org.curtis.musicxml.note.notation.articulation.Staccato;
-import org.curtis.musicxml.note.notation.articulation.Tenuto;
-import org.curtis.musicxml.note.notation.ornament.TrillMark;
-import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
@@ -346,70 +335,8 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "notations":
                     List<Notations> notationsList = note.getNotationsList();
-                    Notations notations = new Notations();
-                    List<Notation> notationList = notations.getNotations();
-                    List<Element> notationsSubelements = XmlUtil.getChildElements(noteSubelement);
-                    for(Element notationsSubelement : notationsSubelements) {
-                        switch (notationsSubelement.getTagName()) {
-                            case "tied":
-                                Tied tied = new Tied();
-                                tied.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
-                                tied.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
-                                notationList.add(tied);
-                                break;
-                            case "slur":
-                                Slur slur = new Slur();
-                                slur.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
-                                slur.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
-                                slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
-                                notationList.add(slur);
-                                break;
-                            case "tuplet":
-                                Tuplet tuplet = NotationFactory.newTuplet(notationsSubelement);
-                                notationList.add(tuplet);
-                                break;
-                            case "ornaments":
-                                List<Element> ornamentsSubelements = XmlUtil.getChildElements(notationsSubelement);
-                                for(Element ornamentsSubelement : ornamentsSubelements) {
-                                    switch (ornamentsSubelement.getTagName()) {
-                                        case "trill-mark":
-                                            TrillMark trillMark = new TrillMark();
-                                            trillMark.setPlacement(PlacementUtil.getLocation(ornamentsSubelement.getAttribute("placement")));
-                                            notationList.add(trillMark);
-                                            break;
-                                        case "wavy-line":
-                                            WavyLine wavyLine = OrnamentFactory.newWavyLine(ornamentsSubelement);
-                                            notationList.add(wavyLine);
-                                    }
-                            }
-                                break;
-                            case "articulations":
-                                List<Element> articulationsSubelements = XmlUtil.getChildElements(notationsSubelement);
-                                for(Element articulationsSubelement : articulationsSubelements) {
-                                    switch (articulationsSubelement.getTagName()) {
-                                        case "staccato":
-                                            Staccato staccato = new Staccato();
-                                            Placement staccatoPlacement = PlacementFactory.newPlacement(noteSubelement);
-                                            staccato.setPlacement(staccatoPlacement);
-                                            notationList.add(staccato);
-                                            break;
-                                        case "tenuto":
-                                            Tenuto tenuto = new Tenuto();
-                                            Placement tenutoPlacement = PlacementFactory.newPlacement(noteSubelement);
-                                            tenuto.setPlacement(tenutoPlacement);
-                                            notationList.add(tenuto);
-                                            break;
-                                    }
-                                }
-                                break;
-                            case "fermata":
-                                Fermata fermata = NotationFactory.newFermata(notationsSubelement);
-                                notationList.add(fermata);
-                                break;
-                        }
-                    }
-                    notations.setNotations(notationList);
-                    notationsList.add(notations);
+                    NotationHandler notationHandler = new NotationHandler(notationsList);
+                    notationHandler.handle(noteSubelement);
                     break;
             }
         }

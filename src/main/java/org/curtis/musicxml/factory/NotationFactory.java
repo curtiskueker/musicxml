@@ -2,7 +2,9 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.LineShape;
+import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.FermataShape;
 import org.curtis.musicxml.note.notation.FermataType;
@@ -39,17 +41,7 @@ public class NotationFactory {
         tuplet.setBracket(TypeUtil.getYesNo(tupletElement.getAttribute("bracket")));
         tuplet.setShowNumber(newShowTuplet(tupletElement.getAttribute("show-number")));
         tuplet.setShowType(newShowTuplet(tupletElement.getAttribute("show-type")));
-        String lineShape = tupletElement.getAttribute("line-shape");
-        if(StringUtil.isNotEmpty(lineShape)) {
-            switch (lineShape) {
-                case "straight":
-                    tuplet.setLineShape(LineShape.STRAIGHT);
-                    break;
-                case "curved":
-                    tuplet.setLineShape(LineShape.CURVED);
-                    break;
-            }
-        }
+        tuplet.setLineShape(newLineShape(tupletElement));
         tuplet.setPosition(FormattingFactory.newPosition(tupletElement));
         tuplet.setPlacement(PlacementUtil.getLocation(tupletElement.getAttribute("placement")));
 
@@ -137,5 +129,52 @@ public class NotationFactory {
         fermata.setPrintStyle(FormattingFactory.newPrintStyle(fermataElement));
 
         return fermata;
+    }
+
+    public static Line newLine(Element lineElement) {
+        Line line = new Line();
+        line.setLineShape(newLineShape(lineElement));
+        line.setLineType(newLineType(lineElement));
+        line.setDashedFormatting(FormattingFactory.newDashedFormatting(lineElement));
+        line.setPrintStyle(FormattingFactory.newPrintStyle(lineElement));
+        line.setPlacement(PlacementUtil.getLocation(lineElement.getAttribute("placement")));
+
+        return line;
+    }
+
+    public static LineShape newLineShape(Element lineShapeElement) {
+        if(lineShapeElement == null) return null;
+
+        String lineShape = lineShapeElement.getAttribute("line-shape");
+        if(StringUtil.isEmpty(lineShape)) return null;
+
+        switch (lineShape) {
+            case "straight":
+                return LineShape.STRAIGHT;
+            case "curved":
+                return LineShape.CURVED;
+            default:
+                return null;
+        }
+    }
+
+    public static LineType newLineType(Element lineTypeElement) {
+        if(lineTypeElement == null) return null;
+
+        String lineType = lineTypeElement.getAttribute("line-type");
+        if(StringUtil.isEmpty(lineType)) return null;
+
+        switch (lineType) {
+            case "solid":
+                return LineType.SOLID;
+            case "dashed":
+                return LineType.DASHED;
+            case "dotted":
+                return LineType.DOTTED;
+            case "wavy":
+                return LineType.WAVY;
+            default:
+                return null;
+        }
     }
 }
