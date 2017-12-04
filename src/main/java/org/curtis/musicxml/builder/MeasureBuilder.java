@@ -25,6 +25,8 @@ import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.RepeatBlock;
+import org.curtis.musicxml.score.RepeatBlockType;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
@@ -272,11 +274,42 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
+        // Begin repeat endings
+        RepeatBlock repeatBlock = measure.getRepeatBlock();
+        if(repeatBlock != null) {
+            RepeatBlockType repeatBlockType = repeatBlock.getRepeatBlockType();
+            Connection repeatBlockConnectionType = repeatBlock.getConnectionType();
+            if (repeatBlockType == RepeatBlockType.MAIN && (repeatBlockConnectionType == Connection.START || repeatBlockConnectionType == Connection.SINGLE)) {
+                append("\\repeat volta #");
+                append(String.valueOf(repeatBlock.getEndingCount()));
+                appendLine(" {");
+            } else if(repeatBlockType == RepeatBlockType.ENDING &&(repeatBlockConnectionType == Connection.START || repeatBlockConnectionType == Connection.SINGLE)) {
+                if (repeatBlock.getEndingNumber().equals(1)) {
+                    appendLine("\\alternative {");
+                }
+                appendLine("{");
+            }
+        }
+
         // Process the data builders
         for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
             musicDataBuilder.setValues(getCurrentTimeSignature());
             append(musicDataBuilder.build().toString());
             setValues(musicDataBuilder.getCurrentTimeSignature());
+        }
+
+        // End repeat endings
+        if(repeatBlock != null) {
+            RepeatBlockType repeatBlockType = repeatBlock.getRepeatBlockType();
+            Connection repeatBlockConnectionType = repeatBlock.getConnectionType();
+            if (repeatBlockConnectionType == Connection.STOP || repeatBlockConnectionType == Connection.SINGLE) {
+                appendLine("");
+                appendLine("}");
+
+                if (repeatBlockType == RepeatBlockType.ENDING && repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) {
+                    appendLine("}");
+                }
+            }
         }
 
         appendLine("");
