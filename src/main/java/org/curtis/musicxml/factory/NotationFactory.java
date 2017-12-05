@@ -5,6 +5,7 @@ import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.LineShape;
 import org.curtis.musicxml.note.LineType;
+import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.FermataShape;
 import org.curtis.musicxml.note.notation.FermataType;
@@ -176,5 +177,16 @@ public class NotationFactory {
             default:
                 return null;
         }
+    }
+
+    public static AccidentalMark newAccidentalMark(Element accidentalMarkElement) {
+        if (accidentalMarkElement == null) return null;
+
+        AccidentalMark accidentalMark = new AccidentalMark();
+        accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(accidentalMarkElement));
+        accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(accidentalMarkElement));
+        accidentalMark.setPlacement(PlacementUtil.getLocation(accidentalMarkElement.getAttribute("placement")));
+
+        return accidentalMark;
     }
 }

@@ -1,18 +1,11 @@
 package org.curtis.musicxml.note.notation.ornament;
 
-public abstract class AbstractMordent extends Ornament {
-    private PlacedTrillSound emptyTrillSound;
+import org.curtis.musicxml.common.Location;
+
+public abstract class AbstractMordent extends PlacedTrillSound {
     private Boolean longMordent;
-    private String approach;
-    private String departure;
-
-    public PlacedTrillSound getEmptyTrillSound() {
-        return emptyTrillSound;
-    }
-
-    public void setEmptyTrillSound(PlacedTrillSound emptyTrillSound) {
-        this.emptyTrillSound = emptyTrillSound;
-    }
+    private Location approach;
+    private Location departure;
 
     public Boolean getLongMordent() {
         return longMordent;
@@ -22,19 +15,19 @@ public abstract class AbstractMordent extends Ornament {
         this.longMordent = longMordent;
     }
 
-    public String getApproach() {
+    public Location getApproach() {
         return approach;
     }
 
-    public void setApproach(String approach) {
+    public void setApproach(Location approach) {
         this.approach = approach;
     }
 
-    public String getDeparture() {
+    public Location getDeparture() {
         return departure;
     }
 
-    public void setDeparture(String departure) {
+    public void setDeparture(Location departure) {
         this.departure = departure;
     }
 }

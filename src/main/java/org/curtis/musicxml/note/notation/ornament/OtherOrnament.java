@@ -3,17 +3,17 @@ package org.curtis.musicxml.note.notation.ornament;
 import org.curtis.musicxml.note.PlacementText;
 
 public class OtherOrnament extends Ornament {
-    private PlacementText value;
+    private PlacementText placementText;
 
     public OtherOrnament() {
 
     }
 
-    public PlacementText getValue() {
-        return value;
+    public PlacementText getPlacementText() {
+        return placementText;
     }
 
-    public void setValue(PlacementText value) {
-        this.value = value;
+    public void setPlacementText(PlacementText placementText) {
+        this.placementText = placementText;
     }
 }

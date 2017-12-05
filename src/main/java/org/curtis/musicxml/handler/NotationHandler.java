@@ -53,19 +53,8 @@ public class NotationHandler extends AbstractHandler {
                     notationList.add(tuplet);
                     break;
                 case "ornaments":
-                    List<Element> ornamentsSubelements = XmlUtil.getChildElements(notationsSubelement);
-                    for(Element ornamentsSubelement : ornamentsSubelements) {
-                        switch (ornamentsSubelement.getTagName()) {
-                            case "trill-mark":
-                                TrillMark trillMark = new TrillMark();
-                                trillMark.setPlacement(PlacementUtil.getLocation(ornamentsSubelement.getAttribute("placement")));
-                                notationList.add(trillMark);
-                                break;
-                            case "wavy-line":
-                                WavyLine wavyLine = OrnamentFactory.newWavyLine(ornamentsSubelement);
-                                notationList.add(wavyLine);
-                        }
-                    }
+                    OrnamentHandler ornamentHandler = new OrnamentHandler(notationList);
+                    ornamentHandler.handle(notationsSubelement);
                     break;
                 case "articulations":
                     ArticulationHandler articulationHandler = new ArticulationHandler(notationList);
