@@ -1,7 +1,7 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.builder.ScoreBuilder;
-import org.curtis.musicxml.builder.ScoreHeaderBuilder;
+import org.curtis.lilypond.builder.ScoreBuilder;
+import org.curtis.lilypond.builder.ScoreHeaderBuilder;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;

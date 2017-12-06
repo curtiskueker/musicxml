@@ -1,4 +1,4 @@
-package org.curtis.musicxml.builder.musicdata;
+package org.curtis.lilypond.builder.musicdata;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;

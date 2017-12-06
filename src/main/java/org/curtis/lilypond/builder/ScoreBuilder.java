@@ -1,4 +1,4 @@
-package org.curtis.musicxml.builder;
+package org.curtis.lilypond.builder;
 
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;

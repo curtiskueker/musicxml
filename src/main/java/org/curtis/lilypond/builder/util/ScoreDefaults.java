@@ -1,4 +1,4 @@
-package org.curtis.musicxml.builder.util;
+package org.curtis.lilypond.builder.util;
 
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.util.MathUtil;
