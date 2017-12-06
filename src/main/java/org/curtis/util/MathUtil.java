@@ -69,6 +69,14 @@ public class MathUtil {
         return round(newValue);
     }
 
+    public static BigDecimal exp(BigDecimal a, Integer b) {
+        if (a == null) a = BigDecimal.ZERO;
+        if (b == null) b = 0;
+
+        BigDecimal newValue = a.pow(b);
+        return round(newValue);
+    }
+
     public static BigDecimal truncate(BigDecimal a) {
         return newBigDecimal(a.intValue());
     }
