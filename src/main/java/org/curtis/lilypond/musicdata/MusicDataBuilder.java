@@ -1,6 +1,6 @@
-package org.curtis.lilypond.builder.musicdata;
+package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.builder.AbstractBuilder;
+import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.musicxml.score.MusicData;
 
 public abstract class MusicDataBuilder extends AbstractBuilder {

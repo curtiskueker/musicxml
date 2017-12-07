@@ -1,7 +1,7 @@
-package org.curtis.lilypond.builder;
+package org.curtis.lilypond;
 
 import org.curtis.musicxml.bin.MusicXml2Ly;
-import org.curtis.lilypond.builder.util.ScoreDefaults;
+import org.curtis.lilypond.util.ScoreDefaults;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextFormatting;

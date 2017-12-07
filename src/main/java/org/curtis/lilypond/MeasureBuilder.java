@@ -1,15 +1,15 @@
-package org.curtis.lilypond.builder;
+package org.curtis.lilypond;
 
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.lilypond.builder.musicdata.AttributesBuilder;
-import org.curtis.lilypond.builder.musicdata.BarlineBuilder;
-import org.curtis.lilypond.builder.musicdata.ChordBuilder;
-import org.curtis.lilypond.builder.musicdata.DirectionBuilder;
-import org.curtis.lilypond.builder.musicdata.MusicDataBuilder;
-import org.curtis.lilypond.builder.musicdata.NoteBuilder;
-import org.curtis.lilypond.builder.musicdata.PrintBuilder;
-import org.curtis.lilypond.builder.musicdata.TupletBuilder;
+import org.curtis.lilypond.musicdata.AttributesBuilder;
+import org.curtis.lilypond.musicdata.BarlineBuilder;
+import org.curtis.lilypond.musicdata.ChordBuilder;
+import org.curtis.lilypond.musicdata.DirectionBuilder;
+import org.curtis.lilypond.musicdata.MusicDataBuilder;
+import org.curtis.lilypond.musicdata.NoteBuilder;
+import org.curtis.lilypond.musicdata.PrintBuilder;
+import org.curtis.lilypond.musicdata.TupletBuilder;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
@@ -59,7 +59,8 @@ public class MeasureBuilder extends AbstractBuilder {
         appendLine(measure.getNumber());
 
         // pre-processing loop
-        // go through notes and mark begins and ends
+        // go through notes and mark begins and ends of chords and tuplets
+        // these are grouped into their own builder calls
         for(MusicData musicData : musicDataList) {
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
@@ -116,6 +117,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
 
+                // skip if we're in backup mode
                 boolean skipNote = MathUtil.isPositive(currentBackupDuration);
                 if (skipNote || (lastNoteSkipped && fullNote.isChord())) {
                     if (!fullNote.isChord()) {
@@ -274,6 +276,7 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
+        // Process output
         // Begin repeat endings
         RepeatBlock repeatBlock = measure.getRepeatBlock();
         if(repeatBlock != null) {

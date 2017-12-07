@@ -1,6 +1,6 @@
-package org.curtis.lilypond.builder.musicdata;
+package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.builder.util.PlacementBuildUtil;
+import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.PrintStyle;

@@ -1,6 +1,6 @@
-package org.curtis.lilypond.builder.musicdata;
+package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.builder.PartBuilder;
+import org.curtis.lilypond.PartBuilder;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;

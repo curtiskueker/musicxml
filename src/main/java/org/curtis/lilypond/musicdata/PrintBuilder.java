@@ -1,4 +1,4 @@
-package org.curtis.lilypond.builder.musicdata;
+package org.curtis.lilypond.musicdata;
 
 import org.curtis.musicxml.direction.Print;
 

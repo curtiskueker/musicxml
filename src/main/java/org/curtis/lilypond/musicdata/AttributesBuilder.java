@@ -1,6 +1,6 @@
-package org.curtis.lilypond.builder.musicdata;
+package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.builder.PartBuilder;
+import org.curtis.lilypond.PartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.attributes.ClefSign;

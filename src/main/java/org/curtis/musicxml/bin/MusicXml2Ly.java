@@ -1,7 +1,7 @@
 package org.curtis.musicxml.bin;
 
 import org.curtis.exception.FileException;
-import org.curtis.lilypond.builder.ScoreBuilder;
+import org.curtis.lilypond.ScoreBuilder;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.util.FileUtil;

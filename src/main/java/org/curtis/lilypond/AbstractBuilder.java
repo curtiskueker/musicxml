@@ -1,4 +1,4 @@
-package org.curtis.lilypond.builder;
+package org.curtis.lilypond;
 
 public abstract class AbstractBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();

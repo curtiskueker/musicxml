@@ -1,7 +1,7 @@
-package org.curtis.lilypond.builder.musicdata;
+package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.builder.AbstractBuilder;
-import org.curtis.lilypond.builder.util.PlacementBuildUtil;
+import org.curtis.lilypond.AbstractBuilder;
+import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.notation.Fermata;
