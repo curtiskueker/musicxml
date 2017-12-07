@@ -31,8 +31,7 @@ public class ScoreBuilder extends AbstractBuilder {
             // begin staff group
             appendLine("\\new StaffGroup <<");
 
-            // staff
-            // TODO: score parts from the part groups list for now
+            // get score parts from the part groups list
             for(ScorePart scorePart : partGroup.getScoreParts()) {
                 appendLine("\\new Staff");
 
@@ -49,7 +48,7 @@ public class ScoreBuilder extends AbstractBuilder {
 
                 appendLine("}");
 
-                // part data
+                // individual parts
                 String partId = scorePart.getId();
                 for(Part part : score.getParts()) {
                     if(partId.equals(part.getId())) {
