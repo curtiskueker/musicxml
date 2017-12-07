@@ -291,11 +291,9 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        // Process the data builders
+        // Main data builder processing loop
         for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
-            musicDataBuilder.setValues(getCurrentTimeSignature());
             append(musicDataBuilder.build().toString());
-            setValues(musicDataBuilder.getCurrentTimeSignature());
         }
 
         // End repeat endings

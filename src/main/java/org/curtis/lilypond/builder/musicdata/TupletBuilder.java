@@ -91,12 +91,10 @@ public class TupletBuilder extends MusicDataBuilder {
             } else if(musicData instanceof Note) {
                 Note note = (Note)musicData;
                 NoteBuilder noteBuilder = new NoteBuilder(note);
-                noteBuilder.setValues(getCurrentTimeSignature());
                 append(noteBuilder.build().toString());
             } else if(musicData instanceof ChordNotes) {
                 ChordNotes chordNotes = (ChordNotes)musicData;
                 ChordBuilder chordBuilder = new ChordBuilder(chordNotes);
-                chordBuilder.setValues(getCurrentTimeSignature());
                 append(chordBuilder.build().toString());
             }
         }

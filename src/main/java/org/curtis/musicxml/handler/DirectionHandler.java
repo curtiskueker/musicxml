@@ -14,6 +14,7 @@ import org.curtis.musicxml.direction.type.WedgeType;
 import org.curtis.musicxml.direction.type.Words;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
+import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
@@ -68,7 +69,7 @@ public class DirectionHandler extends MusicDataHandler {
                                 wedge.setSpread(MathUtil.newBigDecimal(directionTypeSubelement.getAttribute("spread")));
                                 wedge.setLineType(NotationFactory.newLineType(directionTypeSubelement));
                                 wedge.setDashedFormatting(FormattingFactory.newDashedFormatting(directionTypeSubelement));
-                                wedge.setPosition(FormattingFactory.newPosition(directionTypeSubelement));
+                                wedge.setPosition(PlacementFactory.newPosition(directionTypeSubelement));
                                 directionTypes.add(wedge);
                                 break;
                             case "dynamics":

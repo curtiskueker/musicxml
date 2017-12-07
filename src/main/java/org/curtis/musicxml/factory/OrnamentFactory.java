@@ -170,7 +170,7 @@ public class OrnamentFactory {
         WavyLine wavyLine = new WavyLine();
         wavyLine.setType(PlacementUtil.getConnection(element.getAttribute("type")));
         wavyLine.setNumber(StringUtil.getInteger(element.getAttribute("number")));
-        wavyLine.setPosition(FormattingFactory.newPosition(element));
+        wavyLine.setPosition(PlacementFactory.newPosition(element));
         wavyLine.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
         wavyLine.setColor(element.getAttribute("color"));
         wavyLine.setTrillSound(OrnamentFactory.newTrillSound(element));

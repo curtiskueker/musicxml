@@ -43,7 +43,7 @@ public class NotationFactory {
         tuplet.setShowNumber(newShowTuplet(tupletElement.getAttribute("show-number")));
         tuplet.setShowType(newShowTuplet(tupletElement.getAttribute("show-type")));
         tuplet.setLineShape(newLineShape(tupletElement));
-        tuplet.setPosition(FormattingFactory.newPosition(tupletElement));
+        tuplet.setPosition(PlacementFactory.newPosition(tupletElement));
         tuplet.setPlacement(PlacementUtil.getLocation(tupletElement.getAttribute("placement")));
 
         return tuplet;

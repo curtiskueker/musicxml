@@ -4,7 +4,7 @@ import org.curtis.musicxml.note.NoteTypeValue;
 
 public class SlashGroup {
     private NoteTypeValue slashType;
-    private Integer slashDots;
+    private Integer slashDots = 0;
 
     public SlashGroup() {
 

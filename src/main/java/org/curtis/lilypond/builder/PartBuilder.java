@@ -1,5 +1,8 @@
 package org.curtis.lilypond.builder;
 
+import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.attributes.Time;
+import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
@@ -20,8 +23,22 @@ public class PartBuilder extends AbstractBuilder {
     private Integer currentEndingCount = 0;
     private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
 
+    public static Attributes CURRENT_ATTRIBUTES;
+
     public PartBuilder(Part part) {
         this.part = part;
+    }
+
+    public static TimeSignature getCurrentTimeSignature() {
+        if(CURRENT_ATTRIBUTES == null) return null;
+
+        List<Time> timeList = CURRENT_ATTRIBUTES.getTimeList();
+        for(Time time : timeList) {
+            List<TimeSignature> timeSignatures = time.getTimeSignatures();
+            if(!timeSignatures.isEmpty()) return timeSignatures.get(0);
+        }
+
+        return null;
     }
 
     public StringBuilder build() {
@@ -119,12 +136,12 @@ public class PartBuilder extends AbstractBuilder {
         // main processing loop
         for(Measure measure : measures) {
             MeasureBuilder measureBuilder = new MeasureBuilder(measure);
-            measureBuilder.setValues(getCurrentTimeSignature());
             append(measureBuilder.build().toString());
-            setValues(measureBuilder.getCurrentTimeSignature());
         }
 
         appendLine("}");
+
+        CURRENT_ATTRIBUTES = null;
 
         return stringBuilder;
     }

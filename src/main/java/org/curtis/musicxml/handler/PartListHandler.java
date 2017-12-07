@@ -1,9 +1,9 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.MidiInstrument;
+import org.curtis.musicxml.factory.AttributesFactory;
 import org.curtis.musicxml.score.GroupName;
 import org.curtis.musicxml.score.GroupSymbol;
-import org.curtis.musicxml.score.GroupSymbolType;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
@@ -48,13 +48,7 @@ public class PartListHandler extends AbstractHandler {
                         currentPartGroup.setGroupAbbreviation(abbreviatedGroupName);
 
                         GroupSymbol groupSymbol = new GroupSymbol();
-                        String groupSymbolTypeValue = XmlUtil.getChildElementText(partListSubelement, "group-symbol");
-                        GroupSymbolType groupSymbolType = null;
-                        switch (groupSymbolTypeValue) {
-                            case "bracket":
-                                groupSymbolType = GroupSymbolType.BRACKET;
-                        }
-                        groupSymbol.setGroupSymbolType(groupSymbolType);
+                        groupSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(partListSubelement));
                         currentPartGroup.setGroupSymbol(groupSymbol);
                     } else if(type.equals("stop")) {
                         partList.getPartGroups().add(currentPartGroup);

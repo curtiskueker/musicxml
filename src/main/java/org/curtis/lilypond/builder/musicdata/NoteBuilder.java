@@ -1,5 +1,6 @@
 package org.curtis.lilypond.builder.musicdata;
 
+import org.curtis.lilypond.builder.PartBuilder;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
@@ -121,7 +122,7 @@ public class NoteBuilder extends MusicDataBuilder {
             Boolean measure = rest.getMeasure();
             if(measure || noteType == null) {
                 append("R");
-                append(TimeSignatureUtil.getWholeMeasureNoteRepresentation(getCurrentTimeSignature()));
+                append(TimeSignatureUtil.getWholeMeasureNoteRepresentation(PartBuilder.getCurrentTimeSignature()));
             } else {
                 append("r");
             }

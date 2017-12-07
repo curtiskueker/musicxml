@@ -71,7 +71,7 @@ public class FormattingFactory {
 
         PrintStyle printStyle = new PrintStyle();
 
-        Position position = newPosition(printStyleElement);
+        Position position = PlacementFactory.newPosition(printStyleElement);
         printStyle.setPosition(position);
 
         Font font = newFont(printStyleElement);
@@ -80,21 +80,6 @@ public class FormattingFactory {
         printStyle.setColor(printStyleElement.getAttribute("color"));
 
         return printStyle;
-    }
-
-    public static Position newPosition(Element positionElement) {
-        if(positionElement == null) {
-            return null;
-        }
-
-        Position position = new Position();
-
-        position.setDefaultX(MathUtil.newBigDecimal(positionElement.getAttribute("default-x")));
-        position.setDefaultY(MathUtil.newBigDecimal(positionElement.getAttribute("default-y")));
-        position.setRelativeX(MathUtil.newBigDecimal(positionElement.getAttribute("relative-x")));
-        position.setRelativeY(MathUtil.newBigDecimal(positionElement.getAttribute("relative-y")));
-
-        return position;
     }
 
     public static Font newFont(Element fontElement) {

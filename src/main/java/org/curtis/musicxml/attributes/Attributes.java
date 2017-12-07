@@ -19,10 +19,10 @@ public class Attributes extends MusicData {
     private PartSymbol partSymbol;
     private Integer instruments;
     private Clef clef;
-    private List<StaffDetails> staffDetailsList;
-    private List<Transpose> transpositions;
-    private List<Directive> directives;
-    private List<MeasureStyle> measureStyles;
+    private List<StaffDetails> staffDetailsList = new ArrayList<>();
+    private List<Transpose> transpositions = new ArrayList<>();
+    private List<Directive> directives = new ArrayList<>();
+    private List<MeasureStyle> measureStyles = new ArrayList<>();
 
     public Attributes() {
 

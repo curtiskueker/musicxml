@@ -1,5 +1,6 @@
 package org.curtis.lilypond.builder.musicdata;
 
+import org.curtis.lilypond.builder.PartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.attributes.ClefSign;
@@ -55,6 +56,10 @@ public class AttributesBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
+        if(PartBuilder.CURRENT_ATTRIBUTES == null) {
+            PartBuilder.CURRENT_ATTRIBUTES = attributes;
+        }
+
         List<Key> keys = attributes.getKeys();
         for(Key key : keys) {
             TraditionalKey traditionalKey = key.getTraditionalKey();
@@ -71,18 +76,22 @@ public class AttributesBuilder extends MusicDataBuilder {
                 appendLine(mode);
             }
         }
+        if(!keys.isEmpty()) {
+            PartBuilder.CURRENT_ATTRIBUTES.setKeys(keys);
+        }
 
         List<Time> timeList = attributes.getTimeList();
         for(Time time : timeList) {
             List<TimeSignature> timeSignatures = time.getTimeSignatures();
             for(TimeSignature timeSignature : timeSignatures) {
-                setCurrentTimeSignature(timeSignature);
-
                 append("\\time ");
                 append(timeSignature.getBeats());
                 append("/");
                 appendLine(timeSignature.getBeatType());
             }
+        }
+        if(!timeList.isEmpty()) {
+            PartBuilder.CURRENT_ATTRIBUTES.setTimeList(timeList);
         }
 
         Clef clef = attributes.getClef();
@@ -102,6 +111,8 @@ public class AttributesBuilder extends MusicDataBuilder {
                     else if (line == 4) appendLine("tenor");
                     break;
             }
+
+            PartBuilder.CURRENT_ATTRIBUTES.setClef(clef);
         }
 
         return stringBuilder;
