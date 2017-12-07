@@ -1,6 +1,7 @@
 package org.curtis.musicxml.bin;
 
 import org.curtis.exception.FileException;
+import org.curtis.lilypond.builder.ScoreBuilder;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.util.FileUtil;
@@ -23,7 +24,10 @@ public class MusicXml2Ly {
 
             ScoreHandler scoreHandler = new ScoreHandler();
             scoreHandler.handle(xmlDocument.getDocumentElement());
-            StringBuilder results = scoreHandler.getResults();
+
+            // build the score
+            ScoreBuilder scoreBuilder = new ScoreBuilder(scoreHandler.getScore());
+            StringBuilder results = scoreBuilder.build();
 
             FileUtil.stringToFile(results.toString(), outputFilename);
         } catch (XmlException | FileException e) {

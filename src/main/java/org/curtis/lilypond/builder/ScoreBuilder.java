@@ -19,6 +19,10 @@ public class ScoreBuilder extends AbstractBuilder {
     }
 
     public StringBuilder build() {
+        // score header
+        ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(score.getScoreHeader());
+        append(scoreHeaderBuilder.build().toString());
+
         // begin score
         appendLine("\\score {");
 

@@ -1,7 +1,5 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.lilypond.builder.ScoreBuilder;
-import org.curtis.lilypond.builder.ScoreHeaderBuilder;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
@@ -9,21 +7,22 @@ import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
 public class ScoreHandler extends AbstractHandler {
+    private Score score;
+
     public ScoreHandler() {
         
     }
-    
-    private StringBuilder results = new StringBuilder();
+
+    public Score getScore() {
+        return score;
+    }
 
     public void handle(Element element) {
-        Score score = new Score();
+        score = new Score();
 
-        // handle and build score header
+        // handle the score header
         ScoreHeaderHandler scoreHeaderHandler = new ScoreHeaderHandler(score.getScoreHeader());
         scoreHeaderHandler.handle(element);
-
-        ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(score.getScoreHeader());
-        results.append(scoreHeaderBuilder.build().toString());
 
         // handle the parts
         for(PartGroup partGroup : score.getScoreHeader().getPartList().getPartGroups()) {
@@ -40,12 +39,5 @@ public class ScoreHandler extends AbstractHandler {
             }
         }
 
-        // build the score
-        ScoreBuilder scoreBuilder = new ScoreBuilder(score);
-        results.append(scoreBuilder.build().toString());
-    }
-
-    public StringBuilder getResults() {
-        return results;
     }
 }
