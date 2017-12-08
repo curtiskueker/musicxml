@@ -5,7 +5,6 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.lilypond.musicdata.AttributesBuilder;
 import org.curtis.lilypond.musicdata.BarlineBuilder;
 import org.curtis.lilypond.musicdata.ChordBuilder;
-import org.curtis.lilypond.musicdata.DirectionBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.lilypond.musicdata.NoteBuilder;
 import org.curtis.lilypond.musicdata.PrintBuilder;
@@ -320,8 +319,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private void transferDirections() {
         for(Direction direction : currentDirections) {
-            DirectionBuilder directionBuilder = new DirectionBuilder(direction);
-            musicDataBuilders.add(directionBuilder);
+            musicDataBuilders.add(new MusicDataBuilder(direction));
         }
 
         currentDirections.clear();

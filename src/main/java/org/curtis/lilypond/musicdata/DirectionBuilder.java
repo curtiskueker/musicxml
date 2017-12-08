@@ -17,14 +17,11 @@ import org.curtis.musicxml.direction.type.Words;
 import java.util.List;
 
 public class DirectionBuilder extends MusicDataBuilder {
-    private Direction direction;
+    public DirectionBuilder() {
 
-    public DirectionBuilder(Direction direction) {
-        super(direction);
-        this.direction = direction;
     }
 
-    public StringBuilder build() {
+    public StringBuilder buildDirection(Direction direction) {
         List<DirectionType> directionTypes = direction.getDirectionTypes();
         for(DirectionType directionType : directionTypes) {
             if(directionType instanceof Words) {

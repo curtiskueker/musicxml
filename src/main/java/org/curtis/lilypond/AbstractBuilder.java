@@ -2,6 +2,7 @@ package org.curtis.lilypond;
 
 public abstract class AbstractBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();
+
     public abstract StringBuilder build();
 
     protected void appendLine(String string) {

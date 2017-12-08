@@ -2,7 +2,6 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.ChordNotes;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TimeModification;
@@ -84,11 +83,7 @@ public class TupletBuilder extends MusicDataBuilder {
         append(" {");
 
         for(MusicData musicData : musicDataList) {
-            if(musicData instanceof Direction) {
-                Direction direction = (Direction)musicData;
-                DirectionBuilder directionBuilder = new DirectionBuilder(direction);
-                append(directionBuilder.build().toString());
-            } else if(musicData instanceof Note) {
+            if(musicData instanceof Note) {
                 Note note = (Note)musicData;
                 NoteBuilder noteBuilder = new NoteBuilder(note);
                 append(noteBuilder.build().toString());
@@ -96,6 +91,9 @@ public class TupletBuilder extends MusicDataBuilder {
                 ChordNotes chordNotes = (ChordNotes)musicData;
                 ChordBuilder chordBuilder = new ChordBuilder(chordNotes);
                 append(chordBuilder.build().toString());
+            } else {
+                MusicDataBuilder musicDataBuilder = new MusicDataBuilder(musicData);
+                append(musicDataBuilder.build().toString());
             }
         }
 

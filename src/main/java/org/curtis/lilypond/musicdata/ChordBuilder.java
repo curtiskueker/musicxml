@@ -70,7 +70,7 @@ public class ChordBuilder extends MusicDataBuilder {
         }
 
         for(Direction direction : chordNotes.getDirections()) {
-            DirectionBuilder directionBuilder = new DirectionBuilder(direction);
+            MusicDataBuilder directionBuilder = new MusicDataBuilder(direction);
             append(directionBuilder.build().toString());
         }
 
