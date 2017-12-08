@@ -237,8 +237,8 @@ public class NoteBuilder extends MusicDataBuilder {
     protected StringBuilder notationsBuild() {
         for(Notations notations : note.getNotationsList()) {
             for(Notation notation : notations.getNotations()) {
-                NotationBuilder notationBuilder = new NotationBuilder(notation);
-                append(notationBuilder.build().toString());
+                MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
+                append(musicDataBuilder.build().toString());
             }
         }
 

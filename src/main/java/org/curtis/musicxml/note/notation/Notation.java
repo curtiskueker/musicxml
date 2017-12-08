@@ -1,8 +1,9 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.score.MusicData;
 
-public abstract class Notation {
+public abstract class Notation extends MusicData {
     private Editorial editorial;
     private Boolean printObject;
 
