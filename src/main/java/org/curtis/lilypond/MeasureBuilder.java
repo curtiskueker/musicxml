@@ -38,6 +38,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean tupletsOn = false;
     private Chord currentChord = null;
     private TupletNotes currentTuplet = null;
+    private TupletNotes lastTuplet = null;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -121,6 +122,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 // chords and tuplets
                 Connection chordType = fullNote.getChordType();
                 Connection tupletType = currentNote.getTupletType();
+                lastTuplet = null;
                 if (chordType != null || tupletType != null) {
                     if (chordType != null) {
                         switch (chordType) {
@@ -161,6 +163,7 @@ public class MeasureBuilder extends AbstractBuilder {
                                     currentDirections.clear();
                                 }
                                 musicDataBuilder = new MusicDataBuilder(currentTuplet);
+                                lastTuplet = currentTuplet;
                                 currentTuplet = null;
                                 break;
                         }
@@ -218,6 +221,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 currentDirections.add(direction);
                 continue;
             } else if(musicData instanceof Barline) {
+                lastTuplet = null;
                 // hold on the final barline until the very end
                 Barline barline = (Barline)musicData;
                 Location barlineLocation = barline.getLocation();
@@ -306,8 +310,12 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     private void transferDirections() {
-        for(Direction direction : currentDirections) {
-            musicDataBuilders.add(new MusicDataBuilder(direction));
+        if (lastTuplet == null) {
+            for(Direction direction : currentDirections) {
+                musicDataBuilders.add(new MusicDataBuilder(direction));
+            }
+        } else {
+            lastTuplet.getMusicDataList().addAll(currentDirections);
         }
 
         currentDirections.clear();

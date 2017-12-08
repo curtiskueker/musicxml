@@ -31,7 +31,6 @@ public class DirectionHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Direction direction = new Direction();
         direction.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
-        if(direction.getPlacement() == null) direction.setPlacement(Location.BELOW);
         List<DirectionType> directionTypes = direction.getDirectionTypes();
 
         List<Element> directionSubelements = XmlUtil.getChildElements(element);
