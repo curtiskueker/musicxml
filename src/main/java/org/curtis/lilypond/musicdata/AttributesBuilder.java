@@ -50,12 +50,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         MINOR_KEY_MAP.put(6, "dis");
     }
 
-    public AttributesBuilder(Attributes attributes) {
-        super(attributes);
-        this.attributes = attributes;
-    }
-
-    public StringBuilder build() {
+    public StringBuilder buildAttributes(Attributes attributes) {
         if(PartBuilder.CURRENT_ATTRIBUTES == null) {
             PartBuilder.CURRENT_ATTRIBUTES = attributes;
         }

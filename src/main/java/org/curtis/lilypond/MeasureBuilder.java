@@ -1,8 +1,6 @@
 package org.curtis.lilypond;
 
-import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.lilypond.musicdata.AttributesBuilder;
 import org.curtis.lilypond.musicdata.BarlineBuilder;
 import org.curtis.lilypond.musicdata.ChordBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
@@ -243,12 +241,11 @@ public class MeasureBuilder extends AbstractBuilder {
                 Forward forward = (Forward)musicData;
                 currentBackupDuration = MathUtil.subtract(currentBackupDuration, forward.getDuration());
                 continue;
-            } else if(musicData instanceof Attributes) {
-                Attributes attributes = (Attributes)musicData;
-                musicDataBuilder = new AttributesBuilder(attributes);
-            } else if(musicData instanceof Print) {
+            }else if(musicData instanceof Print) {
                 Print print = (Print) musicData;
                 musicDataBuilder = new PrintBuilder(print);
+            } else {
+                musicDataBuilder = new MusicDataBuilder(musicData);
             }
 
             if (musicDataBuilder != null) {
