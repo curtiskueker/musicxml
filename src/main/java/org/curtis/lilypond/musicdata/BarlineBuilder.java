@@ -7,14 +7,7 @@ import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.barline.RepeatDirection;
 
 public class BarlineBuilder extends MusicDataBuilder {
-    private Barline barline;
-
-    public BarlineBuilder(Barline barline) {
-        super(barline);
-        this.barline = barline;
-    }
-
-    public StringBuilder build() {
+    public StringBuilder buildBarline(Barline barline) {
         BarStyleColor barStyleColor = barline.getBarStyle();
         if(barStyleColor == null) return stringBuilder;
 

@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
 import java.util.List;
@@ -20,6 +21,16 @@ public class DirectionBuilder extends MusicDataBuilder {
                 append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
                 append(musicDataResults);
             }
+        }
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildPrint(Print print) {
+        if(print.getNewSystem()) {
+            appendLine("\\break");
+        } else if(print.getNewPage()) {
+            appendLine("\\pageBreak");
         }
 
         return stringBuilder;

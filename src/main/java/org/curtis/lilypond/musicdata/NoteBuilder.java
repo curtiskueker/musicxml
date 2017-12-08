@@ -2,6 +2,9 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.PartBuilder;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
@@ -14,11 +17,17 @@ import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Step;
+import org.curtis.musicxml.note.TimeModification;
+import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.handler.util.TimeSignatureUtil;
+import org.curtis.musicxml.note.notation.ShowTuplet;
+import org.curtis.musicxml.note.notation.Tuplet;
+import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoteBuilder extends MusicDataBuilder {
@@ -27,6 +36,10 @@ public class NoteBuilder extends MusicDataBuilder {
     public NoteBuilder(Note note) {
         super(note);
         this.note = note;
+    }
+
+    public NoteBuilder() {
+
     }
 
     public Note getNote() {
@@ -241,6 +254,148 @@ public class NoteBuilder extends MusicDataBuilder {
                 append(musicDataBuilder.build().toString());
             }
         }
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildNote(Note note) {
+        this.note = note;
+        return build();
+    }
+
+    public StringBuilder buildChord(Chord chord) {
+        List<Note> notes = chord.getNotes();
+        List<NoteBuilder> noteBuilders = new ArrayList<>();
+
+        for(Note note : notes) {
+            NoteBuilder noteBuilder = new NoteBuilder(note);
+            noteBuilders.add(noteBuilder);
+        }
+
+        for (NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            Note note = noteBuilder.getNote();
+            Connection chordType = note.getFullNote().getChordType();
+            if (chordType == Connection.START || chordType == Connection.SINGLE) {
+                append(noteBuilder.preChordBuild().toString());
+            }
+        }
+
+        append("<");
+
+        for(NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            Note note = noteBuilder.getNote();
+            append(noteBuilder.mainBuild().toString());
+
+            if(note.getBeginBeam()) {
+                append("[");
+            }
+        }
+
+        append(">");
+
+        for (NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            Note note = noteBuilder.getNote();
+            Connection chordType = note.getFullNote().getChordType();
+            if (chordType == Connection.SINGLE || chordType == Connection.STOP) {
+                append(noteBuilder.postChordBuild().toString());
+            }
+        }
+
+        for (NoteBuilder noteBuilder : noteBuilders) {
+            Note note = noteBuilder.getNote();
+            if(note.getEndBeam()) {
+                append("]");
+            }
+        }
+
+        for(NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            append(noteBuilder.notationsBuild().toString());
+        }
+
+        for(Direction direction : chord.getDirections()) {
+            MusicDataBuilder directionBuilder = new MusicDataBuilder(direction);
+            append(directionBuilder.build().toString());
+        }
+
+        for(NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            append(noteBuilder.postGraceBuild().toString());
+        }
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildTupletNotes(TupletNotes tupletNotes) {
+        List<MusicData> musicDataList = tupletNotes.getMusicDataList();
+        if(musicDataList == null || musicDataList.isEmpty() || musicDataList.size() < 2) {
+            return stringBuilder;
+        }
+
+        Note startNote = null;
+        for(MusicData musicData : musicDataList) {
+            if(musicData instanceof Note) {
+                Note note = (Note)musicData;
+                Tuplet tuplet = note.getTuplet();
+                if (tuplet != null && tuplet.getType() == Connection.START) {
+                    startNote = note;
+                    break;
+                }
+            } else if(musicData instanceof Chord) {
+                Chord chordNotes = (Chord)musicData;
+                for(Note note : chordNotes.getNotes()) {
+                    Tuplet tuplet = note.getTuplet();
+                    if (tuplet != null && tuplet.getType() == Connection.START) {
+                        startNote = note;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(startNote == null) {
+            return stringBuilder;
+        }
+
+        Tuplet startTuplet = startNote.getTuplet();
+        if(startTuplet == null) {
+            return stringBuilder;
+        }
+
+        if(startTuplet.getShowNumber() == ShowTuplet.NONE) {
+            append(" \\once \\omit TupletNumber");
+        }
+
+        if(!startTuplet.getBracket()) {
+            append (" \\once \\override TupletBracket.bracket-visibility = ##f");
+        }
+
+        if(startTuplet.getPlacement() == Location.ABOVE) {
+            append(" \\tupletUp");
+        } else if(startTuplet.getPlacement() == Location.BELOW) {
+            append(" \\tupletDown");
+        }
+
+        append(" \\tuplet");
+
+        // dependent on time-modification subelements actual-notes and normal-notes
+        TimeModification timeModification = startNote.getTimeModification();
+        append(" ");
+        append(String.valueOf(timeModification.getActualNotes()));
+        append("/");
+        append(String.valueOf(timeModification.getNormalNotes()));
+
+        append(" {");
+
+        for(MusicData musicData : musicDataList) {
+            MusicDataBuilder musicDataBuilder = new MusicDataBuilder(musicData);
+            append(musicDataBuilder.build().toString());
+        }
+
+        append(" }");
 
         return stringBuilder;
     }

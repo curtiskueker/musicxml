@@ -1,16 +1,10 @@
 package org.curtis.lilypond;
 
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.lilypond.musicdata.BarlineBuilder;
-import org.curtis.lilypond.musicdata.ChordBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
-import org.curtis.lilypond.musicdata.NoteBuilder;
-import org.curtis.lilypond.musicdata.PrintBuilder;
-import org.curtis.lilypond.musicdata.TupletBuilder;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
-import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
@@ -142,7 +136,7 @@ public class MeasureBuilder extends AbstractBuilder {
                                 if (tupletType == Connection.STOP || tupletType == Connection.CONTINUE) {
                                     currentTuplet.getMusicDataList().add(currentChord);
                                 } else {
-                                    musicDataBuilder = new ChordBuilder(currentChord);
+                                    musicDataBuilder = new MusicDataBuilder(currentChord);
                                 }
                                 currentChord = null;
                                 break;
@@ -166,13 +160,13 @@ public class MeasureBuilder extends AbstractBuilder {
                                     currentTuplet.getMusicDataList().addAll(currentDirections);
                                     currentDirections.clear();
                                 }
-                                musicDataBuilder = new TupletBuilder(currentTuplet);
+                                musicDataBuilder = new MusicDataBuilder(currentTuplet);
                                 currentTuplet = null;
                                 break;
                         }
                     }
                 } else {
-                    musicDataBuilder = new NoteBuilder(currentNote);
+                    musicDataBuilder = new MusicDataBuilder(currentNote);
                 }
 
                 // grace notes
@@ -232,7 +226,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     continue;
                 }
 
-                musicDataBuilder = new BarlineBuilder(barline);
+                musicDataBuilder = new MusicDataBuilder(barline);
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
                 currentBackupDuration = MathUtil.add(currentBackupDuration, backup.getDuration());
@@ -241,9 +235,6 @@ public class MeasureBuilder extends AbstractBuilder {
                 Forward forward = (Forward)musicData;
                 currentBackupDuration = MathUtil.subtract(currentBackupDuration, forward.getDuration());
                 continue;
-            }else if(musicData instanceof Print) {
-                Print print = (Print) musicData;
-                musicDataBuilder = new PrintBuilder(print);
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);
             }
@@ -259,7 +250,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // put any barline at the end
         if(currentBarline != null) {
-            BarlineBuilder barlineBuilder = new BarlineBuilder(currentBarline);
+            MusicDataBuilder barlineBuilder = new MusicDataBuilder(currentBarline);
             musicDataBuilders.add(barlineBuilder);
         }
 
