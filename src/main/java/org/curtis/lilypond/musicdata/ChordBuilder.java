@@ -2,16 +2,16 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;
-import org.curtis.musicxml.note.ChordNotes;
+import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Note;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChordBuilder extends MusicDataBuilder {
-    private ChordNotes chordNotes;
+    private Chord chordNotes;
 
-    public ChordBuilder(ChordNotes chordNotes) {
+    public ChordBuilder(Chord chordNotes) {
         super(chordNotes);
         this.chordNotes = chordNotes;
     }

@@ -2,7 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.direction.Direction;
-import org.curtis.musicxml.direction.type.DirectionType;
+import org.curtis.musicxml.direction.directiontype.DirectionType;
 
 import java.util.List;
 

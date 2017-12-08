@@ -14,7 +14,7 @@ import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
-import org.curtis.musicxml.note.ChordNotes;
+import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
@@ -42,7 +42,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private BigDecimal currentBackupDuration = MathUtil.ZERO;
     private boolean lastNoteSkipped = false;
     private boolean tupletsOn = false;
-    private ChordNotes currentChord = null;
+    private Chord currentChord = null;
     private TupletNotes currentTuplet = null;
 
     public MeasureBuilder(Measure measure) {
@@ -131,7 +131,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     if (chordType != null) {
                         switch (chordType) {
                             case START:
-                                currentChord = new ChordNotes();
+                                currentChord = new Chord();
                             case CONTINUE:
                                 currentChord.getNotes().add(currentNote);
                                 break;

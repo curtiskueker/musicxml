@@ -33,16 +33,14 @@ public class MusicDataBuilder extends AbstractBuilder {
         musidDataClassName = musidDataClassName.replace("org.curtis.musicxml.", "");
 
         List<String> classNameParts = new ArrayList<>(Arrays.asList(musidDataClassName.split("\\.")));
-        String builderSimpleClassName = classNameParts.remove(classNameParts.size() - 1);
 
-        String builderClassName = "org.curtis.lilypond.musicdata.";
-        for(String classNamePart : classNameParts) {
-            classNamePart = classNamePart.substring(0, 1).toUpperCase() + classNamePart.substring(1);
-            builderClassName += classNamePart;
-        }
+        String objectClassName = classNameParts.remove(classNameParts.size() - 1);
+        String builderRootClassName = classNameParts.remove(classNameParts.size() - 1);
+        builderRootClassName = builderRootClassName.substring(0, 1).toUpperCase() + builderRootClassName.substring(1);
+        String builderPackageName = "org.curtis.lilypond.musicdata.";
 
-        builderClassName += "Builder";
-        String builderMethodName = "build" + builderSimpleClassName;
+        String builderClassName = builderPackageName + builderRootClassName + "Builder";
+        String builderMethodName = "build" + objectClassName;
 
         try {
             Class builderClass = Class.forName(builderClassName);

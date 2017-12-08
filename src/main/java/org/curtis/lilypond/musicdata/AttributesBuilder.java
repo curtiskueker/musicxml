@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class AttributesBuilder extends MusicDataBuilder {
-    private Attributes attributes;
     private static final Map<Integer, String> MAJOR_KEY_MAP;
     private static final Map<Integer, String> MINOR_KEY_MAP;
 
