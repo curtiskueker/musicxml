@@ -70,6 +70,10 @@ public class MeasureBuilder extends AbstractBuilder {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
 
+                if(!currentNote.getPrintout().getPrintObject() || currentNote.getCue()) {
+                    continue;
+                }
+
                 if (previousNote != null) {
                     // chord type
                     if(fullNote.isChord() && !previousNote.getFullNote().isChord()) {
@@ -152,6 +156,10 @@ public class MeasureBuilder extends AbstractBuilder {
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
+
+                if(!currentNote.getPrintout().getPrintObject() || currentNote.getCue()) {
+                    continue;
+                }
 
                 // skip if we're in backup mode
                 boolean skipNote = MathUtil.isPositive(currentBackupDuration);

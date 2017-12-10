@@ -10,9 +10,11 @@ import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.handler.util.PlacementUtil;
+import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -177,5 +179,15 @@ public class FormattingFactory {
         dashedFormatting.setSpaceLength(MathUtil.newBigDecimal(dashedFormattingElement.getAttribute("space-length")));
 
         return dashedFormatting;
+    }
+
+    public static Printout newPrintout(Element element) {
+        Printout printout = new Printout();
+        printout.setPrintObject(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-object")));
+        printout.setPrintDot(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-dot")));
+        printout.setPrintSpacing(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-spacing")));
+        printout.setPrintLyric(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-lyric")));
+
+        return printout;
     }
 }

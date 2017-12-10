@@ -2,7 +2,6 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.LevelDisplay;
-import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
@@ -57,14 +56,7 @@ public class NoteHandler extends MusicDataHandler {
 
         note.setFont(FormattingFactory.newFont(element));
         note.setColor(element.getAttribute("color"));
-
-        Printout printout = new Printout();
-        printout.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
-        printout.setPrintDot(TypeUtil.getYesNo(element.getAttribute("print-dot")));
-        printout.setPrintSpacing(TypeUtil.getYesNo(element.getAttribute("print-spacing")));
-        printout.setPrintLyric(TypeUtil.getYesNo(element.getAttribute("print-lyric")));
-        note.setPrintout(printout);
-
+        note.setPrintout(FormattingFactory.newPrintout(element));
         note.setDynamics(MathUtil.newBigDecimal(element.getAttribute("dynamics")));
         note.setEndDynamics(MathUtil.newBigDecimal(element.getAttribute("end-dynamics")));
         note.setAttack(MathUtil.newBigDecimal(element.getAttribute("attack")));
@@ -123,7 +115,6 @@ public class NoteHandler extends MusicDataHandler {
                     NoteType noteType = new NoteType();
                     noteType.setValue(NoteFactory.newNoteTypeValue(noteSubelement));
                     note.setType(noteType);
-                    String noteTypeSize = noteSubelement.getAttribute("size");
                     noteType.setSize(FormattingFactory.newSymbolSize(noteSubelement));
                     break;
                 case "dot":
