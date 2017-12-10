@@ -1,5 +1,9 @@
 package org.curtis.lilypond;
 
+import org.curtis.lilypond.util.TimeSignatureUtil;
+import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.attributes.Time;
+import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.common.Connection;
@@ -50,9 +54,14 @@ public class MeasureBuilder extends AbstractBuilder {
         append("% measure ");
         appendLine(measure.getNumber());
 
-        // pre-processing loop
-        // go through notes and mark begins and ends of chords and tuplets
+        // pre-processing loops
+        //
+        // Get time signature and divisions from Attributes found in this measure
+        //
+        // Go through Notes and mark begins and ends of chords and tuplets
         // these are grouped into their own builder calls
+        TimeSignature currentTimeSignature = null;
+        BigDecimal currentDivisions = null;
         for(MusicData musicData : musicDataList) {
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
@@ -69,7 +78,6 @@ public class MeasureBuilder extends AbstractBuilder {
                         previousNote.getFullNote().setChordType(Connection.STOP);
                     }
                 }
-
                 // tuplet type
                 Tuplet tuplet = currentNote.getTuplet();
                 if(tuplet != null) {
@@ -93,6 +101,16 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
 
                 previousNote = currentNote;
+            } else if(musicData instanceof Attributes) {
+                Attributes attributes = (Attributes)musicData;
+                currentDivisions = attributes.getDivisions();
+                List<Time> timeList = attributes.getTimeList();
+                for(Time time : timeList) {
+                    List<TimeSignature> timeSignatures = time.getTimeSignatures();
+                    if(!timeSignatures.isEmpty()) {
+                        currentTimeSignature = timeSignatures.get(0);
+                    }
+                }
             }
         }
 
@@ -100,6 +118,31 @@ public class MeasureBuilder extends AbstractBuilder {
         if(previousNote != null && previousNote.getFullNote().isChord()) {
             previousNote.getFullNote().setChordType(Connection.STOP);
         }
+
+        // Attributes not found in current measure: get from the current attributes value
+        if(currentTimeSignature == null) {
+            List<Time> timeList = PartBuilder.CURRENT_ATTRIBUTES.getTimeList();
+            for (Time time : timeList) {
+                List<TimeSignature> timeSignatures = time.getTimeSignatures();
+                if(!timeSignatures.isEmpty()) {
+                    currentTimeSignature = timeSignatures.get(0);
+                }
+            }
+        }
+        if(currentDivisions == null) {
+            currentDivisions = PartBuilder.CURRENT_ATTRIBUTES.getDivisions();
+        }
+
+        // TODO: throw an exception
+        if(currentTimeSignature == null) {
+            System.err.println("CURRENT TIME SIGNATURE NOT FOUND");
+            return stringBuilder;
+        }
+
+        // Calculate expected divisions in the measure
+        BigDecimal totalBeats = TimeSignatureUtil.getTotalBeats(currentTimeSignature.getBeats(), currentTimeSignature.getBeatType());
+        BigDecimal expectedDuration = MathUtil.multiply(currentDivisions, totalBeats);
+        BigDecimal totalDuration = MathUtil.ZERO;
 
         // create data builder list for processing
         for(MusicData musicData : musicDataList) {
@@ -213,6 +256,9 @@ public class MeasureBuilder extends AbstractBuilder {
                     }
                 }
 
+                if (chordType == null || chordType == Connection.START) {
+                    totalDuration = MathUtil.add(totalDuration, currentNote.getDuration());
+                }
                 lastNoteSkipped = false;
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
@@ -267,6 +313,11 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
+        // Check whether expected duration equals total duration
+        if(!MathUtil.equalTo(expectedDuration, totalDuration)) {
+            measure.setImplicit(true);
+        }
+
         // Process output
         // Begin repeat endings
         RepeatBlock repeatBlock = measure.getRepeatBlock();
@@ -283,6 +334,14 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
                 appendLine("{");
             }
+        }
+
+        // Partial measure
+        if(measure.getImplicit()) {
+            append("\\partial ");
+            BigDecimal numerator = MathUtil.multiply(MathUtil.divide(totalDuration, expectedDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
+            BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
+            appendLine(TimeSignatureUtil.getWholeMeasureRepresentation(numerator, denominator));
         }
 
         // Main data builder processing loop

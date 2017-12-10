@@ -49,20 +49,11 @@ public class PartBuilder extends AbstractBuilder {
         // pro-processing loop
         // check for endings
         for(Measure measure : measures) {
+            boolean hasEnding = false;
             for(Barline barline : measure.getBarlines()){
                 Ending ending = barline.getEnding();
-                if(ending == null) {
-                    if (previousMeasure != null) {
-                        RepeatBlock previousRepeatBlock = previousMeasure.getRepeatBlock();
-                        if(previousRepeatBlock != null && previousRepeatBlock.getRepeatBlockType() == RepeatBlockType.ENDING &&
-                                (previousRepeatBlock.getConnectionType() == Connection.STOP || previousRepeatBlock.getConnectionType() == Connection.SINGLE)) {
-                            currentRepeatStartBlockMeasure = null;
-                            currentRepeatEndBlockMeasure = null;
-                            currentEndingCount = 0;
-                            currentRepeatBlocks.clear();
-                        }
-                    }
-                } else {
+                if(ending != null) {
+                    hasEnding = true;
                     switch (ending.getType()) {
                         case START:
                             RepeatBlock startRepeatBlock = currentRepeatStartBlockMeasure.getRepeatBlock();
@@ -127,6 +118,17 @@ public class PartBuilder extends AbstractBuilder {
                             currentRepeatStartBlockMeasure = measure;
                             break;
                     }
+                }
+            }
+
+            if (previousMeasure != null && !hasEnding) {
+                RepeatBlock previousRepeatBlock = previousMeasure.getRepeatBlock();
+                if(previousRepeatBlock != null && previousRepeatBlock.getRepeatBlockType() == RepeatBlockType.ENDING &&
+                        (previousRepeatBlock.getConnectionType() == Connection.STOP || previousRepeatBlock.getConnectionType() == Connection.SINGLE)) {
+                    currentRepeatStartBlockMeasure = null;
+                    currentRepeatEndBlockMeasure = null;
+                    currentEndingCount = 0;
+                    currentRepeatBlocks.clear();
                 }
             }
 

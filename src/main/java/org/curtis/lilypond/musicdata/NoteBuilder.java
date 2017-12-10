@@ -20,7 +20,7 @@ import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.notation.Notation;
-import org.curtis.musicxml.handler.util.TimeSignatureUtil;
+import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
@@ -135,7 +135,7 @@ public class NoteBuilder extends MusicDataBuilder {
             Boolean measure = rest.getMeasure();
             if(measure || noteType == null) {
                 append("R");
-                append(TimeSignatureUtil.getWholeMeasureNoteRepresentation(PartBuilder.getCurrentTimeSignature()));
+                append(TimeSignatureUtil.getWholeMeasureRepresentation(PartBuilder.getCurrentTimeSignature()));
             } else {
                 append("r");
             }
