@@ -1,5 +1,6 @@
 package org.curtis.lilypond;
 
+import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.lilypond.util.ScoreDefaults;
 import org.curtis.musicxml.common.FormattedText;
@@ -35,7 +36,7 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
         this.scoreHeader = scoreHeader;
     }
 
-    public StringBuilder build() {
+    public StringBuilder build() throws BuildException {
         append("\\version \"");
         append(MusicXml2Ly.LILYPOND_VERSION);
         appendLine("\"");

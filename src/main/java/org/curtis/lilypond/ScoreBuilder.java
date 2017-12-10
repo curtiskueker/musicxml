@@ -1,5 +1,6 @@
 package org.curtis.lilypond;
 
+import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.Score;
@@ -18,7 +19,7 @@ public class ScoreBuilder extends AbstractBuilder {
         return score;
     }
 
-    public StringBuilder build() {
+    public StringBuilder build() throws BuildException {
         // score header
         ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(score.getScoreHeader());
         append(scoreHeaderBuilder.build().toString());

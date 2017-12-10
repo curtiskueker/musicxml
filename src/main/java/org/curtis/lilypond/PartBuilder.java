@@ -1,5 +1,6 @@
 package org.curtis.lilypond;
 
+import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Time;
 import org.curtis.musicxml.attributes.TimeSignature;
@@ -24,9 +25,11 @@ public class PartBuilder extends AbstractBuilder {
     private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
 
     public static Attributes CURRENT_ATTRIBUTES;
+    public static String CURRENT_PART_ID;
 
     public PartBuilder(Part part) {
         this.part = part;
+        CURRENT_PART_ID = part.getId();
     }
 
     public static TimeSignature getCurrentTimeSignature() {
@@ -41,7 +44,7 @@ public class PartBuilder extends AbstractBuilder {
         return null;
     }
 
-    public StringBuilder build() {
+    public StringBuilder build() throws BuildException {
         appendLine("{");
 
         List<Measure> measures = part.getMeasures();

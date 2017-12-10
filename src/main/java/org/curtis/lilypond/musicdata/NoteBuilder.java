@@ -1,6 +1,8 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.PartBuilder;
+import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
@@ -50,7 +52,7 @@ public class NoteBuilder extends MusicDataBuilder {
         this.note = note;
     }
 
-    public StringBuilder build() {
+    public StringBuilder build() throws BuildException {
         preChordBuild();
         mainBuild();
         postChordBuild();
@@ -67,7 +69,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    protected StringBuilder mainBuild() {
+    private StringBuilder mainBuild() throws BuildException {
         preGraceBuild();
 
         FullNote fullNote = note.getFullNote();
@@ -134,8 +136,13 @@ public class NoteBuilder extends MusicDataBuilder {
             Rest rest = (Rest)fullNoteType;
             Boolean measure = rest.getMeasure();
             if(measure || noteType == null) {
-                append("R");
-                append(TimeSignatureUtil.getWholeMeasureRepresentation(PartBuilder.getCurrentTimeSignature()));
+                try {
+                    String wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation(PartBuilder.getCurrentTimeSignature());
+                    append("R");
+                    append(wholeMeasureRepresentation);
+                } catch (TimeSignatureException e) {
+                    throw new BuildException("Invalid whole measure representation");
+                }
             } else {
                 append("r");
             }
@@ -144,7 +151,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    protected StringBuilder preChordBuild() {
+    private StringBuilder preChordBuild() {
         append(" ");
 
         Stem stem = note.getStem();
@@ -163,7 +170,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    protected StringBuilder postChordBuild() {
+    private StringBuilder postChordBuild() {
         NoteType noteType = note.getType();
 
         if (noteType != null) {
@@ -222,7 +229,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    protected StringBuilder preGraceBuild() {
+    private StringBuilder preGraceBuild() {
         if (note.isGraceNote()) {
             if (note.getGrace().getGraceType() == Connection.START || note.getGrace().getGraceType() == Connection.SINGLE) {
                 if(note.getGrace().getSlash()) {
@@ -239,7 +246,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    protected StringBuilder postGraceBuild() {
+    private StringBuilder postGraceBuild() {
         if(note.isGraceNote() && note.getGrace().getGraceType() == Connection.STOP) {
             append(" }");
         }
@@ -247,7 +254,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    protected StringBuilder notationsBuild() {
+    private StringBuilder notationsBuild() throws BuildException {
         for(Notations notations : note.getNotationsList()) {
             for(Notation notation : notations.getNotations()) {
                 MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
@@ -258,12 +265,12 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    public StringBuilder buildNote(Note note) {
+    public StringBuilder buildNote(Note note) throws BuildException {
         this.note = note;
         return build();
     }
 
-    public StringBuilder buildChord(Chord chord) {
+    public StringBuilder buildChord(Chord chord) throws BuildException {
         List<Note> notes = chord.getNotes();
         List<NoteBuilder> noteBuilders = new ArrayList<>();
 
@@ -285,7 +292,6 @@ public class NoteBuilder extends MusicDataBuilder {
 
         for(NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
-            Note note = noteBuilder.getNote();
             append(noteBuilder.mainBuild().toString());
         }
 
@@ -327,7 +333,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    public StringBuilder buildTupletNotes(TupletNotes tupletNotes) {
+    public StringBuilder buildTupletNotes(TupletNotes tupletNotes) throws BuildException {
         List<MusicData> musicDataList = tupletNotes.getMusicDataList();
         if(musicDataList == null || musicDataList.isEmpty() || musicDataList.size() < 2) {
             return stringBuilder;

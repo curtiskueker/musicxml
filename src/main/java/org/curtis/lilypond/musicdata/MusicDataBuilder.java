@@ -1,6 +1,8 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.AbstractBuilder;
+import org.curtis.lilypond.PartBuilder;
+import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.score.MusicData;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +30,7 @@ public class MusicDataBuilder extends AbstractBuilder {
         this.musicData = musicData;
     }
 
-    public StringBuilder build() {
+    public StringBuilder build() throws BuildException {
         String musidDataClassName = musicData.getClass().getName();
         musidDataClassName = musidDataClassName.replace("org.curtis.musicxml.", "");
 
@@ -46,6 +48,11 @@ public class MusicDataBuilder extends AbstractBuilder {
             Class builderClass = Class.forName(builderClassName);
             Method builderMethod = builderClass.getMethod(builderMethodName, musicData.getClass());
             return (StringBuilder)builderMethod.invoke(builderClass.newInstance(), musicData);
+        } catch (InvocationTargetException e) {
+            if (e.getCause() instanceof BuildException) {
+                // Note exception but continue anyway
+                System.err.println("Part " + PartBuilder.CURRENT_PART_ID + " MusicData exception: " + e.getMessage());
+            }
         } catch (Exception e) {
             // skip
         }

@@ -1,5 +1,6 @@
 package org.curtis.lilypond.util;
 
+import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.util.MathUtil;
 
@@ -11,18 +12,18 @@ public class TimeSignatureUtil {
 
     }
 
-    public static String getWholeMeasureRepresentation(TimeSignature timeSignature) {
+    public static String getWholeMeasureRepresentation(TimeSignature timeSignature) throws TimeSignatureException {
         return getWholeMeasureRepresentation(timeSignature.getBeats(), timeSignature.getBeatType());
     }
 
-    public static String getWholeMeasureRepresentation(String numerator, String denominator) {
+    public static String getWholeMeasureRepresentation(String numerator, String denominator) throws TimeSignatureException {
         BigDecimal numeratorValue = MathUtil.newBigDecimal(numerator);
         BigDecimal denominatorValue = MathUtil.newBigDecimal(denominator);
 
         return getWholeMeasureRepresentation(numeratorValue, denominatorValue);
     }
 
-    public static String getWholeMeasureRepresentation(BigDecimal numerator, BigDecimal denominator) {
+    public static String getWholeMeasureRepresentation(BigDecimal numerator, BigDecimal denominator) throws TimeSignatureException {
         BigDecimal totalBeats = getTotalBeats(numerator, denominator);
         BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeats);
 
@@ -33,7 +34,15 @@ public class TimeSignatureUtil {
             if(loopCount >= 5) break;
         }
 
-        String wholeMeasureNoteRepresentation = String.valueOf(representationValue.setScale(0, RoundingMode.HALF_UP).intValueExact());
+        int noteRepresentation = representationValue.setScale(0, RoundingMode.HALF_UP).intValueExact();
+
+        // If represenetation isn't a multiple of 2, or loop count greater than one, throw an exception
+        if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || loopCount > 1) {
+            throw new TimeSignatureException("Invalid whole measure representation");
+        }
+
+
+        String wholeMeasureNoteRepresentation = String.valueOf(noteRepresentation);
         for(int i = 1; i <= loopCount; i++) {
             wholeMeasureNoteRepresentation += ".";
         }

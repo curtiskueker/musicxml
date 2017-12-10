@@ -1,5 +1,7 @@
 package org.curtis.lilypond;
 
+import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Time;
@@ -48,11 +50,12 @@ public class MeasureBuilder extends AbstractBuilder {
         this.measure = measure;
     }
 
-    public StringBuilder build() {
+    public StringBuilder build() throws BuildException {
         List<MusicData> musicDataList = measure.getMusicDataList();
 
         append("% measure ");
         appendLine(measure.getNumber());
+        String exceptionStringPrefix = "Part " + PartBuilder.CURRENT_PART_ID + " Measure " + measure.getNumber() + ": ";
 
         // pre-processing loops
         //
@@ -133,10 +136,8 @@ public class MeasureBuilder extends AbstractBuilder {
             currentDivisions = PartBuilder.CURRENT_ATTRIBUTES.getDivisions();
         }
 
-        // TODO: throw an exception
         if(currentTimeSignature == null) {
-            System.err.println("CURRENT TIME SIGNATURE NOT FOUND");
-            return stringBuilder;
+            throw new BuildException(exceptionStringPrefix + "Current Time Signature not found");
         }
 
         // Calculate expected divisions in the measure
@@ -338,10 +339,17 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Partial measure
         if(measure.getImplicit()) {
-            append("\\partial ");
-            BigDecimal numerator = MathUtil.multiply(MathUtil.divide(totalDuration, expectedDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
-            BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
-            appendLine(TimeSignatureUtil.getWholeMeasureRepresentation(numerator, denominator));
+            String wholeMeasureRepresentation = null;
+            try {
+                BigDecimal numerator = MathUtil.multiply(MathUtil.divide(totalDuration, expectedDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
+                BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
+                wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation(numerator, denominator);
+
+                append("\\partial ");
+                appendLine(wholeMeasureRepresentation);
+            } catch (TimeSignatureException e) {
+                System.err.println(exceptionStringPrefix + "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
+            }
         }
 
         // Main data builder processing loop

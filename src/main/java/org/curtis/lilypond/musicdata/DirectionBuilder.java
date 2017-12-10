@@ -1,5 +1,6 @@
 package org.curtis.lilypond.musicdata;
 
+import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Print;
@@ -12,7 +13,7 @@ public class DirectionBuilder extends MusicDataBuilder {
 
     }
 
-    public StringBuilder buildDirection(Direction direction) {
+    public StringBuilder buildDirection(Direction direction) throws BuildException {
         List<DirectionType> directionTypes = direction.getDirectionTypes();
         for(DirectionType directionType : directionTypes) {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(directionType);
