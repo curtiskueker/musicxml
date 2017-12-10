@@ -287,10 +287,6 @@ public class NoteBuilder extends MusicDataBuilder {
             noteBuilder.clear();
             Note note = noteBuilder.getNote();
             append(noteBuilder.mainBuild().toString());
-
-            if(note.getBeginBeam()) {
-                append("[");
-            }
         }
 
         append(">");
@@ -306,7 +302,9 @@ public class NoteBuilder extends MusicDataBuilder {
 
         for (NoteBuilder noteBuilder : noteBuilders) {
             Note note = noteBuilder.getNote();
-            if(note.getEndBeam()) {
+            if(note.getBeginBeam()) {
+                append("[");
+            } else if(note.getEndBeam()) {
                 append("]");
             }
         }
