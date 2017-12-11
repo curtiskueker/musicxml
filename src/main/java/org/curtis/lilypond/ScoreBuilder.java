@@ -3,6 +3,7 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;
+import org.curtis.musicxml.score.PartItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
 
@@ -27,41 +28,37 @@ public class ScoreBuilder extends AbstractBuilder {
         // begin score
         appendLine("\\score {");
 
-        List<PartGroup> partGroups = score.getScoreHeader().getPartList().getPartGroups();
-        for (PartGroup partGroup : partGroups) {
-            // begin staff group
-            appendLine("\\new StaffGroup <<");
+        List<PartItem> partItems = score.getScoreHeader().getPartList().getPartItems();
+        if(partItems.isEmpty()) {
+            throw new BuildException("Score header part list not found");
+        }
 
-            // get score parts from the part groups list
-            for(ScorePart scorePart : partGroup.getScoreParts()) {
-                appendLine("\\new Staff");
+        boolean scorePartFirst = partItems.get(0) instanceof ScorePart;
 
-                // staff identifiers
-                appendLine("\\with {");
+        if(scorePartFirst) {
+            appendLine("<<");
+        }
 
-                append("instrumentName = #\"");
-                append(scorePart.getPartName().getPartName());
-                appendLine("\"");
+        for (PartItem partItem : partItems) {
+            if(partItem instanceof PartGroup) {
+                PartGroup partGroup = (PartGroup)partItem;
 
-                append("shortInstrumentName = #\"");
-                append(scorePart.getPartAbbreviation().getPartName());
-                appendLine("\"");
+                appendLine("\\new StaffGroup <<");
 
-                appendLine("}");
-
-                // individual parts
-                String partId = scorePart.getId();
-                for(Part part : score.getParts()) {
-                    if(partId.equals(part.getId())) {
-                        PartBuilder partBuilder = new PartBuilder(part);
-                        append(partBuilder.build().toString());
-
-                        break;
-                    }
+                for(ScorePart scorePart : partGroup.getScoreParts()) {
+                    buildPart(scorePart);
                 }
-            }
 
-            // end staff group
+                appendLine(">>");
+            } else if(partItem instanceof ScorePart) {
+                ScorePart scorePart = (ScorePart)partItem;
+                appendLine("<<");
+                buildPart(scorePart);
+                appendLine(">>");
+            }
+        }
+
+        if(scorePartFirst) {
             appendLine(">>");
         }
 
@@ -69,5 +66,33 @@ public class ScoreBuilder extends AbstractBuilder {
         appendLine("}");
 
         return stringBuilder;
+    }
+
+    private void buildPart(ScorePart scorePart) throws BuildException {
+        String partId = scorePart.getId();
+
+        appendLine("\\new Staff");
+
+        // staff identifiers
+        appendLine("\\with {");
+
+        append("instrumentName = #\"");
+        append(scorePart.getPartName().getPartName());
+        appendLine("\"");
+
+        append("shortInstrumentName = #\"");
+        append(scorePart.getPartAbbreviation().getPartName());
+        appendLine("\"");
+
+        appendLine("}");
+
+        for(Part part : score.getParts()) {
+            if(partId.equals(part.getId())) {
+                PartBuilder partBuilder = new PartBuilder(part);
+                append(partBuilder.build().toString());
+
+                return;
+            }
+        }
     }
 }

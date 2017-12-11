@@ -4,26 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartList {
-    private List<PartGroup> partGroups = new ArrayList<>();
-    private List<ScorePart> scoreParts = new ArrayList<>();
+    private List<PartItem> partItems = new ArrayList<>();
 
     public PartList() {
 
     }
 
-    public List<PartGroup> getPartGroups() {
-        return partGroups;
+    public List<PartItem> getPartItems() {
+        return partItems;
     }
 
-    public void setPartGroups(List<PartGroup> partGroups) {
-        this.partGroups = partGroups;
-    }
-
-    public List<ScorePart> getScoreParts() {
-        return scoreParts;
-    }
-
-    public void setScoreParts(List<ScorePart> scoreParts) {
-        this.scoreParts = scoreParts;
+    public void setPartItems(List<PartItem> partItems) {
+        this.partItems = partItems;
     }
 }

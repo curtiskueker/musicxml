@@ -27,7 +27,6 @@ public class PartListHandler extends AbstractHandler {
     public void handle(Element element) {
         List<Element> partListSubelements = XmlUtil.getChildElements(element);
         PartGroup currentPartGroup = null;
-        Boolean hasCurrentPartGroup = false;
         for(Element partListSubelement : partListSubelements) {
             String elementName = partListSubelement.getTagName();
             switch (elementName) {
@@ -35,7 +34,6 @@ public class PartListHandler extends AbstractHandler {
                     String type = partListSubelement.getAttribute("type");
                     if(type.equals("start")) {
                         currentPartGroup = new PartGroup();
-                        hasCurrentPartGroup = true;
 
                         currentPartGroup.setNumber(partListSubelement.getAttribute("number"));
 
@@ -51,8 +49,8 @@ public class PartListHandler extends AbstractHandler {
                         groupSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(partListSubelement));
                         currentPartGroup.setGroupSymbol(groupSymbol);
                     } else if(type.equals("stop")) {
-                        partList.getPartGroups().add(currentPartGroup);
-                        hasCurrentPartGroup = false;
+                        partList.getPartItems().add(currentPartGroup);
+                        currentPartGroup = null;
                     }
 
                     break;
@@ -91,11 +89,11 @@ public class PartListHandler extends AbstractHandler {
                         midiInstruments.add(midiInstrument);
                     }
 
-                    if(hasCurrentPartGroup) {
+                    if(currentPartGroup == null) {
+                        partList.getPartItems().add(scorePart);
+                    } else {
                         currentPartGroup.getScoreParts().add(scorePart);
                     }
-
-                    partList.getScoreParts().add(scorePart);
 
                     break;
             }
