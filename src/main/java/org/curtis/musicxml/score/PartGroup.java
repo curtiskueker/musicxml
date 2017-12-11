@@ -6,7 +6,7 @@ import org.curtis.musicxml.common.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartGroup {
+public class PartGroup extends PartItem {
     private GroupName groupName;
     private PartName groupNameDisplay;
     private GroupName groupAbbreviation;

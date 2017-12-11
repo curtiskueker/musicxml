@@ -12,7 +12,7 @@ public class ScoreHeader {
     private LinkAttributes opus;
     private String movementNumber;
     private String movementTitle;
-    private Identification identification = new Identification();
+    private Identification identification;
     private Defaults defaults;
     private List<Credit> credits = new ArrayList<>();
     private PartList partList = new PartList();

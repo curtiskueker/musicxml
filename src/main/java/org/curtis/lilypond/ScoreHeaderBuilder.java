@@ -94,11 +94,13 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
         }
 
         Identification identification = scoreHeader.getIdentification();
-        for (TypedText typedText : identification.getCreators()) {
-            if(typedText.getType().equals("composer")) {
-                append("composer = \"");
-                append(typedText.getValue());
-                append("\"");
+        if (identification != null) {
+            for (TypedText typedText : identification.getCreators()) {
+                if(typedText.getType().equals("composer")) {
+                    append("composer = \"");
+                    append(typedText.getValue());
+                    append("\"");
+                }
             }
         }
 

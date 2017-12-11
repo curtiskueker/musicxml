@@ -1,12 +1,13 @@
 package org.curtis.musicxml.layout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Appearance {
-    private List<LineWidth> lineWidths;
-    private List<NoteSize> noteSizes;
-    private List<Distance> distances;
-    private List<OtherAppearance> otherAppearances;
+    private List<LineWidth> lineWidths = new ArrayList<>();
+    private List<NoteSize> noteSizes = new ArrayList<>();
+    private List<Distance> distances = new ArrayList<>();
+    private List<OtherAppearance> otherAppearances = new ArrayList<>();
 
     public Appearance() {
 

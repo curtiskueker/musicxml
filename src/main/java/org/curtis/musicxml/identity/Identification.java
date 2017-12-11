@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Identification {
     private List<TypedText> creators = new ArrayList<>();
-    private List<TypedText> rightsList;
+    private List<TypedText> rightsList = new ArrayList<>();
     private List<Encoding> encodings = new ArrayList<>();
     private String source;
-    private List<TypedText> relations;
+    private List<TypedText> relations = new ArrayList<>();
     private Miscellaneous miscellaneous;
 
     public Identification() {

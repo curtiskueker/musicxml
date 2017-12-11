@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Credit {
-    private List<String> creditTypes;
+    private List<String> creditTypes = new ArrayList<>();
     private List<Link> links;
     private List<Bookmark> bookmarks;
     private Image creditImage;

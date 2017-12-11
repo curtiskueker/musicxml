@@ -2,13 +2,16 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.factory.FormattingFactory;
+import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.identity.Identification;
-import org.curtis.musicxml.identity.TypedText;
-import org.curtis.musicxml.identity.encoding.Encoding;
-import org.curtis.musicxml.identity.encoding.EncodingDate;
-import org.curtis.musicxml.identity.encoding.Software;
+import org.curtis.musicxml.layout.Appearance;
+import org.curtis.musicxml.layout.Distance;
 import org.curtis.musicxml.layout.Layout;
+import org.curtis.musicxml.layout.LineWidth;
+import org.curtis.musicxml.layout.NoteSize;
+import org.curtis.musicxml.layout.NoteSizeType;
+import org.curtis.musicxml.layout.OtherAppearance;
 import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
@@ -16,7 +19,6 @@ import org.curtis.musicxml.score.LyricFont;
 import org.curtis.musicxml.score.LyricLanguage;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.ScoreHeader;
-import org.curtis.util.DateUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -38,44 +40,19 @@ public class ScoreHeaderHandler extends AbstractHandler {
         for (Element subelement : subelements) {
             String subelementName = subelement.getTagName();
             switch (subelementName) {
+                case "work":
+                    scoreHeader.setWorkNumber(XmlUtil.getChildElementText(subelement, "work-number"));
+                    scoreHeader.setWorkTitle(XmlUtil.getChildElementText(subelement, "work-title"));
+                    break;
+                case "movement-number":
+                    scoreHeader.setMovementNumber(XmlUtil.getChildElementText(subelement, "movement-number"));
+                    break;
+                case "movement-title":
+                    scoreHeader.setMovementTitle(XmlUtil.getChildElementText(subelement, "movement-title"));
+                    break;
                 case "identification":
-                    Identification identification = scoreHeader.getIdentification();
-
-                    List<Element> identificationSubelements = XmlUtil.getChildElements(subelement);
-                    for(Element identificationSubelement : identificationSubelements) {
-                        String identificationSubelementName = identificationSubelement.getTagName();
-                        switch (identificationSubelementName) {
-                            case "creator":
-                                List<TypedText> creators = identification.getCreators();
-                                String creatorType = identificationSubelement.getAttribute("type");
-                                String creatorValue = XmlUtil.getElementText(identificationSubelement);
-
-                                TypedText typedText = new TypedText();
-                                typedText.setType(creatorType);
-                                typedText.setValue(creatorValue);
-
-                                creators.add(typedText);
-                                break;
-                            case "encoding":
-                                List<Element> encodingSubelements = XmlUtil.getChildElements(identificationSubelement);
-                                List<Encoding> encodings = identification.getEncodings();
-                                for(Element encodingSubelement : encodingSubelements) {
-                                    switch (encodingSubelement.getTagName()) {
-                                        case "encoding-date":
-                                            EncodingDate encodingDate = new EncodingDate();
-                                            encodingDate.setEncodingDate(DateUtil.parseDate(XmlUtil.getElementText(encodingSubelement)));
-                                            encodings.add(encodingDate);
-                                            break;
-                                        case "software":
-                                            Software software = new Software();
-                                            software.setSoftware(XmlUtil.getElementText(encodingSubelement));
-                                            encodings.add(software);
-                                            break;
-                                    }
-                                }
-                                break;
-                        }
-                    }
+                    Identification identification = IdentityFactory.newIdentification(subelement);
+                    scoreHeader.setIdentification(identification);
                     break;
                 case "defaults":
                     Defaults defaults = new Defaults();
@@ -94,6 +71,53 @@ public class ScoreHeaderHandler extends AbstractHandler {
                                 defaults.setScaling(scaling);
                                 break;
                             case "appearance":
+                                Appearance appearance = new Appearance();
+                                defaults.setAppearance(appearance);
+                                List<Element> appearanceSubelements = XmlUtil.getChildElements(defaultsSubelement);
+                                for(Element appearanceSubelement : appearanceSubelements) {
+                                    String appearanceSubelementName = appearanceSubelement.getTagName();
+                                    switch (appearanceSubelementName) {
+                                        case "line-width":
+                                            List<LineWidth> lineWidths = appearance.getLineWidths();
+                                            LineWidth lineWidth = new LineWidth();
+                                            lineWidth.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
+                                            lineWidth.setLineWidthType(appearanceSubelement.getAttribute("type"));
+                                            lineWidths.add(lineWidth);
+                                            break;
+                                        case "note-size":
+                                            List<NoteSize> noteSizes = appearance.getNoteSizes();
+                                            NoteSize noteSize = new NoteSize();
+                                            noteSize.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
+                                            String noteSizeType = appearanceSubelement.getAttribute("type");
+                                            switch (noteSizeType) {
+                                                case "cue":
+                                                    noteSize.setType(NoteSizeType.CUE);
+                                                    break;
+                                                case "grace":
+                                                    noteSize.setType(NoteSizeType.GRACE);
+                                                    break;
+                                                case "large":
+                                                    noteSize.setType(NoteSizeType.LARGE);
+                                                    break;
+                                            }
+                                            noteSizes.add(noteSize);
+                                            break;
+                                        case "distance":
+                                            List<Distance> distances = appearance.getDistances();
+                                            Distance distance = new Distance();
+                                            distance.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
+                                            distance.setType(appearanceSubelement.getAttribute("type"));
+                                            distances.add(distance);
+                                            break;
+                                        case "other-appearance":
+                                            List<OtherAppearance> otherAppearances = appearance.getOtherAppearances();
+                                            OtherAppearance otherAppearance = new OtherAppearance();
+                                            otherAppearance.setValue(XmlUtil.getElementText(appearanceSubelement));
+                                            otherAppearance.setType(appearanceSubelement.getAttribute("type"));
+                                            otherAppearances.add(otherAppearance);
+                                            break;
+                                    }
+                                }
                                 break;
                             case "music-font":
                                 defaults.setMusicFont(FormattingFactory.newFont(defaultsSubelement));
@@ -123,23 +147,30 @@ public class ScoreHeaderHandler extends AbstractHandler {
                     List<Credit> credits = scoreHeader.getCredits();
                     Credit credit = new Credit();
                     credit.setPage(StringUtil.getInteger(subelement.getAttribute("page")));
-
-                    List<FormattedText> creditWordsList = credit.getCreditWordsList();
-                    List<Element> creditWordsElements = XmlUtil.getChildElements(subelement, "credit-words");
-                    for(Element creditWordsElement : creditWordsElements) {
-                        FormattedText creditWords = FormattingFactory.newFormattedText(creditWordsElement);
-                        creditWordsList.add(creditWords);
+                    List<Element> creditSubelements = XmlUtil.getChildElements(subelement);
+                    for(Element creditSubelement : creditSubelements) {
+                        String creditSubelementName = creditSubelement.getTagName();
+                        switch (creditSubelementName) {
+                            case "credit-type":
+                                List<String> creditTypes = credit.getCreditTypes();
+                                creditTypes.add(XmlUtil.getElementText(creditSubelement));
+                                break;
+                            case "credit-image":
+                                break;
+                            case "credit-words":
+                                List<FormattedText> creditWordsList = credit.getCreditWordsList();
+                                creditWordsList.add(FormattingFactory.newFormattedText(creditSubelement));
+                                break;
+                        }
                     }
                     credits.add(credit);
                     break;
+                case "part-list":
+                    PartList partList = scoreHeader.getPartList();
+                    PartListHandler partListHandler = new PartListHandler(partList);
+                    partListHandler.handle(subelement);
+                    break;
             }
         }
-
-        // part list: required
-        // processed last
-        Element partListElement = XmlUtil.getChildElement(element, "part-list");
-        PartList partList = scoreHeader.getPartList();
-        PartListHandler partListHandler = new PartListHandler(partList);
-        partListHandler.handle(partListElement);
     }
 }

@@ -9,7 +9,7 @@ import org.curtis.musicxml.score.instrument.ScoreInstrument;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScorePart {
+public class ScorePart extends PartItem {
     private String id;
     private Identification identification;
     private PartName partName;
