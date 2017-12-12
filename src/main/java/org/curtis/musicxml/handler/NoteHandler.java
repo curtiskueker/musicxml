@@ -329,6 +329,8 @@ public class NoteHandler extends MusicDataHandler {
                     NotationHandler notationHandler = new NotationHandler(notationsList);
                     notationHandler.handle(noteSubelement);
                     break;
+                case "lyric":
+                    break;
             }
         }
 

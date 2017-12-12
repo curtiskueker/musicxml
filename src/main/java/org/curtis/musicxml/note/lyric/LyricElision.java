@@ -5,7 +5,7 @@ import org.curtis.musicxml.common.Connection;
 public class LyricElision {
     private TextFontColor elision;
     private Connection syllabic;
-    private TextElementData text;
+    private TextData text;
 
     public LyricElision() {
 
@@ -27,11 +27,11 @@ public class LyricElision {
         this.syllabic = syllabic;
     }
 
-    public TextElementData getText() {
+    public TextData getText() {
         return text;
     }
 
-    public void setText(TextElementData text) {
+    public void setText(TextData text) {
         this.text = text;
     }
 }

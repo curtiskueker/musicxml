@@ -6,7 +6,7 @@ import org.curtis.musicxml.common.TextDecoration;
 
 import java.math.BigDecimal;
 
-public class TextElementData {
+public class TextData {
     private String value;
     private Font font;
     private String color;
@@ -16,7 +16,7 @@ public class TextElementData {
     private String lang;
     private Location textDirection;
 
-    public TextElementData() {
+    public TextData() {
 
     }
 

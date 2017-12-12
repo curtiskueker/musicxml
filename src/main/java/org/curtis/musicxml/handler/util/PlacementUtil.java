@@ -27,6 +27,12 @@ public class PlacementUtil {
                 return Connection.DISCONTINUE;
             case "single":
                 return Connection.SINGLE;
+            case "begin":
+                return Connection.BEGIN;
+            case "end":
+                return Connection.END;
+            case "middle":
+                return Connection.MIDDLE;
             default:
                 return null;
         }
@@ -48,6 +54,10 @@ public class PlacementUtil {
                 return Location.CENTER;
             case "right":
                 return Location.RIGHT;
+            case "over":
+                return Location.OVER;
+            case "under":
+                return Location.UNDER;
             case "top":
                 return Location.TOP;
             case "middle":
@@ -56,6 +66,18 @@ public class PlacementUtil {
                 return Location.BOTTOM;
             case "baseline":
                 return Location.BASELINE;
+            case "up":
+                return Location.UP;
+            case "down":
+                return Location.DOWN;
+            case "ltr":
+                return Location.LTR;
+            case "rtl":
+                return Location.RTL;
+            case "lro":
+                return Location.LRO;
+            case "rlo":
+                return Location.RLO;
             default:
                 return null;
         }

@@ -2,7 +2,6 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
-import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.notation.Fermata;
@@ -10,8 +9,6 @@ import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
-import org.curtis.musicxml.note.notation.ornament.TrillMark;
-import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;

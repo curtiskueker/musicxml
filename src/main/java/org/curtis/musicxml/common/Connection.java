@@ -6,5 +6,8 @@ public enum Connection {
     CHANGE,
     CONTINUE,
     DISCONTINUE,
-    SINGLE
+    SINGLE,
+    BEGIN,
+    END,
+    MIDDLE
 }

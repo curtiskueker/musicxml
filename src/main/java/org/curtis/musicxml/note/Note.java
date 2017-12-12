@@ -35,7 +35,7 @@ public class Note extends MusicData {
     private Boolean isEndBeam = false;
     private List<Notations> notationsList = new ArrayList<>();
     private Connection tupletType;
-    private List<Lyric> lyrics;
+    private List<Lyric> lyrics = new ArrayList<>();
     private Play play;
     private XPosition xPosition;
     private Font font;
