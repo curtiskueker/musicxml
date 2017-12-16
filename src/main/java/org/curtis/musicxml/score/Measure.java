@@ -1,7 +1,5 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.musicxml.barline.Barline;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,17 +62,5 @@ public class Measure {
 
     public void setRepeatBlock(RepeatBlock repeatBlock) {
         this.repeatBlock = repeatBlock;
-    }
-
-    public List<Barline> getBarlines() {
-        List<Barline> barlines = new ArrayList<>();
-        for(MusicData musicData : musicDataList) {
-            if(musicData instanceof Barline) {
-                Barline barline = (Barline)musicData;
-                barlines.add(barline);
-            }
-        }
-
-        return barlines;
     }
 }

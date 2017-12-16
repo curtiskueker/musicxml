@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note.lyric;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextDecoration;
@@ -21,7 +22,7 @@ public class TextData {
     }
 
     public String getValue() {
-        return value;
+        return StringEscapeUtils.unescapeXml(value);
     }
 
     public void setValue(String value) {

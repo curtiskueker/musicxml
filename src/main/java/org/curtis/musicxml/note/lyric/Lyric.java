@@ -3,8 +3,9 @@ package org.curtis.musicxml.note.lyric;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.score.MusicData;
 
-public class Lyric {
+public class Lyric extends MusicData {
     private LyricItem lyricItem;
     private Boolean endLine;
     private Boolean endParagraph;
