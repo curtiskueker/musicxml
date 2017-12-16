@@ -34,6 +34,7 @@ public class LyricHandler extends AbstractHandler {
 
         if(lyricSubelements.isEmpty()) return;
 
+        // Handle the main subelements first
         Element lyricItemElement = lyricSubelements.get(0);
         String lyricItemElementName = lyricItemElement.getTagName();
         LyricItem lyricItem = null;
@@ -96,6 +97,7 @@ public class LyricHandler extends AbstractHandler {
                                 break;
                         }
                     }
+                    lyricElisions.add(lyricElision);
                 }
 
                 // Set the extend value
@@ -118,6 +120,7 @@ public class LyricHandler extends AbstractHandler {
         }
         lyric.setLyricItem(lyricItem);
 
+        // Handle the end elements separately
         for(Element lyricSubelement : lyricSubelements) {
             String lyricSubelementName = lyricSubelement.getTagName();
             switch (lyricSubelementName) {

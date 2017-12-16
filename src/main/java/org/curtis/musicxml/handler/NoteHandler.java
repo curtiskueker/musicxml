@@ -29,6 +29,7 @@ import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.XPosition;
 import org.curtis.musicxml.note.YPosition;
+import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.util.MathUtil;
@@ -330,6 +331,9 @@ public class NoteHandler extends MusicDataHandler {
                     notationHandler.handle(noteSubelement);
                     break;
                 case "lyric":
+                    List<Lyric> lyrics = note.getLyrics();
+                    LyricHandler lyricHandler = new LyricHandler(lyrics);
+                    lyricHandler.handle(noteSubelement);
                     break;
             }
         }

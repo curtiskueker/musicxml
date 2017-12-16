@@ -15,6 +15,8 @@ public class LyricFactory {
     }
 
     public static TextData newTextData(Element element) {
+        if(element == null) return null;
+
         TextData textData = new TextData();
         textData.setValue(XmlUtil.getElementText(element));
         textData.setFont(FormattingFactory.newFont(element));
@@ -29,6 +31,8 @@ public class LyricFactory {
     }
 
     public static TextDecoration newTextDecoration(Element element) {
+        if(element == null) return null;
+
         TextDecoration textDecoration = new TextDecoration();
         textDecoration.setUnderline(StringUtil.getInteger(element.getAttribute("underline")));
         textDecoration.setOverline(StringUtil.getInteger(element.getAttribute("overline")));
@@ -38,6 +42,8 @@ public class LyricFactory {
     }
 
     public static Extend newExtend(Element element) {
+        if(element == null) return null;
+
         Extend extend = new Extend();
         extend.setType(PlacementUtil.getConnection(element.getAttribute("type")));
         extend.setPrintStyle(FormattingFactory.newPrintStyle(element));
