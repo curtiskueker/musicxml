@@ -9,7 +9,6 @@ import org.curtis.musicxml.attributes.StaffDetails;
 import org.curtis.musicxml.attributes.StaffTuning;
 import org.curtis.musicxml.attributes.StaffType;
 import org.curtis.musicxml.attributes.time.Time;
-import org.curtis.musicxml.attributes.time.TimeSignature;
 import org.curtis.musicxml.attributes.Transpose;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.measure.BeatRepeat;
@@ -209,6 +208,7 @@ public class AttributesHandler extends MusicDataHandler {
                     directive.setLang(attributeSubelement.getAttribute("lang"));
                     break;
                 case "measure-style":
+                    List<MeasureStyle> measureStyles = attributes.getMeasureStyles();
                     MeasureStyle measureStyle = null;
                     List<Element> measureStyleSubelements = XmlUtil.getChildElements(attributeSubelement);
                     for(Element measureStyleSubelement : measureStyleSubelements) {
@@ -249,6 +249,7 @@ public class AttributesHandler extends MusicDataHandler {
                         measureStyle.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                         measureStyle.setFont(FormattingFactory.newFont(attributeSubelement));
                         measureStyle.setColor(attributeSubelement.getAttribute("color"));
+                        measureStyles.add(measureStyle);
                     }
                     break;
             }
