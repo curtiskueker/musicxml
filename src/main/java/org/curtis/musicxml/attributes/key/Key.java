@@ -1,11 +1,12 @@
 package org.curtis.musicxml.attributes.key;
 
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.score.MusicData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Key {
+public abstract class Key extends MusicData {
     private List<KeyOctave> keyOctaves = new ArrayList<>();
     private Integer number;
     private PrintStyle printStyle;
