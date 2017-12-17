@@ -8,8 +8,8 @@ import org.curtis.musicxml.attributes.ShowFrets;
 import org.curtis.musicxml.attributes.StaffDetails;
 import org.curtis.musicxml.attributes.StaffTuning;
 import org.curtis.musicxml.attributes.StaffType;
-import org.curtis.musicxml.attributes.Time;
-import org.curtis.musicxml.attributes.TimeSignature;
+import org.curtis.musicxml.attributes.time.Time;
+import org.curtis.musicxml.attributes.time.TimeSignature;
 import org.curtis.musicxml.attributes.Transpose;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.measure.BeatRepeat;
@@ -54,13 +54,8 @@ public class AttributesHandler extends MusicDataHandler {
                     keys.add(key);
                     break;
                 case "time":
-                    // TODO: multiple time-signatures
-                    // TODO: interchangeable time signature
                     List<Time> timeList = attributes.getTimeList();
-                    Time time = new Time();
-                    List<TimeSignature> timeSignatures = time.getTimeSignatures();
-                    TimeSignature timeSignature = AttributesFactory.newTimeSignature(attributeSubelement);
-                    timeSignatures.add(timeSignature);
+                    Time time = AttributesFactory.newTime(attributeSubelement);
                     time.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                     time.setSymbol(AttributesFactory.newTimeSymbol(attributeSubelement));
                     time.setSeparator(AttributesFactory.newTimeSeparator(attributeSubelement));

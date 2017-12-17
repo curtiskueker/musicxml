@@ -2,6 +2,7 @@ package org.curtis.musicxml.attributes;
 
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.measure.MeasureStyle;
+import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.PartSymbol;

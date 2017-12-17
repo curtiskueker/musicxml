@@ -1,6 +1,5 @@
 package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.musicxml.common.Connection;
@@ -137,7 +136,7 @@ public class NoteBuilder extends MusicDataBuilder {
             Boolean measure = rest.getMeasure();
             if(measure || noteType == null) {
                 try {
-                    String wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation(PartBuilder.getCurrentTimeSignature());
+                    String wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation();
                     append("R");
                     append(wholeMeasureRepresentation);
                 } catch (TimeSignatureException e) {

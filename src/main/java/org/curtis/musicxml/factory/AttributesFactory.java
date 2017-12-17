@@ -1,8 +1,13 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.attributes.TimeSeparator;
-import org.curtis.musicxml.attributes.TimeSignature;
-import org.curtis.musicxml.attributes.TimeSymbol;
+import org.curtis.musicxml.attributes.time.Interchangeable;
+import org.curtis.musicxml.attributes.time.SenzaMisura;
+import org.curtis.musicxml.attributes.time.Time;
+import org.curtis.musicxml.attributes.time.TimeRelation;
+import org.curtis.musicxml.attributes.time.TimeSeparator;
+import org.curtis.musicxml.attributes.time.TimeSignature;
+import org.curtis.musicxml.attributes.time.TimeSignatureType;
+import org.curtis.musicxml.attributes.time.TimeSymbol;
 import org.curtis.musicxml.attributes.Tuning;
 import org.curtis.musicxml.attributes.key.Cancel;
 import org.curtis.musicxml.attributes.key.CancelLocation;
@@ -86,12 +91,67 @@ public class AttributesFactory {
         return nonTraditionalKey;
     }
 
-    public static TimeSignature newTimeSignature(Element element) {
+    public static Time newTime(Element element) {
         if(element == null) return null;
 
+        Element timeSignatureElement = XmlUtil.getChildElement(element, "beats");
+        Element senzaMisuraElement = XmlUtil.getChildElement(element, "senza-misura");
+        if (timeSignatureElement != null) return newTimeSignature(element);
+        else if(senzaMisuraElement != null) {
+            SenzaMisura senzaMisura = new SenzaMisura();
+            senzaMisura.setValue(XmlUtil.getElementText(senzaMisuraElement));
+            return senzaMisura;
+        }
+        else return null;
+    }
+
+    private static TimeSignature newTimeSignature(Element element) {
         TimeSignature timeSignature = new TimeSignature();
-        timeSignature.setBeats(XmlUtil.getChildElementText(element, "beats"));
-        timeSignature.setBeatType(XmlUtil.getChildElementText(element, "beat-type"));
+        List<TimeSignatureType> timeSignatureList = timeSignature.getTimeSignatureList();
+        List<Element> timeSubelements = XmlUtil.getChildElements(element);
+        TimeSignatureType timeSignatureType = new TimeSignatureType();
+        for(Element timeSubelement : timeSubelements) {
+            String timeSubelementName = timeSubelement.getTagName();
+            switch (timeSubelementName) {
+                case "beats":
+                    timeSignatureType = new TimeSignatureType();
+                    timeSignatureList.add(timeSignatureType);
+                    timeSignatureType.setBeats(XmlUtil.getElementText(timeSubelement));
+                    break;
+                case "beat-type":
+                    timeSignatureType.setBeatType(XmlUtil.getElementText(timeSubelement));
+                    break;
+                case "interchangeable":
+                    Interchangeable interchangeable = new Interchangeable();
+                    String timeRelation = XmlUtil.getChildElementText(timeSubelement, "time-relation");
+                    if(StringUtil.isNotEmpty(timeRelation)) {
+                        switch (timeRelation) {
+                            case "parentheses":
+                                interchangeable.setTimeRelation(TimeRelation.PARENTHESES);
+                                break;
+                            case "bracket":
+                                interchangeable.setTimeRelation(TimeRelation.BRACKET);
+                                break;
+                            case "equals":
+                                interchangeable.setTimeRelation(TimeRelation.EQUALS);
+                                break;
+                            case "slash":
+                                interchangeable.setTimeRelation(TimeRelation.SLASH);
+                                break;
+                            case "space":
+                                interchangeable.setTimeRelation(TimeRelation.SPACE);
+                                break;
+                            case "hyphen":
+                                interchangeable.setTimeRelation(TimeRelation.HYPHEN);
+                                break;
+                        }
+                    }
+                    interchangeable.setTimeSignature(newTimeSignature(timeSubelement));
+                    interchangeable.setSymbol(AttributesFactory.newTimeSymbol(timeSubelement));
+                    interchangeable.setSeparator(AttributesFactory.newTimeSeparator(timeSubelement));
+                    break;
+            }
+        }
 
         return timeSignature;
     }
@@ -104,7 +164,7 @@ public class AttributesFactory {
 
         switch (symbol) {
             case "common":
-            return TimeSymbol.COMMON;
+                return TimeSymbol.COMMON;
             case "cut":
                 return TimeSymbol.CUT;
             case "single-number":
@@ -128,7 +188,7 @@ public class AttributesFactory {
 
         switch (separator) {
             case "none":
-            return TimeSeparator.NONE;
+                return TimeSeparator.NONE;
             case "horizontal":
                 return TimeSeparator.HORIZONTAL;
             case "diagonal":

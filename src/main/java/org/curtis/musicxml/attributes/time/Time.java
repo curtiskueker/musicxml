@@ -1,47 +1,14 @@
-package org.curtis.musicxml.attributes;
+package org.curtis.musicxml.attributes.time;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.score.MusicData;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Time {
-    private List<TimeSignature> timeSignatures = new ArrayList<>();
-    private Interchangeable interchangeable;
-    private String senzaMisura;
+public abstract class Time extends MusicData {
     private Integer number;
     private TimeSymbol symbol;
     private TimeSeparator separator;
     private PrintStyleAlign printStyleAlign;
     private Boolean printObject;
-
-    public Time() {
-
-    }
-
-    public List<TimeSignature> getTimeSignatures() {
-        return timeSignatures;
-    }
-
-    public void setTimeSignatures(List<TimeSignature> timeSignatures) {
-        this.timeSignatures = timeSignatures;
-    }
-
-    public Interchangeable getInterchangeable() {
-        return interchangeable;
-    }
-
-    public void setInterchangeable(Interchangeable interchangeable) {
-        this.interchangeable = interchangeable;
-    }
-
-    public String getSenzaMisura() {
-        return senzaMisura;
-    }
-
-    public void setSenzaMisura(String senzaMisura) {
-        this.senzaMisura = senzaMisura;
-    }
 
     public Integer getNumber() {
         return number;

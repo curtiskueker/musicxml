@@ -1,10 +1,10 @@
-package org.curtis.musicxml.attributes;
+package org.curtis.musicxml.attributes.time;
 
-public class TimeSignature {
+public class TimeSignatureType {
     private String beats;
     private String beatType;
 
-    public TimeSignature() {
+    public TimeSignatureType() {
 
     }
 

@@ -5,8 +5,7 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.attributes.ClefSign;
-import org.curtis.musicxml.attributes.Time;
-import org.curtis.musicxml.attributes.TimeSignature;
+import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.attributes.key.Key;
 
 import java.util.List;
@@ -28,13 +27,8 @@ public class AttributesBuilder extends MusicDataBuilder {
 
         List<Time> timeList = attributes.getTimeList();
         for(Time time : timeList) {
-            List<TimeSignature> timeSignatures = time.getTimeSignatures();
-            for(TimeSignature timeSignature : timeSignatures) {
-                append("\\time ");
-                append(timeSignature.getBeats());
-                append("/");
-                appendLine(timeSignature.getBeatType());
-            }
+            MusicDataBuilder timeBuilder = new MusicDataBuilder(time);
+            append(timeBuilder.build().toString());
         }
         if(!timeList.isEmpty()) {
             PartBuilder.CURRENT_ATTRIBUTES.setTimeList(timeList);

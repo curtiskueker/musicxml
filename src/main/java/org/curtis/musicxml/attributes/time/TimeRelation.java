@@ -1,4 +1,4 @@
-package org.curtis.musicxml.attributes;
+package org.curtis.musicxml.attributes.time;
 
 public enum TimeRelation {
     PARENTHESES,

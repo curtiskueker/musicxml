@@ -4,8 +4,7 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.attributes.Attributes;
-import org.curtis.musicxml.attributes.Time;
-import org.curtis.musicxml.attributes.TimeSignature;
+import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.common.Connection;
@@ -63,7 +62,7 @@ public class MeasureBuilder extends AbstractBuilder {
         //
         // Go through Notes and mark begins and ends of chords and tuplets
         // these are grouped into their own builder calls
-        TimeSignature currentTimeSignature = null;
+        TimeSignatureType currentTimeSignature = null;
         BigDecimal currentDivisions = null;
         for(MusicData musicData : musicDataList) {
             if(musicData instanceof Note) {
@@ -111,13 +110,7 @@ public class MeasureBuilder extends AbstractBuilder {
             } else if(musicData instanceof Attributes) {
                 Attributes attributes = (Attributes)musicData;
                 currentDivisions = attributes.getDivisions();
-                List<Time> timeList = attributes.getTimeList();
-                for(Time time : timeList) {
-                    List<TimeSignature> timeSignatures = time.getTimeSignatures();
-                    if(!timeSignatures.isEmpty()) {
-                        currentTimeSignature = timeSignatures.get(0);
-                    }
-                }
+                currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature(attributes.getTimeList());
             }
         }
 
@@ -128,13 +121,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Attributes not found in current measure: get from the current attributes value
         if(currentTimeSignature == null) {
-            List<Time> timeList = PartBuilder.CURRENT_ATTRIBUTES.getTimeList();
-            for (Time time : timeList) {
-                List<TimeSignature> timeSignatures = time.getTimeSignatures();
-                if(!timeSignatures.isEmpty()) {
-                    currentTimeSignature = timeSignatures.get(0);
-                }
-            }
+            currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature(PartBuilder.CURRENT_ATTRIBUTES.getTimeList());
         }
         if(currentDivisions == null) {
             currentDivisions = PartBuilder.CURRENT_ATTRIBUTES.getDivisions();
@@ -347,11 +334,10 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Partial measure
         if(measure.getImplicit()) {
-            String wholeMeasureRepresentation = null;
             try {
                 BigDecimal numerator = MathUtil.multiply(MathUtil.divide(totalDuration, expectedDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
                 BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
-                wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation(numerator, denominator);
+                String wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation(numerator, denominator);
 
                 append("\\partial ");
                 appendLine(wholeMeasureRepresentation);

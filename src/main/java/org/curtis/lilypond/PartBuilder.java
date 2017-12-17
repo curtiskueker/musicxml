@@ -3,8 +3,6 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.attributes.Attributes;
-import org.curtis.musicxml.attributes.Time;
-import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
@@ -35,18 +33,6 @@ public class PartBuilder extends AbstractBuilder {
     public PartBuilder(Part part) {
         this.part = part;
         CURRENT_PART_ID = part.getId();
-    }
-
-    public static TimeSignature getCurrentTimeSignature() {
-        if(CURRENT_ATTRIBUTES == null) return null;
-
-        List<Time> timeList = CURRENT_ATTRIBUTES.getTimeList();
-        for(Time time : timeList) {
-            List<TimeSignature> timeSignatures = time.getTimeSignatures();
-            if(!timeSignatures.isEmpty()) return timeSignatures.get(0);
-        }
-
-        return null;
     }
 
     public StringBuilder build() throws BuildException {

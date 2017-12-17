@@ -1,18 +1,24 @@
 package org.curtis.lilypond.util;
 
+import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.TimeSignatureException;
-import org.curtis.musicxml.attributes.TimeSignature;
+import org.curtis.musicxml.attributes.time.Time;
+import org.curtis.musicxml.attributes.time.TimeSignature;
+import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 public class TimeSignatureUtil {
     private TimeSignatureUtil() {
 
     }
 
-    public static String getWholeMeasureRepresentation(TimeSignature timeSignature) throws TimeSignatureException {
+    public static String getWholeMeasureRepresentation() throws TimeSignatureException {
+        TimeSignatureType timeSignature = getCurrentTimeSignature(PartBuilder.CURRENT_ATTRIBUTES.getTimeList());
+        if(timeSignature == null) return "";
         return getWholeMeasureRepresentation(timeSignature.getBeats(), timeSignature.getBeatType());
     }
 
@@ -65,5 +71,19 @@ public class TimeSignatureUtil {
     public static BigDecimal getTotalBeats(BigDecimal numerator, BigDecimal denominator) {
         // Calculates number of quarter note beats in a measure
         return MathUtil.divide(MathUtil.multiply(MathUtil.newBigDecimal(4), numerator), denominator);
+    }
+
+    public static TimeSignatureType getCurrentTimeSignature(List<Time> timeList) {
+        for(Time time : timeList) {
+            if (time instanceof TimeSignature) {
+                TimeSignature timeSignature = (TimeSignature)time;
+                List<TimeSignatureType> timeSignatures = timeSignature.getTimeSignatureList();
+                if(!timeSignatures.isEmpty()) {
+                    return timeSignatures.get(0);
+                }
+            }
+        }
+
+        return null;
     }
 }

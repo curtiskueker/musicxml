@@ -1,10 +1,10 @@
-package org.curtis.musicxml.attributes;
+package org.curtis.musicxml.attributes.time;
 
 import java.util.List;
 
 public class Interchangeable {
     private TimeRelation timeRelation;
-    private List<TimeSignature> timeSignatures;
+    private TimeSignature timeSignature;
     private TimeSymbol symbol;
     private TimeSeparator separator;
 
@@ -20,12 +20,12 @@ public class Interchangeable {
         this.timeRelation = timeRelation;
     }
 
-    public List<TimeSignature> getTimeSignatures() {
-        return timeSignatures;
+    public TimeSignature getTimeSignature() {
+        return timeSignature;
     }
 
-    public void setTimeSignatures(List<TimeSignature> timeSignatures) {
-        this.timeSignatures = timeSignatures;
+    public void setTimeSignature(TimeSignature timeSignature) {
+        this.timeSignature = timeSignature;
     }
 
     public TimeSymbol getSymbol() {
