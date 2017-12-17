@@ -12,7 +12,6 @@ import org.curtis.musicxml.attributes.Time;
 import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.attributes.Transpose;
 import org.curtis.musicxml.attributes.key.Key;
-import org.curtis.musicxml.attributes.key.TraditionalKey;
 import org.curtis.musicxml.attributes.measure.BeatRepeat;
 import org.curtis.musicxml.attributes.measure.MeasureRepeat;
 import org.curtis.musicxml.attributes.measure.MeasureStyle;
@@ -47,13 +46,8 @@ public class AttributesHandler extends MusicDataHandler {
                     attributes.setDivisions(new BigDecimal(XmlUtil.getElementText(attributeSubelement)));
                     break;
                 case "key":
-                    // TODO: non-traditional key handling
                     List<Key> keys = attributes.getKeys();
-                    Key key = new Key();
-                    TraditionalKey traditionalKey = new TraditionalKey();
-                    traditionalKey.setFifths(StringUtil.getInteger(XmlUtil.getChildElementText(attributeSubelement, "fifths")));
-                    traditionalKey.setMode(XmlUtil.getChildElementText(attributeSubelement, "mode"));
-                    key.setTraditionalKey(traditionalKey);
+                    Key key = AttributesFactory.newKey(attributeSubelement);
                     key.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                     key.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
                     key.setPrintObject(TypeUtil.getYesNo(attributeSubelement.getAttribute("print-object")));

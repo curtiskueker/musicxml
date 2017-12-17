@@ -1,5 +1,7 @@
 package org.curtis.musicxml.common;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 public class FormattedText {
     private String value;
     private TextFormatting textFormatting;
@@ -9,7 +11,7 @@ public class FormattedText {
     }
 
     public String getValue() {
-        return value;
+        return StringEscapeUtils.unescapeXml(value);
     }
 
     public void setValue(String value) {

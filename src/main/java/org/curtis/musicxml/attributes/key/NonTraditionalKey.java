@@ -1,40 +1,20 @@
 package org.curtis.musicxml.attributes.key;
 
-import org.curtis.musicxml.note.AccidentalType;
-import org.curtis.musicxml.note.Step;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.math.BigDecimal;
-
-public class NonTraditionalKey {
-    private Step keyStep;
-    private BigDecimal keyAlter;
-    private AccidentalType keyAccidental;
+public class NonTraditionalKey extends Key {
+    private List<NonTraditionalKeyType> nonTraditionalKeyList = new ArrayList<>();
 
     public NonTraditionalKey() {
 
     }
 
-    public Step getKeyStep() {
-        return keyStep;
+    public List<NonTraditionalKeyType> getNonTraditionalKeyList() {
+        return nonTraditionalKeyList;
     }
 
-    public void setKeyStep(Step keyStep) {
-        this.keyStep = keyStep;
-    }
-
-    public BigDecimal getKeyAlter() {
-        return keyAlter;
-    }
-
-    public void setKeyAlter(BigDecimal keyAlter) {
-        this.keyAlter = keyAlter;
-    }
-
-    public AccidentalType getKeyAccidental() {
-        return keyAccidental;
-    }
-
-    public void setKeyAccidental(AccidentalType keyAccidental) {
-        this.keyAccidental = keyAccidental;
+    public void setNonTraditionalKeyList(List<NonTraditionalKeyType> nonTraditionalKeyList) {
+        this.nonTraditionalKeyList = nonTraditionalKeyList;
     }
 }

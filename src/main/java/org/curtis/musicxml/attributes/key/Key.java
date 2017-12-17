@@ -2,35 +2,14 @@ package org.curtis.musicxml.attributes.key;
 
 import org.curtis.musicxml.common.PrintStyle;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Key {
-    private TraditionalKey traditionalKey;
-    private List<NonTraditionalKey> nonTraditionalKeys;
-    private List<KeyOctave> keyOctaves;
+public abstract class Key {
+    private List<KeyOctave> keyOctaves = new ArrayList<>();
     private Integer number;
     private PrintStyle printStyle;
     private Boolean printObject;
-
-    public Key() {
-
-    }
-
-    public TraditionalKey getTraditionalKey() {
-        return traditionalKey;
-    }
-
-    public void setTraditionalKey(TraditionalKey traditionalKey) {
-        this.traditionalKey = traditionalKey;
-    }
-
-    public List<NonTraditionalKey> getNonTraditionalKeys() {
-        return nonTraditionalKeys;
-    }
-
-    public void setNonTraditionalKeys(List<NonTraditionalKey> nonTraditionalKeys) {
-        this.nonTraditionalKeys = nonTraditionalKeys;
-    }
 
     public List<KeyOctave> getKeyOctaves() {
         return keyOctaves;

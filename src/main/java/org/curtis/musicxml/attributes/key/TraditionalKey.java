@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.key;
 
-public class TraditionalKey {
+public class TraditionalKey extends Key {
     private Cancel cancel;
     private Integer fifths;
     private String mode;

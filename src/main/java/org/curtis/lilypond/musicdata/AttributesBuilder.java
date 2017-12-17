@@ -56,8 +56,8 @@ public class AttributesBuilder extends MusicDataBuilder {
 
         List<Key> keys = attributes.getKeys();
         for(Key key : keys) {
-            TraditionalKey traditionalKey = key.getTraditionalKey();
-            if(traditionalKey != null) {
+            if(key instanceof TraditionalKey) {
+                TraditionalKey traditionalKey = (TraditionalKey)key;
                 append("\\key ");
 
                 String mode = traditionalKey.getMode();

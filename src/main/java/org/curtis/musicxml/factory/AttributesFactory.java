@@ -4,6 +4,12 @@ import org.curtis.musicxml.attributes.TimeSeparator;
 import org.curtis.musicxml.attributes.TimeSignature;
 import org.curtis.musicxml.attributes.TimeSymbol;
 import org.curtis.musicxml.attributes.Tuning;
+import org.curtis.musicxml.attributes.key.Cancel;
+import org.curtis.musicxml.attributes.key.CancelLocation;
+import org.curtis.musicxml.attributes.key.Key;
+import org.curtis.musicxml.attributes.key.NonTraditionalKey;
+import org.curtis.musicxml.attributes.key.NonTraditionalKeyType;
+import org.curtis.musicxml.attributes.key.TraditionalKey;
 import org.curtis.musicxml.attributes.measure.SlashGroup;
 import org.curtis.musicxml.score.GroupSymbolType;
 import org.curtis.util.MathUtil;
@@ -16,6 +22,68 @@ import java.util.List;
 public class AttributesFactory {
     private AttributesFactory() {
 
+    }
+
+    public static Key newKey(Element element) {
+        if(element == null) return null;
+
+        Element fifthsElement = XmlUtil.getChildElement(element, "fifths");
+        Element keyStepElement = XmlUtil.getChildElement(element, "key-step");
+        if (fifthsElement != null) return newTraditionalKey(element);
+        else if (keyStepElement != null) return newNonTraditionalKey(element);
+        else return null;
+    }
+
+    private static TraditionalKey newTraditionalKey(Element element) {
+        TraditionalKey traditionalKey = new TraditionalKey();
+        Element cancelElement = XmlUtil.getChildElement(element, "cancel");
+        if(cancelElement != null) {
+            Cancel cancel = new Cancel();
+            cancel.setFifths(StringUtil.getInteger(XmlUtil.getElementText(cancelElement)));
+            String location = cancelElement.getAttribute("location");
+            if(StringUtil.isNotEmpty(location)) {
+                switch (location) {
+                    case "left":
+                        cancel.setLocation(CancelLocation.LEFT);
+                        break;
+                    case "right":
+                        cancel.setLocation(CancelLocation.RIGHT);
+                        break;
+                    case "before-barline":
+                        cancel.setLocation(CancelLocation.BEFORE_BARLINE);
+                        break;
+                }
+            }
+        }
+        traditionalKey.setFifths(StringUtil.getInteger(XmlUtil.getChildElementText(element, "fifths")));
+        traditionalKey.setMode(XmlUtil.getChildElementText(element, "mode"));
+
+        return traditionalKey;
+    }
+
+    private static NonTraditionalKey newNonTraditionalKey(Element element) {
+        NonTraditionalKey nonTraditionalKey = new NonTraditionalKey();
+        List<NonTraditionalKeyType> nonTraditionalKeyList = nonTraditionalKey.getNonTraditionalKeyList();
+        List<Element> nonTraditionalKeyElements = XmlUtil.getChildElements(element);
+        NonTraditionalKeyType nonTraditionalKeyType = new NonTraditionalKeyType();
+        for(Element nonTraditionalKeyElement : nonTraditionalKeyElements) {
+            String nonTraditionalKeyElementName = nonTraditionalKeyElement.getTagName();
+            switch (nonTraditionalKeyElementName) {
+                case "key-step":
+                    nonTraditionalKeyType = new NonTraditionalKeyType();
+                    nonTraditionalKeyType.setKeyStep(NoteFactory.newStep(nonTraditionalKeyElement));
+                    nonTraditionalKeyList.add(nonTraditionalKeyType);
+                    break;
+                case "key-alter":
+                    nonTraditionalKeyType.setKeyAlter(MathUtil.newBigDecimal(XmlUtil.getElementText(nonTraditionalKeyElement)));
+                    break;
+                case "key-accidental":
+                    nonTraditionalKeyType.setKeyAccidental(NoteFactory.newAccidentalType(nonTraditionalKeyElement));
+                    break;
+            }
+        }
+
+        return nonTraditionalKey;
     }
 
     public static TimeSignature newTimeSignature(Element element) {
