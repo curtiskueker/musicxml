@@ -58,16 +58,16 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // pre-processing loops
         //
-        // Get time signature and divisions from Attributes found in this measure
+        // Set the current attributes to any Attributes object found before the first note in the measure
         //
         // Go through Notes and mark begins and ends of chords and tuplets
         // these are grouped into their own builder calls
-        TimeSignatureType currentTimeSignature = null;
-        BigDecimal currentDivisions = null;
+        boolean noteFound = false;
         for(MusicData musicData : musicDataList) {
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
+                noteFound = true;
 
                 if(!currentNote.getPrintout().getPrintObject() || currentNote.getCue()) {
                     continue;
@@ -109,8 +109,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Attributes) {
                 Attributes attributes = (Attributes)musicData;
-                currentDivisions = attributes.getDivisions();
-                currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature(attributes.getTimeList());
+                if(!noteFound) PartBuilder.CURRENT_ATTRIBUTES = attributes;
             }
         }
 
@@ -119,21 +118,14 @@ public class MeasureBuilder extends AbstractBuilder {
             previousNote.getFullNote().setChordType(Connection.STOP);
         }
 
-        // Attributes not found in current measure: get from the current attributes value
-        if(currentTimeSignature == null) {
-            currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature(PartBuilder.CURRENT_ATTRIBUTES.getTimeList());
-        }
-        if(currentDivisions == null) {
-            currentDivisions = PartBuilder.CURRENT_ATTRIBUTES.getDivisions();
-        }
-
-        if(currentTimeSignature == null) {
-            throw new BuildException(exceptionStringPrefix + "Current Time Signature not found");
+        if(PartBuilder.CURRENT_ATTRIBUTES == null) {
+            throw new BuildException(exceptionStringPrefix + "Current Attributes not found");
         }
 
         // Calculate expected divisions in the measure
+        TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature(PartBuilder.CURRENT_ATTRIBUTES.getTimeList());
         BigDecimal totalBeats = TimeSignatureUtil.getTotalBeats(currentTimeSignature.getBeats(), currentTimeSignature.getBeatType());
-        BigDecimal expectedDuration = MathUtil.multiply(currentDivisions, totalBeats);
+        BigDecimal expectedDuration = MathUtil.multiply(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), totalBeats);
         BigDecimal totalDuration = MathUtil.ZERO;
 
         // create data builder list for processing
