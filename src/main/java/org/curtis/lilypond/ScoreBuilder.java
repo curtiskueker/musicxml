@@ -1,6 +1,9 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.score.Measure;
+import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartItem;
@@ -71,6 +74,33 @@ public class ScoreBuilder extends AbstractBuilder {
     private void buildPart(ScorePart scorePart) throws BuildException {
         String partId = scorePart.getId();
 
+        for(Part part : score.getParts()) {
+            if(partId.equals(part.getId())) {
+                // test for multi-staff part
+                List<Measure> measures = part.getMeasures();
+                if(measures.isEmpty()) {
+                    throw new BuildException("Part " + part.getId() + " has no measures");
+                }
+
+                Measure measure = measures.get(0);
+                for(MusicData musicData : measure.getMusicDataList()) {
+                    if(musicData instanceof Attributes) {
+                        Attributes attributes = (Attributes)musicData;
+                        Integer staves = attributes.getStaves();
+                        if(staves > 1) {
+                            buildGrandStaffPart(scorePart, part);
+                            return;
+                        }
+                    }
+                }
+
+                buildSingleStaffPart(scorePart, part);
+                return;
+            }
+        }
+    }
+
+    private void buildSingleStaffPart(ScorePart scorePart, Part part) throws BuildException {
         appendLine("\\new Staff");
 
         // staff identifiers
@@ -86,13 +116,24 @@ public class ScoreBuilder extends AbstractBuilder {
 
         appendLine("}");
 
-        for(Part part : score.getParts()) {
-            if(partId.equals(part.getId())) {
-                PartBuilder partBuilder = new PartBuilder(part);
-                append(partBuilder.build().toString());
+        PartBuilder partBuilder = new PartBuilder(part);
+        append(partBuilder.build().toString());
+    }
 
-                return;
-            }
-        }
+    private void buildGrandStaffPart(ScorePart scorePart, Part part) throws BuildException {
+        appendLine("\\new GrandStaff <<");
+
+        append("\\set GrandStaff.instrumentName = #\"");
+        append(scorePart.getPartName().getPartName());
+        appendLine("\"");
+
+        append("\\set GrandStaff.shortInstrumentName = #\"");
+        append(scorePart.getPartAbbreviation().getPartName());
+        appendLine("\"");
+
+        PartBuilder partBuilder = new PartBuilder(part);
+        append(partBuilder.build().toString());
+
+        appendLine(">>");
     }
 }

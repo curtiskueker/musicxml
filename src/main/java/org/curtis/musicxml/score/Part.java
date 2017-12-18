@@ -6,6 +6,7 @@ import java.util.List;
 public class Part {
     private String id;
     private List<Measure> measures = new ArrayList<>();
+    private Integer staffNumber;
 
     public Part() {
 
@@ -25,5 +26,13 @@ public class Part {
 
     public void setMeasures(List<Measure> measures) {
         this.measures = measures;
+    }
+
+    public Integer getStaffNumber() {
+        return staffNumber;
+    }
+
+    public void setStaffNumber(Integer staffNumber) {
+        this.staffNumber = staffNumber;
     }
 }
