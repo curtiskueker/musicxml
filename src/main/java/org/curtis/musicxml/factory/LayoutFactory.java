@@ -6,6 +6,7 @@ import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.layout.StaffLayout;
+import org.curtis.musicxml.layout.SystemDividers;
 import org.curtis.musicxml.layout.SystemLayout;
 import org.curtis.musicxml.layout.SystemMargins;
 import org.curtis.util.MathUtil;
@@ -77,6 +78,13 @@ public class LayoutFactory {
                     systemLayout.setSystemDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(layoutSubelement, "system-distance")));
                     systemLayout.setTopSystemDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(layoutSubelement, "top-system-distance")));
 
+                    Element systemDividersElement = XmlUtil.getChildElement(layoutSubelement, "system-dividers");
+                    if(systemDividersElement != null) {
+                        SystemDividers systemDividers = new SystemDividers();
+                        systemDividers.setLeftDivider(FormattingFactory.newPrintObjectStyleAlign(XmlUtil.getChildElement(layoutSubelement, "left-divider")));
+                        systemDividers.setRightDivider(FormattingFactory.newPrintObjectStyleAlign(XmlUtil.getChildElement(layoutSubelement, "right-divider")));
+                        systemLayout.setSystemDividers(systemDividers);
+                    }
                     layout.setSystemLayout(systemLayout);
                     break;
                 case "staff-layout":

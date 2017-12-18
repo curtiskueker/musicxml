@@ -15,6 +15,7 @@ import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.layout.PrintObjectStyleAlign;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -82,6 +83,16 @@ public class FormattingFactory {
         printStyle.setColor(printStyleElement.getAttribute("color"));
 
         return printStyle;
+    }
+
+    public static PrintObjectStyleAlign newPrintObjectStyleAlign(Element element) {
+        if(element == null) return null;
+
+        PrintObjectStyleAlign printObjectStyleAlign = new PrintObjectStyleAlign();
+        printObjectStyleAlign.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+        printObjectStyleAlign.setPrintStyleAlign(newPrintStyleAlign(element));
+
+        return printObjectStyleAlign;
     }
 
     public static Font newFont(Element fontElement) {
