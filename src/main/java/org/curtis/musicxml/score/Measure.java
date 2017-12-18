@@ -7,7 +7,7 @@ import java.util.List;
 public class Measure {
     private List<MusicData> musicDataList = new ArrayList<>();
     private String number;
-    private Boolean implicit;
+    private Boolean implicit = false;
     private Boolean nonControlling;
     private BigDecimal width;
     private RepeatBlock repeatBlock;

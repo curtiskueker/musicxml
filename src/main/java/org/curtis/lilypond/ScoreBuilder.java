@@ -2,6 +2,9 @@ package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.note.Backup;
+import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
@@ -88,7 +91,7 @@ public class ScoreBuilder extends AbstractBuilder {
                         Attributes attributes = (Attributes)musicData;
                         Integer staves = attributes.getStaves();
                         if(staves > 1) {
-                            buildGrandStaffPart(scorePart, part);
+                            buildGrandStaffPart(scorePart, part, staves);
                             return;
                         }
                     }
@@ -120,7 +123,7 @@ public class ScoreBuilder extends AbstractBuilder {
         append(partBuilder.build().toString());
     }
 
-    private void buildGrandStaffPart(ScorePart scorePart, Part part) throws BuildException {
+    private void buildGrandStaffPart(ScorePart scorePart, Part part, Integer staves) throws BuildException {
         appendLine("\\new GrandStaff <<");
 
         append("\\set GrandStaff.instrumentName = #\"");
@@ -131,8 +134,67 @@ public class ScoreBuilder extends AbstractBuilder {
         append(scorePart.getPartAbbreviation().getPartName());
         appendLine("\"");
 
-        PartBuilder partBuilder = new PartBuilder(part);
-        append(partBuilder.build().toString());
+        // separate the parts by staves
+        Part[] staffParts = new Part[staves];
+        for(int index = 0; index < staves; index++) {
+            staffParts[index] = new Part();
+            staffParts[index].setStaffNumber(index + 1);
+        }
+
+        for(Measure measure : part.getMeasures()) {
+            Measure[] staffMeasures = new Measure[staves];
+            for(int index = 0; index < staves; index++) {
+                staffMeasures[index] = new Measure();
+            }
+            Integer currentStaff = 1;
+            Backup currentBackup = null;
+            for(MusicData musicData : measure.getMusicDataList()) {
+                if(musicData instanceof Direction) {
+                    Direction direction = (Direction)musicData;
+                    Integer staff = direction.getStaff();
+                    if(staff == null || staff > staves) {
+                        throw new BuildException("Invalid staff number in direction");
+                    }
+                    staffMeasures[staff - 1].getMusicDataList().add(direction);
+                    if(staff.equals(currentStaff) && currentBackup != null) {
+                        staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
+                    }
+                    currentBackup = null;
+                } else if(musicData instanceof Note) {
+                    Note note = (Note)musicData;
+                    Integer staff = note.getStaff();
+                    if(staff == null || staff > staves) {
+                        throw new BuildException("Invalid staff number in note");
+                    }
+                    staffMeasures[staff - 1].getMusicDataList().add(note);
+                    if(staff.equals(currentStaff) && currentBackup != null) {
+                        staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
+                    }
+                    currentBackup = null;
+                } else if(musicData instanceof Backup) {
+                    currentBackup = (Backup)musicData;
+                } else {
+                    for(Measure staffMeasure : staffMeasures) {
+                        staffMeasure.getMusicDataList().add(musicData);
+                    }
+                }
+            }
+
+            for(Measure staffMeasure : staffMeasures) {
+                staffMeasure.setNumber(measure.getNumber());
+            }
+
+            for(int index = 0; index < staves; index++) {
+                Part staffPart = staffParts[index];
+                staffPart.getMeasures().add(staffMeasures[index]);
+            }
+        }
+
+        for(Part staffPart : staffParts) {
+            PartBuilder partBuilder = new PartBuilder(staffPart);
+            append(partBuilder.build().toString());
+        }
+
 
         appendLine(">>");
     }
