@@ -16,7 +16,7 @@ public class Attributes extends MusicData {
     private BigDecimal divisions;
     private List<Key> keys = new ArrayList<>();
     private List<Time> timeList = new ArrayList<>();
-    private Integer staves;
+    private Integer staves = 1;
     private PartSymbol partSymbol;
     private Integer instruments;
     private Clef clef;
