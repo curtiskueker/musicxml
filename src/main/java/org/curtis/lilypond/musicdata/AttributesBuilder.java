@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.attributes.ClefSign;
@@ -12,26 +13,18 @@ import java.util.List;
 
 public class AttributesBuilder extends MusicDataBuilder {
     public StringBuilder buildAttributes(Attributes attributes) throws BuildException {
-        if(PartBuilder.CURRENT_ATTRIBUTES == null) {
-            PartBuilder.CURRENT_ATTRIBUTES = attributes;
-        }
+        AttributesUtil.setCurrentAttributes(attributes);
 
         List<Key> keys = attributes.getKeys();
         for(Key key : keys) {
             MusicDataBuilder keyBuilder = new MusicDataBuilder(key);
             append(keyBuilder.build().toString());
         }
-        if(!keys.isEmpty()) {
-            PartBuilder.CURRENT_ATTRIBUTES.setKeys(keys);
-        }
 
         List<Time> timeList = attributes.getTimeList();
         for(Time time : timeList) {
             MusicDataBuilder timeBuilder = new MusicDataBuilder(time);
             append(timeBuilder.build().toString());
-        }
-        if(!timeList.isEmpty()) {
-            PartBuilder.CURRENT_ATTRIBUTES.setTimeList(timeList);
         }
 
         Clef clef = attributes.getClef();
@@ -51,8 +44,6 @@ public class AttributesBuilder extends MusicDataBuilder {
                     else if (line == 4) appendLine("tenor");
                     break;
             }
-
-            PartBuilder.CURRENT_ATTRIBUTES.setClef(clef);
         }
 
         return stringBuilder;

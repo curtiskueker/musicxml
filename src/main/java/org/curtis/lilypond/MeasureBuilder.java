@@ -2,6 +2,7 @@ package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
+import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
@@ -109,7 +110,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Attributes) {
                 Attributes attributes = (Attributes)musicData;
-                if(!noteFound) PartBuilder.CURRENT_ATTRIBUTES = attributes;
+                if(!noteFound) AttributesUtil.setCurrentAttributes(attributes);
             }
         }
 
