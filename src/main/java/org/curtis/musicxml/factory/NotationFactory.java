@@ -1,5 +1,7 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.direction.directiontype.Dynamics;
+import org.curtis.musicxml.direction.directiontype.DynamicsType;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Line;
@@ -188,5 +190,98 @@ public class NotationFactory {
         accidentalMark.setPlacement(PlacementUtil.getLocation(accidentalMarkElement.getAttribute("placement")));
 
         return accidentalMark;
+    }
+
+    public static Dynamics newDynamics(Element element) {
+        if(element == null) return null;
+
+        Dynamics dynamics = new Dynamics();
+
+        List<Element> dynamicsElements = XmlUtil.getChildElements(element);
+        List<DynamicsType> dynamicsTypes = dynamics.getTypes();
+        for(Element dynamicsElement : dynamicsElements) {
+            String dynamecsElementName = dynamicsElement.getTagName();
+            switch (dynamecsElementName) {
+                case "p":
+                    dynamicsTypes.add(DynamicsType.P);
+                    break;
+                case "pp":
+                    dynamicsTypes.add(DynamicsType.PP);
+                    break;
+                case "ppp":
+                    dynamicsTypes.add(DynamicsType.PPP);
+                    break;
+                case "pppp":
+                    dynamicsTypes.add(DynamicsType.PPPP);
+                    break;
+                case "ppppp":
+                    dynamicsTypes.add(DynamicsType.PPPPP);
+                    break;
+                case "pppppp":
+                    dynamicsTypes.add(DynamicsType.PPPPPP);
+                    break;
+                case "f":
+                    dynamicsTypes.add(DynamicsType.F);
+                    break;
+                case "ff":
+                    dynamicsTypes.add(DynamicsType.FF);
+                    break;
+                case "fff":
+                    dynamicsTypes.add(DynamicsType.FFF);
+                    break;
+                case "ffff":
+                    dynamicsTypes.add(DynamicsType.FFFF);
+                    break;
+                case "fffff":
+                    dynamicsTypes.add(DynamicsType.FFFFF);
+                    break;
+                case "ffffff":
+                    dynamicsTypes.add(DynamicsType.FFFFFF);
+                    break;
+                case "mp":
+                    dynamicsTypes.add(DynamicsType.MP);
+                    break;
+                case "mf":
+                    dynamicsTypes.add(DynamicsType.MF);
+                    break;
+                case "sf":
+                    dynamicsTypes.add(DynamicsType.SF);
+                    break;
+                case "sfp":
+                    dynamicsTypes.add(DynamicsType.SFP);
+                    break;
+                case "sfpp":
+                    dynamicsTypes.add(DynamicsType.SFPP);
+                    break;
+                case "fp":
+                    dynamicsTypes.add(DynamicsType.FP);
+                    break;
+                case "rf":
+                    dynamicsTypes.add(DynamicsType.RF);
+                    break;
+                case "rfz":
+                    dynamicsTypes.add(DynamicsType.RFZ);
+                    break;
+                case "sfz":
+                    dynamicsTypes.add(DynamicsType.SFZ);
+                    break;
+                case "sffz":
+                    dynamicsTypes.add(DynamicsType.SFFZ);
+                    break;
+                case "fz":
+                    dynamicsTypes.add(DynamicsType.FZ);
+                    break;
+                case "other-dynamics":
+                    dynamicsTypes.add(DynamicsType.OTHER_DYNAMICS);
+                    break;
+            }
+        }
+
+        dynamics.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+        dynamics.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        dynamics.setTextDecoration(LyricFactory.newTextDecoration(element));
+        dynamics.setEnclosure(FormattingFactory.newEnclosureShape(element));
+
+        return dynamics;
     }
 }

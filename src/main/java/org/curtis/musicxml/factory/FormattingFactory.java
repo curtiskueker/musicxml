@@ -2,6 +2,7 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.CssFontSize;
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FontStyle;
@@ -45,9 +46,11 @@ public class FormattingFactory {
         return formattedText;
     }
 
-    public static TextFormatting newTextFormatting(Element textFormattingElement) {
+    public static TextFormatting newTextFormatting(Element element) {
         TextFormatting textFormatting = new TextFormatting();
-        textFormatting.setJustify(PlacementUtil.getLocation(textFormattingElement.getAttribute("justify")));
+        textFormatting.setJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
+        textFormatting.setPrintStyleAlign(newPrintStyleAlign(element));
+        textFormatting.setEnclosure(newEnclosureShape(element));
 
         return textFormatting;
     }
@@ -200,5 +203,33 @@ public class FormattingFactory {
         printout.setPrintLyric(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-lyric")));
 
         return printout;
+    }
+
+    public static EnclosureShape newEnclosureShape(Element element) {
+        if(element == null) return null;
+
+        String enclosure = element.getAttribute("enclosure");
+        if(StringUtil.isEmpty(enclosure)) return null;
+
+        switch (enclosure) {
+            case "rectangle":
+                return EnclosureShape.RECTANGLE;
+            case "square":
+                return EnclosureShape.SQUARE;
+            case "oval":
+                return EnclosureShape.OVAL;
+            case "circle":
+                return EnclosureShape.CIRCLE;
+            case "bracket":
+                return EnclosureShape.BRACKET;
+            case "triangle":
+                return EnclosureShape.TRIANGLE;
+            case "diamond":
+                return EnclosureShape.DIAMOND;
+            case "none":
+                return EnclosureShape.NONE;
+            default:
+                return null;
+        }
     }
 }
