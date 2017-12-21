@@ -145,6 +145,7 @@ public class ScoreBuilder extends AbstractBuilder {
             Measure[] staffMeasures = new Measure[staves];
             for(int index = 0; index < staves; index++) {
                 staffMeasures[index] = new Measure();
+                staffMeasures[index].setStaffNumber(index + 1);
             }
             Integer currentStaff = 1;
             Backup currentBackup = null;
@@ -155,10 +156,10 @@ public class ScoreBuilder extends AbstractBuilder {
                     if(staff == null || staff > staves) {
                         throw new BuildException("Invalid staff number in direction");
                     }
-                    staffMeasures[staff - 1].getMusicDataList().add(direction);
                     if(staff.equals(currentStaff) && currentBackup != null) {
                         staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
                     }
+                    staffMeasures[staff - 1].getMusicDataList().add(direction);
                     currentBackup = null;
                 } else if(musicData instanceof Note) {
                     Note note = (Note)musicData;
@@ -166,10 +167,10 @@ public class ScoreBuilder extends AbstractBuilder {
                     if(staff == null || staff > staves) {
                         throw new BuildException("Invalid staff number in note");
                     }
-                    staffMeasures[staff - 1].getMusicDataList().add(note);
                     if(staff.equals(currentStaff) && currentBackup != null) {
                         staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
                     }
+                    staffMeasures[staff - 1].getMusicDataList().add(note);
                     currentBackup = null;
                 } else if(musicData instanceof Backup) {
                     currentBackup = (Backup)musicData;

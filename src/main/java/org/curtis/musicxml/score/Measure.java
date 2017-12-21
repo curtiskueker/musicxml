@@ -11,6 +11,7 @@ public class Measure {
     private Boolean nonControlling;
     private BigDecimal width;
     private RepeatBlock repeatBlock;
+    private Integer staffNumber;
 
     public Measure() {
 
@@ -62,5 +63,13 @@ public class Measure {
 
     public void setRepeatBlock(RepeatBlock repeatBlock) {
         this.repeatBlock = repeatBlock;
+    }
+
+    public Integer getStaffNumber() {
+        return staffNumber;
+    }
+
+    public void setStaffNumber(Integer staffNumber) {
+        this.staffNumber = staffNumber;
     }
 }

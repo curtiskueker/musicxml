@@ -65,6 +65,8 @@ public class MeasureBuilder extends AbstractBuilder {
         // these are grouped into their own builder calls
         boolean noteFound = false;
         for(MusicData musicData : musicDataList) {
+            musicData.setStaffNumber(measure.getStaffNumber());
+
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();

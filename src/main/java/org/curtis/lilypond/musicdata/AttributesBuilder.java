@@ -28,7 +28,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         }
 
         Clef clef = attributes.getClef();
-        if(clef != null) {
+        if(clef != null && (attributes.getStaffNumber() == null || attributes.getStaffNumber().equals(clef.getNumber()))) {
             append("\\clef ");
             ClefSign clefSign = clef.getSign();
             Integer line = clef.getLine();
