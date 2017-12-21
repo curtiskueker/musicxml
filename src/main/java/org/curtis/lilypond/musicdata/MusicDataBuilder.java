@@ -51,7 +51,7 @@ public class MusicDataBuilder extends AbstractBuilder {
         } catch (InvocationTargetException e) {
             if (e.getCause() instanceof BuildException) {
                 // Note exception but continue anyway
-                System.err.println("Part " + PartBuilder.CURRENT_PART_ID + " MusicData exception: " + e.getMessage());
+                System.err.println("Part " + PartBuilder.CURRENT_PART_ID + " MusicData exception: " + e.getCause().getMessage());
             }
         } catch (Exception e) {
             // skip

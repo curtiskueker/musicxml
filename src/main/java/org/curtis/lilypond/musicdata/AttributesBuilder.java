@@ -43,6 +43,11 @@ public class AttributesBuilder extends MusicDataBuilder {
                     if(line == 3) appendLine("alto");
                     else if (line == 4) appendLine("tenor");
                     break;
+                case PERCUSSION:
+                    appendLine("percussion");
+                    break;
+                default:
+                    throw new BuildException("ClefSign " + clefSign + " not implemented");
             }
         }
 
