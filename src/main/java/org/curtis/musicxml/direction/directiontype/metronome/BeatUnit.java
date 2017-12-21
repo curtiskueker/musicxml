@@ -1,10 +1,10 @@
-package org.curtis.musicxml.direction.directiontype;
+package org.curtis.musicxml.direction.directiontype.metronome;
 
 import org.curtis.musicxml.note.NoteTypeValue;
 
 public class BeatUnit {
     private NoteTypeValue beatUnit;
-    private Integer beatUnitDots;
+    private Integer beatUnitDots = 0;
 
     public BeatUnit() {
 

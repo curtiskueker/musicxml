@@ -1,13 +1,14 @@
-package org.curtis.musicxml.direction.directiontype;
+package org.curtis.musicxml.direction.directiontype.metronome;
 
 import org.curtis.musicxml.note.NoteTypeValue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MetronomeNote {
     private NoteTypeValue metronomeType;
-    private Integer metronomeDots;
-    private List<MetronomeBeam> metronomeBeams;
+    private Integer metronomeDots = 0;
+    private List<MetronomeBeam> metronomeBeams = new ArrayList<>();
     private MetronomeTuplet metronomeTuplet;
 
     public MetronomeNote() {

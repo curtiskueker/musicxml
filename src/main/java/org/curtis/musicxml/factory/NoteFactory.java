@@ -1,11 +1,15 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.note.AccidentalType;
+import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Step;
+import org.curtis.musicxml.note.TimeModification;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
+
+import java.util.List;
 
 public class NoteFactory {
     private NoteFactory() {
@@ -156,5 +160,37 @@ public class NoteFactory {
             default:
                 return null;
         }
+    }
+
+    public static BeamType newBeamType(Element element) {
+        if(element == null) return null;
+
+        switch (XmlUtil.getElementText(element)) {
+            case "begin":
+                return BeamType.BEGIN;
+            case "continue":
+                return BeamType.CONTINUE;
+            case "end":
+                return BeamType.END;
+            case "forward hook":
+                return BeamType.FORWARD_HOOK;
+            case "backward hook":
+                return BeamType.BACKWARD_HOOK;
+            default:
+                return null;
+        }
+    }
+
+    public static TimeModification newTimeModification(Element element) {
+        if(element == null) return null;
+
+        TimeModification timeModification = new TimeModification();
+        timeModification.setActualNotes(StringUtil.getInteger(XmlUtil.getChildElementText(element, "actual-notes")));
+        timeModification.setNormalNotes(StringUtil.getInteger(XmlUtil.getChildElementText(element, "normal-notes")));
+        timeModification.setNormalType(NoteFactory.newNoteTypeValue(XmlUtil.getChildElement(element, "normal-type")));
+        List<Element> dotElements = XmlUtil.getChildElements(element, "normal-dot");
+        timeModification.setNormalDots(dotElements.size());
+
+        return timeModification;
     }
 }

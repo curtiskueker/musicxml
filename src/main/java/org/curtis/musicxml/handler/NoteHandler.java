@@ -10,7 +10,6 @@ import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamFan;
-import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
@@ -137,13 +136,7 @@ public class NoteHandler extends MusicDataHandler {
                     note.setAccidental(accidental);
                     break;
                 case "time-modification":
-                    TimeModification timeModification = new TimeModification();
-                    timeModification.setActualNotes(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "actual-notes")));
-                    timeModification.setNormalNotes(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "normal-notes")));
-                    timeModification.setNormalType(NoteFactory.newNoteTypeValue(XmlUtil.getChildElement(noteSubelement, "normal-type")));
-                    List<Element> dotElements = XmlUtil.getChildElements(noteSubelement, "normal-dot");
-                    timeModification.setNormalDots(dotElements.size());
-                    note.setTimeModification(timeModification);
+                    note.setTimeModification(NoteFactory.newTimeModification(noteSubelement));
                     break;
                 case "stem":
                     Stem stem = new Stem();
@@ -289,23 +282,7 @@ public class NoteHandler extends MusicDataHandler {
                 case "beam":
                     List<Beam> beams = note.getBeams();
                     Beam beam = new Beam();
-                    switch (XmlUtil.getElementText(noteSubelement)) {
-                        case "begin":
-                            beam.setType(BeamType.BEGIN);
-                            break;
-                        case "continue":
-                            beam.setType(BeamType.CONTINUE);
-                            break;
-                        case "end":
-                            beam.setType(BeamType.END);
-                            break;
-                        case "forward hook":
-                            beam.setType(BeamType.FORWARD_HOOK);
-                            break;
-                        case "backward hook":
-                            beam.setType(BeamType.BACKWARD_HOOK);
-                            break;
-                    }
+                    beam.setType(NoteFactory.newBeamType(noteSubelement));
                     beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
                     beam.setRepeater(TypeUtil.getYesNo(noteSubelement.getAttribute("repeater")));
                     String beamFan = noteSubelement.getAttribute("fan");

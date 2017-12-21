@@ -1,4 +1,4 @@
-package org.curtis.musicxml.direction.directiontype;
+package org.curtis.musicxml.direction.directiontype.metronome;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.TimeModification;

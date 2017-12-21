@@ -1,10 +1,10 @@
-package org.curtis.musicxml.direction.directiontype;
+package org.curtis.musicxml.direction.directiontype.metronome;
 
 import org.curtis.musicxml.note.BeamType;
 
 public class MetronomeBeam {
     private BeamType beamValue;
-    private Integer number;
+    private Integer number = 1;
 
     public MetronomeBeam() {
 

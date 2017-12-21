@@ -2,7 +2,7 @@ package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
 
-public class AccordionRegistration {
+public class AccordionRegistration extends DirectionType {
     private Boolean accordionHigh;
     private Integer accordionMiddle;
     private Boolean accordionLow;

@@ -6,7 +6,7 @@ import org.curtis.musicxml.common.PrintStyle;
 public class OctaveShift extends DirectionType {
     private OctaveShiftType type;
     private Integer number;
-    private Integer size;
+    private Integer size = 8;
     private DashedFormatting dashedFormatting;
     private PrintStyle printStyle;
 
