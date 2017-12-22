@@ -19,7 +19,7 @@ public class DirectionBuilder extends MusicDataBuilder {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(directionType);
             String musicDataResults = musicDataBuilder.build().toString();
             if(!musicDataResults.isEmpty()) {
-                append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
+                append(PlacementBuildUtil.getPlacement(direction.getPlacement(), directionType.getClass().getSimpleName()));
                 append(musicDataResults);
             }
         }

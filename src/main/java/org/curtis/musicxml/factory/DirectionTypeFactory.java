@@ -275,6 +275,7 @@ public class DirectionTypeFactory {
                     PerMinute perMinute = new PerMinute();
                     perMinute.setPerMinute(XmlUtil.getElementText(beatElement));
                     perMinute.setFont(FormattingFactory.newFont(beatElement));
+                    beatMetronome.setPerMinute(perMinute);
                     break;
             }
         }
@@ -290,6 +291,9 @@ public class DirectionTypeFactory {
             switch (noteElementName) {
                 case "metronome-note":
                     MetronomeNote metronomeNote = new MetronomeNote();
+                    List<MetronomeNote> metronomeNotes = StringUtil.isEmpty(noteMetronome.getMetronomeRelation()) ?
+                            noteMetronome.getMetronomeNotes1() : noteMetronome.getMetronomeNotes2();
+                    metronomeNotes.add(metronomeNote);
                     for(Element metronomeNoteElement : XmlUtil.getChildElements(noteElement)) {
                         String metronomeNoteElementName = metronomeNoteElement.getTagName();
                         switch (metronomeNoteElementName) {
@@ -320,6 +324,7 @@ public class DirectionTypeFactory {
                     }
                     break;
                 case "metronome-relation":
+                    noteMetronome.setMetronomeRelation(XmlUtil.getElementText(noteElement));
                     break;
             }
         }

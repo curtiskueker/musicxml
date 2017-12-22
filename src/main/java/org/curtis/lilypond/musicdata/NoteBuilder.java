@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
+import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
@@ -11,7 +12,6 @@ import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
-import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
@@ -173,52 +173,7 @@ public class NoteBuilder extends MusicDataBuilder {
         NoteType noteType = note.getType();
 
         if (noteType != null) {
-            NoteTypeValue noteTypeValue = noteType.getValue();
-            switch (noteTypeValue) {
-                case _1024TH:
-                    append("1024");
-                    break;
-                case _512TH:
-                    append("512");
-                    break;
-                case _256TH:
-                    append("256");
-                    break;
-                case _128TH:
-                    append("128");
-                    break;
-                case _64TH:
-                    append("64");
-                    break;
-                case _32ND:
-                    append("32");
-                    break;
-                case _16TH:
-                    append("16");
-                    break;
-                case EIGHTH:
-                    append("8");
-                    break;
-                case QUARTER:
-                    append("4");
-                    break;
-                case HALF:
-                    append("2");
-                    break;
-                case WHOLE:
-                    append("1");
-                    break;
-                case BREVE:
-                    append("\\breve");
-                    break;
-                case LONG:
-                    append("\\longa");
-                    break;
-                case MAXIMA:
-                    append("\\maxima");
-                    break;
-            }
-
+            append(NoteUtil.getNoteTypeValue(noteType.getValue()));
             List<Placement> dots = note.getDots();
             for(Placement dot : dots) {
                 append(".");
