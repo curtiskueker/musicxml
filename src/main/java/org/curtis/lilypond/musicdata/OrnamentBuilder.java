@@ -2,8 +2,10 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.notation.ornament.InvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
+import org.curtis.musicxml.note.notation.ornament.Turn;
 import org.curtis.util.MathUtil;
 
 public class OrnamentBuilder extends MusicDataBuilder {
@@ -14,6 +16,20 @@ public class OrnamentBuilder extends MusicDataBuilder {
     public StringBuilder buildTrillMark(TrillMark trillMark) {
         append(PlacementBuildUtil.getPlacement(trillMark.getPlacement()));
         append("\\trill");
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildTurn(Turn turn) {
+        append(PlacementBuildUtil.getPlacement(turn.getPlacement()));
+        append("\\turn");
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildInvertedTurn(InvertedTurn invertedTurn) {
+        append(PlacementBuildUtil.getPlacement(invertedTurn.getPlacement()));
+        append("\\reverseturn");
 
         return stringBuilder;
     }
