@@ -50,6 +50,10 @@ public class MeasureHandler extends AbstractHandler {
                     AttributesHandler attributesHandler = new AttributesHandler();
                     musicData = attributesHandler.handle(measureSubelement);
                     break;
+                case "harmony":
+                    HarmonyHandler harmonyHandler = new HarmonyHandler();
+                    musicData = harmonyHandler.handle(measureSubelement);
+                    break;
                 case "print":
                     PrintHandler printHandler = new PrintHandler();
                     musicData = printHandler.handle(measureSubelement);

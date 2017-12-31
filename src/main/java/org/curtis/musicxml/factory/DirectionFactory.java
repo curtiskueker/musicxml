@@ -1,5 +1,6 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
 import org.curtis.musicxml.direction.directiontype.Bracket;
@@ -42,8 +43,8 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class DirectionTypeFactory {
-    private DirectionTypeFactory() {
+public class DirectionFactory {
+    private DirectionFactory() {
 
     }
 
@@ -330,5 +331,15 @@ public class DirectionTypeFactory {
         }
 
         return noteMetronome;
+    }
+
+    public static Offset newOffset(Element element) {
+        if (element == null) return null;
+
+        Offset offset = new Offset();
+        offset.setDivisions(MathUtil.newBigDecimal(XmlUtil.getElementText(element)));
+        offset.setSound(TypeUtil.getYesNo(element.getAttribute("sound")));
+
+        return offset;
     }
 }

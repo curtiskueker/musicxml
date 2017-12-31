@@ -6,10 +6,11 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.score.MusicData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Harmony extends MusicData {
-    private List<HarmonyChord> harmonyChords;
+    private List<HarmonyChord> harmonyChords = new ArrayList<>();
     private Frame frame;
     private Offset offset;
     private Editorial editorial;

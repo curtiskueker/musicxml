@@ -1,10 +1,9 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.direction.Direction;
-import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
-import org.curtis.musicxml.factory.DirectionTypeFactory;
+import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.handler.util.PlacementUtil;
@@ -32,14 +31,12 @@ public class DirectionHandler extends MusicDataHandler {
                     List<DirectionType> directionTypes = direction.getDirectionTypes();
                     List<Element> directionTypeSubelements = XmlUtil.getChildElements(directionSubelement);
                     for(Element directionTypeSubelement : directionTypeSubelements) {
-                        DirectionType directionType = DirectionTypeFactory.newDirectionType(directionTypeSubelement);
+                        DirectionType directionType = DirectionFactory.newDirectionType(directionTypeSubelement);
                         if(directionType != null) directionTypes.add(directionType);
                     }
                     break;
                 case "offset":
-                    Offset offset = new Offset();
-                    offset.setDivisions(MathUtil.newBigDecimal(XmlUtil.getElementText(directionSubelement)));
-                    direction.setOffset(offset);
+                    direction.setOffset(DirectionFactory.newOffset(directionSubelement));
                     break;
                 case "staff":
                     direction.setStaff(StringUtil.getInteger(XmlUtil.getElementText(directionSubelement)));

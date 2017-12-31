@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
-public class Root {
+public class Root extends HarmonyChord {
     private RootStep rootStep;
     private RootAlter rootAlter;
 

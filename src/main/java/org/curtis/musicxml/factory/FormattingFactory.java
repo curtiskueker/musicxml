@@ -12,6 +12,7 @@ import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Printout;
+import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.handler.util.PlacementUtil;
@@ -53,6 +54,14 @@ public class FormattingFactory {
         textFormatting.setEnclosure(newEnclosureShape(element));
 
         return textFormatting;
+    }
+
+    public static StyleText newStyleText(Element element) {
+        StyleText styleText = new StyleText();
+        styleText.setValue(XmlUtil.getElementText(element));
+        styleText.setPrintStyle(newPrintStyle(element));
+
+        return styleText;
     }
 
     public static PrintStyleAlign newPrintStyleAlign(Element printStyleAlignElement) {

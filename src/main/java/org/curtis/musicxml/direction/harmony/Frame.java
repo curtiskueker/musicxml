@@ -4,20 +4,21 @@ import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Frame {
     private Integer frameStrings;
     private Integer frameFrets;
     private FirstFret firstFret;
-    private List<FrameNote> frameNotes;
+    private List<FrameNote> frameNotes = new ArrayList<>();
     private Position position;
     private String color;
     private Location halign;
     private Location valignImage;
     private BigDecimal height;
     private BigDecimal width;
-    private String unployed;
+    private String unplayed;
 
     public Frame() {
 
@@ -103,11 +104,11 @@ public class Frame {
         this.width = width;
     }
 
-    public String getUnployed() {
-        return unployed;
+    public String getUnplayed() {
+        return unplayed;
     }
 
-    public void setUnployed(String unployed) {
-        this.unployed = unployed;
+    public void setUnplayed(String unplayed) {
+        this.unplayed = unplayed;
     }
 }
