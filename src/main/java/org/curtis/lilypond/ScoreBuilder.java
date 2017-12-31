@@ -77,29 +77,38 @@ public class ScoreBuilder extends AbstractBuilder {
     private void buildPart(ScorePart scorePart) throws BuildException {
         String partId = scorePart.getId();
 
+        // find the corresponding Part indicated in the score header
+        Part partToProcess = null;
         for(Part part : score.getParts()) {
             if(partId.equals(part.getId())) {
-                // test for multi-staff part
-                List<Measure> measures = part.getMeasures();
-                if(measures.isEmpty()) {
-                    throw new BuildException("Part " + part.getId() + " has no measures");
-                }
-
-                Measure measure = measures.get(0);
-                for(MusicData musicData : measure.getMusicDataList()) {
-                    if(musicData instanceof Attributes) {
-                        Attributes attributes = (Attributes)musicData;
-                        Integer staves = attributes.getStaves();
-                        if(staves > 1) {
-                            buildGrandStaffPart(scorePart, part, staves);
-                            return;
-                        }
-                    }
-                }
-
-                buildSingleStaffPart(scorePart, part);
-                return;
+                partToProcess = part;
+                break;
             }
+        }
+
+        if(partToProcess == null) throw new BuildException("Part " + partId + " not found");
+
+        List<Measure> measures = partToProcess.getMeasures();
+        if(measures.isEmpty()) {
+            throw new BuildException("Part " + partId + " has no measures");
+        }
+
+        // test for multi-staff part
+        // Default to 1 staff
+        Integer staves = 1;
+        for (Measure measure : measures) {
+            for(MusicData musicData : measure.getMusicDataList()) {
+                if(musicData instanceof Attributes) {
+                    Attributes attributes = (Attributes)musicData;
+                    staves = attributes.getStaves();
+                }
+            }
+        }
+
+        if(staves > 1) {
+            buildGrandStaffPart(scorePart, partToProcess, staves);
+        } else {
+            buildSingleStaffPart(scorePart, partToProcess);
         }
     }
 
