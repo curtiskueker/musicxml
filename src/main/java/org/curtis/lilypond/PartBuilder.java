@@ -1,7 +1,6 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
@@ -156,19 +155,8 @@ public class PartBuilder extends AbstractBuilder {
 
         // build lyrics block, if there are any
         if(!lyrics.isEmpty()) {
-            append("\\new Lyrics \\lyricsto \"");
-            append(part.getId());
-            appendLine("\" {");
-
-            for (List<Lyric> lyricList : lyrics) {
-                for(Lyric lyric : lyricList) {
-                    MusicDataBuilder musicDataBuilder = new MusicDataBuilder(lyric);
-                    append(musicDataBuilder.build().toString());
-                }
-            }
-
-            appendLine("");
-            appendLine("}");
+            LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(lyrics, part.getId());
+            append(lyricPartBuilder.build().toString());
         }
 
         CURRENT_ATTRIBUTES = null;
