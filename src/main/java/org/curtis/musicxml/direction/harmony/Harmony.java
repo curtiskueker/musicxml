@@ -6,6 +6,7 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.score.MusicData;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Harmony extends MusicData {
     private Boolean printFrame;
     private PrintStyle printStyle;
     private Location placement;
+    private BigDecimal divisions;
 
     public Harmony() {
 
@@ -103,5 +105,13 @@ public class Harmony extends MusicData {
 
     public void setPlacement(Location placement) {
         this.placement = placement;
+    }
+
+    public BigDecimal getDivisions() {
+        return divisions;
+    }
+
+    public void setDivisions(BigDecimal divisions) {
+        this.divisions = divisions;
     }
 }

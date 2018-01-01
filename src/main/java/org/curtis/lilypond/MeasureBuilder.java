@@ -11,6 +11,7 @@ import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
@@ -275,6 +276,9 @@ public class MeasureBuilder extends AbstractBuilder {
             } else if (musicData instanceof Forward) {
                 Forward forward = (Forward)musicData;
                 currentBackupDuration = MathUtil.subtract(currentBackupDuration, forward.getDuration());
+                continue;
+            } else if (musicData instanceof Harmony) {
+                // Harmony processed separately
                 continue;
             } else {
                 musicDataBuilder = new MusicDataBuilder(musicData);

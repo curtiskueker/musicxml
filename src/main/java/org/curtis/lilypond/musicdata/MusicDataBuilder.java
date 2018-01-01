@@ -22,15 +22,9 @@ public class MusicDataBuilder extends AbstractBuilder {
 
     }
 
-    public MusicData getMusicData() {
-        return musicData;
-    }
-
-    public void setMusicData(MusicData musicData) {
-        this.musicData = musicData;
-    }
-
     public StringBuilder build() throws BuildException {
+        if (musicData == null) return stringBuilder;
+
         String musidDataClassName = musicData.getClass().getName();
         musidDataClassName = musidDataClassName.replace("org.curtis.musicxml.", "");
 

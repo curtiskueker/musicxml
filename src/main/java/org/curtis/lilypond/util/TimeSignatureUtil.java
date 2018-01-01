@@ -31,6 +31,11 @@ public class TimeSignatureUtil {
 
     public static String getWholeMeasureRepresentation(BigDecimal numerator, BigDecimal denominator) throws TimeSignatureException {
         BigDecimal totalBeats = getTotalBeats(numerator, denominator);
+
+        return getRepresentationValue(totalBeats);
+    }
+
+    public static String getRepresentationValue(BigDecimal totalBeats) throws TimeSignatureException {
         BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeats);
 
         int loopCount = 0;
@@ -44,16 +49,16 @@ public class TimeSignatureUtil {
 
         // If represenetation isn't a multiple of 2, or loop count greater than one, throw an exception
         if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || loopCount > 1) {
-            throw new TimeSignatureException("Invalid whole measure representation");
+            throw new TimeSignatureException("Invalid duration representation value");
         }
 
 
-        String wholeMeasureNoteRepresentation = String.valueOf(noteRepresentation);
+        String representationString = String.valueOf(noteRepresentation);
         for(int i = 1; i <= loopCount; i++) {
-            wholeMeasureNoteRepresentation += ".";
+            representationString += ".";
         }
 
-        return wholeMeasureNoteRepresentation;
+        return representationString;
     }
 
     private static boolean rounds(BigDecimal value) {

@@ -3,6 +3,7 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
@@ -93,16 +94,27 @@ public class ScoreBuilder extends AbstractBuilder {
             throw new BuildException("Part " + partId + " has no measures");
         }
 
-        // test for multi-staff part
-        // Default to 1 staff
+        // pre-processing loop
+        //
+        // test for multi-staff part: default to 1 staff
+        // test for existence of harmony data: construct harmony part
         Integer staves = 1;
+        boolean hasHarmony = false;
         for (Measure measure : measures) {
             for(MusicData musicData : measure.getMusicDataList()) {
                 if(musicData instanceof Attributes) {
                     Attributes attributes = (Attributes)musicData;
-                    staves = attributes.getStaves();
+                    if (attributes.getStaves() > 1) {
+                        staves = attributes.getStaves();
+                    }
+                } else if (musicData instanceof Harmony) {
+                    hasHarmony = true;
                 }
             }
+        }
+
+        if (hasHarmony) {
+            buildHarmonyPart(partToProcess);
         }
 
         if(staves > 1) {
@@ -207,5 +219,10 @@ public class ScoreBuilder extends AbstractBuilder {
 
 
         appendLine(">>");
+    }
+
+    private void buildHarmonyPart(Part part) throws BuildException {
+        HarmonyPartBuilder harmonyPartBuilder = new HarmonyPartBuilder(part);
+        append(harmonyPartBuilder.build().toString());
     }
 }

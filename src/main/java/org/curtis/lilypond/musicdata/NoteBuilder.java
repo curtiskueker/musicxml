@@ -17,7 +17,6 @@ import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
-import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.notation.Notation;
@@ -25,9 +24,7 @@ import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
-import org.curtis.util.MathUtil;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,42 +75,8 @@ public class NoteBuilder extends MusicDataBuilder {
             append(" ");
 
             Pitch pitch = (Pitch)fullNoteType;
-            Step step = pitch.getStep();
-            switch (step) {
-                case A:
-                    append("a");
-                    break;
-                case B:
-                    append("b");
-                    break;
-                case C:
-                    append("c");
-                    break;
-                case D:
-                    append("d");
-                    break;
-                case E:
-                    append("e");
-                    break;
-                case F:
-                    append("f");
-                    break;
-                case G:
-                    append("g");
-                    break;
-            }
-
-            //TODO: alter single and double accidentals only
-            BigDecimal alter = pitch.getAlter();
-            if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(-2))) {
-                append("eses");
-            } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(-1))) {
-                append("es");
-            } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(1))) {
-                append("is");
-            } else if(MathUtil.equalTo(alter, MathUtil.newBigDecimal(2))) {
-                append("isis");
-            }
+            append(NoteUtil.getStep(pitch.getStep()));
+            append(NoteUtil.getAlter(pitch.getAlter()));
 
             Integer octave = pitch.getOctave();
             if(octave > 3) {
@@ -136,9 +99,8 @@ public class NoteBuilder extends MusicDataBuilder {
             Boolean measure = rest.getMeasure();
             if(measure || noteType == null) {
                 try {
-                    String wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation();
                     append("R");
-                    append(wholeMeasureRepresentation);
+                    append(TimeSignatureUtil.getWholeMeasureRepresentation());
                 } catch (TimeSignatureException e) {
                     throw new BuildException("Invalid whole measure representation");
                 }
