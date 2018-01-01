@@ -24,7 +24,7 @@ public class PartBuilder extends AbstractBuilder {
     private Measure currentRepeatEndBlockMeasure;
     private Integer currentEndingCount = 0;
     private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
-    private List<List<Lyric>> lyrics = new ArrayList<>();
+    private boolean hasLyrics = false;
 
     public static Attributes CURRENT_ATTRIBUTES;
     public static String CURRENT_PART_ID;
@@ -118,7 +118,7 @@ public class PartBuilder extends AbstractBuilder {
                 } else if(musicData instanceof Note) {
                     Note note = (Note)musicData;
                     if (!note.getLyrics().isEmpty()) {
-                        lyrics.add(note.getLyrics());
+                        hasLyrics = true;
                     }
                 }
             }
@@ -137,12 +137,12 @@ public class PartBuilder extends AbstractBuilder {
             previousMeasure = measure;
         }
 
-        if (lyrics.isEmpty()) {
-            appendLine("{");
-        } else {
+        if (hasLyrics) {
             append("\\new Voice = \"");
             append(part.getId());
             appendLine("\" {");
+        } else {
+            appendLine("{");
         }
 
         // main processing loop
@@ -154,8 +154,8 @@ public class PartBuilder extends AbstractBuilder {
         appendLine("}");
 
         // build lyrics block, if there are any
-        if(!lyrics.isEmpty()) {
-            LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(lyrics, part.getId());
+        if(hasLyrics) {
+            LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(part);
             append(lyricPartBuilder.build().toString());
         }
 
