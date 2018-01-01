@@ -77,6 +77,7 @@ public class HarmonyPartBuilder extends AbstractBuilder {
             append(musicDataBuilder.build().toString());
         }
 
+        appendLine("");
         appendLine("}");
 
         return stringBuilder;
