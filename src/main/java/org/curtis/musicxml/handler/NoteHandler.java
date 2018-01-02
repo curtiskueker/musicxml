@@ -90,6 +90,7 @@ public class NoteHandler extends MusicDataHandler {
                     unpitched.setDisplayStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
                     unpitched.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
                     fullNote.setFullNoteType(unpitched);
+                    break;
                 case "rest":
                     Rest rest = new Rest();
                     rest.setDisplayStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
@@ -247,9 +248,7 @@ public class NoteHandler extends MusicDataHandler {
                     }
 
                     String filledNotehead = noteSubelement.getAttribute("filled");
-                    if (StringUtil.isNotEmpty(filledNotehead)) {
-                        notehead.setFilled(TypeUtil.getYesNo(filledNotehead));
-                    }
+                    notehead.setFilled(TypeUtil.getYesNo(filledNotehead));
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
                     notehead.setFont(FormattingFactory.newFont(noteSubelement));
                     notehead.setColor(noteSubelement.getAttribute("color"));

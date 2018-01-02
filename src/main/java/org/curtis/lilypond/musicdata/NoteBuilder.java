@@ -19,6 +19,7 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.TupletNotes;
+import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.note.notation.ShowTuplet;
@@ -78,25 +79,15 @@ public class NoteBuilder extends MusicDataBuilder {
             append(NoteUtil.getStep(pitch.getStep()));
             append(NoteUtil.getAlter(pitch.getAlter()));
 
-            Integer octave = pitch.getOctave();
-            if(octave > 3) {
-                int iterations = octave - 3;
-                for(int i = 1; i <= iterations; i++) {
-                    append("'");
-                }
-            } else if(octave < 3) {
-                int iterations = 3 - octave;
-                for(int i = 1; i <= iterations; i++) {
-                    append(",");
-                }
-            }
-        }
-
-        NoteType noteType = note.getType();
-
-        if (fullNoteType instanceof Rest) {
+            buildPitchOctave(pitch.getOctave());
+        } else if (fullNoteType instanceof Unpitched) {
+            Unpitched unpitched = (Unpitched)fullNoteType;
+            append(NoteUtil.getStep(unpitched.getDisplayStep()));
+            buildPitchOctave(unpitched.getDisplayOctave() - 1);
+        } else if (fullNoteType instanceof Rest) {
             Rest rest = (Rest)fullNoteType;
             Boolean measure = rest.getMeasure();
+            NoteType noteType = note.getType();
             if(measure || noteType == null) {
                 try {
                     append("R");
@@ -110,6 +101,22 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         return stringBuilder;
+    }
+
+    private void buildPitchOctave(Integer octave) throws BuildException {
+        if(octave == null) return;
+
+        if(octave > 3) {
+            int iterations = octave - 3;
+            for(int i = 1; i <= iterations; i++) {
+                append("'");
+            }
+        } else if(octave < 3) {
+            int iterations = 3 - octave;
+            for(int i = 1; i <= iterations; i++) {
+                append(",");
+            }
+        }
     }
 
     private StringBuilder preChordBuild() {
