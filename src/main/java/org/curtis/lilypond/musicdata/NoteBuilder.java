@@ -12,6 +12,8 @@ import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
+import org.curtis.musicxml.note.Notehead;
+import org.curtis.musicxml.note.NoteheadType;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
@@ -50,25 +52,18 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() throws BuildException {
-        preChordBuild();
-        mainBuild();
-        postChordBuild();
-
-        if(note.getBeginBeam()) {
-            append("[");
-        } else if(note.getEndBeam()) {
-            append("]");
-        }
-
+        preNoteBuild();
+        startGraceBuild();
+        noteTypeBuild();
+        noteDurationBuild();
+        beamBuild();
         notationsBuild();
-        postGraceBuild();
+        finishGraceBuild();
 
         return stringBuilder;
     }
 
-    private StringBuilder mainBuild() throws BuildException {
-        preGraceBuild();
-
+    private StringBuilder noteTypeBuild() throws BuildException {
         FullNote fullNote = note.getFullNote();
         FullNoteType fullNoteType = fullNote.getFullNoteType();
 
@@ -79,11 +74,11 @@ public class NoteBuilder extends MusicDataBuilder {
             append(NoteUtil.getStep(pitch.getStep()));
             append(NoteUtil.getAlter(pitch.getAlter()));
 
-            buildPitchOctave(pitch.getOctave());
+            pitchOctaveBuild(pitch.getOctave());
         } else if (fullNoteType instanceof Unpitched) {
             Unpitched unpitched = (Unpitched)fullNoteType;
             append(NoteUtil.getStep(unpitched.getDisplayStep()));
-            buildPitchOctave(unpitched.getDisplayOctave() - 1);
+            pitchOctaveBuild(unpitched.getDisplayOctave() - 1);
         } else if (fullNoteType instanceof Rest) {
             Rest rest = (Rest)fullNoteType;
             Boolean measure = rest.getMeasure();
@@ -103,7 +98,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private void buildPitchOctave(Integer octave) throws BuildException {
+    private void pitchOctaveBuild(Integer octave) {
         if(octave == null) return;
 
         if(octave > 3) {
@@ -119,7 +114,7 @@ public class NoteBuilder extends MusicDataBuilder {
         }
     }
 
-    private StringBuilder preChordBuild() {
+    private StringBuilder preNoteBuild() {
         append(" ");
 
         Stem stem = note.getStem();
@@ -135,10 +130,22 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
+        Notehead notehead = note.getNotehead();
+        if (notehead != null) {
+            NoteheadType noteheadType = notehead.getType();
+            if (noteheadType != null) {
+                switch (noteheadType) {
+                    case CROSS:
+                    case X:
+                        append("\\xNote ");
+                }
+            }
+        }
+
         return stringBuilder;
     }
 
-    private StringBuilder postChordBuild() {
+    private StringBuilder noteDurationBuild() {
         NoteType noteType = note.getType();
 
         if (noteType != null) {
@@ -152,7 +159,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private StringBuilder preGraceBuild() {
+    private StringBuilder startGraceBuild() {
         if (note.isGraceNote()) {
             if (note.getGrace().getGraceType() == Connection.START || note.getGrace().getGraceType() == Connection.SINGLE) {
                 if(note.getGrace().getSlash()) {
@@ -169,7 +176,7 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private StringBuilder postGraceBuild() {
+    private StringBuilder finishGraceBuild() {
         if(note.isGraceNote() && note.getGrace().getGraceType() == Connection.STOP) {
             append(" }");
         }
@@ -186,6 +193,14 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         return stringBuilder;
+    }
+
+    private void beamBuild() {
+        if(note.getBeginBeam()) {
+            append("[");
+        } else if(note.getEndBeam()) {
+            append("]");
+        }
     }
 
     public StringBuilder buildNote(Note note) throws BuildException {
@@ -207,7 +222,7 @@ public class NoteBuilder extends MusicDataBuilder {
             Note note = noteBuilder.getNote();
             Connection chordType = note.getFullNote().getChordType();
             if (chordType == Connection.START || chordType == Connection.SINGLE) {
-                append(noteBuilder.preChordBuild().toString());
+                append(noteBuilder.preNoteBuild().toString());
             }
         }
 
@@ -215,7 +230,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
         for(NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
-            append(noteBuilder.mainBuild().toString());
+            append(noteBuilder.noteTypeBuild().toString());
         }
 
         append(">");
@@ -225,17 +240,12 @@ public class NoteBuilder extends MusicDataBuilder {
             Note note = noteBuilder.getNote();
             Connection chordType = note.getFullNote().getChordType();
             if (chordType == Connection.SINGLE || chordType == Connection.STOP) {
-                append(noteBuilder.postChordBuild().toString());
+                append(noteBuilder.noteDurationBuild().toString());
             }
         }
 
         for (NoteBuilder noteBuilder : noteBuilders) {
-            Note note = noteBuilder.getNote();
-            if(note.getBeginBeam()) {
-                append("[");
-            } else if(note.getEndBeam()) {
-                append("]");
-            }
+            noteBuilder.beamBuild();
         }
 
         for(NoteBuilder noteBuilder : noteBuilders) {
@@ -250,7 +260,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
         for(NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
-            append(noteBuilder.postGraceBuild().toString());
+            append(noteBuilder.finishGraceBuild().toString());
         }
 
         return stringBuilder;
