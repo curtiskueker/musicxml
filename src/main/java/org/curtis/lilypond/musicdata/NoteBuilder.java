@@ -1,5 +1,6 @@
 package org.curtis.lilypond.musicdata;
 
+import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.util.NoteUtil;
@@ -7,6 +8,7 @@ import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.Chord;
+import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
@@ -27,7 +29,9 @@ import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.util.MathUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +68,11 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder noteTypeBuild() throws BuildException {
+        if (!note.getPrintout().getPrintObject()) {
+            append(" s");
+            return stringBuilder;
+        }
+
         FullNote fullNote = note.getFullNote();
         FullNoteType fullNoteType = fullNote.getFullNoteType();
 
@@ -333,6 +342,19 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         append(" }");
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildForward(Forward forward) throws BuildException {
+        BigDecimal duration = forward.getDuration();
+
+        append("s");
+        try {
+            append(TimeSignatureUtil.getRepresentationValue(MathUtil.divide(duration, PartBuilder.CURRENT_ATTRIBUTES.getDivisions())));
+        } catch (TimeSignatureException e) {
+            throw new BuildException(e.getMessage());
+        }
 
         return stringBuilder;
     }

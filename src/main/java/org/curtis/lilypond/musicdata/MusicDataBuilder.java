@@ -3,6 +3,7 @@ package org.curtis.lilypond.musicdata;
 import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.score.MusicData;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,6 +26,16 @@ public class MusicDataBuilder extends AbstractBuilder {
     public StringBuilder build() throws BuildException {
         if (musicData == null) return stringBuilder;
 
+        Connection polyphonicVoiceType = musicData.getPolyphonicVoiceType();
+        if (polyphonicVoiceType != null) {
+            switch (polyphonicVoiceType) {
+                case BEGIN:
+                    appendLine("<<");
+                case START:
+                    appendLine("{");
+            }
+        }
+
         String musidDataClassName = musicData.getClass().getName();
         musidDataClassName = musidDataClassName.replace("org.curtis.musicxml.", "");
 
@@ -41,7 +52,7 @@ public class MusicDataBuilder extends AbstractBuilder {
         try {
             Class builderClass = Class.forName(builderClassName);
             Method builderMethod = builderClass.getMethod(builderMethodName, musicData.getClass());
-            return (StringBuilder)builderMethod.invoke(builderClass.newInstance(), musicData);
+            append(builderMethod.invoke(builderClass.newInstance(), musicData).toString());
         } catch (InvocationTargetException e) {
             if (e.getCause() instanceof BuildException) {
                 // Note exception but continue anyway
@@ -49,6 +60,18 @@ public class MusicDataBuilder extends AbstractBuilder {
             }
         } catch (Exception e) {
             // skip
+        }
+
+        if (polyphonicVoiceType != null) {
+            switch (polyphonicVoiceType) {
+                case STOP:
+                    appendLine("}");
+                    appendLine("\\\\");
+                    break;
+                case END:
+                    appendLine("}");
+                    appendLine(">>");
+            }
         }
 
         return stringBuilder;

@@ -7,7 +7,6 @@ import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.Note;
-import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
