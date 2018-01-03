@@ -9,6 +9,7 @@ import java.util.List;
 public class Chord extends MusicData {
     private List<Note> notes = new ArrayList<>();
     private List<Direction> directions = new ArrayList<>();
+    private String voice;
 
     public Chord() {
 
@@ -28,5 +29,13 @@ public class Chord extends MusicData {
 
     public void setDirections(List<Direction> directions) {
         this.directions = directions;
+    }
+
+    public String getVoice() {
+        return voice;
+    }
+
+    public void setVoice(String voice) {
+        this.voice = voice;
     }
 }

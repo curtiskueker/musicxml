@@ -23,16 +23,29 @@ public class MusicDataBuilder extends AbstractBuilder {
 
     }
 
+    public MusicData getMusicData() {
+        return musicData;
+    }
+
+    public void setMusicData(MusicData musicData) {
+        this.musicData = musicData;
+    }
+
     public StringBuilder build() throws BuildException {
         if (musicData == null) return stringBuilder;
 
-        Connection polyphonicVoiceType = musicData.getPolyphonicVoiceType();
-        if (polyphonicVoiceType != null) {
-            switch (polyphonicVoiceType) {
+        Connection polyphonicVoiceStart = musicData.getPolyphonicVoiceStart();
+        if (polyphonicVoiceStart != null) {
+            switch (polyphonicVoiceStart) {
                 case BEGIN:
+                    appendLine("");
                     appendLine("<<");
-                case START:
                     appendLine("{");
+                    break;
+                case START:
+                    appendLine("");
+                    appendLine("{");
+                    break;
             }
         }
 
@@ -62,15 +75,19 @@ public class MusicDataBuilder extends AbstractBuilder {
             // skip
         }
 
-        if (polyphonicVoiceType != null) {
-            switch (polyphonicVoiceType) {
+        Connection polyphonicVoiceStop = musicData.getPolyphonicVoiceStop();
+        if (polyphonicVoiceStop != null) {
+            switch (polyphonicVoiceStop) {
                 case STOP:
+                    appendLine("");
                     appendLine("}");
                     appendLine("\\\\");
                     break;
                 case END:
+                    appendLine("");
                     appendLine("}");
                     appendLine(">>");
+                    break;
             }
         }
 

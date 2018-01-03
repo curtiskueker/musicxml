@@ -27,6 +27,7 @@ import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.RepeatBlock;
 import org.curtis.musicxml.score.RepeatBlockType;
 import org.curtis.util.MathUtil;
+import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -47,7 +48,8 @@ public class MeasureBuilder extends AbstractBuilder {
     private Chord currentChord = null;
     private TupletNotes currentTuplet = null;
     private TupletNotes lastTuplet = null;
-    private SortedMap<String, List<MusicData>> voiceMap = new TreeMap<>();
+    private SortedMap<String, List<MusicDataBuilder>> voiceDataBuilders = new TreeMap<>();
+    private String currentVoice = null;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -75,7 +77,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 FullNote fullNote = currentNote.getFullNote();
                 noteFound = true;
 
-                if(currentNote.getCue()) {
+                if(skipNote(currentNote)) {
                     continue;
                 }
 
@@ -142,7 +144,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
 
-                if(currentNote.getCue()) {
+                if(skipNote(currentNote)) {
                     continue;
                 }
 
@@ -155,6 +157,7 @@ public class MeasureBuilder extends AbstractBuilder {
                         switch (chordType) {
                             case START:
                                 currentChord = new Chord();
+                                currentChord.setVoice(currentNote.getEditorialVoice().getVoice());
                             case CONTINUE:
                                 currentChord.getNotes().add(currentNote);
                                 break;
@@ -165,7 +168,7 @@ public class MeasureBuilder extends AbstractBuilder {
                                 if (tupletType == Connection.STOP || tupletType == Connection.CONTINUE) {
                                     currentTuplet.getMusicDataList().add(currentChord);
                                 } else {
-                                    musicDataBuilder = new MusicDataBuilder(currentChord);
+                                    musicDataBuilder = addToDataBuilders(currentChord);
                                 }
                                 currentChord = null;
                                 break;
@@ -176,6 +179,7 @@ public class MeasureBuilder extends AbstractBuilder {
                         switch (tupletType) {
                             case START:
                                 currentTuplet = new TupletNotes();
+                                currentTuplet.setVoice(currentNote.getEditorialVoice().getVoice());
                             case CONTINUE:
                                 if (chordType == null) {
                                     currentTuplet.getMusicDataList().add(currentNote);
@@ -189,14 +193,14 @@ public class MeasureBuilder extends AbstractBuilder {
                                     currentTuplet.getMusicDataList().addAll(currentDirections);
                                     currentDirections.clear();
                                 }
-                                musicDataBuilder = new MusicDataBuilder(currentTuplet);
+                                musicDataBuilder = addToDataBuilders(currentTuplet);
                                 lastTuplet = currentTuplet;
                                 currentTuplet = null;
                                 break;
                         }
                     }
                 } else {
-                    musicDataBuilder = new MusicDataBuilder(currentNote);
+                    musicDataBuilder = addToDataBuilders(currentNote);
                 }
 
                 // grace notes
@@ -259,7 +263,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     continue;
                 }
 
-                musicDataBuilder = new MusicDataBuilder(barline);
+                musicDataBuilder = addToDataBuilders(barline);
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
                 totalDuration = MathUtil.subtract(totalDuration, backup.getDuration());
@@ -267,17 +271,15 @@ public class MeasureBuilder extends AbstractBuilder {
             } else if (musicData instanceof Forward) {
                 Forward forward = (Forward)musicData;
                 totalDuration = MathUtil.add(totalDuration, forward.getDuration());
-                musicDataBuilder = new MusicDataBuilder(forward);
+                musicDataBuilder = addToDataBuilders(forward);
             } else if (musicData instanceof Harmony) {
                 // Harmony processed separately
                 continue;
             } else {
-                musicDataBuilder = new MusicDataBuilder(musicData);
+                musicDataBuilder = addToDataBuilders(musicData);
             }
 
             if (musicDataBuilder != null) {
-                putOnVoiceMap(musicData);
-                musicDataBuilders.add(musicDataBuilder);
                 transferDirections();
             }
         }
@@ -287,8 +289,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // put any barline at the end
         if(currentBarline != null) {
-            MusicDataBuilder barlineBuilder = new MusicDataBuilder(currentBarline);
-            musicDataBuilders.add(barlineBuilder);
+            addToDataBuilders(currentBarline);
         }
 
         // end grace notes at end of measure
@@ -306,7 +307,7 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         // process polyphonic voice map
-        processVoiceMap();
+        processVoiceBuilders();
 
         // OUTPUT
         //
@@ -341,9 +342,16 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        // Main data builder processing loop
+        // Main data builder processing loops
+        // general list first, then each build each voice
         for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
             append(musicDataBuilder.build().toString());
+        }
+        for(String voiceBuilderKey : voiceDataBuilders.keySet()) {
+            List<MusicDataBuilder> voiceDataBuilderList = voiceDataBuilders.get(voiceBuilderKey);
+            for (MusicDataBuilder voiceDataBuilder : voiceDataBuilderList) {
+                append(voiceDataBuilder.build().toString());
+            }
         }
 
         // End repeat endings
@@ -368,7 +376,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private void transferDirections() {
         if (lastTuplet == null) {
             for(Direction direction : currentDirections) {
-                musicDataBuilders.add(new MusicDataBuilder(direction));
+                addToDataBuilders(direction);
             }
         } else {
             lastTuplet.getMusicDataList().addAll(currentDirections);
@@ -377,38 +385,66 @@ public class MeasureBuilder extends AbstractBuilder {
         currentDirections.clear();
     }
 
-    private void putOnVoiceMap(MusicData musicData) {
-        String voice = null;
+    private MusicDataBuilder addToDataBuilders(MusicData musicData) {
         if (musicData instanceof Note) {
             Note note = (Note)musicData;
             EditorialVoice editorialVoice = note.getEditorialVoice();
-            if (editorialVoice != null) voice = editorialVoice.getVoice();
+            if (editorialVoice != null) currentVoice = editorialVoice.getVoice();
         } else if (musicData instanceof Forward) {
             Forward forward = (Forward)musicData;
             EditorialVoice editorialVoice = forward.getEditorialVoice();
-            if (editorialVoice != null) voice = editorialVoice.getVoice();
+            if (editorialVoice != null) currentVoice = editorialVoice.getVoice();
+        } else if (musicData instanceof Chord) {
+            Chord chord = (Chord)musicData;
+            currentVoice = chord.getVoice();
+        } else if (musicData instanceof TupletNotes) {
+            TupletNotes tupletNotes = (TupletNotes)musicData;
+            currentVoice = tupletNotes.getVoice();
         }
 
-        if (voice == null) return;
+        MusicDataBuilder musicDataBuilder = new MusicDataBuilder(musicData);
 
-        List<MusicData> voiceList = voiceMap.get(voice);
-        if(voiceList == null) voiceList = new ArrayList<>();
-        voiceList.add(musicData);
+        if (StringUtil.isEmpty(currentVoice)) {
+            musicDataBuilders.add(new MusicDataBuilder(musicData));
+        } else {
+            List<MusicDataBuilder> voiceList = voiceDataBuilders.get(currentVoice);
+            if(voiceList == null) {
+                voiceList = new ArrayList<>();
+                voiceDataBuilders.put(currentVoice, voiceList);
+            }
+
+            voiceList.add(musicDataBuilder);
+        }
+
+        return musicDataBuilder;
     }
 
-    private void processVoiceMap() {
-        if (voiceMap.size() < 2) return;
+    private void processVoiceBuilders() {
+        if (voiceDataBuilders.size() < 2) return;
 
         // Mark first and last items in each list as start and stop
-        for(List<MusicData> voiceList : voiceMap.values()) {
-            voiceList.get(0).setPolyphonicVoiceType(Connection.START);
-            voiceList.get(voiceList.size() - 1).setPolyphonicVoiceType(Connection.STOP);
+        for(List<MusicDataBuilder> voiceList : voiceDataBuilders.values()) {
+            voiceList.get(0).getMusicData().setPolyphonicVoiceStart(Connection.START);
+            voiceList.get(voiceList.size() - 1).getMusicData().setPolyphonicVoiceStop(Connection.STOP);
         }
 
         // Mark first item of first voice list, and last item of last voice list as begin and end
-        List<MusicData> firstList = voiceMap.get(voiceMap.firstKey());
-        firstList.get(0).setPolyphonicVoiceType(Connection.BEGIN);
-        List<MusicData> lastList = voiceMap.get(voiceMap.lastKey());
-        lastList.get(lastList.size() - 1).setPolyphonicVoiceType(Connection.END);
+        List<MusicDataBuilder> firstList = voiceDataBuilders.get(voiceDataBuilders.firstKey());
+        firstList.get(0).getMusicData().setPolyphonicVoiceStart(Connection.BEGIN);
+        List<MusicDataBuilder> lastList = voiceDataBuilders.get(voiceDataBuilders.lastKey());
+        lastList.get(lastList.size() - 1).getMusicData().setPolyphonicVoiceStop(Connection.END);
+    }
+
+    private boolean skipNote(Note note) {
+        if(note.getCue()) {
+            return true;
+        }
+
+        // skip non-printed chords as redundant
+        if (note.getFullNote().isChord() && !note.getPrintout().getPrintObject()) {
+            return true;
+        }
+
+        return false;
     }
 }

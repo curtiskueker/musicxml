@@ -4,7 +4,8 @@ import org.curtis.musicxml.common.Connection;
 
 public abstract class MusicData {
     private Integer staffNumber;
-    private Connection polyphonicVoiceType;
+    private Connection polyphonicVoiceStart;
+    private Connection polyphonicVoiceStop;
 
     public Integer getStaffNumber() {
         return staffNumber;
@@ -14,11 +15,19 @@ public abstract class MusicData {
         this.staffNumber = staffNumber;
     }
 
-    public Connection getPolyphonicVoiceType() {
-        return polyphonicVoiceType;
+    public Connection getPolyphonicVoiceStart() {
+        return polyphonicVoiceStart;
     }
 
-    public void setPolyphonicVoiceType(Connection polyphonicVoiceType) {
-        this.polyphonicVoiceType = polyphonicVoiceType;
+    public void setPolyphonicVoiceStart(Connection polyphonicVoiceStart) {
+        this.polyphonicVoiceStart = polyphonicVoiceStart;
+    }
+
+    public Connection getPolyphonicVoiceStop() {
+        return polyphonicVoiceStop;
+    }
+
+    public void setPolyphonicVoiceStop(Connection polyphonicVoiceStop) {
+        this.polyphonicVoiceStop = polyphonicVoiceStop;
     }
 }

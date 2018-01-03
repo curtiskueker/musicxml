@@ -262,7 +262,7 @@ public class FormattingFactory {
         EditorialVoice editorialVoice = new EditorialVoice();
         editorialVoice.setFootnote(newFormattedText(XmlUtil.getChildElement(element, "footnote")));
         editorialVoice.setLevel(newLevel(XmlUtil.getChildElement(element, "level")));
-        editorialVoice.setVoice(XmlUtil.getElementText(element));
+        editorialVoice.setVoice(XmlUtil.getChildElementText(element, "voice"));
 
         return editorialVoice;
     }

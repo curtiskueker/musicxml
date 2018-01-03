@@ -27,7 +27,7 @@ public class DirectionHandler extends MusicDataHandler {
         EditorialVoiceDirection editorialVoiceDirection = new EditorialVoiceDirection();
         editorialVoiceDirection.setFootnote(FormattingFactory.newFormattedText(XmlUtil.getChildElement(element, "footnote")));
         editorialVoiceDirection.setLevel(FormattingFactory.newLevel(XmlUtil.getChildElement(element, "level")));
-        editorialVoiceDirection.setVoice(XmlUtil.getElementText(element));
+        editorialVoiceDirection.setVoice(XmlUtil.getChildElementText(element, "voice"));
         direction.setEditorialVoiceDirection(editorialVoiceDirection);
         direction.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
 

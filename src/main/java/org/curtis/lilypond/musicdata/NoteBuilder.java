@@ -349,7 +349,7 @@ public class NoteBuilder extends MusicDataBuilder {
     public StringBuilder buildForward(Forward forward) throws BuildException {
         BigDecimal duration = forward.getDuration();
 
-        append("s");
+        append(" s");
         try {
             append(TimeSignatureUtil.getRepresentationValue(MathUtil.divide(duration, PartBuilder.CURRENT_ATTRIBUTES.getDivisions())));
         } catch (TimeSignatureException e) {
