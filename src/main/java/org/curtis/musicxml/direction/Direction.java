@@ -12,9 +12,7 @@ import java.util.List;
 public class Direction extends MusicData {
     private List<DirectionType> directionTypes = new ArrayList<>();
     private Offset offset;
-    private FormattedText footnote;
-    private Level level;
-    private String voice;
+    private EditorialVoiceDirection editorialVoiceDirection;
     private Integer staff;
     private Sound sound;
     private Location placement;
@@ -40,28 +38,12 @@ public class Direction extends MusicData {
         this.offset = offset;
     }
 
-    public FormattedText getFootnote() {
-        return footnote;
+    public EditorialVoiceDirection getEditorialVoiceDirection() {
+        return editorialVoiceDirection;
     }
 
-    public void setFootnote(FormattedText footnote) {
-        this.footnote = footnote;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public String getVoice() {
-        return voice;
-    }
-
-    public void setVoice(String voice) {
-        this.voice = voice;
+    public void setEditorialVoiceDirection(EditorialVoiceDirection editorialVoiceDirection) {
+        this.editorialVoiceDirection = editorialVoiceDirection;
     }
 
     public Integer getStaff() {

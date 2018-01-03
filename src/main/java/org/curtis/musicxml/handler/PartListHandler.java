@@ -2,6 +2,7 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.factory.AttributesFactory;
+import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.score.GroupName;
 import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.PartGroup;
@@ -35,6 +36,7 @@ public class PartListHandler extends AbstractHandler {
                     if(type.equals("start")) {
                         currentPartGroup = new PartGroup();
 
+                        currentPartGroup.setEditorial(FormattingFactory.newEditorial(partListSubelement));
                         currentPartGroup.setNumber(partListSubelement.getAttribute("number"));
 
                         GroupName groupName = new GroupName();

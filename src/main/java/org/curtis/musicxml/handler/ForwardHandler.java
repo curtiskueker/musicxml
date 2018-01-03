@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -16,6 +17,7 @@ public class ForwardHandler extends MusicDataHandler {
         Forward forward = new Forward();
 
         forward.setDuration(MathUtil.newBigDecimal(XmlUtil.getChildElementText(element, "duration")));
+        forward.setEditorialVoice(FormattingFactory.newEditorialVoice(element));
         forward.setStaff(StringUtil.getInteger(XmlUtil.getChildElementText(element, "staff")));
 
         return forward;

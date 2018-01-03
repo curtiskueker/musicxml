@@ -133,6 +133,7 @@ public class LyricHandler extends AbstractHandler {
             }
         }
 
+        lyric.setEditorial(FormattingFactory.newEditorial(element));
         lyric.setNumber(element.getAttribute("number"));
         lyric.setName(element.getAttribute("name"));
         lyric.setJustify(PlacementUtil.getLocation("justify"));

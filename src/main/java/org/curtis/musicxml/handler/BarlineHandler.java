@@ -28,6 +28,7 @@ public class BarlineHandler extends MusicDataHandler {
 
     public MusicData handle(Element element) {
         Barline barline = new Barline();
+        barline.setEditorial(FormattingFactory.newEditorial(element));
         barline.setLocation(PlacementUtil.getLocation(element.getAttribute("location")));
         barline.setSegno(element.getAttribute("segno"));
         barline.setCoda(element.getAttribute("coda"));

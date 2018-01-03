@@ -1,7 +1,6 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.FormattedText;
-import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
@@ -24,7 +23,6 @@ import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Tie;
-import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.XPosition;
 import org.curtis.musicxml.note.YPosition;
@@ -54,6 +52,7 @@ public class NoteHandler extends MusicDataHandler {
         xPosition.setRelativeY(MathUtil.newBigDecimal(element.getAttribute("relative-y")));
         note.setxPosition(xPosition);
 
+        note.setEditorialVoice(FormattingFactory.newEditorialVoice(element));
         note.setFont(FormattingFactory.newFont(element));
         note.setColor(element.getAttribute("color"));
         note.setPrintout(FormattingFactory.newPrintout(element));
@@ -128,11 +127,7 @@ public class NoteHandler extends MusicDataHandler {
                     accidental.setAccidentalType(NoteFactory.newAccidentalType(noteSubelement));
                     accidental.setCautionary(TypeUtil.getYesNo(noteSubelement.getAttribute("cautionary")));
                     accidental.setEditorial(TypeUtil.getYesNo(noteSubelement.getAttribute("editorial")));
-                    LevelDisplay levelDisplay = new LevelDisplay();
-                    levelDisplay.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
-                    levelDisplay.setBracket(TypeUtil.getYesNo(noteSubelement.getAttribute("bracket")));
-                    levelDisplay.setSize(FormattingFactory.newSymbolSize(noteSubelement));
-                    accidental.setLevelDisplay(levelDisplay);
+                    accidental.setLevelDisplay(FormattingFactory.newLevelDisplay(noteSubelement));
                     accidental.setPrintStyle(FormattingFactory.newPrintStyle(noteSubelement));
                     note.setAccidental(accidental);
                     break;

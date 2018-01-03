@@ -48,6 +48,8 @@ public class HarmonyHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Harmony harmony = new Harmony();
 
+        harmony.setEditorial(FormattingFactory.newEditorial(element));
+
         List<Element> harmonySubelements = XmlUtil.getChildElements(element);
         HarmonyChord harmonyChord = null;
         for(Element harmonySubelement: harmonySubelements) {

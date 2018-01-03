@@ -2,12 +2,16 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.CssFontSize;
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FontStyle;
 import org.curtis.musicxml.common.FontWeight;
 import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.common.Level;
+import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
@@ -240,5 +244,48 @@ public class FormattingFactory {
             default:
                 return null;
         }
+    }
+
+    public static Editorial newEditorial(Element element) {
+        if (element == null) return null;
+
+        Editorial editorial = new Editorial();
+        editorial.setFootnote(newFormattedText(XmlUtil.getChildElement(element, "footnote")));
+        editorial.setLevel(newLevel(XmlUtil.getChildElement(element, "level")));
+
+        return editorial;
+    }
+
+    public static EditorialVoice newEditorialVoice(Element element) {
+        if (element == null) return null;
+
+        EditorialVoice editorialVoice = new EditorialVoice();
+        editorialVoice.setFootnote(newFormattedText(XmlUtil.getChildElement(element, "footnote")));
+        editorialVoice.setLevel(newLevel(XmlUtil.getChildElement(element, "level")));
+        editorialVoice.setVoice(XmlUtil.getElementText(element));
+
+        return editorialVoice;
+    }
+
+    public static Level newLevel(Element element) {
+        if (element == null) return null;
+
+        Level level = new Level();
+        level.setValue(XmlUtil.getElementText(element));
+        level.setReference(TypeUtil.getYesNo(element.getAttribute("reference")));
+        level.setLevelDisplay(newLevelDisplay(element));
+
+        return level;
+    }
+
+    public static LevelDisplay newLevelDisplay(Element element) {
+        if (element == null) return null;
+
+        LevelDisplay levelDisplay = new LevelDisplay();
+        levelDisplay.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
+        levelDisplay.setBracket(TypeUtil.getYesNo(element.getAttribute("bracket")));
+        levelDisplay.setSize(FormattingFactory.newSymbolSize(element));
+
+        return levelDisplay;
     }
 }

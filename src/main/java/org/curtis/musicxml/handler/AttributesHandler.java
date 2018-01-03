@@ -38,6 +38,8 @@ public class AttributesHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Attributes attributes = new Attributes();
 
+        attributes.setEditorial(FormattingFactory.newEditorial(element));
+
         List<Element> attributesSubelements = XmlUtil.getChildElements(element);
         for(Element attributeSubelement : attributesSubelements) {
             switch (attributeSubelement.getTagName()) {

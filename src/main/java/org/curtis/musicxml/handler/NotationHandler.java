@@ -24,6 +24,7 @@ public class NotationHandler extends AbstractHandler {
 
     public void handle(Element element) {
         Notations notations = new Notations();
+        notations.setEditorial(FormattingFactory.newEditorial(element));
         List<Notation> notationList = notations.getNotations();
         List<Element> notationsSubelements = XmlUtil.getChildElements(element);
         for(Element notationsSubelement : notationsSubelements) {
