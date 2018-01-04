@@ -19,6 +19,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildWords(Words words) {
+        if (words.isTextMark()) append("\\mark ");
         append("\\markup { ");
 
         FormattedText formattedText = words.getFormattedText();

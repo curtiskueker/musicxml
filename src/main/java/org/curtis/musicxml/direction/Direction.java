@@ -1,8 +1,6 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.FormattedText;
-import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.score.MusicData;
 

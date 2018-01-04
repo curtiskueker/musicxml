@@ -30,6 +30,7 @@ public class DirectionHandler extends MusicDataHandler {
         editorialVoiceDirection.setVoice(XmlUtil.getChildElementText(element, "voice"));
         direction.setEditorialVoiceDirection(editorialVoiceDirection);
         direction.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        direction.setDirective(TypeUtil.getYesNo(element.getAttribute("directive")));
 
         List<Element> directionSubelements = XmlUtil.getChildElements(element);
         for(Element directionSubelement : directionSubelements) {
@@ -53,12 +54,6 @@ public class DirectionHandler extends MusicDataHandler {
                     Sound sound = new Sound();
                     sound.setDynamics(MathUtil.newBigDecimal(directionSubelement.getAttribute("dynamics")));
                     direction.setSound(sound);
-                    break;
-                case "placement":
-                    direction.setPlacement(PlacementUtil.getLocation(directionSubelement.getAttribute("placement")));
-                    break;
-                case "directive":
-                    direction.setDirective(TypeUtil.getYesNo(directionSubelement.getAttribute("directive")));
                     break;
             }
         }

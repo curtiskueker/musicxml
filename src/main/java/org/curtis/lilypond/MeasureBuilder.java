@@ -12,6 +12,9 @@ import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.Words;
+import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
@@ -250,8 +253,11 @@ public class MeasureBuilder extends AbstractBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
-                // defer directions until end of next note
-                currentDirections.add(direction);
+                if (deferredDirection(direction)) {
+                    currentDirections.add(direction);
+                }
+
+                addToDataBuilders(direction);
                 continue;
             } else if(musicData instanceof Barline) {
                 lastTuplet = null;
@@ -446,5 +452,22 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         return false;
+    }
+
+    private boolean deferredDirection(Direction direction) {
+        boolean isDeferred = true;
+        if (direction.getDirective()) isDeferred = false;
+
+        Location placement = direction.getPlacement();
+        for (DirectionType directionType : direction.getDirectionTypes()) {
+            if (directionType instanceof Metronome) isDeferred = false;
+            if (directionType instanceof Words && placement == null) {
+                isDeferred = false;
+                Words words = (Words)directionType;
+                words.setTextMark(true);
+            }
+        }
+
+        return isDeferred;
     }
 }

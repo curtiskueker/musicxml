@@ -4,6 +4,7 @@ import org.curtis.musicxml.common.FormattedText;
 
 public class Words extends DirectionType {
     private FormattedText formattedText;
+    private boolean textMark = false;
 
     public Words() {
 
@@ -15,5 +16,13 @@ public class Words extends DirectionType {
 
     public void setFormattedText(FormattedText formattedText) {
         this.formattedText = formattedText;
+    }
+
+    public boolean isTextMark() {
+        return textMark;
+    }
+
+    public void setTextMark(boolean textMark) {
+        this.textMark = textMark;
     }
 }
