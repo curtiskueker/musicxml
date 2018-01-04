@@ -1,6 +1,5 @@
 package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.musicxml.attributes.Attributes;

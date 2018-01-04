@@ -17,8 +17,9 @@ public class LyricBuilder extends MusicDataBuilder {
 
             TextData textData = lyricSyllable.getText();
             if(textData != null) {
+                append("\"");
                 append(textData.getValue());
-                append(" ");
+                append("\" ");
             }
 
             Connection syllabic = lyricSyllable.getSyllabic();

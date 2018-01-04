@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
+import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,10 +51,16 @@ public class KeyBuilder extends MusicDataBuilder {
         append("\\key ");
 
         String mode = traditionalKey.getMode();
-        if(mode.equals("major")) {
-            append(MAJOR_KEY_MAP.get(traditionalKey.getFifths()));
-        } else if(mode.equals("minor")) {
-            append(MINOR_KEY_MAP.get(traditionalKey.getFifths()));
+
+        // default mode to major
+        if (StringUtil.isEmpty(mode)) mode = "major";
+        switch (mode) {
+            case "major":
+                append(MAJOR_KEY_MAP.get(traditionalKey.getFifths()));
+                break;
+            case "minor":
+                append(MINOR_KEY_MAP.get(traditionalKey.getFifths()));
+                break;
         }
         append(" \\");
         appendLine(mode);

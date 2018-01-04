@@ -204,12 +204,14 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private void beamBuild() {
+    private StringBuilder beamBuild() {
         if(note.getBeginBeam()) {
             append("[");
         } else if(note.getEndBeam()) {
             append("]");
         }
+
+        return stringBuilder;
     }
 
     public StringBuilder buildNote(Note note) throws BuildException {
@@ -254,7 +256,8 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         for (NoteBuilder noteBuilder : noteBuilders) {
-            noteBuilder.beamBuild();
+            noteBuilder.clear();
+            append(noteBuilder.beamBuild().toString());
         }
 
         for(NoteBuilder noteBuilder : noteBuilders) {
