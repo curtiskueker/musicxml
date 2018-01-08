@@ -1,7 +1,10 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
+import org.curtis.lilypond.util.AttributesUtil;
+import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.direction.harmony.Root;
@@ -26,26 +29,44 @@ public class HarmonyPartBuilder extends AbstractBuilder {
     }
 
     public StringBuilder build() throws BuildException {
+        PartBuilder.CURRENT_PART_ID = "Harmony Builder";
         appendLine("\\new ChordNames \\chordmode {");
 
         BigDecimal currentDivisions = MathUtil.ZERO;
         BigDecimal currentDuration = MathUtil.ZERO;
 
-        Harmony currentHarmony = new Harmony();
-        Root currentRoot = new Root();
-        RootStep currentRootStep = new RootStep();
-        currentRoot.setRootStep(currentRootStep);
-        currentHarmony.getHarmonyChords().add(currentRoot);
-
         List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
+        Harmony currentHarmony = newEmptyHarmony();
+
         for(Measure measure : part.getMeasures()) {
             for(MusicData musicData : measure.getMusicDataList()) {
                 if(musicData instanceof Harmony) {
-                    currentHarmony.setDivisions(MathUtil.divide(currentDuration, currentDivisions));
+                    BigDecimal totalBeats = MathUtil.divide(currentDuration, currentDivisions);
 
                     if (musicDataBuilders.isEmpty() && MathUtil.isPositive(currentDuration)) {
                         MusicDataBuilder emptyHarmonyBuilder = new MusicDataBuilder(currentHarmony);
                         musicDataBuilders.add(emptyHarmonyBuilder);
+                    }
+
+                    BigDecimal currentMeasureBeats;
+                    try {
+                        currentMeasureBeats = TimeSignatureUtil.getCurrentMeasureBeats();
+                    } catch (TimeSignatureException e) {
+                        throw new BuildException(e.getMessage());
+                    }
+                    if (MathUtil.largerThan(totalBeats, currentMeasureBeats)) {
+                        currentHarmony.setTotalBeats(currentMeasureBeats);
+                        totalBeats = MathUtil.subtract(totalBeats, currentMeasureBeats);
+                        while (MathUtil.isPositive(totalBeats)) {
+                            Harmony emptyHarmony = newEmptyHarmony();
+                            BigDecimal emptyHarmonyTotalBeats = MathUtil.largerThan(totalBeats, currentMeasureBeats) ? currentMeasureBeats : totalBeats;
+                            emptyHarmony.setTotalBeats(emptyHarmonyTotalBeats);
+                            MusicDataBuilder emptyHarmonyBuilder = new MusicDataBuilder(emptyHarmony);
+                            musicDataBuilders.add(emptyHarmonyBuilder);
+                            totalBeats = MathUtil.subtract(totalBeats, emptyHarmonyTotalBeats);
+                        }
+                    } else {
+                        currentHarmony.setTotalBeats(totalBeats);
                     }
 
                     Harmony harmony = (Harmony)musicData;
@@ -55,6 +76,7 @@ public class HarmonyPartBuilder extends AbstractBuilder {
                     currentDuration = MathUtil.ZERO;
                 } else if (musicData instanceof Attributes) {
                     Attributes attributes = (Attributes)musicData;
+                    AttributesUtil.setCurrentAttributes(attributes);
                     BigDecimal divisions = attributes.getDivisions();
                     if (divisions != null) currentDivisions = divisions;
                 } else if (musicData instanceof Note) {
@@ -71,7 +93,7 @@ public class HarmonyPartBuilder extends AbstractBuilder {
         }
 
         // set the last harmony to the accumulated duration
-        currentHarmony.setDivisions(MathUtil.divide(currentDuration, currentDivisions));
+        currentHarmony.setTotalBeats(MathUtil.divide(currentDuration, currentDivisions));
 
         for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
             append(musicDataBuilder.build().toString());
@@ -81,5 +103,15 @@ public class HarmonyPartBuilder extends AbstractBuilder {
         appendLine("}");
 
         return stringBuilder;
+    }
+
+    private Harmony newEmptyHarmony() {
+        Harmony harmony = new Harmony();
+        Root root = new Root();
+        RootStep rootStep = new RootStep();
+        root.setRootStep(rootStep);
+        harmony.getHarmonyChords().add(root);
+
+        return harmony;
     }
 }

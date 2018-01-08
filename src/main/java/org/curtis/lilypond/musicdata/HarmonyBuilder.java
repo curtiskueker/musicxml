@@ -32,7 +32,7 @@ public class HarmonyBuilder extends MusicDataBuilder {
             }
 
             try {
-                append(TimeSignatureUtil.getRepresentationValue(harmony.getDivisions()));
+                append(TimeSignatureUtil.getRepresentationValue(harmony.getTotalBeats()));
             } catch (TimeSignatureException e) {
                 throw new BuildException(e.getMessage());
             }

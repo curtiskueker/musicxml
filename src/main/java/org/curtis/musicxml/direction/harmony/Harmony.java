@@ -21,7 +21,7 @@ public class Harmony extends MusicData {
     private Boolean printFrame;
     private PrintStyle printStyle;
     private Location placement;
-    private BigDecimal divisions;
+    private BigDecimal totalBeats;
 
     public Harmony() {
 
@@ -107,11 +107,11 @@ public class Harmony extends MusicData {
         this.placement = placement;
     }
 
-    public BigDecimal getDivisions() {
-        return divisions;
+    public BigDecimal getTotalBeats() {
+        return totalBeats;
     }
 
-    public void setDivisions(BigDecimal divisions) {
-        this.divisions = divisions;
+    public void setTotalBeats(BigDecimal totalBeats) {
+        this.totalBeats = totalBeats;
     }
 }

@@ -134,8 +134,13 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         // Calculate expected divisions in the measure
-        TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature(PartBuilder.CURRENT_ATTRIBUTES.getTimeList());
-        BigDecimal totalBeats = TimeSignatureUtil.getTotalBeats(currentTimeSignature.getBeats(), currentTimeSignature.getBeatType());
+        TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
+        BigDecimal totalBeats;
+        try {
+            totalBeats = TimeSignatureUtil.getCurrentMeasureBeats();
+        } catch (TimeSignatureException e) {
+            throw new BuildException(e.getMessage());
+        }
         BigDecimal expectedDuration = MathUtil.multiply(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), totalBeats);
         BigDecimal totalDuration = MathUtil.ZERO;
 

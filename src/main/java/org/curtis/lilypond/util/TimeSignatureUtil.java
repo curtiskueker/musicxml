@@ -17,7 +17,7 @@ public class TimeSignatureUtil {
     }
 
     public static String getWholeMeasureRepresentation() throws TimeSignatureException {
-        TimeSignatureType timeSignature = getCurrentTimeSignature(PartBuilder.CURRENT_ATTRIBUTES.getTimeList());
+        TimeSignatureType timeSignature = getCurrentTimeSignature();
         if(timeSignature == null) return "";
         return getWholeMeasureRepresentation(timeSignature.getBeats(), timeSignature.getBeatType());
     }
@@ -49,7 +49,7 @@ public class TimeSignatureUtil {
 
         // If represenetation isn't a multiple of 2, or loop count greater than one, throw an exception
         if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || loopCount > 1) {
-            throw new TimeSignatureException("Invalid duration representation value");
+            throw new TimeSignatureException("Invalid duration representation value.  Total beats: " + totalBeats);
         }
 
 
@@ -66,11 +66,13 @@ public class TimeSignatureUtil {
         return MathUtil.isNegative(MathUtil.subtract(MathUtil.subtract(value, comparisonValue).abs(), MathUtil.newBigDecimal(.1)));
     }
 
-    public static BigDecimal getTotalBeats(String numerator, String denominator) {
-        BigDecimal numeratorValue = MathUtil.newBigDecimal(numerator);
-        BigDecimal denominatorValue = MathUtil.newBigDecimal(denominator);
+    public static BigDecimal getCurrentMeasureBeats() throws TimeSignatureException {
+        TimeSignatureType currentTimeSignature = getCurrentTimeSignature();
+        if (currentTimeSignature == null) throw new TimeSignatureException("Current time signature not found");
+        BigDecimal numerator = MathUtil.newBigDecimal(currentTimeSignature.getBeats());
+        BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
 
-        return getTotalBeats(numeratorValue, denominatorValue);
+        return getTotalBeats(numerator, denominator);
     }
 
     public static BigDecimal getTotalBeats(BigDecimal numerator, BigDecimal denominator) {
@@ -78,7 +80,8 @@ public class TimeSignatureUtil {
         return MathUtil.divide(MathUtil.multiply(MathUtil.newBigDecimal(4), numerator), denominator);
     }
 
-    public static TimeSignatureType getCurrentTimeSignature(List<Time> timeList) {
+    public static TimeSignatureType getCurrentTimeSignature() {
+        List<Time> timeList = PartBuilder.CURRENT_ATTRIBUTES.getTimeList();
         for(Time time : timeList) {
             if (time instanceof TimeSignature) {
                 TimeSignature timeSignature = (TimeSignature)time;
