@@ -255,9 +255,10 @@ public class MeasureBuilder extends AbstractBuilder {
                 Direction direction = (Direction)musicData;
                 if (deferredDirection(direction)) {
                     currentDirections.add(direction);
+                } else {
+                    addToDataBuilders(direction);
                 }
 
-                addToDataBuilders(direction);
                 continue;
             } else if(musicData instanceof Barline) {
                 lastTuplet = null;
