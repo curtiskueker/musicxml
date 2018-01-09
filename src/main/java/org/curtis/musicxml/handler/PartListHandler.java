@@ -6,12 +6,12 @@ import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
+import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.score.GroupBarline;
 import org.curtis.musicxml.score.GroupBarlineType;
 import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
-import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
@@ -21,7 +21,6 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PartListHandler extends AbstractHandler {
@@ -33,51 +32,45 @@ public class PartListHandler extends AbstractHandler {
 
     public void handle(Element element) {
         List<Element> partListSubelements = XmlUtil.getChildElements(element);
-        PartGroup currentPartGroup = null;
         for(Element partListSubelement : partListSubelements) {
             String elementName = partListSubelement.getTagName();
             switch (elementName) {
                 case "part-group":
-                    String type = partListSubelement.getAttribute("type");
-                    if(type.equals("start")) {
-                        currentPartGroup = new PartGroup();
-                        currentPartGroup.setEditorial(FormattingFactory.newEditorial(partListSubelement));
-                        currentPartGroup.setNumber(partListSubelement.getAttribute("number"));
-                        currentPartGroup.setGroupName(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-name")));
-                        currentPartGroup.setGroupNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-name-display")));
-                        currentPartGroup.setGroupAbbreviation(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-abbreviation")));
-                        currentPartGroup.setGroupAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-abbreviation-display")));
-                        Element groupSymbolElement = XmlUtil.getChildElement(partListSubelement, "group-symbol");
-                        if (groupSymbolElement != null) {
-                            GroupSymbol groupSymbol = new GroupSymbol();
-                            groupSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(groupSymbolElement));
-                            groupSymbol.setPosition(PlacementFactory.newPosition(groupSymbolElement));
-                            groupSymbol.setColor(groupSymbolElement.getAttribute("color"));
-                            currentPartGroup.setGroupSymbol(groupSymbol);
-                        }
-                        Element groupBarlineElement = XmlUtil.getChildElement(partListSubelement, "group-barline");
-                        if (groupBarlineElement != null) {
-                            GroupBarline groupBarline = new GroupBarline();
-                            String groupBarlineValue = XmlUtil.getElementText(groupBarlineElement);
-                            switch (groupBarlineValue) {
-                                case "yes":
-                                    groupBarline.setGroupBarlineValue(GroupBarlineType.YES);
-                                    break;
-                                case "no":
-                                    groupBarline.setGroupBarlineValue(GroupBarlineType.NO);
-                                    break;
-                                case "Mensurstrich":
-                                    groupBarline.setGroupBarlineValue(GroupBarlineType.MENSURSTRICH);
-                                    break;
-                            }
-                            groupBarline.setColor(groupBarlineElement.getAttribute("color"));
-                        }
-                        currentPartGroup.setGroupTime(XmlUtil.hasChildElement(partListSubelement, "group-time"));
-                    } else if(type.equals("stop")) {
-                        partList.getPartItems().add(currentPartGroup);
-                        currentPartGroup = null;
+                    PartGroup partGroup = new PartGroup();
+                    partGroup.setType(PlacementUtil.getConnection(partListSubelement.getAttribute("type")));
+                    partGroup.setEditorial(FormattingFactory.newEditorial(partListSubelement));
+                    partGroup.setNumber(partListSubelement.getAttribute("number"));
+                    partGroup.setGroupName(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-name")));
+                    partGroup.setGroupNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-name-display")));
+                    partGroup.setGroupAbbreviation(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-abbreviation")));
+                    partGroup.setGroupAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-abbreviation-display")));
+                    Element groupSymbolElement = XmlUtil.getChildElement(partListSubelement, "group-symbol");
+                    if (groupSymbolElement != null) {
+                        GroupSymbol groupSymbol = new GroupSymbol();
+                        groupSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(groupSymbolElement));
+                        groupSymbol.setPosition(PlacementFactory.newPosition(groupSymbolElement));
+                        groupSymbol.setColor(groupSymbolElement.getAttribute("color"));
+                        partGroup.setGroupSymbol(groupSymbol);
                     }
-
+                    Element groupBarlineElement = XmlUtil.getChildElement(partListSubelement, "group-barline");
+                    if (groupBarlineElement != null) {
+                        GroupBarline groupBarline = new GroupBarline();
+                        String groupBarlineValue = XmlUtil.getElementText(groupBarlineElement);
+                        switch (groupBarlineValue) {
+                            case "yes":
+                                groupBarline.setGroupBarlineValue(GroupBarlineType.YES);
+                                break;
+                            case "no":
+                                groupBarline.setGroupBarlineValue(GroupBarlineType.NO);
+                                break;
+                            case "Mensurstrich":
+                                groupBarline.setGroupBarlineValue(GroupBarlineType.MENSURSTRICH);
+                                break;
+                        }
+                        groupBarline.setColor(groupBarlineElement.getAttribute("color"));
+                    }
+                    partGroup.setGroupTime(XmlUtil.hasChildElement(partListSubelement, "group-time"));
+                    partList.getPartItems().add(partGroup);
                     break;
                 case "score-part":
                     ScorePart scorePart = new ScorePart();
@@ -121,13 +114,7 @@ public class PartListHandler extends AbstractHandler {
                         midiInstrument.setPan(MathUtil.newBigDecimal(XmlUtil.getChildElementText(midiInstrumentElement, "pan")));
                         midiInstruments.add(midiInstrument);
                     }
-
-                    if(currentPartGroup == null) {
-                        partList.getPartItems().add(scorePart);
-                    } else {
-                        currentPartGroup.getScoreParts().add(scorePart);
-                    }
-
+                    partList.getPartItems().add(scorePart);
                     break;
             }
         }

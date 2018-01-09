@@ -2,6 +2,7 @@ package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.note.Backup;
@@ -51,20 +52,14 @@ public class ScoreBuilder extends AbstractBuilder {
         for (PartItem partItem : partItems) {
             if(partItem instanceof PartGroup) {
                 PartGroup partGroup = (PartGroup)partItem;
-                //System.err.println("Part group start " + partGroup.getNumber() + " ");
-
-                appendLine("\\new StaffGroup <<");
-
-                for(ScorePart scorePart : partGroup.getScoreParts()) {
-                    //System.err.println("Score part " + scorePart.getId());
-                    buildPart(scorePart);
+                Connection partGroupType = partGroup.getType();
+                if (partGroupType == Connection.START) {
+                    appendLine("\\new StaffGroup <<");
+                } else if (partGroupType == Connection.STOP) {
+                    appendLine(">>");
                 }
-
-                //System.err.println("Part group stop " + partGroup.getNumber() + " ");
-                appendLine(">>");
             } else if(partItem instanceof ScorePart) {
                 ScorePart scorePart = (ScorePart)partItem;
-                //System.err.println("Score part " + scorePart.getId());
                 appendLine("<<");
                 buildPart(scorePart);
                 appendLine(">>");

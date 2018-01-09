@@ -4,9 +4,6 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.NameDisplay;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PartGroup extends PartItem {
     private GroupName groupName;
     private NameDisplay groupNameDisplay;
@@ -18,7 +15,6 @@ public class PartGroup extends PartItem {
     private Editorial editorial;
     private Connection type;
     private String number = "1";
-    private List<ScorePart> scoreParts = new ArrayList<>();
 
     public PartGroup() {
 
@@ -102,13 +98,5 @@ public class PartGroup extends PartItem {
 
     public void setNumber(String number) {
         this.number = number;
-    }
-
-    public List<ScorePart> getScoreParts() {
-        return scoreParts;
-    }
-
-    public void setScoreParts(List<ScorePart> scoreParts) {
-        this.scoreParts = scoreParts;
     }
 }

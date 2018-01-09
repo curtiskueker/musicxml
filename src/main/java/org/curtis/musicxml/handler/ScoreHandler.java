@@ -1,6 +1,5 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
@@ -13,7 +12,6 @@ import java.util.TreeSet;
 
 public class ScoreHandler extends AbstractHandler {
     private Score score;
-    private List<Element> partElements;
     private static SortedSet<String> TAG_NAMES = new TreeSet<>();
     public static Boolean DEBUG;
 
@@ -34,33 +32,23 @@ public class ScoreHandler extends AbstractHandler {
         scoreHeaderHandler.handle(element);
 
         // handle the parts
-        partElements = XmlUtil.getChildElements(element, "part");
+        List<Element> partElements = XmlUtil.getChildElements(element, "part");
         for(PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
-            if(partItem instanceof PartGroup) {
-                PartGroup partGroup = (PartGroup)partItem;
-                for(ScorePart scorePart : partGroup.getScoreParts()) {
-                    handleScorePart(scorePart);
+            if(partItem instanceof ScorePart) {
+                ScorePart scorePart = (ScorePart) partItem;
+                String partId = scorePart.getId();
+                for (Element partElement : partElements) {
+                    if (partId.equals(partElement.getAttribute("id"))) {
+                        PartHandler partHandler = new PartHandler(score.getParts());
+                        partHandler.handle(partElement);
+                    }
                 }
-            } else if(partItem instanceof ScorePart) {
-                ScorePart scorePart = (ScorePart)partItem;
-                handleScorePart(scorePart);
             }
         }
 
         if (DEBUG) {
             for (String tagName : TAG_NAMES) {
                 System.err.println("Tag name: " + tagName);
-            }
-        }
-    }
-
-    private void handleScorePart(ScorePart scorePart) {
-        String partId = scorePart.getId();
-        for(Element partElement : partElements) {
-            if(partId.equals(partElement.getAttribute("id"))) {
-                PartHandler partHandler = new PartHandler(score.getParts());
-                partHandler.handle(partElement);
-                return;
             }
         }
     }
