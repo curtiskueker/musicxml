@@ -37,13 +37,14 @@ public class MusicXml2Ly {
     }
 
     public static void main(String args[]) {
-        if(args.length < 2) {
+        String xmlFilename = args[0];
+        String outputfilename = args[1];
+        ScoreHandler.DEBUG = new Boolean(args[2]);
+
+        if (xmlFilename.equals("EMPTY") || outputfilename.equals("EMPTY")) {
             System.err.println("Usage: mysicXml2Ly -f inputfile -o outputfile");
             return;
         }
-
-        String xmlFilename = args[0];
-        String outputfilename = args[1];
 
         MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
         try {

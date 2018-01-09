@@ -8,10 +8,14 @@ import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class ScoreHandler extends AbstractHandler {
     private Score score;
     private List<Element> partElements;
+    private static SortedSet<String> TAG_NAMES = new TreeSet<>();
+    public static Boolean DEBUG;
 
     public ScoreHandler() {
         
@@ -22,6 +26,7 @@ public class ScoreHandler extends AbstractHandler {
     }
 
     public void handle(Element element) {
+        if (DEBUG) setTagNames(element);
         score = new Score();
 
         // handle the score header
@@ -41,6 +46,12 @@ public class ScoreHandler extends AbstractHandler {
                 handleScorePart(scorePart);
             }
         }
+
+        if (DEBUG) {
+            for (String tagName : TAG_NAMES) {
+                System.err.println("Tag name: " + tagName);
+            }
+        }
     }
 
     private void handleScorePart(ScorePart scorePart) {
@@ -51,6 +62,14 @@ public class ScoreHandler extends AbstractHandler {
                 partHandler.handle(partElement);
                 return;
             }
+        }
+    }
+
+    private void setTagNames(Element element) {
+        TAG_NAMES.add(element.getTagName());
+        List<Element> children = XmlUtil.getChildElements(element);
+        for (Element child : children) {
+            setTagNames(child);
         }
     }
 }
