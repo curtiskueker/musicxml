@@ -4,6 +4,7 @@ import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.MusicData;
 
 import java.lang.reflect.InvocationTargetException;
@@ -72,8 +73,10 @@ public class MusicDataBuilder extends AbstractBuilder {
                 System.err.println(PartBuilder.CURRENT_PART_ID + ": MusicData exception: " + e.getCause().getMessage());
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("");
+            if (ScoreHandler.DEBUG) {
+                e.printStackTrace();
+                System.err.println("");
+            }
             // skip
         }
 
