@@ -34,6 +34,7 @@ public class ScoreBuilder extends AbstractBuilder {
 
         // begin score
         appendLine("\\score {");
+        appendLine("<<");
 
         List<PartItem> partItems = score.getScoreHeader().getPartList().getPartItems();
         if(partItems.isEmpty()) {
@@ -49,16 +50,20 @@ public class ScoreBuilder extends AbstractBuilder {
         for (PartItem partItem : partItems) {
             if(partItem instanceof PartGroup) {
                 PartGroup partGroup = (PartGroup)partItem;
+                //System.err.println("Part group start " + partGroup.getNumber() + " ");
 
                 appendLine("\\new StaffGroup <<");
 
                 for(ScorePart scorePart : partGroup.getScoreParts()) {
+                    System.err.println("Score part " + scorePart.getId());
                     buildPart(scorePart);
                 }
 
+                //System.err.println("Part group stop " + partGroup.getNumber() + " ");
                 appendLine(">>");
             } else if(partItem instanceof ScorePart) {
                 ScorePart scorePart = (ScorePart)partItem;
+                //System.err.println("Score part " + scorePart.getId());
                 appendLine("<<");
                 buildPart(scorePart);
                 appendLine(">>");
@@ -70,6 +75,7 @@ public class ScoreBuilder extends AbstractBuilder {
         }
 
         // end score
+        appendLine(">>");
         appendLine("}");
 
         return stringBuilder;
