@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.LineShape;
 import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.notation.AccidentalMark;
+import org.curtis.musicxml.note.notation.Bezier;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.FermataShape;
 import org.curtis.musicxml.note.notation.FermataType;
@@ -17,6 +18,8 @@ import org.curtis.musicxml.note.notation.TupletDot;
 import org.curtis.musicxml.note.notation.TupletNumber;
 import org.curtis.musicxml.note.notation.TupletPortion;
 import org.curtis.musicxml.note.notation.TupletType;
+import org.curtis.musicxml.note.notation.technical.bend.BendSound;
+import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -283,5 +286,31 @@ public class NotationFactory {
         dynamics.setEnclosure(FormattingFactory.newEnclosureShape(element));
 
         return dynamics;
+    }
+
+    public static Bezier newBezier(Element element) {
+        if (element == null) return null;
+
+        Bezier bezier = new Bezier();
+        bezier.setBezierOffset(MathUtil.newBigDecimal(element.getAttribute("bezier-offset")));
+        bezier.setBezierOffset2(MathUtil.newBigDecimal(element.getAttribute("bezier-offset2")));
+        bezier.setBezierX(MathUtil.newBigDecimal(element.getAttribute("bezier-x")));
+        bezier.setBezierY(MathUtil.newBigDecimal(element.getAttribute("bezier-y")));
+        bezier.setBezierX2(MathUtil.newBigDecimal(element.getAttribute("bezier-x2")));
+        bezier.setBezierY2(MathUtil.newBigDecimal(element.getAttribute("bezier-y2")));
+
+        return bezier;
+    }
+
+    public static BendSound newBendSound(Element element) {
+        if (element == null) return null;
+
+        BendSound bendSound = new BendSound();
+        bendSound.setAccelerate(TypeUtil.getYesNo(element.getAttribute("accelerate")));
+        bendSound.setBeats(MathUtil.newBigDecimal(element.getAttribute("beats")));
+        bendSound.setFirstBeat(MathUtil.newBigDecimal(element.getAttribute("first-beat")));
+        bendSound.setLastBeat(MathUtil.newBigDecimal(element.getAttribute("last-beat")));
+
+        return bendSound;
     }
 }
