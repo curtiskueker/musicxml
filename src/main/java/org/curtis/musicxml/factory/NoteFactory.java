@@ -1,5 +1,6 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.NoteTypeValue;
@@ -160,6 +161,16 @@ public class NoteFactory {
             default:
                 return null;
         }
+    }
+
+    public static AccidentalText newAccidentalText(Element element) {
+        if (element == null) return null;
+
+        AccidentalText accidentalText = new AccidentalText();
+        accidentalText.setAccidentalType(NoteFactory.newAccidentalType(element));
+        accidentalText.setTextFormatting(FormattingFactory.newTextFormatting(element));
+
+        return accidentalText;
     }
 
     public static BeamType newBeamType(Element element) {

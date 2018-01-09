@@ -11,6 +11,7 @@ import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartItem;
+import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
 
@@ -55,7 +56,7 @@ public class ScoreBuilder extends AbstractBuilder {
                 appendLine("\\new StaffGroup <<");
 
                 for(ScorePart scorePart : partGroup.getScoreParts()) {
-                    System.err.println("Score part " + scorePart.getId());
+                    //System.err.println("Score part " + scorePart.getId());
                     buildPart(scorePart);
                 }
 
@@ -140,9 +141,12 @@ public class ScoreBuilder extends AbstractBuilder {
         append(scorePart.getPartName().getPartName());
         appendLine("\"");
 
-        append("shortInstrumentName = #\"");
-        append(scorePart.getPartAbbreviation().getPartName());
-        appendLine("\"");
+        PartName partAbbreviation = scorePart.getPartAbbreviation();
+        if (partAbbreviation != null) {
+            append("shortInstrumentName = #\"");
+            append(partAbbreviation.getPartName());
+            appendLine("\"");
+        }
 
         appendLine("}");
 
@@ -157,9 +161,12 @@ public class ScoreBuilder extends AbstractBuilder {
         append(scorePart.getPartName().getPartName());
         appendLine("\"");
 
-        append("\\set GrandStaff.shortInstrumentName = #\"");
-        append(scorePart.getPartAbbreviation().getPartName());
-        appendLine("\"");
+        PartName partAbbreviation = scorePart.getPartAbbreviation();
+        if (partAbbreviation != null) {
+            append("\\set GrandStaff.shortInstrumentName = #\"");
+            append(partAbbreviation.getPartName());
+            appendLine("\"");
+        }
 
         // separate the parts by staves
         Part[] staffParts = new Part[staves];

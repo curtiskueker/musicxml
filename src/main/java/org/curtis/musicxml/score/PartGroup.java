@@ -2,15 +2,16 @@ package org.curtis.musicxml.score;
 
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.NameDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PartGroup extends PartItem {
     private GroupName groupName;
-    private PartName groupNameDisplay;
+    private NameDisplay groupNameDisplay;
     private GroupName groupAbbreviation;
-    private PartName groupAbbreviationDisplay;
+    private NameDisplay groupAbbreviationDisplay;
     private GroupSymbol groupSymbol;
     private GroupBarline groupBarline;
     private Boolean groupTime;
@@ -31,11 +32,11 @@ public class PartGroup extends PartItem {
         this.groupName = groupName;
     }
 
-    public PartName getGroupNameDisplay() {
+    public NameDisplay getGroupNameDisplay() {
         return groupNameDisplay;
     }
 
-    public void setGroupNameDisplay(PartName groupNameDisplay) {
+    public void setGroupNameDisplay(NameDisplay groupNameDisplay) {
         this.groupNameDisplay = groupNameDisplay;
     }
 
@@ -47,11 +48,11 @@ public class PartGroup extends PartItem {
         this.groupAbbreviation = groupAbbreviation;
     }
 
-    public PartName getGroupAbbreviationDisplay() {
+    public NameDisplay getGroupAbbreviationDisplay() {
         return groupAbbreviationDisplay;
     }
 
-    public void setGroupAbbreviationDisplay(PartName groupAbbreviationDisplay) {
+    public void setGroupAbbreviationDisplay(NameDisplay groupAbbreviationDisplay) {
         this.groupAbbreviationDisplay = groupAbbreviationDisplay;
     }
 

@@ -2,11 +2,12 @@ package org.curtis.musicxml.common;
 
 import org.curtis.musicxml.note.AccidentalText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NameDisplay {
-    private List<FormattedText> displayTextList;
-    private List<AccidentalText> accidentalTextList;
+    private List<FormattedText> displayTextList = new ArrayList<>();
+    private List<AccidentalText> accidentalTextList = new ArrayList<>();
 
     public NameDisplay() {
 

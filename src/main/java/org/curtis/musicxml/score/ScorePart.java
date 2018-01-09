@@ -16,9 +16,9 @@ public class ScorePart extends PartItem {
     private NameDisplay partNameDisplay;
     private PartName partAbbreviation;
     private NameDisplay partAbbreviationDisplay;
-    private List<String> groups;
-    private List<ScoreInstrument> scoreInstruments;
-    private List<MidiDevice> midiDevices;
+    private List<String> groups = new ArrayList<>();
+    private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
+    private List<MidiDevice> midiDevices = new ArrayList<>();
     private List<MidiInstrument> midiInstruments = new ArrayList<>();
 
     public ScorePart() {

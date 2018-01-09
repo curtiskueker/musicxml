@@ -3,13 +3,19 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.factory.AttributesFactory;
 import org.curtis.musicxml.factory.FormattingFactory;
-import org.curtis.musicxml.score.GroupName;
+import org.curtis.musicxml.factory.IdentityFactory;
+import org.curtis.musicxml.factory.PlacementFactory;
+import org.curtis.musicxml.factory.ScorePartFactory;
+import org.curtis.musicxml.score.GroupBarline;
+import org.curtis.musicxml.score.GroupBarlineType;
 import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
+import org.curtis.musicxml.score.instrument.Solo;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -35,21 +41,38 @@ public class PartListHandler extends AbstractHandler {
                     String type = partListSubelement.getAttribute("type");
                     if(type.equals("start")) {
                         currentPartGroup = new PartGroup();
-
                         currentPartGroup.setEditorial(FormattingFactory.newEditorial(partListSubelement));
                         currentPartGroup.setNumber(partListSubelement.getAttribute("number"));
-
-                        GroupName groupName = new GroupName();
-                        groupName.setGroupName(XmlUtil.getChildElementText(partListSubelement, "group-name"));
-                        currentPartGroup.setGroupName(groupName);
-
-                        GroupName abbreviatedGroupName = new GroupName();
-                        abbreviatedGroupName.setGroupName(XmlUtil.getChildElementText(partListSubelement, "group-abbreviation"));
-                        currentPartGroup.setGroupAbbreviation(abbreviatedGroupName);
-
-                        GroupSymbol groupSymbol = new GroupSymbol();
-                        groupSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(partListSubelement));
-                        currentPartGroup.setGroupSymbol(groupSymbol);
+                        currentPartGroup.setGroupName(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-name")));
+                        currentPartGroup.setGroupNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-name-display")));
+                        currentPartGroup.setGroupAbbreviation(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-abbreviation")));
+                        currentPartGroup.setGroupAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-abbreviation-display")));
+                        Element groupSymbolElement = XmlUtil.getChildElement(partListSubelement, "group-symbol");
+                        if (groupSymbolElement != null) {
+                            GroupSymbol groupSymbol = new GroupSymbol();
+                            groupSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(groupSymbolElement));
+                            groupSymbol.setPosition(PlacementFactory.newPosition(groupSymbolElement));
+                            groupSymbol.setColor(groupSymbolElement.getAttribute("color"));
+                            currentPartGroup.setGroupSymbol(groupSymbol);
+                        }
+                        Element groupBarlineElement = XmlUtil.getChildElement(partListSubelement, "group-barline");
+                        if (groupBarlineElement != null) {
+                            GroupBarline groupBarline = new GroupBarline();
+                            String groupBarlineValue = XmlUtil.getElementText(groupBarlineElement);
+                            switch (groupBarlineValue) {
+                                case "yes":
+                                    groupBarline.setGroupBarlineValue(GroupBarlineType.YES);
+                                    break;
+                                case "no":
+                                    groupBarline.setGroupBarlineValue(GroupBarlineType.NO);
+                                    break;
+                                case "Mensurstrich":
+                                    groupBarline.setGroupBarlineValue(GroupBarlineType.MENSURSTRICH);
+                                    break;
+                            }
+                            groupBarline.setColor(groupBarlineElement.getAttribute("color"));
+                        }
+                        currentPartGroup.setGroupTime(XmlUtil.hasChildElement(partListSubelement, "group-time"));
                     } else if(type.equals("stop")) {
                         partList.getPartItems().add(currentPartGroup);
                         currentPartGroup = null;
@@ -59,26 +82,34 @@ public class PartListHandler extends AbstractHandler {
                 case "score-part":
                     ScorePart scorePart = new ScorePart();
                     scorePart.setId(partListSubelement.getAttribute("id"));
-
-                    PartName partName = new PartName();
-                    partName.setPartName(XmlUtil.getChildElementText(partListSubelement, "part-name"));
-                    scorePart.setPartName(partName);
-
-                    PartName partAbbreviation = new PartName();
-                    partAbbreviation.setPartName(XmlUtil.getChildElementText(partListSubelement, "part-abbreviation"));
-                    scorePart.setPartAbbreviation(partAbbreviation);
-
+                    scorePart.setIdentification(IdentityFactory.newIdentification(XmlUtil.getChildElement(partListSubelement, "identification")));
+                    scorePart.setPartName(ScorePartFactory.newPartName(XmlUtil.getChildElement(partListSubelement, "part-name")));
+                    scorePart.setPartNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-name-display")));
+                    scorePart.setPartAbbreviation(ScorePartFactory.newPartName(XmlUtil.getChildElement(partListSubelement, "part-abbreviation")));
+                    scorePart.setPartAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-abbreviation-display")));
+                    List<Element> groupElements = XmlUtil.getChildElements(partListSubelement, "group");
+                    for(Element groupElement : groupElements) {
+                        scorePart.getGroups().add(XmlUtil.getElementText(groupElement));
+                    }
                     List<Element> scoreInstrumentElements = XmlUtil.getChildElements(partListSubelement, "score-instrument");
-                    List<ScoreInstrument> scoreInstruments = new ArrayList<>();
                     for(Element scoreInstrumentElement : scoreInstrumentElements) {
                         ScoreInstrument scoreInstrument = new ScoreInstrument();
                         scoreInstrument.setId(scoreInstrumentElement.getAttribute("id"));
                         scoreInstrument.setInstrumentName(XmlUtil.getChildElementText(scoreInstrumentElement, "instrument-name"));
-
-                        scoreInstruments.add(scoreInstrument);
+                        scoreInstrument.setInstrumentAbbreviation(XmlUtil.getChildElementText(scoreInstrumentElement, "instrument-abbreviation"));
+                        scoreInstrument.setInstrumentSound(XmlUtil.getChildElementText(scoreInstrumentElement, "instrument-sound"));
+                        if(XmlUtil.hasChildElement(scoreInstrumentElement, "solo")) {
+                            scoreInstrument.setInstrumentType(new Solo());
+                        } else if (XmlUtil.hasChildElement(scoreInstrumentElement, "ensemble")) {
+                            Ensemble ensemble = new Ensemble();
+                            ensemble.setValue(StringUtil.getInteger(XmlUtil.getChildElementText(scoreInstrumentElement, "ensemble")));
+                            scoreInstrument.setInstrumentType(ensemble);
+                        }
+                        Element virtualInstrumentElement = XmlUtil.getChildElement(partListSubelement, "virtual-instrument");
+                        scoreInstrument.setVirtualLibrary(XmlUtil.getChildElementText(virtualInstrumentElement, "virtual-library"));
+                        scoreInstrument.setVirtualName(XmlUtil.getChildElementText(virtualInstrumentElement, "virtual-name"));
+                        scorePart.getScoreInstruments().add(scoreInstrument);
                     }
-                    scorePart.setScoreInstruments(scoreInstruments);
-
                     List<Element> midiInstrumentElements = XmlUtil.getChildElements(partListSubelement, "midi-instrument");
                     List<MidiInstrument> midiInstruments = scorePart.getMidiInstruments();
                     for(Element midiInstrumentElement : midiInstrumentElements) {

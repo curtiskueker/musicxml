@@ -1,12 +1,10 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
-import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamFan;
 import org.curtis.musicxml.note.FullNote;
@@ -256,15 +254,10 @@ public class NoteHandler extends MusicDataHandler {
                         String noteheadTextSubelementName = noteheadTextSubelement.getTagName();
                         switch (noteheadTextSubelementName) {
                             case "display-text":
-                                List<FormattedText> displayTextList = noteheadText.getDisplayTextList();
-                                displayTextList.add(FormattingFactory.newFormattedText(noteheadTextSubelement));
+                                noteheadText.getDisplayTextList().add(FormattingFactory.newFormattedText(noteheadTextSubelement));
                                 break;
                             case "accidental-text":
-                                List<AccidentalText> accidentalTextList = noteheadText.getAccidentalTextList();
-                                AccidentalText accidentalText = new AccidentalText();
-                                accidentalText.setAccidentalType(NoteFactory.newAccidentalType(noteheadTextSubelement));
-                                accidentalText.setTextFormatting(FormattingFactory.newTextFormatting(noteheadTextSubelement));
-                                accidentalTextList.add(accidentalText);
+                                noteheadText.getAccidentalTextList().add(NoteFactory.newAccidentalText(noteheadTextSubelement));
                                 break;
                         }
                     }
