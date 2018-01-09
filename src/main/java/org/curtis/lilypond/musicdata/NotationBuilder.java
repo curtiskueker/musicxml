@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
@@ -31,6 +32,12 @@ public class NotationBuilder extends MusicDataBuilder {
                 append(")");
                 break;
         }
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildArpeggiate(Arpeggiate arpeggiate) {
+        append("\\arpeggio");
 
         return stringBuilder;
     }
