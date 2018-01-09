@@ -28,26 +28,41 @@ public class AttributesBuilder extends MusicDataBuilder {
 
         Clef clef = attributes.getClef();
         if(clef != null && (attributes.getStaffNumber() == null || attributes.getStaffNumber().equals(clef.getNumber()))) {
-            append("\\clef ");
+            append("\\clef \"");
             ClefSign clefSign = clef.getSign();
             Integer line = clef.getLine();
             switch (clefSign) {
                 case G:
-                    if(line == 2) appendLine("treble");
+                    if(line == 2) append("treble");
                     break;
                 case F:
-                    if(line == 4) appendLine("bass");
+                    if(line == 4) append("bass");
                     break;
                 case C:
-                    if(line == 3) appendLine("alto");
-                    else if (line == 4) appendLine("tenor");
+                    if(line == 3) append("alto");
+                    else if (line == 4) append("tenor");
                     break;
                 case PERCUSSION:
-                    appendLine("percussion");
+                    append("percussion");
                     break;
                 default:
                     throw new BuildException("ClefSign " + clefSign + " not implemented");
             }
+
+            Integer clefOctaveChange = clef.getClefOctaveChange();
+            if (clefOctaveChange != null && !clefOctaveChange.equals(0)) {
+                if (clefOctaveChange < 0) {
+                    append("_");
+                } else {
+                    append("^");
+                }
+
+                clefOctaveChange = Math.abs(clefOctaveChange);
+                Integer stepValue = 1 + (clefOctaveChange * 7);
+                append(String.valueOf(stepValue));
+            }
+
+            appendLine("\"");
         }
 
         return stringBuilder;
