@@ -34,6 +34,7 @@ public class XmlUtil {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             builder.setErrorHandler(new XmlErrorHandler());
+            builder.setEntityResolver(new XmlEntityResolver());
 
             return builder.parse(new InputSource(new ByteArrayInputStream(xmlString.getBytes())));
         } catch (Exception e) {
