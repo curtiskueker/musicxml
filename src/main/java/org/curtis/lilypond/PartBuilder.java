@@ -146,8 +146,12 @@ public class PartBuilder extends AbstractBuilder {
 
         // main processing loop
         for(Measure measure : measures) {
-            MeasureBuilder measureBuilder = new MeasureBuilder(measure);
-            append(measureBuilder.build().toString());
+            try {
+                MeasureBuilder measureBuilder = new MeasureBuilder(measure);
+                append(measureBuilder.build().toString());
+            } catch (BuildException e) {
+                System.err.println(e.getMessage());
+            }
         }
 
         appendLine("}");

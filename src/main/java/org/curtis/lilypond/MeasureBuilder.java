@@ -313,8 +313,13 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         // Check whether expected duration equals total duration
+        // First measure is set to a partial, otherwise it's an exception
         if(!MathUtil.equalTo(expectedDuration, totalDuration)) {
-            measure.setImplicit(true);
+            if (measure.isFirstMeasure()) {
+                measure.setImplicit(true);
+            } else {
+                throw new BuildException(exceptionStringPrefix + "Expected duration: " + expectedDuration + " Total duration: " + totalDuration + ".  Skipping measure.");
+            }
         }
 
         // process polyphonic voice map

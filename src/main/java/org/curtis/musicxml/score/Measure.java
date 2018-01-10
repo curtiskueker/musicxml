@@ -12,6 +12,7 @@ public class Measure {
     private BigDecimal width;
     private RepeatBlock repeatBlock;
     private Integer staffNumber;
+    private boolean isFirstMeasure = false;
 
     public Measure() {
 
@@ -71,5 +72,13 @@ public class Measure {
 
     public void setStaffNumber(Integer staffNumber) {
         this.staffNumber = staffNumber;
+    }
+
+    public boolean isFirstMeasure() {
+        return isFirstMeasure;
+    }
+
+    public void setFirstMeasure(boolean firstMeasure) {
+        isFirstMeasure = firstMeasure;
     }
 }
