@@ -68,7 +68,7 @@ public class HarmonyHandler extends MusicDataHandler {
                     if(rootAlterElement != null) {
                         RootAlter rootAlter = new RootAlter();
                         rootAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(rootAlterElement)));
-                        rootAlter.setPrintObject(TypeUtil.getYesNo(rootAlterElement.getAttribute("print-object")));
+                        rootAlter.setPrintObject(FormattingFactory.getPrintObject(rootAlterElement));
                         rootAlter.setPrintStyle(FormattingFactory.newPrintStyle(rootAlterElement));
                         rootAlter.setLocation(PlacementUtil.getLocation(rootAlterElement.getAttribute("location")));
                         root.setRootAlter(rootAlter);
@@ -213,7 +213,7 @@ public class HarmonyHandler extends MusicDataHandler {
                     if (bassAlterElement != null) {
                         BassAlter bassAlter = new BassAlter();
                         bassAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(bassAlterElement)));
-                        bassAlter.setPrintObject(TypeUtil.getYesNo(bassAlterElement.getAttribute("print-object")));
+                        bassAlter.setPrintObject(FormattingFactory.getPrintObject(bassAlterElement));
                         bassAlter.setPrintStyle(FormattingFactory.newPrintStyle(bassAlterElement));
                         bassAlter.setLocation(PlacementUtil.getLocation(bassAlterElement.getAttribute("location")));
                         bass.setBassAlter(bassAlter);
@@ -271,7 +271,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         degreeType.setText(degreeTypeElement.getAttribute("text"));
                         degreeType.setPrintStyle(FormattingFactory.newPrintStyle(degreeTypeElement));
                         degree.setDegreeType(degreeType);
-                        degree.setPrintObject(TypeUtil.getYesNo(harmonySubelement.getAttribute("print-object")));
+                        degree.setPrintObject(FormattingFactory.getPrintObject(degreeAlterElement));
                         degrees.add(degree);
                     }
                     break;
@@ -351,7 +351,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         break;
                 }
             }
-            harmony.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+            harmony.setPrintObject(FormattingFactory.getPrintObject(element));
             harmony.setPrintFrame(TypeUtil.getYesNo(element.getAttribute("print-frame")));
             harmony.setPrintStyle(FormattingFactory.newPrintStyle(element));
             harmony.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));

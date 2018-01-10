@@ -245,7 +245,7 @@ public class DirectionFactory {
             case "other-direction":
                 OtherDirection otherDirection = new OtherDirection();
                 otherDirection.setValue(XmlUtil.getElementText(element));
-                otherDirection.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+                otherDirection.setPrintObject(FormattingFactory.getPrintObject(element));
                 otherDirection.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return otherDirection;
             default:

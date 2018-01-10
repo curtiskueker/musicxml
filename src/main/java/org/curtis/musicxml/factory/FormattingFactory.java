@@ -105,7 +105,7 @@ public class FormattingFactory {
         if(element == null) return null;
 
         PrintObjectStyleAlign printObjectStyleAlign = new PrintObjectStyleAlign();
-        printObjectStyleAlign.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+        printObjectStyleAlign.setPrintObject(getPrintObject(element));
         printObjectStyleAlign.setPrintStyleAlign(newPrintStyleAlign(element));
 
         return printObjectStyleAlign;
@@ -208,9 +208,15 @@ public class FormattingFactory {
         return dashedFormatting;
     }
 
+    public static Boolean getPrintObject(Element element) {
+        if (element == null) return true;
+
+        return TypeUtil.getYesNoDefaultYes(element.getAttribute("print-object"));
+    }
+
     public static Printout newPrintout(Element element) {
         Printout printout = new Printout();
-        printout.setPrintObject(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-object")));
+        printout.setPrintObject(getPrintObject(element));
         printout.setPrintDot(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-dot")));
         printout.setPrintSpacing(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-spacing")));
         printout.setPrintLyric(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-lyric")));

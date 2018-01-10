@@ -2,7 +2,6 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.handler.util.PlacementUtil;
-import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.score.GroupName;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.xml.XmlUtil;
@@ -49,7 +48,7 @@ public class ScorePartFactory {
         PartName partName = new PartName();
         partName.setPartName(XmlUtil.getElementText(element));
         partName.setPartNamePrintStyle(FormattingFactory.newPrintStyle(element));
-        partName.setPartNamePrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+        partName.setPartNamePrintObject(FormattingFactory.getPrintObject(element));
         partName.setPartNameJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
 
         return partName;

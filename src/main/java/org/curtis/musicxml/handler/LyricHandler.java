@@ -140,7 +140,7 @@ public class LyricHandler extends AbstractHandler {
         lyric.setPosition(PlacementFactory.newPosition(element));
         lyric.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
         lyric.setColor(element.getAttribute("color"));
-        lyric.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+        lyric.setPrintObject(FormattingFactory.getPrintObject(element));
         lyrics.add(lyric);
     }
 }

@@ -5,7 +5,6 @@ import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
-import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
@@ -35,7 +34,7 @@ public class NotationHandler extends AbstractHandler {
     public void handle(Element element) {
         Notations notations = new Notations();
         notations.setEditorial(FormattingFactory.newEditorial(element));
-        notations.setPrintObject(TypeUtil.getYesNo(element.getAttribute("print-object")));
+        notations.setPrintObject(FormattingFactory.getPrintObject(element));
 
         List<Notation> notationList = notations.getNotations();
         List<Element> notationsSubelements = XmlUtil.getChildElements(element);
@@ -138,7 +137,7 @@ public class NotationHandler extends AbstractHandler {
                     otherNotation.setValue(XmlUtil.getElementText(notationsSubelement));
                     otherNotation.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
                     otherNotation.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
-                    otherNotation.setPrintObject(TypeUtil.getYesNo(notationsSubelement.getAttribute("print-object")));
+                    otherNotation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
                     otherNotation.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
                     otherNotation.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
                     notationList.add(otherNotation);

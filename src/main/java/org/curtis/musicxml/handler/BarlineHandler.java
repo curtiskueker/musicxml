@@ -11,7 +11,6 @@ import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
-import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -95,10 +94,9 @@ public class BarlineHandler extends MusicDataHandler {
                 case "ending":
                     Ending ending = new Ending();
                     ending.setValue(XmlUtil.getElementText(barlineSubelement));
-                    // TODO: comma-separated ending numbers
                     ending.setNumber(barlineSubelement.getAttribute("number"));
                     ending.setType(PlacementUtil.getConnection(barlineSubelement.getAttribute("type")));
-                    ending.setPrintObject(TypeUtil.getYesNo(barlineSubelement.getAttribute("print-object")));
+                    ending.setPrintObject(FormattingFactory.getPrintObject(barlineSubelement));
                     ending.setPrintStyle(FormattingFactory.newPrintStyle(barlineSubelement));
                     ending.setEndLength(MathUtil.newBigDecimal(barlineSubelement.getAttribute("end-length")));
                     ending.setTextX(MathUtil.newBigDecimal(barlineSubelement.getAttribute("text-x")));

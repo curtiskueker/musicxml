@@ -51,7 +51,7 @@ public class AttributesHandler extends MusicDataHandler {
                     Key key = AttributesFactory.newKey(attributeSubelement);
                     key.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                     key.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
-                    key.setPrintObject(TypeUtil.getYesNo(attributeSubelement.getAttribute("print-object")));
+                    key.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     keys.add(key);
                     break;
                 case "time":
@@ -61,7 +61,7 @@ public class AttributesHandler extends MusicDataHandler {
                     time.setSymbol(AttributesFactory.newTimeSymbol(attributeSubelement));
                     time.setSeparator(AttributesFactory.newTimeSeparator(attributeSubelement));
                     time.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(attributeSubelement));
-                    time.setPrintObject(TypeUtil.getYesNo(attributeSubelement.getAttribute("print-object")));
+                    time.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     timeList.add(time);
                     break;
                 case "staves":
@@ -116,7 +116,7 @@ public class AttributesHandler extends MusicDataHandler {
                     clef.setSize(FormattingFactory.newSymbolSize(attributeSubelement));
                     clef.setAfterBarline(TypeUtil.getYesNo(attributeSubelement.getAttribute("after-barline")));
                     clef.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
-                    clef.setPrintObject(TypeUtil.getYesNo(attributeSubelement.getAttribute("print-object")));
+                    clef.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     attributes.setClef(clef);
                     break;
                 case "staff-details":
@@ -175,7 +175,7 @@ public class AttributesHandler extends MusicDataHandler {
                                 break;
                         }
                     }
-                    staffDetails.setPrintObject(TypeUtil.getYesNo(attributeSubelement.getAttribute("print-object")));
+                    staffDetails.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     staffDetails.setPrintSpacing(TypeUtil.getYesNo(attributeSubelement.getAttribute("print-spacing")));
                     staffDetailsList.add(staffDetails);
                     break;
