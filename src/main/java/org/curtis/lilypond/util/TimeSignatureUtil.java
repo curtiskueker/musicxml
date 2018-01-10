@@ -61,6 +61,12 @@ public class TimeSignatureUtil {
         return representationString;
     }
 
+    public static String getDurationRepresentationValue(BigDecimal duration) throws TimeSignatureException {
+        BigDecimal totalBeats = MathUtil.divide(duration, PartBuilder.CURRENT_ATTRIBUTES.getDivisions());
+
+        return getRepresentationValue(totalBeats);
+    }
+
     private static boolean rounds(BigDecimal value) {
         BigDecimal comparisonValue = new BigDecimal(value.toString()).setScale(0, RoundingMode.HALF_UP);
         return MathUtil.isNegative(MathUtil.subtract(MathUtil.subtract(value, comparisonValue).abs(), MathUtil.newBigDecimal(.1)));
@@ -78,6 +84,10 @@ public class TimeSignatureUtil {
     public static BigDecimal getTotalBeats(BigDecimal numerator, BigDecimal denominator) {
         // Calculates number of quarter note beats in a measure
         return MathUtil.divide(MathUtil.multiply(MathUtil.newBigDecimal(4), numerator), denominator);
+    }
+
+    public static BigDecimal getExpectedMeasureDuration() throws TimeSignatureException {
+        return MathUtil.multiply(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), getCurrentMeasureBeats());
     }
 
     public static TimeSignatureType getCurrentTimeSignature() {

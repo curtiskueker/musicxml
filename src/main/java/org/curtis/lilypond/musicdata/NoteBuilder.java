@@ -1,6 +1,5 @@
 package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.util.NoteUtil;
@@ -94,8 +93,15 @@ public class NoteBuilder extends MusicDataBuilder {
             NoteType noteType = note.getType();
             if(measure || noteType == null) {
                 try {
-                    append("R");
-                    append(TimeSignatureUtil.getWholeMeasureRepresentation());
+                    BigDecimal duration = note.getDuration();
+                    BigDecimal expectedDuration = TimeSignatureUtil.getExpectedMeasureDuration();
+                    if (MathUtil.equalTo(duration, expectedDuration)) {
+                        append("R");
+                        append(TimeSignatureUtil.getWholeMeasureRepresentation());
+                    } else {
+                        append("r");
+                        append(TimeSignatureUtil.getDurationRepresentationValue(note.getDuration()));
+                    }
                 } catch (TimeSignatureException e) {
                     throw new BuildException("Invalid whole measure representation");
                 }
@@ -354,7 +360,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
         append(" s");
         try {
-            append(TimeSignatureUtil.getRepresentationValue(MathUtil.divide(duration, PartBuilder.CURRENT_ATTRIBUTES.getDivisions())));
+            append(TimeSignatureUtil.getDurationRepresentationValue(duration));
         } catch (TimeSignatureException e) {
             throw new BuildException(e.getMessage());
         }
