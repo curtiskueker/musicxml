@@ -132,12 +132,15 @@ public class ScoreBuilder extends AbstractBuilder {
         // staff identifiers
         appendLine("\\with {");
 
-        append("instrumentName = #\"");
-        append(scorePart.getPartName().getPartName());
-        appendLine("\"");
+        PartName partName = scorePart.getPartName();
+        if (partName.getPartNamePrintObject()) {
+            append("instrumentName = #\"");
+            append(partName.getPartName());
+            appendLine("\"");
+        }
 
         PartName partAbbreviation = scorePart.getPartAbbreviation();
-        if (partAbbreviation != null) {
+        if (partAbbreviation != null && partAbbreviation.getPartNamePrintObject()) {
             append("shortInstrumentName = #\"");
             append(partAbbreviation.getPartName());
             appendLine("\"");
@@ -152,12 +155,15 @@ public class ScoreBuilder extends AbstractBuilder {
     private void buildGrandStaffPart(ScorePart scorePart, Part part, Integer staves) throws BuildException {
         appendLine("\\new GrandStaff <<");
 
-        append("\\set GrandStaff.instrumentName = #\"");
-        append(scorePart.getPartName().getPartName());
-        appendLine("\"");
+        PartName partName = scorePart.getPartName();
+        if (partName.getPartNamePrintObject()) {
+            append("\\set GrandStaff.instrumentName = #\"");
+            append(partName.getPartName());
+            appendLine("\"");
+        }
 
         PartName partAbbreviation = scorePart.getPartAbbreviation();
-        if (partAbbreviation != null) {
+        if (partAbbreviation != null && partAbbreviation.getPartNamePrintObject()) {
             append("\\set GrandStaff.shortInstrumentName = #\"");
             append(partAbbreviation.getPartName());
             appendLine("\"");

@@ -48,6 +48,7 @@ public class KeyBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildTraditionalKey(TraditionalKey traditionalKey) throws BuildException {
+        if (!traditionalKey.getPrintObject()) appendLine("\\override Staff.KeySignature.stencil = ##f ");
         append("\\key ");
 
         String mode = traditionalKey.getMode();

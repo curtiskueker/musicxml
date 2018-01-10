@@ -36,7 +36,7 @@ public class PartBuilder extends AbstractBuilder {
     public StringBuilder build() throws BuildException {
         List<Measure> measures = part.getMeasures();
 
-        // pro-processing loop
+        // pre-processing loop
         // check for endings
         // check for vocal part: presence of lyric is indicator
         for(Measure measure : measures) {
