@@ -5,8 +5,10 @@ import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
+import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
+import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
@@ -16,6 +18,12 @@ import java.util.List;
 public class DirectiontypeBuilder extends MusicDataBuilder {
     public DirectiontypeBuilder() {
 
+    }
+
+    public StringBuilder buildSegno(Segno segno) {
+        append("\\segno");
+
+        return stringBuilder;
     }
 
     public StringBuilder buildWords(Words words) {
@@ -45,6 +53,12 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
         append(formattedText.getValue());
 
         append(" }");
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildCoda(Coda coda) {
+        appendLine("\\coda");
 
         return stringBuilder;
     }
