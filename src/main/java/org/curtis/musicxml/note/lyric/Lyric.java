@@ -5,6 +5,8 @@ import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.score.MusicData;
 
+import java.math.BigDecimal;
+
 public class Lyric extends MusicData {
     private LyricItem lyricItem;
     private Boolean endLine;
@@ -17,6 +19,7 @@ public class Lyric extends MusicData {
     private Location placement;
     private String color;
     private Boolean printObject;
+    private BigDecimal totalBeats;
 
     public Lyric() {
 
@@ -108,5 +111,13 @@ public class Lyric extends MusicData {
 
     public void setPrintObject(Boolean printObject) {
         this.printObject = printObject;
+    }
+
+    public BigDecimal getTotalBeats() {
+        return totalBeats;
+    }
+
+    public void setTotalBeats(BigDecimal totalBeats) {
+        this.totalBeats = totalBeats;
     }
 }

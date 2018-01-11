@@ -3,15 +3,10 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
-import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
-import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.direction.harmony.Root;
 import org.curtis.musicxml.direction.harmony.RootStep;
-import org.curtis.musicxml.note.Backup;
-import org.curtis.musicxml.note.Forward;
-import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
@@ -21,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HarmonyPartBuilder extends AbstractBuilder {
+public class HarmonyPartBuilder extends FilteredPartBuilder {
     private Part part;
 
     public HarmonyPartBuilder(Part part) {
@@ -32,14 +27,13 @@ public class HarmonyPartBuilder extends AbstractBuilder {
         PartBuilder.CURRENT_PART_ID = "Harmony Builder";
         appendLine("\\new ChordNames \\chordmode {");
 
-        BigDecimal currentDivisions = MathUtil.ZERO;
-        BigDecimal currentDuration = MathUtil.ZERO;
-
         List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
         Harmony currentHarmony = newEmptyHarmony();
 
         for(Measure measure : part.getMeasures()) {
             for(MusicData musicData : measure.getMusicDataList()) {
+                adjustCurrentDuration(musicData);
+
                 if(musicData instanceof Harmony) {
                     BigDecimal totalBeats = MathUtil.divide(currentDuration, currentDivisions);
 
@@ -74,25 +68,12 @@ public class HarmonyPartBuilder extends AbstractBuilder {
                     musicDataBuilders.add(musicDataBuilder);
                     currentHarmony = harmony;
                     currentDuration = MathUtil.ZERO;
-                } else if (musicData instanceof Attributes) {
-                    Attributes attributes = (Attributes)musicData;
-                    AttributesUtil.setCurrentAttributes(attributes);
-                    BigDecimal divisions = attributes.getDivisions();
-                    if (divisions != null) currentDivisions = divisions;
-                } else if (musicData instanceof Note) {
-                    Note note = (Note)musicData;
-                    if (!note.getFullNote().isChord()) currentDuration = MathUtil.add(currentDuration, note.getDuration());
-                } else if (musicData instanceof Backup) {
-                    Backup backup = (Backup)musicData;
-                    currentDuration = MathUtil.subtract(currentDuration, backup.getDuration());
-                } else if (musicData instanceof Forward) {
-                    Forward forward = (Forward)musicData;
-                    currentDuration = MathUtil.add(currentDuration, forward.getDuration());
                 }
             }
         }
 
         // set the last harmony to the accumulated duration
+        currentHarmony.setTotalBeats(MathUtil.divide(currentDuration, currentDivisions));
         currentHarmony.setTotalBeats(MathUtil.divide(currentDuration, currentDivisions));
 
         for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
