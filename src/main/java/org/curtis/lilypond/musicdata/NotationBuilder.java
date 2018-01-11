@@ -6,6 +6,7 @@ import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
+import org.curtis.musicxml.note.notation.Tuplet;
 
 public class NotationBuilder extends MusicDataBuilder {
     public StringBuilder buildTied(Tied tied) {
@@ -36,14 +37,19 @@ public class NotationBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    public StringBuilder buildArpeggiate(Arpeggiate arpeggiate) {
-        append("\\arpeggio");
-
+    // Built in NoteBuilder.buildTupletNotes()
+    public StringBuilder buildTuplet(Tuplet tuplet) {
         return stringBuilder;
     }
 
     public StringBuilder buildFermata(Fermata fermata) {
         append("\\fermata");
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildArpeggiate(Arpeggiate arpeggiate) {
+        append("\\arpeggio");
 
         return stringBuilder;
     }
