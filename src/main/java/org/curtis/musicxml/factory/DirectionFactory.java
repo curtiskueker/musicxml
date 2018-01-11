@@ -4,6 +4,7 @@ import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
 import org.curtis.musicxml.direction.directiontype.Bracket;
+import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Damp;
 import org.curtis.musicxml.direction.directiontype.DampAll;
 import org.curtis.musicxml.direction.directiontype.Dashes;
@@ -65,6 +66,10 @@ public class DirectionFactory {
                 Words words = new Words();
                 words.setFormattedText(FormattingFactory.newFormattedText(element));
                 return words;
+            case "coda":
+                Coda coda = new Coda();
+                coda.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                return coda;
             case "wedge":
                 Wedge wedge = new Wedge();
                 String wedgeType = element.getAttribute("type");
