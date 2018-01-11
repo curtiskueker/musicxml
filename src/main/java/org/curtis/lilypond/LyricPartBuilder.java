@@ -79,8 +79,8 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                         } else if (lyricCount > 1) {
                             for(Lyric lyric : lyrics) {
                                 Integer lyricNumber = StringUtil.getInteger(lyric.getNumber());
-                                if (lyricNumber ==  null) throw new BuildException("Invalid lyric number: " + lyric.getNumber());
-                                if (lyricNumber > lyricCount) throw new BuildException("Expecting consecutive numbered lyric numbers: " + lyric.getNumber());
+                                if (lyricNumber ==  null) throw new BuildException(getExceptionStringPrefix(measure) + "Invalid lyric number: " + lyric.getNumber());
+                                if (lyricNumber > lyricCount) throw new BuildException(getExceptionStringPrefix(measure) + "Expecting consecutive numbered lyric numbers:.  Found lyric number " + lyric.getNumber() + ".");
                                 lyric.setTotalBeats(totalBeats);
                                 lyricLists.get(lyricNumber - 1).add(lyric);
                             }

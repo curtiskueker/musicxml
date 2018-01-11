@@ -13,6 +13,7 @@ public class Measure {
     private RepeatBlock repeatBlock;
     private Integer staffNumber;
     private boolean isFirstMeasure = false;
+    private boolean isLastMeasure = false;
 
     public Measure() {
 
@@ -80,5 +81,13 @@ public class Measure {
 
     public void setFirstMeasure(boolean firstMeasure) {
         isFirstMeasure = firstMeasure;
+    }
+
+    public boolean isLastMeasure() {
+        return isLastMeasure;
+    }
+
+    public void setLastMeasure(boolean lastMeasure) {
+        isLastMeasure = lastMeasure;
     }
 }

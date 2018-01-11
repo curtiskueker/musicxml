@@ -32,7 +32,7 @@ public class MusicXml2Ly {
 
             FileUtil.stringToFile(results.toString(), outputFilename);
         } catch (XmlException | FileException | BuildException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class MusicXml2Ly {
         try {
             musicXml2Ly.execute(xmlFilename, outputfilename);
         } catch (MusicXmlException e) {
-            throw new RuntimeException(e);
+            System.err.println("Fatal exception: " + e.getMessage());
         }
     }
 }

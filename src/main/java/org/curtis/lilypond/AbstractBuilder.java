@@ -1,6 +1,8 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.musicxml.score.Measure;
+import org.curtis.util.StringUtil;
 
 public abstract class AbstractBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();
@@ -18,5 +20,17 @@ public abstract class AbstractBuilder {
 
     public void clear() {
         stringBuilder = new StringBuilder();
+    }
+
+    public String getExceptionStringPrefix(Measure measure) {
+        String exceptionStringPrefix = "";
+        if (StringUtil.isNotEmpty(PartBuilder.CURRENT_PART_ID)) {
+            exceptionStringPrefix += "Part " + PartBuilder.CURRENT_PART_ID;
+        }
+        if (measure != null) {
+            exceptionStringPrefix += " Measure " + measure.getNumber() + ": ";
+        }
+
+        return exceptionStringPrefix;
     }
 }

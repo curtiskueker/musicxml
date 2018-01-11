@@ -63,7 +63,6 @@ public class MeasureBuilder extends AbstractBuilder {
 
         append("% measure ");
         appendLine(measure.getNumber());
-        String exceptionStringPrefix = "Part " + PartBuilder.CURRENT_PART_ID + " Measure " + measure.getNumber() + ": ";
 
         // pre-processing loops
         //
@@ -130,7 +129,7 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         if(PartBuilder.CURRENT_ATTRIBUTES == null) {
-            throw new BuildException(exceptionStringPrefix + "Current Attributes not found");
+            throw new BuildException(getExceptionStringPrefix(measure) + "Current Attributes not found");
         }
 
         // Calculate expected divisions in the measure
@@ -313,12 +312,12 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         // Check whether expected duration equals total duration
-        // First measure is set to a partial, otherwise it's an exception
+        // First or last measure can be partial, otherwise it's an exception
         if(!MathUtil.equalTo(expectedDuration, totalDuration)) {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
-            } else {
-                throw new BuildException(exceptionStringPrefix + "Expected duration: " + expectedDuration + " Total duration: " + totalDuration + ".  Skipping measure.");
+            } else if (!measure.isLastMeasure()){
+                throw new BuildException(getExceptionStringPrefix(measure) + "Expected duration: " + expectedDuration + " Total duration: " + totalDuration + ".  Skipping measure.");
             }
         }
 
@@ -354,7 +353,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 append("\\partial ");
                 appendLine(wholeMeasureRepresentation);
             } catch (TimeSignatureException e) {
-                System.err.println(exceptionStringPrefix + "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
+                System.err.println(getExceptionStringPrefix(measure) + "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
             }
         }
 

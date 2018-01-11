@@ -97,6 +97,7 @@ public class ScoreBuilder extends AbstractBuilder {
         }
 
         measures.get(0).setFirstMeasure(true);
+        measures.get(measures.size() - 1).setLastMeasure(true);
 
         // pre-processing loop
         //
@@ -235,6 +236,7 @@ public class ScoreBuilder extends AbstractBuilder {
                 throw new BuildException(staffPart.getId() + " has no measures");
             }
             partMeasures.get(0).setFirstMeasure(true);
+            partMeasures.get(partMeasures.size() - 1).setLastMeasure(true);
 
             PartBuilder partBuilder = new PartBuilder(staffPart);
             append(partBuilder.build().toString());
