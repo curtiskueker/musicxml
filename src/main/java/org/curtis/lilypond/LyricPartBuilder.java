@@ -19,7 +19,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
     private Part part;
     private int currentLyricCount = 1;
     private List<List<Lyric>> lyricLists;
-    private int lyricsCounter = 1;
+    private static int lyricsCounter = 1;
 
     public LyricPartBuilder(Part part) {
         this.part = part;
@@ -59,15 +59,37 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                             }
                         }
                     } else {
-                        int lyricCount = lyrics.size();
-                        if(lyricCount != currentLyricCount) {
-                            if (currentLyricCount > 1) {
-                                buildLyricLists();
-                            }
+                        // Lyric count is max lyric number
+                        int lyricCount = 0;
+                        for (Lyric lyric : lyrics) {
+                            Integer lyricNumber = StringUtil.getInteger(lyric.getNumber());
+                            if (lyricNumber ==  null) throw new BuildException(getExceptionStringPrefix(measure) + "Invalid lyric number: " + lyric.getNumber());
+                            if (lyricNumber > lyricCount) lyricCount = lyricNumber;
+                        }
 
-                            lyricLists = new ArrayList<>(lyricCount);
-                            for(int i = 1; i <= lyricCount; i++) {
-                                lyricLists.add(new ArrayList<>());
+                        if(lyricCount != currentLyricCount) {
+                            if (lyricCount == 1 || currentLyricCount == 1) {
+                                // if we move from or to 1, rebuild the lists
+                                if (currentLyricCount > 1) {
+                                    buildLyricLists();
+                                }
+
+                                lyricLists = new ArrayList<>(lyricCount);
+                                for(int i = 1; i <= lyricCount; i++) {
+                                    lyricLists.add(new ArrayList<>());
+                                }
+                            } else if (lyricCount > currentLyricCount) {
+                                // if we're expanding the list
+                                // add a new lyric list and stock it with empty lyrics
+                                for (int listIndex = lyricCount; listIndex < currentLyricCount; listIndex++) {
+                                    List<Lyric> lyricListToAdd = new ArrayList<>();
+                                    for (Lyric lyric : lyricLists.get(0)) {
+                                        Lyric lyricToAdd = newEmptyLyric();
+                                        lyricToAdd.setTotalBeats(lyric.getTotalBeats());
+                                        lyricListToAdd.add(lyricToAdd);
+                                    }
+                                    lyricLists.add(lyricListToAdd);
+                                }
                             }
                         }
 
@@ -77,12 +99,20 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(lyric);
                             append(musicDataBuilder.build().toString());
                         } else if (lyricCount > 1) {
-                            for(Lyric lyric : lyrics) {
-                                Integer lyricNumber = StringUtil.getInteger(lyric.getNumber());
-                                if (lyricNumber ==  null) throw new BuildException(getExceptionStringPrefix(measure) + "Invalid lyric number: " + lyric.getNumber());
-                                if (lyricNumber > lyricCount) throw new BuildException(getExceptionStringPrefix(measure) + "Expecting consecutive numbered lyric numbers:.  Found lyric number " + lyric.getNumber() + ".");
-                                lyric.setTotalBeats(totalBeats);
-                                lyricLists.get(lyricNumber - 1).add(lyric);
+                            // get the lyric for each number in turn
+                            // add an empty lyric, if not found
+                            for (int lyricIndex = 1; lyricIndex <= lyricCount; lyricIndex++) {
+                                Lyric lyricToAdd = null;
+                                for (Lyric lyric : lyrics) {
+                                    Integer lyricNumber = StringUtil.getInteger(lyric.getNumber());
+                                    if (lyricIndex == lyricNumber) {
+                                        lyricToAdd = lyric;
+                                        break;
+                                    }
+                                }
+                                if (lyricToAdd == null) lyricToAdd = newEmptyLyric();
+                                lyricToAdd.setTotalBeats(totalBeats);
+                                lyricLists.get(lyricIndex - 1).add(lyricToAdd);
                             }
                         }
 
