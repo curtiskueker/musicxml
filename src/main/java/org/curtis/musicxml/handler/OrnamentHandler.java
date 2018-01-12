@@ -7,15 +7,11 @@ import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.notation.Notation;
-import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
-import org.curtis.musicxml.note.notation.ornament.HorizontalTurn;
-import org.curtis.musicxml.note.notation.ornament.OrnamentAccidentalMark;
+import org.curtis.musicxml.note.notation.Ornaments;
+import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.OtherOrnament;
-import org.curtis.musicxml.note.notation.ornament.PlacedTrillSound;
 import org.curtis.musicxml.note.notation.ornament.Schleifer;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
-import org.curtis.musicxml.note.notation.ornament.TrillMark;
-import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -31,35 +27,33 @@ public class OrnamentHandler extends AbstractHandler {
 
     public void handle(Element element) {
         List<Element> ornamentElements = XmlUtil.getChildElements(element);
+        Ornaments ornaments = new Ornaments();
         for(Element ornamentElement : ornamentElements) {
             String ornamentElementName = ornamentElement.getTagName();
+            Ornament ornament = null;
             switch (ornamentElementName) {
                 case "mordent":
                 case "inverted-mordent":
-                    AbstractMordent abstractMordent = OrnamentFactory.newMordent(ornamentElement);
-                    notationList.add(abstractMordent);
+                    ornament = OrnamentFactory.newMordent(ornamentElement);
                     break;
                 case "trill-mark":
                 case "vertical-turn":
                 case "shake":
-                    PlacedTrillSound placedTrillSound = OrnamentFactory.newPlacedTrillSound(ornamentElement);
-                    notationList.add(placedTrillSound);
+                    ornament = OrnamentFactory.newPlacedTrillSound(ornamentElement);
                     break;
                 case "turn":
                 case "delayed-turn":
                 case "inverted-turn":
                 case "delayed-inverted-turn":
-                    HorizontalTurn horizontalTurn = OrnamentFactory.newHorizontalTurn(ornamentElement);
-                    notationList.add(horizontalTurn);
+                    ornament = OrnamentFactory.newHorizontalTurn(ornamentElement);
                     break;
                 case "wavy-line":
-                    WavyLine wavyLine = OrnamentFactory.newWavyLine(ornamentElement);
-                    notationList.add(wavyLine);
+                    ornament = OrnamentFactory.newWavyLine(ornamentElement);
                     break;
                 case "schleifer":
                     Schleifer schleifer = new Schleifer();
                     schleifer.setPlacement(PlacementFactory.newPlacement(ornamentElement));
-                    notationList.add(schleifer);
+                    ornament = schleifer;
                     break;
                 case "tremolo":
                     Tremolo tremolo = new Tremolo();
@@ -67,7 +61,7 @@ public class OrnamentHandler extends AbstractHandler {
                     tremolo.setType(PlacementUtil.getConnection(ornamentElement.getAttribute("type")));
                     tremolo.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
                     tremolo.setPlacement(PlacementUtil.getLocation(ornamentElement.getAttribute("placement")));
-                    notationList.add(tremolo);
+                    ornament = tremolo;
                     break;
                 case "other-ornament":
                     OtherOrnament otherOrnament = new OtherOrnament();
@@ -76,14 +70,15 @@ public class OrnamentHandler extends AbstractHandler {
                     placementText.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
                     placementText.setPlacement(PlacementUtil.getLocation(ornamentElement.getAttribute("placement")));
                     otherOrnament.setPlacementText(placementText);
-                    notationList.add(otherOrnament);
-                    break;
-                case "accidental-mark":
-                    OrnamentAccidentalMark ornamentAccidentalMark = new OrnamentAccidentalMark();
-                    ornamentAccidentalMark.setAccidentalMark(NotationFactory.newAccidentalMark(ornamentElement));
-                    notationList.add(ornamentAccidentalMark);
+                    ornament = otherOrnament;
                     break;
             }
+            if (ornament != null) ornaments.getOrnaments().add(ornament);
         }
+        List<Element> accidentalMarkElements = XmlUtil.getChildElements(element, "accidental-mark");
+        for (Element accidentalMarkElement : accidentalMarkElements) {
+            ornaments.getAccidentalMarks().add(NotationFactory.newAccidentalMark(accidentalMarkElement));
+        }
+        notationList.add(ornaments);
     }
 }

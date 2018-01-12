@@ -1,12 +1,15 @@
 package org.curtis.lilypond.musicdata;
 
+import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Fermata;
+import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
+import org.curtis.musicxml.note.notation.ornament.Ornament;
 
 public class NotationBuilder extends MusicDataBuilder {
     public StringBuilder buildTied(Tied tied) {
@@ -39,6 +42,15 @@ public class NotationBuilder extends MusicDataBuilder {
 
     // Built in NoteBuilder.buildTupletNotes()
     public StringBuilder buildTuplet(Tuplet tuplet) {
+        return stringBuilder;
+    }
+
+    public StringBuilder buildOrnaments(Ornaments ornaments) throws BuildException {
+        for (Ornament ornament : ornaments.getOrnaments()) {
+            MusicDataBuilder musicDataBuilder = new MusicDataBuilder(ornament);
+            append(musicDataBuilder.build().toString());
+        }
+
         return stringBuilder;
     }
 
