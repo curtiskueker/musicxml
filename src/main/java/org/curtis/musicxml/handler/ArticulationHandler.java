@@ -5,8 +5,10 @@ import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.Placement;
+import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.articulation.Accent;
+import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
 import org.curtis.musicxml.note.notation.articulation.BreathMarkType;
 import org.curtis.musicxml.note.notation.articulation.Caesura;
@@ -37,71 +39,73 @@ public class ArticulationHandler extends AbstractHandler {
     }
 
     public void handle(Element element) {
+        Articulations articulations = new Articulations();
         List<Element> articulationsSubelements = XmlUtil.getChildElements(element);
         for(Element articulationsSubelement : articulationsSubelements) {
+            Articulation articulation = null;
             switch (articulationsSubelement.getTagName()) {
                 case "accent":
                     Accent accent = new Accent();
                     Placement accentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     accent.setPlacement(accentPlacement);
-                    notationList.add(accent);
+                    articulation = accent;
                     break;
                 case "strong-accent":
                     StrongAccent strongAccent = new StrongAccent();
                     Placement strongAccentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     strongAccent.setPlacement(strongAccentPlacement);
                     strongAccent.setType(PlacementUtil.getLocation(articulationsSubelement.getAttribute("type")));
-                    notationList.add(strongAccent);
+                    articulation = strongAccent;
                     break;
                 case "staccato":
                     Staccato staccato = new Staccato();
                     Placement staccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     staccato.setPlacement(staccatoPlacement);
-                    notationList.add(staccato);
+                    articulation = staccato;
                     break;
                 case "tenuto":
                     Tenuto tenuto = new Tenuto();
                     Placement tenutoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     tenuto.setPlacement(tenutoPlacement);
-                    notationList.add(tenuto);
+                    articulation = tenuto;
                     break;
                 case "detached-legato":
                     DetachedLegato detachedLegato = new DetachedLegato();
                     Placement detachedLegatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     detachedLegato.setPlacement(detachedLegatoPlacement);
-                    notationList.add(detachedLegato);
+                    articulation = detachedLegato;
                     break;
                 case "staccatissimo":
                     Staccatissimo staccatissimo = new Staccatissimo();
                     Placement staccatissimoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     staccatissimo.setPlacement(staccatissimoPlacement);
-                    notationList.add(staccatissimo);
+                    articulation = staccatissimo;
                     break;
                 case "spiccato":
                     Spiccato spiccato = new Spiccato();
                     Placement spiccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     spiccato.setPlacement(spiccatoPlacement);
-                    notationList.add(spiccato);
+                    articulation = spiccato;
                     break;
                 case "scoop":
                     Scoop scoop = new Scoop();
                     scoop.setLine(NotationFactory.newLine(articulationsSubelement));
-                    notationList.add(scoop);
+                    articulation = scoop;
                     break;
                 case "plop":
                     Plop plop = new Plop();
                     plop.setLine(NotationFactory.newLine(articulationsSubelement));
-                    notationList.add(plop);
+                    articulation = plop;
                     break;
                 case "doit":
                     Doit doit = new Doit();
                     doit.setLine(NotationFactory.newLine(articulationsSubelement));
-                    notationList.add(doit);
+                    articulation = doit;
                     break;
                 case "falloff":
                     Falloff falloff = new Falloff();
                     falloff.setLine(NotationFactory.newLine(articulationsSubelement));
-                    notationList.add(falloff);
+                    articulation = falloff;
                     break;
                 case "breath-mark":
                     BreathMark breathMark = new BreathMark();
@@ -118,33 +122,34 @@ public class ArticulationHandler extends AbstractHandler {
                     }
                     breathMark.setPrintStyle(FormattingFactory.newPrintStyle(articulationsSubelement));
                     breathMark.setPlacement(PlacementUtil.getLocation(articulationsSubelement.getAttribute("placement")));
-                    notationList.add(breathMark);
+                    articulation = breathMark;
                     break;
                 case "caesura":
                     Caesura caesura = new Caesura();
                     Placement caesuraPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     caesura.setPlacement(caesuraPlacement);
-                    notationList.add(caesura);
+                    articulation = caesura;
                     break;
                 case "stress":
                     Stress stress = new Stress();
                     Placement stressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     stress.setPlacement(stressPlacement);
-                    notationList.add(stress);
+                    articulation = stress;
                     break;
                 case "unstress":
                     Unstress unstress = new Unstress();
                     Placement unstressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     unstress.setPlacement(unstressPlacement);
-                    notationList.add(unstress);
+                    articulation = unstress;
                     break;
                 case "other-articulation":
                     OtherArticulation otherArticulation = new OtherArticulation();
                     otherArticulation.setValue(PlacementFactory.newPlacementText(articulationsSubelement));
-                    notationList.add(otherArticulation);
+                    articulation = otherArticulation;
                     break;
             }
+            if (articulation != null) articulations.getArticulationList().add(articulation);
         }
-
+        notationList.add(articulations);
     }
 }
