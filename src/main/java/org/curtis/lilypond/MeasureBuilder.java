@@ -404,11 +404,17 @@ public class MeasureBuilder extends AbstractBuilder {
         if (musicData instanceof Note) {
             Note note = (Note)musicData;
             EditorialVoice editorialVoice = note.getEditorialVoice();
-            if (editorialVoice != null) currentVoice = editorialVoice.getVoice();
+            if (editorialVoice != null) {
+                String voice = editorialVoice.getVoice();
+                if(StringUtil.isNotEmpty(voice)) currentVoice = voice;
+            }
         } else if (musicData instanceof Forward) {
             Forward forward = (Forward)musicData;
             EditorialVoice editorialVoice = forward.getEditorialVoice();
-            if (editorialVoice != null) currentVoice = editorialVoice.getVoice();
+            if (editorialVoice != null) {
+                String voice = editorialVoice.getVoice();
+                if(StringUtil.isNotEmpty(voice)) currentVoice = voice;
+            }
         } else if (musicData instanceof Chord) {
             Chord chord = (Chord)musicData;
             currentVoice = chord.getVoice();

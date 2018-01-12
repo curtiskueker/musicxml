@@ -1,8 +1,11 @@
 package org.curtis.musicxml.note.lyric;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.note.TimeModification;
+import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
@@ -20,6 +23,8 @@ public class Lyric extends MusicData {
     private String color;
     private Boolean printObject;
     private BigDecimal totalBeats;
+    private TimeModification timeModification;
+    private Tuplet tuplet;
 
     public Lyric() {
 
@@ -119,5 +124,21 @@ public class Lyric extends MusicData {
 
     public void setTotalBeats(BigDecimal totalBeats) {
         this.totalBeats = totalBeats;
+    }
+
+    public TimeModification getTimeModification() {
+        return timeModification;
+    }
+
+    public void setTimeModification(TimeModification timeModification) {
+        this.timeModification = timeModification;
+    }
+
+    public Tuplet getTuplet() {
+        return tuplet;
+    }
+
+    public void setTuplet(Tuplet tuplet) {
+        this.tuplet = tuplet;
     }
 }

@@ -5,13 +5,13 @@ import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Lyric;
+import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,18 +43,17 @@ public class LyricPartBuilder extends FilteredPartBuilder {
 
                 if (musicData instanceof Note) {
                     Note note = (Note)musicData;
-                    BigDecimal totalBeats = MathUtil.divide(note.getDuration(), currentDivisions);
                     List<Lyric> lyrics = note.getLyrics();
                     if (lyrics.isEmpty()) {
                         if (lyricLists.size() == 1) {
                             Lyric emptyLyric = newEmptyLyric();
-                            emptyLyric.setTotalBeats(totalBeats);
+                            setLyricValues(emptyLyric, note);
                             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(emptyLyric);
                             append(musicDataBuilder.build().toString());
                         } else if (lyricLists.size() > 1) {
                             for(List<Lyric> lyricList : lyricLists) {
                                 Lyric emptyLyric = newEmptyLyric();
-                                emptyLyric.setTotalBeats(totalBeats);
+                                setLyricValues(emptyLyric, note);
                                 lyricList.add(emptyLyric);
                             }
                         }
@@ -90,12 +89,14 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                                     }
                                     lyricLists.add(lyricListToAdd);
                                 }
+                            } else {
+                                lyricCount = currentLyricCount;
                             }
                         }
 
                         if (lyricCount == 1) {
                             Lyric lyric = lyrics.get(0);
-                            lyric.setTotalBeats(totalBeats);
+                            setLyricValues(lyric, note);
                             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(lyric);
                             append(musicDataBuilder.build().toString());
                         } else if (lyricCount > 1) {
@@ -111,7 +112,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                                     }
                                 }
                                 if (lyricToAdd == null) lyricToAdd = newEmptyLyric();
-                                lyricToAdd.setTotalBeats(totalBeats);
+                                setLyricValues(lyricToAdd, note);
                                 lyricLists.get(lyricIndex - 1).add(lyricToAdd);
                             }
                         }
@@ -172,5 +173,14 @@ public class LyricPartBuilder extends FilteredPartBuilder {
         lyric.setLyricItem(new Extend());
 
         return lyric;
+    }
+
+    private void setLyricValues(Lyric lyric, Note note) {
+        lyric.setTotalBeats(MathUtil.divide(note.getDuration(), currentDivisions));
+        lyric.setTimeModification(note.getTimeModification());
+        lyric.setTuplet(note.getTuplet());
+
+        Tuplet tuplet = note.getTuplet();
+        if (tuplet != null) lyric.setTuplet(tuplet);
     }
 }
