@@ -4,6 +4,7 @@ import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.DetachedLegato;
+import org.curtis.musicxml.note.notation.articulation.Staccatissimo;
 import org.curtis.musicxml.note.notation.articulation.Staccato;
 import org.curtis.musicxml.note.notation.articulation.StrongAccent;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
@@ -48,6 +49,14 @@ public class ArticulationBuilder extends MusicDataBuilder {
         Placement placement = detachedLegato.getPlacement();
         if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
         append("\\portato");
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildStaccatissimo(Staccatissimo staccatissimo) {
+        Placement placement = staccatissimo.getPlacement();
+        if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
+        append("\\staccatissimo");
 
         return stringBuilder;
     }
