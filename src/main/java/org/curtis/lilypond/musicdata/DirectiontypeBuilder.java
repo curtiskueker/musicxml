@@ -8,6 +8,7 @@ import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
+import org.curtis.musicxml.direction.directiontype.OtherDirection;
 import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
@@ -113,6 +114,13 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
                     break;
             }
         }
+
+        return stringBuilder;
+    }
+
+
+    public StringBuilder buildOtherDirection(OtherDirection otherDirection) {
+        if (!otherDirection.getPrintObject()) return stringBuilder;
 
         return stringBuilder;
     }
