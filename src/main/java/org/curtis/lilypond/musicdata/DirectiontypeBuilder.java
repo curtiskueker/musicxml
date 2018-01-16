@@ -51,7 +51,9 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
             }
         }
 
+        append("\"");
         append(formattedText.getValue());
+        append("\"");
 
         append(" }");
 

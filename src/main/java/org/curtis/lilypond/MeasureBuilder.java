@@ -473,13 +473,23 @@ public class MeasureBuilder extends AbstractBuilder {
         boolean isDeferred = true;
         if (direction.getDirective()) isDeferred = false;
 
+        // test whether the direction is deferred
         Location placement = direction.getPlacement();
         for (DirectionType directionType : direction.getDirectionTypes()) {
             if (directionType instanceof Metronome) isDeferred = false;
-            if (directionType instanceof Words && placement == null) {
-                isDeferred = false;
-                Words words = (Words)directionType;
-                words.setTextMark(true);
+            if (directionType instanceof Words && (placement == null || direction.getDirective())) isDeferred = false;
+
+            if (!isDeferred) break;
+        }
+
+        // reset any relevant direction type values if it's deferred
+        if (!isDeferred) {
+            direction.setDirective(true);
+            for (DirectionType directionType : direction.getDirectionTypes()) {
+                if (directionType instanceof Words) {
+                    Words words = (Words)directionType;
+                    words.setTextMark(true);
+                }
             }
         }
 

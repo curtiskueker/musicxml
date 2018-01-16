@@ -72,10 +72,9 @@ public class MusicDataBuilder extends AbstractBuilder {
                 // Note exception but continue anyway
                 System.err.println(PartBuilder.CURRENT_PART_ID + ": MusicData exception: " + e.getCause().getMessage());
             }
+        } catch (NoSuchMethodException e) {
+            System.err.println("Unimplemented method:" + e.getMessage());
         } catch (Exception e) {
-            if (e instanceof NoSuchMethodException) {
-                System.err.println("Unimplemented method:" + e.getMessage());
-            }
             if (ScoreHandler.DEBUG) {
                 e.printStackTrace();
                 System.err.println("");
