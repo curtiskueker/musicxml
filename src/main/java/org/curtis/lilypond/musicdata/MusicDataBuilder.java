@@ -60,7 +60,8 @@ public class MusicDataBuilder extends AbstractBuilder {
         builderRootClassName = builderRootClassName.substring(0, 1).toUpperCase() + builderRootClassName.substring(1);
         String builderPackageName = "org.curtis.lilypond.musicdata.";
 
-        String builderClassName = builderPackageName + builderRootClassName + "Builder";
+        String builderObjectName = builderRootClassName + "Builder";
+        String builderClassName = builderPackageName + builderObjectName;
         String builderMethodName = "build" + objectClassName;
 
         try {
@@ -73,7 +74,7 @@ public class MusicDataBuilder extends AbstractBuilder {
                 System.err.println(PartBuilder.CURRENT_PART_ID + ": MusicData exception: " + e.getCause().getMessage());
             }
         } catch (NoSuchMethodException e) {
-            System.err.println("Unimplemented method:" + e.getMessage());
+            System.err.println("Unimplemented method: " + builderObjectName + "." + builderMethodName + "(" + objectClassName + ")");
         } catch (Exception e) {
             if (ScoreHandler.DEBUG) {
                 e.printStackTrace();

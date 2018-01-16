@@ -256,6 +256,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
+                setDirectionDefaults(direction);
                 if (deferredDirection(direction)) {
                     currentDirections.add(direction);
                 } else {
@@ -457,27 +458,17 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     private boolean skipNote(Note note) {
-        if(note.getCue()) {
-            return true;
-        }
-
-        // skip non-printed chords as redundant
-        if (note.getFullNote().isChord() && !note.getPrintout().getPrintObject()) {
-            return true;
-        }
-
-        return false;
+        // skip cues and non-printed chords as redundant
+        return note.getCue() || (note.getFullNote().isChord() && !note.getPrintout().getPrintObject());
     }
 
     private boolean deferredDirection(Direction direction) {
         boolean isDeferred = true;
         if (direction.getDirective()) isDeferred = false;
 
-        // test whether the direction is deferred
-        Location placement = direction.getPlacement();
         for (DirectionType directionType : direction.getDirectionTypes()) {
             if (directionType instanceof Metronome) isDeferred = false;
-            if (directionType instanceof Words && (placement == null || direction.getDirective())) isDeferred = false;
+            if (directionType instanceof Words && direction.getDirective()) isDeferred = false;
 
             if (!isDeferred) break;
         }
@@ -494,5 +485,15 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         return isDeferred;
+    }
+
+    private void setDirectionDefaults(Direction direction) {
+        for (DirectionType directionType : direction.getDirectionTypes()) {
+            if (directionType instanceof Words) {
+                if (!direction.getDirective() && direction.getPlacement() == null) {
+                    direction.setPlacement(Location.ABOVE);
+                }
+            }
+        }
     }
 }
