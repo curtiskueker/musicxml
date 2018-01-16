@@ -15,11 +15,12 @@ public class MetronomeBuilder extends MusicDataBuilder {
         if(perMinute == null) return stringBuilder;
         if(beatUnit1 == null) return stringBuilder;
 
-        appendLine("");
+        appendLine();
         append("\\tempo ");
         append(NoteUtil.getNoteTypeValue(beatUnit1.getBeatUnit()));
         append(" = ");
         append(perMinute.getPerMinute());
+        appendLine();
 
         return stringBuilder;
     }

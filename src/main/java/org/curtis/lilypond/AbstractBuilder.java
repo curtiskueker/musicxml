@@ -14,6 +14,10 @@ public abstract class AbstractBuilder {
         stringBuilder.append("\n");
     }
 
+    protected void appendLine() {
+        appendLine("");
+    }
+
     protected void append(String string) {
         stringBuilder.append(string);
     }

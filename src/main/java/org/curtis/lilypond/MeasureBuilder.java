@@ -134,9 +134,9 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Calculate expected divisions in the measure
         TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
-        BigDecimal expectedDuration = null;
+        BigDecimal wholeMeasureDuration = null;
         try {
-            expectedDuration = TimeSignatureUtil.getExpectedMeasureDuration();
+            wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
         } catch (TimeSignatureException e) {
             throw new BuildException(e.getMessage());
         }
@@ -313,11 +313,11 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Check whether expected duration equals total duration
         // First or last measure can be partial, otherwise it's an exception
-        if(!MathUtil.equalTo(expectedDuration, totalDuration)) {
+        if(!MathUtil.equalTo(wholeMeasureDuration, totalDuration)) {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
             } else if (!measure.isLastMeasure()){
-                throw new BuildException(getExceptionStringPrefix(measure) + "Expected duration: " + expectedDuration + " Total duration: " + totalDuration + ".  Skipping measure.");
+                throw new BuildException(getExceptionStringPrefix(measure) + "Expected duration: " + wholeMeasureDuration + " Total duration: " + totalDuration + ".  Skipping measure.");
             }
         }
 
@@ -346,7 +346,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // Partial measure
         if(measure.getImplicit()) {
             try {
-                BigDecimal numerator = MathUtil.multiply(MathUtil.divide(totalDuration, expectedDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
+                BigDecimal numerator = MathUtil.multiply(MathUtil.divide(totalDuration, wholeMeasureDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
                 BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
                 String wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation(numerator, denominator);
 
@@ -374,7 +374,7 @@ public class MeasureBuilder extends AbstractBuilder {
             RepeatBlockType repeatBlockType = repeatBlock.getRepeatBlockType();
             Connection repeatBlockConnectionType = repeatBlock.getConnectionType();
             if (repeatBlockConnectionType == Connection.STOP || repeatBlockConnectionType == Connection.SINGLE) {
-                appendLine("");
+                appendLine();
                 appendLine("}");
 
                 if (repeatBlockType == RepeatBlockType.ENDING && repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) {
@@ -383,7 +383,7 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        appendLine("");
+        appendLine();
 
         return stringBuilder;
     }

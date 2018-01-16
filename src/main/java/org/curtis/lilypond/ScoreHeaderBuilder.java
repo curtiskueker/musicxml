@@ -40,7 +40,7 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
         append("\\version \"");
         append(MusicXml2Ly.LILYPOND_VERSION);
         appendLine("\"");
-        appendLine("");
+        appendLine();
 
         ScoreDefaults.getInstance().setScoreDefaults(scoreHeader.getDefaults());
 

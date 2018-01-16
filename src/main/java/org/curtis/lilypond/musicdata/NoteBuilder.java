@@ -91,20 +91,16 @@ public class NoteBuilder extends MusicDataBuilder {
             Rest rest = (Rest)fullNoteType;
             Boolean measure = rest.getMeasure();
             NoteType noteType = note.getType();
-            if(measure || noteType == null) {
-                try {
-                    BigDecimal duration = note.getDuration();
-                    BigDecimal expectedDuration = TimeSignatureUtil.getExpectedMeasureDuration();
-                    if (MathUtil.equalTo(duration, expectedDuration)) {
-                        append("R");
-                        append(TimeSignatureUtil.getWholeMeasureRepresentation());
-                    } else {
-                        append("r");
-                        append(TimeSignatureUtil.getDurationRepresentationValue(note.getDuration()));
-                    }
-                } catch (TimeSignatureException e) {
-                    throw new BuildException("Invalid whole measure representation");
-                }
+            BigDecimal duration = note.getDuration();
+            BigDecimal wholeMeasureDuration = null;
+            try {
+                wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
+            } catch (TimeSignatureException e) {
+                throw new BuildException(e.getMessage());
+            }
+            if(measure || noteType == null || MathUtil.equalTo(duration, wholeMeasureDuration)) {
+                rest.setMeasure(true);
+                append("R");
             } else {
                 append("r");
             }
@@ -160,10 +156,16 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private StringBuilder noteDurationBuild() {
+    private StringBuilder noteDurationBuild() throws BuildException {
         NoteType noteType = note.getType();
-
-        if (noteType != null) {
+        FullNoteType fullNoteType = note.getFullNote().getFullNoteType();
+        if (fullNoteType instanceof Rest && ((Rest)fullNoteType).getMeasure()) {
+            try {
+                append(TimeSignatureUtil.getWholeMeasureRepresentation());
+            } catch (TimeSignatureException e) {
+                throw new BuildException(e.getMessage());
+            }
+        } else if (noteType != null) {
             append(NoteUtil.getNoteTypeValue(noteType.getValue()));
             List<Placement> dots = note.getDots();
             for(Placement dot : dots) {

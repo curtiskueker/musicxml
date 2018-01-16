@@ -39,12 +39,12 @@ public class MusicDataBuilder extends AbstractBuilder {
         if (polyphonicVoiceStart != null) {
             switch (polyphonicVoiceStart) {
                 case BEGIN:
-                    appendLine("");
+                    appendLine();
                     appendLine("<<");
                     appendLine("{");
                     break;
                 case START:
-                    appendLine("");
+                    appendLine();
                     appendLine("{");
                     break;
             }
@@ -85,12 +85,12 @@ public class MusicDataBuilder extends AbstractBuilder {
         if (polyphonicVoiceStop != null) {
             switch (polyphonicVoiceStop) {
                 case STOP:
-                    appendLine("");
+                    appendLine();
                     appendLine("}");
                     appendLine("\\\\");
                     break;
                 case END:
-                    appendLine("");
+                    appendLine();
                     appendLine("}");
                     appendLine(">>");
                     break;

@@ -80,7 +80,7 @@ public class HarmonyPartBuilder extends FilteredPartBuilder {
             append(musicDataBuilder.build().toString());
         }
 
-        appendLine("");
+        appendLine();
         appendLine("}");
 
         return stringBuilder;

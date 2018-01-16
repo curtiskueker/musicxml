@@ -127,7 +127,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
             buildLyricLists();
         }
 
-        appendLine("");
+        appendLine();
         appendLine("}");
 
         return stringBuilder;

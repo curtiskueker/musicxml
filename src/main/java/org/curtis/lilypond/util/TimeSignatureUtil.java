@@ -86,7 +86,7 @@ public class TimeSignatureUtil {
         return MathUtil.divide(MathUtil.multiply(MathUtil.newBigDecimal(4), numerator), denominator);
     }
 
-    public static BigDecimal getExpectedMeasureDuration() throws TimeSignatureException {
+    public static BigDecimal getWholeMeasureDuration() throws TimeSignatureException {
         return MathUtil.multiply(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), getCurrentMeasureBeats());
     }
 

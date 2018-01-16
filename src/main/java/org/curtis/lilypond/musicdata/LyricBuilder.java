@@ -74,11 +74,11 @@ public class LyricBuilder extends MusicDataBuilder {
         }
 
         if (tupletConnection == Connection.STOP) {
-            appendLine("");
+            appendLine();
             append("}");
         }
 
-        appendLine("");
+        appendLine();
 
         return stringBuilder;
     }
