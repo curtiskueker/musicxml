@@ -14,7 +14,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
@@ -51,11 +50,14 @@ public class XmlUtil {
         StringBuilder xmlStringBuilder = new StringBuilder();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(xmlFilename));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                xmlStringBuilder.append(line);
-                xmlStringBuilder.append("\n");
+            FileReader reader = new FileReader(xmlFilename);
+            int ch;
+            boolean inProlog = true;
+            while ((ch = reader.read()) != -1) {
+                char c = (char)ch;
+                if (c == '<') inProlog = false;
+                if (inProlog) continue;
+                xmlStringBuilder.append(c);
             }
         } catch (IOException e) {
             throw new XmlException(e.getMessage());
