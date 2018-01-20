@@ -34,8 +34,10 @@ import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -44,7 +46,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;
     private List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
     private Note previousNote;
-    private Set<Integer> currentBeams = new HashSet<>();
+    private Map<String, Set<Integer>> currentBeams = new HashMap<>();
     private List<Direction> currentDirections = new ArrayList<>();
     private Barline currentBarline = null;
     private boolean tupletsOn = false;
@@ -134,7 +136,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Calculate expected divisions in the measure
         TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
-        BigDecimal wholeMeasureDuration = null;
+        BigDecimal wholeMeasureDuration;
         try {
             wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
         } catch (TimeSignatureException e) {
@@ -149,6 +151,8 @@ public class MeasureBuilder extends AbstractBuilder {
             if(musicData instanceof Note) {
                 Note currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
+                String voice = currentNote.getEditorialVoice().getVoice();
+                if (StringUtil.isEmpty(voice)) voice = "1";
 
                 if(skipNote(currentNote)) {
                     continue;
@@ -163,7 +167,7 @@ public class MeasureBuilder extends AbstractBuilder {
                         switch (chordType) {
                             case START:
                                 currentChord = new Chord();
-                                currentChord.setVoice(currentNote.getEditorialVoice().getVoice());
+                                currentChord.setVoice(voice);
                             case CONTINUE:
                                 currentChord.getNotes().add(currentNote);
                                 break;
@@ -185,7 +189,7 @@ public class MeasureBuilder extends AbstractBuilder {
                         switch (tupletType) {
                             case START:
                                 currentTuplet = new TupletNotes();
-                                currentTuplet.setVoice(currentNote.getEditorialVoice().getVoice());
+                                currentTuplet.setVoice(voice);
                             case CONTINUE:
                                 if (chordType == null) {
                                     currentTuplet.getMusicDataList().add(currentNote);
@@ -234,16 +238,17 @@ public class MeasureBuilder extends AbstractBuilder {
                 for (Beam beam : beams) {
                     Integer beamNumber = beam.getNumber();
                     BeamType beamType = beam.getType();
+                    Set<Integer> voiceBeams = currentBeams.computeIfAbsent(voice, beamSet -> new HashSet<>());
                     switch (beamType) {
                         case BEGIN:
-                            if(currentBeams.isEmpty()) {
+                            if(voiceBeams.isEmpty()) {
                                 currentNote.setBeginBeam(true);
                             }
-                            currentBeams.add(beamNumber);
+                            voiceBeams.add(beamNumber);
                             break;
                         case END:
-                            currentBeams.remove(beamNumber);
-                            if(currentBeams.isEmpty()) {
+                            voiceBeams.remove(beamNumber);
+                            if(voiceBeams.isEmpty()) {
                                 currentNote.setEndBeam(true);
                             }
                             break;
@@ -429,12 +434,7 @@ public class MeasureBuilder extends AbstractBuilder {
         if (StringUtil.isEmpty(currentVoice)) {
             musicDataBuilders.add(new MusicDataBuilder(musicData));
         } else {
-            List<MusicDataBuilder> voiceList = voiceDataBuilders.get(currentVoice);
-            if(voiceList == null) {
-                voiceList = new ArrayList<>();
-                voiceDataBuilders.put(currentVoice, voiceList);
-            }
-
+            List<MusicDataBuilder> voiceList = voiceDataBuilders.computeIfAbsent(currentVoice, voiceBuilders -> new ArrayList<>());
             voiceList.add(musicDataBuilder);
         }
 
