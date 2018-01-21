@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.notation.ornament.Mordent;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.note.notation.ornament.Turn;
+import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.util.MathUtil;
 
 public class OrnamentBuilder extends MusicDataBuilder {
@@ -40,6 +41,11 @@ public class OrnamentBuilder extends MusicDataBuilder {
         append(PlacementBuildUtil.getPlacement(mordent.getPlacement()));
         append("\\mordent");
 
+        return stringBuilder;
+    }
+
+    // TODO: wavy line implementation
+    public StringBuilder buildWavyLine(WavyLine wavyLine) {
         return stringBuilder;
     }
 
