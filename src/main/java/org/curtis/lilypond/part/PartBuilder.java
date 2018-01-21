@@ -1,7 +1,6 @@
 package org.curtis.lilypond.part;
 
 import org.curtis.lilypond.AbstractBuilder;
-import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
@@ -190,30 +189,13 @@ public class PartBuilder extends AbstractBuilder {
             previousMeasure = measure;
         }
 
-        if (hasLyrics) {
-            append("\\new Voice = \"");
-            append(part.getId());
-            appendLine("\" {");
-        } else {
-            appendLine("{");
-        }
-
         // main processing loop
-        for(Measure measure : measures) {
-            try {
-                MeasureBuilder measureBuilder = new MeasureBuilder(measure);
-                append(measureBuilder.build().toString());
-            } catch (BuildException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-
-        appendLine("}");
-
-        // build lyrics block, if there are any
         if(hasLyrics) {
             LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(part);
             append(lyricPartBuilder.build().toString());
+        } else {
+            VoicePartBuilder voicePartBuilder = new VoicePartBuilder(part);
+            append(voicePartBuilder.build().toString());
         }
 
         CURRENT_ATTRIBUTES = null;

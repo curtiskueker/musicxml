@@ -26,6 +26,13 @@ public class LyricPartBuilder extends FilteredPartBuilder {
     }
 
     public StringBuilder build() throws BuildException {
+        append("\\new Voice = \"");
+        append(part.getId());
+        append("\" ");
+
+        VoicePartBuilder voicePartBuilder = new VoicePartBuilder(part);
+        append(voicePartBuilder.build().toString());
+
         append("\\new Lyrics = \"Lyrics");
         append(String.valueOf(lyricsCounter));
         append("\" ");
