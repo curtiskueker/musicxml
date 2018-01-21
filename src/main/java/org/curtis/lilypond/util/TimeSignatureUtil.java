@@ -1,6 +1,6 @@
 package org.curtis.lilypond.util;
 
-import org.curtis.lilypond.PartBuilder;
+import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.attributes.time.TimeSignature;

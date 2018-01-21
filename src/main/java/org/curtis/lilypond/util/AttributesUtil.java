@@ -1,6 +1,6 @@
 package org.curtis.lilypond.util;
 
-import org.curtis.lilypond.PartBuilder;
+import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.attributes.Directive;

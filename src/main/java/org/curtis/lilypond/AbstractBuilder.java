@@ -1,6 +1,7 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.util.StringUtil;
 

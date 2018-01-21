@@ -1,6 +1,8 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.part.HarmonyPartBuilder;
+import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;

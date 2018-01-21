@@ -1,7 +1,7 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.AbstractBuilder;
-import org.curtis.lilypond.PartBuilder;
+import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.handler.ScoreHandler;

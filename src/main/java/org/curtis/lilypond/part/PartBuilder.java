@@ -1,6 +1,9 @@
-package org.curtis.lilypond;
+package org.curtis.lilypond.part;
 
+import org.curtis.lilypond.AbstractBuilder;
+import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.part.LyricPartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;

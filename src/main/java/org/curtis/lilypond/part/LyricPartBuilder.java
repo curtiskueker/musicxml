@@ -1,4 +1,4 @@
-package org.curtis.lilypond;
+package org.curtis.lilypond.part;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
