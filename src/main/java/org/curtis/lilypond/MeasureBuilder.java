@@ -25,7 +25,6 @@ import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
-import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.RepeatBlock;
@@ -51,7 +50,6 @@ public class MeasureBuilder extends AbstractBuilder {
     private Map<String, Set<Integer>> currentBeams = new HashMap<>();
     private List<Direction> currentDirections = new ArrayList<>();
     private Barline currentBarline = null;
-    private boolean tupletsOn = false;
     private Chord currentChord = null;
     private TupletNotes currentTuplet = null;
     private TupletNotes lastTuplet = null;
@@ -68,82 +66,6 @@ public class MeasureBuilder extends AbstractBuilder {
         append("% measure ");
         appendLine(measure.getNumber());
 
-        // pre-processing loops
-        //
-        // Set the current attributes to any Attributes object found before the first note in the measure
-        //
-        // Go through Notes and mark begins and ends of chords and tuplets
-        // these are grouped into their own builder calls
-        boolean noteFound = false;
-        for(MusicData musicData : musicDataList) {
-            musicData.setStaffNumber(measure.getStaffNumber());
-
-            if(musicData instanceof Note) {
-                Note note = (Note)musicData;
-                FullNote fullNote = note.getFullNote();
-                noteFound = true;
-
-                if(skipNote(note)) {
-                    continue;
-                }
-
-                if (previousNote != null) {
-                    // chord type
-                    if(fullNote.isChord() && !previousNote.getFullNote().isChord()) {
-                        previousNote.getFullNote().setChord(true);
-                        previousNote.getFullNote().setChordType(Connection.START);
-                    } else if(fullNote.isChord() && previousNote.getFullNote().isChord()) {
-                        previousNote.getFullNote().setChordType(Connection.CONTINUE);
-                    } else if(!fullNote.isChord() && previousNote.getFullNote().isChord()) {
-                        previousNote.getFullNote().setChordType(Connection.STOP);
-                    }
-                }
-                // tuplet type
-                Tuplet tuplet = note.getTuplet();
-                if(tuplet != null) {
-                    Connection tupletType = tuplet.getType();
-                    switch (tupletType) {
-                        case START:
-                            note.setTupletType(Connection.START);
-                            tupletsOn = true;
-                            break;
-                        case STOP:
-                            note.setTupletType(Connection.STOP);
-                            tupletsOn = false;
-                            break;
-                    }
-                } else if(note.getFullNote().isChord() && previousNote.getFullNote().isChord() && previousNote.getTupletType() == Connection.STOP) {
-                    // adjust end tuplet on chords
-                    previousNote.setTupletType(Connection.CONTINUE);
-                    note.setTupletType(Connection.STOP);
-                } else if(tupletsOn) {
-                    note.setTupletType(Connection.CONTINUE);
-                }
-
-                previousNote = note;
-            } else if(musicData instanceof Attributes) {
-                Attributes attributes = (Attributes)musicData;
-                if(!noteFound) AttributesUtil.setCurrentAttributes(attributes);
-            }
-        }
-
-        // close last chord note at end of measure
-        if(previousNote != null && previousNote.getFullNote().isChord()) {
-            previousNote.getFullNote().setChordType(Connection.STOP);
-        }
-
-        if(PartBuilder.CURRENT_ATTRIBUTES == null) {
-            throw new BuildException(getExceptionStringPrefix(measure) + "Current Attributes not found");
-        }
-
-        // Calculate expected divisions in the measure
-        TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
-        BigDecimal wholeMeasureDuration;
-        try {
-            wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
-        } catch (TimeSignatureException e) {
-            throw new BuildException(e.getMessage());
-        }
         BigDecimal totalDuration = MathUtil.ZERO;
 
         // create data builder list for processing
@@ -156,7 +78,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 String voice = currentNote.getEditorialVoice().getVoice();
                 if (StringUtil.isEmpty(voice)) voice = "1";
 
-                if(skipNote(currentNote)) {
+                if(PartBuilder.skipNote(currentNote)) {
                     continue;
                 }
 
@@ -272,6 +194,10 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
 
                 musicDataBuilder = addToDataBuilders(barline);
+            } else if (musicData instanceof Attributes) {
+                Attributes attributes = (Attributes)musicData;
+                AttributesUtil.setCurrentAttributes(attributes);
+                musicDataBuilder = addToDataBuilders(attributes);
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
                 totalDuration = MathUtil.subtract(totalDuration, backup.getDuration());
@@ -311,6 +237,15 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Check whether expected duration equals total duration
         // First or last measure can be partial, otherwise it's an exception
+        // Calculate expected divisions in the measure
+        TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
+        BigDecimal wholeMeasureDuration;
+        try {
+            wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
+        } catch (TimeSignatureException e) {
+            throw new BuildException(e.getMessage());
+        }
+
         if(!MathUtil.equalTo(wholeMeasureDuration, totalDuration)) {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
@@ -435,11 +370,6 @@ public class MeasureBuilder extends AbstractBuilder {
         firstList.get(0).getMusicData().setPolyphonicVoiceStart(Connection.BEGIN);
         List<MusicDataBuilder> lastList = voiceDataBuilders.get(voiceDataBuilders.lastKey());
         lastList.get(lastList.size() - 1).getMusicData().setPolyphonicVoiceStop(Connection.END);
-    }
-
-    private boolean skipNote(Note note) {
-        // skip cues and non-printed chords as redundant
-        return note.getCue() || (note.getFullNote().isChord() && !note.getPrintout().getPrintObject());
     }
 
     private void transferDirections() {

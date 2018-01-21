@@ -3,13 +3,14 @@ package org.curtis.lilypond.part;
 import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.lilypond.part.LyricPartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
@@ -22,6 +23,8 @@ import java.util.List;
 public class PartBuilder extends AbstractBuilder {
     private Part part;
     private Measure previousMeasure;
+    private Note previousNote;
+    private boolean tupletsOn = false;
     private Measure currentRepeatStartBlockMeasure;
     private Measure currentRepeatEndBlockMeasure;
     private Integer currentEndingCount = 0;
@@ -47,7 +50,55 @@ public class PartBuilder extends AbstractBuilder {
 
             List<MusicData> musicDataList = measure.getMusicDataList();
             for(MusicData musicData : musicDataList) {
-                if(musicData instanceof Barline) {
+                musicData.setStaffNumber(measure.getStaffNumber());
+
+                if(musicData instanceof Note) {
+                    Note note = (Note)musicData;
+                    FullNote fullNote = note.getFullNote();
+
+                    if(skipNote(note)) {
+                        continue;
+                    }
+
+                    if (!note.getLyrics().isEmpty()) {
+                        hasLyrics = true;
+                    }
+
+                    if (previousNote != null) {
+                        // chord type
+                        if(fullNote.isChord() && !previousNote.getFullNote().isChord()) {
+                            previousNote.getFullNote().setChord(true);
+                            previousNote.getFullNote().setChordType(Connection.START);
+                        } else if(fullNote.isChord() && previousNote.getFullNote().isChord()) {
+                            previousNote.getFullNote().setChordType(Connection.CONTINUE);
+                        } else if(!fullNote.isChord() && previousNote.getFullNote().isChord()) {
+                            previousNote.getFullNote().setChordType(Connection.STOP);
+                        }
+                    }
+                    // tuplet type
+                    Tuplet tuplet = note.getTuplet();
+                    if(tuplet != null) {
+                        Connection tupletType = tuplet.getType();
+                        switch (tupletType) {
+                            case START:
+                                note.setTupletType(Connection.START);
+                                tupletsOn = true;
+                                break;
+                            case STOP:
+                                note.setTupletType(Connection.STOP);
+                                tupletsOn = false;
+                                break;
+                        }
+                    } else if(note.getFullNote().isChord() && previousNote.getFullNote().isChord() && previousNote.getTupletType() == Connection.STOP) {
+                        // adjust end tuplet on chords
+                        previousNote.setTupletType(Connection.CONTINUE);
+                        note.setTupletType(Connection.STOP);
+                    } else if(tupletsOn) {
+                        note.setTupletType(Connection.CONTINUE);
+                    }
+
+                    previousNote = note;
+                } else if(musicData instanceof Barline) {
                     Barline barline = (Barline)musicData;
                     Ending ending = barline.getEnding();
                     if(ending != null) {
@@ -117,11 +168,6 @@ public class PartBuilder extends AbstractBuilder {
                                 break;
                         }
                     }
-                } else if(musicData instanceof Note) {
-                    Note note = (Note)musicData;
-                    if (!note.getLyrics().isEmpty()) {
-                        hasLyrics = true;
-                    }
                 }
             }
 
@@ -134,6 +180,11 @@ public class PartBuilder extends AbstractBuilder {
                     currentEndingCount = 0;
                     currentRepeatBlocks.clear();
                 }
+            }
+
+            // close last chord note at end of measure
+            if(previousNote != null && previousNote.getFullNote().isChord()) {
+                previousNote.getFullNote().setChordType(Connection.STOP);
             }
 
             previousMeasure = measure;
@@ -168,5 +219,10 @@ public class PartBuilder extends AbstractBuilder {
         CURRENT_ATTRIBUTES = null;
 
         return stringBuilder;
+    }
+
+    public static boolean skipNote(Note note) {
+        // skip cues and non-printed chords as redundant
+        return note.getCue() || (note.getFullNote().isChord() && !note.getPrintout().getPrintObject());
     }
 }
