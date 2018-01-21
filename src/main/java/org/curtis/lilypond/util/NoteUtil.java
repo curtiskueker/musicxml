@@ -1,5 +1,6 @@
 package org.curtis.lilypond.util;
 
+import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Step;
 import org.curtis.util.MathUtil;
@@ -85,5 +86,9 @@ public class NoteUtil {
         }
 
         return "";
+    }
+
+    public static String getSpacerRepresentation(BigDecimal duration) throws TimeSignatureException {
+        return "s" + TimeSignatureUtil.getDurationRepresentationValue(duration);
     }
 }

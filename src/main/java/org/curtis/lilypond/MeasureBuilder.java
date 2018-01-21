@@ -46,6 +46,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;
     private List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
     private Note previousNote;
+    private Note currentNote;
     private Map<String, Set<Integer>> currentBeams = new HashMap<>();
     private List<Direction> currentDirections = new ArrayList<>();
     private Barline currentBarline = null;
@@ -77,11 +78,11 @@ public class MeasureBuilder extends AbstractBuilder {
             musicData.setStaffNumber(measure.getStaffNumber());
 
             if(musicData instanceof Note) {
-                Note currentNote = (Note)musicData;
-                FullNote fullNote = currentNote.getFullNote();
+                Note note = (Note)musicData;
+                FullNote fullNote = note.getFullNote();
                 noteFound = true;
 
-                if(skipNote(currentNote)) {
+                if(skipNote(note)) {
                     continue;
                 }
 
@@ -97,28 +98,28 @@ public class MeasureBuilder extends AbstractBuilder {
                     }
                 }
                 // tuplet type
-                Tuplet tuplet = currentNote.getTuplet();
+                Tuplet tuplet = note.getTuplet();
                 if(tuplet != null) {
                     Connection tupletType = tuplet.getType();
                     switch (tupletType) {
                         case START:
-                            currentNote.setTupletType(Connection.START);
+                            note.setTupletType(Connection.START);
                             tupletsOn = true;
                             break;
                         case STOP:
-                            currentNote.setTupletType(Connection.STOP);
+                            note.setTupletType(Connection.STOP);
                             tupletsOn = false;
                             break;
                     }
-                } else if(currentNote.getFullNote().isChord() && previousNote.getFullNote().isChord() && previousNote.getTupletType() == Connection.STOP) {
+                } else if(note.getFullNote().isChord() && previousNote.getFullNote().isChord() && previousNote.getTupletType() == Connection.STOP) {
                     // adjust end tuplet on chords
                     previousNote.setTupletType(Connection.CONTINUE);
-                    currentNote.setTupletType(Connection.STOP);
+                    note.setTupletType(Connection.STOP);
                 } else if(tupletsOn) {
-                    currentNote.setTupletType(Connection.CONTINUE);
+                    note.setTupletType(Connection.CONTINUE);
                 }
 
-                previousNote = currentNote;
+                previousNote = note;
             } else if(musicData instanceof Attributes) {
                 Attributes attributes = (Attributes)musicData;
                 if(!noteFound) AttributesUtil.setCurrentAttributes(attributes);
@@ -149,7 +150,7 @@ public class MeasureBuilder extends AbstractBuilder {
             MusicDataBuilder musicDataBuilder = null;
 
             if(musicData instanceof Note) {
-                Note currentNote = (Note)musicData;
+                currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
                 String voice = currentNote.getEditorialVoice().getVoice();
                 if (StringUtil.isEmpty(voice)) voice = "1";
@@ -172,9 +173,7 @@ public class MeasureBuilder extends AbstractBuilder {
                                 currentChord.getNotes().add(currentNote);
                                 break;
                             case STOP:
-                                currentChord.getNotes().add(currentNote);
-                                currentChord.getDirections().addAll(currentDirections);
-                                currentDirections.clear();
+                                transferDirections();
                                 if (tupletType == Connection.STOP || tupletType == Connection.CONTINUE) {
                                     currentTuplet.getMusicDataList().add(currentChord);
                                 } else {
@@ -191,18 +190,10 @@ public class MeasureBuilder extends AbstractBuilder {
                                 currentTuplet = new TupletNotes();
                                 currentTuplet.setVoice(voice);
                             case CONTINUE:
-                                if (chordType == null) {
-                                    currentTuplet.getMusicDataList().add(currentNote);
-                                    currentTuplet.getMusicDataList().addAll(currentDirections);
-                                    currentDirections.clear();
-                                }
+                                if (chordType == null) transferDirections();
                                 break;
                             case STOP:
-                                if (chordType == null) {
-                                    currentTuplet.getMusicDataList().add(currentNote);
-                                    currentTuplet.getMusicDataList().addAll(currentDirections);
-                                    currentDirections.clear();
-                                }
+                                if (chordType == null) transferDirections();
                                 musicDataBuilder = addToDataBuilders(currentTuplet);
                                 lastTuplet = currentTuplet;
                                 currentTuplet = null;
@@ -394,18 +385,6 @@ public class MeasureBuilder extends AbstractBuilder {
         return stringBuilder;
     }
 
-    private void transferDirections() {
-        if (lastTuplet == null) {
-            for(Direction direction : currentDirections) {
-                addToDataBuilders(direction);
-            }
-        } else {
-            lastTuplet.getMusicDataList().addAll(currentDirections);
-        }
-
-        currentDirections.clear();
-    }
-
     private MusicDataBuilder addToDataBuilders(MusicData musicData) {
         if (musicData instanceof Note) {
             Note note = (Note)musicData;
@@ -460,6 +439,65 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean skipNote(Note note) {
         // skip cues and non-printed chords as redundant
         return note.getCue() || (note.getFullNote().isChord() && !note.getPrintout().getPrintObject());
+    }
+
+    private void transferDirections() {
+        if (hasMultipleDirections()) {
+            List<Direction> nonMultipleDirections = new ArrayList<>();
+            for (Direction direction : currentDirections) {
+                boolean isMultipleDirection = false;
+                for (DirectionType directionType : direction.getDirectionTypes()) {
+                    if (DirectionType.MULTIPLE_DIRECTION_TYPES.contains(directionType.getClass().getSimpleName())) {
+                        isMultipleDirection = true;
+                        break;
+                    }
+                }
+
+                if (isMultipleDirection) {
+                    currentNote.getMultipleDirections().add(direction);
+                } else {
+                    nonMultipleDirections.add(direction);
+                }
+            }
+
+            currentDirections.clear();
+            currentDirections.addAll(nonMultipleDirections);
+        }
+
+        if (lastTuplet != null) {
+            lastTuplet.getMusicDataList().addAll(currentDirections);
+        } else if (currentChord != null) {
+            currentChord.getNotes().add(currentNote);
+            currentChord.getDirections().addAll(currentDirections);
+        } else if (currentTuplet != null) {
+            currentTuplet.getMusicDataList().add(currentNote);
+            currentTuplet.getMusicDataList().addAll(currentDirections);
+        } else {
+            for(Direction direction : currentDirections) {
+                addToDataBuilders(direction);
+            }
+        }
+
+        currentDirections.clear();
+    }
+
+    private boolean hasMultipleDirections() {
+        Map<String, Integer> directionTypeCounts = new HashMap<>();
+        for (Direction direction : currentDirections) {
+            for (DirectionType directionType : direction.getDirectionTypes()) {
+                String name = directionType.getClass().getSimpleName();
+                Integer directionTypeCount = directionTypeCounts.computeIfAbsent(name, count -> 0);
+                directionTypeCount++;
+                directionTypeCounts.put(name, directionTypeCount);
+            }
+        }
+
+        for (String multipleDirectionType : DirectionType.MULTIPLE_DIRECTION_TYPES) {
+            Integer directionTypeCount = directionTypeCounts.get(multipleDirectionType);
+            if (directionTypeCount != null && directionTypeCount > 1) return true;
+        }
+
+        return false;
     }
 
     private boolean deferredDirection(Direction direction) {

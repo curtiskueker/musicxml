@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
+import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Tuplet;
@@ -47,6 +48,7 @@ public class Note extends MusicData {
     private BigDecimal release;
     private String timeOnly;
     private Boolean pizzicato;
+    private List<Direction> multipleDirections = new ArrayList<>();
 
     public Note() {
 
@@ -322,5 +324,13 @@ public class Note extends MusicData {
 
     public void setPizzicato(Boolean pizzicato) {
         this.pizzicato = pizzicato;
+    }
+
+    public List<Direction> getMultipleDirections() {
+        return multipleDirections;
+    }
+
+    public void setMultipleDirections(List<Direction> multipleDirections) {
+        this.multipleDirections = multipleDirections;
     }
 }

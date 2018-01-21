@@ -6,6 +6,7 @@ import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
@@ -32,10 +33,12 @@ import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class NoteBuilder extends MusicDataBuilder {
     private Note note;
+    private List<Direction> nonMultipleDirections = new ArrayList<>();
 
     public NoteBuilder(Note note) {
         super(note);
@@ -56,12 +59,15 @@ public class NoteBuilder extends MusicDataBuilder {
 
     public StringBuilder build() throws BuildException {
         preNoteBuild();
+        preNonMultipleDirectionBuild();
         startGraceBuild();
         noteTypeBuild();
         noteDurationBuild();
         beamBuild();
         notationsBuild();
         finishGraceBuild();
+        nonMultipleDirectionBuild();
+        postNonMultipleDirectionBuild();
 
         return stringBuilder;
     }
@@ -222,8 +228,65 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
+    private StringBuilder preNonMultipleDirectionBuild() {
+        if (!nonMultipleDirections.isEmpty()) {
+            append(" << ");
+        }
+
+        return stringBuilder;
+    }
+
+    private StringBuilder nonMultipleDirectionBuild() throws BuildException {
+        int directionTypeCount = 0;
+        for (Direction direction : nonMultipleDirections) {
+            directionTypeCount += direction.getDirectionTypes().size();
+        }
+
+        if (directionTypeCount < 2) return stringBuilder;
+
+        // create list spacers with durations
+        // get the iterator to the list
+        int spacerCount = Integer.highestOneBit(directionTypeCount - 1) << 1;
+        BigDecimal spacerDuration = MathUtil.divide(note.getDuration(), MathUtil.newBigDecimal(spacerCount));
+        Iterator<Direction> directionIterator = nonMultipleDirections.iterator();
+        Direction direction = directionIterator.next();
+        Iterator<DirectionType> directionTypeIterator = direction.getDirectionTypes().iterator();
+        DirectionType directionType;
+
+        append(" { ");
+
+        // for each direction type, build the spacer then the direction type with placement
+        for (int spacerIndex = 1; spacerIndex <= spacerCount; spacerIndex++) {
+            try {
+                append(NoteUtil.getSpacerRepresentation(spacerDuration));
+                if (!directionTypeIterator.hasNext()) {
+                    direction = directionIterator.next();
+                    directionTypeIterator = direction.getDirectionTypes().iterator();
+                }
+                directionType = directionTypeIterator.next();
+                append(new MusicDataBuilder(directionType).build().toString());
+                append(" ");
+            } catch (TimeSignatureException e) {
+                throw new BuildException(e.getMessage());
+            }
+        }
+
+        append("} ");
+
+        return stringBuilder;
+    }
+
+    private StringBuilder postNonMultipleDirectionBuild() {
+        if (!nonMultipleDirections.isEmpty()) {
+            append(" >> ");
+        }
+
+        return stringBuilder;
+    }
+
     public StringBuilder buildNote(Note note) throws BuildException {
         this.note = note;
+        nonMultipleDirections.addAll(note.getMultipleDirections());
         return build();
     }
 
@@ -234,6 +297,7 @@ public class NoteBuilder extends MusicDataBuilder {
         for(Note note : notes) {
             NoteBuilder noteBuilder = new NoteBuilder(note);
             noteBuilders.add(noteBuilder);
+            nonMultipleDirections.addAll(note.getMultipleDirections());
         }
 
         for (NoteBuilder noteBuilder : noteBuilders) {
@@ -360,9 +424,8 @@ public class NoteBuilder extends MusicDataBuilder {
     public StringBuilder buildForward(Forward forward) throws BuildException {
         BigDecimal duration = forward.getDuration();
 
-        append(" s");
         try {
-            append(TimeSignatureUtil.getDurationRepresentationValue(duration));
+            append(NoteUtil.getSpacerRepresentation(duration));
         } catch (TimeSignatureException e) {
             throw new BuildException(e.getMessage());
         }
