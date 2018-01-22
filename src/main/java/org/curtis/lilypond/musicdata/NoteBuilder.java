@@ -309,6 +309,8 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
+        preNonMultipleDirectionBuild();
+
         append("<");
 
         for(NoteBuilder noteBuilder : noteBuilders) {
@@ -346,6 +348,9 @@ public class NoteBuilder extends MusicDataBuilder {
             noteBuilder.clear();
             append(noteBuilder.finishGraceBuild().toString());
         }
+
+        nonMultipleDirectionBuild();
+        postNonMultipleDirectionBuild();
 
         return stringBuilder;
     }

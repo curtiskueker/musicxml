@@ -50,6 +50,8 @@ public class PartBuilder extends AbstractBuilder {
         // check for vocal part: presence of lyric is indicator
         for(Measure measure : measures) {
             boolean hasEnding = false;
+            // default repeat block measure, in case opening repeat not notated
+            if (currentRepeatStartBlockMeasure == null) currentRepeatStartBlockMeasure = measure;
 
             List<MusicData> musicDataList = measure.getMusicDataList();
             for(MusicData musicData : musicDataList) {
@@ -178,7 +180,7 @@ public class PartBuilder extends AbstractBuilder {
                 RepeatBlock previousRepeatBlock = previousMeasure.getRepeatBlock();
                 if(previousRepeatBlock != null && previousRepeatBlock.getRepeatBlockType() == RepeatBlockType.ENDING &&
                         (previousRepeatBlock.getConnectionType() == Connection.STOP || previousRepeatBlock.getConnectionType() == Connection.SINGLE)) {
-                    currentRepeatStartBlockMeasure = null;
+                    currentRepeatStartBlockMeasure = measure;
                     currentRepeatEndBlockMeasure = null;
                     currentEndingCount = 0;
                     currentRepeatBlocks.clear();

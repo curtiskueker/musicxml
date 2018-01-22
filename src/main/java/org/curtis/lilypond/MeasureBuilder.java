@@ -356,25 +356,8 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private void transferDirections() {
         if (hasMultipleDirections()) {
-            List<Direction> nonMultipleDirections = new ArrayList<>();
-            for (Direction direction : currentDirections) {
-                boolean isMultipleDirection = false;
-                for (DirectionType directionType : direction.getDirectionTypes()) {
-                    if (DirectionType.MULTIPLE_DIRECTION_TYPES.contains(directionType.getClass().getSimpleName())) {
-                        isMultipleDirection = true;
-                        break;
-                    }
-                }
-
-                if (isMultipleDirection) {
-                    currentNote.getMultipleDirections().add(direction);
-                } else {
-                    nonMultipleDirections.add(direction);
-                }
-            }
-
+            currentNote.getMultipleDirections().addAll(currentDirections);
             currentDirections.clear();
-            currentDirections.addAll(nonMultipleDirections);
         }
 
         if (lastTuplet != null) {
