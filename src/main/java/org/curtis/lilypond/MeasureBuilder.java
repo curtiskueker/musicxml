@@ -4,6 +4,7 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
+import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
@@ -39,25 +40,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;
     private List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
     private Note previousNote;
     private Note currentNote;
-    private Map<String, Set<Integer>> currentBeams = new HashMap<>();
+    private Set<Integer> currentBeams = new HashSet<>();
     private List<Direction> currentDirections = new ArrayList<>();
     private Barline currentBarline = null;
     private Chord currentChord = null;
     private TupletNotes currentTuplet = null;
     private TupletNotes lastTuplet = null;
-    private SortedMap<String, List<MusicDataBuilder>> voiceDataBuilders = new TreeMap<>();
-    private String currentVoice = null;
+    private String currentVoice;
+    private String defaultVoice;
+    private String voice;
 
-    public MeasureBuilder(Measure measure) {
+    public MeasureBuilder(Measure measure, String voice, String defaultVoice) {
         this.measure = measure;
+        this.voice = voice;
+        this.defaultVoice = defaultVoice;
     }
 
     public StringBuilder build() throws BuildException {
@@ -152,17 +154,16 @@ public class MeasureBuilder extends AbstractBuilder {
                 for (Beam beam : beams) {
                     Integer beamNumber = beam.getNumber();
                     BeamType beamType = beam.getType();
-                    Set<Integer> voiceBeams = currentBeams.computeIfAbsent(voice, beamSet -> new HashSet<>());
                     switch (beamType) {
                         case BEGIN:
-                            if(voiceBeams.isEmpty()) {
+                            if(currentBeams.isEmpty()) {
                                 currentNote.setBeginBeam(true);
                             }
-                            voiceBeams.add(beamNumber);
+                            currentBeams.add(beamNumber);
                             break;
                         case END:
-                            voiceBeams.remove(beamNumber);
-                            if(voiceBeams.isEmpty()) {
+                            currentBeams.remove(beamNumber);
+                            if(currentBeams.isEmpty()) {
                                 currentNote.setEndBeam(true);
                             }
                             break;
@@ -254,9 +255,6 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        // process polyphonic voice map
-        processVoiceBuilders();
-
         // OUTPUT
         //
         // Begin repeat endings
@@ -292,13 +290,15 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Main data builder processing loops
         // general list first, then each build each voice
-        for(MusicDataBuilder musicDataBuilder : musicDataBuilders) {
-            append(musicDataBuilder.build().toString());
-        }
-        for(String voiceBuilderKey : voiceDataBuilders.keySet()) {
-            List<MusicDataBuilder> voiceDataBuilderList = voiceDataBuilders.get(voiceBuilderKey);
-            for (MusicDataBuilder voiceDataBuilder : voiceDataBuilderList) {
-                append(voiceDataBuilder.build().toString());
+        if (musicDataBuilders.isEmpty()) {
+            try {
+                append(NoteUtil.getSpacerRepresentation(totalDuration));
+            } catch (TimeSignatureException e) {
+                throw new BuildException(e.getMessage());
+            }
+        } else {
+            for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
+                append(musicDataBuilder.build().toString());
             }
         }
 
@@ -326,15 +326,15 @@ public class MeasureBuilder extends AbstractBuilder {
             Note note = (Note)musicData;
             EditorialVoice editorialVoice = note.getEditorialVoice();
             if (editorialVoice != null) {
-                String voice = editorialVoice.getVoice();
-                if(StringUtil.isNotEmpty(voice)) currentVoice = voice;
+                String musicDataVoice = editorialVoice.getVoice();
+                if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
             }
         } else if (musicData instanceof Forward) {
             Forward forward = (Forward)musicData;
             EditorialVoice editorialVoice = forward.getEditorialVoice();
             if (editorialVoice != null) {
-                String voice = editorialVoice.getVoice();
-                if(StringUtil.isNotEmpty(voice)) currentVoice = voice;
+                String musicDataVoice = editorialVoice.getVoice();
+                if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
             }
         } else if (musicData instanceof Chord) {
             Chord chord = (Chord)musicData;
@@ -344,32 +344,14 @@ public class MeasureBuilder extends AbstractBuilder {
             currentVoice = tupletNotes.getVoice();
         }
 
-        MusicDataBuilder musicDataBuilder = new MusicDataBuilder(musicData);
-
-        if (StringUtil.isEmpty(currentVoice)) {
+        // add if voice matches or, when not found, voice = default voice
+        MusicDataBuilder musicDataBuilder = null;
+        if (voice.equals(currentVoice) || (StringUtil.isEmpty(currentVoice) && voice.equals(defaultVoice))) {
+            musicDataBuilder = new MusicDataBuilder(musicData);
             musicDataBuilders.add(new MusicDataBuilder(musicData));
-        } else {
-            List<MusicDataBuilder> voiceList = voiceDataBuilders.computeIfAbsent(currentVoice, voiceBuilders -> new ArrayList<>());
-            voiceList.add(musicDataBuilder);
         }
 
         return musicDataBuilder;
-    }
-
-    private void processVoiceBuilders() {
-        if (voiceDataBuilders.size() < 2) return;
-
-        // Mark first and last items in each list as start and stop
-        for(List<MusicDataBuilder> voiceList : voiceDataBuilders.values()) {
-            voiceList.get(0).getMusicData().setPolyphonicVoiceStart(Connection.START);
-            voiceList.get(voiceList.size() - 1).getMusicData().setPolyphonicVoiceStop(Connection.STOP);
-        }
-
-        // Mark first item of first voice list, and last item of last voice list as begin and end
-        List<MusicDataBuilder> firstList = voiceDataBuilders.get(voiceDataBuilders.firstKey());
-        firstList.get(0).getMusicData().setPolyphonicVoiceStart(Connection.BEGIN);
-        List<MusicDataBuilder> lastList = voiceDataBuilders.get(voiceDataBuilders.lastKey());
-        lastList.get(lastList.size() - 1).getMusicData().setPolyphonicVoiceStop(Connection.END);
     }
 
     private void transferDirections() {

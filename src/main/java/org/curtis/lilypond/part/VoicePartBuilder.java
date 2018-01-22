@@ -13,14 +13,39 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     }
 
     public StringBuilder build() throws BuildException {
+        if (voices.isEmpty()) voices.add("1");
+        String defaultVoice = voices.first();
+        boolean hasMultipleVoices = voices.size() > 1;
+
         appendLine("{");
 
-        for(Measure measure : part.getMeasures()) {
-            try {
-                MeasureBuilder measureBuilder = new MeasureBuilder(measure);
-                append(measureBuilder.build().toString());
-            } catch (BuildException e) {
-                System.err.println(e.getMessage());
+        for (String voice : voices) {
+            if (hasMultipleVoices && voice.equals(voices.first())) {
+                appendLine();
+                appendLine("<<");
+                appendLine("{");
+            }
+
+            for(Measure measure : part.getMeasures()) {
+                try {
+                    MeasureBuilder measureBuilder = new MeasureBuilder(measure, voice, defaultVoice);
+                    append(measureBuilder.build().toString());
+                } catch (BuildException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+
+            if (hasMultipleVoices) {
+                if (voice.equals(voices.last())) {
+                    appendLine();
+                    appendLine("}");
+                    appendLine(">>");
+                } else {
+                    appendLine();
+                    appendLine("}");
+                    appendLine("\\\\");
+                    appendLine("{");
+                }
             }
         }
 

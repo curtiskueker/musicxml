@@ -3,7 +3,6 @@ package org.curtis.lilypond.musicdata;
 import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.MusicData;
 
@@ -24,31 +23,8 @@ public class MusicDataBuilder extends AbstractBuilder {
 
     }
 
-    public MusicData getMusicData() {
-        return musicData;
-    }
-
-    public void setMusicData(MusicData musicData) {
-        this.musicData = musicData;
-    }
-
     public StringBuilder build() throws BuildException {
         if (musicData == null) return stringBuilder;
-
-        Connection polyphonicVoiceStart = musicData.getPolyphonicVoiceStart();
-        if (polyphonicVoiceStart != null) {
-            switch (polyphonicVoiceStart) {
-                case BEGIN:
-                    appendLine();
-                    appendLine("<<");
-                    appendLine("{");
-                    break;
-                case START:
-                    appendLine();
-                    appendLine("{");
-                    break;
-            }
-        }
 
         String musidDataClassName = musicData.getClass().getName();
         musidDataClassName = musidDataClassName.replace("org.curtis.musicxml.", "");
@@ -79,22 +55,6 @@ public class MusicDataBuilder extends AbstractBuilder {
             if (ScoreHandler.DEBUG) {
                 e.printStackTrace();
                 System.err.println("");
-            }
-        }
-
-        Connection polyphonicVoiceStop = musicData.getPolyphonicVoiceStop();
-        if (polyphonicVoiceStop != null) {
-            switch (polyphonicVoiceStop) {
-                case STOP:
-                    appendLine();
-                    appendLine("}");
-                    appendLine("\\\\");
-                    break;
-                case END:
-                    appendLine();
-                    appendLine("}");
-                    appendLine(">>");
-                    break;
             }
         }
 

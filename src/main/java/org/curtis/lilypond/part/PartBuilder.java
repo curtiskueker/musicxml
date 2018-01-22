@@ -15,9 +15,12 @@ import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.RepeatBlock;
 import org.curtis.musicxml.score.RepeatBlockType;
+import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class PartBuilder extends AbstractBuilder {
     private Part part;
@@ -29,6 +32,7 @@ public class PartBuilder extends AbstractBuilder {
     private Integer currentEndingCount = 0;
     private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
     private boolean hasLyrics = false;
+    private SortedSet<String> voices = new TreeSet<>();
 
     public static Attributes CURRENT_ATTRIBUTES;
     public static String CURRENT_PART_ID;
@@ -59,9 +63,9 @@ public class PartBuilder extends AbstractBuilder {
                         continue;
                     }
 
-                    if (!note.getLyrics().isEmpty()) {
-                        hasLyrics = true;
-                    }
+                    String voice = note.getEditorialVoice().getVoice();
+                    if (StringUtil.isNotEmpty(voice)) voices.add(voice);
+                    if (!note.getLyrics().isEmpty()) hasLyrics = true;
 
                     if (previousNote != null) {
                         // chord type
@@ -192,9 +196,11 @@ public class PartBuilder extends AbstractBuilder {
         // main processing loop
         if(hasLyrics) {
             LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(part);
+            lyricPartBuilder.voices.addAll(voices);
             append(lyricPartBuilder.build().toString());
         } else {
             VoicePartBuilder voicePartBuilder = new VoicePartBuilder(part);
+            voicePartBuilder.voices.addAll(voices);
             append(voicePartBuilder.build().toString());
         }
 
