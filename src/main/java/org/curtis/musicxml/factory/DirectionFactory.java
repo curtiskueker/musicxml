@@ -35,6 +35,29 @@ import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet;
 import org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.PerMinute;
+import org.curtis.musicxml.direction.directiontype.percussion.Beater;
+import org.curtis.musicxml.direction.directiontype.percussion.BeaterValue;
+import org.curtis.musicxml.direction.directiontype.percussion.Effect;
+import org.curtis.musicxml.direction.directiontype.percussion.EffectType;
+import org.curtis.musicxml.direction.directiontype.percussion.Glass;
+import org.curtis.musicxml.direction.directiontype.percussion.GlassType;
+import org.curtis.musicxml.direction.directiontype.percussion.Membrane;
+import org.curtis.musicxml.direction.directiontype.percussion.MembraneType;
+import org.curtis.musicxml.direction.directiontype.percussion.Metal;
+import org.curtis.musicxml.direction.directiontype.percussion.MetalType;
+import org.curtis.musicxml.direction.directiontype.percussion.OtherPercussion;
+import org.curtis.musicxml.direction.directiontype.percussion.Percussion;
+import org.curtis.musicxml.direction.directiontype.percussion.Pitched;
+import org.curtis.musicxml.direction.directiontype.percussion.PitchedType;
+import org.curtis.musicxml.direction.directiontype.percussion.Stick;
+import org.curtis.musicxml.direction.directiontype.percussion.StickLocation;
+import org.curtis.musicxml.direction.directiontype.percussion.StickLocationType;
+import org.curtis.musicxml.direction.directiontype.percussion.StickMaterial;
+import org.curtis.musicxml.direction.directiontype.percussion.StickType;
+import org.curtis.musicxml.direction.directiontype.percussion.Timpani;
+import org.curtis.musicxml.direction.directiontype.percussion.TipDirection;
+import org.curtis.musicxml.direction.directiontype.percussion.Wood;
+import org.curtis.musicxml.direction.directiontype.percussion.WoodType;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.util.MathUtil;
@@ -245,8 +268,9 @@ public class DirectionFactory {
                 accordionRegistration.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return accordionRegistration;
             case "percussion":
-                // TODO: percussion elements
-                return null;
+                List<Element> percussionElements = XmlUtil.getChildElements(element);
+                if (percussionElements.isEmpty()) return null;
+                return newPercussion(percussionElements.get(0));
             case "other-direction":
                 OtherDirection otherDirection = new OtherDirection();
                 otherDirection.setValue(XmlUtil.getElementText(element));
@@ -346,5 +370,422 @@ public class DirectionFactory {
         offset.setSound(TypeUtil.getYesNo(element.getAttribute("sound")));
 
         return offset;
+    }
+
+    private static Percussion newPercussion(Element element) {
+        if (element == null) return null;
+
+        String elementName = element.getTagName();
+        String elementValue = XmlUtil.getElementText(element);
+        Percussion percussion = null;
+        switch (elementName) {
+            case "glass":
+                Glass glass = new Glass();
+                switch (elementValue) {
+                    case "wind chimes":
+                        glass.setValue(GlassType.WIND_CHIMES);
+                }
+                percussion = glass;
+                break;
+            case "metal":
+                Metal metal = new Metal();
+                switch (elementValue) {
+                    case "almglocken":
+                        metal.setValue(MetalType.ALMGLOCKEN);
+                        break;
+                    case "bell":
+                        metal.setValue(MetalType.BELL);
+                        break;
+                    case "bell plate":
+                        metal.setValue(MetalType.BELL_PLATE);
+                        break;
+                    case "brake drum":
+                        metal.setValue(MetalType.BRAKE_DRUM);
+                        break;
+                    case "Chinese cymbal":
+                        metal.setValue(MetalType.CHINESE_CYMBAL);
+                        break;
+                    case "cowbell":
+                        metal.setValue(MetalType.COWBELL);
+                        break;
+                    case "crash cymbals":
+                        metal.setValue(MetalType.CRASH_CYMBALS);
+                        break;
+                    case "crotale":
+                        metal.setValue(MetalType.CROTALE);
+                        break;
+                    case "cymbal tongs":
+                        metal.setValue(MetalType.CYMBAL_TONGS);
+                        break;
+                    case "domed gong":
+                        metal.setValue(MetalType.DOMED_GONG);
+                        break;
+                    case "finger cymbals":
+                        metal.setValue(MetalType.FINGER_CYMBALS);
+                        break;
+                    case "flexatone":
+                        metal.setValue(MetalType.FLEXATONE);
+                        break;
+                    case "gong":
+                        metal.setValue(MetalType.GONG);
+                        break;
+                    case "hi-hat":
+                        metal.setValue(MetalType.HI_HAT);
+                        break;
+                    case "high-hat cymbals":
+                        metal.setValue(MetalType.HI_HAT_CYMBALS);
+                        break;
+                    case "handbell":
+                        metal.setValue(MetalType.HANDBELL);
+                        break;
+                    case "sistrum":
+                        metal.setValue(MetalType.SISTRUM);
+                        break;
+                    case "sizzle cymbal":
+                        metal.setValue(MetalType.SIZZLE_CYMBAL);
+                        break;
+                    case "sleigh bells":
+                        metal.setValue(MetalType.SLEIGH_BELLS);
+                        break;
+                    case "suspended cymbal":
+                        metal.setValue(MetalType.SUSPENDED_CYMBAL);
+                        break;
+                    case "tam tam":
+                        metal.setValue(MetalType.TAM_TAM);
+                        break;
+                    case "triangle":
+                        metal.setValue(MetalType.TRIANGLE);
+                        break;
+                    case "Vietnamese hat":
+                        metal.setValue(MetalType.VIETNAMESE_HAT);
+                        break;
+                }
+                percussion = metal;
+                break;
+            case "wood":
+                Wood wood = new Wood();
+                switch (elementValue) {
+                    case "board clapper":
+                        wood.setValue(WoodType.BOARD_CLAPPER);
+                        break;
+                    case "cabasa":
+                        wood.setValue(WoodType.CABASA);
+                        break;
+                    case "castanets":
+                        wood.setValue(WoodType.CASTANETS);
+                        break;
+                    case "claves":
+                        wood.setValue(WoodType.CLAVES);
+                        break;
+                    case "guiro":
+                        wood.setValue(WoodType.GUIRO);
+                        break;
+                    case "log drum":
+                        wood.setValue(WoodType.LOG_DRUM);
+                        break;
+                    case "maraca":
+                        wood.setValue(WoodType.MARACA);
+                        break;
+                    case "maracas":
+                        wood.setValue(WoodType.MARACAS);
+                        break;
+                    case "ratchet":
+                        wood.setValue(WoodType.RATCHET);
+                        break;
+                    case "sandpaper blocks":
+                        wood.setValue(WoodType.SANDPAPER_BLOCKS);
+                        break;
+                    case "slit drum":
+                        wood.setValue(WoodType.SLIT_DRUM);
+                        break;
+                    case "temple block":
+                        wood.setValue(WoodType.TEMPLE_BLOCK);
+                        break;
+                    case "vibraslap":
+                        wood.setValue(WoodType.VIBRASLAP);
+                        break;
+                    case "wood block":
+                        wood.setValue(WoodType.WOOD_BLOCK);
+                        break;
+                }
+                percussion = wood;
+                break;
+            case "pitched":
+                Pitched pitched = new Pitched();
+                switch (elementValue) {
+                    case "chimes":
+                        pitched.setValue(PitchedType.CHIMES);
+                        break;
+                    case "glockenspiel":
+                        pitched.setValue(PitchedType.GLOCKENSPIEL);
+                        break;
+                    case "mallet":
+                        pitched.setValue(PitchedType.MALLET);
+                        break;
+                    case "marimba":
+                        pitched.setValue(PitchedType.MARIMBA);
+                        break;
+                    case "tubular chimes":
+                        pitched.setValue(PitchedType.TUBULAR_CHIMES);
+                        break;
+                    case "vibraphone":
+                        pitched.setValue(PitchedType.VIBRAPHONE);
+                        break;
+                    case "xylophone":
+                        pitched.setValue(PitchedType.XYLOPHONE);
+                        break;
+                }
+                percussion = pitched;
+                break;
+            case "membrane":
+                Membrane membrane = new Membrane();
+                switch (elementValue) {
+                    case "bass drum":
+                        membrane.setValue(MembraneType.BASS_DRUM);
+                        break;
+                    case "bass drum on side":
+                        membrane.setValue(MembraneType.BASS_DRUM_ON_SIDE);
+                        break;
+                    case "bongos":
+                        membrane.setValue(MembraneType.BONGOS);
+                        break;
+                    case "conga drum":
+                        membrane.setValue(MembraneType.CONGA_DRUM);
+                        break;
+                    case "goblet drum":
+                        membrane.setValue(MembraneType.GOBLET_DRUM);
+                        break;
+                    case "military drum":
+                        membrane.setValue(MembraneType.MILITARY_DRUM);
+                        break;
+                    case "snare drum":
+                        membrane.setValue(MembraneType.SNARE_DRUM);
+                        break;
+                    case "snare drum snares off":
+                        membrane.setValue(MembraneType.SHARE_DRUM_SNARES_OFF);
+                        break;
+                    case "tambourine":
+                        membrane.setValue(MembraneType.TAMBOURINE);
+                        break;
+                    case "tenor drum":
+                        membrane.setValue(MembraneType.TENOR_DRUM);
+                        break;
+                    case "timbales":
+                        membrane.setValue(MembraneType.TIMBALES);
+                        break;
+                    case "tomtom":
+                        membrane.setValue(MembraneType.TOMTOM);
+                        break;
+                }
+                percussion = membrane;
+                break;
+            case "effect":
+                Effect effect = new Effect();
+                switch (elementValue) {
+                    case "anvil":
+                        effect.setValue(EffectType.ANVIL);
+                        break;
+                    case "auto horn":
+                        effect.setValue(EffectType.AUTO_HORN);
+                        break;
+                    case "bird whistle":
+                        effect.setValue(EffectType.BIRD_WHISTLE);
+                        break;
+                    case "cannon":
+                        effect.setValue(EffectType.CANNON);
+                        break;
+                    case "duck call":
+                        effect.setValue(EffectType.DUCK_CALL);
+                        break;
+                    case "gun shot":
+                        effect.setValue(EffectType.GUN_SHOT);
+                        break;
+                    case "klaxon horn":
+                        effect.setValue(EffectType.KLAXON_HORN);
+                        break;
+                    case "lions roar":
+                        effect.setValue(EffectType.LIONS_ROAR);
+                        break;
+                    case "police whistle":
+                        effect.setValue(EffectType.POLICE_WHISTLE);
+                        break;
+                    case "siren":
+                        effect.setValue(EffectType.SIREN);
+                        break;
+                    case "slide whistle":
+                        effect.setValue(EffectType.SLIDE_WHISTLE);
+                        break;
+                    case "thunder sheet":
+                        effect.setValue(EffectType.THUNDER_SHEET);
+                        break;
+                    case "wind machine":
+                        effect.setValue(EffectType.WIND_MACHINE);
+                        break;
+                    case "wind whistle":
+                        effect.setValue(EffectType.WIND_WHISTLE);
+                        break;
+                }
+                percussion = effect;
+                break;
+            case "timpani":
+                percussion = new Timpani();
+                break;
+            case "beater":
+                Beater beater = new Beater();
+                switch (elementValue) {
+                    case "bow":
+                        beater.setBeaterValue(BeaterValue.BOW);
+                        break;
+                    case "chime hammer":
+                        beater.setBeaterValue(BeaterValue.CHIME_HAMNER);
+                        break;
+                    case "coin":
+                        beater.setBeaterValue(BeaterValue.COIN);
+                        break;
+                    case "finger":
+                        beater.setBeaterValue(BeaterValue.FINGER);
+                        break;
+                    case "fingernail":
+                        beater.setBeaterValue(BeaterValue.FINGERNAIL);
+                        break;
+                    case "fist":
+                        beater.setBeaterValue(BeaterValue.FIST);
+                        break;
+                    case "guiro scraper":
+                        beater.setBeaterValue(BeaterValue.GUIRO_SCRAPER);
+                        break;
+                    case "hammer":
+                        beater.setBeaterValue(BeaterValue.HAMMER);
+                        break;
+                    case "hand":
+                        beater.setBeaterValue(BeaterValue.HAND);
+                        break;
+                    case "jazz stick":
+                        beater.setBeaterValue(BeaterValue.JAZZ_STICK);
+                        break;
+                    case "knitting needle":
+                        beater.setBeaterValue(BeaterValue.KNITTING_NEEDLE);
+                        break;
+                    case "metal hammer":
+                        beater.setBeaterValue(BeaterValue.METAL_HAMMER);
+                        break;
+                    case "snare stick":
+                        beater.setBeaterValue(BeaterValue.SNARE_STICK);
+                        break;
+                    case "spoon mallet":
+                        beater.setBeaterValue(BeaterValue.SPOON_MALLET);
+                        break;
+                    case "triangle beater":
+                        beater.setBeaterValue(BeaterValue.TRIANGLE_BEATER);
+                        break;
+                    case "triangle beater plain":
+                        beater.setBeaterValue(BeaterValue.TRIANGLE_BEATER_PLAIN);
+                        break;
+                    case "wire brush":
+                        beater.setBeaterValue(BeaterValue.WIRE_BRUSH);
+                        break;
+                }
+                beater.setTip(newTipDirection(element));
+                percussion = beater;
+                break;
+            case "stick":
+                Stick stick = new Stick();
+                String stickType = XmlUtil.getChildElementText(element, "stick-type");
+                switch (stickType) {
+                    case "bass drum":
+                        stick.setStickType(StickType.BASS_DRUM);
+                        break;
+                    case "double bass drum":
+                        stick.setStickType(StickType.DOUBLE_BASS_DRUM);
+                        break;
+                    case "timpani":
+                        stick.setStickType(StickType.TIMPANI);
+                        break;
+                    case "xylophone":
+                        stick.setStickType(StickType.XYLOPHONE);
+                        break;
+                    case "yarn":
+                        stick.setStickType(StickType.YARN);
+                        break;
+                }
+                String stickMaterial = XmlUtil.getChildElementText(element, "stick-material");
+                switch (stickMaterial) {
+                    case "soft":
+                        stick.setStickMaterial(StickMaterial.SOFT);
+                        break;
+                    case "medium":
+                        stick.setStickMaterial(StickMaterial.MEDIUM);
+                        break;
+                    case "hard":
+                        stick.setStickMaterial(StickMaterial.HARD);
+                        break;
+                    case "shaded":
+                        stick.setStickMaterial(StickMaterial.SHADED);
+                        break;
+                    case "x":
+                        stick.setStickMaterial(StickMaterial.X);
+                        break;
+                }
+                stick.setTip(newTipDirection(element));
+                percussion = stick;
+                break;
+            case "stick-location":
+                StickLocation stickLocation = new StickLocation();
+                switch (elementValue) {
+                    case "center":
+                        stickLocation.setValue(StickLocationType.CENTER);
+                        break;
+                    case "rim":
+                        stickLocation.setValue(StickLocationType.RIM);
+                        break;
+                    case "cymbal bell":
+                        stickLocation.setValue(StickLocationType.CYMBAL_BELL);
+                        break;
+                    case "cymbal edge":
+                        stickLocation.setValue(StickLocationType.CYMBAL_EDGE);
+                        break;
+                }
+                percussion = stickLocation;
+                break;
+            case "other-percussion":
+                OtherPercussion otherPercussion = new OtherPercussion();
+                otherPercussion.setValue(XmlUtil.getElementText(element));
+                percussion = otherPercussion;
+                break;
+        }
+
+        if (percussion == null) return null;
+
+        percussion.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+        percussion.setEnclosure(FormattingFactory.newEnclosureShape(element));
+
+        return percussion;
+    }
+
+    private static TipDirection newTipDirection(Element element) {
+        if (element == null) return null;
+
+        String tip = element.getAttribute("tip");
+        if (StringUtil.isEmpty(tip)) return null;
+        switch (tip) {
+            case "up":
+                return TipDirection.UP;
+            case "down":
+                return TipDirection.DOWN;
+            case "left":
+                return TipDirection.LEFT;
+            case "right":
+                return TipDirection.RIGHT;
+            case "northwest":
+                return TipDirection.NORTHWEST;
+            case "northeast":
+                return TipDirection.NORTHEAST;
+            case "southeast":
+                return TipDirection.SOUTHEAST;
+            case "southwest":
+                return TipDirection.SOUTHWEST;
+            default:
+                return null;
+        }
     }
 }

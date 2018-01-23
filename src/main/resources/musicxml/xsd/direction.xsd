@@ -12,22 +12,6 @@
 
     <!-- direction elements -->
 
-    <xs:simpleType name="tip-direction">
-        <xs:annotation>
-            <xs:documentation>The tip-direction type represents the direction in which the tip of a stick or beater points, using Unicode arrow terminology.</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="up"/>
-            <xs:enumeration value="down"/>
-            <xs:enumeration value="left"/>
-            <xs:enumeration value="right"/>
-            <xs:enumeration value="northwest"/>
-            <xs:enumeration value="northeast"/>
-            <xs:enumeration value="southeast"/>
-            <xs:enumeration value="southwest"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:complexType name="sound">
         <xs:annotation>
             <xs:documentation>The sound element contains general playback parameters. They can stand alone within a part/measure, or be a component element within a direction.
@@ -705,6 +689,22 @@
             <xs:enumeration value="hard"/>
             <xs:enumeration value="shaded"/>
             <xs:enumeration value="x"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="tip-direction">
+        <xs:annotation>
+            <xs:documentation>The tip-direction type represents the direction in which the tip of a stick or beater points, using Unicode arrow terminology.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="up"/>
+            <xs:enumeration value="down"/>
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="northwest"/>
+            <xs:enumeration value="northeast"/>
+            <xs:enumeration value="southeast"/>
+            <xs:enumeration value="southwest"/>
         </xs:restriction>
     </xs:simpleType>
 
