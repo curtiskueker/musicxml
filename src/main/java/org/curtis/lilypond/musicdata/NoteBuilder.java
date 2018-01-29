@@ -3,6 +3,7 @@ package org.curtis.lilypond.musicdata;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.util.NoteUtil;
+import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
@@ -55,6 +56,14 @@ public class NoteBuilder extends MusicDataBuilder {
 
     public void setNote(Note note) {
         this.note = note;
+    }
+
+    public List<Direction> getNonMultipleDirections() {
+        return nonMultipleDirections;
+    }
+
+    public void setNonMultipleDirections(List<Direction> nonMultipleDirections) {
+        this.nonMultipleDirections = nonMultipleDirections;
     }
 
     public StringBuilder build() throws BuildException {
@@ -244,6 +253,10 @@ public class NoteBuilder extends MusicDataBuilder {
 
         if (directionTypeCount < 2) return stringBuilder;
 
+        for(Direction direction : nonMultipleDirections) {
+            DirectionBuilder.setDirectionDefaults(direction);
+        }
+
         // create list spacers with durations
         // get the iterator to the list
         int spacerCount = Integer.highestOneBit(directionTypeCount - 1) << 1;
@@ -260,10 +273,15 @@ public class NoteBuilder extends MusicDataBuilder {
             try {
                 append(NoteUtil.getSpacerRepresentation(spacerDuration));
                 if (!directionTypeIterator.hasNext()) {
-                    direction = directionIterator.next();
-                    directionTypeIterator = direction.getDirectionTypes().iterator();
+                    if (directionIterator.hasNext()) {
+                        direction = directionIterator.next();
+                        directionTypeIterator = direction.getDirectionTypes().iterator();
+                    } else {
+                        break;
+                    }
                 }
                 directionType = directionTypeIterator.next();
+                append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
                 append(new MusicDataBuilder(directionType).build().toString());
                 append(" ");
             } catch (TimeSignatureException e) {
@@ -349,7 +367,17 @@ public class NoteBuilder extends MusicDataBuilder {
             append(noteBuilder.finishGraceBuild().toString());
         }
 
-        nonMultipleDirectionBuild();
+        for (NoteBuilder noteBuilder : noteBuilders) {
+            noteBuilder.clear();
+            Note note = noteBuilder.getNote();
+            Connection chordType = note.getFullNote().getChordType();
+            if (chordType == Connection.START || chordType == Connection.SINGLE) {
+                noteBuilder.getNonMultipleDirections().clear();
+                noteBuilder.getNonMultipleDirections().addAll(nonMultipleDirections);
+                append(noteBuilder.nonMultipleDirectionBuild().toString());
+            }
+        }
+
         postNonMultipleDirectionBuild();
 
         return stringBuilder;

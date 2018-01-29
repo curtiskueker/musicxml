@@ -3,6 +3,7 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.score.PartItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -59,5 +60,17 @@ public class ScoreHandler extends AbstractHandler {
         for (Element child : children) {
             setTagNames(child);
         }
+    }
+
+    public static void displayException(Exception e) {
+        if (StringUtil.isEmpty(e.getMessage())) {
+            System.err.println("Exception: no message");
+        } else {
+            System.err.println("Exception: " + e.getMessage());
+        }
+        if (!DEBUG) return;
+
+        e.printStackTrace();
+        System.err.println("");
     }
 }

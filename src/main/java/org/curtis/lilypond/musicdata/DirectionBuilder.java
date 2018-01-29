@@ -2,9 +2,11 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.PlacementBuildUtil;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.Words;
 
 import java.util.List;
 
@@ -35,5 +37,15 @@ public class DirectionBuilder extends MusicDataBuilder {
         }
 
         return stringBuilder;
+    }
+
+    public static void setDirectionDefaults(Direction direction) {
+        for (DirectionType directionType : direction.getDirectionTypes()) {
+            if (directionType instanceof Words) {
+                if (!direction.getDirective() && direction.getPlacement() == null) {
+                    direction.setPlacement(Location.ABOVE);
+                }
+            }
+        }
     }
 }

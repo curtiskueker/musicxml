@@ -7,6 +7,7 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.notation.Tuplet;
@@ -196,6 +197,7 @@ public class PartBuilder extends AbstractBuilder {
         }
 
         // main processing loop
+        if (ScoreHandler.DEBUG) System.err.println("Part " + part.getId());
         if(hasLyrics) {
             LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(part);
             lyricPartBuilder.voices.addAll(voices);

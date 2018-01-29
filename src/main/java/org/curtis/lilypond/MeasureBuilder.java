@@ -2,6 +2,7 @@ package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
+import org.curtis.lilypond.musicdata.DirectionBuilder;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.NoteUtil;
@@ -18,6 +19,7 @@ import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.harmony.Harmony;
+import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
@@ -67,6 +69,8 @@ public class MeasureBuilder extends AbstractBuilder {
 
         append("% measure ");
         appendLine(measure.getNumber());
+
+        if (ScoreHandler.DEBUG) System.err.println("Measure " + measure.getNumber());
 
         BigDecimal totalDuration = MathUtil.ZERO;
 
@@ -176,7 +180,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
-                setDirectionDefaults(direction);
+                DirectionBuilder.setDirectionDefaults(direction);
                 if (deferredDirection(direction)) {
                     currentDirections.add(direction);
                 } else {
@@ -419,15 +423,5 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         return isDeferred;
-    }
-
-    private void setDirectionDefaults(Direction direction) {
-        for (DirectionType directionType : direction.getDirectionTypes()) {
-            if (directionType instanceof Words) {
-                if (!direction.getDirective() && direction.getPlacement() == null) {
-                    direction.setPlacement(Location.ABOVE);
-                }
-            }
-        }
     }
 }
