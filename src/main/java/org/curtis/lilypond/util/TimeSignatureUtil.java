@@ -36,19 +36,29 @@ public class TimeSignatureUtil {
     }
 
     public static String getRepresentationValue(BigDecimal totalBeats) throws TimeSignatureException {
+        if (!MathUtil.isPositive(totalBeats)) throw new TimeSignatureException("Representation value is non-positive value");
+
         BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeats);
 
         int loopCount = 0;
-        while(!rounds(representationValue)) {
+        BigDecimal multiplier = MathUtil.newBigDecimal(1);
+        BigDecimal multiplierBase = MathUtil.ZERO;
+        BigDecimal one = MathUtil.newBigDecimal(1);
+        while(!rounds(representationValue) && loopCount <= 5) {
             loopCount++;
-            representationValue = MathUtil.multiply(representationValue, MathUtil.newBigDecimal(1.5));
-            if(loopCount >= 5) break;
+            multiplier = MathUtil.divide(multiplier, MathUtil.newBigDecimal(2));
+            BigDecimal multiplierValue = MathUtil.multiply(representationValue, MathUtil.add(one, MathUtil.add(multiplierBase, multiplier)));
+            if (rounds(multiplierValue)) {
+                representationValue = multiplierValue;
+                break;
+            }
+            multiplierBase = MathUtil.newBigDecimal(multiplier.doubleValue());
         }
 
         int noteRepresentation = representationValue.setScale(0, RoundingMode.HALF_UP).intValueExact();
 
-        // If represenetation isn't a multiple of 2, or loop count greater than one, throw an exception
-        if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || loopCount > 1) {
+        // If represenetation isn't a multiple of 2, or loop count greater than two, throw an exception
+        if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || loopCount > 2) {
             throw new TimeSignatureException("Invalid duration representation value.  Total beats: " + totalBeats);
         }
 

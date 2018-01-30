@@ -261,6 +261,11 @@ public class NoteBuilder extends MusicDataBuilder {
         // get the iterator to the list
         int spacerCount = Integer.highestOneBit(directionTypeCount - 1) << 1;
         BigDecimal spacerDuration = MathUtil.divide(note.getDuration(), MathUtil.newBigDecimal(spacerCount));
+        if (!MathUtil.isPositive(spacerDuration)) {
+            System.err.println("Warning: multiple dynamics directions on zero-duration note.  Skipping.");
+            return stringBuilder;
+        }
+
         Iterator<Direction> directionIterator = nonMultipleDirections.iterator();
         Direction direction = directionIterator.next();
         Iterator<DirectionType> directionTypeIterator = direction.getDirectionTypes().iterator();
