@@ -46,6 +46,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
 
     // TODO: wavy line implementation
     public StringBuilder buildWavyLine(WavyLine wavyLine) {
+        System.err.println("Warning OrnamentBuilder.buildWavyLine not implemented");
         return stringBuilder;
     }
 
