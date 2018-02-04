@@ -95,6 +95,7 @@ public class NotationHandler extends AbstractHandler {
                     OrnamentHandler ornamentHandler = new OrnamentHandler(notationList);
                     ornamentHandler.handle(notationsSubelement);
                     break;
+                    // TODO: technical elements
                 case "articulations":
                     ArticulationHandler articulationHandler = new ArticulationHandler(notationList);
                     articulationHandler.handle(notationsSubelement);
