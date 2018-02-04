@@ -19,7 +19,9 @@ import org.curtis.musicxml.score.RepeatBlockType;
 import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -27,7 +29,7 @@ public class PartBuilder extends AbstractBuilder {
     private Part part;
     private Measure previousMeasure;
     private Note previousNote;
-    private boolean tupletsOn = false;
+    private Map<String, Boolean> tupletsOn = new HashMap<>();
     private Measure currentRepeatStartBlockMeasure;
     private Measure currentRepeatEndBlockMeasure;
     private Integer currentEndingCount = 0;
@@ -88,18 +90,18 @@ public class PartBuilder extends AbstractBuilder {
                         switch (tupletType) {
                             case START:
                                 note.setTupletType(Connection.START);
-                                tupletsOn = true;
+                                tupletsOn.put(voice, true);
                                 break;
                             case STOP:
                                 note.setTupletType(Connection.STOP);
-                                tupletsOn = false;
+                                tupletsOn.put(voice, false);
                                 break;
                         }
                     } else if(note.getFullNote().isChord() && previousNote.getFullNote().isChord() && previousNote.getTupletType() == Connection.STOP) {
                         // adjust end tuplet on chords
                         previousNote.setTupletType(Connection.CONTINUE);
                         note.setTupletType(Connection.STOP);
-                    } else if(tupletsOn) {
+                    } else if(tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) {
                         note.setTupletType(Connection.CONTINUE);
                     }
 

@@ -78,11 +78,13 @@ public class MeasureBuilder extends AbstractBuilder {
         for(MusicData musicData : musicDataList) {
             MusicDataBuilder musicDataBuilder = null;
 
+            setCurrentVoice(musicData);
+
             if(musicData instanceof Note) {
                 currentNote = (Note)musicData;
                 FullNote fullNote = currentNote.getFullNote();
-                String voice = currentNote.getEditorialVoice().getVoice();
-                if (StringUtil.isEmpty(voice)) voice = "1";
+                String currentNoteVoice = currentNote.getEditorialVoice().getVoice();
+                if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
                 if(PartBuilder.skipNote(currentNote)) {
                     continue;
@@ -91,13 +93,19 @@ public class MeasureBuilder extends AbstractBuilder {
                 // chords and tuplets
                 Connection chordType = fullNote.getChordType();
                 Connection tupletType = currentNote.getTupletType();
+                if (chordType == null || chordType == Connection.START) {
+                    totalDuration = MathUtil.add(totalDuration, currentNote.getDuration());
+                }
+
+                if (!isCurrentVoice()) continue;
+
                 lastTuplet = null;
                 if (chordType != null || tupletType != null) {
                     if (chordType != null) {
                         switch (chordType) {
                             case START:
                                 currentChord = new Chord();
-                                currentChord.setVoice(voice);
+                                currentChord.setVoice(currentNoteVoice);
                             case CONTINUE:
                                 currentChord.getNotes().add(currentNote);
                                 break;
@@ -117,7 +125,7 @@ public class MeasureBuilder extends AbstractBuilder {
                         switch (tupletType) {
                             case START:
                                 currentTuplet = new TupletNotes();
-                                currentTuplet.setVoice(voice);
+                                currentTuplet.setVoice(currentNoteVoice);
                             case CONTINUE:
                                 if (chordType == null) transferDirections();
                                 break;
@@ -172,10 +180,6 @@ public class MeasureBuilder extends AbstractBuilder {
                             }
                             break;
                     }
-                }
-
-                if (chordType == null || chordType == Connection.START) {
-                    totalDuration = MathUtil.add(totalDuration, currentNote.getDuration());
                 }
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
@@ -326,6 +330,16 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     private MusicDataBuilder addToDataBuilders(MusicData musicData) {
+        MusicDataBuilder musicDataBuilder = null;
+        if (isCurrentVoice()) {
+            musicDataBuilder = new MusicDataBuilder(musicData);
+            musicDataBuilders.add(new MusicDataBuilder(musicData));
+        }
+
+        return musicDataBuilder;
+    }
+
+    private void setCurrentVoice(MusicData musicData) {
         if (musicData instanceof Note) {
             Note note = (Note)musicData;
             EditorialVoice editorialVoice = note.getEditorialVoice();
@@ -347,18 +361,16 @@ public class MeasureBuilder extends AbstractBuilder {
             TupletNotes tupletNotes = (TupletNotes)musicData;
             currentVoice = tupletNotes.getVoice();
         }
+    }
 
-        // add if voice matches or, when not found, voice = default voice
-        MusicDataBuilder musicDataBuilder = null;
-        if (voice.equals(currentVoice) || (StringUtil.isEmpty(currentVoice) && voice.equals(defaultVoice))) {
-            musicDataBuilder = new MusicDataBuilder(musicData);
-            musicDataBuilders.add(new MusicDataBuilder(musicData));
-        }
-
-        return musicDataBuilder;
+    private boolean isCurrentVoice() {
+        // voice matches or, when not found, voice = default voice
+        return voice.equals(currentVoice) || (StringUtil.isEmpty(currentVoice) && voice.equals(defaultVoice));
     }
 
     private void transferDirections() {
+        if (!isCurrentVoice()) return;
+
         if (hasMultipleDirections()) {
             currentNote.getMultipleDirections().addAll(currentDirections);
             currentDirections.clear();
