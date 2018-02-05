@@ -121,7 +121,7 @@ public class ArticulationHandler extends AbstractHandler {
                         }
                     }
                     breathMark.setPrintStyle(FormattingFactory.newPrintStyle(articulationsSubelement));
-                    breathMark.setPlacement(PlacementUtil.getLocation(articulationsSubelement.getAttribute("placement")));
+                    breathMark.setPlacement(PlacementFactory.newPlacementLocation(articulationsSubelement));
                     articulation = breathMark;
                     break;
                 case "caesura":

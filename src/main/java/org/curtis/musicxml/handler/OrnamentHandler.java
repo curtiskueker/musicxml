@@ -59,7 +59,7 @@ public class OrnamentHandler extends AbstractHandler {
                     tremolo.setTremoloMarks(StringUtil.getInteger(XmlUtil.getElementText(ornamentElement)));
                     tremolo.setType(PlacementUtil.getConnection(ornamentElement.getAttribute("type")));
                     tremolo.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
-                    tremolo.setPlacement(PlacementUtil.getLocation(ornamentElement.getAttribute("placement")));
+                    tremolo.setPlacement(PlacementFactory.newPlacementLocation(ornamentElement));
                     ornament = tremolo;
                     break;
                 case "other-ornament":

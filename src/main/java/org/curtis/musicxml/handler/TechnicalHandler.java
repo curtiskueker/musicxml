@@ -3,7 +3,6 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Technicals;
 import org.curtis.musicxml.note.notation.technical.Arrow;
@@ -89,7 +88,7 @@ public class TechnicalHandler extends AbstractHandler {
                     }
                     harmonic.setPrintObject(FormattingFactory.getPrintObject(element));
                     harmonic.setPrintStyle(FormattingFactory.newPrintStyle(element));
-                    harmonic.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+                    harmonic.setPlacement(PlacementFactory.newPlacementLocation(element));
                     technical = harmonic;
                     break;
                 case "open-string":
@@ -212,7 +211,7 @@ public class TechnicalHandler extends AbstractHandler {
                         }
                     }
                     hole.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
-                    hole.setPlacement(PlacementUtil.getLocation(technicalElement.getAttribute("placement")));
+                    hole.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = hole;
                     break;
                 case "arrow":
@@ -299,7 +298,7 @@ public class TechnicalHandler extends AbstractHandler {
                         }
                     }
                     arrow.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
-                    arrow.setPlacement(PlacementUtil.getLocation(technicalElement.getAttribute("placement")));
+                    arrow.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = arrow;
                     break;
                 case "handbell":
@@ -341,7 +340,7 @@ public class TechnicalHandler extends AbstractHandler {
                             break;
                     }
                     handbell.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
-                    handbell.setPlacement(PlacementUtil.getLocation(technicalElement.getAttribute("placement")));
+                    handbell.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = handbell;
                     break;
                 case "other-technical":

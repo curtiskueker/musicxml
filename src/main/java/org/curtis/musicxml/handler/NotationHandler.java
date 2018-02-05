@@ -47,7 +47,7 @@ public class NotationHandler extends AbstractHandler {
                     tied.setLineType(NotationFactory.newLineType(notationsSubelement));
                     tied.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     tied.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    tied.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
+                    tied.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     tied.setOrientation(PlacementUtil.getLocation(notationsSubelement.getAttribute("orientation")));
                     tied.setBezier(NotationFactory.newBezier(notationsSubelement));
                     tied.setColor(notationsSubelement.getAttribute("color"));
@@ -60,7 +60,7 @@ public class NotationHandler extends AbstractHandler {
                     slur.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slur.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     slur.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    slur.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
+                    slur.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     slur.setOrientation(PlacementUtil.getLocation(notationsSubelement.getAttribute("orientation")));
                     slur.setBezier(NotationFactory.newBezier(notationsSubelement));
                     slur.setColor(notationsSubelement.getAttribute("color"));
@@ -115,7 +115,7 @@ public class NotationHandler extends AbstractHandler {
                     arpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     arpeggiate.setDirection(PlacementUtil.getLocation(notationsSubelement.getAttribute("direction")));
                     arpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    arpeggiate.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
+                    arpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     arpeggiate.setColor(notationsSubelement.getAttribute("color"));
                     notationList.add(arpeggiate);
                     break;
@@ -124,7 +124,7 @@ public class NotationHandler extends AbstractHandler {
                     nonArpeggiate.setType(PlacementUtil.getLocation(notationsSubelement.getAttribute("type")));
                     nonArpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     nonArpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    nonArpeggiate.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
+                    nonArpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     nonArpeggiate.setColor(notationsSubelement.getAttribute("color"));
                     notationList.add(nonArpeggiate);
                     break;
@@ -132,7 +132,7 @@ public class NotationHandler extends AbstractHandler {
                     AccidentalMark accidentalMark = new AccidentalMark();
                     accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(notationsSubelement));
                     accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
-                    accidentalMark.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
+                    accidentalMark.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     notationList.add(accidentalMark);
                     break;
                 case "other-notation":
@@ -142,7 +142,7 @@ public class NotationHandler extends AbstractHandler {
                     otherNotation.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     otherNotation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
                     otherNotation.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
-                    otherNotation.setPlacement(PlacementUtil.getLocation(notationsSubelement.getAttribute("placement")));
+                    otherNotation.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     notationList.add(otherNotation);
                     break;
             }

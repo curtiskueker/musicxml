@@ -31,25 +31,23 @@ public class NotationFactory {
 
     }
 
-    public static Tuplet newTuplet(Element tupletElement) {
-        if(tupletElement == null) {
-            return null;
-        }
+    public static Tuplet newTuplet(Element element) {
+        if(element == null) return null;
 
         Tuplet tuplet = new Tuplet();
 
-        TupletPortion tupletActual = newTupletPortion(XmlUtil.getChildElement(tupletElement, "tuplet-actual"));
+        TupletPortion tupletActual = newTupletPortion(XmlUtil.getChildElement(element, "tuplet-actual"));
         tuplet.setTupletActual(tupletActual);
-        TupletPortion tupletNormal = newTupletPortion(XmlUtil.getChildElement(tupletElement, "tuplet-normal"));
+        TupletPortion tupletNormal = newTupletPortion(XmlUtil.getChildElement(element, "tuplet-normal"));
         tuplet.setTupletNormal(tupletNormal);
-        tuplet.setType(PlacementUtil.getConnection(tupletElement.getAttribute("type")));
-        tuplet.setNumber(StringUtil.getInteger(tupletElement.getAttribute("number")));
-        tuplet.setBracket(TypeUtil.getYesNo(tupletElement.getAttribute("bracket")));
-        tuplet.setShowNumber(newShowTuplet(tupletElement.getAttribute("show-number")));
-        tuplet.setShowType(newShowTuplet(tupletElement.getAttribute("show-type")));
-        tuplet.setLineShape(newLineShape(tupletElement));
-        tuplet.setPosition(PlacementFactory.newPosition(tupletElement));
-        tuplet.setPlacement(PlacementUtil.getLocation(tupletElement.getAttribute("placement")));
+        tuplet.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+        tuplet.setNumber(StringUtil.getInteger(element.getAttribute("number")));
+        tuplet.setBracket(TypeUtil.getYesNo(element.getAttribute("bracket")));
+        tuplet.setShowNumber(newShowTuplet(element.getAttribute("show-number")));
+        tuplet.setShowType(newShowTuplet(element.getAttribute("show-type")));
+        tuplet.setLineShape(newLineShape(element));
+        tuplet.setPosition(PlacementFactory.newPosition(element));
+        tuplet.setPlacement(PlacementFactory.newPlacementLocation(element));
 
         return tuplet;
     }
@@ -137,13 +135,15 @@ public class NotationFactory {
         return fermata;
     }
 
-    public static Line newLine(Element lineElement) {
+    public static Line newLine(Element element) {
+        if (element == null) return null;
+
         Line line = new Line();
-        line.setLineShape(newLineShape(lineElement));
-        line.setLineType(newLineType(lineElement));
-        line.setDashedFormatting(FormattingFactory.newDashedFormatting(lineElement));
-        line.setPrintStyle(FormattingFactory.newPrintStyle(lineElement));
-        line.setPlacement(PlacementUtil.getLocation(lineElement.getAttribute("placement")));
+        line.setLineShape(newLineShape(element));
+        line.setLineType(newLineType(element));
+        line.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
+        line.setPrintStyle(FormattingFactory.newPrintStyle(element));
+        line.setPlacement(PlacementFactory.newPlacementLocation(element));
 
         return line;
     }
@@ -184,13 +184,13 @@ public class NotationFactory {
         }
     }
 
-    public static AccidentalMark newAccidentalMark(Element accidentalMarkElement) {
-        if (accidentalMarkElement == null) return null;
+    public static AccidentalMark newAccidentalMark(Element element) {
+        if (element == null) return null;
 
         AccidentalMark accidentalMark = new AccidentalMark();
-        accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(accidentalMarkElement));
-        accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(accidentalMarkElement));
-        accidentalMark.setPlacement(PlacementUtil.getLocation(accidentalMarkElement.getAttribute("placement")));
+        accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(element));
+        accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(element));
+        accidentalMark.setPlacement(PlacementFactory.newPlacementLocation(element));
 
         return accidentalMark;
     }
@@ -281,7 +281,7 @@ public class NotationFactory {
         }
 
         dynamics.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
-        dynamics.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        dynamics.setPlacement(PlacementFactory.newPlacementLocation(element));
         dynamics.setTextDecoration(LyricFactory.newTextDecoration(element));
         dynamics.setEnclosure(FormattingFactory.newEnclosureShape(element));
 

@@ -333,7 +333,7 @@ public class HarmonyHandler extends MusicDataHandler {
             harmony.setPrintObject(FormattingFactory.getPrintObject(element));
             harmony.setPrintFrame(TypeUtil.getYesNo(element.getAttribute("print-frame")));
             harmony.setPrintStyle(FormattingFactory.newPrintStyle(element));
-            harmony.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+            harmony.setPlacement(PlacementFactory.newPlacementLocation(element));
         }
 
         if(harmonyChord != null) harmony.getHarmonyChords().add(harmonyChord);

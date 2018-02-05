@@ -30,7 +30,7 @@ public class TechnicalFactory {
         fingering.setSubstitution(TypeUtil.getYesNo(element.getAttribute("substitution")));
         fingering.setAlternate(TypeUtil.getYesNo(element.getAttribute("alternate")));
         fingering.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        fingering.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        fingering.setPlacement(PlacementFactory.newPlacementLocation(element));
 
         return fingering;
     }
@@ -52,7 +52,7 @@ public class TechnicalFactory {
         StringNumber stringNumber = new StringNumber();
         stringNumber.setStringNumber(StringUtil.getInteger(XmlUtil.getElementText(element)));
         stringNumber.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        stringNumber.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        stringNumber.setPlacement(PlacementFactory.newPlacementLocation(element));
 
         return stringNumber;
     }
@@ -81,7 +81,7 @@ public class TechnicalFactory {
         String numberLevel = element.getAttribute("number");
         if (StringUtil.isNotEmpty(numberLevel)) hammerOnPullOff.setNumber(StringUtil.getInteger(numberLevel));
         hammerOnPullOff.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        hammerOnPullOff.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        hammerOnPullOff.setPlacement(PlacementFactory.newPlacementLocation(element));
     }
 
     public static BendSound newBendSound(Element element) {

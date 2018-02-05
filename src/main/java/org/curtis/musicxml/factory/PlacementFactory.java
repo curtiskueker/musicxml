@@ -1,5 +1,6 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.handler.util.PlacementUtil;
@@ -14,22 +15,32 @@ public class PlacementFactory {
 
     }
 
-    public static Placement newPlacement(Element placementElement) {
+    public static Placement newPlacement(Element element) {
+        if (element == null) return null;
+
         Placement placement = new Placement();
 
-        PrintStyle printStyle = FormattingFactory.newPrintStyle(placementElement);
+        PrintStyle printStyle = FormattingFactory.newPrintStyle(element);
         placement.setPrintStyle(printStyle);
 
-        placement.setPlacement(PlacementUtil.getLocation(placementElement.getAttribute("placement")));
+        placement.setPlacement(PlacementFactory.newPlacementLocation(element));
 
         return placement;
     }
 
-    public static PlacementText newPlacementText(Element placementTextElement) {
+    public static Location newPlacementLocation(Element element) {
+        if (element == null) return null;
+
+        return PlacementUtil.getLocation(element.getAttribute("placement"));
+    }
+
+    public static PlacementText newPlacementText(Element element) {
+        if (element == null) return null;
+
         PlacementText placementText = new PlacementText();
-        placementText.setValue(XmlUtil.getElementText(placementTextElement));
-        placementText.setPrintStyle(FormattingFactory.newPrintStyle(placementTextElement));
-        placementText.setPlacement(PlacementUtil.getLocation(placementTextElement.getAttribute("placement")));
+        placementText.setValue(XmlUtil.getElementText(element));
+        placementText.setPrintStyle(FormattingFactory.newPrintStyle(element));
+        placementText.setPlacement(PlacementFactory.newPlacementLocation(element));
 
         return placementText;
     }

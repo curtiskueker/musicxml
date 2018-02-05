@@ -4,7 +4,6 @@ import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.LyricFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
-import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
@@ -138,7 +137,7 @@ public class LyricHandler extends AbstractHandler {
         lyric.setName(element.getAttribute("name"));
         lyric.setJustify(PlacementUtil.getLocation("justify"));
         lyric.setPosition(PlacementFactory.newPosition(element));
-        lyric.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        lyric.setPlacement(PlacementFactory.newPlacementLocation(element));
         lyric.setColor(element.getAttribute("color"));
         lyric.setPrintObject(FormattingFactory.getPrintObject(element));
         lyrics.add(lyric);

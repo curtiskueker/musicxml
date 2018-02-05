@@ -112,7 +112,7 @@ public class OrnamentFactory {
         }
 
         placedTrillSound.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        placedTrillSound.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        placedTrillSound.setPlacement(PlacementFactory.newPlacementLocation(element));
         placedTrillSound.setTrillSound(newTrillSound(element));
 
         return placedTrillSound;
@@ -157,7 +157,7 @@ public class OrnamentFactory {
         }
 
         horizontalTurn.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        horizontalTurn.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        horizontalTurn.setPlacement(PlacementFactory.newPlacementLocation(element));
         horizontalTurn.setTrillSound(newTrillSound(element));
         horizontalTurn.setSlash(TypeUtil.getYesNo(element.getAttribute("slash")));
 
@@ -171,7 +171,7 @@ public class OrnamentFactory {
         wavyLine.setType(PlacementUtil.getConnection(element.getAttribute("type")));
         wavyLine.setNumber(StringUtil.getInteger(element.getAttribute("number")));
         wavyLine.setPosition(PlacementFactory.newPosition(element));
-        wavyLine.setPlacement(PlacementUtil.getLocation(element.getAttribute("placement")));
+        wavyLine.setPlacement(PlacementFactory.newPlacementLocation(element));
         wavyLine.setColor(element.getAttribute("color"));
         wavyLine.setTrillSound(OrnamentFactory.newTrillSound(element));
 
