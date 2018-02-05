@@ -3,15 +3,15 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.note.Placement;
 
 public abstract class HeelToe extends Technical {
-    private Placement value;
+    private Placement placement;
     private Boolean substitution;
 
-    public Placement getValue() {
-        return value;
+    public Placement getPlacement() {
+        return placement;
     }
 
-    public void setValue(Placement value) {
-        this.value = value;
+    public void setPlacement(Placement placement) {
+        this.placement = placement;
     }
 
     public Boolean getSubstitution() {

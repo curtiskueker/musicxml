@@ -4,11 +4,11 @@ import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
+import org.curtis.musicxml.factory.TechnicalFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
-import org.curtis.musicxml.note.notation.DynamicsNotation;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.NonArpeggiate;
@@ -88,22 +88,24 @@ public class NotationHandler extends AbstractHandler {
                     slide.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slide.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     slide.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
-                    slide.setBendSound(NotationFactory.newBendSound(notationsSubelement));
+                    slide.setBendSound(TechnicalFactory.newBendSound(notationsSubelement));
                     notationList.add(slide);
                     break;
                 case "ornaments":
                     OrnamentHandler ornamentHandler = new OrnamentHandler(notationList);
                     ornamentHandler.handle(notationsSubelement);
                     break;
-                    // TODO: technical elements
+                case "technical":
+                    TechnicalHandler technicalHandler = new TechnicalHandler(notationList);
+                    technicalHandler.handle(notationsSubelement);
+                    break;
                 case "articulations":
                     ArticulationHandler articulationHandler = new ArticulationHandler(notationList);
                     articulationHandler.handle(notationsSubelement);
                     break;
                 case "dynamics":
-                    DynamicsNotation dynamicsNotation = new DynamicsNotation();
-                    dynamicsNotation.setDynamics(NotationFactory.newDynamics(notationsSubelement));
-                    notationList.add(dynamicsNotation);
+                    notationList.add(NotationFactory.newDynamicsNotation(notationsSubelement));
+                    break;
                 case "fermata":
                     Fermata fermata = NotationFactory.newFermata(notationsSubelement);
                     notationList.add(fermata);

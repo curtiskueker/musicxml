@@ -27,11 +27,9 @@ import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
+import org.curtis.musicxml.factory.TechnicalFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
-import org.curtis.musicxml.note.notation.technical.Fingering;
-import org.curtis.musicxml.note.notation.technical.Fret;
-import org.curtis.musicxml.note.notation.technical.StringNumber;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -297,28 +295,9 @@ public class HarmonyHandler extends MusicDataHandler {
                     for(Element frameNoteElement : frameNoteElements) {
                         List<FrameNote> frameNotes = frame.getFrameNotes();
                         FrameNote frameNote = new FrameNote();
-                        Element stringElement = XmlUtil.getChildElement(frameNoteElement, "string");
-                        StringNumber stringNumber = new StringNumber();
-                        stringNumber.setStringNumber(StringUtil.getInteger(XmlUtil.getElementText(stringElement)));
-                        stringNumber.setPrintStyle(FormattingFactory.newPrintStyle(stringElement));
-                        stringNumber.setPlacement(PlacementUtil.getLocation(stringElement.getAttribute("placement")));
-                        frameNote.setString(stringNumber);
-                        Element fretElement = XmlUtil.getChildElement(frameNoteElement, "fret");
-                        Fret fret = new Fret();
-                        fret.setValue(StringUtil.getInteger(XmlUtil.getElementText(fretElement)));
-                        fret.setFont(FormattingFactory.newFont(fretElement));
-                        fret.setColor(fretElement.getAttribute("color"));
-                        frameNote.setFret(fret);
-                        Element fingeringElement = XmlUtil.getChildElement(frameNoteElement, "fingering");
-                        if (fingeringElement != null) {
-                            Fingering fingering = new Fingering();
-                            fingering.setValue(XmlUtil.getElementText(fingeringElement));
-                            fingering.setSubstitution(TypeUtil.getYesNo(fingeringElement.getAttribute("substitution")));
-                            fingering.setAlternate(TypeUtil.getYesNo(fingeringElement.getAttribute("alternate")));
-                            fingering.setPrintStyle(FormattingFactory.newPrintStyle(fingeringElement));
-                            fingering.setPlacement(PlacementUtil.getLocation(fingeringElement.getAttribute("placement")));
-                            frameNote.setFingering(fingering);
-                        }
+                        frameNote.setString(TechnicalFactory.newStringNumber(XmlUtil.getChildElement(frameNoteElement, "string")));
+                        frameNote.setFret(TechnicalFactory.newFret(XmlUtil.getChildElement(frameNoteElement, "fret")));
+                        frameNote.setFingering(TechnicalFactory.newFingering(XmlUtil.getChildElement(frameNoteElement, "fingering")));
                         Element barreElement = XmlUtil.getChildElement(frameNoteElement, "barre");
                         if (barreElement != null) {
                             Barre barre = new Barre();

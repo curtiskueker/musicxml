@@ -3,17 +3,17 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.note.Placement;
 
 public class UpBow extends Technical {
-    private Placement value;
+    private Placement placement;
 
     public UpBow() {
 
     }
 
-    public Placement getValue() {
-        return value;
+    public Placement getPlacement() {
+        return placement;
     }
 
-    public void setValue(Placement value) {
-        this.value = value;
+    public void setPlacement(Placement placement) {
+        this.placement = placement;
     }
 }

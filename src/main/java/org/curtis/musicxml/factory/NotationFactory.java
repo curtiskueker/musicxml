@@ -9,6 +9,7 @@ import org.curtis.musicxml.note.LineShape;
 import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Bezier;
+import org.curtis.musicxml.note.notation.DynamicsNotation;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.FermataShape;
 import org.curtis.musicxml.note.notation.FermataType;
@@ -18,7 +19,6 @@ import org.curtis.musicxml.note.notation.TupletDot;
 import org.curtis.musicxml.note.notation.TupletNumber;
 import org.curtis.musicxml.note.notation.TupletPortion;
 import org.curtis.musicxml.note.notation.TupletType;
-import org.curtis.musicxml.note.notation.technical.bend.BendSound;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -288,6 +288,15 @@ public class NotationFactory {
         return dynamics;
     }
 
+    public static DynamicsNotation newDynamicsNotation(Element element) {
+        if (element == null) return null;
+
+        DynamicsNotation dynamicsNotation = new DynamicsNotation();
+        dynamicsNotation.setDynamics(newDynamics(element));
+
+        return dynamicsNotation;
+    }
+
     public static Bezier newBezier(Element element) {
         if (element == null) return null;
 
@@ -300,17 +309,5 @@ public class NotationFactory {
         bezier.setBezierY2(MathUtil.newBigDecimal(element.getAttribute("bezier-y2")));
 
         return bezier;
-    }
-
-    public static BendSound newBendSound(Element element) {
-        if (element == null) return null;
-
-        BendSound bendSound = new BendSound();
-        bendSound.setAccelerate(TypeUtil.getYesNo(element.getAttribute("accelerate")));
-        bendSound.setBeats(MathUtil.newBigDecimal(element.getAttribute("beats")));
-        bendSound.setFirstBeat(MathUtil.newBigDecimal(element.getAttribute("first-beat")));
-        bendSound.setLastBeat(MathUtil.newBigDecimal(element.getAttribute("last-beat")));
-
-        return bendSound;
     }
 }

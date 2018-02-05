@@ -5,7 +5,7 @@ import org.curtis.musicxml.common.PrintStyle;
 
 public class Hole extends Technical {
     private String holeType;
-    private HoleClosedType holeClosedValue;
+    private HoleClosedType holeClosedType;
     private HoleClosedLocation holeClosedLocation;
     private String holeShape;
     private PrintStyle printStyle;
@@ -23,12 +23,12 @@ public class Hole extends Technical {
         this.holeType = holeType;
     }
 
-    public HoleClosedType getHoleClosedValue() {
-        return holeClosedValue;
+    public HoleClosedType getHoleClosedType() {
+        return holeClosedType;
     }
 
-    public void setHoleClosedValue(HoleClosedType holeClosedValue) {
-        this.holeClosedValue = holeClosedValue;
+    public void setHoleClosedType(HoleClosedType holeClosedType) {
+        this.holeClosedType = holeClosedType;
     }
 
     public HoleClosedLocation getHoleClosedLocation() {

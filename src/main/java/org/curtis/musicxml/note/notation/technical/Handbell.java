@@ -4,7 +4,7 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 public class Handbell extends Technical {
-    private HandbellType handbellValue;
+    private HandbellType handbellType;
     private PrintStyle printStyle;
     private Location placement;
 
@@ -12,12 +12,12 @@ public class Handbell extends Technical {
 
     }
 
-    public HandbellType getHandbellValue() {
-        return handbellValue;
+    public HandbellType getHandbellType() {
+        return handbellType;
     }
 
-    public void setHandbellValue(HandbellType handbellValue) {
-        this.handbellValue = handbellValue;
+    public void setHandbellType(HandbellType handbellType) {
+        this.handbellType = handbellType;
     }
 
     public PrintStyle getPrintStyle() {

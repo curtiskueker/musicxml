@@ -1,4 +1,4 @@
-package org.curtis.musicxml.note.notation.technical.bend;
+package org.curtis.musicxml.note.notation.technical;
 
 import java.math.BigDecimal;
 

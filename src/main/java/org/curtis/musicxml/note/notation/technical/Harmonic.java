@@ -1,8 +1,7 @@
-package org.curtis.musicxml.note.notation.technical.harmonic;
+package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.note.notation.technical.Technical;
 
 public class Harmonic extends Technical {
     private HarmonicType harmonicType;

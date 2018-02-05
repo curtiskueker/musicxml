@@ -5,7 +5,6 @@ import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
-import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
@@ -65,11 +64,7 @@ public class OrnamentHandler extends AbstractHandler {
                     break;
                 case "other-ornament":
                     OtherOrnament otherOrnament = new OtherOrnament();
-                    PlacementText placementText = new PlacementText();
-                    placementText.setValue(XmlUtil.getElementText(ornamentElement));
-                    placementText.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
-                    placementText.setPlacement(PlacementUtil.getLocation(ornamentElement.getAttribute("placement")));
-                    otherOrnament.setPlacementText(placementText);
+                    otherOrnament.setPlacementText(PlacementFactory.newPlacementText(ornamentElement));
                     ornament = otherOrnament;
                     break;
             }

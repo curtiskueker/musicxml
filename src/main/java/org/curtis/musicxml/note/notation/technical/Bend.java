@@ -1,14 +1,13 @@
-package org.curtis.musicxml.note.notation.technical.bend;
+package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.PlacementText;
-import org.curtis.musicxml.note.notation.technical.Technical;
 
 import java.math.BigDecimal;
 
 public class Bend extends Technical {
     private BigDecimal bendAlter;
-    private PreBend preBend;
+    private BendType bendType;
     private PlacementText withBar;
     private PrintStyle printStyle;
     private BendSound bendSound;
@@ -25,12 +24,12 @@ public class Bend extends Technical {
         this.bendAlter = bendAlter;
     }
 
-    public PreBend getPreBend() {
-        return preBend;
+    public BendType getBendType() {
+        return bendType;
     }
 
-    public void setPreBend(PreBend preBend) {
-        this.preBend = preBend;
+    public void setBendType(BendType bendType) {
+        this.bendType = bendType;
     }
 
     public PlacementText getWithBar() {
