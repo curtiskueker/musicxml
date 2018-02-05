@@ -6,6 +6,7 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.directiontype.Coda;
+import org.curtis.musicxml.direction.directiontype.Dashes;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
 import org.curtis.musicxml.direction.directiontype.OtherDirection;
@@ -120,8 +121,22 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
+    public StringBuilder buildDashes(Dashes dashes) {
+        switch (dashes.getType()) {
+            case START:
+                append("\\startTextSpan ");
+                break;
+            case STOP:
+                append("\\stopTextSpan ");
+                break;
+        }
+
+        return stringBuilder;
+    }
 
     public StringBuilder buildOtherDirection(OtherDirection otherDirection) {
+        System.err.println("Warning: OrnamentBuilder.buildOtherDirection not implemented");
+
         if (!otherDirection.getPrintObject()) return stringBuilder;
 
         return stringBuilder;
