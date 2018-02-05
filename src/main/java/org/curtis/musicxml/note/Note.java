@@ -10,6 +10,7 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Note extends MusicData {
     private Grace grace;
     private Boolean cue = false;
     private FullNote fullNote;
-    private BigDecimal duration;
+    private BigDecimal duration = MathUtil.ZERO;
     private List<Tie> ties = new ArrayList<>();
     private String instrument;
     private EditorialVoice editorialVoice = new EditorialVoice();

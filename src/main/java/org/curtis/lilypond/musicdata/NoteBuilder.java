@@ -174,6 +174,7 @@ public class NoteBuilder extends MusicDataBuilder {
     private StringBuilder noteDurationBuild() throws BuildException {
         NoteType noteType = note.getType();
         FullNoteType fullNoteType = note.getFullNote().getFullNoteType();
+        BigDecimal duration = note.getDuration();
         if (fullNoteType instanceof Rest && ((Rest)fullNoteType).getMeasure()) {
             try {
                 append(TimeSignatureUtil.getWholeMeasureRepresentation());
@@ -185,6 +186,12 @@ public class NoteBuilder extends MusicDataBuilder {
             List<Placement> dots = note.getDots();
             for(Placement dot : dots) {
                 append(".");
+            }
+        } else if (MathUtil.isPositive(duration)) {
+            try {
+                append(TimeSignatureUtil.getDurationRepresentationValue(duration));
+            } catch (TimeSignatureException e) {
+                throw new BuildException(e.getMessage());
             }
         }
 

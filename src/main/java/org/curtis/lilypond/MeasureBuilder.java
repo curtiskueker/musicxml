@@ -57,6 +57,8 @@ public class MeasureBuilder extends AbstractBuilder {
     private String currentVoice;
     private String defaultVoice;
     private String voice;
+    BigDecimal measureDuration = MathUtil.ZERO;
+    BigDecimal voiceDuration = MathUtil.ZERO;
 
     public MeasureBuilder(Measure measure, String voice, String defaultVoice) {
         this.measure = measure;
@@ -71,8 +73,6 @@ public class MeasureBuilder extends AbstractBuilder {
         appendLine(measure.getNumber());
 
         if (ScoreHandler.DEBUG) System.err.println("Measure " + measure.getNumber());
-
-        BigDecimal totalDuration = MathUtil.ZERO;
 
         // create data builder list for processing
         for(MusicData musicData : musicDataList) {
@@ -94,7 +94,8 @@ public class MeasureBuilder extends AbstractBuilder {
                 Connection chordType = fullNote.getChordType();
                 Connection tupletType = currentNote.getTupletType();
                 if (chordType == null || chordType == Connection.START) {
-                    totalDuration = MathUtil.add(totalDuration, currentNote.getDuration());
+                    measureDuration = MathUtil.add(measureDuration, currentNote.getDuration());
+                    if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNote.getDuration());
                 }
 
                 if (!isCurrentVoice()) continue;
@@ -209,11 +210,11 @@ public class MeasureBuilder extends AbstractBuilder {
                 musicDataBuilder = addToDataBuilders(attributes);
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
-                totalDuration = MathUtil.subtract(totalDuration, backup.getDuration());
+                measureDuration = MathUtil.subtract(measureDuration, backup.getDuration());
                 continue;
             } else if (musicData instanceof Forward) {
                 Forward forward = (Forward)musicData;
-                totalDuration = MathUtil.add(totalDuration, forward.getDuration());
+                measureDuration = MathUtil.add(measureDuration, forward.getDuration());
                 musicDataBuilder = addToDataBuilders(forward);
             } else if (musicData instanceof Harmony) {
                 // Harmony processed separately
@@ -225,14 +226,6 @@ public class MeasureBuilder extends AbstractBuilder {
             if (musicDataBuilder != null) {
                 transferDirections();
             }
-        }
-
-        // clear any directions at the end of the measure
-        transferDirections();
-
-        // put any barline at the end
-        if(currentBarline != null) {
-            addToDataBuilders(currentBarline);
         }
 
         // end grace notes at end of measure
@@ -255,12 +248,23 @@ public class MeasureBuilder extends AbstractBuilder {
             throw new BuildException(e.getMessage());
         }
 
-        if(!MathUtil.equalTo(wholeMeasureDuration, totalDuration)) {
+        if(!MathUtil.equalTo(wholeMeasureDuration, measureDuration)) {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
             } else if (!measure.isLastMeasure()){
-                throw new BuildException(getExceptionStringPrefix(measure) + "Expected duration: " + wholeMeasureDuration + " Total duration: " + totalDuration + ".  Skipping measure.");
+                throw new BuildException(getExceptionStringPrefix(measure) + "Expected duration: " + wholeMeasureDuration + " Total duration: " + measureDuration + ".  Skipping measure.");
             }
+        }
+
+        // check that voice duration matches measure duration
+        checkVoiceDuration();
+
+        // clear any directions at the end of the measure
+        transferDirections();
+
+        // put any barline at the end
+        if(currentBarline != null) {
+            addToDataBuilders(currentBarline);
         }
 
         // OUTPUT
@@ -285,7 +289,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // Partial measure
         if(measure.getImplicit()) {
             try {
-                BigDecimal numerator = MathUtil.multiply(MathUtil.divide(totalDuration, wholeMeasureDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
+                BigDecimal numerator = MathUtil.multiply(MathUtil.divide(measureDuration, wholeMeasureDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
                 BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
                 String wholeMeasureRepresentation = TimeSignatureUtil.getWholeMeasureRepresentation(numerator, denominator);
 
@@ -300,7 +304,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // general list first, then each build each voice
         if (musicDataBuilders.isEmpty()) {
             try {
-                append(NoteUtil.getSpacerRepresentation(totalDuration));
+                append(NoteUtil.getSpacerRepresentation(measureDuration));
             } catch (TimeSignatureException e) {
                 throw new BuildException(e.getMessage());
             }
@@ -332,11 +336,21 @@ public class MeasureBuilder extends AbstractBuilder {
     private MusicDataBuilder addToDataBuilders(MusicData musicData) {
         MusicDataBuilder musicDataBuilder = null;
         if (isCurrentVoice()) {
+            checkVoiceDuration();
             musicDataBuilder = new MusicDataBuilder(musicData);
-            musicDataBuilders.add(new MusicDataBuilder(musicData));
+            musicDataBuilders.add(musicDataBuilder);
         }
 
         return musicDataBuilder;
+    }
+
+    private void checkVoiceDuration() {
+        if (MathUtil.isPositive(voiceDuration) && MathUtil.smallerThan(voiceDuration, measureDuration)) {
+            BigDecimal durationDifference = MathUtil.subtract(measureDuration, voiceDuration);
+            Note spacerNote = NoteUtil.getSpacerNote(durationDifference);
+            musicDataBuilders.add(new MusicDataBuilder(spacerNote));
+            voiceDuration = MathUtil.add(voiceDuration, durationDifference);
+        }
     }
 
     private void setCurrentVoice(MusicData musicData) {

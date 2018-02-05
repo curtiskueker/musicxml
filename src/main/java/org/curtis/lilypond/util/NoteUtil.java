@@ -1,7 +1,11 @@
 package org.curtis.lilypond.util;
 
 import org.curtis.lilypond.exception.TimeSignatureException;
+import org.curtis.musicxml.common.Printout;
+import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteTypeValue;
+import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Step;
 import org.curtis.util.MathUtil;
 
@@ -86,6 +90,19 @@ public class NoteUtil {
         }
 
         return "";
+    }
+
+    public static Note getSpacerNote(BigDecimal duration) {
+        Note note = new Note();
+        note.setDuration(duration);
+        Printout printout = new Printout();
+        printout.setPrintObject(false);
+        note.setPrintout(printout);
+        FullNote fullNote = new FullNote();
+        fullNote.setFullNoteType(new Rest());
+        note.setFullNote(fullNote);
+
+        return note;
     }
 
     public static String getSpacerRepresentation(BigDecimal duration) throws TimeSignatureException {
