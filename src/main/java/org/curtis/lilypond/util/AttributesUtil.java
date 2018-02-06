@@ -24,7 +24,7 @@ public class AttributesUtil {
 
         // first time setting
         if(PartBuilder.CURRENT_ATTRIBUTES == null) {
-            PartBuilder.CURRENT_ATTRIBUTES = attributes;
+            PartBuilder.CURRENT_ATTRIBUTES = attributesCopy(attributes);
             return;
         }
 
@@ -83,6 +83,25 @@ public class AttributesUtil {
         if(!measureStyles.isEmpty()) {
             PartBuilder.CURRENT_ATTRIBUTES.setMeasureStyles(measureStyles);
         }
+    }
 
+    private static Attributes attributesCopy(Attributes attributes) {
+        if (attributes == null) return null;
+
+        Attributes copy = new Attributes();
+
+        copy.setDivisions(attributes.getDivisions());
+        copy.setKeys(attributes.getKeys());
+        copy.setTimeList(attributes.getTimeList());
+        copy.setStaves(attributes.getStaves());
+        copy.setPartSymbol(attributes.getPartSymbol());
+        copy.setInstruments(attributes.getInstruments());
+        copy.setClef(attributes.getClef());
+        copy.setStaffDetailsList(attributes.getStaffDetailsList());
+        copy.setTranspositions(attributes.getTranspositions());
+        copy.setDirectives(attributes.getDirectives());
+        copy.setMeasureStyles(attributes.getMeasureStyles());
+
+        return copy;
     }
 }

@@ -70,7 +70,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                         int lyricCount = 0;
                         for (Lyric lyric : lyrics) {
                             Integer lyricNumber = StringUtil.getInteger(lyric.getNumber());
-                            if (lyricNumber ==  null) throw new BuildException(getExceptionStringPrefix(measure) + "Invalid lyric number: " + lyric.getNumber());
+                            if (lyricNumber ==  null) throw new BuildException(getPartAndMeasure(measure) + "Invalid lyric number: " + lyric.getNumber());
                             if (lyricNumber > lyricCount) lyricCount = lyricNumber;
                         }
 

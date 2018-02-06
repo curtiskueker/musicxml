@@ -23,19 +23,19 @@ public abstract class AbstractBuilder {
         stringBuilder.append(string);
     }
 
-    public void clear() {
+    protected void clear() {
         stringBuilder = new StringBuilder();
     }
 
-    public String getExceptionStringPrefix(Measure measure) {
-        String exceptionStringPrefix = "";
+    protected String getPartAndMeasure(Measure measure) {
+        String value = "";
         if (StringUtil.isNotEmpty(PartBuilder.CURRENT_PART_ID)) {
-            exceptionStringPrefix += "Part " + PartBuilder.CURRENT_PART_ID;
+            value += "Part " + PartBuilder.CURRENT_PART_ID;
         }
         if (measure != null) {
-            exceptionStringPrefix += " Measure " + measure.getNumber() + ": ";
+            value += " Measure " + measure.getNumber() + ": ";
         }
 
-        return exceptionStringPrefix;
+        return value;
     }
 }

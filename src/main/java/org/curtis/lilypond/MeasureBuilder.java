@@ -256,7 +256,7 @@ public class MeasureBuilder extends AbstractBuilder {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
             } else if (!measure.isLastMeasure()){
-                throw new BuildException(getExceptionStringPrefix(measure) + "Expected duration: " + wholeMeasureDuration + " Total duration: " + measureDuration + ".  Skipping measure.");
+                throw new BuildException(getPartAndMeasure(measure) + "Expected duration: " + wholeMeasureDuration + " Total duration: " + measureDuration + ".  Skipping measure.");
             }
         }
 
@@ -300,7 +300,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 append("\\partial ");
                 appendLine(wholeMeasureRepresentation);
             } catch (TimeSignatureException e) {
-                System.err.println(getExceptionStringPrefix(measure) + "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
+                System.err.println(getPartAndMeasure(measure) + "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
             }
         }
 
@@ -339,7 +339,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private MusicDataBuilder addToDataBuilders(MusicData musicData) {
         MusicDataBuilder musicDataBuilder = null;
-        if (isCurrentVoice()) {
+        if (isCurrentVoice() || musicData instanceof Attributes) {
             checkVoiceDuration();
             musicDataBuilder = new MusicDataBuilder(musicData);
             musicDataBuilders.add(musicDataBuilder);

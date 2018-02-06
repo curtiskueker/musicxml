@@ -47,6 +47,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     appendLine("{");
                 }
             }
+
+            PartBuilder.CURRENT_ATTRIBUTES = null;
         }
 
         appendLine("}");

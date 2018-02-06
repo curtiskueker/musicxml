@@ -210,8 +210,6 @@ public class PartBuilder extends AbstractBuilder {
             append(voicePartBuilder.build().toString());
         }
 
-        CURRENT_ATTRIBUTES = null;
-
         return stringBuilder;
     }
 
