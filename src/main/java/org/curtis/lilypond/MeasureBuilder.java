@@ -57,11 +57,13 @@ public class MeasureBuilder extends AbstractBuilder {
     private String currentVoice;
     private String defaultVoice;
     private String voice;
-    BigDecimal measureDuration = MathUtil.ZERO;
-    BigDecimal voiceDuration = MathUtil.ZERO;
+    private BigDecimal measureDuration = MathUtil.ZERO;
+    private BigDecimal voiceDuration = MathUtil.ZERO;
+    public static String CURRENT_MEASURE_NUMBER;
 
     public MeasureBuilder(Measure measure, String voice, String defaultVoice) {
         this.measure = measure;
+        CURRENT_MEASURE_NUMBER = measure.getNumber();
         this.voice = voice;
         this.defaultVoice = defaultVoice;
     }
@@ -70,7 +72,7 @@ public class MeasureBuilder extends AbstractBuilder {
         List<MusicData> musicDataList = measure.getMusicDataList();
 
         append("% measure ");
-        appendLine(measure.getNumber());
+        appendLine(CURRENT_MEASURE_NUMBER);
 
         if (ScoreHandler.DEBUG) System.err.println("Measure " + measure.getNumber());
 
@@ -184,12 +186,14 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
-                Direction direction = (Direction)musicData;
-                DirectionBuilder.setDirectionDefaults(direction);
-                if (deferredDirection(direction)) {
-                    currentDirections.add(direction);
-                } else {
-                    addToDataBuilders(direction);
+                if (isCurrentVoice()) {
+                    Direction direction = (Direction)musicData;
+                    DirectionBuilder.setDirectionDefaults(direction);
+                    if (deferredDirection(direction)) {
+                        currentDirections.add(direction);
+                    } else {
+                        addToDataBuilders(direction);
+                    }
                 }
 
                 continue;
