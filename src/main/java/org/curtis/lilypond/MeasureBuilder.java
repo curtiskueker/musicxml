@@ -46,6 +46,7 @@ import java.util.Set;
 public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;
     private List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
+    private boolean hasNoteDataBuilder = false;
     private Note previousNote;
     private Note currentNote;
     private Set<Integer> currentBeams = new HashSet<>();
@@ -306,7 +307,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Main data builder processing loops
         // general list first, then each build each voice
-        if (musicDataBuilders.isEmpty()) {
+        if (!hasNoteDataBuilder) {
             try {
                 append(NoteUtil.getSpacerRepresentation(measureDuration));
             } catch (TimeSignatureException e) {
@@ -339,10 +340,11 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private MusicDataBuilder addToDataBuilders(MusicData musicData) {
         MusicDataBuilder musicDataBuilder = null;
-        if (isCurrentVoice() || musicData instanceof Attributes) {
+        if (isCurrentVoice() || musicData instanceof Attributes || musicData instanceof Barline) {
             checkVoiceDuration();
             musicDataBuilder = new MusicDataBuilder(musicData);
             musicDataBuilders.add(musicDataBuilder);
+            if (musicData instanceof Note || musicData instanceof Chord) hasNoteDataBuilder = true;
         }
 
         return musicDataBuilder;
