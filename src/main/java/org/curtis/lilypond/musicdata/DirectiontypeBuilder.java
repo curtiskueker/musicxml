@@ -14,7 +14,9 @@ import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
+import org.curtis.util.MathUtil;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class DirectiontypeBuilder extends MusicDataBuilder {
@@ -49,6 +51,14 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
                 case BOLD:
                     append("\\bold ");
                     break;
+            }
+        }
+        if (font.getFontSize() != null) {
+            BigDecimal fontSize = font.getFontSize().getFontSize();
+            if (MathUtil.isPositive(fontSize)) {
+                append("\\abs-fontsize #");
+                append(String.valueOf(fontSize.intValue()));
+                append(" ");
             }
         }
 
