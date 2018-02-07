@@ -10,6 +10,7 @@ import org.curtis.musicxml.direction.directiontype.Dashes;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
 import org.curtis.musicxml.direction.directiontype.OtherDirection;
+import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
@@ -24,6 +25,13 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
 
     }
 
+    public StringBuilder buildRehearsal(Rehearsal rehearsal) {
+        append("\\mark ");
+        formattedTextBuild(rehearsal.getFormattedText());
+
+        return stringBuilder;
+    }
+
     public StringBuilder buildSegno(Segno segno) {
         append("\\segno");
 
@@ -32,41 +40,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
 
     public StringBuilder buildWords(Words words) {
         if (words.isTextMark()) append("\\mark ");
-        append("\\markup { ");
-
-        FormattedText formattedText = words.getFormattedText();
-        TextFormatting textFormatting = formattedText.getTextFormatting();
-        PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
-        PrintStyle printStyle = printStyleAlign.getPrintStyle();
-        Font font = printStyle.getFont();
-        if(font.getFontStyle() != null) {
-            switch (font.getFontStyle()) {
-                case ITALIC:
-                    append("\\italic ");
-                    break;
-            }
-        }
-        if(font.getFontWeight() != null) {
-            switch (font.getFontWeight()) {
-                case BOLD:
-                    append("\\bold ");
-                    break;
-            }
-        }
-        if (font.getFontSize() != null) {
-            BigDecimal fontSize = font.getFontSize().getFontSize();
-            if (MathUtil.isPositive(fontSize)) {
-                append("\\abs-fontsize #");
-                append(String.valueOf(fontSize.intValue()));
-                append(" ");
-            }
-        }
-
-        append("\"");
-        append(formattedText.getValue());
-        append("\"");
-
-        append(" }");
+        formattedTextBuild(words.getFormattedText());
 
         return stringBuilder;
     }
@@ -150,5 +124,45 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
         if (!otherDirection.getPrintObject()) return stringBuilder;
 
         return stringBuilder;
+    }
+
+    private void formattedTextBuild(FormattedText formattedText) {
+        if (formattedText == null) return;
+
+        TextFormatting textFormatting = formattedText.getTextFormatting();
+        PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
+        PrintStyle printStyle = printStyleAlign.getPrintStyle();
+        Font font = printStyle.getFont();
+
+        append("\\markup { ");
+
+        if(font.getFontStyle() != null) {
+            switch (font.getFontStyle()) {
+                case ITALIC:
+                    append("\\italic ");
+                    break;
+            }
+        }
+        if(font.getFontWeight() != null) {
+            switch (font.getFontWeight()) {
+                case BOLD:
+                    append("\\bold ");
+                    break;
+            }
+        }
+        if (font.getFontSize() != null) {
+            BigDecimal fontSize = font.getFontSize().getFontSize();
+            if (MathUtil.isPositive(fontSize)) {
+                append("\\abs-fontsize #");
+                append(String.valueOf(fontSize.intValue()));
+                append(" ");
+            }
+        }
+
+        append("\"");
+        append(formattedText.getValue());
+        append("\"");
+
+        append(" }");
     }
 }
