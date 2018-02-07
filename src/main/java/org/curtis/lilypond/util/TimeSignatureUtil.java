@@ -38,6 +38,8 @@ public class TimeSignatureUtil {
     public static String getRepresentationValue(BigDecimal totalBeats) throws TimeSignatureException {
         if (!MathUtil.isPositive(totalBeats)) throw new TimeSignatureException("Representation value is non-positive value");
 
+        if (MathUtil.equalTo(totalBeats, MathUtil.newBigDecimal(8))) return "\\breve";
+
         BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeats);
 
         int loopCount = 0;
