@@ -107,7 +107,7 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
         List<Credit> credits = scoreHeader.getCredits();
         List<FormattedText> creditWordsList = new ArrayList<>();
         for(Credit credit : credits) {
-            if(credit.getPage() > 1) {
+            if(credit.getPage() != null && credit.getPage() > 1) {
                 continue;
             }
 

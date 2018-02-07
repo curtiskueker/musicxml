@@ -258,7 +258,7 @@ public class MeasureBuilder extends AbstractBuilder {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
             } else if (!measure.isLastMeasure()){
-                throw new BuildException(getPartAndMeasure(measure) + "Expected duration: " + wholeMeasureDuration + " Total duration: " + measureDuration + ".  Skipping measure.");
+                System.err.println("Warning: " + getPartAndMeasure(measure) + "Expected measure duration: " + wholeMeasureDuration + " Encoded measure duration: " + measureDuration);
             }
         }
 
