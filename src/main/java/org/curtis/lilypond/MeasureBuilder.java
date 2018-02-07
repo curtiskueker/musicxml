@@ -262,11 +262,11 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        // check that voice duration matches measure duration
-        checkVoiceDuration();
-
         // clear any directions at the end of the measure
         transferDirections();
+
+        // check that voice duration matches measure duration
+        checkVoiceDuration();
 
         // put any barline at the end
         if(currentBarline != null) {
