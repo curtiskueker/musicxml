@@ -16,6 +16,7 @@ import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.util.MathUtil;
+import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -129,6 +130,11 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
     private void formattedTextBuild(FormattedText formattedText) {
         if (formattedText == null) return;
 
+        String value = formattedText.getValue();
+        if (StringUtil.isEmpty(value)) return;
+
+        value = value.replaceAll("[^\\x00-\\x7F]", "");
+
         TextFormatting textFormatting = formattedText.getTextFormatting();
         PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
         PrintStyle printStyle = printStyleAlign.getPrintStyle();
@@ -160,7 +166,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
         }
 
         append("\"");
-        append(formattedText.getValue());
+        append(value);
         append("\"");
 
         append(" }");
