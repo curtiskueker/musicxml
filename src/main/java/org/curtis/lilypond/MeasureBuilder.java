@@ -392,7 +392,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private void transferDirections() {
         if (!isCurrentVoice()) return;
 
-        if (hasMultipleDirections()) {
+        if (hasMultipleDirections() || (currentNote != null && !currentNote.getMultipleDirections().isEmpty() && currentBarline != null)) {
             currentNote.getMultipleDirections().addAll(currentDirections);
             currentDirections.clear();
         }
