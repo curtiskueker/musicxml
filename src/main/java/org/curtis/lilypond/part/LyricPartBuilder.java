@@ -31,7 +31,6 @@ public class LyricPartBuilder extends FilteredPartBuilder {
         append("\" ");
 
         VoicePartBuilder voicePartBuilder = new VoicePartBuilder(part);
-        voicePartBuilder.voices.addAll(voices);
         append(voicePartBuilder.build().toString());
 
         append("\\new Lyrics = \"Lyrics");

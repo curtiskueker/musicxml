@@ -3,6 +3,8 @@ package org.curtis.musicxml.score;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Measure {
     private List<MusicData> musicDataList = new ArrayList<>();
@@ -14,6 +16,7 @@ public class Measure {
     private Integer staffNumber;
     private boolean isFirstMeasure = false;
     private boolean isLastMeasure = false;
+    private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {
 
@@ -89,5 +92,13 @@ public class Measure {
 
     public void setLastMeasure(boolean lastMeasure) {
         isLastMeasure = lastMeasure;
+    }
+
+    public SortedSet<String> getVoices() {
+        return voices;
+    }
+
+    public void setVoices(SortedSet<String> voices) {
+        this.voices = voices;
     }
 }

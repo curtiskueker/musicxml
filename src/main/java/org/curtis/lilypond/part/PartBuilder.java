@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class PartBuilder extends AbstractBuilder {
     private Part part;
@@ -35,7 +33,6 @@ public class PartBuilder extends AbstractBuilder {
     private Integer currentEndingCount = 0;
     private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
     private boolean hasLyrics = false;
-    private SortedSet<String> voices = new TreeSet<>();
 
     public static Attributes CURRENT_ATTRIBUTES;
     public static String CURRENT_PART_ID;
@@ -69,7 +66,7 @@ public class PartBuilder extends AbstractBuilder {
                     }
 
                     String voice = note.getEditorialVoice().getVoice();
-                    if (StringUtil.isNotEmpty(voice)) voices.add(voice);
+                    if (StringUtil.isNotEmpty(voice)) measure.getVoices().add(voice);
                     if (!note.getLyrics().isEmpty()) hasLyrics = true;
 
                     if (previousNote != null) {
@@ -202,11 +199,9 @@ public class PartBuilder extends AbstractBuilder {
         if (ScoreHandler.DEBUG) System.err.println("Part " + part.getId());
         if(hasLyrics) {
             LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(part);
-            lyricPartBuilder.voices.addAll(voices);
             append(lyricPartBuilder.build().toString());
         } else {
             VoicePartBuilder voicePartBuilder = new VoicePartBuilder(part);
-            voicePartBuilder.voices.addAll(voices);
             append(voicePartBuilder.build().toString());
         }
 

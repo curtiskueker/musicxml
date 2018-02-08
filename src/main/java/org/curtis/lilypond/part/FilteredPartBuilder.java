@@ -10,13 +10,10 @@ import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public abstract class FilteredPartBuilder extends AbstractBuilder {
     protected BigDecimal currentDivisions = MathUtil.ZERO;
     protected BigDecimal currentDuration = MathUtil.ZERO;
-    protected SortedSet<String> voices = new TreeSet<>();
 
     protected void adjustCurrentDuration(MusicData musicData) {
          if (musicData instanceof Attributes) {
