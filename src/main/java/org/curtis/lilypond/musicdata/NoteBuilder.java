@@ -34,12 +34,14 @@ import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class NoteBuilder extends MusicDataBuilder {
     private Note note;
-    private List<Direction> nonMultipleDirections = new ArrayList<>();
+    private List<Direction> directions = new ArrayList<>();
 
     public NoteBuilder(Note note) {
         super(note);
@@ -58,25 +60,25 @@ public class NoteBuilder extends MusicDataBuilder {
         this.note = note;
     }
 
-    public List<Direction> getNonMultipleDirections() {
-        return nonMultipleDirections;
+    public List<Direction> getDirections() {
+        return directions;
     }
 
-    public void setNonMultipleDirections(List<Direction> nonMultipleDirections) {
-        this.nonMultipleDirections = nonMultipleDirections;
+    public void setDirections(List<Direction> directions) {
+        this.directions = directions;
     }
 
     public StringBuilder build() throws BuildException {
         preNoteBuild();
-        preNonMultipleDirectionBuild();
+        preDirectionBuild();
         startGraceBuild();
         noteTypeBuild();
         noteDurationBuild();
         beamBuild();
         notationsBuild();
         finishGraceBuild();
-        nonMultipleDirectionBuild();
-        postNonMultipleDirectionBuild();
+        directionBuild();
+        postDirectionBuild();
 
         return stringBuilder;
     }
@@ -244,23 +246,29 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private StringBuilder preNonMultipleDirectionBuild() {
-        if (!nonMultipleDirections.isEmpty()) {
+    private StringBuilder preDirectionBuild() {
+        if (hasMultipleDirections()) {
             append(" << ");
         }
 
         return stringBuilder;
     }
 
-    private StringBuilder nonMultipleDirectionBuild() throws BuildException {
+    private StringBuilder directionBuild() throws BuildException {
+        if (!hasMultipleDirections()) {
+            for (Direction direction : directions) {
+                append(new MusicDataBuilder(direction).build().toString());
+            }
+
+            return stringBuilder;
+        }
+
         int directionTypeCount = 0;
-        for (Direction direction : nonMultipleDirections) {
+        for (Direction direction : directions) {
             directionTypeCount += direction.getDirectionTypes().size();
         }
 
-        if (directionTypeCount < 2) return stringBuilder;
-
-        for(Direction direction : nonMultipleDirections) {
+        for(Direction direction : directions) {
             DirectionBuilder.setDirectionDefaults(direction);
         }
 
@@ -273,7 +281,7 @@ public class NoteBuilder extends MusicDataBuilder {
             return stringBuilder;
         }
 
-        Iterator<Direction> directionIterator = nonMultipleDirections.iterator();
+        Iterator<Direction> directionIterator = directions.iterator();
         Direction direction = directionIterator.next();
         Iterator<DirectionType> directionTypeIterator = direction.getDirectionTypes().iterator();
         DirectionType directionType;
@@ -306,8 +314,8 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private StringBuilder postNonMultipleDirectionBuild() {
-        if (!nonMultipleDirections.isEmpty()) {
+    private StringBuilder postDirectionBuild() {
+        if (hasMultipleDirections()) {
             append(" >> ");
         }
 
@@ -316,7 +324,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
     public StringBuilder buildNote(Note note) throws BuildException {
         this.note = note;
-        nonMultipleDirections.addAll(note.getMultipleDirections());
+        directions.addAll(note.getDirections());
         return build();
     }
 
@@ -327,8 +335,9 @@ public class NoteBuilder extends MusicDataBuilder {
         for(Note note : notes) {
             NoteBuilder noteBuilder = new NoteBuilder(note);
             noteBuilders.add(noteBuilder);
-            nonMultipleDirections.addAll(note.getMultipleDirections());
+            directions.addAll(note.getDirections());
         }
+        directions.addAll(chord.getDirections());
 
         for (NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
@@ -339,7 +348,7 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        preNonMultipleDirectionBuild();
+        preDirectionBuild();
 
         append("<");
 
@@ -369,9 +378,11 @@ public class NoteBuilder extends MusicDataBuilder {
             append(noteBuilder.notationsBuild().toString());
         }
 
-        for(Direction direction : chord.getDirections()) {
-            MusicDataBuilder directionBuilder = new MusicDataBuilder(direction);
-            append(directionBuilder.build().toString());
+        if (!hasMultipleDirections()) {
+            for(Direction direction : chord.getDirections()) {
+                MusicDataBuilder directionBuilder = new MusicDataBuilder(direction);
+                append(directionBuilder.build().toString());
+            }
         }
 
         for(NoteBuilder noteBuilder : noteBuilders) {
@@ -379,18 +390,20 @@ public class NoteBuilder extends MusicDataBuilder {
             append(noteBuilder.finishGraceBuild().toString());
         }
 
-        for (NoteBuilder noteBuilder : noteBuilders) {
-            noteBuilder.clear();
-            Note note = noteBuilder.getNote();
-            Connection chordType = note.getFullNote().getChordType();
-            if (chordType == Connection.START || chordType == Connection.SINGLE) {
-                noteBuilder.getNonMultipleDirections().clear();
-                noteBuilder.getNonMultipleDirections().addAll(nonMultipleDirections);
-                append(noteBuilder.nonMultipleDirectionBuild().toString());
+        if (hasMultipleDirections()) {
+            for (NoteBuilder noteBuilder : noteBuilders) {
+                noteBuilder.clear();
+                Note note = noteBuilder.getNote();
+                Connection chordType = note.getFullNote().getChordType();
+                if (chordType == Connection.START || chordType == Connection.SINGLE) {
+                    noteBuilder.getDirections().clear();
+                    noteBuilder.getDirections().addAll(directions);
+                    append(noteBuilder.directionBuild().toString());
+                }
             }
         }
 
-        postNonMultipleDirectionBuild();
+        postDirectionBuild();
 
         return stringBuilder;
     }
@@ -476,5 +489,24 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         return stringBuilder;
+    }
+
+    private boolean hasMultipleDirections() {
+        Map<String, Integer> directionTypeCounts = new HashMap<>();
+        for (Direction direction : directions) {
+            for (DirectionType directionType : direction.getDirectionTypes()) {
+                String name = directionType.getClass().getSimpleName();
+                Integer directionTypeCount = directionTypeCounts.computeIfAbsent(name, count -> 0);
+                directionTypeCount++;
+                directionTypeCounts.put(name, directionTypeCount);
+            }
+        }
+
+        for (String multipleDirectionType : DirectionType.MULTIPLE_DIRECTION_TYPES) {
+            Integer directionTypeCount = directionTypeCounts.get(multipleDirectionType);
+            if (directionTypeCount != null && directionTypeCount > 1) return true;
+        }
+
+        return false;
     }
 }

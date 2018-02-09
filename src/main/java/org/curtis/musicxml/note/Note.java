@@ -49,7 +49,7 @@ public class Note extends MusicData {
     private BigDecimal release;
     private String timeOnly;
     private Boolean pizzicato;
-    private List<Direction> multipleDirections = new ArrayList<>();
+    private List<Direction> directions = new ArrayList<>();
 
     public Note() {
 
@@ -327,11 +327,11 @@ public class Note extends MusicData {
         this.pizzicato = pizzicato;
     }
 
-    public List<Direction> getMultipleDirections() {
-        return multipleDirections;
+    public List<Direction> getDirections() {
+        return directions;
     }
 
-    public void setMultipleDirections(List<Direction> multipleDirections) {
-        this.multipleDirections = multipleDirections;
+    public void setDirections(List<Direction> directions) {
+        this.directions = directions;
     }
 }
