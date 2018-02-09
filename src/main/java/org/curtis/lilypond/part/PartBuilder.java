@@ -7,10 +7,15 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.notation.Notation;
+import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Tuplet;
+import org.curtis.musicxml.note.notation.ornament.Ornament;
+import org.curtis.musicxml.note.notation.ornament.TrillMark;
+import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
@@ -23,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+
 public class PartBuilder extends AbstractBuilder {
     private Part part;
     private Measure previousMeasure;
@@ -33,6 +40,8 @@ public class PartBuilder extends AbstractBuilder {
     private Integer currentEndingCount = 0;
     private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
     private boolean hasLyrics = false;
+    private WavyLine stopWavyLine = null;
+    private boolean hasStopWavyLine = false;
 
     public static Attributes CURRENT_ATTRIBUTES;
     public static String CURRENT_PART_ID;
@@ -69,8 +78,52 @@ public class PartBuilder extends AbstractBuilder {
                     if (StringUtil.isNotEmpty(voice)) measure.getVoices().add(voice);
                     if (!note.getLyrics().isEmpty()) hasLyrics = true;
 
+                    // notation/ornament adjustments
+                    boolean addNewNotations = hasStopWavyLine && !note.getFullNote().isChord();
+
+                    hasStopWavyLine = false;
+                    TrillMark trillMark = null;
+                    WavyLine startWavyLine = null;
+                    List<Ornament> wavyLineOrnamentList = null;
+                    for (Notations notations : note.getNotationsList()) {
+                        for (Notation notation : notations.getNotations()) {
+                            if (notation instanceof Ornaments) {
+                                Ornaments ornaments = (Ornaments)notation;
+                                List<Ornament> ornamentList = ornaments.getOrnaments();
+                                for (Ornament ornament : ornamentList) {
+                                    if (ornament instanceof TrillMark) {
+                                        trillMark = (TrillMark)ornament;
+                                    } else if (ornament instanceof WavyLine) {
+                                        WavyLine wavyLine = (WavyLine)ornament;
+                                        switch (wavyLine.getType()) {
+                                            case START:
+                                                startWavyLine = wavyLine;
+                                                break;
+                                            case STOP:
+                                                stopWavyLine = wavyLine;
+                                                wavyLineOrnamentList = ornamentList;
+                                                hasStopWavyLine = true;
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (trillMark != null && startWavyLine != null) trillMark.setPrintObject(false);
+                    if (hasStopWavyLine && wavyLineOrnamentList != null) wavyLineOrnamentList.remove(stopWavyLine);
+                    if (addNewNotations) {
+                        Notations notations = new Notations();
+                        notations.setPrintObject(true);
+                        Ornaments ornaments = new Ornaments();
+                        ornaments.setPrintObject(true);
+                        ornaments.getOrnaments().add(stopWavyLine);
+                        notations.getNotations().add(ornaments);
+                        note.getNotationsList().add(notations);
+                    }
+
+                    // chord type
                     if (previousNote != null) {
-                        // chord type
                         if(fullNote.isChord() && !previousNote.getFullNote().isChord()) {
                             previousNote.getFullNote().setChord(true);
                             previousNote.getFullNote().setChordType(Connection.START);
@@ -196,7 +249,7 @@ public class PartBuilder extends AbstractBuilder {
         }
 
         // main processing loop
-        if (ScoreHandler.DEBUG) System.err.println("Part " + part.getId());
+        if (DEBUG) System.err.println("Part " + part.getId());
         if(hasLyrics) {
             LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(part);
             append(lyricPartBuilder.build().toString());

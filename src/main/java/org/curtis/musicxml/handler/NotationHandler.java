@@ -9,7 +9,6 @@ import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
-import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.NonArpeggiate;
 import org.curtis.musicxml.note.notation.Notation;
@@ -17,7 +16,6 @@ import org.curtis.musicxml.note.notation.OtherNotation;
 import org.curtis.musicxml.note.notation.Slide;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
-import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -39,6 +37,7 @@ public class NotationHandler extends AbstractHandler {
         List<Notation> notationList = notations.getNotations();
         List<Element> notationsSubelements = XmlUtil.getChildElements(element);
         for(Element notationsSubelement : notationsSubelements) {
+            Notation notation = null;
             switch (notationsSubelement.getTagName()) {
                 case "tied":
                     Tied tied = new Tied();
@@ -51,7 +50,7 @@ public class NotationHandler extends AbstractHandler {
                     tied.setOrientation(PlacementUtil.getLocation(notationsSubelement.getAttribute("orientation")));
                     tied.setBezier(NotationFactory.newBezier(notationsSubelement));
                     tied.setColor(notationsSubelement.getAttribute("color"));
-                    notationList.add(tied);
+                    notation = tied;
                     break;
                 case "slur":
                     Slur slur = new Slur();
@@ -64,11 +63,10 @@ public class NotationHandler extends AbstractHandler {
                     slur.setOrientation(PlacementUtil.getLocation(notationsSubelement.getAttribute("orientation")));
                     slur.setBezier(NotationFactory.newBezier(notationsSubelement));
                     slur.setColor(notationsSubelement.getAttribute("color"));
-                    notationList.add(slur);
+                    notation = slur;
                     break;
                 case "tuplet":
-                    Tuplet tuplet = NotationFactory.newTuplet(notationsSubelement);
-                    notationList.add(tuplet);
+                    notation = NotationFactory.newTuplet(notationsSubelement);
                     break;
                 case "glissando":
                     Glissando glissando = new Glissando();
@@ -78,7 +76,7 @@ public class NotationHandler extends AbstractHandler {
                     glissando.setLineType(NotationFactory.newLineType(notationsSubelement));
                     glissando.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     glissando.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
-                    notationList.add(glissando);
+                    notation = glissando;
                     break;
                 case "slide":
                     Slide slide = new Slide();
@@ -89,7 +87,7 @@ public class NotationHandler extends AbstractHandler {
                     slide.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     slide.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
                     slide.setBendSound(TechnicalFactory.newBendSound(notationsSubelement));
-                    notationList.add(slide);
+                    notation = slide;
                     break;
                 case "ornaments":
                     OrnamentHandler ornamentHandler = new OrnamentHandler(notationList);
@@ -104,11 +102,10 @@ public class NotationHandler extends AbstractHandler {
                     articulationHandler.handle(notationsSubelement);
                     break;
                 case "dynamics":
-                    notationList.add(NotationFactory.newDynamicsNotation(notationsSubelement));
+                    notation = NotationFactory.newDynamicsNotation(notationsSubelement);
                     break;
                 case "fermata":
-                    Fermata fermata = NotationFactory.newFermata(notationsSubelement);
-                    notationList.add(fermata);
+                    notation = NotationFactory.newFermata(notationsSubelement);
                     break;
                 case "arpeggiate":
                     Arpeggiate arpeggiate = new Arpeggiate();
@@ -117,7 +114,7 @@ public class NotationHandler extends AbstractHandler {
                     arpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
                     arpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     arpeggiate.setColor(notationsSubelement.getAttribute("color"));
-                    notationList.add(arpeggiate);
+                    notation = arpeggiate;
                     break;
                 case "non-arpeggiate":
                     NonArpeggiate nonArpeggiate = new NonArpeggiate();
@@ -126,14 +123,14 @@ public class NotationHandler extends AbstractHandler {
                     nonArpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
                     nonArpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     nonArpeggiate.setColor(notationsSubelement.getAttribute("color"));
-                    notationList.add(nonArpeggiate);
+                    notation = nonArpeggiate;
                     break;
                 case "accidental-mark":
                     AccidentalMark accidentalMark = new AccidentalMark();
                     accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(notationsSubelement));
                     accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
                     accidentalMark.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
-                    notationList.add(accidentalMark);
+                    notation = accidentalMark;
                     break;
                 case "other-notation":
                     OtherNotation otherNotation = new OtherNotation();
@@ -143,8 +140,12 @@ public class NotationHandler extends AbstractHandler {
                     otherNotation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
                     otherNotation.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
                     otherNotation.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
-                    notationList.add(otherNotation);
+                    notation = otherNotation;
                     break;
+            }
+            if (notation != null) {
+                notation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
+                notationList.add(notation);
             }
         }
         notations.setNotations(notationList);

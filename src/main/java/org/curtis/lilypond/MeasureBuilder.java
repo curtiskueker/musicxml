@@ -20,7 +20,6 @@ import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.harmony.Harmony;
-import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
@@ -41,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
 
 public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;
@@ -74,7 +75,7 @@ public class MeasureBuilder extends AbstractBuilder {
         append("% measure ");
         appendLine(CURRENT_MEASURE_NUMBER);
 
-        if (ScoreHandler.DEBUG) System.err.println("Measure " + measure.getNumber());
+        if (DEBUG) System.err.println("Measure " + measure.getNumber());
 
         // create data builder list for processing
         for(MusicData musicData : musicDataList) {

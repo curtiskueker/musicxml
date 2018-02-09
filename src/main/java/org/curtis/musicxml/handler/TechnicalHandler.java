@@ -349,6 +349,7 @@ public class TechnicalHandler extends AbstractHandler {
                     technical = otherTechnical;
                     break;
             }
+            technicals.setPrintObject(FormattingFactory.getPrintObject(element));
             if (technical != null) technicals.getTechnicals().add(technical);
         }
         notationList.add(technicals);

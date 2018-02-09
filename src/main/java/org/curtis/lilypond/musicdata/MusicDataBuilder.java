@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+
 public class MusicDataBuilder extends AbstractBuilder {
     private MusicData musicData;
 
@@ -51,11 +53,13 @@ public class MusicDataBuilder extends AbstractBuilder {
                 System.err.println(PartBuilder.CURRENT_PART_ID + ", Measure " + MeasureBuilder.CURRENT_MEASURE_NUMBER + ":  MusicData exception: " + e.getCause().getMessage());
             } else {
                 ScoreHandler.displayException(e);
+                if(DEBUG) e.printStackTrace();
             }
         } catch (NoSuchMethodException e) {
             System.err.println("Unimplemented method: " + builderObjectName + "." + builderMethodName + "(" + objectClassName + ")");
         } catch (Exception e) {
             ScoreHandler.displayException(e);
+            if(DEBUG) e.printStackTrace();
         }
 
         return stringBuilder;

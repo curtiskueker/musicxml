@@ -228,6 +228,8 @@ public class NoteBuilder extends MusicDataBuilder {
     private StringBuilder notationsBuild() throws BuildException {
         for(Notations notations : note.getNotationsList()) {
             for(Notation notation : notations.getNotations()) {
+                if (!notation.getPrintObject()) continue;
+
                 MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
                 append(musicDataBuilder.build().toString());
             }
