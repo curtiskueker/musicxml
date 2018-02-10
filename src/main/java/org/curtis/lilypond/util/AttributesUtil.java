@@ -85,7 +85,7 @@ public class AttributesUtil {
         }
     }
 
-    private static Attributes attributesCopy(Attributes attributes) {
+    public static Attributes attributesCopy(Attributes attributes) {
         if (attributes == null) return null;
 
         Attributes copy = new Attributes();

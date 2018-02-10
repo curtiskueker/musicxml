@@ -63,6 +63,8 @@ public class AttributesBuilder extends MusicDataBuilder {
             }
 
             appendLine("\"");
+
+            if (clefSign == ClefSign.PERCUSSION) appendLine("\\set Staff.middleCPosition = #-6");
         }
 
         return stringBuilder;

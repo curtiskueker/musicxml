@@ -257,7 +257,11 @@ public class MeasureBuilder extends AbstractBuilder {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
             } else if (!measure.isLastMeasure()){
+                // Expected measure duration falls short
+                // Attempt to add a spacer at the end of the measure
                 System.err.println("Warning: " + getPartAndMeasure(measure) + "Expected measure duration: " + wholeMeasureDuration + " Encoded measure duration: " + measureDuration);
+                BigDecimal wholeMeasureDurationDifference = MathUtil.subtract(wholeMeasureDuration, measureDuration);
+                if (MathUtil.isPositive(wholeMeasureDurationDifference)) addSpacerDataBuilder(wholeMeasureDurationDifference);
             }
         }
 
@@ -353,10 +357,14 @@ public class MeasureBuilder extends AbstractBuilder {
     private void checkVoiceDuration() {
         if (MathUtil.isPositive(voiceDuration) && MathUtil.smallerThan(voiceDuration, measureDuration)) {
             BigDecimal durationDifference = MathUtil.subtract(measureDuration, voiceDuration);
-            Note spacerNote = NoteUtil.getSpacerNote(durationDifference);
-            musicDataBuilders.add(new MusicDataBuilder(spacerNote));
+            addSpacerDataBuilder(durationDifference);
             voiceDuration = MathUtil.add(voiceDuration, durationDifference);
         }
+    }
+
+    private void addSpacerDataBuilder(BigDecimal duration) {
+        Note spacerNote = NoteUtil.getSpacerNote(duration);
+        musicDataBuilders.add(new MusicDataBuilder(spacerNote));
     }
 
     private void setCurrentVoice(MusicData musicData) {

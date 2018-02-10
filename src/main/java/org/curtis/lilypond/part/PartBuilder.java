@@ -52,6 +52,7 @@ public class PartBuilder extends AbstractBuilder {
     }
 
     public StringBuilder build() throws BuildException {
+        if (DEBUG) System.err.println("Part " + part.getId());
         List<Measure> measures = part.getMeasures();
 
         // pre-processing loop
@@ -249,7 +250,6 @@ public class PartBuilder extends AbstractBuilder {
         }
 
         // main processing loop
-        if (DEBUG) System.err.println("Part " + part.getId());
         if(hasLyrics) {
             LyricPartBuilder lyricPartBuilder = new LyricPartBuilder(part);
             append(lyricPartBuilder.build().toString());
@@ -263,6 +263,6 @@ public class PartBuilder extends AbstractBuilder {
 
     public static boolean skipNote(Note note) {
         // skip cues and non-printed chords as redundant
-        return note.getCue() || (note.getFullNote().isChord() && !note.getPrintout().getPrintObject());
+        return note.getFullNote().isChord() && (note.getCue() || !note.getPrintout().getPrintObject());
     }
 }

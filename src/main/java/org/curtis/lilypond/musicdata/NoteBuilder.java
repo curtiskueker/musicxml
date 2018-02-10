@@ -84,7 +84,7 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder noteTypeBuild() throws BuildException {
-        if (!note.getPrintout().getPrintObject()) {
+        if (note.getCue() || !note.getPrintout().getPrintObject()) {
             append(" s");
             return stringBuilder;
         }
@@ -103,7 +103,7 @@ public class NoteBuilder extends MusicDataBuilder {
         } else if (fullNoteType instanceof Unpitched) {
             Unpitched unpitched = (Unpitched)fullNoteType;
             append(NoteUtil.getStep(unpitched.getDisplayStep()));
-            pitchOctaveBuild(unpitched.getDisplayOctave() - 1);
+            pitchOctaveBuild(unpitched.getDisplayOctave());
         } else if (fullNoteType instanceof Rest) {
             Rest rest = (Rest)fullNoteType;
             Boolean measure = rest.getMeasure();

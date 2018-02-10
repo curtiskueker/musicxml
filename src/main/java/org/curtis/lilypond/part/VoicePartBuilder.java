@@ -2,6 +2,8 @@ package org.curtis.lilypond.part;
 
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.util.AttributesUtil;
+import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.Part;
 
@@ -54,7 +56,11 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         boolean hasMultipleVoices = measureVoices.size() > 1;
         String defaultVoice = measureVoices.first();
 
+        Attributes currentAttributes = AttributesUtil.attributesCopy(PartBuilder.CURRENT_ATTRIBUTES);
         for (String voice : measureVoices) {
+            // Reset attributes state at the beginning of each voice
+            AttributesUtil.setCurrentAttributes(currentAttributes);
+
             if (hasMultipleVoices && voice.equals(measureVoices.first())) {
                 appendLine();
                 appendLine("<<");
