@@ -79,7 +79,7 @@ public class PartBuilder extends AbstractBuilder {
                     if (!note.getLyrics().isEmpty()) hasLyrics = true;
 
                     // notation/ornament adjustments
-                    boolean addNewNotations = hasStopWavyLine && !note.getFullNote().isChord();
+                    boolean addNewNotations = hasStopWavyLine;
 
                     hasStopWavyLine = false;
                     TrillMark trillMark = null;
