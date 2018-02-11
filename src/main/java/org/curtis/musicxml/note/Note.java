@@ -8,7 +8,10 @@ import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Notation;
+import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Tuplet;
+import org.curtis.musicxml.note.notation.ornament.Ornament;
+import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 
@@ -209,6 +212,22 @@ public class Note extends MusicData {
 
     public void setNotationsList(List<Notations> notationsList) {
         this.notationsList = notationsList;
+    }
+
+    public Tremolo getTremolo() {
+        for (Notations notations : notationsList) {
+            List<Notation> notationList = notations.getNotations();
+            for (Notation notation : notationList) {
+                if (notation instanceof Ornaments) {
+                    Ornaments ornaments = (Ornaments)notation;
+                    for (Ornament ornament : ornaments.getOrnaments()) {
+                        if (ornament instanceof Tremolo) return (Tremolo)ornament;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     public Connection getTupletType() {

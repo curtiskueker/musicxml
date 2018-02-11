@@ -29,6 +29,7 @@ import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Tuplet;
+import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 
@@ -79,6 +80,7 @@ public class NoteBuilder extends MusicDataBuilder {
         finishGraceBuild();
         directionBuild();
         postDirectionBuild();
+        postNoteBuild();
 
         return stringBuilder;
     }
@@ -142,8 +144,15 @@ public class NoteBuilder extends MusicDataBuilder {
         }
     }
 
-    private StringBuilder preNoteBuild() {
+    private StringBuilder preNoteBuild() throws BuildException {
         append(" ");
+
+        Tremolo tremolo = note.getTremolo();
+        if (tremolo != null && tremolo.getType() == Connection.START) {
+            append("\\repeat tremolo ");
+            noteTypeValueBuild();
+            append(" { ");
+        }
 
         Stem stem = note.getStem();
         if(stem != null) {
@@ -173,28 +182,44 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
+    private StringBuilder postNoteBuild() throws BuildException {
+        Tremolo tremolo = note.getTremolo();
+        if (tremolo != null && tremolo.getType() == Connection.STOP) {
+            append(" } ");
+        }
+
+        return stringBuilder;
+    }
+
     private StringBuilder noteDurationBuild() throws BuildException {
         NoteType noteType = note.getType();
         FullNoteType fullNoteType = note.getFullNote().getFullNoteType();
         BigDecimal duration = note.getDuration();
-        if (fullNoteType instanceof Rest && ((Rest)fullNoteType).getMeasure()) {
-            try {
-                append(TimeSignatureUtil.getWholeMeasureRepresentation());
-            } catch (TimeSignatureException e) {
-                throw new BuildException(e.getMessage());
-            }
-        } else if (noteType != null) {
-            append(NoteUtil.getNoteTypeValue(noteType.getValue()));
-            List<Placement> dots = note.getDots();
-            for(Placement dot : dots) {
-                append(".");
-            }
-        } else if (MathUtil.isPositive(duration)) {
-            try {
+        Tremolo tremolo = note.getTremolo();
+        try {
+            if (tremolo != null &&(tremolo.getType() == Connection.START || tremolo.getType() == Connection.STOP)) {
                 append(TimeSignatureUtil.getDurationRepresentationValue(duration));
-            } catch (TimeSignatureException e) {
-                throw new BuildException(e.getMessage());
+            } else if (fullNoteType instanceof Rest && ((Rest)fullNoteType).getMeasure()) {
+                append(TimeSignatureUtil.getWholeMeasureRepresentation());
+            } else if (noteType != null) {
+                noteTypeValueBuild();
+            } else if (MathUtil.isPositive(duration)) {
+                append(TimeSignatureUtil.getDurationRepresentationValue(duration));
             }
+        } catch (TimeSignatureException e) {
+            throw new BuildException(e.getMessage());
+        }
+
+        return stringBuilder;
+    }
+
+    private StringBuilder noteTypeValueBuild() {
+        NoteType noteType = note.getType();
+        if (noteType == null) return stringBuilder;
+        append(NoteUtil.getNoteTypeValue(noteType.getValue()));
+        List<Placement> dots = note.getDots();
+        for(Placement dot : dots) {
+            append(".");
         }
 
         return stringBuilder;
