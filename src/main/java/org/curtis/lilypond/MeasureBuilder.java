@@ -216,10 +216,12 @@ public class MeasureBuilder extends AbstractBuilder {
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
                 measureDuration = MathUtil.subtract(measureDuration, backup.getDuration());
+                if (isCurrentVoice()) voiceDuration = MathUtil.subtract(voiceDuration, backup.getDuration());
                 continue;
             } else if (musicData instanceof Forward) {
                 Forward forward = (Forward)musicData;
                 measureDuration = MathUtil.add(measureDuration, forward.getDuration());
+                if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, forward.getDuration());
                 musicDataBuilder = addToDataBuilders(forward);
             } else if (musicData instanceof Harmony) {
                 // Harmony processed separately

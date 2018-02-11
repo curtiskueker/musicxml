@@ -510,6 +510,7 @@ public class NoteBuilder extends MusicDataBuilder {
         BigDecimal duration = forward.getDuration();
 
         try {
+            append(" ");
             append(NoteUtil.getSpacerRepresentation(duration));
         } catch (TimeSignatureException e) {
             throw new BuildException(e.getMessage());
