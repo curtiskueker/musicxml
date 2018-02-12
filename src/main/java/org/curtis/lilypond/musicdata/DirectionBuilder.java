@@ -10,6 +10,8 @@ import org.curtis.musicxml.direction.directiontype.Words;
 
 import java.util.List;
 
+import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+
 public class DirectionBuilder extends MusicDataBuilder {
     public DirectionBuilder() {
 
@@ -30,6 +32,8 @@ public class DirectionBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildPrint(Print print) {
+        if (DEBUG) return stringBuilder;
+
         if(print.getNewSystem()) {
             appendLine("\\break");
         } else if(print.getNewPage()) {

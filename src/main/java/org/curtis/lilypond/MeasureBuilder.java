@@ -216,7 +216,6 @@ public class MeasureBuilder extends AbstractBuilder {
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
                 measureDuration = MathUtil.subtract(measureDuration, backup.getDuration());
-                if (isCurrentVoice()) voiceDuration = MathUtil.subtract(voiceDuration, backup.getDuration());
                 continue;
             } else if (musicData instanceof Forward) {
                 Forward forward = (Forward)musicData;
@@ -338,6 +337,8 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
             }
         }
+
+        if (DEBUG) append(" | ");
 
         appendLine();
 
