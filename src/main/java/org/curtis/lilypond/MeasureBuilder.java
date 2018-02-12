@@ -324,6 +324,8 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
+        if (DEBUG) append(" | ");
+
         // End repeat endings
         if(repeatBlock != null) {
             RepeatBlockType repeatBlockType = repeatBlock.getRepeatBlockType();
@@ -337,8 +339,6 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
             }
         }
-
-        if (DEBUG) append(" | ");
 
         appendLine();
 
