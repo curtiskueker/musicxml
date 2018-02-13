@@ -252,15 +252,16 @@ public class MeasureBuilder extends AbstractBuilder {
             throw new BuildException(e.getMessage());
         }
 
-        if(!MathUtil.equalTo(wholeMeasureDuration, measureDuration)) {
+        if(!MathUtil.equalTo(wholeMeasureDuration, voiceDuration)) {
             if (measure.isFirstMeasure()) {
                 measure.setImplicit(true);
             } else if (!measure.isLastMeasure()){
-                // Expected measure duration falls short
+                // Expected voice duration falls short
                 // Attempt to add a spacer at the end of the measure
-                System.err.println("Warning: " + getPartAndMeasure(measure) + "Expected measure duration: " + wholeMeasureDuration + " Encoded measure duration: " + measureDuration);
-                BigDecimal wholeMeasureDurationDifference = MathUtil.subtract(wholeMeasureDuration, measureDuration);
-                if (MathUtil.isPositive(wholeMeasureDurationDifference)) addSpacerDataBuilder(wholeMeasureDurationDifference);
+                BigDecimal wholeMeasureDurationDifference = MathUtil.subtract(wholeMeasureDuration, voiceDuration);
+                if (MathUtil.isPositive(wholeMeasureDurationDifference)) {
+                    addSpacerDataBuilder(wholeMeasureDurationDifference);
+                }
             }
         }
 
@@ -268,7 +269,7 @@ public class MeasureBuilder extends AbstractBuilder {
         transferDirections();
 
         // check that voice duration matches measure duration
-        checkVoiceDuration();
+        if (!measure.getImplicit()) checkVoiceDuration();
 
         // put any barline at the end
         if(currentBarline != null) {
@@ -305,7 +306,7 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        if (DEBUG) append(" | ");
+        if (DEBUG) if (!measure.isLastMeasure()) append(" | ");
 
         appendLine();
 
@@ -328,13 +329,13 @@ public class MeasureBuilder extends AbstractBuilder {
         if (MathUtil.isPositive(voiceDuration) && MathUtil.smallerThan(voiceDuration, measureDuration)) {
             BigDecimal durationDifference = MathUtil.subtract(measureDuration, voiceDuration);
             addSpacerDataBuilder(durationDifference);
-            voiceDuration = MathUtil.add(voiceDuration, durationDifference);
         }
     }
 
     private void addSpacerDataBuilder(BigDecimal duration) {
         Note spacerNote = NoteUtil.getSpacerNote(duration);
         musicDataBuilders.add(new MusicDataBuilder(spacerNote));
+        voiceDuration = MathUtil.add(voiceDuration, duration);
     }
 
     private void setCurrentVoice(MusicData musicData) {

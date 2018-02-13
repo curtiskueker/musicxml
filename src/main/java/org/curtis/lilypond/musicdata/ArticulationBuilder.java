@@ -1,8 +1,10 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.PlacementBuildUtil;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.notation.articulation.Accent;
+import org.curtis.musicxml.note.notation.articulation.BreathMark;
 import org.curtis.musicxml.note.notation.articulation.DetachedLegato;
 import org.curtis.musicxml.note.notation.articulation.Staccatissimo;
 import org.curtis.musicxml.note.notation.articulation.Staccato;
@@ -15,49 +17,58 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildAccent(Accent accent) {
-        Placement placement = accent.getPlacement();
-        if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
+        buildPlacement(accent.getPlacement());
         append("\\accent");
 
         return stringBuilder;
     }
 
     public StringBuilder buildStrongAccent(StrongAccent strongAccent) {
-        Placement placement = strongAccent.getPlacement();
-        if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
+        buildPlacement(strongAccent.getPlacement());
         append("\\marcato");
 
         return stringBuilder;
     }
     public StringBuilder buildStaccato(Staccato staccato) {
-        Placement placement = staccato.getPlacement();
-        if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
+        buildPlacement(staccato.getPlacement());
         append("\\staccato");
 
         return stringBuilder;
     }
 
     public StringBuilder buildTenuto(Tenuto tenuto) {
-        Placement placement = tenuto.getPlacement();
-        if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
+        buildPlacement(tenuto.getPlacement());
         append("\\tenuto");
 
         return stringBuilder;
     }
 
     public StringBuilder buildDetachedLegato(DetachedLegato detachedLegato) {
-        Placement placement = detachedLegato.getPlacement();
-        if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
+        buildPlacement(detachedLegato.getPlacement());
         append("\\portato");
 
         return stringBuilder;
     }
 
     public StringBuilder buildStaccatissimo(Staccatissimo staccatissimo) {
-        Placement placement = staccatissimo.getPlacement();
-        if (placement != null) append(PlacementBuildUtil.getPlacement(placement.getPlacement()));
+        buildPlacement(staccatissimo.getPlacement());
         append("\\staccatissimo");
 
         return stringBuilder;
+    }
+
+    public StringBuilder buildBreathMark(BreathMark breathMark) {
+        append("\\breathe");
+
+        return stringBuilder;
+    }
+
+    private void buildPlacement(Placement placement) {
+        if (placement == null) return;
+        buildPlacement(placement.getPlacement());
+    }
+
+    private void buildPlacement(Location placement) {
+        append(PlacementBuildUtil.getPlacement(placement));
     }
 }

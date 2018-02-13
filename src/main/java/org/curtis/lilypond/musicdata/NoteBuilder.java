@@ -25,10 +25,13 @@ import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.Unpitched;
+import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Tuplet;
+import org.curtis.musicxml.note.notation.articulation.Articulation;
+import org.curtis.musicxml.note.notation.articulation.BreathMark;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -43,6 +46,7 @@ import java.util.Map;
 public class NoteBuilder extends MusicDataBuilder {
     private Note note;
     private List<Direction> directions = new ArrayList<>();
+    private List<Notation> deferredNotations = new ArrayList<>();
 
     public NoteBuilder(Note note) {
         super(note);
@@ -81,6 +85,7 @@ public class NoteBuilder extends MusicDataBuilder {
         directionBuild();
         postDirectionBuild();
         postNoteBuild();
+        deferredNotationsBuild();
 
         return stringBuilder;
     }
@@ -254,6 +259,20 @@ public class NoteBuilder extends MusicDataBuilder {
         for(Notations notations : note.getNotationsList()) {
             for(Notation notation : notations.getNotations()) {
                 if (!notation.getPrintObject()) continue;
+
+                if (notation instanceof Articulations) {
+                    Articulations articulations = (Articulations)notation;
+                    List<Articulation> articulationList = articulations.getArticulationList();
+                    List<Articulation> articulationListCopy = new ArrayList<>();
+                    for (Articulation articulation : articulationList) {
+                        if (articulation instanceof BreathMark) {
+                            deferredNotations.add(articulation);
+                        } else {
+                            articulationListCopy.add(articulation);
+                        }
+                    }
+                    articulations.setArticulationList(articulationListCopy);
+                }
 
                 MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
                 append(musicDataBuilder.build().toString());
@@ -431,6 +450,7 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         postDirectionBuild();
+        deferredNotationsBuild();
 
         return stringBuilder;
     }
@@ -536,5 +556,15 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         return false;
+    }
+
+    private StringBuilder deferredNotationsBuild() throws BuildException {
+        for (Notation notation : deferredNotations) {
+            MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
+            append(" ");
+            append(musicDataBuilder.build().toString());
+        }
+
+        return stringBuilder;
     }
 }
