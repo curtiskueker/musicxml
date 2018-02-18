@@ -4,6 +4,7 @@ import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
+import org.curtis.musicxml.factory.LinkFactory;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Distance;
@@ -13,6 +14,8 @@ import org.curtis.musicxml.layout.NoteSize;
 import org.curtis.musicxml.layout.NoteSizeType;
 import org.curtis.musicxml.layout.OtherAppearance;
 import org.curtis.musicxml.layout.Scaling;
+import org.curtis.musicxml.link.Bookmark;
+import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.LyricFont;
@@ -43,6 +46,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
                 case "work":
                     scoreHeader.setWorkNumber(XmlUtil.getChildElementText(subelement, "work-number"));
                     scoreHeader.setWorkTitle(XmlUtil.getChildElementText(subelement, "work-title"));
+                    scoreHeader.setOpus(LinkFactory.newLinkAttributes(XmlUtil.getChildElement(subelement, "opus")));
                     break;
                 case "movement-number":
                     scoreHeader.setMovementNumber(XmlUtil.getChildElementText(subelement, "movement-number"));
@@ -148,6 +152,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
                     Credit credit = new Credit();
                     credit.setPage(StringUtil.getInteger(subelement.getAttribute("page")));
                     List<Element> creditSubelements = XmlUtil.getChildElements(subelement);
+                    boolean creditWordsAdded = false;
                     for(Element creditSubelement : creditSubelements) {
                         String creditSubelementName = creditSubelement.getTagName();
                         switch (creditSubelementName) {
@@ -155,9 +160,20 @@ public class ScoreHeaderHandler extends AbstractHandler {
                                 List<String> creditTypes = credit.getCreditTypes();
                                 creditTypes.add(XmlUtil.getElementText(creditSubelement));
                                 break;
+                            case "link":
+                                Link link = LinkFactory.newLink(creditSubelement);
+                                if (creditWordsAdded) credit.getLinks().add(link);
+                                else credit.getCreditWordsLinks().add(link);
+                                break;
+                            case "bookmark":
+                                Bookmark bookmark = LinkFactory.newBookmark(creditSubelement);
+                                if (creditWordsAdded) credit.getBookmarks().add(bookmark);
+                                else credit.getCreditWordsBookmarks().add(bookmark);
+                                break;
                             case "credit-image":
                                 break;
                             case "credit-words":
+                                creditWordsAdded = true;
                                 List<FormattedText> creditWordsList = credit.getCreditWordsList();
                                 creditWordsList.add(FormattingFactory.newFormattedText(creditSubelement));
                                 break;

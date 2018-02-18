@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.LinkFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
@@ -61,6 +62,16 @@ public class MeasureHandler extends AbstractHandler {
                 case "barline":
                     BarlineHandler barlineHandler = new BarlineHandler();
                     musicData = barlineHandler.handle(measureSubelement);
+                    break;
+                case "grouping":
+                    GroupingHandler groupingHandler = new GroupingHandler();
+                    musicData = groupingHandler.handle(measureSubelement);
+                    break;
+                case "link":
+                    musicData = LinkFactory.newLink(measureSubelement);
+                    break;
+                case "bookmark":
+                    musicData = LinkFactory.newBookmark(measureSubelement);
                     break;
             }
 

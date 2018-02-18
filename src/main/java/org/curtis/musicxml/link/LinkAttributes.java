@@ -2,7 +2,7 @@ package org.curtis.musicxml.link;
 
 public class LinkAttributes {
     private String href;
-    private LinkType type;
+    private LinkType type = LinkType.SIMPLE;
     private String role;
     private String title;
     private Show show = Show.REPLACE;

@@ -20,7 +20,7 @@ public class Barline extends MusicData {
     private List<Fermata> fermataList = new ArrayList<>();
     private Ending ending;
     private Repeat repeat;
-    private Location location;
+    private Location location = Location.RIGHT;
     private String segno;
     private String coda;
     private BigDecimal divisions;

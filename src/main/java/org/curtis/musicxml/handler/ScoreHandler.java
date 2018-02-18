@@ -42,6 +42,9 @@ public class ScoreHandler extends AbstractHandler {
                 }
             }
         }
+
+        String scoreVersion = element.getAttribute("version");
+        if (StringUtil.isNotEmpty(scoreVersion)) score.setVersion(scoreVersion);
     }
 
     public static void displayException(Exception e) {

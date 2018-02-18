@@ -3,10 +3,11 @@ package org.curtis.musicxml.direction;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.score.MusicData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Grouping extends MusicData {
-    private List<Feature> features;
+    private List<Feature> features = new ArrayList<>();
     private Connection type;
     private String number = "1";
     private String numberOf;

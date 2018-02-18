@@ -189,7 +189,10 @@ public class DirectionFactory {
                         break;
                 }
                 octaveShift.setNumber(StringUtil.getInteger(element.getAttribute("number")));
-                octaveShift.setSize(StringUtil.getInteger(element.getAttribute("size")));
+                Integer octaveShiftSize = StringUtil.getInteger(element.getAttribute("size"));
+                if (octaveShiftSize != null) {
+                    octaveShift.setSize(octaveShiftSize);
+                }
                 octaveShift.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
                 octaveShift.setPrintStyle(FormattingFactory.newPrintStyle(element));
                 return octaveShift;
@@ -339,7 +342,10 @@ public class DirectionFactory {
                                 List<MetronomeBeam> metronomeBeams = metronomeNote.getMetronomeBeams();
                                 MetronomeBeam metronomeBeam = new MetronomeBeam();
                                 metronomeBeam.setBeamValue(NoteFactory.newBeamType(metronomeNoteElement));
-                                metronomeBeam.setNumber(StringUtil.getInteger(metronomeNoteElement.getAttribute("number")));
+                                Integer beamNumber = StringUtil.getInteger(metronomeNoteElement.getAttribute("number"));
+                                if (beamNumber != null) {
+                                    metronomeBeam.setNumber(beamNumber);
+                                }
                                 metronomeBeams.add(metronomeBeam);
                                 break;
                             case "metronome-tuplet":

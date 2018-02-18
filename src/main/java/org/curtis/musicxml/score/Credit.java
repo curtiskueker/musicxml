@@ -10,12 +10,12 @@ import java.util.List;
 
 public class Credit {
     private List<String> creditTypes = new ArrayList<>();
-    private List<Link> links;
-    private List<Bookmark> bookmarks;
+    private List<Link> links = new ArrayList<>();
+    private List<Bookmark> bookmarks = new ArrayList<>();
     private Image creditImage;
     private List<FormattedText> creditWordsList = new ArrayList<>();
-    private List<Link> creditWordsLinks;
-    private List<Bookmark> creditWordsBookmarks;
+    private List<Link> creditWordsLinks = new ArrayList<>();
+    private List<Bookmark> creditWordsBookmarks = new ArrayList<>();
     private Integer page;
 
     public Credit() {
