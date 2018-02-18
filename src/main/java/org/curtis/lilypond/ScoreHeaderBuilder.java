@@ -90,7 +90,8 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
         if(StringUtil.isNotEmpty(scoreHeader.getMovementTitle())) {
             append("title = \"");
             append(scoreHeader.getMovementTitle());
-            appendLine("\"");
+            append("\"");
+            appendLine();
         }
 
         Identification identification = scoreHeader.getIdentification();
@@ -100,6 +101,7 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
                     append("composer = \"");
                     append(typedText.getValue());
                     append("\"");
+                    appendLine();
                 }
             }
         }
