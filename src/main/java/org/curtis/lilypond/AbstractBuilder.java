@@ -38,4 +38,8 @@ public abstract class AbstractBuilder {
 
         return value;
     }
+
+    protected void displayMeasureMessage(Measure measure, String message) {
+        System.err.println(getPartAndMeasure(measure) + message);
+    }
 }

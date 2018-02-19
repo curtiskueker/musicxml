@@ -12,6 +12,8 @@ import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
+import org.curtis.musicxml.note.notation.Slur;
+import org.curtis.musicxml.note.notation.SlurType;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
@@ -25,8 +27,10 @@ import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
 
@@ -42,6 +46,7 @@ public class PartBuilder extends AbstractBuilder {
     private boolean hasLyrics = false;
     private WavyLine stopWavyLine = null;
     private boolean hasStopWavyLine = false;
+    private Map<String, Set<Integer>> activeSlurs = new HashMap<>();
 
     public static Attributes CURRENT_ATTRIBUTES;
     public static String CURRENT_PART_ID;
@@ -107,6 +112,31 @@ public class PartBuilder extends AbstractBuilder {
                                                 break;
                                         }
                                     }
+                                }
+                            } else if (notation instanceof Slur) {
+                                Slur slur = (Slur)notation;
+                                Set<Integer> activeVoiceSlurs = activeSlurs.computeIfAbsent(voice, voiceSlurs -> new HashSet<Integer>());
+                                Integer slurNumber = slur.getNumber();
+                                boolean isActiveSlur = activeVoiceSlurs.contains(slurNumber);
+                                int activeSlurCount = activeVoiceSlurs.size();
+                                switch (slur.getConnectionType()) {
+                                    case START:
+                                        if (activeSlurCount > 1) {
+                                            displayMeasureMessage(measure, "Maximum two active slurs exceeded");
+                                            continue;
+                                        }
+                                        if (isActiveSlur) {
+                                            displayMeasureMessage(measure, "Start slur: Slur number " + slurNumber + " already started");
+                                            continue;
+                                        }
+                                        if (activeSlurCount == 1) slur.setSlurType(SlurType.PHRASING);
+                                        activeVoiceSlurs.add(slurNumber);
+                                        break;
+                                    case STOP:
+                                        if (!activeVoiceSlurs.contains(slurNumber)) displayMeasureMessage(measure, "Stop slur: Slur number " + slurNumber + " not started");
+                                        if (activeSlurCount == 2) slur.setSlurType(SlurType.PHRASING);
+                                        activeVoiceSlurs.remove(slurNumber);
+                                        break;
                                 }
                             }
                         }

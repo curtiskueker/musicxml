@@ -7,7 +7,7 @@ import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.LineType;
 
 public class Slur extends Notation {
-    private Connection type;
+    private Connection connectionType;
     private Integer number = 1;
     private LineType lineType;
     private DashedFormatting dashedFormatting;
@@ -16,17 +16,18 @@ public class Slur extends Notation {
     private Location orientation;
     private Bezier bezier;
     private String color;
+    private SlurType slurType;
 
     public Slur() {
 
     }
 
-    public Connection getType() {
-        return type;
+    public Connection getConnectionType() {
+        return connectionType;
     }
 
-    public void setType(Connection type) {
-        this.type = type;
+    public void setConnectionType(Connection connectionType) {
+        this.connectionType = connectionType;
     }
 
     public Integer getNumber() {
@@ -91,5 +92,13 @@ public class Slur extends Notation {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public SlurType getSlurType() {
+        return slurType;
+    }
+
+    public void setSlurType(SlurType slurType) {
+        this.slurType = slurType;
     }
 }

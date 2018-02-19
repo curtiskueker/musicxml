@@ -12,6 +12,7 @@ import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
+import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
@@ -29,6 +30,8 @@ import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.note.notation.ShowTuplet;
+import org.curtis.musicxml.note.notation.Slur;
+import org.curtis.musicxml.note.notation.SlurType;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
@@ -182,6 +185,41 @@ public class NoteBuilder extends MusicDataBuilder {
                         append("\\xNote ");
                 }
             }
+        }
+
+        List<Slur> slurs = note.getSlurs();
+        for (Slur slur : slurs) {
+            Connection connectionType = slur.getConnectionType();
+            if (connectionType != Connection.START) continue;
+
+            SlurType slurType = slur.getSlurType();
+            LineType lineType = slur.getLineType();
+            append("\\");
+            if (slurType == null) {
+                append("slur");
+            } else {
+                switch (slurType) {
+                    case NORMAL:
+                        append("slur");
+                        break;
+                    case PHRASING:
+                        append("phrasingSlur");
+                        break;
+                }
+            }
+            if (lineType == null) {
+                append("Solid");
+            } else {
+                switch (lineType) {
+                    case SOLID:
+                        append("Solid");
+                        break;
+                    case DASHED:
+                        append("Dashed");
+                        break;
+                }
+            }
+            append(" ");
         }
 
         return stringBuilder;

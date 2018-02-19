@@ -9,6 +9,7 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
+import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
@@ -228,6 +229,21 @@ public class Note extends MusicData {
         }
 
         return null;
+    }
+
+    public List<Slur> getSlurs() {
+        List<Slur> slurs = new ArrayList<>();
+        for (Notations notations : notationsList) {
+            List<Notation> notationList = notations.getNotations();
+            for (Notation notation : notationList) {
+                if (notation instanceof Slur) {
+                    Slur slur = (Slur)notation;
+                    slurs.add(slur);
+                }
+            }
+        }
+
+        return slurs;
     }
 
     public Connection getTupletType() {

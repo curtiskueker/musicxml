@@ -288,7 +288,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 append("\\partial ");
                 appendLine(wholeMeasureRepresentation);
             } catch (TimeSignatureException e) {
-                System.err.println(getPartAndMeasure(measure) + "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
+                displayMeasureMessage(measure, "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
             }
         }
 
@@ -385,7 +385,7 @@ public class MeasureBuilder extends AbstractBuilder {
         } else {
             for(Direction direction : currentDirections) {
                 for (DirectionType directionType : direction.getDirectionTypes()) {
-                    System.err.println(getPartAndMeasure(measure) + "Skipping direction type: " + directionType.getClass().getSimpleName());
+                    displayMeasureMessage(measure, "Skipping direction type: " + directionType.getClass().getSimpleName());
                 }
             }
         }

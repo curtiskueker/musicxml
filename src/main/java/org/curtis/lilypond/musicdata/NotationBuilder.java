@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
+import org.curtis.musicxml.note.notation.SlurType;
 import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
@@ -28,10 +29,12 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildSlur(Slur slur) {
-        Connection slurType = slur.getType();
-        switch (slurType) {
+        Connection connectionType = slur.getConnectionType();
+        SlurType slurType = slur.getSlurType();
+        if (connectionType == Connection.START) append(PlacementBuildUtil.getPlacement(slur.getPlacement()));
+        if (slurType == SlurType.PHRASING) append("\\");
+        switch (connectionType) {
             case START:
-                append(PlacementBuildUtil.getPlacement(slur.getPlacement()));
                 append("(");
                 break;
             case STOP:
