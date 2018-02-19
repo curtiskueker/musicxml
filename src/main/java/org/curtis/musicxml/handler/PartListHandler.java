@@ -81,9 +81,7 @@ public class PartListHandler extends AbstractHandler {
                     scorePart.setPartAbbreviation(ScorePartFactory.newPartName(XmlUtil.getChildElement(partListSubelement, "part-abbreviation")));
                     scorePart.setPartAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-abbreviation-display")));
                     List<Element> groupElements = XmlUtil.getChildElements(partListSubelement, "group");
-                    for(Element groupElement : groupElements) {
-                        scorePart.getGroups().add(XmlUtil.getElementText(groupElement));
-                    }
+                    groupElements.forEach(groupElement -> scorePart.getGroups().add(XmlUtil.getElementText(groupElement)));
                     List<Element> scoreInstrumentElements = XmlUtil.getChildElements(partListSubelement, "score-instrument");
                     for(Element scoreInstrumentElement : scoreInstrumentElements) {
                         ScoreInstrument scoreInstrument = new ScoreInstrument();

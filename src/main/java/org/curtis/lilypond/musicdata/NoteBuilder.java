@@ -141,14 +141,10 @@ public class NoteBuilder extends MusicDataBuilder {
 
         if(octave > 3) {
             int iterations = octave - 3;
-            for(int i = 1; i <= iterations; i++) {
-                append("'");
-            }
+            for(int i = 1; i <= iterations; i++) append("'");
         } else if(octave < 3) {
             int iterations = 3 - octave;
-            for(int i = 1; i <= iterations; i++) {
-                append(",");
-            }
+            for(int i = 1; i <= iterations; i++) append(",");
         }
     }
 
@@ -261,9 +257,7 @@ public class NoteBuilder extends MusicDataBuilder {
         if (noteType == null) return stringBuilder;
         append(NoteUtil.getNoteTypeValue(noteType.getValue()));
         List<Placement> dots = note.getDots();
-        for(Placement dot : dots) {
-            append(".");
-        }
+        for(Placement dot : dots) append(".");
 
         return stringBuilder;
     }
@@ -347,14 +341,8 @@ public class NoteBuilder extends MusicDataBuilder {
             return stringBuilder;
         }
 
-        int directionTypeCount = 0;
-        for (Direction direction : directions) {
-            directionTypeCount += direction.getDirectionTypes().size();
-        }
-
-        for(Direction direction : directions) {
-            DirectionBuilder.setDirectionDefaults(direction);
-        }
+        int directionTypeCount = directions.stream().mapToInt(direction -> direction.getDirectionTypes().size()).sum();
+        directions.forEach(DirectionBuilder::setDirectionDefaults);
 
         // create list spacers with durations
         // get the iterator to the list

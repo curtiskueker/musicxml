@@ -83,13 +83,7 @@ public class ScoreBuilder extends AbstractBuilder {
         String partId = scorePart.getId();
 
         // find the corresponding Part indicated in the score header
-        Part partToProcess = null;
-        for(Part part : score.getParts()) {
-            if(partId.equals(part.getId())) {
-                partToProcess = part;
-                break;
-            }
-        }
+        Part partToProcess = score.getParts().stream().filter(part -> partId.equals(part.getId())).findAny().orElse(null);
 
         if(partToProcess == null) throw new BuildException("Part " + partId + " not found");
 

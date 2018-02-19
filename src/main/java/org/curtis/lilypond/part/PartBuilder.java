@@ -244,9 +244,7 @@ public class PartBuilder extends AbstractBuilder {
                                 break;
                         }
 
-                        for(RepeatBlock repeatBlock : currentRepeatBlocks) {
-                            repeatBlock.setEndingCount(currentEndingCount);
-                        }
+                        currentRepeatBlocks.forEach(repeatBlock -> repeatBlock.setEndingCount(currentEndingCount));
                     }
 
                     Repeat repeat = barline.getRepeat();

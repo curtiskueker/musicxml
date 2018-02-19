@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
 
@@ -383,11 +384,8 @@ public class MeasureBuilder extends AbstractBuilder {
                 currentNote.getDirections().add(direction);
             }
         } else {
-            for(Direction direction : currentDirections) {
-                for (DirectionType directionType : direction.getDirectionTypes()) {
-                    displayMeasureMessage(measure, "Skipping direction type: " + directionType.getClass().getSimpleName());
-                }
-            }
+            currentDirections.stream().flatMap(direction -> direction.getDirectionTypes().stream()).collect(Collectors.toList())
+                    .forEach(directionType -> displayMeasureMessage(measure, "Skipping direction type: " + directionType.getClass().getSimpleName()));
         }
 
         currentDirections.clear();

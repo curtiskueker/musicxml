@@ -7,11 +7,8 @@ import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.lyric.Lyric;
-import org.curtis.musicxml.note.notation.Notation;
-import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tuplet;
-import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -19,6 +16,7 @@ import org.curtis.util.MathUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Note extends MusicData {
     private Grace grace;
@@ -216,34 +214,18 @@ public class Note extends MusicData {
     }
 
     public Tremolo getTremolo() {
-        for (Notations notations : notationsList) {
-            List<Notation> notationList = notations.getNotations();
-            for (Notation notation : notationList) {
-                if (notation instanceof Ornaments) {
-                    Ornaments ornaments = (Ornaments)notation;
-                    for (Ornament ornament : ornaments.getOrnaments()) {
-                        if (ornament instanceof Tremolo) return (Tremolo)ornament;
-                    }
-                }
-            }
-        }
-
-        return null;
+        return notationsList.stream().flatMap(notations -> notations.getNotations().stream())
+                .filter(notation -> notation instanceof Tremolo)
+                .map(notation -> (Tremolo)notation)
+                .findAny().orElse(null);
     }
 
     public List<Slur> getSlurs() {
-        List<Slur> slurs = new ArrayList<>();
-        for (Notations notations : notationsList) {
-            List<Notation> notationList = notations.getNotations();
-            for (Notation notation : notationList) {
-                if (notation instanceof Slur) {
-                    Slur slur = (Slur)notation;
-                    slurs.add(slur);
-                }
-            }
-        }
-
-        return slurs;
+        return notationsList.stream()
+                .flatMap(notations -> notations.getNotations().stream())
+                .filter(notation -> notation instanceof Slur)
+                .map(notation -> (Slur)notation)
+                .collect(Collectors.toList());
     }
 
     public Connection getTupletType() {
@@ -255,15 +237,11 @@ public class Note extends MusicData {
     }
 
     public Tuplet getTuplet() {
-        for(Notations notations : notationsList) {
-            for(Notation notation : notations.getNotations()) {
-                if(notation instanceof Tuplet) {
-                    return (Tuplet)notation;
-                }
-            }
-        }
-
-        return null;
+        return notationsList.stream()
+                .flatMap(notations -> notations.getNotations().stream())
+                .filter(notation -> notation instanceof Tuplet)
+                .map(notation -> (Tuplet)notation)
+                .findAny().orElse(null);
     }
 
     public List<Lyric> getLyrics() {

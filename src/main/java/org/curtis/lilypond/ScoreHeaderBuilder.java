@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ScoreHeaderBuilder extends AbstractBuilder {
     private ScoreHeader scoreHeader;
@@ -106,15 +107,10 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
             }
         }
 
-        List<Credit> credits = scoreHeader.getCredits();
         List<FormattedText> creditWordsList = new ArrayList<>();
-        for(Credit credit : credits) {
-            if(credit.getPage() != null && credit.getPage() > 1) {
-                continue;
-            }
-
-            creditWordsList.addAll(credit.getCreditWordsList());
-        }
+        scoreHeader.getCredits().stream()
+                .filter(credit -> credit.getPage() == null || credit.getPage().equals(1))
+                .collect(Collectors.toList()).forEach(credit -> creditWordsList.addAll(credit.getCreditWordsList()));
 
         if(!creditWordsList.isEmpty()) {
             appendLine("title =");

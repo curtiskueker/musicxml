@@ -81,9 +81,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                                 }
 
                                 lyricLists = new ArrayList<>(lyricCount);
-                                for(int i = 1; i <= lyricCount; i++) {
-                                    lyricLists.add(new ArrayList<>());
-                                }
+                                for(int i = 1; i <= lyricCount; i++) lyricLists.add(new ArrayList<>());
                             } else if (lyricCount > currentLyricCount) {
                                 // if we're expanding the list
                                 // add a new lyric list and stock it with empty lyrics
