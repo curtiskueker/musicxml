@@ -8,6 +8,7 @@ import java.util.List;
 public class NameDisplay {
     private List<FormattedText> displayTextList = new ArrayList<>();
     private List<AccidentalText> accidentalTextList = new ArrayList<>();
+    private Boolean printObject;
 
     public NameDisplay() {
 
@@ -27,5 +28,13 @@ public class NameDisplay {
 
     public void setAccidentalTextList(List<AccidentalText> accidentalTextList) {
         this.accidentalTextList = accidentalTextList;
+    }
+
+    public Boolean getPrintObject() {
+        return printObject;
+    }
+
+    public void setPrintObject(Boolean printObject) {
+        this.printObject = printObject;
     }
 }

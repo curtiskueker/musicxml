@@ -38,6 +38,7 @@ public class ScorePartFactory {
                     break;
             }
         }
+        nameDisplay.setPrintObject(FormattingFactory.getPrintObject(element));
 
         return nameDisplay;
     }
