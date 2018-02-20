@@ -291,6 +291,6 @@ public class PartBuilder extends AbstractBuilder {
 
     public static boolean skipNote(Note note) {
         // skip cues and non-printed chords as redundant
-        return note.getFullNote().isChord() && (note.getCue() || !note.getPrintout().getPrintObject());
+        return note.getCue() || !note.getPrintout().getPrintObject();
     }
 }

@@ -88,20 +88,20 @@ public class MeasureBuilder extends AbstractBuilder {
                 String currentNoteVoice = currentNote.getEditorialVoice().getVoice();
                 if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
-                if(PartBuilder.skipNote(currentNote)) {
-                    continue;
-                }
-
-                // chords and tuplets
                 Connection chordType = fullNote.getChordType();
-                Connection tupletType = currentNote.getTupletType();
                 if (chordType == null || chordType == Connection.START) {
                     measureDuration = MathUtil.add(measureDuration, currentNote.getDuration());
                     if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNote.getDuration());
                 }
 
+                if(PartBuilder.skipNote(currentNote)) {
+                    continue;
+                }
+
                 if (!isCurrentVoice()) continue;
 
+                // chords and tuplets
+                Connection tupletType = currentNote.getTupletType();
                 lastTuplet = null;
                 if (chordType != null || tupletType != null) {
                     if (chordType != null) {
