@@ -61,7 +61,7 @@ public class TimeSignatureUtil {
 
         // If represenetation isn't a multiple of 2, or loop count greater than two, throw an exception
         if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || loopCount > 2) {
-            throw new TimeSignatureException("Invalid duration representation value.  Total beats: " + totalBeats);
+            throw new TimeSignatureException("Invalid duration representation value.  Total beats: " + totalBeats + ".");
         }
 
 

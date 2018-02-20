@@ -246,7 +246,7 @@ public class NoteBuilder extends MusicDataBuilder {
                 append(TimeSignatureUtil.getDurationRepresentationValue(duration));
             }
         } catch (TimeSignatureException e) {
-            throw new BuildException(e.getMessage());
+            throw new BuildException(e.getMessage() + "  Skipping note.");
         }
 
         return stringBuilder;
