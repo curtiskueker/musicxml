@@ -13,6 +13,10 @@ public class MathUtil {
 
     }
 
+    public static BigDecimal newBigDecimal(BigDecimal val) {
+        return newBigDecimal(val.doubleValue());
+    }
+
     public static BigDecimal newBigDecimal(double val) {
         BigDecimal newValue = new BigDecimal(val);
         return round(newValue);

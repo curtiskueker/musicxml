@@ -12,6 +12,8 @@ import java.math.RoundingMode;
 import java.util.List;
 
 public class TimeSignatureUtil {
+    private static String[] LONG_NOTES = {"\\breve", "\\longa", "\\maxima"};
+
     private TimeSignatureUtil() {
 
     }
@@ -38,39 +40,52 @@ public class TimeSignatureUtil {
     public static String getRepresentationValue(BigDecimal totalBeats) throws TimeSignatureException {
         if (!MathUtil.isPositive(totalBeats)) throw new TimeSignatureException("Representation value is non-positive value");
 
-        if (MathUtil.equalTo(totalBeats, MathUtil.newBigDecimal(8))) return "\\breve";
+        BigDecimal totalBeatsCopy = MathUtil.newBigDecimal(totalBeats);
+        int dividerCount = 0;
+        if (exceedsWholeNoteRepresentationValue(totalBeats)) {
+            while (exceedsWholeNoteRepresentationValue(totalBeatsCopy)) {
+                dividerCount++;
+                totalBeatsCopy = MathUtil.divide(totalBeatsCopy, MathUtil.newBigDecimal(2));
+            }
+        }
 
-        BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeats);
+        if (dividerCount > 3) throw new TimeSignatureException("Note beat total of " + totalBeats + " exceeds maxixmum value allowed.  Skipping note.");
 
-        int loopCount = 0;
+        BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeatsCopy);
+
+        int multiplierCount = 0;
         BigDecimal multiplier = MathUtil.newBigDecimal(1);
         BigDecimal multiplierBase = MathUtil.ZERO;
         BigDecimal one = MathUtil.newBigDecimal(1);
-        while(!rounds(representationValue) && loopCount <= 5) {
-            loopCount++;
+        while(!rounds(representationValue) && multiplierCount <= 5) {
+            multiplierCount++;
             multiplier = MathUtil.divide(multiplier, MathUtil.newBigDecimal(2));
             BigDecimal multiplierValue = MathUtil.multiply(representationValue, MathUtil.add(one, MathUtil.add(multiplierBase, multiplier)));
             if (rounds(multiplierValue)) {
                 representationValue = multiplierValue;
                 break;
             }
-            multiplierBase = MathUtil.newBigDecimal(multiplier.doubleValue());
+            multiplierBase = MathUtil.newBigDecimal(multiplier);
         }
 
         int noteRepresentation = representationValue.setScale(0, RoundingMode.HALF_UP).intValueExact();
 
         // If represenetation isn't a multiple of 2, or loop count greater than two, throw an exception
-        if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || loopCount > 2) {
-            throw new TimeSignatureException("Invalid duration representation value.  Total beats: " + totalBeats + ".");
+        if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || multiplierCount > 2) {
+            throw new TimeSignatureException("Duration value not processed.  Total beats: " + totalBeats + ".");
         }
 
 
-        String representationString = String.valueOf(noteRepresentation);
-        for(int i = 1; i <= loopCount; i++) {
+        String representationString = dividerCount > 0 ? LONG_NOTES[dividerCount - 1] : String.valueOf(noteRepresentation);
+        for(int i = 1; i <= multiplierCount; i++) {
             representationString += ".";
         }
 
         return representationString;
+    }
+
+    private static boolean exceedsWholeNoteRepresentationValue(BigDecimal beats) {
+        return !MathUtil.smallerThan(beats, MathUtil.newBigDecimal(8));
     }
 
     public static String getDurationRepresentationValue(BigDecimal duration) throws TimeSignatureException {
