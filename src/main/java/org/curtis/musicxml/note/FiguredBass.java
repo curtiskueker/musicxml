@@ -6,10 +6,11 @@ import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FiguredBass extends MusicData {
-    private List<Figure> figures;
+    private List<Figure> figures = new ArrayList<>();
     private BigDecimal duration;
     private Editorial editorial;
     private PrintStyle printStyle;

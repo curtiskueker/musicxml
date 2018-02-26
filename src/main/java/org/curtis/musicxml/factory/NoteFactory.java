@@ -1,11 +1,15 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.BeamType;
+import org.curtis.musicxml.note.Figure;
+import org.curtis.musicxml.note.FiguredBass;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.note.TimeModification;
+import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -203,5 +207,27 @@ public class NoteFactory {
         timeModification.setNormalDots(dotElements.size());
 
         return timeModification;
+    }
+
+    public static FiguredBass newFiguredBass(Element element) {
+        if (element == null) return null;
+
+        FiguredBass figuredBass = new FiguredBass();
+        List<Element> figureElements = XmlUtil.getChildElements(element, "figure");
+        for (Element figureElement : figureElements) {
+            Figure figure = new Figure();
+            figure.setPrefix(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "prefix")));
+            figure.setFigureNumber(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "figure-number")));
+            figure.setSuffix(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "suffix")));
+            figure.setExtend(LyricFactory.newExtend(XmlUtil.getChildElement(figureElement, "extend")));
+            figuredBass.getFigures().add(figure);
+        }
+        figuredBass.setDuration(MathUtil.newBigDecimal(XmlUtil.getChildElementText(element, "duration")));
+        figuredBass.setEditorial(FormattingFactory.newEditorial(element));
+        figuredBass.setPrintStyle(FormattingFactory.newPrintStyle(element));
+        figuredBass.setPrintout(FormattingFactory.newPrintout(element));
+        figuredBass.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
+
+        return figuredBass;
     }
 }
