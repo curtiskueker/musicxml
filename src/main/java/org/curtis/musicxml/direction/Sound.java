@@ -6,12 +6,13 @@ import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.score.MusicData;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sound extends MusicData {
-    private List<MidiDevice> midiDevices;
-    private List<MidiInstrument> midiInstruments;
-    private List<Play> playList;
+    private List<MidiDevice> midiDevices = new ArrayList<>();
+    private List<MidiInstrument> midiInstruments = new ArrayList<>();
+    private List<Play> playList = new ArrayList<>();
     private Offset offset;
     private BigDecimal tempo;
     private BigDecimal dynamics;
@@ -27,9 +28,9 @@ public class Sound extends MusicData {
     private Boolean pizzicato;
     private BigDecimal pan;
     private BigDecimal elevation;
-    private BigDecimal damperPedal;
-    private BigDecimal softPedal;
-    private BigDecimal sostenutoPedal;
+    private String damperPedal;
+    private String softPedal;
+    private String sostenutoPedal;
 
     public Sound() {
 
@@ -179,27 +180,27 @@ public class Sound extends MusicData {
         this.elevation = elevation;
     }
 
-    public BigDecimal getDamperPedal() {
+    public String getDamperPedal() {
         return damperPedal;
     }
 
-    public void setDamperPedal(BigDecimal damperPedal) {
+    public void setDamperPedal(String damperPedal) {
         this.damperPedal = damperPedal;
     }
 
-    public BigDecimal getSoftPedal() {
+    public String getSoftPedal() {
         return softPedal;
     }
 
-    public void setSoftPedal(BigDecimal softPedal) {
+    public void setSoftPedal(String softPedal) {
         this.softPedal = softPedal;
     }
 
-    public BigDecimal getSostenutoPedal() {
+    public String getSostenutoPedal() {
         return sostenutoPedal;
     }
 
-    public void setSostenutoPedal(BigDecimal sostenutoPedal) {
+    public void setSostenutoPedal(String sostenutoPedal) {
         this.sostenutoPedal = sostenutoPedal;
     }
 }

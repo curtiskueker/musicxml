@@ -1,6 +1,5 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.factory.AttributesFactory;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
@@ -16,7 +15,6 @@ import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
 import org.curtis.musicxml.score.instrument.Solo;
-import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -101,16 +99,13 @@ public class PartListHandler extends AbstractHandler {
                         scoreInstrument.setVirtualName(XmlUtil.getChildElementText(virtualInstrumentElement, "virtual-name"));
                         scorePart.getScoreInstruments().add(scoreInstrument);
                     }
+                    List<Element> midiDeviceElements = XmlUtil.getChildElements(partListSubelement, "midi-device");
+                    for (Element midiDeviceElement : midiDeviceElements) {
+                        scorePart.getMidiDevices().add(ScorePartFactory.newMidiDevice(midiDeviceElement));
+                    }
                     List<Element> midiInstrumentElements = XmlUtil.getChildElements(partListSubelement, "midi-instrument");
-                    List<MidiInstrument> midiInstruments = scorePart.getMidiInstruments();
                     for(Element midiInstrumentElement : midiInstrumentElements) {
-                        MidiInstrument midiInstrument = new MidiInstrument();
-                        midiInstrument.setId(midiInstrumentElement.getAttribute("id"));
-                        midiInstrument.setMidiChannel(StringUtil.getInteger(XmlUtil.getChildElementText(midiInstrumentElement, "midi-channel")));
-                        midiInstrument.setMidiProgram(StringUtil.getInteger(XmlUtil.getChildElementText(midiInstrumentElement, "midi-program")));
-                        midiInstrument.setVolume(MathUtil.newBigDecimal(XmlUtil.getChildElementText(midiInstrumentElement, "volume")));
-                        midiInstrument.setPan(MathUtil.newBigDecimal(XmlUtil.getChildElementText(midiInstrumentElement, "pan")));
-                        midiInstruments.add(midiInstrument);
+                        scorePart.getMidiInstruments().add(ScorePartFactory.newMidiInstrument(midiInstrumentElement));
                     }
                     partList.getPartItems().add(scorePart);
                     break;

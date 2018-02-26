@@ -3,6 +3,7 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
+import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
@@ -298,6 +299,9 @@ public class NoteHandler extends MusicDataHandler {
                     List<Lyric> lyrics = note.getLyrics();
                     LyricHandler lyricHandler = new LyricHandler(lyrics);
                     lyricHandler.handle(noteSubelement);
+                    break;
+                case "play":
+                    note.setPlay(ScorePartFactory.newPlay(noteSubelement));
                     break;
             }
         }

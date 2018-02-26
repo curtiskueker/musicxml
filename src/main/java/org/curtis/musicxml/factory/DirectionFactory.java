@@ -1,6 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.direction.Offset;
+import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
 import org.curtis.musicxml.direction.directiontype.Bracket;
@@ -793,5 +794,45 @@ public class DirectionFactory {
             default:
                 return null;
         }
+    }
+
+    public static Sound newSound(Element element) {
+        if (element == null) return null;
+
+        Sound sound = new Sound();
+        sound.setOffset(newOffset(XmlUtil.getChildElement(element, "offset")));
+        sound.setTempo(MathUtil.newBigDecimal(element.getAttribute("tempo")));
+        sound.setDynamics(MathUtil.newBigDecimal(element.getAttribute("dynamics")));
+        sound.setDacapo(TypeUtil.getYesNo(element.getAttribute("dacapo")));
+        sound.setSegno(element.getAttribute("segno"));
+        sound.setDalsegno(element.getAttribute("dalsegno"));
+        sound.setCoda(element.getAttribute("coda"));
+        sound.setTocoda(element.getAttribute("tocoda"));
+        sound.setDivisions(MathUtil.newBigDecimal(element.getAttribute("divisions")));
+        sound.setForwardRepeat(TypeUtil.getYesNo(element.getAttribute("forward-repeat")));
+        sound.setFine(element.getAttribute("fine"));
+        sound.setTimeOnly(element.getAttribute("time-only"));
+        sound.setPizzicato(TypeUtil.getYesNo(element.getAttribute("pizzicato")));
+        sound.setPan(MathUtil.newBigDecimal(element.getAttribute("pan")));
+        sound.setElevation(MathUtil.newBigDecimal(element.getAttribute("elevation")));
+        sound.setDamperPedal(element.getAttribute("damper-pedal"));
+        sound.setSoftPedal(element.getAttribute("soft-pedal"));
+        sound.setSostenutoPedal(element.getAttribute("sostenuto-pedal"));
+        List<Element> soundSubelements = XmlUtil.getChildElements(element);
+        for (Element soundSubelement : soundSubelements) {
+            switch (soundSubelement.getTagName()) {
+                case "midi-device":
+                    sound.getMidiDevices().add(ScorePartFactory.newMidiDevice(soundSubelement));
+                    break;
+                case "midi-instrument":
+                    sound.getMidiInstruments().add(ScorePartFactory.newMidiInstrument(soundSubelement));
+                    break;
+                case "play":
+                    sound.getPlayList().add(ScorePartFactory.newPlay(soundSubelement));
+                    break;
+            }
+        }
+
+        return sound;
     }
 }

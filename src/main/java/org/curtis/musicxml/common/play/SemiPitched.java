@@ -1,17 +1,17 @@
 package org.curtis.musicxml.common.play;
 
 public class SemiPitched extends PlayType {
-    private SemiPitchcedType value;
+    private SemiPitchcedType semiPitchcedType;
 
     public SemiPitched() {
 
     }
 
-    public SemiPitchcedType getValue() {
-        return value;
+    public SemiPitchcedType getSemiPitchcedType() {
+        return semiPitchcedType;
     }
 
-    public void setValue(SemiPitchcedType value) {
-        this.value = value;
+    public void setSemiPitchcedType(SemiPitchcedType semiPitchcedType) {
+        this.semiPitchcedType = semiPitchcedType;
     }
 }

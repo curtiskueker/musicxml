@@ -1,9 +1,10 @@
 package org.curtis.musicxml.common.play;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Play {
-    private List<PlayType> playTypes;
+    private List<PlayType> playTypes = new ArrayList<>();
     private String id;
 
     public Play() {
