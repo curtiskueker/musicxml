@@ -6,25 +6,17 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.util.FileUtil;
-import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
-import org.curtis.xml.XmlUtil;
-import org.w3c.dom.Document;
 
 public class MusicXml2Ly {
     public static String LILYPOND_VERSION = "2.18.2";
 
     private void execute(String xmlFilename, String outputFilename) throws MusicXmlException {
         try {
-            Document xmlDocument = XmlUtil.fileToDocument(xmlFilename);
-
             // output file
             outputFilename += ".ly";
 
-            SchemaValidator.getInstance().validate(xmlDocument);
-
-            ScoreHandler scoreHandler = new ScoreHandler();
-            scoreHandler.handle(xmlDocument.getDocumentElement());
+            ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(xmlFilename);
 
             // build the score
             ScoreBuilder scoreBuilder = new ScoreBuilder(scoreHandler.getScore());
