@@ -9,7 +9,7 @@ import org.curtis.properties.AppProperties;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
 
-public class MusicXmlDb {
+public class MusicXml2Db {
     public static String GENERATE_SCHEMA_FILE = null;
     public static String INPUT_FILE =  null;
     public static boolean CREATE_DB_SCHEMA = false;
@@ -44,7 +44,7 @@ public class MusicXmlDb {
                 CREATE_DB_SCHEMA = true;
             }
         }
-        MusicXmlDb musicXmlDb = new MusicXmlDb();
+        MusicXml2Db musicXmlDb = new MusicXml2Db();
         try {
             musicXmlDb.execute();
         } catch (MusicXmlException e) {

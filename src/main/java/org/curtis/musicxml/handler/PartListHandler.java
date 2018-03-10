@@ -56,13 +56,13 @@ public class PartListHandler extends AbstractHandler {
                         String groupBarlineValue = XmlUtil.getElementText(groupBarlineElement);
                         switch (groupBarlineValue) {
                             case "yes":
-                                groupBarline.setGroupBarlineValue(GroupBarlineType.YES);
+                                groupBarline.setGroupBarlineType(GroupBarlineType.YES);
                                 break;
                             case "no":
-                                groupBarline.setGroupBarlineValue(GroupBarlineType.NO);
+                                groupBarline.setGroupBarlineType(GroupBarlineType.NO);
                                 break;
                             case "Mensurstrich":
-                                groupBarline.setGroupBarlineValue(GroupBarlineType.MENSURSTRICH);
+                                groupBarline.setGroupBarlineType(GroupBarlineType.MENSURSTRICH);
                                 break;
                         }
                         groupBarline.setColor(groupBarlineElement.getAttribute("color"));
@@ -72,7 +72,7 @@ public class PartListHandler extends AbstractHandler {
                     break;
                 case "score-part":
                     ScorePart scorePart = new ScorePart();
-                    scorePart.setId(partListSubelement.getAttribute("id"));
+                    scorePart.setScorePartId(partListSubelement.getAttribute("id"));
                     scorePart.setIdentification(IdentityFactory.newIdentification(XmlUtil.getChildElement(partListSubelement, "identification")));
                     scorePart.setPartName(ScorePartFactory.newPartName(XmlUtil.getChildElement(partListSubelement, "part-name")));
                     scorePart.setPartNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-name-display")));
@@ -83,7 +83,7 @@ public class PartListHandler extends AbstractHandler {
                     List<Element> scoreInstrumentElements = XmlUtil.getChildElements(partListSubelement, "score-instrument");
                     for(Element scoreInstrumentElement : scoreInstrumentElements) {
                         ScoreInstrument scoreInstrument = new ScoreInstrument();
-                        scoreInstrument.setId(scoreInstrumentElement.getAttribute("id"));
+                        scoreInstrument.setScoreInstrumentId(scoreInstrumentElement.getAttribute("id"));
                         scoreInstrument.setInstrumentName(XmlUtil.getChildElementText(scoreInstrumentElement, "instrument-name"));
                         scoreInstrument.setInstrumentAbbreviation(XmlUtil.getChildElementText(scoreInstrumentElement, "instrument-abbreviation"));
                         scoreInstrument.setInstrumentSound(XmlUtil.getChildElementText(scoreInstrumentElement, "instrument-sound"));

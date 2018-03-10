@@ -1,8 +1,7 @@
 package org.curtis.database;
 
-import org.curtis.musicxml.bin.MusicXmlDb;
+import org.curtis.musicxml.bin.MusicXml2Db;
 import org.curtis.properties.AppProperties;
-import org.curtis.properties.PropertyException;
 import org.curtis.util.StringUtil;
 
 import java.util.Properties;
@@ -50,11 +49,11 @@ public class DBSessionFactory {
             jpaProperties.put("hibernate.show_sql", AppProperties.getBoolean("database.hibernate.show_sql"));
             jpaProperties.put("hibernate.format_sql", AppProperties.getBoolean("database.hibernate.format_sql"));
 
-            if (StringUtil.isNotEmpty(MusicXmlDb.GENERATE_SCHEMA_FILE)) {
-                jpaProperties.put("javax.persistence.schema-generation.scripts.create-target", MusicXmlDb.GENERATE_SCHEMA_FILE);
+            if (StringUtil.isNotEmpty(MusicXml2Db.GENERATE_SCHEMA_FILE)) {
+                jpaProperties.put("javax.persistence.schema-generation.scripts.create-target", MusicXml2Db.GENERATE_SCHEMA_FILE);
                 jpaProperties.put("javax.persistence.schema-generation.scripts.action", "create");
                 jpaProperties.put("hibernate.hbm2ddl.delimiter", ";");
-            } else if (MusicXmlDb.CREATE_DB_SCHEMA){
+            } else if (MusicXml2Db.CREATE_DB_SCHEMA){
                 jpaProperties.put("hibernate.hbm2ddl.auto", "update");
             }
 

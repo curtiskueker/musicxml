@@ -1,8 +1,20 @@
 package org.curtis.musicxml.score;
 
-public class LyricLanguage {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "lyric_language")
+public class LyricLanguage extends DatabaseItem {
+    @Column
     private String number;
+    @Column
     private String name;
+    @Transient
     private String lang;
 
     public LyricLanguage() {

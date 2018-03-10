@@ -1,20 +1,43 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.link.LinkAttributes;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreHeader {
+@Entity
+@Table(name = "score_header")
+public class ScoreHeader extends DatabaseItem {
+    @Column(name = "work_number")
     private String workNumber;
+    @Column(name = "work_title")
     private String workTitle;
+    @Transient
     private LinkAttributes opus;
+    @Column(name = "movement_number")
     private String movementNumber;
+    @Column(name = "movement_title")
     private String movementTitle;
+    @Transient
     private Identification identification;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "defaults_id")
     private Defaults defaults;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "score_header_id", nullable = false)
     private List<Credit> credits = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_list_id")
     private PartList partList = new PartList();
 
     public ScoreHeader() {

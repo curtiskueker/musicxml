@@ -33,7 +33,7 @@ public class ScoreHandler extends AbstractHandler {
         for(PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
             if(partItem instanceof ScorePart) {
                 ScorePart scorePart = (ScorePart) partItem;
-                String partId = scorePart.getId();
+                String partId = scorePart.getScorePartId();
                 for (Element partElement : partElements) {
                     if (partId.equals(partElement.getAttribute("id"))) {
                         PartHandler partHandler = new PartHandler(score.getParts());

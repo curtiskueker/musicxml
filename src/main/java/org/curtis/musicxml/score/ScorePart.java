@@ -6,31 +6,56 @@ import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("score part")
 public class ScorePart extends PartItem {
-    private String id;
+    @Column(name = "score_part_id")
+    private String scorePartId;
+    @Transient
     private Identification identification;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_name_id")
     private PartName partName;
+    @Transient
     private NameDisplay partNameDisplay;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_abbreviation_id")
     private PartName partAbbreviation;
+    @Transient
     private NameDisplay partAbbreviationDisplay;
+    @ElementCollection
+    @CollectionTable(name = "score_part_group", joinColumns = @JoinColumn(name = "score_part_id"))
+    @Column(name = "group_name")
     private List<String> groups = new ArrayList<>();
+    @Transient
     private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
+    @Transient
     private List<MidiDevice> midiDevices = new ArrayList<>();
+    @Transient
     private List<MidiInstrument> midiInstruments = new ArrayList<>();
 
     public ScorePart() {
 
     }
 
-    public String getId() {
-        return id;
+    public String getScorePartId() {
+        return scorePartId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setScorePartId(String scorePartId) {
+        this.scorePartId = scorePartId;
     }
 
     public Identification getIdentification() {

@@ -1,20 +1,41 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Scaling;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Defaults {
+@Entity
+@Table(name = "defaults")
+public class Defaults extends DatabaseItem {
+    @Transient
     private Scaling scaling;
+    @Transient
     private Layout layout;
+    @Transient
     private Appearance appearance;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "music_font_id")
     private Font musicFont;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "word_font_id")
     private Font wordFont;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "defaults_id", nullable = false)
     private List<LyricFont> lyricFonts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "defaults_id", nullable = false)
     private List<LyricLanguage> lyricLanguages = new ArrayList<>();
 
     public Defaults() {

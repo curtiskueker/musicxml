@@ -1,21 +1,43 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Measure {
+@Entity
+@Table(name = "measure")
+public class Measure extends DatabaseItem {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "measure_id", nullable = false)
     private List<MusicData> musicDataList = new ArrayList<>();
+    @Column
     private String number;
+    @Transient
     private Boolean implicit = false;
+    @Transient
     private Boolean nonControlling;
+    @Transient
     private BigDecimal width;
+    @Transient
     private RepeatBlock repeatBlock;
+    @Transient
     private Integer staffNumber;
+    @Transient
     private boolean isFirstMeasure = false;
+    @Transient
     private boolean isLastMeasure = false;
+    @Transient
     private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {

@@ -1,13 +1,32 @@
 package org.curtis.musicxml.score.instrument;
 
-public class ScoreInstrument {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "score_instrument")
+public class ScoreInstrument extends DatabaseItem {
+    @Column(name = "instrument_name")
     private String instrumentName;
+    @Column(name = "instrument_abbreviation")
     private String instrumentAbbreviation;
+    @Column(name = "instrument_sound")
     private String instrumentSound;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instrument_type_id")
     private InstrumentType instrumentType;
+    @Column(name = "virtual_library")
     private String virtualLibrary;
+    @Column(name = "virtual_name")
     private String virtualName;
-    private String id;
+    @Column(name = "score_instrument_id")
+    private String scoreInstrumentId;
 
     public ScoreInstrument() {
 
@@ -61,11 +80,11 @@ public class ScoreInstrument {
         this.virtualName = virtualName;
     }
 
-    public String getId() {
-        return id;
+    public String getScoreInstrumentId() {
+        return scoreInstrumentId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setScoreInstrumentId(String scoreInstrumentId) {
+        this.scoreInstrumentId = scoreInstrumentId;
     }
 }

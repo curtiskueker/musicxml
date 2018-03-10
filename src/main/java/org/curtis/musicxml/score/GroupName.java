@@ -1,11 +1,22 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Location;
 
-public class GroupName {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "group_name")
+public class GroupName extends DatabaseItem {
+    @Column(name = "group_name")
     private String groupName;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location justify;
 
     public GroupName() {

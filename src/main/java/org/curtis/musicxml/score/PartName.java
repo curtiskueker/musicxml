@@ -1,12 +1,24 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Location;
 
-public class PartName {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "part_name")
+public class PartName extends DatabaseItem {
+    @Column(name = "part_name")
     private String partName;
+    @Transient
     private PrintStyle partNamePrintStyle;
+    @Transient
     private Boolean partNamePrintObject;
+    @Transient
     private Location partNameJustify;
 
     public PartName() {

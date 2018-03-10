@@ -3,7 +3,7 @@ package org.curtis.musicxml.link;
 import org.curtis.musicxml.score.MusicData;
 
 public class Bookmark extends MusicData {
-    private String id;
+    private String bookmarkId;
     private String name;
     private ElementPosition elementPosition;
 
@@ -11,12 +11,12 @@ public class Bookmark extends MusicData {
 
     }
 
-    public String getId() {
-        return id;
+    public String getBookmarkId() {
+        return bookmarkId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBookmarkId(String bookmarkId) {
+        this.bookmarkId = bookmarkId;
     }
 
     public String getName() {

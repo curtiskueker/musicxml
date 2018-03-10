@@ -17,7 +17,7 @@ public class PartHandler extends AbstractHandler {
     public void handle(Element element) {
         Part part = new Part();
 
-        part.setId(element.getAttribute("id"));
+        part.setPartId(element.getAttribute("id"));
 
         List<Measure> measures = part.getMeasures();
         List<Element> measureElements = XmlUtil.getChildElements(element, "measure");

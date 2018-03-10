@@ -1,21 +1,41 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Credit {
+@Entity
+@Table(name = "credit")
+public class Credit extends DatabaseItem {
+    @ElementCollection
+    @CollectionTable(name = "credit_type", joinColumns = @JoinColumn(name = "credit_id"))
+    @Column(name = "credit_type")
     private List<String> creditTypes = new ArrayList<>();
+    @Transient
     private List<Link> links = new ArrayList<>();
+    @Transient
     private List<Bookmark> bookmarks = new ArrayList<>();
+    @Transient
     private Image creditImage;
+    @Transient
     private List<FormattedText> creditWordsList = new ArrayList<>();
+    @Transient
     private List<Link> creditWordsLinks = new ArrayList<>();
+    @Transient
     private List<Bookmark> creditWordsBookmarks = new ArrayList<>();
+    @Column
     private Integer page;
 
     public Credit() {

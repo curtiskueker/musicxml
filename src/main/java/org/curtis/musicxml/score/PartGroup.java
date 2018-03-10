@@ -4,16 +4,40 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.NameDisplay;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("part group")
 public class PartGroup extends PartItem {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_name_id")
     private GroupName groupName;
+    @Transient
     private NameDisplay groupNameDisplay;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_abbreviation_id")
     private GroupName groupAbbreviation;
+    @Transient
     private NameDisplay groupAbbreviationDisplay;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_symbol_id")
     private GroupSymbol groupSymbol;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_barline_id")
     private GroupBarline groupBarline;
+    @Transient
     private Boolean groupTime;
+    @Transient
     private Editorial editorial;
+    @Transient
     private Connection type;
+    @Column
     private String number = "1";
 
     public PartGroup() {

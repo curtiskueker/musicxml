@@ -1,10 +1,20 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Position;
 
-public class GroupSymbol {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "group_symbol")
+public class GroupSymbol extends DatabaseItem {
+    @Transient
     private GroupSymbolType groupSymbolType;
+    @Transient
     private Position position;
+    @Transient
     private String color;
 
     public GroupSymbol() {

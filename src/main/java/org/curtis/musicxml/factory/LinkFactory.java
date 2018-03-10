@@ -78,7 +78,7 @@ public class LinkFactory {
         if (element == null) return null;
 
         Bookmark bookmark = new Bookmark();
-        bookmark.setId(element.getAttribute("id"));
+        bookmark.setBookmarkId(element.getAttribute("id"));
         bookmark.setName(element.getAttribute("name"));
         bookmark.setElementPosition(newElementPosition(element));
 

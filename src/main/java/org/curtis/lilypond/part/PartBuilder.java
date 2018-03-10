@@ -53,11 +53,11 @@ public class PartBuilder extends AbstractBuilder {
 
     public PartBuilder(Part part) {
         this.part = part;
-        CURRENT_PART_ID = part.getId();
+        CURRENT_PART_ID = part.getPartId();
     }
 
     public StringBuilder build() throws BuildException {
-        if (DEBUG) System.err.println("Part " + part.getId());
+        if (DEBUG) System.err.println("Part " + part.getPartId());
         List<Measure> measures = part.getMeasures();
 
         // pre-processing loop

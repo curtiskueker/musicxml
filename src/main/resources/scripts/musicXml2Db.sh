@@ -16,4 +16,4 @@ while getopts 'sf:i:' flag; do
   esac
 done
 
-java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.MusicXmlDb SCHEMA_FILE=$SCHEMA_FILE INPUT_FILE=$INPUT_FILE $CREATE_SCHEMA
+java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.MusicXml2Db SCHEMA_FILE=$SCHEMA_FILE INPUT_FILE=$INPUT_FILE $CREATE_SCHEMA

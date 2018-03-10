@@ -80,10 +80,10 @@ public class ScoreBuilder extends AbstractBuilder {
     }
 
     private void buildPart(ScorePart scorePart) throws BuildException {
-        String partId = scorePart.getId();
+        String partId = scorePart.getScorePartId();
 
         // find the corresponding Part indicated in the score header
-        Part partToProcess = score.getParts().stream().filter(part -> partId.equals(part.getId())).findAny().orElse(null);
+        Part partToProcess = score.getParts().stream().filter(part -> partId.equals(part.getPartId())).findAny().orElse(null);
 
         if(partToProcess == null) throw new BuildException("Part " + partId + " not found");
 
@@ -173,7 +173,7 @@ public class ScoreBuilder extends AbstractBuilder {
         for(int index = 0; index < staves; index++) {
             staffParts[index] = new Part();
             staffParts[index].setStaffNumber(index + 1);
-            staffParts[index].setId(scorePart.getId() + ", staff " + String.valueOf(index + 1));
+            staffParts[index].setPartId(scorePart.getScorePartId() + ", staff " + String.valueOf(index + 1));
         }
 
         for(Measure measure : part.getMeasures()) {
@@ -229,7 +229,7 @@ public class ScoreBuilder extends AbstractBuilder {
         for(Part staffPart : staffParts) {
             List<Measure> partMeasures = staffPart.getMeasures();
             if (partMeasures.isEmpty()) {
-                throw new BuildException(staffPart.getId() + " has no measures");
+                throw new BuildException(staffPart.getPartId() + " has no measures");
             }
             partMeasures.get(0).setFirstMeasure(true);
             partMeasures.get(partMeasures.size() - 1).setLastMeasure(true);

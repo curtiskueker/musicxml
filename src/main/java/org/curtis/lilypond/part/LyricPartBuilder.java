@@ -27,7 +27,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
 
     public StringBuilder build() throws BuildException {
         append("\\new Voice = \"");
-        append(part.getId());
+        append(part.getPartId());
         append("\" ");
 
         VoicePartBuilder voicePartBuilder = new VoicePartBuilder(part);
@@ -157,7 +157,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
 
             if (i > 0) {
                 append("\\set associatedVoice = \"");
-                append(part.getId());
+                append(part.getPartId());
                 appendLine("\"");
             }
 

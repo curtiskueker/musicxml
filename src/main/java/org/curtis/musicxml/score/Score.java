@@ -2,19 +2,24 @@ package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "score")
 public class Score extends DatabaseItem {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "score_header_id")
     private ScoreHeader scoreHeader = new ScoreHeader();
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "score_id", nullable = false)
     private List<Part> parts = new ArrayList<>();
     @Column
     private String version = "1.0";

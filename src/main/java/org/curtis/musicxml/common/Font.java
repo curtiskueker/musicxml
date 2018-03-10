@@ -1,9 +1,21 @@
 package org.curtis.musicxml.common;
 
-public class Font {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "font")
+public class Font extends DatabaseItem {
+    @Transient
     private String fontFamily;
+    @Transient
     private FontStyle fontStyle;
+    @Transient
     private FontSize fontSize;
+    @Transient
     private FontWeight fontWeight;
 
     public Font() {
