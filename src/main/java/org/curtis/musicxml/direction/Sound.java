@@ -5,31 +5,57 @@ import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("sound")
 public class Sound extends MusicData {
+    @Transient
     private List<MidiDevice> midiDevices = new ArrayList<>();
+    @Transient
     private List<MidiInstrument> midiInstruments = new ArrayList<>();
+    @Transient
     private List<Play> playList = new ArrayList<>();
+    @Transient
     private Offset offset;
+    @Transient
     private BigDecimal tempo;
+    @Transient
     private BigDecimal dynamics;
+    @Transient
     private Boolean dacapo;
+    @Transient
     private String segno;
+    @Transient
     private String dalsegno;
+    @Transient
     private String coda;
+    @Transient
     private String tocoda;
+    @Transient
     private BigDecimal divisions;
+    @Transient
     private Boolean forwardRepeat;
+    @Transient
     private String fine;
+    @Transient
     private String timeOnly;
+    @Transient
     private Boolean pizzicato;
+    @Transient
     private BigDecimal pan;
+    @Transient
     private BigDecimal elevation;
+    @Transient
     private String damperPedal;
+    @Transient
     private String softPedal;
+    @Transient
     private String sostenutoPedal;
 
     public Sound() {

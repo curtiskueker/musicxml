@@ -3,10 +3,13 @@ package org.curtis.musicxml.score;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.link.LinkAttributes;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,7 +36,8 @@ public class ScoreHeader extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "defaults_id")
     private Defaults defaults;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "score_header_id", nullable = false)
     private List<Credit> credits = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)

@@ -6,21 +6,37 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("harmony")
 public class Harmony extends MusicData {
+    @Transient
     private List<HarmonyChord> harmonyChords = new ArrayList<>();
+    @Transient
     private Frame frame;
+    @Transient
     private Offset offset;
+    @Transient
     private Editorial editorial;
+    @Transient
     private Integer staff;
+    @Transient
     private HarmonyType type;
+    @Transient
     private Boolean printObject;
+    @Transient
     private Boolean printFrame;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
+    @Transient
     private BigDecimal totalBeats;
 
     public Harmony() {

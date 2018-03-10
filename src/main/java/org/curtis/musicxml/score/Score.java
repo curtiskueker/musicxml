@@ -5,6 +5,7 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -18,7 +19,7 @@ public class Score extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "score_header_id")
     private ScoreHeader scoreHeader = new ScoreHeader();
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "score_id", nullable = false)
     private List<Part> parts = new ArrayList<>();
     @Column

@@ -5,19 +5,34 @@ import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("print")
 public class Print extends MusicData {
+    @Transient
     private Layout layout;
+    @Transient
     private MeasureLayout measureLayout;
+    @Transient
     private List<MeasureNumbering> measureNumberings;
+    @Transient
     private NameDisplay partNameDisplay;
+    @Transient
     private NameDisplay partAbbreviationDisplay;
+    @Transient
     private BigDecimal staffSpacing;
+    @Transient
     private Boolean newSystem = false;
+    @Transient
     private Boolean newPage = false;
+    @Transient
     private Integer blankPage;
+    @Transient
     private String pageNumber;
 
     public Print() {

@@ -5,9 +5,12 @@ import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Scaling;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -31,10 +34,12 @@ public class Defaults extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "word_font_id")
     private Font wordFont;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
     private List<LyricFont> lyricFonts = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
     private List<LyricLanguage> lyricLanguages = new ArrayList<>();
 

@@ -4,16 +4,28 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("direction")
 public class Direction extends MusicData {
+    @Transient
     private List<DirectionType> directionTypes = new ArrayList<>();
+    @Transient
     private Offset offset;
+    @Transient
     private EditorialVoiceDirection editorialVoiceDirection;
+    @Transient
     private Integer staff;
+    @Transient
     private Sound sound;
+    @Transient
     private Location placement;
+    @Transient
     private Boolean directive;
 
     public Direction() {

@@ -5,16 +5,27 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("figured bass")
 public class FiguredBass extends MusicData {
+    @Transient
     private List<Figure> figures = new ArrayList<>();
+    @Transient
     private BigDecimal duration;
+    @Transient
     private Editorial editorial;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Printout printout;
+    @Transient
     private Boolean parentheses;
 
     public FiguredBass() {

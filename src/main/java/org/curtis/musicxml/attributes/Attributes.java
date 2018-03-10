@@ -7,22 +7,39 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.PartSymbol;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("attributes")
 public class Attributes extends MusicData {
+    @Transient
     private Editorial editorial;
+    @Transient
     private BigDecimal divisions;
+    @Transient
     private List<Key> keys = new ArrayList<>();
+    @Transient
     private List<Time> timeList = new ArrayList<>();
+    @Transient
     private Integer staves = 1;
+    @Transient
     private PartSymbol partSymbol;
+    @Transient
     private Integer instruments;
+    @Transient
     private Clef clef;
+    @Transient
     private List<StaffDetails> staffDetailsList = new ArrayList<>();
+    @Transient
     private List<Transpose> transpositions = new ArrayList<>();
+    @Transient
     private List<Directive> directives = new ArrayList<>();
+    @Transient
     private List<MeasureStyle> measureStyles = new ArrayList<>();
 
     public Attributes() {

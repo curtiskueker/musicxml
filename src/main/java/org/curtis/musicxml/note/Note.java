@@ -13,44 +13,82 @@ import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@DiscriminatorValue("note")
 public class Note extends MusicData {
+    @Transient
     private Grace grace;
+    @Transient
     private Boolean cue = false;
+    @Transient
     private FullNote fullNote;
+    @Transient
     private BigDecimal duration = MathUtil.ZERO;
+    @Transient
     private List<Tie> ties = new ArrayList<>();
+    @Transient
     private String instrument;
+    @Transient
     private EditorialVoice editorialVoice = new EditorialVoice();
+    @Transient
     private NoteType type;
+    @Transient
     private List<Placement> dots = new ArrayList<>();
+    @Transient
     private Accidental accidental;
+    @Transient
     private TimeModification timeModification;
+    @Transient
     private Stem stem;
+    @Transient
     private Notehead notehead;
+    @Transient
     private NoteheadText noteheadText;
+    @Transient
     private Integer staff;
+    @Transient
     private List<Beam> beams = new ArrayList<>();
+    @Transient
     private Boolean isBeginBeam = false;
+    @Transient
     private Boolean isEndBeam = false;
+    @Transient
     private List<Notations> notationsList = new ArrayList<>();
+    @Transient
     private Connection tupletType;
+    @Transient
     private List<Lyric> lyrics = new ArrayList<>();
+    @Transient
     private Play play;
+    @Transient
     private XPosition xPosition;
+    @Transient
     private Font font;
+    @Transient
     private String color;
+    @Transient
     private Printout printout;
+    @Transient
     private BigDecimal dynamics;
+    @Transient
     private BigDecimal endDynamics;
+    @Transient
     private BigDecimal attack;
+    @Transient
     private BigDecimal release;
+    @Transient
     private String timeOnly;
+    @Transient
     private Boolean pizzicato;
+    @Transient
     private List<Direction> directions = new ArrayList<>();
 
     public Note() {

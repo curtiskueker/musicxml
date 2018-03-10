@@ -5,6 +5,7 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,7 +18,7 @@ import java.util.List;
 public class Part extends DatabaseItem {
     @Column(name = "part_id")
     private String partId;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "part_id", nullable = false)
     private List<Measure> measures = new ArrayList<>();
     @Transient

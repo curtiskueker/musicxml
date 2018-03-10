@@ -7,7 +7,20 @@
     <persistence-unit name="musicxml" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <class>org.curtis.musicxml.attributes.Attributes</class>
+        <class>org.curtis.musicxml.barline.Barline</class>
         <class>org.curtis.musicxml.common.Font</class>
+        <class>org.curtis.musicxml.direction.Direction</class>
+        <class>org.curtis.musicxml.direction.Grouping</class>
+        <class>org.curtis.musicxml.direction.Print</class>
+        <class>org.curtis.musicxml.direction.Sound</class>
+        <class>org.curtis.musicxml.direction.harmony.Harmony</class>
+        <class>org.curtis.musicxml.link.Bookmark</class>
+        <class>org.curtis.musicxml.link.Link</class>
+        <class>org.curtis.musicxml.note.Backup</class>
+        <class>org.curtis.musicxml.note.FiguredBass</class>
+        <class>org.curtis.musicxml.note.Forward</class>
+        <class>org.curtis.musicxml.note.Note</class>
         <class>org.curtis.musicxml.score.Credit</class>
         <class>org.curtis.musicxml.score.Defaults</class>
         <class>org.curtis.musicxml.score.GroupBarline</class>

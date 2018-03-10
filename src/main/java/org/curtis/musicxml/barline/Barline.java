@@ -7,22 +7,39 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("barline")
 public class Barline extends MusicData {
+    @Transient
     private BarStyleColor barStyle;
+    @Transient
     private Editorial editorial;
+    @Transient
     private WavyLine wavyLine;
+    @Transient
     private PrintStyleAlign segnoPrint;
+    @Transient
     private PrintStyleAlign codaPrint;
+    @Transient
     private List<Fermata> fermataList = new ArrayList<>();
+    @Transient
     private Ending ending;
+    @Transient
     private Repeat repeat;
+    @Transient
     private Location location = Location.RIGHT;
+    @Transient
     private String segno;
+    @Transient
     private String coda;
+    @Transient
     private BigDecimal divisions;
 
     public Barline() {

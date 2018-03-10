@@ -5,7 +5,6 @@ import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
-import org.curtis.properties.AppProperties;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
 
@@ -16,16 +15,14 @@ public class MusicXml2Db {
 
     private void execute() throws MusicXmlException {
         try {
-            AppProperties.addPropertiesFile("properties/database");
-            DBSessionFactory sessionFactory = DBSessionFactory.getInstance();
-            DBTransaction dbTransaction = sessionFactory.getTransaction();
+            DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
 
             if (StringUtil.isNotEmpty(INPUT_FILE)) {
                 ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(INPUT_FILE);
                 dbTransaction.create(scoreHandler.getScore());
             }
 
-            sessionFactory.closeTransaction();
+            DBSessionFactory.getInstance().closeTransaction();
         } catch (DBException | XmlException e) {
             e.printStackTrace();
             throw new MusicXmlException(e);
