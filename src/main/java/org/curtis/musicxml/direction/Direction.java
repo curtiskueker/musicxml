@@ -4,8 +4,13 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +18,11 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("direction")
 public class Direction extends MusicData {
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "direction_id", nullable = false)
     private List<DirectionType> directionTypes = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "offset_id")
     private Offset offset;
     @Transient
     private EditorialVoiceDirection editorialVoiceDirection;

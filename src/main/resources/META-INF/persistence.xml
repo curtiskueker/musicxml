@@ -8,12 +8,36 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>org.curtis.musicxml.attributes.Attributes</class>
+        <class>org.curtis.musicxml.attributes.Image</class>
         <class>org.curtis.musicxml.barline.Barline</class>
         <class>org.curtis.musicxml.common.Font</class>
         <class>org.curtis.musicxml.direction.Direction</class>
         <class>org.curtis.musicxml.direction.Grouping</class>
+        <class>org.curtis.musicxml.direction.Offset</class>
         <class>org.curtis.musicxml.direction.Print</class>
         <class>org.curtis.musicxml.direction.Sound</class>
+        <class>org.curtis.musicxml.direction.directiontype.AccordionRegistration</class>
+        <class>org.curtis.musicxml.direction.directiontype.Bracket</class>
+        <class>org.curtis.musicxml.direction.directiontype.Coda</class>
+        <class>org.curtis.musicxml.direction.directiontype.Damp</class>
+        <class>org.curtis.musicxml.direction.directiontype.DampAll</class>
+        <class>org.curtis.musicxml.direction.directiontype.Dashes</class>
+        <class>org.curtis.musicxml.direction.directiontype.DirectionType</class>
+        <class>org.curtis.musicxml.direction.directiontype.Dynamics</class>
+        <class>org.curtis.musicxml.direction.directiontype.Eyeglasses</class>
+        <class>org.curtis.musicxml.direction.directiontype.HarpPedals</class>
+        <class>org.curtis.musicxml.direction.directiontype.OctaveShift</class>
+        <class>org.curtis.musicxml.direction.directiontype.OtherDirection</class>
+        <class>org.curtis.musicxml.direction.directiontype.Pedal</class>
+        <class>org.curtis.musicxml.direction.directiontype.PrincipalVoice</class>
+        <class>org.curtis.musicxml.direction.directiontype.Rehearsal</class>
+        <class>org.curtis.musicxml.direction.directiontype.Scordatura</class>
+        <class>org.curtis.musicxml.direction.directiontype.Segno</class>
+        <class>org.curtis.musicxml.direction.directiontype.StringMute</class>
+        <class>org.curtis.musicxml.direction.directiontype.Wedge</class>
+        <class>org.curtis.musicxml.direction.directiontype.Words</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.Metronome</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Percussion</class>
         <class>org.curtis.musicxml.direction.harmony.Harmony</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
         <class>org.curtis.musicxml.link.Link</class>

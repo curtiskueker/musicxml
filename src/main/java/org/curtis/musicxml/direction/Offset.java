@@ -1,9 +1,18 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Offset {
+@Entity
+@Table(name = "offset")
+public class Offset extends DatabaseItem {
+    @Transient
     private BigDecimal divisions;
+    @Transient
     private Boolean sound;
 
     public Offset() {

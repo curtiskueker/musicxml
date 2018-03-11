@@ -1,6 +1,7 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.direction.Sound;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -42,7 +44,7 @@ public class Measure extends DatabaseItem {
     private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {
-
+        setId(0);
     }
 
     public List<MusicData> getMusicDataList() {

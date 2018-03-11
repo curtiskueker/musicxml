@@ -3,11 +3,22 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("octave shift")
 public class OctaveShift extends DirectionType {
+    @Transient
     private OctaveShiftType type;
+    @Transient
     private Integer number;
+    @Transient
     private Integer size = 8;
+    @Transient
     private DashedFormatting dashedFormatting;
+    @Transient
     private PrintStyle printStyle;
 
     public OctaveShift() {

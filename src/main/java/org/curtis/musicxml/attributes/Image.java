@@ -2,12 +2,24 @@ package org.curtis.musicxml.attributes;
 
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.direction.directiontype.DirectionType;
 
-public class Image {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("image")
+public class Image extends DirectionType {
+    @Transient
     private String source;
+    @Transient
     private String type;
+    @Transient
     private Position position;
+    @Transient
     private Location halign;
+    @Transient
     private Location valignImage;
 
     public Image() {

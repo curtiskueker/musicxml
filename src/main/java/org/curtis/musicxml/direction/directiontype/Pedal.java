@@ -3,10 +3,20 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("pedal")
 public class Pedal extends DirectionType {
+    @Transient
     private Connection type;
+    @Transient
     private Boolean line;
+    @Transient
     private Boolean sign;
+    @Transient
     private PrintStyleAlign printStyleAlign;
 
     public Pedal() {

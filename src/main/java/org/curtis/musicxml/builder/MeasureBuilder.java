@@ -1,5 +1,9 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
+import org.curtis.musicxml.builder.musicdata.SoundBuilder;
+import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 
@@ -15,9 +19,13 @@ public class MeasureBuilder extends BaseBuilder {
         buildAttribute("number", measure.getNumber());
         appendLine(">");
         for (MusicData musicData : measure.getMusicDataList()) {
-            // TODO: music-data
+            BaseBuilder baseBuilder = null;
+            if (musicData instanceof Direction) baseBuilder = new DirectionBuilder((Direction)musicData);
+            else if (musicData instanceof Sound) baseBuilder = new SoundBuilder((Sound)musicData);
+            if (baseBuilder != null) append(baseBuilder.build().toString());
         }
         appendLine("</measure>");
+
         return stringBuilder;
     }
 }

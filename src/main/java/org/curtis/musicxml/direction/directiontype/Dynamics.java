@@ -5,14 +5,24 @@ import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("dynamics")
 public class Dynamics extends DirectionType {
+    @Transient
     private List<DynamicsType> types = new ArrayList<>();
+    @Transient
     private PrintStyleAlign printStyleAlign;
+    @Transient
     private Location placement;
+    @Transient
     private TextDecoration textDecoration;
+    @Transient
     private EnclosureShape enclosure;
 
     public Dynamics() {

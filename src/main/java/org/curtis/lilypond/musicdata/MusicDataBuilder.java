@@ -5,7 +5,6 @@ import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.handler.ScoreHandler;
-import org.curtis.musicxml.score.MusicData;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,9 +15,9 @@ import java.util.List;
 import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
 
 public class MusicDataBuilder extends AbstractBuilder {
-    private MusicData musicData;
+    private Object musicData;
 
-    public MusicDataBuilder(MusicData musicData) {
+    public MusicDataBuilder(Object musicData) {
         this.musicData = musicData;
     }
 

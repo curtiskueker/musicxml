@@ -5,8 +5,12 @@ import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,7 +25,8 @@ public class Sound extends MusicData {
     private List<MidiInstrument> midiInstruments = new ArrayList<>();
     @Transient
     private List<Play> playList = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "offset_id")
     private Offset offset;
     @Transient
     private BigDecimal tempo;
@@ -29,19 +34,19 @@ public class Sound extends MusicData {
     private BigDecimal dynamics;
     @Transient
     private Boolean dacapo;
-    @Transient
+    @Column
     private String segno;
-    @Transient
+    @Column
     private String dalsegno;
-    @Transient
+    @Column
     private String coda;
-    @Transient
+    @Column
     private String tocoda;
     @Transient
     private BigDecimal divisions;
     @Transient
     private Boolean forwardRepeat;
-    @Transient
+    @Column
     private String fine;
     @Transient
     private String timeOnly;

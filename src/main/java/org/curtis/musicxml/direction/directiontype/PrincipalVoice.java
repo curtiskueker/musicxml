@@ -3,10 +3,20 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("principal voice")
 public class PrincipalVoice extends DirectionType {
+    @Transient
     private String principalVoice;
+    @Transient
     private Connection type;
+    @Transient
     private PrincipalVoiceSymbol symbol;
+    @Transient
     private PrintStyleAlign printStyleAlign;
 
     public PrincipalVoice() {
