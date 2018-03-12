@@ -1,9 +1,18 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.note.NoteTypeValue;
 
-public class BeatUnit {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "beat_unit")
+public class BeatUnit extends DatabaseItem {
+    @Transient
     private NoteTypeValue beatUnit;
+    @Transient
     private Integer beatUnitDots = 0;
 
     public BeatUnit() {

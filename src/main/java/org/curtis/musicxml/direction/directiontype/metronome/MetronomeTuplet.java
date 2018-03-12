@@ -1,13 +1,24 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 
-public class MetronomeTuplet {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "metronome_tuplet")
+public class MetronomeTuplet extends DatabaseItem {
+    @Transient
     private TimeModification timeModification;
+    @Transient
     private Connection type;
+    @Transient
     private Boolean bracket;
+    @Transient
     private ShowTuplet showNumber;
 
     public MetronomeTuplet() {

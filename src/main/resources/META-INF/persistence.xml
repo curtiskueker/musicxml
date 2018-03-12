@@ -16,6 +16,7 @@
         <class>org.curtis.musicxml.direction.Offset</class>
         <class>org.curtis.musicxml.direction.Print</class>
         <class>org.curtis.musicxml.direction.Sound</class>
+        <class>org.curtis.musicxml.direction.directiontype.Accord</class>
         <class>org.curtis.musicxml.direction.directiontype.AccordionRegistration</class>
         <class>org.curtis.musicxml.direction.directiontype.Bracket</class>
         <class>org.curtis.musicxml.direction.directiontype.Coda</class>
@@ -29,6 +30,7 @@
         <class>org.curtis.musicxml.direction.directiontype.OctaveShift</class>
         <class>org.curtis.musicxml.direction.directiontype.OtherDirection</class>
         <class>org.curtis.musicxml.direction.directiontype.Pedal</class>
+        <class>org.curtis.musicxml.direction.directiontype.PedalTuning</class>
         <class>org.curtis.musicxml.direction.directiontype.PrincipalVoice</class>
         <class>org.curtis.musicxml.direction.directiontype.Rehearsal</class>
         <class>org.curtis.musicxml.direction.directiontype.Scordatura</class>
@@ -36,8 +38,13 @@
         <class>org.curtis.musicxml.direction.directiontype.StringMute</class>
         <class>org.curtis.musicxml.direction.directiontype.Wedge</class>
         <class>org.curtis.musicxml.direction.directiontype.Words</class>
-        <class>org.curtis.musicxml.direction.directiontype.metronome.Metronome</class>
-        <class>org.curtis.musicxml.direction.directiontype.percussion.Percussion</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.BeatUnit</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet</class>
+        <class>org.curtis.musicxml.direction.directiontype.metronome.PerMinute</class>
         <class>org.curtis.musicxml.direction.harmony.Harmony</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
         <class>org.curtis.musicxml.link.Link</class>

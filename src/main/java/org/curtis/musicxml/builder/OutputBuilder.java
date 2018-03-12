@@ -59,6 +59,12 @@ public abstract class OutputBuilder {
         appendLine(">");
     }
 
+    protected void buildElementWithValue(String elementName, Integer elementValue) {
+        if (elementValue == null) return;
+
+        buildElementWithValue(elementName, String.valueOf(elementValue));
+    }
+
     protected void buildElementWithAttribute(String elementName, String attributeName, String attributeValue) {
         if (StringUtil.isEmpty(attributeValue)) return;
 
@@ -77,5 +83,18 @@ public abstract class OutputBuilder {
             buildAttribute(attributeName, attributes.get(attributeName));
         }
         appendLine("/>");
+    }
+
+    protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, String attributeValue) {
+        if (StringUtil.isEmpty(elementValue)) return;
+
+        append("<");
+        append(elementName);
+        buildAttribute(attributeName, attributeValue);
+        append(">");
+        append(elementValue);
+        append("</");
+        append(elementName);
+        appendLine(">");
     }
 }

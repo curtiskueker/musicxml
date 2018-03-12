@@ -2,6 +2,7 @@ package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -11,7 +12,7 @@ import javax.persistence.Transient;
 public class AccordionRegistration extends DirectionType {
     @Transient
     private Boolean accordionHigh;
-    @Transient
+    @Column(name = "accordion_middle")
     private Integer accordionMiddle;
     @Transient
     private Boolean accordionLow;

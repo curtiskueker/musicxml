@@ -1,9 +1,18 @@
 package org.curtis.musicxml.direction.directiontype;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.attributes.Tuning;
 
-public class Accord {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table
+public class Accord extends DatabaseItem {
+    @Transient
     private Tuning tuning;
+    @Transient
     private Integer string;
 
     public Accord() {

@@ -4,12 +4,10 @@ import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-@Entity
-@DiscriminatorValue("percussion")
+@MappedSuperclass
 public abstract class Percussion extends DirectionType {
     @Transient
     private PrintStyleAlign printStyleAlign;

@@ -3,6 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
 import org.curtis.musicxml.direction.directiontype.Bracket;
 import org.curtis.musicxml.direction.directiontype.Coda;
@@ -16,6 +17,7 @@ import org.curtis.musicxml.direction.directiontype.HarpPedals;
 import org.curtis.musicxml.direction.directiontype.OctaveShift;
 import org.curtis.musicxml.direction.directiontype.OtherDirection;
 import org.curtis.musicxml.direction.directiontype.Pedal;
+import org.curtis.musicxml.direction.directiontype.PedalTuning;
 import org.curtis.musicxml.direction.directiontype.PrincipalVoice;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Scordatura;
@@ -23,8 +25,16 @@ import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.StringMute;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.Words;
+import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
+import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
+import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
+import org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet;
+import org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome;
 import org.curtis.musicxml.direction.directiontype.percussion.Percussion;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DirectionTypeBuilder extends BaseBuilder {
     private DirectionType directionType;
@@ -99,15 +109,42 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildMetronome(Metronome metronome) {
-        buildElenent("metronome");
+        appendLine("<metronome>");
+        if (metronome instanceof BeatMetronome) buildBeatMetronome((BeatMetronome)metronome);
+        else if (metronome instanceof NoteMetronome) buildNoteMetronome((NoteMetronome)metronome);
+        appendLine("</metronome>");
+    }
+
+    private void buildBeatMetronome(BeatMetronome beatMetronome) {
+        buildElementWithValue("per-minute", beatMetronome.getPerMinute().getPerMinute());
+    }
+
+    private void buildNoteMetronome(NoteMetronome noteMetronome) {
+        noteMetronome.getMetronomeNotes1().forEach(metronomeNote -> buildMetronomeNote(metronomeNote));
+        buildElementWithValue("metronome-relation", noteMetronome.getMetronomeRelation());
+        noteMetronome.getMetronomeNotes2().forEach(metronomeNote -> buildMetronomeNote(metronomeNote));
+    }
+
+    private void buildMetronomeNote(MetronomeNote metronomeNote) {
+        for (MetronomeBeam metronomeBeam : metronomeNote.getMetronomeBeams()) {
+            buildElenent("metronome-beam");
+        }
+        buildElenent("metronome-tuplet");
     }
 
     private void buildOctaveShift(OctaveShift octaveShift) {
-        buildElenent("octave-shift");
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(octaveShift.getType()));
+        attributes.put("size", String.valueOf(octaveShift.getSize()));
+        buildElementWithAttributes("octave-shift", attributes);
     }
 
     private void buildHarpPedals(HarpPedals harpPedals) {
-        buildElenent("harp-pedals");
+        appendLine("<harp-pedals>");
+        for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
+            buildElenent("pedal-tuning");
+        }
+        appendLine("</harp-pedals>");
     }
 
     private void buildDamp(Damp damp) {
@@ -127,7 +164,11 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildScordatura(Scordatura scordatura) {
-        buildElenent("scordatura");
+        appendLine("<scordatura>");
+        for (Accord accord : scordatura.getAccords()) {
+            buildElenent("accord");
+        }
+        appendLine("</scordatura>");
     }
 
     private void buildImage(Image image) {
@@ -135,11 +176,16 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildPrincipalVoice(PrincipalVoice principalVoice) {
-        buildElenent("principal-voice");
+        String symbol = BuilderUtil.enumValue(principalVoice.getSymbol());
+        symbol = symbol.replace("hauptstimme", "Hauptstimme");
+        symbol = symbol.replace("nebenstimme", "Nebenstimme");
+        buildElementWithValueAndAttribute("principal-voice", principalVoice.getPrincipalVoice(), "symbol", symbol);
     }
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {
-        buildElenent("accordion-registration");
+        appendLine("<accordion-registration>");
+        buildElementWithValue("accordion-middle", accordionRegistration.getAccordionMiddle());
+        appendLine("</accordion-registration>");
     }
 
     private void buildPercussion(Percussion percussion) {

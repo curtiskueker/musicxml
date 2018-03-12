@@ -19,8 +19,10 @@ public class DirectionBuilder extends BaseBuilder {
 
         appendLine("<direction>");
         for (DirectionType directionType : direction.getDirectionTypes()) {
+            appendLine("<direction-type>");
             DirectionTypeBuilder directionTypeBuilder = new DirectionTypeBuilder(directionType);
             append(directionTypeBuilder.build().toString());
+            appendLine("</direction-type>");
         }
         DirectionBuilder directionBuilder = new DirectionBuilder();
         append(directionBuilder.buildOffset(direction.getOffset()).toString());
@@ -35,8 +37,7 @@ public class DirectionBuilder extends BaseBuilder {
         if (offset == null) return stringBuilder;
 
         clear();
-        appendLine("<offset>");
-        appendLine("</offset>");
+        buildElementWithValue("offset", 0);
 
         return stringBuilder;
     }

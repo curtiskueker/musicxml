@@ -4,12 +4,10 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-@Entity
-@DiscriminatorValue("metronome")
+@MappedSuperclass
 public abstract class Metronome extends DirectionType {
     @Transient
     private PrintStyleAlign printStyleAlign;

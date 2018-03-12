@@ -1,9 +1,18 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.note.BeamType;
 
-public class MetronomeBeam {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "metronome_beam")
+public class MetronomeBeam extends DatabaseItem {
+    @Transient
     private BeamType beamValue;
+    @Transient
     private Integer number = 1;
 
     public MetronomeBeam() {

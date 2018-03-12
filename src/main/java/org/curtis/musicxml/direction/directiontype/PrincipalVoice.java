@@ -3,18 +3,22 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("principal voice")
 public class PrincipalVoice extends DirectionType {
-    @Transient
+    @Column(name = "principal_voice")
     private String principalVoice;
     @Transient
     private Connection type;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private PrincipalVoiceSymbol symbol;
     @Transient
     private PrintStyleAlign printStyleAlign;
