@@ -5,8 +5,11 @@ import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.LineType;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 
@@ -17,7 +20,8 @@ public class Bracket extends DirectionType {
     private Connection type;
     @Transient
     private Integer number;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_end")
     private LineEnd lineEnd;
     @Transient
     private BigDecimal endLength;

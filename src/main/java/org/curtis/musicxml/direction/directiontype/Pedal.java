@@ -3,14 +3,18 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("pedal")
 public class Pedal extends DirectionType {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Boolean line;

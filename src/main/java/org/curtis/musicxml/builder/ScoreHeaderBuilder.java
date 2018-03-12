@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.GroupBarline;
@@ -111,18 +112,8 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         }
         GroupBarline groupBarline = partGroup.getGroupBarline();
         if (groupBarline != null) {
-            String groupBarlineValue = null;
-            switch (groupBarline.getGroupBarlineType()) {
-                case YES:
-                    groupBarlineValue = "yes";
-                    break;
-                case NO:
-                    groupBarlineValue = "no";
-                    break;
-                case MENSURSTRICH:
-                    groupBarlineValue = "Mensurstrich";
-                    break;
-            }
+            String groupBarlineValue = BuilderUtil.enumValue(groupBarline.getGroupBarlineType());
+            groupBarlineValue = groupBarlineValue.replace("mensurstrich", "Mensurstrich");
             buildElementWithValue("group-barline", groupBarlineValue);
         }
         appendLine("</part-group>");

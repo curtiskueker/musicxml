@@ -59,6 +59,15 @@ public abstract class OutputBuilder {
         appendLine(">");
     }
 
+    protected void buildElementWithAttribute(String elementName, String attributeName, String attributeValue) {
+        if (StringUtil.isEmpty(attributeValue)) return;
+
+        append("<");
+        append(elementName);
+        buildAttribute(attributeName, attributeValue);
+        appendLine("/>");
+    }
+
     protected void buildElementWithAttributes(String elementName, Map<String, String> attributes) {
         if (attributes == null || attributes.isEmpty()) return;
 
