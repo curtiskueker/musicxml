@@ -1,17 +1,27 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+@DiscriminatorValue("glass")
 public class Glass extends Percussion {
-    private GlassType value;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private GlassType type;
 
     public Glass() {
 
     }
 
-    public GlassType getValue() {
-        return value;
+    public GlassType getType() {
+        return type;
     }
 
-    public void setValue(GlassType value) {
-        this.value = value;
+    public void setType(GlassType type) {
+        this.type = type;
     }
 }

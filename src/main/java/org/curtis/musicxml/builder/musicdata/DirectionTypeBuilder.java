@@ -29,9 +29,19 @@ import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
-import org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet;
 import org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome;
+import org.curtis.musicxml.direction.directiontype.percussion.Beater;
+import org.curtis.musicxml.direction.directiontype.percussion.Effect;
+import org.curtis.musicxml.direction.directiontype.percussion.Glass;
+import org.curtis.musicxml.direction.directiontype.percussion.Membrane;
+import org.curtis.musicxml.direction.directiontype.percussion.Metal;
+import org.curtis.musicxml.direction.directiontype.percussion.OtherPercussion;
 import org.curtis.musicxml.direction.directiontype.percussion.Percussion;
+import org.curtis.musicxml.direction.directiontype.percussion.Pitched;
+import org.curtis.musicxml.direction.directiontype.percussion.Stick;
+import org.curtis.musicxml.direction.directiontype.percussion.StickLocation;
+import org.curtis.musicxml.direction.directiontype.percussion.Timpani;
+import org.curtis.musicxml.direction.directiontype.percussion.Wood;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -189,10 +199,99 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildPercussion(Percussion percussion) {
-        buildElenent("percussion");
+        appendLine("<percussion>");
+        if (percussion instanceof Glass) buildGlass((Glass)percussion);
+        else if (percussion instanceof Metal) buildMetal((Metal)percussion);
+        else if (percussion instanceof Wood) buildWood((Wood)percussion);
+        else if (percussion instanceof Pitched) buildPitched((Pitched)percussion);
+        else if (percussion instanceof Membrane) buildMembrane((Membrane)percussion);
+        else if (percussion instanceof Effect) buildEffect((Effect)percussion);
+        else if (percussion instanceof Timpani) buildTimpani((Timpani)percussion);
+        else if (percussion instanceof Beater) buildBeater((Beater)percussion);
+        else if (percussion instanceof Stick) buildStick((Stick)percussion);
+        else if (percussion instanceof StickLocation) buildStickLocation((StickLocation)percussion);
+        else if (percussion instanceof OtherPercussion) buildOtherPercussion((OtherPercussion)percussion);
+        appendLine("</percussion>");
+    }
+
+    private void buildGlass(Glass glass) {
+        String type = BuilderUtil.enumValue(glass.getType());
+        type = type.replace("-", " ");
+        buildElementWithValue("glass", type);
+    }
+
+    private void buildMetal(Metal metal) {
+        String type = BuilderUtil.enumValue(metal.getType());
+        type = type.replace("bell-plate", "bell plate");
+        type = type.replace("brake-drum", "brake drum");
+        type = type.replace("chinese-cymbal", "Chinese cymbal");
+        type = type.replace("crash-cymbals", "crash cymbals");
+        type = type.replace("cymbal-tongs", "cymbal tongs");
+        type = type.replace("domed-gong", "domed gong");
+        type = type.replace("finger-cymbals", "finger cymbals");
+        type = type.replace("high-hat-cymbals", "high-hat cymbals");
+        type = type.replace("sizzle-cymbal", "sizzle cymbal");
+        type = type.replace("sleigh-bells", "sleigh bells");
+        type = type.replace("suspended-cymbal", "suspended cymbal");
+        type = type.replace("tam-tam", "tam tam");
+        type = type.replace("vietnamese-hat", "Vietnamese hat");
+        buildElementWithValue("metal", type);
+    }
+
+    private void buildWood(Wood wood) {
+        String type = BuilderUtil.enumValue(wood.getType());
+        type = type.replace("-", " ");
+        buildElementWithValue("wood", type);
+    }
+
+    private void buildPitched(Pitched pitched) {
+        String type = BuilderUtil.enumValue(pitched.getType());
+        type = type.replace("-", " ");
+        buildElementWithValue("pitched", type);
+    }
+
+    private void buildMembrane(Membrane membrane) {
+        String type = BuilderUtil.enumValue(membrane.getType());
+        type = type.replace("-", " ");
+        buildElementWithValue("membrane", type);
+    }
+
+    private void buildEffect(Effect effect) {
+        String type = BuilderUtil.enumValue(effect.getType());
+        type = type.replace("-", " ");
+        buildElementWithValue("effect", type);
+    }
+
+    private void buildTimpani(Timpani timpani) {
+        buildElenent("timpani");
+    }
+
+    private void buildBeater(Beater beater) {
+        buildElementWithValueAndAttribute("beater", BuilderUtil.enumValue(beater.getBeaterValue()), "tip", BuilderUtil.enumValue(beater.getTip()));
+    }
+
+    private void buildStick(Stick stick) {
+        append("<stick");
+        buildAttribute("tip", BuilderUtil.enumValue(stick.getTip()));
+        appendLine(">");
+        String stickType = BuilderUtil.enumValue(stick.getStickType());
+        stickType = stickType.replace("-", " ");
+        buildElementWithValue("stick-type", stickType);
+        buildElementWithValue("stick-material", BuilderUtil.enumValue(stick.getStickMaterial()));
+        appendLine("</stick>");
+    }
+
+    private void buildStickLocation(StickLocation stickLocation) {
+        String type = BuilderUtil.enumValue(stickLocation.getType());
+        type = type.replace("-", " ");
+        buildElementWithValue("stick-location", type);
+    }
+
+    private void buildOtherPercussion(OtherPercussion otherPercussion) {
+        buildElementWithValue("other-percussion", otherPercussion.getValue());
     }
 
     private void buildOtherDirection(OtherDirection otherDirection) {
-        buildElenent("other-direction");
+        buildElementWithValue("other-direction", otherDirection.getValue());
     }
 }

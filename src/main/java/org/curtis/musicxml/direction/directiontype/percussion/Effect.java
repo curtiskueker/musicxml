@@ -1,17 +1,27 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+@DiscriminatorValue("effect")
 public class Effect extends Percussion {
-    private EffectType value;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private EffectType type;
 
     public Effect() {
 
     }
 
-    public EffectType getValue() {
-        return value;
+    public EffectType getType() {
+        return type;
     }
 
-    public void setValue(EffectType value) {
-        this.value = value;
+    public void setType(EffectType type) {
+        this.type = type;
     }
 }

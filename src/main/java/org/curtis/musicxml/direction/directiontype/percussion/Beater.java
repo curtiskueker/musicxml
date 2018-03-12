@@ -1,7 +1,19 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+@DiscriminatorValue("beater")
 public class Beater extends Percussion {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "beater_value")
     private BeaterValue beaterValue;
+    @Enumerated(EnumType.STRING)
+    @Column
     private TipDirection tip;
 
     public Beater() {

@@ -45,6 +45,17 @@
         <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.PerMinute</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Beater</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Effect</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Glass</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Membrane</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Metal</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.OtherPercussion</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Pitched</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Stick</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.StickLocation</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Timpani</class>
+        <class>org.curtis.musicxml.direction.directiontype.percussion.Wood</class>
         <class>org.curtis.musicxml.direction.harmony.Harmony</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
         <class>org.curtis.musicxml.link.Link</class>

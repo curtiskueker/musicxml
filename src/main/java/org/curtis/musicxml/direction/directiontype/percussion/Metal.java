@@ -1,17 +1,27 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+@DiscriminatorValue("metal")
 public class Metal extends Percussion {
-    private MetalType value;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private MetalType type;
 
     public Metal() {
 
     }
 
-    public MetalType getValue() {
-        return value;
+    public MetalType getType() {
+        return type;
     }
 
-    public void setValue(MetalType value) {
-        this.value = value;
+    public void setType(MetalType type) {
+        this.type = type;
     }
 }

@@ -1,17 +1,27 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+@DiscriminatorValue("membrane")
 public class Membrane extends Percussion {
-    private MembraneType value;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private MembraneType type;
 
     public Membrane() {
 
     }
 
-    public MembraneType getValue() {
-        return value;
+    public MembraneType getType() {
+        return type;
     }
 
-    public void setValue(MembraneType value) {
-        this.value = value;
+    public void setType(MembraneType type) {
+        this.type = type;
     }
 }

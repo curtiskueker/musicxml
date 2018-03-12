@@ -390,7 +390,7 @@ public class DirectionFactory {
                 Glass glass = new Glass();
                 switch (elementValue) {
                     case "wind chimes":
-                        glass.setValue(GlassType.WIND_CHIMES);
+                        glass.setType(GlassType.WIND_CHIMES);
                 }
                 percussion = glass;
                 break;
@@ -398,73 +398,73 @@ public class DirectionFactory {
                 Metal metal = new Metal();
                 switch (elementValue) {
                     case "almglocken":
-                        metal.setValue(MetalType.ALMGLOCKEN);
+                        metal.setType(MetalType.ALMGLOCKEN);
                         break;
                     case "bell":
-                        metal.setValue(MetalType.BELL);
+                        metal.setType(MetalType.BELL);
                         break;
                     case "bell plate":
-                        metal.setValue(MetalType.BELL_PLATE);
+                        metal.setType(MetalType.BELL_PLATE);
                         break;
                     case "brake drum":
-                        metal.setValue(MetalType.BRAKE_DRUM);
+                        metal.setType(MetalType.BRAKE_DRUM);
                         break;
                     case "Chinese cymbal":
-                        metal.setValue(MetalType.CHINESE_CYMBAL);
+                        metal.setType(MetalType.CHINESE_CYMBAL);
                         break;
                     case "cowbell":
-                        metal.setValue(MetalType.COWBELL);
+                        metal.setType(MetalType.COWBELL);
                         break;
                     case "crash cymbals":
-                        metal.setValue(MetalType.CRASH_CYMBALS);
+                        metal.setType(MetalType.CRASH_CYMBALS);
                         break;
                     case "crotale":
-                        metal.setValue(MetalType.CROTALE);
+                        metal.setType(MetalType.CROTALE);
                         break;
                     case "cymbal tongs":
-                        metal.setValue(MetalType.CYMBAL_TONGS);
+                        metal.setType(MetalType.CYMBAL_TONGS);
                         break;
                     case "domed gong":
-                        metal.setValue(MetalType.DOMED_GONG);
+                        metal.setType(MetalType.DOMED_GONG);
                         break;
                     case "finger cymbals":
-                        metal.setValue(MetalType.FINGER_CYMBALS);
+                        metal.setType(MetalType.FINGER_CYMBALS);
                         break;
                     case "flexatone":
-                        metal.setValue(MetalType.FLEXATONE);
+                        metal.setType(MetalType.FLEXATONE);
                         break;
                     case "gong":
-                        metal.setValue(MetalType.GONG);
+                        metal.setType(MetalType.GONG);
                         break;
                     case "hi-hat":
-                        metal.setValue(MetalType.HI_HAT);
+                        metal.setType(MetalType.HI_HAT);
                         break;
                     case "high-hat cymbals":
-                        metal.setValue(MetalType.HI_HAT_CYMBALS);
+                        metal.setType(MetalType.HI_HAT_CYMBALS);
                         break;
                     case "handbell":
-                        metal.setValue(MetalType.HANDBELL);
+                        metal.setType(MetalType.HANDBELL);
                         break;
                     case "sistrum":
-                        metal.setValue(MetalType.SISTRUM);
+                        metal.setType(MetalType.SISTRUM);
                         break;
                     case "sizzle cymbal":
-                        metal.setValue(MetalType.SIZZLE_CYMBAL);
+                        metal.setType(MetalType.SIZZLE_CYMBAL);
                         break;
                     case "sleigh bells":
-                        metal.setValue(MetalType.SLEIGH_BELLS);
+                        metal.setType(MetalType.SLEIGH_BELLS);
                         break;
                     case "suspended cymbal":
-                        metal.setValue(MetalType.SUSPENDED_CYMBAL);
+                        metal.setType(MetalType.SUSPENDED_CYMBAL);
                         break;
                     case "tam tam":
-                        metal.setValue(MetalType.TAM_TAM);
+                        metal.setType(MetalType.TAM_TAM);
                         break;
                     case "triangle":
-                        metal.setValue(MetalType.TRIANGLE);
+                        metal.setType(MetalType.TRIANGLE);
                         break;
                     case "Vietnamese hat":
-                        metal.setValue(MetalType.VIETNAMESE_HAT);
+                        metal.setType(MetalType.VIETNAMESE_HAT);
                         break;
                 }
                 percussion = metal;
@@ -473,46 +473,46 @@ public class DirectionFactory {
                 Wood wood = new Wood();
                 switch (elementValue) {
                     case "board clapper":
-                        wood.setValue(WoodType.BOARD_CLAPPER);
+                        wood.setType(WoodType.BOARD_CLAPPER);
                         break;
                     case "cabasa":
-                        wood.setValue(WoodType.CABASA);
+                        wood.setType(WoodType.CABASA);
                         break;
                     case "castanets":
-                        wood.setValue(WoodType.CASTANETS);
+                        wood.setType(WoodType.CASTANETS);
                         break;
                     case "claves":
-                        wood.setValue(WoodType.CLAVES);
+                        wood.setType(WoodType.CLAVES);
                         break;
                     case "guiro":
-                        wood.setValue(WoodType.GUIRO);
+                        wood.setType(WoodType.GUIRO);
                         break;
                     case "log drum":
-                        wood.setValue(WoodType.LOG_DRUM);
+                        wood.setType(WoodType.LOG_DRUM);
                         break;
                     case "maraca":
-                        wood.setValue(WoodType.MARACA);
+                        wood.setType(WoodType.MARACA);
                         break;
                     case "maracas":
-                        wood.setValue(WoodType.MARACAS);
+                        wood.setType(WoodType.MARACAS);
                         break;
                     case "ratchet":
-                        wood.setValue(WoodType.RATCHET);
+                        wood.setType(WoodType.RATCHET);
                         break;
                     case "sandpaper blocks":
-                        wood.setValue(WoodType.SANDPAPER_BLOCKS);
+                        wood.setType(WoodType.SANDPAPER_BLOCKS);
                         break;
                     case "slit drum":
-                        wood.setValue(WoodType.SLIT_DRUM);
+                        wood.setType(WoodType.SLIT_DRUM);
                         break;
                     case "temple block":
-                        wood.setValue(WoodType.TEMPLE_BLOCK);
+                        wood.setType(WoodType.TEMPLE_BLOCK);
                         break;
                     case "vibraslap":
-                        wood.setValue(WoodType.VIBRASLAP);
+                        wood.setType(WoodType.VIBRASLAP);
                         break;
                     case "wood block":
-                        wood.setValue(WoodType.WOOD_BLOCK);
+                        wood.setType(WoodType.WOOD_BLOCK);
                         break;
                 }
                 percussion = wood;
@@ -521,25 +521,25 @@ public class DirectionFactory {
                 Pitched pitched = new Pitched();
                 switch (elementValue) {
                     case "chimes":
-                        pitched.setValue(PitchedType.CHIMES);
+                        pitched.setType(PitchedType.CHIMES);
                         break;
                     case "glockenspiel":
-                        pitched.setValue(PitchedType.GLOCKENSPIEL);
+                        pitched.setType(PitchedType.GLOCKENSPIEL);
                         break;
                     case "mallet":
-                        pitched.setValue(PitchedType.MALLET);
+                        pitched.setType(PitchedType.MALLET);
                         break;
                     case "marimba":
-                        pitched.setValue(PitchedType.MARIMBA);
+                        pitched.setType(PitchedType.MARIMBA);
                         break;
                     case "tubular chimes":
-                        pitched.setValue(PitchedType.TUBULAR_CHIMES);
+                        pitched.setType(PitchedType.TUBULAR_CHIMES);
                         break;
                     case "vibraphone":
-                        pitched.setValue(PitchedType.VIBRAPHONE);
+                        pitched.setType(PitchedType.VIBRAPHONE);
                         break;
                     case "xylophone":
-                        pitched.setValue(PitchedType.XYLOPHONE);
+                        pitched.setType(PitchedType.XYLOPHONE);
                         break;
                 }
                 percussion = pitched;
@@ -548,40 +548,40 @@ public class DirectionFactory {
                 Membrane membrane = new Membrane();
                 switch (elementValue) {
                     case "bass drum":
-                        membrane.setValue(MembraneType.BASS_DRUM);
+                        membrane.setType(MembraneType.BASS_DRUM);
                         break;
                     case "bass drum on side":
-                        membrane.setValue(MembraneType.BASS_DRUM_ON_SIDE);
+                        membrane.setType(MembraneType.BASS_DRUM_ON_SIDE);
                         break;
                     case "bongos":
-                        membrane.setValue(MembraneType.BONGOS);
+                        membrane.setType(MembraneType.BONGOS);
                         break;
                     case "conga drum":
-                        membrane.setValue(MembraneType.CONGA_DRUM);
+                        membrane.setType(MembraneType.CONGA_DRUM);
                         break;
                     case "goblet drum":
-                        membrane.setValue(MembraneType.GOBLET_DRUM);
+                        membrane.setType(MembraneType.GOBLET_DRUM);
                         break;
                     case "military drum":
-                        membrane.setValue(MembraneType.MILITARY_DRUM);
+                        membrane.setType(MembraneType.MILITARY_DRUM);
                         break;
                     case "snare drum":
-                        membrane.setValue(MembraneType.SNARE_DRUM);
+                        membrane.setType(MembraneType.SNARE_DRUM);
                         break;
                     case "snare drum snares off":
-                        membrane.setValue(MembraneType.SHARE_DRUM_SNARES_OFF);
+                        membrane.setType(MembraneType.SHARE_DRUM_SNARES_OFF);
                         break;
                     case "tambourine":
-                        membrane.setValue(MembraneType.TAMBOURINE);
+                        membrane.setType(MembraneType.TAMBOURINE);
                         break;
                     case "tenor drum":
-                        membrane.setValue(MembraneType.TENOR_DRUM);
+                        membrane.setType(MembraneType.TENOR_DRUM);
                         break;
                     case "timbales":
-                        membrane.setValue(MembraneType.TIMBALES);
+                        membrane.setType(MembraneType.TIMBALES);
                         break;
                     case "tomtom":
-                        membrane.setValue(MembraneType.TOMTOM);
+                        membrane.setType(MembraneType.TOMTOM);
                         break;
                 }
                 percussion = membrane;
@@ -590,46 +590,46 @@ public class DirectionFactory {
                 Effect effect = new Effect();
                 switch (elementValue) {
                     case "anvil":
-                        effect.setValue(EffectType.ANVIL);
+                        effect.setType(EffectType.ANVIL);
                         break;
                     case "auto horn":
-                        effect.setValue(EffectType.AUTO_HORN);
+                        effect.setType(EffectType.AUTO_HORN);
                         break;
                     case "bird whistle":
-                        effect.setValue(EffectType.BIRD_WHISTLE);
+                        effect.setType(EffectType.BIRD_WHISTLE);
                         break;
                     case "cannon":
-                        effect.setValue(EffectType.CANNON);
+                        effect.setType(EffectType.CANNON);
                         break;
                     case "duck call":
-                        effect.setValue(EffectType.DUCK_CALL);
+                        effect.setType(EffectType.DUCK_CALL);
                         break;
                     case "gun shot":
-                        effect.setValue(EffectType.GUN_SHOT);
+                        effect.setType(EffectType.GUN_SHOT);
                         break;
                     case "klaxon horn":
-                        effect.setValue(EffectType.KLAXON_HORN);
+                        effect.setType(EffectType.KLAXON_HORN);
                         break;
                     case "lions roar":
-                        effect.setValue(EffectType.LIONS_ROAR);
+                        effect.setType(EffectType.LIONS_ROAR);
                         break;
                     case "police whistle":
-                        effect.setValue(EffectType.POLICE_WHISTLE);
+                        effect.setType(EffectType.POLICE_WHISTLE);
                         break;
                     case "siren":
-                        effect.setValue(EffectType.SIREN);
+                        effect.setType(EffectType.SIREN);
                         break;
                     case "slide whistle":
-                        effect.setValue(EffectType.SLIDE_WHISTLE);
+                        effect.setType(EffectType.SLIDE_WHISTLE);
                         break;
                     case "thunder sheet":
-                        effect.setValue(EffectType.THUNDER_SHEET);
+                        effect.setType(EffectType.THUNDER_SHEET);
                         break;
                     case "wind machine":
-                        effect.setValue(EffectType.WIND_MACHINE);
+                        effect.setType(EffectType.WIND_MACHINE);
                         break;
                     case "wind whistle":
-                        effect.setValue(EffectType.WIND_WHISTLE);
+                        effect.setType(EffectType.WIND_WHISTLE);
                         break;
                 }
                 percussion = effect;
@@ -740,16 +740,16 @@ public class DirectionFactory {
                 StickLocation stickLocation = new StickLocation();
                 switch (elementValue) {
                     case "center":
-                        stickLocation.setValue(StickLocationType.CENTER);
+                        stickLocation.setType(StickLocationType.CENTER);
                         break;
                     case "rim":
-                        stickLocation.setValue(StickLocationType.RIM);
+                        stickLocation.setType(StickLocationType.RIM);
                         break;
                     case "cymbal bell":
-                        stickLocation.setValue(StickLocationType.CYMBAL_BELL);
+                        stickLocation.setType(StickLocationType.CYMBAL_BELL);
                         break;
                     case "cymbal edge":
-                        stickLocation.setValue(StickLocationType.CYMBAL_EDGE);
+                        stickLocation.setType(StickLocationType.CYMBAL_EDGE);
                         break;
                 }
                 percussion = stickLocation;

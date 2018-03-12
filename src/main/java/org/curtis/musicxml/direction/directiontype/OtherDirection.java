@@ -2,6 +2,7 @@ package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -9,7 +10,7 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue("other direction")
 public class OtherDirection extends DirectionType {
-    @Transient
+    @Column
     private String value;
     @Transient
     private Boolean printObject;

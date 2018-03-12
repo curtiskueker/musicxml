@@ -1,17 +1,27 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
+@DiscriminatorValue("wood")
 public class Wood extends Percussion {
-    private WoodType value;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private WoodType type;
 
     public Wood() {
 
     }
 
-    public WoodType getValue() {
-        return value;
+    public WoodType getType() {
+        return type;
     }
 
-    public void setValue(WoodType value) {
-        this.value = value;
+    public void setType(WoodType type) {
+        this.type = type;
     }
 }
