@@ -1,8 +1,23 @@
 package org.curtis.musicxml.barline;
 
-public class Repeat {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "barline_repeat")
+public class Repeat extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column
     private RepeatDirection direction;
+    @Column
     private Integer times;
+    @Enumerated(EnumType.STRING)
+    @Column
     private Winged winged;
 
     public Repeat() {

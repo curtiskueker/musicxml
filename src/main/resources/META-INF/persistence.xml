@@ -10,6 +10,9 @@
         <class>org.curtis.musicxml.attributes.Attributes</class>
         <class>org.curtis.musicxml.attributes.Image</class>
         <class>org.curtis.musicxml.barline.Barline</class>
+        <class>org.curtis.musicxml.barline.BarStyleColor</class>
+        <class>org.curtis.musicxml.barline.Ending</class>
+        <class>org.curtis.musicxml.barline.Repeat</class>
         <class>org.curtis.musicxml.common.Font</class>
         <class>org.curtis.musicxml.direction.Direction</class>
         <class>org.curtis.musicxml.direction.EditorialVoiceDirection</class>

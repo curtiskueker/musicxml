@@ -11,7 +11,7 @@ public class FormattingBuilder extends OutputBuilder {
         if (font == null) return "";
         clear();
 
-        buildElenent(elementName);
+        buildElement(elementName);
 
         return stringBuilder.toString();
     }

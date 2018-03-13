@@ -1,7 +1,21 @@
 package org.curtis.musicxml.barline;
 
-public class BarStyleColor {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "bar_style_color")
+public class BarStyleColor extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bar_style")
     private BarStyle barStyle;
+    @Transient
     private String color;
 
     public BarStyleColor() {

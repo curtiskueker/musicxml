@@ -1,5 +1,7 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
 import org.curtis.musicxml.builder.musicdata.DirectionBuilder;
 import org.curtis.musicxml.builder.musicdata.GroupingBuilder;
 import org.curtis.musicxml.builder.musicdata.HarmonyBuilder;
@@ -30,6 +32,7 @@ public class MeasureBuilder extends BaseBuilder {
             else if (musicData instanceof Harmony) baseBuilder = new HarmonyBuilder((Harmony)musicData);
             else if (musicData instanceof Print) baseBuilder = new PrintBuilder((Print)musicData);
             else if (musicData instanceof Sound) baseBuilder = new SoundBuilder((Sound)musicData);
+            else if (musicData instanceof Barline) baseBuilder = new BarlineBuilder((Barline)musicData);
             else if (musicData instanceof Grouping) baseBuilder = new GroupingBuilder((Grouping)musicData);
             if (baseBuilder != null) append(baseBuilder.build().toString());
         }

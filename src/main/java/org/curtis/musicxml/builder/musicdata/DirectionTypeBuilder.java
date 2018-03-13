@@ -83,19 +83,19 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildRehearsal(Rehearsal rehearsal) {
-        buildElenent("rehearsal");
+        buildElement("rehearsal");
     }
 
     private void buildSegno(Segno segno) {
-        buildElenent("segno");
+        buildElement("segno");
     }
 
     private void buildWords(Words words) {
-        buildElenent("words");
+        buildElement("words");
     }
 
     private void buildCoda(Coda coda) {
-        buildElenent("coda");
+        buildElement("coda");
     }
 
     private void buildWedge(Wedge wedge) {
@@ -103,11 +103,11 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildDynamics(Dynamics dynamics) {
-        buildElenent("dynamics");
+        buildElement("dynamics");
     }
 
     private void buildDashes(Dashes dashes) {
-        buildElenent("dashes");
+        buildElement("dashes");
     }
 
     private void buildBracket(Bracket bracket) {
@@ -137,52 +137,52 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildMetronomeNote(MetronomeNote metronomeNote) {
         for (MetronomeBeam metronomeBeam : metronomeNote.getMetronomeBeams()) {
-            buildElenent("metronome-beam");
+            buildElement("metronome-beam");
         }
-        buildElenent("metronome-tuplet");
+        buildElement("metronome-tuplet");
     }
 
     private void buildOctaveShift(OctaveShift octaveShift) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(octaveShift.getType()));
-        attributes.put("size", String.valueOf(octaveShift.getSize()));
+        attributes.put("size", BuilderUtil.stringValue(octaveShift.getSize()));
         buildElementWithAttributes("octave-shift", attributes);
     }
 
     private void buildHarpPedals(HarpPedals harpPedals) {
         appendLine("<harp-pedals>");
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
-            buildElenent("pedal-tuning");
+            buildElement("pedal-tuning");
         }
         appendLine("</harp-pedals>");
     }
 
     private void buildDamp(Damp damp) {
-        buildElenent("damp");
+        buildElement("damp");
     }
 
     private void buildDampAll(DampAll dampAll) {
-        buildElenent("damp-all");
+        buildElement("damp-all");
     }
 
     private void buildEyglasses(Eyeglasses eyeglasses) {
-        buildElenent("eyeglasses");
+        buildElement("eyeglasses");
     }
 
     private void buildStringMute(StringMute stringMute) {
-        buildElenent("string-mute");
+        buildElement("string-mute");
     }
 
     private void buildScordatura(Scordatura scordatura) {
         appendLine("<scordatura>");
         for (Accord accord : scordatura.getAccords()) {
-            buildElenent("accord");
+            buildElement("accord");
         }
         appendLine("</scordatura>");
     }
 
     private void buildImage(Image image) {
-        buildElenent("image");
+        buildElement("image");
     }
 
     private void buildPrincipalVoice(PrincipalVoice principalVoice) {
@@ -263,7 +263,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildTimpani(Timpani timpani) {
-        buildElenent("timpani");
+        buildElement("timpani");
     }
 
     private void buildBeater(Beater beater) {

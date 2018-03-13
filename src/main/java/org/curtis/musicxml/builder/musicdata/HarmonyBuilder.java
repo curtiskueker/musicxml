@@ -54,7 +54,7 @@ public class HarmonyBuilder extends BaseBuilder {
                 BassStep bassStep = bass.getBassStep();
                 buildElementWithAttribute("bass-step", "text", bassStep.getText());
                 BassAlter bassAlter = bass.getBassAlter();
-                if (bassAlter != null) buildElenent("bass-alter");
+                if (bassAlter != null) buildElement("bass-alter");
                 appendLine("</bass>");
             }
             for (Degree degree : harmonyChord.getDegrees()) {
@@ -64,7 +64,7 @@ public class HarmonyBuilder extends BaseBuilder {
                 attributes.put("symbol", BuilderUtil.enumValue(degreeValue.getSymbol()));
                 attributes.put("text", degreeValue.getText());
                 buildElementWithValueAndAttributes("degree-value", degreeValue.getValue(), attributes);
-                buildElenent("degree-alter");
+                buildElement("degree-alter");
                 DegreeType degreeType = degree.getDegreeType();
                 buildElementWithValueAndAttribute("degree-type", BuilderUtil.enumValue(degreeType.getValue()), "text", degreeType.getText());
                 appendLine("</degree>");
@@ -84,7 +84,7 @@ public class HarmonyBuilder extends BaseBuilder {
         for (FrameNote frameNote : frame.getFrameNotes()) {
             appendLine("<frame-note>");
             Barre barre = frameNote.getBarre();
-            if (barre != null) buildElenent("barre");
+            if (barre != null) buildElement("barre");
             appendLine("</frame-note>");
         }
         appendLine("</harmony>");
@@ -98,12 +98,12 @@ public class HarmonyBuilder extends BaseBuilder {
         buildElementWithAttribute("root-step", "text", rootStep.getText());
         RootAlter rootAlter = root.getRootAlter();
         if (rootAlter != null) {
-            buildElenent("root-alter");
+            buildElement("root-alter");
         }
         appendLine("</root>");
     }
 
     private void buildFunction(Function function) {
-        buildElenent("function");
+        buildElement("function");
     }
 }

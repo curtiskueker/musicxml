@@ -12,4 +12,8 @@ public class BuilderUtil {
 
         return value.toLowerCase().replace("_", "-");
     }
+
+    public static String stringValue(Integer integerValue) {
+        return integerValue == null ? "" : String.valueOf(integerValue);
+    }
 }

@@ -7,8 +7,14 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,13 +37,15 @@ public class Barline extends MusicData {
     private List<Fermata> fermataList = new ArrayList<>();
     @Transient
     private Ending ending;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "repeat_id")
     private Repeat repeat;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location location = Location.RIGHT;
-    @Transient
+    @Column
     private String segno;
-    @Transient
+    @Column
     private String coda;
     @Transient
     private BigDecimal divisions;

@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.util.StringUtil;
 
 import java.util.Map;
@@ -41,7 +42,7 @@ public abstract class OutputBuilder {
         buildAttribute(attributeName, String.valueOf(attributeValue));
     }
 
-    protected void buildElenent(String elementName) {
+    protected void buildElement(String elementName) {
         append("<");
         append(elementName);
         appendLine("/>");
@@ -72,6 +73,12 @@ public abstract class OutputBuilder {
         append(elementName);
         buildAttribute(attributeName, attributeValue);
         appendLine("/>");
+    }
+
+    protected void buildElementWithAttribute(String elementName, String attributeName, Integer attributeValue) {
+        if (attributeValue == null) return;
+
+        buildElementWithAttribute(elementName, attributeName, String.valueOf(attributeValue));
     }
 
     protected void buildElementWithAttributes(String elementName, Map<String, String> attributes) {
@@ -120,6 +127,6 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElementWithValueAndAttributes(String elementName, Integer elementValue, Map<String, String> attributes) {
-        buildElementWithValueAndAttributes(elementName, elementValue == null ? "" : String.valueOf(elementValue), attributes);
+        buildElementWithValueAndAttributes(elementName, BuilderUtil.stringValue(elementValue), attributes);
     }
 }

@@ -1,18 +1,36 @@
 package org.curtis.musicxml.barline;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Ending {
+@Entity
+@Table
+public class Ending extends DatabaseItem {
+    @Column
     private String value;
+    @Column
     private String number;
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
+    @Transient
     private Boolean printObject;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private BigDecimal endLength;
+    @Transient
     private BigDecimal textX;
+    @Transient
     private BigDecimal textY;
 
     public Ending() {
