@@ -1,10 +1,21 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 
-public class FirstFret {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "first_fret")
+public class FirstFret extends DatabaseItem {
+    @Column
     private Integer value;
+    @Column
     private String text;
+    @Transient
     private Location location;
 
     public FirstFret() {

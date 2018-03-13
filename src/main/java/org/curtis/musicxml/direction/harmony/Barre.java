@@ -1,9 +1,18 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 
-public class Barre {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table
+public class Barre extends DatabaseItem {
+    @Transient
     private Connection type;
+    @Transient
     private String color;
 
     public Barre() {

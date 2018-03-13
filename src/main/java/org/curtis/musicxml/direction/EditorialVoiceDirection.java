@@ -1,11 +1,21 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
 
-public class EditorialVoiceDirection {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "editorial_voice_direction")
+public class EditorialVoiceDirection extends DatabaseItem {
+    @Transient
     private FormattedText footnote;
+    @Transient
     private Level level;
+    @Transient
     private String voice;
 
     public EditorialVoiceDirection() {

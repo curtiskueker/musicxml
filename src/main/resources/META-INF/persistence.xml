@@ -12,6 +12,8 @@
         <class>org.curtis.musicxml.barline.Barline</class>
         <class>org.curtis.musicxml.common.Font</class>
         <class>org.curtis.musicxml.direction.Direction</class>
+        <class>org.curtis.musicxml.direction.EditorialVoiceDirection</class>
+        <class>org.curtis.musicxml.direction.Feature</class>
         <class>org.curtis.musicxml.direction.Grouping</class>
         <class>org.curtis.musicxml.direction.Offset</class>
         <class>org.curtis.musicxml.direction.Print</class>
@@ -63,6 +65,9 @@
         <class>org.curtis.musicxml.direction.harmony.DegreeAlter</class>
         <class>org.curtis.musicxml.direction.harmony.DegreeType</class>
         <class>org.curtis.musicxml.direction.harmony.DegreeValue</class>
+        <class>org.curtis.musicxml.direction.harmony.FirstFret</class>
+        <class>org.curtis.musicxml.direction.harmony.Frame</class>
+        <class>org.curtis.musicxml.direction.harmony.FrameNote</class>
         <class>org.curtis.musicxml.direction.harmony.Harmony</class>
         <class>org.curtis.musicxml.direction.harmony.HarmonyChord</class>
         <class>org.curtis.musicxml.direction.harmony.Inversion</class>

@@ -1,23 +1,51 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame {
+@Entity
+@Table
+public class Frame extends DatabaseItem {
+    @Column(name = "frame_strings")
     private Integer frameStrings;
+    @Column(name = "frame_frets")
     private Integer frameFrets;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "first_fret_id")
     private FirstFret firstFret;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "frame_id", nullable = false)
     private List<FrameNote> frameNotes = new ArrayList<>();
+    @Transient
     private Position position;
+    @Transient
     private String color;
+    @Transient
     private Location halign;
+    @Transient
     private Location valignImage;
+    @Transient
     private BigDecimal height;
+    @Transient
     private BigDecimal width;
+    @Column
     private String unplayed;
 
     public Frame() {

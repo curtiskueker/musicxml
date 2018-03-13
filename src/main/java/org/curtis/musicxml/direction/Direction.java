@@ -24,7 +24,8 @@ public class Direction extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
     private Offset offset;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_voice_direction_id")
     private EditorialVoiceDirection editorialVoiceDirection;
     @Transient
     private Integer staff;

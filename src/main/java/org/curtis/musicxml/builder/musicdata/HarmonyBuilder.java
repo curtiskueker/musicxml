@@ -2,12 +2,16 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.direction.harmony.Barre;
 import org.curtis.musicxml.direction.harmony.Bass;
 import org.curtis.musicxml.direction.harmony.BassAlter;
 import org.curtis.musicxml.direction.harmony.BassStep;
 import org.curtis.musicxml.direction.harmony.Degree;
 import org.curtis.musicxml.direction.harmony.DegreeType;
 import org.curtis.musicxml.direction.harmony.DegreeValue;
+import org.curtis.musicxml.direction.harmony.FirstFret;
+import org.curtis.musicxml.direction.harmony.Frame;
+import org.curtis.musicxml.direction.harmony.FrameNote;
 import org.curtis.musicxml.direction.harmony.Function;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.direction.harmony.HarmonyChord;
@@ -65,6 +69,23 @@ public class HarmonyBuilder extends BaseBuilder {
                 buildElementWithValueAndAttribute("degree-type", BuilderUtil.enumValue(degreeType.getValue()), "text", degreeType.getText());
                 appendLine("</degree>");
             }
+        }
+        Frame frame = harmony.getFrame();
+        if (frame != null) {
+            append("<frame");
+            buildAttribute("unplayed", frame.getUnplayed());
+            appendLine(">");
+            buildElementWithValue("frame-strings", frame.getFrameStrings());
+            buildElementWithValue("frame-frets", frame.getFrameFrets());
+            FirstFret firstFret = frame.getFirstFret();
+            if (firstFret != null) buildElementWithValueAndAttribute("first-fret", firstFret.getValue(), "text", firstFret.getText());
+            appendLine("</frame>");
+        }
+        for (FrameNote frameNote : frame.getFrameNotes()) {
+            appendLine("<frame-note>");
+            Barre barre = frameNote.getBarre();
+            if (barre != null) buildElenent("barre");
+            appendLine("</frame-note>");
         }
         appendLine("</harmony>");
 

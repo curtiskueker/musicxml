@@ -9,8 +9,6 @@ import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.w3c.dom.Element;
 
-import java.util.List;
-
 public class PrintHandler extends MusicDataHandler {
     public PrintHandler() {
 

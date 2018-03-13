@@ -1,7 +1,17 @@
 package org.curtis.musicxml.direction;
 
-public class Feature {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table
+public class Feature extends DatabaseItem {
+    @Column
     private String value;
+    @Column
     private String type;
 
     public Feature() {

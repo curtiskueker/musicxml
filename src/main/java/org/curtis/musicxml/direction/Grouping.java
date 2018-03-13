@@ -2,9 +2,16 @@ package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.score.MusicData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +19,15 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("grouping")
 public class Grouping extends MusicData {
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "grouping_id", nullable = false)
     private List<Feature> features = new ArrayList<>();
     @Transient
     private Connection type;
-    @Transient
+    @Column
     private String number = "1";
-    @Transient
+    @Column(name = "number_of")
     private String numberOf;
 
     public Grouping() {

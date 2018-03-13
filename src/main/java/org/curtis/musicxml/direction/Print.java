@@ -1,15 +1,18 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.NameDisplay;
+import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @DiscriminatorValue("print")
@@ -18,8 +21,11 @@ public class Print extends MusicData {
     private Layout layout;
     @Transient
     private MeasureLayout measureLayout;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "measure_numbering_value")
+    private MeasureNumberingType measureNumberingValue;
     @Transient
-    private List<MeasureNumbering> measureNumberings;
+    private PrintStyleAlign printStyleAlign;
     @Transient
     private NameDisplay partNameDisplay;
     @Transient
@@ -30,9 +36,9 @@ public class Print extends MusicData {
     private Boolean newSystem = false;
     @Transient
     private Boolean newPage = false;
-    @Transient
+    @Column(name = "blank_page")
     private Integer blankPage;
-    @Transient
+    @Column(name = "page_number")
     private String pageNumber;
 
     public Print() {
@@ -55,12 +61,20 @@ public class Print extends MusicData {
         this.measureLayout = measureLayout;
     }
 
-    public List<MeasureNumbering> getMeasureNumberings() {
-        return measureNumberings;
+    public MeasureNumberingType getMeasureNumberingValue() {
+        return measureNumberingValue;
     }
 
-    public void setMeasureNumberings(List<MeasureNumbering> measureNumberings) {
-        this.measureNumberings = measureNumberings;
+    public void setMeasureNumberingValue(MeasureNumberingType measureNumberingValue) {
+        this.measureNumberingValue = measureNumberingValue;
+    }
+
+    public PrintStyleAlign getPrintStyleAlign() {
+        return printStyleAlign;
+    }
+
+    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        this.printStyleAlign = printStyleAlign;
     }
 
     public NameDisplay getPartNameDisplay() {
