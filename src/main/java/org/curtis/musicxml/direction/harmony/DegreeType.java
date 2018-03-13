@@ -1,10 +1,24 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 
-public class DegreeType {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "degree_type")
+public class DegreeType extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column
     private DegreeTypeValue value;
+    @Column
     private String text;
+    @Transient
     private PrintStyle printStyle;
 
     public DegreeType() {

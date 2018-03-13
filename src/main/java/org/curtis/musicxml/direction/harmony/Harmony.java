@@ -5,9 +5,18 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.score.MusicData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,7 +25,9 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("harmony")
 public class Harmony extends MusicData {
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "harmony_id", nullable = false)
     private List<HarmonyChord> harmonyChords = new ArrayList<>();
     @Transient
     private Frame frame;
@@ -26,7 +37,8 @@ public class Harmony extends MusicData {
     private Editorial editorial;
     @Transient
     private Integer staff;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private HarmonyType type;
     @Transient
     private Boolean printObject;

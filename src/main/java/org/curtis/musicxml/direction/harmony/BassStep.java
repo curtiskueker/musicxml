@@ -1,11 +1,22 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.Step;
 
-public class BassStep {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "bass_step")
+public class BassStep extends DatabaseItem {
+    @Transient
     private Step step;
+    @Column
     private String text;
+    @Transient
     private PrintStyle printStyle;
 
     public BassStep() {

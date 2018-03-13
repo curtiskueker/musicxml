@@ -1,12 +1,21 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class DegreeAlter {
+@Entity
+@Table(name = "degree_alter")
+public class DegreeAlter extends DatabaseItem {
+    @Transient
     private BigDecimal semitones;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Boolean plusMinus;
 
     public DegreeAlter() {

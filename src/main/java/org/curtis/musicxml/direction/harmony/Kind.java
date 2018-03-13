@@ -1,17 +1,37 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Location;
 
-public class Kind {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table
+public class Kind extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "kind_value")
     private KindValue kindValue;
+    @Transient
     private Boolean useSymbols;
+    @Column
     private String text;
+    @Transient
     private Boolean stackDegrees;
+    @Transient
     private Boolean parenthesesDegrees;
+    @Transient
     private Boolean bracketDegrees;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location halign;
+    @Transient
     private Location valign;
 
     public Kind() {

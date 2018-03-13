@@ -1,14 +1,24 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class RootAlter {
+@Entity
+@Table(name = "root_alter")
+public class RootAlter extends DatabaseItem {
+    @Transient
     private BigDecimal semitones;
+    @Transient
     private Boolean printObject;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location location;
 
     public RootAlter() {

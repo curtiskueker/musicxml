@@ -1,12 +1,37 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class HarmonyChord {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "harmony_chord")
+@DiscriminatorColumn(name = "harmony_chord_type")
+public abstract class HarmonyChord extends DatabaseItem {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "kind_id")
     private Kind kind;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inversion_id")
     private Inversion inversion;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bass_id")
     private Bass bass;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "harmony_chord_id", nullable = false)
     private List<Degree> degrees = new ArrayList<>();
 
     public Kind getKind() {

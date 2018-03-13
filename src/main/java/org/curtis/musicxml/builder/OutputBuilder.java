@@ -97,4 +97,29 @@ public abstract class OutputBuilder {
         append(elementName);
         appendLine(">");
     }
+
+    protected void buildElementWithValueAndAttribute(String elementName, Integer elementValue, String attributeName, String attributeValue) {
+        if (elementValue == null) return;
+
+        buildElementWithValueAndAttribute(elementName, String.valueOf(elementValue), attributeName, attributeValue);
+    }
+
+    protected void buildElementWithValueAndAttributes(String elementName, String elementValue, Map<String, String> attributes) {
+        append("<");
+        append(elementName);
+        if (attributes != null && !attributes.isEmpty()) {
+            for (String attributeName : attributes.keySet()) {
+                buildAttribute(attributeName, attributes.get(attributeName));
+            }
+        }
+        append(">");
+        if (StringUtil.isNotEmpty(elementValue)) append(elementValue);
+        append("</");
+        append(elementName);
+        appendLine(">");
+    }
+
+    protected void buildElementWithValueAndAttributes(String elementName, Integer elementValue, Map<String, String> attributes) {
+        buildElementWithValueAndAttributes(elementName, elementValue == null ? "" : String.valueOf(elementValue), attributes);
+    }
 }

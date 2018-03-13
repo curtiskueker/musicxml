@@ -56,7 +56,19 @@
         <class>org.curtis.musicxml.direction.directiontype.percussion.StickLocation</class>
         <class>org.curtis.musicxml.direction.directiontype.percussion.Timpani</class>
         <class>org.curtis.musicxml.direction.directiontype.percussion.Wood</class>
+        <class>org.curtis.musicxml.direction.harmony.Bass</class>
+        <class>org.curtis.musicxml.direction.harmony.BassAlter</class>
+        <class>org.curtis.musicxml.direction.harmony.BassStep</class>
+        <class>org.curtis.musicxml.direction.harmony.Degree</class>
+        <class>org.curtis.musicxml.direction.harmony.DegreeAlter</class>
+        <class>org.curtis.musicxml.direction.harmony.DegreeType</class>
+        <class>org.curtis.musicxml.direction.harmony.DegreeValue</class>
         <class>org.curtis.musicxml.direction.harmony.Harmony</class>
+        <class>org.curtis.musicxml.direction.harmony.HarmonyChord</class>
+        <class>org.curtis.musicxml.direction.harmony.Inversion</class>
+        <class>org.curtis.musicxml.direction.harmony.Kind</class>
+        <class>org.curtis.musicxml.direction.harmony.RootAlter</class>
+        <class>org.curtis.musicxml.direction.harmony.RootStep</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
         <class>org.curtis.musicxml.link.Link</class>
         <class>org.curtis.musicxml.note.Backup</class>

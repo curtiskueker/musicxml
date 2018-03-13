@@ -1,9 +1,19 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 
-public class Inversion {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table
+public class Inversion extends DatabaseItem {
+    @Column
     private Integer value;
+    @Transient
     private PrintStyle printStyle;
 
     public Inversion() {

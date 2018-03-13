@@ -1,7 +1,17 @@
 package org.curtis.musicxml.direction.harmony;
 
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@DiscriminatorValue("root")
 public class Root extends HarmonyChord {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "root_step_id")
     private RootStep rootStep;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "root_alter_id")
     private RootAlter rootAlter;
 
     public Root() {
