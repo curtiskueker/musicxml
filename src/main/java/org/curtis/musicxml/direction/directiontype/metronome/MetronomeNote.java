@@ -2,6 +2,8 @@ package org.curtis.musicxml.direction.directiontype.metronome;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.note.NoteTypeValue;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +28,7 @@ public class MetronomeNote extends DatabaseItem {
     @Transient
     private Integer metronomeDots = 0;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "metronome_note_id", nullable = false)
     private List<MetronomeBeam> metronomeBeams = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)

@@ -2,6 +2,8 @@ package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.direction.Sound;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +24,7 @@ import java.util.TreeSet;
 @Table(name = "measure")
 public class Measure extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "measure_id", nullable = false)
     private List<MusicData> musicDataList = new ArrayList<>();
     @Column

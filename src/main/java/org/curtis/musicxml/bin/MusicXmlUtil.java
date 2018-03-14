@@ -3,7 +3,9 @@ package org.curtis.musicxml.bin;
 import org.curtis.database.DBException;
 import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
+import org.curtis.musicxml.builder.ScoreBuilder;
 import org.curtis.musicxml.handler.ScoreHandler;
+import org.curtis.musicxml.score.Score;
 import org.curtis.properties.AppProperties;
 import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
@@ -30,5 +32,14 @@ public class MusicXmlUtil {
         DBSessionFactory sessionFactory = DBSessionFactory.getInstance();
 
         return sessionFactory.getTransaction();
+    }
+
+    public static String getXmlResults(Score score) throws XmlException {
+        ScoreBuilder scoreBuilder = new ScoreBuilder(score);
+        String results = scoreBuilder.build().toString();
+
+        //SchemaValidator.getInstance().validate(results);
+
+        return results;
     }
 }

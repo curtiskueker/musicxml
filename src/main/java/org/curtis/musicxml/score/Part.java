@@ -1,6 +1,8 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ public class Part extends DatabaseItem {
     @Column(name = "part_id")
     private String partId;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "part_id", nullable = false)
     private List<Measure> measures = new ArrayList<>();
     @Transient

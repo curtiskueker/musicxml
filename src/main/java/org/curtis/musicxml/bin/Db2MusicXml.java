@@ -3,15 +3,11 @@ package org.curtis.musicxml.bin;
 import org.curtis.database.DBException;
 import org.curtis.database.DBTransaction;
 import org.curtis.exception.FileException;
-import org.curtis.musicxml.builder.ScoreBuilder;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.score.Score;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
-import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
-import org.curtis.xml.XmlUtil;
-import org.w3c.dom.Document;
 
 public class Db2MusicXml {
     public static Integer SCORE_ID;
@@ -28,16 +24,14 @@ public class Db2MusicXml {
                 throw new MusicXmlException("Score not found");
             }
 
-            ScoreBuilder scoreBuilder = new ScoreBuilder(score);
-            String results = scoreBuilder.build().toString();
-
-            Document xmlDocument = XmlUtil.stringToDocument(results);
-            SchemaValidator.getInstance().validate(xmlDocument);
+            String results = MusicXmlUtil.getXmlResults(score);
 
             FileUtil.stringToFile(results, OUTPUT_FILE);
         } catch (DBException | FileException | XmlException e) {
             e.printStackTrace();
             throw new MusicXmlException(e);
+        } catch (Throwable e){
+            e.printStackTrace();
         } finally {
             System.exit(0);
         }

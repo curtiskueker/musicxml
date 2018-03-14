@@ -1,6 +1,8 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
@@ -31,6 +33,7 @@ public abstract class HarmonyChord extends DatabaseItem {
     @JoinColumn(name = "bass_id")
     private Bass bass;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "harmony_chord_id", nullable = false)
     private List<Degree> degrees = new ArrayList<>();
 
