@@ -40,7 +40,10 @@ public class NoteBuilder extends BaseBuilder {
         Grace grace = note.getGrace();
         if (grace != null) buildElement("grace");
         buildFullNote(note.getFullNote());
-        for (Tie tie : note.getTies()) buildElement("tie");
+        // TODO: duration
+        buildElementWithValue("duration", 1);
+        // TODO: tie type
+        for (Tie tie : note.getTies()) buildElementWithAttribute("tie", "type", "start");
         String instrument = note.getInstrument();
         if (StringUtil.isNotEmpty(instrument)) buildElementWithAttribute("instrument", "id", instrument);
         NoteType noteType = note.getType();
@@ -48,9 +51,15 @@ public class NoteBuilder extends BaseBuilder {
             buildElementWithValue("type", BuilderUtil.noteTypeValue(noteType.getValue()));
         }
         Accidental accidental = note.getAccidental();
-        if (accidental != null) buildElement("accidental");
-        NoteBuilder noteBuilder = new NoteBuilder();
-        append(noteBuilder.buildTimeModification(note.getTimeModification()).toString());
+        // TODO: accidental-value
+        if (accidental != null) buildElementWithValue("accidental", "sharp");
+        TimeModification timeModification = note.getTimeModification();
+        if (timeModification != null) {
+            appendLine("<time-modification>");
+            NoteBuilder noteBuilder = new NoteBuilder();
+            append(noteBuilder.buildTimeModification(note.getTimeModification()).toString());
+            appendLine("</time-modification>");
+        }
         Stem stem = note.getStem();
         if (stem != null) {
             buildElementWithValue("stem", BuilderUtil.enumValue(stem.getType()));
@@ -89,6 +98,7 @@ public class NoteBuilder extends BaseBuilder {
         FullNoteType fullNoteType = fullNote.getFullNoteType();
         if (fullNoteType instanceof Pitch) buildPitch((Pitch)fullNoteType);
         else if (fullNoteType instanceof Unpitched) buildUnpitched((Unpitched)fullNoteType);
+        else if (fullNoteType instanceof Rest) buildRest((Rest)fullNoteType);
     }
 
     private void buildPitch(Pitch pitch) {

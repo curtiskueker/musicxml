@@ -38,7 +38,7 @@ public class MusicXmlUtil {
         ScoreBuilder scoreBuilder = new ScoreBuilder(score);
         String results = scoreBuilder.build().toString();
 
-        //SchemaValidator.getInstance().validate(results);
+        SchemaValidator.getInstance().validate(results);
 
         return results;
     }
