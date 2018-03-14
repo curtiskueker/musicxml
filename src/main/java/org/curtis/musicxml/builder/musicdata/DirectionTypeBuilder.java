@@ -29,6 +29,7 @@ import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
+import org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet;
 import org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome;
 import org.curtis.musicxml.direction.directiontype.percussion.Beater;
 import org.curtis.musicxml.direction.directiontype.percussion.Effect;
@@ -126,7 +127,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildBeatMetronome(BeatMetronome beatMetronome) {
+        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatMetronome.getBeatUnit1().getBeatUnit()));
         buildElementWithValue("per-minute", beatMetronome.getPerMinute().getPerMinute());
+        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatMetronome.getBeatUnit2().getBeatUnit()));
     }
 
     private void buildNoteMetronome(NoteMetronome noteMetronome) {
@@ -136,10 +139,17 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildMetronomeNote(MetronomeNote metronomeNote) {
+        buildElementWithValue("metronome-type", BuilderUtil.noteTypeValue(metronomeNote.getMetronomeType()));
         for (MetronomeBeam metronomeBeam : metronomeNote.getMetronomeBeams()) {
-            buildElement("metronome-beam");
+            buildElementWithValueAndAttribute("metronome-beam", NoteBuilder.buildBeamType(metronomeBeam.getBeamType()), "number", metronomeBeam.getNumber());
         }
-        buildElement("metronome-tuplet");
+        MetronomeTuplet metronomeTuplet = metronomeNote.getMetronomeTuplet();
+        if (metronomeTuplet != null) {
+            appendLine("<metronome-tuplet>");
+            NoteBuilder noteBuilder = new NoteBuilder();
+            append(noteBuilder.buildTimeModification(metronomeTuplet.getTimeModification()).toString());
+            appendLine("<metronome-tuplet>");
+        }
     }
 
     private void buildOctaveShift(OctaveShift octaveShift) {

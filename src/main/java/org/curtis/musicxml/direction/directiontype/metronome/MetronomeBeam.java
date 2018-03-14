@@ -3,28 +3,31 @@ package org.curtis.musicxml.direction.directiontype.metronome;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.note.BeamType;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "metronome_beam")
 public class MetronomeBeam extends DatabaseItem {
-    @Transient
-    private BeamType beamValue;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "beam_type")
+    private BeamType beamType;
+    @Column
     private Integer number = 1;
 
     public MetronomeBeam() {
 
     }
 
-    public BeamType getBeamValue() {
-        return beamValue;
+    public BeamType getBeamType() {
+        return beamType;
     }
 
-    public void setBeamValue(BeamType beamValue) {
-        this.beamValue = beamValue;
+    public void setBeamType(BeamType beamType) {
+        this.beamType = beamType;
     }
 
     public Integer getNumber() {

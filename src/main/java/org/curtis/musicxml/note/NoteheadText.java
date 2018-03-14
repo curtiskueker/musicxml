@@ -1,31 +1,16 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.musicxml.common.FormattedText;
+import org.curtis.database.DatabaseItem;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
-public class NoteheadText {
-    private List<FormattedText> displayTextList = new ArrayList<>();
-    private List<AccidentalText> accidentalTextList = new ArrayList<>();
-
-    public NoteheadText() {
-
-    }
-
-    public List<FormattedText> getDisplayTextList() {
-        return displayTextList;
-    }
-
-    public void setDisplayTextList(List<FormattedText> displayTextList) {
-        this.displayTextList = displayTextList;
-    }
-
-    public List<AccidentalText> getAccidentalTextList() {
-        return accidentalTextList;
-    }
-
-    public void setAccidentalTextList(List<AccidentalText> accidentalTextList) {
-        this.accidentalTextList = accidentalTextList;
-    }
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "notehead_text")
+@DiscriminatorColumn(name = "notehead_text_type")
+public abstract class NoteheadText extends DatabaseItem {
 }

@@ -4,7 +4,10 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.note.NoteTypeValue;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -17,7 +20,8 @@ import java.util.List;
 @Entity
 @Table(name = "metronome_note")
 public class MetronomeNote extends DatabaseItem {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "metronome_type")
     private NoteTypeValue metronomeType;
     @Transient
     private Integer metronomeDots = 0;

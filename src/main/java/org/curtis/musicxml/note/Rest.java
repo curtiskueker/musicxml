@@ -1,8 +1,17 @@
 package org.curtis.musicxml.note;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("rest")
 public class Rest extends FullNoteType {
+    @Transient
     private Step displayStep;
+    @Transient
     private Integer displayOctave;
+    @Transient
     private Boolean measure = false;
 
     public Rest() {

@@ -105,6 +105,11 @@ public abstract class OutputBuilder {
         appendLine(">");
     }
 
+    protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, Integer attributeValue) {
+        buildElementWithValueAndAttribute(elementName, elementValue, attributeName, BuilderUtil.stringValue(attributeValue));
+    }
+
+
     protected void buildElementWithValueAndAttribute(String elementName, Integer elementValue, String attributeName, String attributeValue) {
         if (elementValue == null) return;
 

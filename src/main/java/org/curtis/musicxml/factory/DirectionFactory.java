@@ -342,7 +342,7 @@ public class DirectionFactory {
                             case "metronome-beam":
                                 List<MetronomeBeam> metronomeBeams = metronomeNote.getMetronomeBeams();
                                 MetronomeBeam metronomeBeam = new MetronomeBeam();
-                                metronomeBeam.setBeamValue(NoteFactory.newBeamType(metronomeNoteElement));
+                                metronomeBeam.setBeamType(NoteFactory.newBeamType(metronomeNoteElement));
                                 Integer beamNumber = StringUtil.getInteger(metronomeNoteElement.getAttribute("number"));
                                 if (beamNumber != null) {
                                     metronomeBeam.setNumber(beamNumber);

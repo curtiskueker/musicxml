@@ -1,9 +1,22 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.SymbolSize;
 
-public class NoteType {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "note_type")
+public class NoteType extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column
     private NoteTypeValue value;
+    @Transient
     private SymbolSize size;
 
     public NoteType() {

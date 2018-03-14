@@ -1,10 +1,24 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 
-public class FullNote {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "full_note")
+public class FullNote extends DatabaseItem {
+    @Transient
     private Boolean chord = false;
+    @Transient
     private Connection chordType;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "full_note_type_id")
     private FullNoteType fullNoteType;
 
     public Boolean isChord() {

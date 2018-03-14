@@ -12,9 +12,19 @@ import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,37 +34,50 @@ import java.util.stream.Collectors;
 @Entity
 @DiscriminatorValue("note")
 public class Note extends MusicData {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "grace_id")
     private Grace grace;
     @Transient
     private Boolean cue = false;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "full_note_id")
     private FullNote fullNote;
     @Transient
     private BigDecimal duration = MathUtil.ZERO;
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "note_id", nullable = false)
     private List<Tie> ties = new ArrayList<>();
-    @Transient
+    @Column
     private String instrument;
     @Transient
     private EditorialVoice editorialVoice = new EditorialVoice();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id")
     private NoteType type;
     @Transient
     private List<Placement> dots = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accidental_id")
     private Accidental accidental;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "time_modification_id")
     private TimeModification timeModification;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sted_id")
     private Stem stem;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "notehead_id")
     private Notehead notehead;
-    @Transient
-    private NoteheadText noteheadText;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "note_id", nullable = false)
+    private List<NoteheadText> noteheadTextList = new ArrayList<>();
     @Transient
     private Integer staff;
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "note_id", nullable = false)
     private List<Beam> beams = new ArrayList<>();
     @Transient
     private Boolean isBeginBeam = false;
@@ -203,12 +226,12 @@ public class Note extends MusicData {
         this.notehead = notehead;
     }
 
-    public NoteheadText getNoteheadText() {
-        return noteheadText;
+    public List<NoteheadText> getNoteheadTextList() {
+        return noteheadTextList;
     }
 
-    public void setNoteheadText(NoteheadText noteheadText) {
-        this.noteheadText = noteheadText;
+    public void setNoteheadTextList(List<NoteheadText> noteheadTextList) {
+        this.noteheadTextList = noteheadTextList;
     }
 
     public Integer getStaff() {

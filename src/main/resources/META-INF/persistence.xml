@@ -79,10 +79,25 @@
         <class>org.curtis.musicxml.direction.harmony.RootStep</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
         <class>org.curtis.musicxml.link.Link</class>
+        <class>org.curtis.musicxml.note.Accidental</class>
         <class>org.curtis.musicxml.note.Backup</class>
+        <class>org.curtis.musicxml.note.Beam</class>
         <class>org.curtis.musicxml.note.FiguredBass</class>
         <class>org.curtis.musicxml.note.Forward</class>
+        <class>org.curtis.musicxml.note.FullNote</class>
+        <class>org.curtis.musicxml.note.FullNoteType</class>
+        <class>org.curtis.musicxml.note.Grace</class>
         <class>org.curtis.musicxml.note.Note</class>
+        <class>org.curtis.musicxml.note.Notehead</class>
+        <class>org.curtis.musicxml.note.NoteheadAccidentalText</class>
+        <class>org.curtis.musicxml.note.NoteheadDisplayText</class>
+        <class>org.curtis.musicxml.note.NoteheadText</class>
+        <class>org.curtis.musicxml.note.NoteType</class>
+        <class>org.curtis.musicxml.note.Pitch</class>
+        <class>org.curtis.musicxml.note.Rest</class>
+        <class>org.curtis.musicxml.note.Tie</class>
+        <class>org.curtis.musicxml.note.TimeModification</class>
+        <class>org.curtis.musicxml.note.Unpitched</class>
         <class>org.curtis.musicxml.score.Credit</class>
         <class>org.curtis.musicxml.score.Defaults</class>
         <class>org.curtis.musicxml.score.GroupBarline</class>

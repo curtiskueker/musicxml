@@ -1,14 +1,25 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Grace {
+@Entity
+@Table
+public class Grace extends DatabaseItem {
+    @Transient
     private Connection graceType;
+    @Transient
     private BigDecimal stealTimePrevious;
+    @Transient
     private BigDecimal stealTimeFollowing;
+    @Transient
     private BigDecimal makeTime;
+    @Transient
     private Boolean slash;
 
     public Grace() {

@@ -1,13 +1,25 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.PrintStyle;
 
-public class Accidental {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table
+public class Accidental extends DatabaseItem {
+    @Transient
     private AccidentalType accidentalType;
+    @Transient
     private Boolean cautionary;
+    @Transient
     private Boolean editorial;
+    @Transient
     private LevelDisplay levelDisplay;
+    @Transient
     private PrintStyle printStyle;
 
     public Accidental() {

@@ -5,14 +5,18 @@ import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "metronome_tuplet")
 public class MetronomeTuplet extends DatabaseItem {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "time_modification_id")
     private TimeModification timeModification;
     @Transient
     private Connection type;

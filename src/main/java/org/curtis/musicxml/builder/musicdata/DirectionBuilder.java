@@ -39,9 +39,9 @@ public class DirectionBuilder extends BaseBuilder {
     }
 
     public StringBuilder buildOffset(Offset offset) {
+        clear();
         if (offset == null) return stringBuilder;
 
-        clear();
         // TODO offset value
         buildElementWithValue("offset", 0);
 
