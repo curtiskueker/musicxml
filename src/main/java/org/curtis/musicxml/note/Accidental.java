@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "accidental")
 public class Accidental extends DatabaseItem {
     @Transient
     private AccidentalType accidentalType;

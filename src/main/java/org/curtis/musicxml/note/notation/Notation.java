@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table
+@Table(name = "notation")
 @DiscriminatorColumn(name = "notation_type")
 public abstract class Notation extends DatabaseItem {
     @Transient

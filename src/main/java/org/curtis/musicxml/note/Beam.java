@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "beam")
 public class Beam extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column

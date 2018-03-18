@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "feature")
 public class Feature extends DatabaseItem {
     @Column
     private String value;

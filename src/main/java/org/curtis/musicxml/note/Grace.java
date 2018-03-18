@@ -9,7 +9,7 @@ import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
-@Table
+@Table(name = "grace")
 public class Grace extends DatabaseItem {
     @Transient
     private Connection graceType;

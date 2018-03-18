@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "notehead")
 public class Notehead extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column

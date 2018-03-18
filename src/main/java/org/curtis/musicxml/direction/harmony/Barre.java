@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "barre")
 public class Barre extends DatabaseItem {
     @Transient
     private Connection type;

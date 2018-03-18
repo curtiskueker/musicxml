@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
-@Table
+@Table(name = "ending")
 public class Ending extends DatabaseItem {
     @Column
     private String value;

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "frame")
 public class Frame extends DatabaseItem {
     @Column(name = "frame_strings")
     private Integer frameStrings;

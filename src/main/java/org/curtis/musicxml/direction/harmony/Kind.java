@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "kind")
 public class Kind extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "kind_value")

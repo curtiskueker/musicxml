@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "inversion")
 public class Inversion extends DatabaseItem {
     @Column
     private Integer value;

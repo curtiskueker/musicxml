@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "accord")
 public class Accord extends DatabaseItem {
     @Transient
     private Tuning tuning;

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "notations")
 public class Notations extends DatabaseItem {
     @Transient
     private Editorial editorial;
