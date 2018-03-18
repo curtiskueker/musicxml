@@ -2,9 +2,18 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("fermata")
 public class Fermata extends Notation {
+    @Transient
     private FermataShape fermataShape;
+    @Transient
     private FermataType type;
+    @Transient
     private PrintStyle printStyle;
 
     public Fermata() {

@@ -3,11 +3,22 @@ package org.curtis.musicxml.note.notation;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("non arpeggiate")
 public class NonArpeggiate extends Notation {
+    @Transient
     private Location type;
+    @Transient
     private Integer number;
+    @Transient
     private Position position;
+    @Transient
     private Location placement;
+    @Transient
     private String color;
 
     public NonArpeggiate() {

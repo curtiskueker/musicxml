@@ -87,6 +87,7 @@
         <class>org.curtis.musicxml.note.FullNote</class>
         <class>org.curtis.musicxml.note.FullNoteType</class>
         <class>org.curtis.musicxml.note.Grace</class>
+        <class>org.curtis.musicxml.note.Notations</class>
         <class>org.curtis.musicxml.note.Note</class>
         <class>org.curtis.musicxml.note.Notehead</class>
         <class>org.curtis.musicxml.note.NoteheadAccidentalText</class>
@@ -97,6 +98,24 @@
         <class>org.curtis.musicxml.note.Rest</class>
         <class>org.curtis.musicxml.note.Tie</class>
         <class>org.curtis.musicxml.note.TimeModification</class>
+        <class>org.curtis.musicxml.note.notation.AccidentalMark</class>
+        <class>org.curtis.musicxml.note.notation.Arpeggiate</class>
+        <class>org.curtis.musicxml.note.notation.Articulations</class>
+        <class>org.curtis.musicxml.note.notation.Fermata</class>
+        <class>org.curtis.musicxml.note.notation.Glissando</class>
+        <class>org.curtis.musicxml.note.notation.NonArpeggiate</class>
+        <class>org.curtis.musicxml.note.notation.Notation</class>
+        <class>org.curtis.musicxml.note.notation.Ornaments</class>
+        <class>org.curtis.musicxml.note.notation.OtherNotation</class>
+        <class>org.curtis.musicxml.note.notation.Slide</class>
+        <class>org.curtis.musicxml.note.notation.Slur</class>
+        <class>org.curtis.musicxml.note.notation.Technicals</class>
+        <class>org.curtis.musicxml.note.notation.Tied</class>
+        <class>org.curtis.musicxml.note.notation.Tuplet</class>
+        <class>org.curtis.musicxml.note.notation.TupletDot</class>
+        <class>org.curtis.musicxml.note.notation.TupletNumber</class>
+        <class>org.curtis.musicxml.note.notation.TupletPortion</class>
+        <class>org.curtis.musicxml.note.notation.TupletType</class>
         <class>org.curtis.musicxml.note.Unpitched</class>
         <class>org.curtis.musicxml.score.Credit</class>
         <class>org.curtis.musicxml.score.Defaults</class>

@@ -4,9 +4,18 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.AccidentalType;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("accidental mark")
 public class AccidentalMark extends Notation {
+    @Transient
     private AccidentalType accidentalType;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
 
     public AccidentalMark() {

@@ -1,14 +1,31 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.note.notation.Notation;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Notations {
+@Entity
+@Table
+public class Notations extends DatabaseItem {
+    @Transient
     private Editorial editorial;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "notations_id", nullable = false)
     private List<Notation> notations = new ArrayList<>();
+    @Transient
     private Boolean printObject;
 
     public Notations() {

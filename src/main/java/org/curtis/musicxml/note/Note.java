@@ -83,7 +83,9 @@ public class Note extends MusicData {
     private Boolean isBeginBeam = false;
     @Transient
     private Boolean isEndBeam = false;
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "note_id", nullable = false)
     private List<Notations> notationsList = new ArrayList<>();
     @Transient
     private Connection tupletType;

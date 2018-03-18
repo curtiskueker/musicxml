@@ -4,12 +4,24 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("other notation")
 public class OtherNotation extends Notation {
+    @Transient
     private String value;
+    @Transient
     private Connection type;
+    @Transient
     private Integer number = 1;
+    @Transient
     private Boolean printObject;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
 
     public OtherNotation() {

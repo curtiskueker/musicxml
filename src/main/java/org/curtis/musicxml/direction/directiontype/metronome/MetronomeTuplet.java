@@ -6,7 +6,10 @@ import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,7 +25,8 @@ public class MetronomeTuplet extends DatabaseItem {
     private Connection type;
     @Transient
     private Boolean bracket;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "show_number")
     private ShowTuplet showNumber;
 
     public MetronomeTuplet() {

@@ -5,16 +5,43 @@ import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.LineShape;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("tuplet")
 public class Tuplet extends Notation {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tuplet_actual_id")
     private TupletPortion tupletActual;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tuplet_normal_id")
     private TupletPortion tupletNormal;
+    @Transient
     private Connection type;
+    @Transient
     private Integer number;
+    @Transient
     private Boolean bracket;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "show_number")
     private ShowTuplet showNumber;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "show_type")
     private ShowTuplet showType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_shape")
     private LineShape lineShape;
+    @Transient
     private Position position;
+    @Transient
     private Location placement;
 
     public Tuplet() {

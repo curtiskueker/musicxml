@@ -3,11 +3,22 @@ package org.curtis.musicxml.note.notation;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("arpeggiate")
 public class Arpeggiate extends Notation {
+    @Transient
     private Integer number;
+    @Transient
     private Location direction;
+    @Transient
     private Position position;
+    @Transient
     private Location placement;
+    @Transient
     private String color;
 
     public Arpeggiate() {

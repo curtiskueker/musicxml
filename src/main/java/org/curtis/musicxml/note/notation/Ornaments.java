@@ -2,11 +2,18 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("ornaments")
 public class Ornaments extends Notation {
+    @Transient
     private List<Ornament> ornaments = new ArrayList<>();
+    @Transient
     private List<AccidentalMark> accidentalMarks = new ArrayList<>();
 
     public Ornaments() {

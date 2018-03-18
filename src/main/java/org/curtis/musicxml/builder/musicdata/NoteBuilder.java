@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Grace;
+import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Notehead;
@@ -18,6 +19,7 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
+import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
@@ -87,6 +89,10 @@ public class NoteBuilder extends BaseBuilder {
                 buildElementWithValueAndAttributes("beam", buildBeamType(beam.getType()), attributes);
             }
         }
+        List<Notations> notationsList = note.getNotationsList();
+        if (!notationsList.isEmpty()) {
+            for (Notations notations : notationsList) buildNotations(notations);
+        }
         appendLine("</note>");
 
         return stringBuilder;
@@ -134,5 +140,14 @@ public class NoteBuilder extends BaseBuilder {
         beamValue = beamValue.replace("backward-hook", "backward hook");
 
         return beamValue;
+    }
+
+    private void buildNotations(Notations notations) {
+        appendLine("<notations>");
+        for (Notation notation : notations.getNotations()) {
+            NotationBuilder notationBuilder = new NotationBuilder(notation);
+            append(notationBuilder.build().toString());
+        }
+        appendLine("</notations>");
     }
 }

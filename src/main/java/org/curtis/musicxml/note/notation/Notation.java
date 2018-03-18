@@ -1,10 +1,23 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Editorial;
-import org.curtis.musicxml.score.MusicData;
 
-public abstract class Notation extends MusicData {
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table
+@DiscriminatorColumn(name = "notation_type")
+public abstract class Notation extends DatabaseItem {
+    @Transient
     private Editorial editorial;
+    @Transient
     private Boolean printObject;
 
     public Editorial getEditorial() {

@@ -5,12 +5,25 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.LineType;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("glissando")
 public class Glissando extends Notation {
+    @Column
     private String value;
+    @Transient
     private Connection type;
+    @Transient
     private Integer number = 1;
+    @Transient
     private LineType lineType;
+    @Transient
     private DashedFormatting dashedFormatting;
+    @Transient
     private PrintStyle printStyle;
 
     public Glissando() {

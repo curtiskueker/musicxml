@@ -1,11 +1,25 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.note.NoteTypeValue;
 
-public class TupletType {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "tuplet_type")
+public class TupletType extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "note_type_value")
     private NoteTypeValue noteTypeValue;
+    @Transient
     private Font font;
+    @Transient
     private String color;
 
     public TupletType() {

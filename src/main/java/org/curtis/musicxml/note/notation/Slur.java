@@ -6,16 +6,32 @@ import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.LineType;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("slur")
 public class Slur extends Notation {
+    @Transient
     private Connection connectionType;
+    @Transient
     private Integer number = 1;
+    @Transient
     private LineType lineType;
+    @Transient
     private DashedFormatting dashedFormatting;
+    @Transient
     private Position position;
+    @Transient
     private Location placement;
+    @Transient
     private Location orientation;
+    @Transient
     private Bezier bezier;
+    @Transient
     private String color;
+    @Transient
     private SlurType slurType;
 
     public Slur() {

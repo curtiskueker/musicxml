@@ -6,13 +6,27 @@ import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("slide")
 public class Slide extends Notation {
+    @Column
     private String value;
+    @Transient
     private Connection type;
+    @Transient
     private Integer number = 1;
+    @Transient
     private LineType lineType;
+    @Transient
     private DashedFormatting dashedFormatting;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private BendSound bendSound;
 
     public Slide() {
