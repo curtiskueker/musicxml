@@ -89,6 +89,7 @@ public class PartBuilder extends AbstractBuilder {
 
                     hasStopWavyLine = false;
                     TrillMark trillMark = null;
+                    Ornaments trillMarkOrnaments = null;
                     WavyLine startWavyLine = null;
                     List<Ornament> wavyLineOrnamentList = null;
                     for (Notations notations : note.getNotationsList()) {
@@ -99,6 +100,7 @@ public class PartBuilder extends AbstractBuilder {
                                 for (Ornament ornament : ornamentList) {
                                     if (ornament instanceof TrillMark) {
                                         trillMark = (TrillMark)ornament;
+                                        trillMarkOrnaments = ornaments;
                                     } else if (ornament instanceof WavyLine) {
                                         WavyLine wavyLine = (WavyLine)ornament;
                                         switch (wavyLine.getType()) {
@@ -141,7 +143,7 @@ public class PartBuilder extends AbstractBuilder {
                             }
                         }
                     }
-                    if (trillMark != null && startWavyLine != null) trillMark.setPrintObject(false);
+                    if (trillMark != null && trillMarkOrnaments != null && startWavyLine != null) trillMarkOrnaments.setPrintObject(false);
                     if (hasStopWavyLine && wavyLineOrnamentList != null) wavyLineOrnamentList.remove(stopWavyLine);
                     if (addNewNotations) {
                         Notations notations = new Notations();

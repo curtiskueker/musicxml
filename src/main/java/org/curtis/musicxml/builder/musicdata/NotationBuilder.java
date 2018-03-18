@@ -2,8 +2,10 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.Notation;
+import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slide;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
@@ -12,6 +14,9 @@ import org.curtis.musicxml.note.notation.TupletDot;
 import org.curtis.musicxml.note.notation.TupletNumber;
 import org.curtis.musicxml.note.notation.TupletPortion;
 import org.curtis.musicxml.note.notation.TupletType;
+import org.curtis.musicxml.note.notation.ornament.Ornament;
+
+import java.util.List;
 
 public class NotationBuilder extends BaseBuilder {
     private Notation notation;
@@ -28,6 +33,8 @@ public class NotationBuilder extends BaseBuilder {
         else if (notation instanceof Tuplet) buildTuplet((Tuplet)notation);
         else if (notation instanceof Glissando) buildGlissando((Glissando)notation);
         else if (notation instanceof Slide) buildSlide((Slide)notation);
+        else if (notation instanceof Ornaments) buildOrnaments((Ornaments)notation);
+        else if (notation instanceof AccidentalMark) buildAccidentalMark((AccidentalMark)notation);
 
         return stringBuilder;
     }
@@ -79,5 +86,19 @@ public class NotationBuilder extends BaseBuilder {
 
     private void buildSlide(Slide slide) {
         buildElementWithValue("slide", slide.getValue());
+    }
+
+    private void buildOrnaments(Ornaments ornaments) {
+        appendLine("<ornaments>");
+        List<Ornament> ornamentList = ornaments.getOrnaments();
+        for (Ornament ornament : ornamentList) {
+            OrnamentBuilder ornamentBuilder = new OrnamentBuilder(ornament);
+            append(ornamentBuilder.build().toString());
+        }
+        appendLine("</ornaments>");
+    }
+
+    private void buildAccidentalMark(AccidentalMark accidentalMark) {
+        buildElement("accidental-mark");
     }
 }

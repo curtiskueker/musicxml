@@ -116,6 +116,20 @@
         <class>org.curtis.musicxml.note.notation.TupletNumber</class>
         <class>org.curtis.musicxml.note.notation.TupletPortion</class>
         <class>org.curtis.musicxml.note.notation.TupletType</class>
+        <class>org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn</class>
+        <class>org.curtis.musicxml.note.notation.ornament.DelayedTurn</class>
+        <class>org.curtis.musicxml.note.notation.ornament.InvertedMordent</class>
+        <class>org.curtis.musicxml.note.notation.ornament.InvertedTurn</class>
+        <class>org.curtis.musicxml.note.notation.ornament.Mordent</class>
+        <class>org.curtis.musicxml.note.notation.ornament.Ornament</class>
+        <class>org.curtis.musicxml.note.notation.ornament.OtherOrnament</class>
+        <class>org.curtis.musicxml.note.notation.ornament.Schleifer</class>
+        <class>org.curtis.musicxml.note.notation.ornament.Shake</class>
+        <class>org.curtis.musicxml.note.notation.ornament.Tremolo</class>
+        <class>org.curtis.musicxml.note.notation.ornament.TrillMark</class>
+        <class>org.curtis.musicxml.note.notation.ornament.Turn</class>
+        <class>org.curtis.musicxml.note.notation.ornament.VerticalTurn</class>
+        <class>org.curtis.musicxml.note.notation.ornament.WavyLine</class>
         <class>org.curtis.musicxml.note.Unpitched</class>
         <class>org.curtis.musicxml.score.Credit</class>
         <class>org.curtis.musicxml.score.Defaults</class>

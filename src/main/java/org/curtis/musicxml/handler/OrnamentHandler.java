@@ -28,9 +28,9 @@ public class OrnamentHandler extends AbstractHandler {
     public void handle(Element element) {
         List<Element> ornamentElements = XmlUtil.getChildElements(element);
         Ornaments ornaments = new Ornaments();
+        Ornament ornament = null;
         for(Element ornamentElement : ornamentElements) {
             String ornamentElementName = ornamentElement.getTagName();
-            Ornament ornament = null;
             switch (ornamentElementName) {
                 case "mordent":
                 case "inverted-mordent":
@@ -68,15 +68,11 @@ public class OrnamentHandler extends AbstractHandler {
                     otherOrnament.setPlacementText(PlacementFactory.newPlacementText(ornamentElement));
                     ornament = otherOrnament;
                     break;
+                case "accidental-mark":
+                    if (ornament != null) ornament.getAccidentalMarks().add(NotationFactory.newAccidentalMark(ornamentElement));
+                    continue;
             }
-            if (ornament != null) {
-                ornament.setPrintObject(FormattingFactory.getPrintObject(ornamentElement));
-                ornaments.getOrnaments().add(ornament);
-            }
-        }
-        List<Element> accidentalMarkElements = XmlUtil.getChildElements(element, "accidental-mark");
-        for (Element accidentalMarkElement : accidentalMarkElements) {
-            ornaments.getAccidentalMarks().add(NotationFactory.newAccidentalMark(accidentalMarkElement));
+            if (ornament != null) ornaments.getOrnaments().add(ornament);
         }
         ornaments.setPrintObject(FormattingFactory.getPrintObject(element));
         notationList.add(ornaments);

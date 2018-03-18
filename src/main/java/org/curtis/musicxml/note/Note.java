@@ -7,6 +7,7 @@ import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.lyric.Lyric;
+import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
@@ -278,7 +279,10 @@ public class Note extends MusicData {
 
     public Tremolo getTremolo() {
         return notationsList.stream().flatMap(notations -> notations.getNotations().stream())
-                .filter(notation -> notation instanceof Tremolo)
+                .filter(notations -> notations instanceof Ornaments)
+                .map(ornaments -> (Ornaments)ornaments)
+                .flatMap(ornaments -> ornaments.getOrnaments().stream())
+                .filter(ornament -> ornament instanceof Tremolo)
                 .map(notation -> (Tremolo)notation)
                 .findAny().orElse(null);
     }

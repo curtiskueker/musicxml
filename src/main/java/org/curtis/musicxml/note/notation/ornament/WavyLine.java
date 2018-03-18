@@ -4,12 +4,24 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("wavy line")
 public class WavyLine extends Ornament {
+    @Transient
     private Connection type;
+    @Transient
     private Integer number;
+    @Transient
     private Position position;
+    @Transient
     private Location placement;
+    @Transient
     private String color;
+    @Transient
     private TrillSound trillSound;
 
     public WavyLine() {
