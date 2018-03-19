@@ -3,11 +3,22 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("harmonic")
 public class Harmonic extends Technical {
+    @Transient
     private HarmonicType harmonicType;
+    @Transient
     private HarmonicPitch harmonicPitch;
+    @Transient
     private Boolean printObject;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
 
     public Harmonic() {

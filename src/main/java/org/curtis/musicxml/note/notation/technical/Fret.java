@@ -2,9 +2,18 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Font;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("fret")
 public class Fret extends Technical {
+    @Transient
     private Integer value;
+    @Transient
     private Font font;
+    @Transient
     private String color;
 
     public Fret() {

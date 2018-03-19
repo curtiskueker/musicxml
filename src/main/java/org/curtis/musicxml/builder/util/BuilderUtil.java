@@ -14,6 +14,10 @@ public class BuilderUtil {
         return value.toLowerCase().replace("_", "-");
     }
 
+    public static String enumValueWithSpaces(Enum enumValue) {
+        return enumValue(enumValue).replace("-", " ");
+    }
+
     public static String stringValue(Integer integerValue) {
         return integerValue == null ? "" : String.valueOf(integerValue);
     }

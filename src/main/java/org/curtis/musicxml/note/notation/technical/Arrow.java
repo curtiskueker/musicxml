@@ -3,11 +3,28 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("arrow")
 public class Arrow extends Technical {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "arrow_direction")
     private ArrowDirection arrowDirection;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "arrow_style")
     private ArrowStyle arrowStyle;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "circular_arrow")
     private CircularArrow circularArrow;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
 
     public Arrow() {

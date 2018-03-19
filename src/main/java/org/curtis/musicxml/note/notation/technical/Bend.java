@@ -3,13 +3,23 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.PlacementText;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
+@Entity
+@DiscriminatorValue("bend")
 public class Bend extends Technical {
+    @Transient
     private BigDecimal bendAlter;
+    @Transient
     private BendType bendType;
+    @Transient
     private PlacementText withBar;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private BendSound bendSound;
 
     public Bend() {

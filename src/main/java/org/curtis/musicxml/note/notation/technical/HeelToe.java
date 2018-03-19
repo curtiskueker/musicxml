@@ -2,8 +2,14 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.note.Placement;
 
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+
+@MappedSuperclass
 public abstract class HeelToe extends Technical {
+    @Transient
     private Placement placement;
+    @Transient
     private Boolean substitution;
 
     public Placement getPlacement() {

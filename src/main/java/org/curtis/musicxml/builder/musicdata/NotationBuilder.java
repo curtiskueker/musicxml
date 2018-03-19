@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slide;
 import org.curtis.musicxml.note.notation.Slur;
+import org.curtis.musicxml.note.notation.Technicals;
 import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.TupletDot;
@@ -15,6 +16,7 @@ import org.curtis.musicxml.note.notation.TupletNumber;
 import org.curtis.musicxml.note.notation.TupletPortion;
 import org.curtis.musicxml.note.notation.TupletType;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
+import org.curtis.musicxml.note.notation.technical.Technical;
 
 import java.util.List;
 
@@ -96,6 +98,15 @@ public class NotationBuilder extends BaseBuilder {
             append(ornamentBuilder.build().toString());
         }
         appendLine("</ornaments>");
+    }
+
+    private void buildTechnicals(Technicals technicals) {
+        appendLine("<technical>");
+        for (Technical technical : technicals.getTechnicals()) {
+            TechnicalBuilder technicalBuilder = new TechnicalBuilder(technical);
+            append(technicalBuilder.build().toString());
+        }
+        appendLine("</technical>");
     }
 
     private void buildAccidentalMark(AccidentalMark accidentalMark) {

@@ -3,9 +3,18 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("string number")
 public class StringNumber extends Technical {
+    @Transient
     private Integer stringNumber;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
 
     public StringNumber() {

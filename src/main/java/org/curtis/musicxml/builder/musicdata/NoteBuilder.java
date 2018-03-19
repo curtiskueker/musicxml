@@ -135,11 +135,7 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     public static String buildBeamType(BeamType beamType) {
-        String beamValue = BuilderUtil.enumValue(beamType);
-        beamValue = beamValue.replace("forward-hook", "forward hook");
-        beamValue = beamValue.replace("backward-hook", "backward hook");
-
-        return beamValue;
+        return BuilderUtil.enumValueWithSpaces(beamType);
     }
 
     private void buildNotations(Notations notations) {

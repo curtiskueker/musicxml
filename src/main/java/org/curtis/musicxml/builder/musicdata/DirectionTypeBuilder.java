@@ -226,9 +226,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildGlass(Glass glass) {
-        String type = BuilderUtil.enumValue(glass.getType());
-        type = type.replace("-", " ");
-        buildElementWithValue("glass", type);
+        buildElementWithValue("glass", BuilderUtil.enumValueWithSpaces(glass.getType()));
     }
 
     private void buildMetal(Metal metal) {
@@ -250,27 +248,19 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildWood(Wood wood) {
-        String type = BuilderUtil.enumValue(wood.getType());
-        type = type.replace("-", " ");
-        buildElementWithValue("wood", type);
+        buildElementWithValue("wood", BuilderUtil.enumValueWithSpaces(wood.getType()));
     }
 
     private void buildPitched(Pitched pitched) {
-        String type = BuilderUtil.enumValue(pitched.getType());
-        type = type.replace("-", " ");
-        buildElementWithValue("pitched", type);
+        buildElementWithValue("pitched", BuilderUtil.enumValueWithSpaces(pitched.getType()));
     }
 
     private void buildMembrane(Membrane membrane) {
-        String type = BuilderUtil.enumValue(membrane.getType());
-        type = type.replace("-", " ");
-        buildElementWithValue("membrane", type);
+        buildElementWithValue("membrane", BuilderUtil.enumValueWithSpaces(membrane.getType()));
     }
 
     private void buildEffect(Effect effect) {
-        String type = BuilderUtil.enumValue(effect.getType());
-        type = type.replace("-", " ");
-        buildElementWithValue("effect", type);
+        buildElementWithValue("effect", BuilderUtil.enumValueWithSpaces(effect.getType()));
     }
 
     private void buildTimpani(Timpani timpani) {
@@ -285,17 +275,13 @@ public class DirectionTypeBuilder extends BaseBuilder {
         append("<stick");
         buildAttribute("tip", BuilderUtil.enumValue(stick.getTip()));
         appendLine(">");
-        String stickType = BuilderUtil.enumValue(stick.getStickType());
-        stickType = stickType.replace("-", " ");
-        buildElementWithValue("stick-type", stickType);
+        buildElementWithValue("stick-type", BuilderUtil.enumValueWithSpaces(stick.getStickType()));
         buildElementWithValue("stick-material", BuilderUtil.enumValue(stick.getStickMaterial()));
         appendLine("</stick>");
     }
 
     private void buildStickLocation(StickLocation stickLocation) {
-        String type = BuilderUtil.enumValue(stickLocation.getType());
-        type = type.replace("-", " ");
-        buildElementWithValue("stick-location", type);
+        buildElementWithValue("stick-location", BuilderUtil.enumValueWithSpaces(stickLocation.getType()));
     }
 
     private void buildOtherPercussion(OtherPercussion otherPercussion) {

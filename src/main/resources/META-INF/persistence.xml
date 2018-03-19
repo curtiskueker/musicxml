@@ -130,6 +130,31 @@
         <class>org.curtis.musicxml.note.notation.ornament.Turn</class>
         <class>org.curtis.musicxml.note.notation.ornament.VerticalTurn</class>
         <class>org.curtis.musicxml.note.notation.ornament.WavyLine</class>
+        <class>org.curtis.musicxml.note.notation.technical.Arrow</class>
+        <class>org.curtis.musicxml.note.notation.technical.Bend</class>
+        <class>org.curtis.musicxml.note.notation.technical.DownBow</class>
+        <class>org.curtis.musicxml.note.notation.technical.DoubleTongue</class>
+        <class>org.curtis.musicxml.note.notation.technical.Fingering</class>
+        <class>org.curtis.musicxml.note.notation.technical.Fingernails</class>
+        <class>org.curtis.musicxml.note.notation.technical.Fret</class>
+        <class>org.curtis.musicxml.note.notation.technical.HammerOn</class>
+        <class>org.curtis.musicxml.note.notation.technical.Handbell</class>
+        <class>org.curtis.musicxml.note.notation.technical.Harmonic</class>
+        <class>org.curtis.musicxml.note.notation.technical.Heel</class>
+        <class>org.curtis.musicxml.note.notation.technical.Hole</class>
+        <class>org.curtis.musicxml.note.notation.technical.OpenString</class>
+        <class>org.curtis.musicxml.note.notation.technical.OtherTechnical</class>
+        <class>org.curtis.musicxml.note.notation.technical.Pluck</class>
+        <class>org.curtis.musicxml.note.notation.technical.PullOff</class>
+        <class>org.curtis.musicxml.note.notation.technical.SnapPizzicato</class>
+        <class>org.curtis.musicxml.note.notation.technical.Stopped</class>
+        <class>org.curtis.musicxml.note.notation.technical.StringNumber</class>
+        <class>org.curtis.musicxml.note.notation.technical.Tap</class>
+        <class>org.curtis.musicxml.note.notation.technical.Technical</class>
+        <class>org.curtis.musicxml.note.notation.technical.ThumbPosition</class>
+        <class>org.curtis.musicxml.note.notation.technical.Toe</class>
+        <class>org.curtis.musicxml.note.notation.technical.TripleTongue</class>
+        <class>org.curtis.musicxml.note.notation.technical.UpBow</class>
         <class>org.curtis.musicxml.note.Unpitched</class>
         <class>org.curtis.musicxml.score.Credit</class>
         <class>org.curtis.musicxml.score.Defaults</class>
