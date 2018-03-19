@@ -20,8 +20,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -90,7 +88,9 @@ public class Note extends MusicData {
     private List<Notations> notationsList = new ArrayList<>();
     @Transient
     private Connection tupletType;
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "note_id")
     private List<Lyric> lyrics = new ArrayList<>();
     @Transient
     private Play play;

@@ -14,12 +14,18 @@ import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Notehead;
 import org.curtis.musicxml.note.NoteheadText;
 import org.curtis.musicxml.note.Pitch;
+import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
+import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Lyric;
+import org.curtis.musicxml.note.lyric.LyricItem;
+import org.curtis.musicxml.note.lyric.LyricSyllable;
+import org.curtis.musicxml.note.lyric.LyricText;
+import org.curtis.musicxml.note.lyric.TextFontColor;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.util.StringUtil;
 
@@ -94,6 +100,7 @@ public class NoteBuilder extends BaseBuilder {
         if (!notationsList.isEmpty()) {
             for (Notations notations : notationsList) buildNotations(notations);
         }
+        for (Lyric lyric : note.getLyrics()) buildLyric(lyric);
         appendLine("</note>");
 
         return stringBuilder;
@@ -149,9 +156,36 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     private void buildLyric(Lyric lyric) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("number", lyric.getNumber());
-        attributes.put("name", lyric.getName());
-        buildElementWithAttributes("lyric", attributes);
+        append("<lyric");
+        buildAttribute("number", lyric.getNumber());
+        buildAttribute("name", lyric.getName());
+        appendLine(">");
+        LyricItem lyricItem = lyric.getLyricItem();
+        if (lyricItem instanceof LyricText) {
+            LyricText lyricText = (LyricText)lyricItem;
+            for (LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
+                TextFontColor lyricElision = lyricSyllable.getLyricElision();
+                if (lyricElision != null) buildElementWithValue("elision", lyricElision.getValue());
+                buildElementWithValue("syllabic", BuilderUtil.enumValue(lyricSyllable.getSyllabic()));
+                buildElementWithValue("text", lyricSyllable.getText().getValue());
+            }
+            buildExtend(lyricText.getExtend());
+        }
+        else if (lyricItem instanceof Extend) buildExtend((Extend)lyricItem);
+        appendLine("</lyric>");
+    }
+
+    public void buildExtend(Extend extend) {
+        if (extend == null) return;
+
+        buildElement("extend");
+    }
+
+    private void buildPlacement(String elementName, Placement placement) {
+        buildPlacementWithAttribute(elementName, placement, "");
+    }
+
+    private void buildPlacementWithAttribute(String elementName, Placement placement, String attribute) {
+        buildElement(elementName);
     }
 }

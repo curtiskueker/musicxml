@@ -95,9 +95,18 @@
         <class>org.curtis.musicxml.note.NoteheadText</class>
         <class>org.curtis.musicxml.note.NoteType</class>
         <class>org.curtis.musicxml.note.Pitch</class>
+        <class>org.curtis.musicxml.note.Placement</class>
         <class>org.curtis.musicxml.note.Rest</class>
         <class>org.curtis.musicxml.note.Tie</class>
         <class>org.curtis.musicxml.note.TimeModification</class>
+        <class>org.curtis.musicxml.note.lyric.Extend</class>
+        <class>org.curtis.musicxml.note.lyric.Humming</class>
+        <class>org.curtis.musicxml.note.lyric.Laughing</class>
+        <class>org.curtis.musicxml.note.lyric.Lyric</class>
+        <class>org.curtis.musicxml.note.lyric.LyricItem</class>
+        <class>org.curtis.musicxml.note.lyric.LyricText</class>
+        <class>org.curtis.musicxml.note.lyric.TextData</class>
+        <class>org.curtis.musicxml.note.lyric.TextFontColor</class>
         <class>org.curtis.musicxml.note.notation.AccidentalMark</class>
         <class>org.curtis.musicxml.note.notation.Arpeggiate</class>
         <class>org.curtis.musicxml.note.notation.Articulations</class>

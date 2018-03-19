@@ -1,20 +1,35 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextDecoration;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class TextData {
+@Entity
+@Table(name = "text_data")
+public class TextData extends DatabaseItem {
+    @Column
     private String value;
+    @Transient
     private Font font;
+    @Transient
     private String color;
+    @Transient
     private TextDecoration textDecoration;
+    @Transient
     private BigDecimal textRotation;
+    @Transient
     private String letterSpacing;
+    @Transient
     private String lang;
+    @Transient
     private Location textDirection;
 
     public TextData() {

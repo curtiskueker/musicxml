@@ -1,12 +1,27 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.note.lyric.Extend;
 
-public class Figure {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "figure")
+public class Figure extends DatabaseItem {
+    @Transient
     private StyleText prefix;
+    @Transient
     private StyleText figureNumber;
+    @Transient
     private StyleText suffix;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "extend_id")
     private Extend extend;
 
     public Figure() {

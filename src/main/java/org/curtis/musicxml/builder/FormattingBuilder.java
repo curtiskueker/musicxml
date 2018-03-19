@@ -8,8 +8,8 @@ public class FormattingBuilder extends OutputBuilder {
     }
 
     public String buildFont(String elementName, Font font) {
-        if (font == null) return "";
         clear();
+        if (font == null) return "";
 
         buildElement(elementName);
 

@@ -8,9 +8,9 @@ import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
 import org.curtis.musicxml.note.lyric.Lyric;
-import org.curtis.musicxml.note.lyric.LyricElision;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
+import org.curtis.musicxml.note.lyric.LyricText;
 import org.curtis.musicxml.note.lyric.TextFontColor;
 import org.curtis.util.MathUtil;
 import org.curtis.xml.XmlUtil;
@@ -40,7 +40,7 @@ public class LyricHandler extends AbstractHandler {
         switch (lyricItemElementName) {
             case "syllabic":
             case "text":
-                LyricSyllable lyricSyllable = new LyricSyllable();
+                LyricText lyricText = new LyricText();
 
                 // loop through child elements
                 // when a "text" element is reached add the groups to the list
@@ -55,24 +55,9 @@ public class LyricHandler extends AbstractHandler {
                     }
                 }
 
-                // the first group has the syllable's main settings
-                List<Element> syllabicElements = textElementGroups.remove(0);
-                for(Element syllabicElement : syllabicElements) {
-                    String syllabicElementName = syllabicElement.getTagName();
-                    switch (syllabicElementName) {
-                        case "syllabic":
-                            lyricSyllable.setSyllabic(PlacementUtil.getConnection(XmlUtil.getElementText(syllabicElement)));
-                            break;
-                        case "text":
-                            lyricSyllable.setText(LyricFactory.newTextData(syllabicElement));
-                            break;
-                    }
-                }
-
-                // Set the list of LyricElision with the remaining groups
-                List<LyricElision> lyricElisions = lyricSyllable.getLyricElisions();
+                // Set the lyric syllables
                 for(List<Element> textElementGroup : textElementGroups) {
-                    LyricElision lyricElision = new LyricElision();
+                    LyricSyllable lyricSyllable = new LyricSyllable();
                     for(Element textElement : textElementGroup) {
                         String textElementName = textElement.getTagName();
                         switch (textElementName) {
@@ -86,7 +71,7 @@ public class LyricHandler extends AbstractHandler {
                                 textFontColor.setLetterSpacing(textElement.getAttribute("letter-spacing"));
                                 textFontColor.setLang(textElement.getAttribute("lang"));
                                 textFontColor.setTextDirection(PlacementUtil.getLocation(textElement.getAttribute("dir")));
-                                lyricElision.setElision(textFontColor);
+                                lyricSyllable.setLyricElision(textFontColor);
                                 break;
                             case "syllabic":
                                 lyricSyllable.setSyllabic(PlacementUtil.getConnection(XmlUtil.getElementText(textElement)));
@@ -96,13 +81,13 @@ public class LyricHandler extends AbstractHandler {
                                 break;
                         }
                     }
-                    lyricElisions.add(lyricElision);
+                    lyricText.getLyricSyllables().add(lyricSyllable);
                 }
 
                 // Set the extend value
-                lyricSyllable.setExtend(LyricFactory.newExtend(XmlUtil.getChildElement(lyricItemElement, "extend")));
+                lyricText.setExtend(LyricFactory.newExtend(XmlUtil.getChildElement(lyricItemElement, "extend")));
 
-                lyricItem = lyricSyllable;
+                lyricItem = lyricText;
                 break;
             case "extend":
                 Extend extend = new Extend();

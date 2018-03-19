@@ -7,8 +7,11 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.Tuplet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -16,7 +19,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "lyric")
 public class Lyric extends DatabaseItem {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lyric_item_id")
     private LyricItem lyricItem;
     @Transient
     private Boolean endLine;

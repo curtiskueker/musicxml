@@ -9,6 +9,7 @@ import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
+import org.curtis.musicxml.note.lyric.LyricText;
 import org.curtis.musicxml.note.lyric.TextData;
 import org.curtis.util.MathUtil;
 
@@ -46,26 +47,27 @@ public class LyricBuilder extends MusicDataBuilder {
         }
 
         LyricItem lyricItem = lyric.getLyricItem();
-        if(lyricItem instanceof LyricSyllable) {
-            LyricSyllable lyricSyllable = (LyricSyllable)lyricItem;
+        if(lyricItem instanceof LyricText) {
+            LyricText lyricText = (LyricText)lyricItem;
+            for(LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
+                TextData textData = lyricSyllable.getText();
+                if(textData != null) {
+                    append("\"");
+                    append(textData.getValue());
+                    append("\"");
+                }
 
-            TextData textData = lyricSyllable.getText();
-            if(textData != null) {
-                append("\"");
-                append(textData.getValue());
-                append("\"");
-            }
+                append(totalBeatRepresentation);
 
-            append(totalBeatRepresentation);
-
-            Connection syllabic = lyricSyllable.getSyllabic();
-            if(syllabic != null) {
-                switch (syllabic) {
-                    case BEGIN:
-                    case MIDDLE:
-                        append(" --");
-                        break;
-                    case SINGLE:
+                Connection syllabic = lyricSyllable.getSyllabic();
+                if(syllabic != null) {
+                    switch (syllabic) {
+                        case BEGIN:
+                        case MIDDLE:
+                            append(" --");
+                            break;
+                        case SINGLE:
+                    }
                 }
             }
         } else if (lyricItem instanceof Extend) {
