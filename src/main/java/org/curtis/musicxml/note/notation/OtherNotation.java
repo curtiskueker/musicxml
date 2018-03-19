@@ -4,6 +4,7 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -11,7 +12,7 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue("other notation")
 public class OtherNotation extends Notation {
-    @Transient
+    @Column
     private String value;
     @Transient
     private Connection type;

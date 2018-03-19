@@ -1,29 +1,48 @@
 package org.curtis.musicxml.note.lyric;
 
-import org.curtis.musicxml.common.Connection;
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.Tuplet;
-import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Lyric extends MusicData {
+@Entity
+@Table(name = "lyric")
+public class Lyric extends DatabaseItem {
+    @Transient
     private LyricItem lyricItem;
+    @Transient
     private Boolean endLine;
+    @Transient
     private Boolean endParagraph;
+    @Transient
     private Editorial editorial;
+    @Column
     private String number;
+    @Column
     private String name;
+    @Transient
     private Location justify;
+    @Transient
     private Position position;
+    @Transient
     private Location placement;
+    @Transient
     private String color;
+    @Transient
     private Boolean printObject;
+    @Transient
     private BigDecimal totalBeats;
+    @Transient
     private TimeModification timeModification;
+    @Transient
     private Tuplet tuplet;
 
     public Lyric() {

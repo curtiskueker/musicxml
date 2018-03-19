@@ -116,6 +116,23 @@
         <class>org.curtis.musicxml.note.notation.TupletNumber</class>
         <class>org.curtis.musicxml.note.notation.TupletPortion</class>
         <class>org.curtis.musicxml.note.notation.TupletType</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Accent</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Articulation</class>
+        <class>org.curtis.musicxml.note.notation.articulation.BreathMark</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Caesura</class>
+        <class>org.curtis.musicxml.note.notation.articulation.DetachedLegato</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Doit</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Falloff</class>
+        <class>org.curtis.musicxml.note.notation.articulation.OtherArticulation</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Plop</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Scoop</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Spiccato</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Staccatissimo</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Staccato</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Stress</class>
+        <class>org.curtis.musicxml.note.notation.articulation.StrongAccent</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Tenuto</class>
+        <class>org.curtis.musicxml.note.notation.articulation.Unstress</class>
         <class>org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn</class>
         <class>org.curtis.musicxml.note.notation.ornament.DelayedTurn</class>
         <class>org.curtis.musicxml.note.notation.ornament.InvertedMordent</class>

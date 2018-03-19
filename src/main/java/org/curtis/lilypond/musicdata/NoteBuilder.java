@@ -49,7 +49,7 @@ import java.util.Map;
 public class NoteBuilder extends MusicDataBuilder {
     private Note note;
     private List<Direction> directions = new ArrayList<>();
-    private List<Notation> deferredNotations = new ArrayList<>();
+    private List<Object> deferredNotations = new ArrayList<>();
 
     public NoteBuilder(Note note) {
         super(note);
@@ -585,7 +585,7 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder deferredNotationsBuild() throws BuildException {
-        for (Notation notation : deferredNotations) {
+        for (Object notation : deferredNotations) {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
             append(" ");
             append(musicDataBuilder.build().toString());

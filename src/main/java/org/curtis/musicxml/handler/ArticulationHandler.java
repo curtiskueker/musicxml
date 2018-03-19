@@ -148,10 +148,7 @@ public class ArticulationHandler extends AbstractHandler {
                     articulation = otherArticulation;
                     break;
             }
-            if (articulation != null) {
-                articulation.setPrintObject(FormattingFactory.getPrintObject(articulationsSubelement));
-                articulations.getArticulationList().add(articulation);
-            }
+            if (articulation != null) articulations.getArticulationList().add(articulation);
         }
         articulations.setPrintObject(FormattingFactory.getPrintObject(element));
         notationList.add(articulations);

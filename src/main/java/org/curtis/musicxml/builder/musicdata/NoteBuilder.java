@@ -19,6 +19,7 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
+import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.util.StringUtil;
 
@@ -145,5 +146,12 @@ public class NoteBuilder extends BaseBuilder {
             append(notationBuilder.build().toString());
         }
         appendLine("</notations>");
+    }
+
+    private void buildLyric(Lyric lyric) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("number", lyric.getNumber());
+        attributes.put("name", lyric.getName());
+        buildElementWithAttributes("lyric", attributes);
     }
 }
