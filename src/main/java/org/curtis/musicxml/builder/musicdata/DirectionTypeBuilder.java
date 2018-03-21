@@ -26,6 +26,7 @@ import org.curtis.musicxml.direction.directiontype.StringMute;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
+import org.curtis.musicxml.direction.directiontype.metronome.BeatUnit;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
@@ -129,7 +130,8 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildBeatMetronome(BeatMetronome beatMetronome) {
         buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatMetronome.getBeatUnit1().getBeatUnit()));
         buildElementWithValue("per-minute", beatMetronome.getPerMinute().getPerMinute());
-        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatMetronome.getBeatUnit2().getBeatUnit()));
+        BeatUnit beatUnit2 = beatMetronome.getBeatUnit2();
+        if (beatUnit2 != null) buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit2.getBeatUnit()));
     }
 
     private void buildNoteMetronome(NoteMetronome noteMetronome) {

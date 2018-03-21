@@ -26,6 +26,6 @@ public class BuilderUtil {
         if (noteTypeValue == null) return "";
 
         String value = enumValue(noteTypeValue);
-        return value.replace("_", "");
+        return value.replace("-", "");
     }
 }

@@ -82,6 +82,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         if (currentMeasureList.isEmpty()) return;
 
         SortedSet<String> measureVoices = currentMeasureList.get(0).getVoices();
+        // TODO: process when no voice elements are found
         if (measureVoices.isEmpty()) return;
 
         boolean hasMultipleVoices = measureVoices.size() > 1;

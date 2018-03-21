@@ -5,7 +5,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("beat metronome")
@@ -13,7 +12,8 @@ public class BeatMetronome extends Metronome {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "beat_unit_1_id")
     private BeatUnit beatUnit1;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "per_minute_id")
     private PerMinute perMinute;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "beat_unit_2_id")
