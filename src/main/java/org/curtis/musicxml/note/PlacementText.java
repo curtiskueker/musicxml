@@ -1,11 +1,22 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
-public class PlacementText {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "placement_text")
+public class PlacementText extends DatabaseItem {
+    @Column
     private String value;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
 
     public PlacementText() {

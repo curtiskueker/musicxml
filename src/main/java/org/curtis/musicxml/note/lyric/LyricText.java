@@ -18,7 +18,7 @@ import java.util.List;
 public class LyricText extends LyricItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "lyric_text_id")
+    @JoinColumn(name = "lyric_text_id", nullable = false)
     private List<LyricSyllable> lyricSyllables = new ArrayList<>();
     @Transient
     private Extend extend;

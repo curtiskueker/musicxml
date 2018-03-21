@@ -96,9 +96,12 @@
         <class>org.curtis.musicxml.note.NoteType</class>
         <class>org.curtis.musicxml.note.Pitch</class>
         <class>org.curtis.musicxml.note.Placement</class>
+        <class>org.curtis.musicxml.note.PlacementText</class>
         <class>org.curtis.musicxml.note.Rest</class>
         <class>org.curtis.musicxml.note.Tie</class>
         <class>org.curtis.musicxml.note.TimeModification</class>
+        <class>org.curtis.musicxml.note.XPosition</class>
+        <class>org.curtis.musicxml.note.YPosition</class>
         <class>org.curtis.musicxml.note.lyric.Extend</class>
         <class>org.curtis.musicxml.note.lyric.Humming</class>
         <class>org.curtis.musicxml.note.lyric.Laughing</class>

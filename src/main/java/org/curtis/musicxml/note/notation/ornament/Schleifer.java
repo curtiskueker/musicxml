@@ -2,14 +2,17 @@ package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.note.Placement;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("schleifer")
 public class Schleifer extends Ornament {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "placement_id")
     private Placement placement;
 
     public Schleifer() {

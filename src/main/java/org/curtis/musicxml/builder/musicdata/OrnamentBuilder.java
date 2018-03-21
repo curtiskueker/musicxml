@@ -7,6 +7,8 @@ import org.curtis.musicxml.note.notation.ornament.InvertedMordent;
 import org.curtis.musicxml.note.notation.ornament.InvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.Mordent;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
+import org.curtis.musicxml.note.notation.ornament.OtherOrnament;
+import org.curtis.musicxml.note.notation.ornament.Schleifer;
 import org.curtis.musicxml.note.notation.ornament.Shake;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
@@ -32,7 +34,9 @@ public class OrnamentBuilder extends BaseBuilder {
         else if (ornament instanceof Shake) buildShake((Shake)ornament);
         else if (ornament instanceof Mordent) buildMordent((Mordent)ornament);
         else if (ornament instanceof InvertedMordent) buildInvertedMordent((InvertedMordent)ornament);
+        else if (ornament instanceof Schleifer) buildSchleifer((Schleifer)ornament);
         else if (ornament instanceof Tremolo) buildTremolo((Tremolo)ornament);
+        else if (ornament instanceof OtherOrnament) buildOtherOrnament((OtherOrnament)ornament);
 
         return stringBuilder;
     }
@@ -73,7 +77,15 @@ public class OrnamentBuilder extends BaseBuilder {
         buildElement("inverted-mordent");
     }
 
+    private void buildSchleifer(Schleifer schleifer) {
+        buildPlacement("schleifer", schleifer.getPlacement());
+    }
+
     private void buildTremolo(Tremolo tremolo) {
         buildElementWithValue("tremolo", tremolo.getTremoloMarks());
+    }
+
+    private void buildOtherOrnament(OtherOrnament otherOrnament) {
+        buildPlacementText("other-ornament", otherOrnament.getPlacementText());
     }
 }

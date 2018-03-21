@@ -20,7 +20,7 @@ import java.util.List;
 public class Articulations extends Notation {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "articulations_id")
+    @JoinColumn(name = "articulations_id", nullable = false)
     private List<Articulation> articulationList = new ArrayList<>();
 
     public Articulations() {

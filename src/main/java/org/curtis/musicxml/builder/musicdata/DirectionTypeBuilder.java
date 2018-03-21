@@ -147,8 +147,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         if (metronomeTuplet != null) {
             appendLine("<metronome-tuplet>");
             buildAttribute("show-number", BuilderUtil.enumValue(metronomeTuplet.getShowNumber()));
-            NoteBuilder noteBuilder = new NoteBuilder();
-            append(noteBuilder.buildTimeModification(metronomeTuplet.getTimeModification()).toString());
+            buildTimeModification(metronomeTuplet.getTimeModification());
             appendLine("<metronome-tuplet>");
         }
     }

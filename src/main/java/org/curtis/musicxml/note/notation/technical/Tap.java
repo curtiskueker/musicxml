@@ -2,14 +2,17 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.note.PlacementText;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("tap")
 public class Tap extends Technical {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "placement_text_id")
     private PlacementText placementText;
 
     public Tap() {

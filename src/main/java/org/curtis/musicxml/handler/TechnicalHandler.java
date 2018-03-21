@@ -106,7 +106,7 @@ public class TechnicalHandler extends AbstractHandler {
                     break;
                 case "pluck":
                     Pluck pluck = new Pluck();
-                    pluck.setValue(PlacementFactory.newPlacementText(technicalElement));
+                    pluck.setPlacementText(PlacementFactory.newPlacementText(technicalElement));
                     technical = pluck;
                     break;
                 case "double-tongue":

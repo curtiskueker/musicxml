@@ -1,6 +1,11 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.note.Line;
+import org.curtis.musicxml.note.Placement;
+import org.curtis.musicxml.note.PlacementText;
+import org.curtis.musicxml.note.TimeModification;
+import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.util.StringUtil;
 
 import java.util.Map;
@@ -133,5 +138,36 @@ public abstract class OutputBuilder {
 
     protected void buildElementWithValueAndAttributes(String elementName, Integer elementValue, Map<String, String> attributes) {
         buildElementWithValueAndAttributes(elementName, BuilderUtil.stringValue(elementValue), attributes);
+    }
+
+    protected void buildTimeModification(TimeModification timeModification) {
+        if (timeModification == null) return;
+
+        buildElementWithValue("actual-notes", timeModification.getActualNotes());
+        buildElementWithValue("normal-notes", timeModification.getNormalNotes());
+        buildElementWithValue("normal-type", BuilderUtil.noteTypeValue(timeModification.getNormalType()));
+    }
+
+    protected void buildExtend(Extend extend) {
+        if (extend == null) return;
+
+        buildElement("extend");
+    }
+
+    protected void buildPlacement(String elementName, Placement placement) {
+        buildPlacementWithAttribute(elementName, placement, "", "");
+    }
+
+    protected void buildPlacementWithAttribute(String elementName, Placement placement, String attributeName, String attributeValue) {
+        buildElement(elementName);
+    }
+
+    protected void buildPlacementText(String elementName, PlacementText placementText) {
+        String value = placementText == null ? "" : placementText.getValue();
+        buildElementWithValue(elementName, value);
+    }
+
+    protected void buildLine(String elementName, Line line) {
+        buildElementWithAttribute(elementName, "line-shape", BuilderUtil.enumValue(line.getLineShape()));
     }
 }

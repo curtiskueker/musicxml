@@ -2,14 +2,17 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.note.Placement;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("fingernails")
 public class Fingernails extends Technical {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "placement_id")
     private Placement placement;
 
     public Fingernails() {

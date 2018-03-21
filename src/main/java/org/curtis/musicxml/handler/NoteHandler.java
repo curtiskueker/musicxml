@@ -119,9 +119,9 @@ public class NoteHandler extends MusicDataHandler {
                     noteType.setSize(FormattingFactory.newSymbolSize(noteSubelement));
                     break;
                 case "dot":
-                    List<Placement> dots = note.getDots();
-                    Placement dotPlacement = PlacementFactory.newPlacement(noteSubelement);
-                    dots.add(dotPlacement);
+                    Integer dots = note.getDots();
+                    dots++;
+                    note.setDots(dots);
                     break;
                 case "accidental":
                     Accidental accidental = new Accidental();

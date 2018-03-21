@@ -17,9 +17,7 @@ public class FiguredBassBuilder extends BaseBuilder {
         appendLine("<figured-bass>");
         for (Figure figure : figuredBass.getFigures()) {
             appendLine("<figure>");
-            NoteBuilder noteBuilder = new NoteBuilder();
-            noteBuilder.buildExtend(figure.getExtend());
-            append(noteBuilder.build().toString());
+            buildExtend(figure.getExtend());
             appendLine("</figure>");
         }
         appendLine("</figured-bass>");

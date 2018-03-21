@@ -144,7 +144,7 @@ public class ArticulationHandler extends AbstractHandler {
                     break;
                 case "other-articulation":
                     OtherArticulation otherArticulation = new OtherArticulation();
-                    otherArticulation.setValue(PlacementFactory.newPlacementText(articulationsSubelement));
+                    otherArticulation.setPlacementText(PlacementFactory.newPlacementText(articulationsSubelement));
                     articulation = otherArticulation;
                     break;
             }

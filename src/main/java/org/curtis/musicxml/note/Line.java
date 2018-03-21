@@ -1,14 +1,30 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
-public class Line {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "line")
+public class Line extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_shape")
     private LineShape lineShape;
+    @Transient
     private LineType lineType;
+    @Transient
     private DashedFormatting dashedFormatting;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Location placement;
 
     public Line() {

@@ -54,8 +54,9 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id")
     private NoteType type;
-    @Transient
-    private List<Placement> dots = new ArrayList<>();
+    // TODO: dot Placement
+    @Column
+    private Integer dots = 0;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "accidental_id")
     private Accidental accidental;
@@ -90,11 +91,12 @@ public class Note extends MusicData {
     private Connection tupletType;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "note_id")
+    @JoinColumn(name = "note_id", nullable = false)
     private List<Lyric> lyrics = new ArrayList<>();
     @Transient
     private Play play;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "x_position_id")
     private XPosition xPosition;
     @Transient
     private Font font;
@@ -189,11 +191,11 @@ public class Note extends MusicData {
         this.type = type;
     }
 
-    public List<Placement> getDots() {
+    public Integer getDots() {
         return dots;
     }
 
-    public void setDots(List<Placement> dots) {
+    public void setDots(Integer dots) {
         this.dots = dots;
     }
 

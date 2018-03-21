@@ -3,8 +3,11 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.PlacementText;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 
@@ -15,7 +18,8 @@ public class Bend extends Technical {
     private BigDecimal bendAlter;
     @Transient
     private BendType bendType;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "with_bar_id")
     private PlacementText withBar;
     @Transient
     private PrintStyle printStyle;

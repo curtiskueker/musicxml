@@ -256,8 +256,8 @@ public class NoteBuilder extends MusicDataBuilder {
         NoteType noteType = note.getType();
         if (noteType == null) return stringBuilder;
         append(NoteUtil.getNoteTypeValue(noteType.getValue()));
-        List<Placement> dots = note.getDots();
-        for(Placement dot : dots) append(".");
+        Integer dots = note.getDots();
+        for(int dotCount = 1; dotCount <= dots; dotCount++) append(".");
 
         return stringBuilder;
     }

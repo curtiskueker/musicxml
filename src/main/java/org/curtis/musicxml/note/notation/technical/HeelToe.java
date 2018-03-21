@@ -2,12 +2,16 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.note.Placement;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class HeelToe extends Technical {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "placement_id")
     private Placement placement;
     @Transient
     private Boolean substitution;

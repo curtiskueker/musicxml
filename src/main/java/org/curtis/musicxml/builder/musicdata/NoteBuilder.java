@@ -14,7 +14,6 @@ import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Notehead;
 import org.curtis.musicxml.note.NoteheadText;
 import org.curtis.musicxml.note.Pitch;
-import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.Tie;
@@ -35,8 +34,6 @@ import java.util.Map;
 
 public class NoteBuilder extends BaseBuilder {
     private Note note;
-
-    public NoteBuilder() {}
 
     public NoteBuilder(Note note) {
         this.note = note;
@@ -59,14 +56,17 @@ public class NoteBuilder extends BaseBuilder {
         if (noteType != null) {
             buildElementWithValue("type", BuilderUtil.noteTypeValue(noteType.getValue()));
         }
+        // TODO: note dot Placement
+        for (Integer dotCount = 1; dotCount <= note.getDots(); dotCount++) {
+            buildElement("dot");
+        }
         Accidental accidental = note.getAccidental();
         // TODO: accidental-value
         if (accidental != null) buildElementWithValue("accidental", "sharp");
         TimeModification timeModification = note.getTimeModification();
         if (timeModification != null) {
             appendLine("<time-modification>");
-            NoteBuilder noteBuilder = new NoteBuilder();
-            append(noteBuilder.buildTimeModification(note.getTimeModification()).toString());
+            buildTimeModification(note.getTimeModification());
             appendLine("</time-modification>");
         }
         Stem stem = note.getStem();
@@ -131,17 +131,6 @@ public class NoteBuilder extends BaseBuilder {
         buildElement("rest");
     }
 
-    public StringBuilder buildTimeModification(TimeModification timeModification) {
-        clear();
-        if (timeModification == null) return stringBuilder;
-
-        buildElementWithValue("actual-notes", timeModification.getActualNotes());
-        buildElementWithValue("normal-notes", timeModification.getNormalNotes());
-        buildElementWithValue("normal-type", BuilderUtil.noteTypeValue(timeModification.getNormalType()));
-
-        return stringBuilder;
-    }
-
     public static String buildBeamType(BeamType beamType) {
         return BuilderUtil.enumValueWithSpaces(beamType);
     }
@@ -173,19 +162,5 @@ public class NoteBuilder extends BaseBuilder {
         }
         else if (lyricItem instanceof Extend) buildExtend((Extend)lyricItem);
         appendLine("</lyric>");
-    }
-
-    public void buildExtend(Extend extend) {
-        if (extend == null) return;
-
-        buildElement("extend");
-    }
-
-    private void buildPlacement(String elementName, Placement placement) {
-        buildPlacementWithAttribute(elementName, placement, "");
-    }
-
-    private void buildPlacementWithAttribute(String elementName, Placement placement, String attribute) {
-        buildElement(elementName);
     }
 }
