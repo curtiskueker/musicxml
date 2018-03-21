@@ -25,7 +25,8 @@ public class ScoreHeader extends DatabaseItem {
     private String workNumber;
     @Column(name = "work_title")
     private String workTitle;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "opus_id")
     private LinkAttributes opus;
     @Column(name = "movement_number")
     private String movementNumber;

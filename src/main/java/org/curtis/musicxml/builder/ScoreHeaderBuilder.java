@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.GroupBarline;
@@ -14,7 +15,6 @@ import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
-import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +30,13 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         appendLine("<work>");
         buildElementWithValue("work-number", scoreHeader.getWorkNumber());
         buildElementWithValue("work-title", scoreHeader.getWorkTitle());
+        LinkAttributes opus = scoreHeader.getOpus();
+        if (opus != null) {
+            append("<opus");
+            XLinkBuilder xLinkBuilder = new XLinkBuilder();
+            append(xLinkBuilder.buildLinkAttributes(opus));
+            appendLine("/>");
+        }
         appendLine("</work>");
         buildElementWithValue("movement-number", scoreHeader.getMovementNumber());
         buildElementWithValue("movement-title", scoreHeader.getMovementTitle());

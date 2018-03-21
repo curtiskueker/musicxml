@@ -78,7 +78,9 @@
         <class>org.curtis.musicxml.direction.harmony.RootAlter</class>
         <class>org.curtis.musicxml.direction.harmony.RootStep</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
+        <class>org.curtis.musicxml.link.ElementPosition</class>
         <class>org.curtis.musicxml.link.Link</class>
+        <class>org.curtis.musicxml.link.LinkAttributes</class>
         <class>org.curtis.musicxml.note.Accidental</class>
         <class>org.curtis.musicxml.note.Backup</class>
         <class>org.curtis.musicxml.note.Beam</class>

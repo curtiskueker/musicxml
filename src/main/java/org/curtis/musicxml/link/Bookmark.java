@@ -2,18 +2,23 @@ package org.curtis.musicxml.link;
 
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("bookmark")
 public class Bookmark extends MusicData {
-    @Transient
+    @Column(name = "bookmark_id")
     private String bookmarkId;
-    @Transient
+    @Column
     private String name;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "element_position_id")
     private ElementPosition elementPosition;
 
     public Bookmark() {

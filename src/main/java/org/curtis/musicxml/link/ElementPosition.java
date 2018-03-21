@@ -1,7 +1,17 @@
 package org.curtis.musicxml.link;
 
-public class ElementPosition {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "element_position")
+public class ElementPosition extends DatabaseItem {
+    @Column
     private String element;
+    @Column
     private Integer position;
 
     public ElementPosition() {
