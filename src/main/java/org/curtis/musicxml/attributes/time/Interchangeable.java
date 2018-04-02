@@ -1,11 +1,30 @@
 package org.curtis.musicxml.attributes.time;
 
-import java.util.List;
+import org.curtis.database.DatabaseItem;
 
-public class Interchangeable {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "interchangeable")
+public class Interchangeable extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "time_relation")
     private TimeRelation timeRelation;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "time_signature_id")
     private TimeSignature timeSignature;
+    @Enumerated(EnumType.STRING)
+    @Column
     private TimeSymbol symbol;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "time_separator")
     private TimeSeparator separator;
 
     public Interchangeable() {

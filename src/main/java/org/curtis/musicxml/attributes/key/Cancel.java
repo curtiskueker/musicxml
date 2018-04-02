@@ -1,7 +1,20 @@
 package org.curtis.musicxml.attributes.key;
 
-public class Cancel {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "cancel")
+public class Cancel extends DatabaseItem {
+    @Column
     private Integer fifths;
+    @Enumerated(EnumType.STRING)
+    @Column
     private CancelLocation location;
 
     public Cancel() {

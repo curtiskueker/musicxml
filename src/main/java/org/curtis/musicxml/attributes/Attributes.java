@@ -6,9 +6,17 @@ import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.PartSymbol;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,15 +29,18 @@ public class Attributes extends MusicData {
     private Editorial editorial;
     @Transient
     private BigDecimal divisions;
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "attributes_id", nullable = false)
     private List<Key> keys = new ArrayList<>();
     @Transient
     private List<Time> timeList = new ArrayList<>();
-    @Transient
+    @Column
     private Integer staves = 1;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_symbol_id")
     private PartSymbol partSymbol;
-    @Transient
+    @Column
     private Integer instruments;
     @Transient
     private Clef clef;
@@ -37,7 +48,9 @@ public class Attributes extends MusicData {
     private List<StaffDetails> staffDetailsList = new ArrayList<>();
     @Transient
     private List<Transpose> transpositions = new ArrayList<>();
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "attributes_id", nullable = false)
     private List<Directive> directives = new ArrayList<>();
     @Transient
     private List<MeasureStyle> measureStyles = new ArrayList<>();

@@ -1,8 +1,21 @@
 package org.curtis.musicxml.attributes.key;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
+@DiscriminatorValue("traditional key")
 public class TraditionalKey extends Key {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cancel_id")
     private Cancel cancel;
+    @Column
     private Integer fifths;
+    @Column
     private String mode;
 
     public TraditionalKey() {

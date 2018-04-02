@@ -1,10 +1,17 @@
 package org.curtis.musicxml.attributes.time;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("time signature")
 public class TimeSignature extends Time {
+    @Transient
     private List<TimeSignatureType> timeSignatureList = new ArrayList<>();
+    @Transient
     private Interchangeable interchangeable;
 
     public TimeSignature() {

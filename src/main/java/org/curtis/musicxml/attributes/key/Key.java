@@ -1,15 +1,37 @@
 package org.curtis.musicxml.attributes.key;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.score.MusicData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Key extends MusicData {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "key_signature")
+@DiscriminatorColumn(name = "key_type")
+public abstract class Key extends DatabaseItem {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "key_id", nullable = false)
     private List<KeyOctave> keyOctaves = new ArrayList<>();
+    @Transient
     private Integer number;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Boolean printObject;
 
     public List<KeyOctave> getKeyOctaves() {

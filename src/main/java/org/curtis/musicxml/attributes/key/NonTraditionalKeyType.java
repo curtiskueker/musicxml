@@ -1,13 +1,22 @@
 package org.curtis.musicxml.attributes.key;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.Step;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class NonTraditionalKeyType {
+@Entity
+@Table(name = "non_traditional_key_type")
+public class NonTraditionalKeyType extends DatabaseItem {
+    @Transient
     private Step keyStep;
+    @Transient
     private BigDecimal keyAlter;
+    @Transient
     private AccidentalType keyAccidental;
 
     public NonTraditionalKeyType() {

@@ -8,7 +8,18 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>org.curtis.musicxml.attributes.Attributes</class>
+        <class>org.curtis.musicxml.attributes.Directive</class>
         <class>org.curtis.musicxml.attributes.Image</class>
+        <class>org.curtis.musicxml.attributes.key.Key</class>
+        <class>org.curtis.musicxml.attributes.key.KeyOctave</class>
+        <class>org.curtis.musicxml.attributes.key.NonTraditionalKey</class>
+        <class>org.curtis.musicxml.attributes.key.NonTraditionalKeyType</class>
+        <class>org.curtis.musicxml.attributes.key.TraditionalKey</class>
+        <class>org.curtis.musicxml.attributes.time.Interchangeable</class>
+        <class>org.curtis.musicxml.attributes.time.SenzaMisura</class>
+        <class>org.curtis.musicxml.attributes.time.Time</class>
+        <class>org.curtis.musicxml.attributes.time.TimeSignature</class>
+        <class>org.curtis.musicxml.attributes.time.TimeSignatureType</class>
         <class>org.curtis.musicxml.barline.Barline</class>
         <class>org.curtis.musicxml.barline.BarStyleColor</class>
         <class>org.curtis.musicxml.barline.Ending</class>
@@ -201,6 +212,7 @@
         <class>org.curtis.musicxml.score.PartItem</class>
         <class>org.curtis.musicxml.score.PartList</class>
         <class>org.curtis.musicxml.score.PartName</class>
+        <class>org.curtis.musicxml.score.PartSymbol</class>
         <class>org.curtis.musicxml.score.Score</class>
         <class>org.curtis.musicxml.score.ScoreHeader</class>
         <class>org.curtis.musicxml.score.ScorePart</class>

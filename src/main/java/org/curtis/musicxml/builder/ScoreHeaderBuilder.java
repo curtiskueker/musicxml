@@ -114,8 +114,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildGroupName("group-abbreviation", partGroup.getGroupAbbreviation());
         GroupSymbol groupSymbol = partGroup.getGroupSymbol();
         if (groupSymbol != null) {
-            // TODO: group-symbol value
-            buildElementWithValue("group-symbol", "none");
+            buildElementWithValue("group-symbol", BuilderUtil.enumValue(groupSymbol.getGroupSymbolType()));
         }
         GroupBarline groupBarline = partGroup.getGroupBarline();
         if (groupBarline != null) {

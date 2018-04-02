@@ -1,12 +1,28 @@
 package org.curtis.musicxml.score;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Position;
 
-public class PartSymbol {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "part_symbol")
+public class PartSymbol extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "group_symbol_type")
     private GroupSymbolType groupSymbolType;
+    @Transient
     private Integer topStaff;
+    @Transient
     private Integer bottomStaff;
+    @Transient
     private Position position;
+    @Transient
     private String color;
 
     public PartSymbol() {

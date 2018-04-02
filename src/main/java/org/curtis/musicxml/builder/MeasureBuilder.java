@@ -1,6 +1,8 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.builder.musicdata.AttributesBuilder;
 import org.curtis.musicxml.builder.musicdata.BackupBuilder;
 import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
 import org.curtis.musicxml.builder.musicdata.BookmarkBuilder;
@@ -44,6 +46,7 @@ public class MeasureBuilder extends BaseBuilder {
             else if (musicData instanceof Backup) baseBuilder = new BackupBuilder((Backup)musicData);
             else if (musicData instanceof Forward) baseBuilder = new ForwardBuilder((Forward)musicData);
             else if (musicData instanceof Direction) baseBuilder = new DirectionBuilder((Direction)musicData);
+            else if (musicData instanceof Attributes) baseBuilder = new AttributesBuilder((Attributes)musicData);
             else if (musicData instanceof Harmony) baseBuilder = new HarmonyBuilder((Harmony)musicData);
             else if (musicData instanceof FiguredBass) baseBuilder = new FiguredBassBuilder((FiguredBass)musicData);
             else if (musicData instanceof Print) baseBuilder = new PrintBuilder((Print)musicData);

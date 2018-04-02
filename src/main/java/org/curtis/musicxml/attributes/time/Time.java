@@ -1,13 +1,34 @@
 package org.curtis.musicxml.attributes.time;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyleAlign;
-import org.curtis.musicxml.score.MusicData;
 
-public abstract class Time extends MusicData {
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "time")
+@DiscriminatorColumn(name = "time_type")
+public abstract class Time extends DatabaseItem {
+    @Transient
     private Integer number;
+    @Enumerated(EnumType.STRING)
+    @Column
     private TimeSymbol symbol;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "time_separator")
     private TimeSeparator separator;
+    @Transient
     private PrintStyleAlign printStyleAlign;
+    @Transient
     private Boolean printObject;
 
     public Integer getNumber() {
