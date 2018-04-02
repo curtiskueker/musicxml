@@ -99,7 +99,7 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine("</transpose>");
         }
         for (Directive directive : attributes.getDirectives()) {
-            buildElementWithValue("directive", directive.getValue());
+            buildElementWithValueAndAttribute("directive", directive.getValue(), "xml:lang", directive.getLang());
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             appendLine("<measure-style>");

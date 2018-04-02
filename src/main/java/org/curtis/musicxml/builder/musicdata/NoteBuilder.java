@@ -24,6 +24,7 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
+import org.curtis.musicxml.note.lyric.TextData;
 import org.curtis.musicxml.note.lyric.TextFontColor;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.util.StringUtil;
@@ -154,9 +155,10 @@ public class NoteBuilder extends BaseBuilder {
             LyricText lyricText = (LyricText)lyricItem;
             for (LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
                 TextFontColor lyricElision = lyricSyllable.getLyricElision();
-                if (lyricElision != null) buildElementWithValue("elision", lyricElision.getValue());
+                if (lyricElision != null) buildElementWithValueAndAttribute("elision", lyricElision.getValue(), "xml:lang", lyricElision.getLang());
                 buildElementWithValue("syllabic", BuilderUtil.enumValue(lyricSyllable.getSyllabic()));
-                buildElementWithValue("text", lyricSyllable.getText().getValue());
+                TextData lyricSyllableText = lyricSyllable.getText();
+                buildElementWithValueAndAttribute("text", lyricSyllableText.getValue(), "xml:lang", lyricSyllableText.getLang());
             }
             buildExtend(lyricText.getExtend());
         }

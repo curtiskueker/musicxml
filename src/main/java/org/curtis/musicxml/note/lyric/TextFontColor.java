@@ -26,7 +26,7 @@ public class TextFontColor extends DatabaseItem {
     private BigDecimal textRotation;
     @Transient
     private String letterSpacing;
-    @Transient
+    @Column
     private String lang;
     @Transient
     private Location textDirection;

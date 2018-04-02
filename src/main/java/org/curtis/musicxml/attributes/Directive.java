@@ -15,7 +15,7 @@ public class Directive extends DatabaseItem {
     private String value;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Column
     private String lang;
 
     public Directive() {

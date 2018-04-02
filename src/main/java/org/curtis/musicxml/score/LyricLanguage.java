@@ -5,7 +5,6 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "lyric_language")
@@ -14,7 +13,7 @@ public class LyricLanguage extends DatabaseItem {
     private String number;
     @Column
     private String name;
-    @Transient
+    @Column
     private String lang;
 
     public LyricLanguage() {

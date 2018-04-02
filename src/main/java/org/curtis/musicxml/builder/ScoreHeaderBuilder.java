@@ -77,6 +77,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("number", lyricLanguage.getNumber());
         attributes.put("name", lyricLanguage.getName());
+        attributes.put("xml:lang", lyricLanguage.getLang());
         buildElementWithAttributes("lyric-language", attributes);
     }
 
