@@ -1,13 +1,23 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.attributes.Directive;
+import org.curtis.musicxml.attributes.StaffDetails;
+import org.curtis.musicxml.attributes.StaffTuning;
+import org.curtis.musicxml.attributes.Transpose;
 import org.curtis.musicxml.attributes.key.Cancel;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.key.KeyOctave;
 import org.curtis.musicxml.attributes.key.NonTraditionalKey;
 import org.curtis.musicxml.attributes.key.NonTraditionalKeyType;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
+import org.curtis.musicxml.attributes.measure.BeatRepeat;
+import org.curtis.musicxml.attributes.measure.MeasureRepeat;
+import org.curtis.musicxml.attributes.measure.MeasureStyle;
+import org.curtis.musicxml.attributes.measure.MultipleRest;
+import org.curtis.musicxml.attributes.measure.Slash;
+import org.curtis.musicxml.attributes.measure.SlashGroup;
 import org.curtis.musicxml.attributes.time.Interchangeable;
 import org.curtis.musicxml.attributes.time.SenzaMisura;
 import org.curtis.musicxml.attributes.time.Time;
@@ -35,13 +45,6 @@ public class AttributesBuilder extends BaseBuilder {
             }
             appendLine("</key>");
         }
-        buildElementWithValue("staves", attributes.getStaves());
-        PartSymbol partSymbol = attributes.getPartSymbol();
-        if (partSymbol != null) buildElementWithValue("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()));
-        buildElementWithValue("instruments", attributes.getInstruments());
-        for (Directive directive : attributes.getDirectives()) {
-            buildElementWithValue("directive", directive.getValue());
-        }
         for (Time time : attributes.getTimeList()) {
             append("<time");
             buildAttribute("symbol", BuilderUtil.enumValue(time.getSymbol()));
@@ -50,6 +53,76 @@ public class AttributesBuilder extends BaseBuilder {
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
             else if (time instanceof SenzaMisura) buildSenzaMisura((SenzaMisura)time);
             appendLine("</time>");
+        }
+        buildElementWithValue("staves", attributes.getStaves());
+        PartSymbol partSymbol = attributes.getPartSymbol();
+        if (partSymbol != null) buildElementWithValue("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()));
+        buildElementWithValue("instruments", attributes.getInstruments());
+        for (Clef clef : attributes.getClefs()) {
+            appendLine("<clef>");
+            String clefSign = BuilderUtil.enumValue(clef.getSign());
+            switch (clefSign) {
+                case "g":
+                    clefSign = "G";
+                    break;
+                case "f":
+                    clefSign = "F";
+                    break;
+                case "c":
+                    clefSign = "C";
+                    break;
+                case "tab":
+                    clefSign = "TAB";
+                    break;
+            }
+            buildElementWithValue("sign", clefSign);
+            buildElementWithValue("line", clef.getLine());
+            buildElementWithValue("clef-octave-change", clef.getClefOctaveChange());
+            appendLine("</clef>");
+        }
+        for (StaffDetails staffDetails : attributes.getStaffDetailsList()) {
+            append("<staff-details");
+            buildAttribute("show-frets", BuilderUtil.enumValue(staffDetails.getShowFrets()));
+            appendLine(">");
+            buildElementWithValue("staff-type", BuilderUtil.enumValue(staffDetails.getStaffType()));
+            buildElementWithValue("staff-lines", staffDetails.getStaffLines());
+            for (StaffTuning staffTuning : staffDetails.getStaffTunings()) {
+                buildElementWithAttribute("staff-tuning", "line", staffTuning.getLine());
+            }
+            buildElementWithValue("capo", staffDetails.getCapo());
+            appendLine("</staff-details>");
+        }
+        for (Transpose transpose : attributes.getTranspositions()) {
+            appendLine("<transpose>");
+            buildElementWithValue("diatonic", transpose.getDiatonic());
+            buildElementWithValue("octave-change", transpose.getOctaveChange());
+            appendLine("</transpose>");
+        }
+        for (Directive directive : attributes.getDirectives()) {
+            buildElementWithValue("directive", directive.getValue());
+        }
+        for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
+            appendLine("<measure-style>");
+            if (measureStyle instanceof MultipleRest) buildElement("multiple-rest");
+            else if (measureStyle instanceof MeasureRepeat) {
+                MeasureRepeat measureRepeat = (MeasureRepeat)measureStyle;
+                buildElementWithAttribute("measure-repeat", "slashes", measureRepeat.getSlashes());
+            }
+            else if (measureStyle instanceof BeatRepeat) {
+                BeatRepeat beatRepeat = (BeatRepeat)measureStyle;
+                append("<beat-repeat");
+                buildAttribute("slashes", beatRepeat.getSlashes());
+                appendLine(">");
+                buildSlashGroup(beatRepeat.getSlashGroup());
+                appendLine("</beat-repeat>");
+            }
+            else if (measureStyle instanceof Slash) {
+                Slash slash = (Slash)measureStyle;
+                appendLine("<slash>");
+                buildSlashGroup(slash.getSlashGroup());
+                appendLine("</slash>");
+            }
+            appendLine("</measure-style>");
         }
         appendLine("</attributes>");
 
@@ -95,5 +168,11 @@ public class AttributesBuilder extends BaseBuilder {
     private void buildTimeSignatureType(TimeSignatureType timeSignatureType) {
         buildElementWithValue("beats", timeSignatureType.getBeats());
         buildElementWithValue("beat-type", timeSignatureType.getBeatType());
+    }
+
+    private void buildSlashGroup(SlashGroup slashGroup) {
+        if (slashGroup == null) return;
+
+        buildElementWithValue("slash-type", BuilderUtil.noteTypeValue(slashGroup.getSlashType()));
     }
 }

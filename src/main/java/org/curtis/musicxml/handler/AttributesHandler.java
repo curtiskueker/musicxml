@@ -117,7 +117,7 @@ public class AttributesHandler extends MusicDataHandler {
                     clef.setAfterBarline(TypeUtil.getYesNo(attributeSubelement.getAttribute("after-barline")));
                     clef.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
                     clef.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
-                    attributes.setClef(clef);
+                    attributes.getClefs().add(clef);
                     break;
                 case "staff-details":
                     List<StaffDetails> staffDetailsList = attributes.getStaffDetailsList();

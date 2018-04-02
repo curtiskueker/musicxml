@@ -1,7 +1,15 @@
 package org.curtis.musicxml.attributes.time;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +17,12 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("time signature")
 public class TimeSignature extends Time {
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "time_signature_id", nullable = false)
     private List<TimeSignatureType> timeSignatureList = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "interchangeable_id")
     private Interchangeable interchangeable;
 
     public TimeSignature() {

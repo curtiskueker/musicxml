@@ -1,17 +1,46 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class StaffDetails {
+@Entity
+@Table(name = "staff_details")
+public class StaffDetails extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "staff_type")
     private StaffType staffType;
+    @Column(name = "staff_lines")
     private Integer staffLines;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "staff_details_id", nullable = false)
     private List<StaffTuning> staffTunings;
+    @Column
     private Integer capo;
+    @Transient
     private BigDecimal staffSize;
+    @Transient
     private Integer number;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "show_frets")
     private ShowFrets showFrets;
+    @Transient
     private Boolean printObject;
+    @Transient
     private Boolean printSpacing;
 
     public StaffDetails() {

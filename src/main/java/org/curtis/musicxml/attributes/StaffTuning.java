@@ -1,7 +1,18 @@
 package org.curtis.musicxml.attributes;
 
-public class StaffTuning {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "staff_tuning")
+public class StaffTuning extends DatabaseItem {
+    @Transient
     private Tuning tuning;
+    @Column
     private Integer line;
 
     public StaffTuning() {

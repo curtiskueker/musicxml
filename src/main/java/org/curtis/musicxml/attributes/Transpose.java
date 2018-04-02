@@ -1,12 +1,25 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Transpose {
+@Entity
+@Table(name = "transpose")
+public class Transpose extends DatabaseItem {
+    @Column
     private Integer diatonic;
+    @Transient
     private BigDecimal chromatic;
+    @Column(name = "octave_change")
     private Integer octaveChange;
+    @Transient
     private Boolean doubled;
+    @Transient
     private Integer number;
 
     public Transpose() {

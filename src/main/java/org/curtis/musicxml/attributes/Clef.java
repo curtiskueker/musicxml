@@ -1,17 +1,37 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.SymbolSize;
 
-public class Clef {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "clef")
+public class Clef extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column
     private ClefSign sign;
+    @Column
     private Integer line;
+    @Column(name = "clef_octave_change")
     private Integer clefOctaveChange;
+    @Transient
     private Integer number;
+    @Transient
     private Boolean additional;
+    @Transient
     private SymbolSize size;
+    @Transient
     private Boolean afterBarline;
+    @Transient
     private PrintStyle printStyle;
+    @Transient
     private Boolean printObject;
 
     public Clef() {

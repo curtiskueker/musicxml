@@ -2,9 +2,19 @@ package org.curtis.musicxml.attributes.measure;
 
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("measure repeat")
 public class MeasureRepeat extends MeasureStyle {
+    @Transient
     private Integer value;
+    @Transient
     private Connection type;
+    @Column
     private Integer slashes;
 
     public MeasureRepeat() {

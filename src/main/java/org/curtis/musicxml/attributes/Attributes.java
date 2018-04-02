@@ -33,7 +33,9 @@ public class Attributes extends MusicData {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
     private List<Key> keys = new ArrayList<>();
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "attributes_id", nullable = false)
     private List<Time> timeList = new ArrayList<>();
     @Column
     private Integer staves = 1;
@@ -42,17 +44,25 @@ public class Attributes extends MusicData {
     private PartSymbol partSymbol;
     @Column
     private Integer instruments;
-    @Transient
-    private Clef clef;
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "attributes_id", nullable = false)
+    private List<Clef> clefs = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "attributes_id", nullable = false)
     private List<StaffDetails> staffDetailsList = new ArrayList<>();
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "attributes_id", nullable = false)
     private List<Transpose> transpositions = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
     private List<Directive> directives = new ArrayList<>();
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "attributes_id", nullable = false)
     private List<MeasureStyle> measureStyles = new ArrayList<>();
 
     public Attributes() {
@@ -115,12 +125,12 @@ public class Attributes extends MusicData {
         this.instruments = instruments;
     }
 
-    public Clef getClef() {
-        return clef;
+    public List<Clef> getClefs() {
+        return clefs;
     }
 
-    public void setClef(Clef clef) {
-        this.clef = clef;
+    public void setClefs(List<Clef> clefs) {
+        this.clefs = clefs;
     }
 
     public List<StaffDetails> getStaffDetailsList() {

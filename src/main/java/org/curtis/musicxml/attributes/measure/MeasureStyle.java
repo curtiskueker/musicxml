@@ -1,10 +1,25 @@
 package org.curtis.musicxml.attributes.measure;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 
-public abstract class MeasureStyle {
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "measure_style")
+@DiscriminatorColumn(name = "measure_style_type")
+public abstract class MeasureStyle extends DatabaseItem {
+    @Transient
     private Integer number;
+    @Transient
     private Font font;
+    @Transient
     private String color;
 
     public Integer getNumber() {

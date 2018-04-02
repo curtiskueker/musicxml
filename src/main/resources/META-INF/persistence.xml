@@ -8,13 +8,23 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>org.curtis.musicxml.attributes.Attributes</class>
+        <class>org.curtis.musicxml.attributes.Clef</class>
         <class>org.curtis.musicxml.attributes.Directive</class>
         <class>org.curtis.musicxml.attributes.Image</class>
+        <class>org.curtis.musicxml.attributes.StaffDetails</class>
+        <class>org.curtis.musicxml.attributes.StaffTuning</class>
+        <class>org.curtis.musicxml.attributes.Transpose</class>
         <class>org.curtis.musicxml.attributes.key.Key</class>
         <class>org.curtis.musicxml.attributes.key.KeyOctave</class>
         <class>org.curtis.musicxml.attributes.key.NonTraditionalKey</class>
         <class>org.curtis.musicxml.attributes.key.NonTraditionalKeyType</class>
         <class>org.curtis.musicxml.attributes.key.TraditionalKey</class>
+        <class>org.curtis.musicxml.attributes.measure.BeatRepeat</class>
+        <class>org.curtis.musicxml.attributes.measure.MeasureRepeat</class>
+        <class>org.curtis.musicxml.attributes.measure.MeasureStyle</class>
+        <class>org.curtis.musicxml.attributes.measure.MultipleRest</class>
+        <class>org.curtis.musicxml.attributes.measure.Slash</class>
+        <class>org.curtis.musicxml.attributes.measure.SlashGroup</class>
         <class>org.curtis.musicxml.attributes.time.Interchangeable</class>
         <class>org.curtis.musicxml.attributes.time.SenzaMisura</class>
         <class>org.curtis.musicxml.attributes.time.Time</class>

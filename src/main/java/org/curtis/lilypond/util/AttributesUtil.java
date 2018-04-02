@@ -59,9 +59,9 @@ public class AttributesUtil {
             PartBuilder.CURRENT_ATTRIBUTES.setInstruments(instruments);
         }
 
-        Clef clef = attributes.getClef();
-        if(clef != null) {
-            PartBuilder.CURRENT_ATTRIBUTES.setClef(clef);
+        List<Clef> clefs = attributes.getClefs();
+        if(!clefs.isEmpty()) {
+            PartBuilder.CURRENT_ATTRIBUTES.setClefs(clefs);
         }
 
         List<StaffDetails> staffDetailsList = attributes.getStaffDetailsList();
@@ -96,7 +96,7 @@ public class AttributesUtil {
         copy.setStaves(attributes.getStaves());
         copy.setPartSymbol(attributes.getPartSymbol());
         copy.setInstruments(attributes.getInstruments());
-        copy.setClef(attributes.getClef());
+        copy.setClefs(attributes.getClefs());
         copy.setStaffDetailsList(attributes.getStaffDetailsList());
         copy.setTranspositions(attributes.getTranspositions());
         copy.setDirectives(attributes.getDirectives());
