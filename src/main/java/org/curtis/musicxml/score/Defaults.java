@@ -22,11 +22,14 @@ import java.util.List;
 @Entity
 @Table(name = "defaults")
 public class Defaults extends DatabaseItem {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "defaults_id")
     private Scaling scaling;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "layout_id")
     private Layout layout;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "appearance_id")
     private Appearance appearance;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "music_font_id")

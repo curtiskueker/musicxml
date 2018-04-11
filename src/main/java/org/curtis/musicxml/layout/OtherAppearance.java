@@ -1,7 +1,17 @@
 package org.curtis.musicxml.layout;
 
-public class OtherAppearance {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "other_appearance")
+public class OtherAppearance extends DatabaseItem {
+    @Column
     private String value;
+    @Column
     private String type;
 
     public OtherAppearance() {

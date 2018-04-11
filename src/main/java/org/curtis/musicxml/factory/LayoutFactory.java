@@ -8,7 +8,6 @@ import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.layout.StaffLayout;
 import org.curtis.musicxml.layout.SystemDividers;
 import org.curtis.musicxml.layout.SystemLayout;
-import org.curtis.musicxml.layout.SystemMargins;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -51,12 +50,15 @@ public class LayoutFactory {
                             switch (marginType) {
                                 case "odd":
                                     pageMargins.setType(MarginType.ODD);
+                                    pageMargins.setMarginTypeKey(MarginType.ODD);
                                     break;
                                 case "even":
                                     pageMargins.setType(MarginType.EVEN);
+                                    pageMargins.setMarginTypeKey(MarginType.EVEN);
                                     break;
                                 case "both":
                                     pageMargins.setType(MarginType.BOTH);
+                                    pageMargins.setMarginTypeKey(MarginType.BOTH);
                                     break;
                             }
                         }
@@ -69,10 +71,8 @@ public class LayoutFactory {
                     SystemLayout systemLayout = new SystemLayout();
                     Element systemMarginsElement = XmlUtil.getChildElement(layoutSubelement, "system-margins");
                     if(systemMarginsElement != null) {
-                        SystemMargins systemMargins = new SystemMargins();
-                        systemMargins.setLeftMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(systemMarginsElement, "left-margin")));
-                        systemMargins.setRightMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(systemMarginsElement, "right-margin")));
-                        systemLayout.setSystemMargins(systemMargins);
+                        systemLayout.setLeftMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(systemMarginsElement, "left-margin")));
+                        systemLayout.setRightMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(systemMarginsElement, "right-margin")));
                     }
 
                     systemLayout.setSystemDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(layoutSubelement, "system-distance")));

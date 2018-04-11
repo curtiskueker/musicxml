@@ -1,9 +1,18 @@
 package org.curtis.musicxml.layout;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
-public class PrintObjectStyleAlign {
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "print_object_style_align")
+public class PrintObjectStyleAlign extends DatabaseItem {
+    @Transient
     private Boolean printObject;
+    @Transient
     private PrintStyleAlign printStyleAlign;
 
     public PrintObjectStyleAlign() {

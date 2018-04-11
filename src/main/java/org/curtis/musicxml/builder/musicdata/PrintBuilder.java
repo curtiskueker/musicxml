@@ -18,6 +18,8 @@ public class PrintBuilder extends BaseBuilder {
         buildAttribute("blank-page", print.getBlankPage());
         buildAttribute("page-number", print.getPageNumber());
         appendLine(">");
+        append(LayoutBuilder.buildLayout(print.getLayout()));
+        buildElement("measure-layout");
         buildElementWithValue("measure-numbering", BuilderUtil.enumValue(print.getMeasureNumberingValue()));
         appendLine("</print>");
 

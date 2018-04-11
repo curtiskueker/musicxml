@@ -8,11 +8,15 @@ import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.util.StringUtil;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public abstract class OutputBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();
 
+    public StringBuilder getStringBuilder() {
+        return stringBuilder;
+    }
 
     protected void appendLine(String string) {
         stringBuilder.append(string);
@@ -69,6 +73,10 @@ public abstract class OutputBuilder {
         if (elementValue == null) return;
 
         buildElementWithValue(elementName, String.valueOf(elementValue));
+    }
+
+    protected void buildElementWithValue(String elementName, BigDecimal elementValue) {
+        buildElementWithValue(elementName, elementValue.toString());
     }
 
     protected void buildElementWithAttribute(String elementName, String attributeName, String attributeValue) {

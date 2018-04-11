@@ -1,9 +1,19 @@
 package org.curtis.musicxml.layout;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Scaling {
+@Entity
+@Table(name = "scaling")
+public class Scaling extends DatabaseItem {
+    @Column
     private BigDecimal millimeters;
+    @Transient
     private BigDecimal tenths;
 
     public Scaling() {

@@ -1,7 +1,21 @@
 package org.curtis.musicxml.layout;
 
-public class SystemDividers {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "system_dividers")
+public class SystemDividers extends DatabaseItem {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "left_divider_id")
     private PrintObjectStyleAlign leftDivider;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "right_divider_id")
     private PrintObjectStyleAlign rightDivider;
 
     public SystemDividers() {

@@ -108,6 +108,20 @@
         <class>org.curtis.musicxml.identity.encoding.EncodingDescription</class>
         <class>org.curtis.musicxml.identity.encoding.Software</class>
         <class>org.curtis.musicxml.identity.encoding.Supports</class>
+        <class>org.curtis.musicxml.layout.Appearance</class>
+        <class>org.curtis.musicxml.layout.Distance</class>
+        <class>org.curtis.musicxml.layout.Layout</class>
+        <class>org.curtis.musicxml.layout.LineWidth</class>
+        <class>org.curtis.musicxml.layout.Margins</class>
+        <class>org.curtis.musicxml.layout.MeasureLayout</class>
+        <class>org.curtis.musicxml.layout.NoteSize</class>
+        <class>org.curtis.musicxml.layout.PageLayout</class>
+        <class>org.curtis.musicxml.layout.PageMargins</class>
+        <class>org.curtis.musicxml.layout.PrintObjectStyleAlign</class>
+        <class>org.curtis.musicxml.layout.Scaling</class>
+        <class>org.curtis.musicxml.layout.StaffLayout</class>
+        <class>org.curtis.musicxml.layout.SystemDividers</class>
+        <class>org.curtis.musicxml.layout.SystemLayout</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
         <class>org.curtis.musicxml.link.ElementPosition</class>
         <class>org.curtis.musicxml.link.Link</class>

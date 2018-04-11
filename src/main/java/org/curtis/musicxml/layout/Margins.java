@@ -1,11 +1,22 @@
 package org.curtis.musicxml.layout;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Margins {
+@Entity
+@Table(name = "margins")
+public class Margins extends DatabaseItem {
+    @Transient
     private BigDecimal leftMargin;
+    @Transient
     private BigDecimal rightMargin;
+    @Transient
     private BigDecimal topMargin;
+    @Transient
     private BigDecimal bottomMargin;
 
     public Margins() {

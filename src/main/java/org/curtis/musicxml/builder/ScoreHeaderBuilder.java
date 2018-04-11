@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.builder.musicdata.LayoutBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.Miscellaneous;
@@ -10,6 +11,12 @@ import org.curtis.musicxml.identity.encoding.Encoding;
 import org.curtis.musicxml.identity.encoding.EncodingDescription;
 import org.curtis.musicxml.identity.encoding.Software;
 import org.curtis.musicxml.identity.encoding.Supports;
+import org.curtis.musicxml.layout.Appearance;
+import org.curtis.musicxml.layout.Distance;
+import org.curtis.musicxml.layout.LineWidth;
+import org.curtis.musicxml.layout.NoteSize;
+import org.curtis.musicxml.layout.OtherAppearance;
+import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
@@ -109,6 +116,32 @@ public class ScoreHeaderBuilder extends BaseBuilder {
 
         if (defaults == null) return;
         appendLine("<defaults>");
+        Scaling scaling = defaults.getScaling();
+        if (scaling != null) {
+            appendLine("<scaling>");
+            buildElementWithValue("millimeters", scaling.getMillimeters());
+            // TODO: scaling tenths
+            buildElementWithValue("tenths", 100);
+            appendLine("</scaling>");
+        }
+        append(LayoutBuilder.buildLayout(defaults.getLayout()));
+        Appearance appearance = defaults.getAppearance();
+        if (appearance != null) {
+            appendLine("<appearance>");
+            for (LineWidth lineWidth : appearance.getLineWidths()) {
+                // TODO: line width decimal
+                buildElementWithValueAndAttribute("line-width", 100, "type", lineWidth.getLineWidthType());
+            }
+            for (NoteSize noteSize : appearance.getNoteSizes()) {
+                // TODO: note size decimal
+                buildElementWithValueAndAttribute("note-size", 100, "type", BuilderUtil.enumValue(noteSize.getType()));
+            }
+            for (Distance distance : appearance.getDistances()) {
+                buildElementWithAttribute("distance", "type", distance.getType());
+            }
+            for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", otherAppearance.getType());
+            appendLine("</appearance>");
+        }
         FormattingBuilder formattingBuilder = new FormattingBuilder();
         append(formattingBuilder.buildFont("music-font", defaults.getMusicFont()));
         append(formattingBuilder.buildFont("word-font", defaults.getWordFont()));

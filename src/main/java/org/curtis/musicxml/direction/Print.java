@@ -6,20 +6,25 @@ import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("print")
 public class Print extends MusicData {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "layout_id")
     private Layout layout;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "measure_layout_id")
     private MeasureLayout measureLayout;
     @Enumerated(EnumType.STRING)
     @Column(name = "measure_numbering_value")

@@ -1,12 +1,36 @@
 package org.curtis.musicxml.layout;
 
+import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Appearance {
+@Entity
+@Table(name = "appearance")
+public class Appearance extends DatabaseItem {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "appearance_id", nullable = false)
     private List<LineWidth> lineWidths = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "appearance_id", nullable = false)
     private List<NoteSize> noteSizes = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "appearance_id", nullable = false)
     private List<Distance> distances = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "appearance_id", nullable = false)
     private List<OtherAppearance> otherAppearances = new ArrayList<>();
 
     public Appearance() {
