@@ -1,9 +1,20 @@
 package org.curtis.musicxml.identity.encoding;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+@DiscriminatorValue("supports")
 public class Supports extends Encoding {
+    @Transient
     private Boolean type;
+    @Column
     private String element;
+    @Column
     private String attribute;
+    @Column
     private String value;
 
     public Supports() {

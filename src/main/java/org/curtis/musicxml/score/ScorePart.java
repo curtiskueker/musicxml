@@ -23,7 +23,8 @@ import java.util.List;
 public class ScorePart extends PartItem {
     @Column(name = "score_part_id")
     private String scorePartId;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "identification_id")
     private Identification identification;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "part_name_id")

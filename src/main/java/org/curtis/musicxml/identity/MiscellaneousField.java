@@ -1,7 +1,17 @@
 package org.curtis.musicxml.identity;
 
-public class MiscellaneousField {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "miscellaneous_field")
+public class MiscellaneousField extends DatabaseItem {
+    @Column
     private String value;
+    @Column
     private String name;
 
     public MiscellaneousField() {

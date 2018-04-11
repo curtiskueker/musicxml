@@ -1,6 +1,15 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.identity.Identification;
+import org.curtis.musicxml.identity.Miscellaneous;
+import org.curtis.musicxml.identity.MiscellaneousField;
+import org.curtis.musicxml.identity.TypedText;
+import org.curtis.musicxml.identity.encoding.Encoder;
+import org.curtis.musicxml.identity.encoding.Encoding;
+import org.curtis.musicxml.identity.encoding.EncodingDescription;
+import org.curtis.musicxml.identity.encoding.Software;
+import org.curtis.musicxml.identity.encoding.Supports;
 import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.Defaults;
@@ -17,6 +26,7 @@ import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ScoreHeaderBuilder extends BaseBuilder {
@@ -40,6 +50,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         appendLine("</work>");
         buildElementWithValue("movement-number", scoreHeader.getMovementNumber());
         buildElementWithValue("movement-title", scoreHeader.getMovementTitle());
+        buildIdentification(scoreHeader.getIdentification());
         buildDefaults();
         for (Credit credit : scoreHeader.getCredits()) {
             buildCredit(credit);
@@ -47,6 +58,50 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildPartList();
 
         return stringBuilder;
+    }
+
+    private void buildIdentification(Identification identification) {
+        if (identification == null) return;
+
+        appendLine("<identification>");
+        List<Encoding> encodings = identification.getEncodings();
+        if (!encodings.isEmpty()) {
+            appendLine("<encoding>");
+            for (Encoding encoding : encodings) {
+                if (encoding instanceof Encoder) {
+                    Encoder encoder = (Encoder)encoding;
+                    buildTypedText(encoder.getEncoder(), "encoder");
+                }
+                if (encoding instanceof Software) {
+                    Software software = (Software)encoding;
+                    buildElementWithValue("software", software.getSoftware());
+                }
+                else if (encoding instanceof EncodingDescription) {
+                    EncodingDescription encodingDescription = (EncodingDescription)encoding;
+                    buildElementWithValue("encoding-description", encodingDescription.getEncodingDescription());
+                }
+                else if (encoding instanceof Supports) {
+                    Supports supports = (Supports)encoding;
+                    Map<String, String> attributes = new HashMap<>();
+                    // TODO: supports type
+                    attributes.put("type", "yes");
+                    attributes.put("element", supports.getElement());
+                    attributes.put("attribute", supports.getAttribute());
+                    attributes.put("value", supports.getValue());
+                    buildElementWithAttributes("supports", attributes);
+                }
+            }
+            buildElementWithValue("source", identification.getSource());
+            Miscellaneous miscellaneous = identification.getMiscellaneous();
+            if (miscellaneous != null) {
+                appendLine("<miscellaneous>");
+                for (MiscellaneousField miscellaneousField : miscellaneous.getMiscellaneousFields()) buildElementWithValueAndAttribute("miscellaneous-field", miscellaneousField.getValue(), "name", miscellaneousField.getName());
+                appendLine("</miscellaneous>");
+            }
+            appendLine("</encoding>");
+        }
+        buildElementWithValue("source", identification.getSource());
+        appendLine("</identification>");
     }
 
     private void buildDefaults() {
@@ -136,6 +191,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         append("<score-part");
         buildAttribute("id", scorePart.getScorePartId());
         appendLine(">");
+        buildIdentification(scorePart.getIdentification());
         buildPartName("part-name", scorePart.getPartName());
         buildPartName("part-abbreviation", scorePart.getPartAbbreviation());
         for (String group : scorePart.getGroups()) {
@@ -148,5 +204,11 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         if (partName == null) return;
 
         buildElementWithValue(elementName, partName.getPartName());
+    }
+
+    private void buildTypedText(TypedText typedText, String elementName) {
+        if (typedText == null) return;
+
+        buildElementWithValueAndAttribute(elementName, typedText.getValue(), "type", typedText.getType());
     }
 }

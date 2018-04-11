@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,8 @@ public class ScoreHeader extends DatabaseItem {
     private String movementNumber;
     @Column(name = "movement_title")
     private String movementTitle;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "identification_id")
     private Identification identification;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "defaults_id")

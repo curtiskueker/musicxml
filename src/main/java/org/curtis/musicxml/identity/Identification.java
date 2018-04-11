@@ -1,16 +1,39 @@
 package org.curtis.musicxml.identity;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.identity.encoding.Encoding;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Identification {
+@Entity
+@Table(name = "identification")
+public class Identification extends DatabaseItem {
+    @Transient
     private List<TypedText> creators = new ArrayList<>();
+    @Transient
     private List<TypedText> rightsList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "identification_id", nullable = false)
     private List<Encoding> encodings = new ArrayList<>();
+    @Column
     private String source;
+    @Transient
     private List<TypedText> relations = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "miscellaneous_id")
     private Miscellaneous miscellaneous;
 
     public Identification() {

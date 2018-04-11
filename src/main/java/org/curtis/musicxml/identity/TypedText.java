@@ -1,7 +1,17 @@
 package org.curtis.musicxml.identity;
 
-public class TypedText {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "typed_text")
+public class TypedText extends DatabaseItem {
+    @Column
     private String value;
+    @Column
     private String type;
 
     public TypedText() {
