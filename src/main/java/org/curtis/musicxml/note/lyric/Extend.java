@@ -3,14 +3,18 @@ package org.curtis.musicxml.note.lyric;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("extend")
 public class Extend extends LyricItem {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private PrintStyle printStyle;

@@ -159,7 +159,7 @@ public abstract class OutputBuilder {
     protected void buildExtend(Extend extend) {
         if (extend == null) return;
 
-        buildElement("extend");
+        buildElementWithAttribute("extend", "type", BuilderUtil.enumValue(extend.getType()));
     }
 
     protected void buildPlacement(String elementName, Placement placement) {

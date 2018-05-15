@@ -16,7 +16,8 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("bracket")
 public class Bracket extends DirectionType {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Integer number;

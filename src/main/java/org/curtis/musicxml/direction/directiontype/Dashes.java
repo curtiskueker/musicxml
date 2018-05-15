@@ -4,14 +4,18 @@ import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Connection;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("dashes")
 public class Dashes extends DirectionType {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Integer number;

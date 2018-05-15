@@ -52,13 +52,11 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildTied(Tied tied) {
-        // TODO: tied type
-        buildElementWithAttribute("tied", "type", "start");
+        buildElementWithAttribute("tied", "type", BuilderUtil.enumValue(tied.getType()));
     }
 
     private void buildSlur(Slur slur) {
-        // TODO: slur type
-        buildElementWithAttribute("slur", "type", "start");
+        buildElementWithAttribute("slur", "type", BuilderUtil.enumValue(slur.getConnectionType()));
     }
 
     private void buildTuplet(Tuplet tuplet) {

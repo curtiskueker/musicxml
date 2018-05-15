@@ -112,11 +112,12 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildDashes(Dashes dashes) {
-        buildElement("dashes");
+        buildElementWithAttribute("dashes", "type", BuilderUtil.enumValue(dashes.getType()));
     }
 
     private void buildBracket(Bracket bracket) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(bracket.getType()));
         attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
         attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
         buildElementWithAttributes("bracket", attributes);
