@@ -1,7 +1,6 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.direction.Sound;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -11,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -33,7 +31,7 @@ public class Measure extends DatabaseItem {
     private Boolean implicit = false;
     @Transient
     private Boolean nonControlling;
-    @Transient
+    @Column
     private BigDecimal width;
     @Transient
     private RepeatBlock repeatBlock;

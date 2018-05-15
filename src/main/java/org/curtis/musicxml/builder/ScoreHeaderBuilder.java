@@ -8,6 +8,7 @@ import org.curtis.musicxml.identity.MiscellaneousField;
 import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.identity.encoding.Encoder;
 import org.curtis.musicxml.identity.encoding.Encoding;
+import org.curtis.musicxml.identity.encoding.EncodingDate;
 import org.curtis.musicxml.identity.encoding.EncodingDescription;
 import org.curtis.musicxml.identity.encoding.Software;
 import org.curtis.musicxml.identity.encoding.Supports;
@@ -31,6 +32,7 @@ import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.util.DateUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +77,11 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         if (!encodings.isEmpty()) {
             appendLine("<encoding>");
             for (Encoding encoding : encodings) {
-                if (encoding instanceof Encoder) {
+                if (encoding instanceof EncodingDate) {
+                    EncodingDate encodingDate = (EncodingDate)encoding;
+                    buildElementWithValue("encoding-date", DateUtil.formatDate(encodingDate.getEncodingDate()));
+                }
+                else if (encoding instanceof Encoder) {
                     Encoder encoder = (Encoder)encoding;
                     buildTypedText(encoder.getEncoder(), "encoder");
                 }
@@ -120,8 +126,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         if (scaling != null) {
             appendLine("<scaling>");
             buildElementWithValue("millimeters", scaling.getMillimeters());
-            // TODO: scaling tenths
-            buildElementWithValue("tenths", 100);
+            buildElementWithValue("tenths", BuilderUtil.stringValue(scaling.getTenths()));
             appendLine("</scaling>");
         }
         append(LayoutBuilder.buildLayout(defaults.getLayout()));
@@ -129,15 +134,14 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         if (appearance != null) {
             appendLine("<appearance>");
             for (LineWidth lineWidth : appearance.getLineWidths()) {
-                // TODO: line width decimal
-                buildElementWithValueAndAttribute("line-width", 100, "type", lineWidth.getLineWidthType());
+                buildElementWithValueAndAttribute("line-width", BuilderUtil.stringValue(lineWidth.getValue()), "type", lineWidth.getLineWidthType());
             }
             for (NoteSize noteSize : appearance.getNoteSizes()) {
                 // TODO: note size decimal
                 buildElementWithValueAndAttribute("note-size", 100, "type", BuilderUtil.enumValue(noteSize.getType()));
             }
             for (Distance distance : appearance.getDistances()) {
-                buildElementWithAttribute("distance", "type", distance.getType());
+                buildElementWithValueAndAttribute("distance", BuilderUtil.stringValue(distance.getValue()), "type", distance.getType());
             }
             for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", otherAppearance.getType());
             appendLine("</appearance>");

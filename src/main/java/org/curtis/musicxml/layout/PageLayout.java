@@ -5,8 +5,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.FetchType;
@@ -15,7 +14,6 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +21,9 @@ import java.util.Map;
 @Entity
 @Table(name = "page_layout")
 public class PageLayout extends DatabaseItem {
-    @Transient
+    @Column(name = "page_height")
     private BigDecimal pageHeight;
-    @Transient
+    @Column(name = "page_width")
     private BigDecimal pageWidth;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

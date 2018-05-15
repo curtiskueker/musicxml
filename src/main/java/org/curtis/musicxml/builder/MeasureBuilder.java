@@ -15,6 +15,7 @@ import org.curtis.musicxml.builder.musicdata.LinkBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
 import org.curtis.musicxml.builder.musicdata.PrintBuilder;
 import org.curtis.musicxml.builder.musicdata.SoundBuilder;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Grouping;
 import org.curtis.musicxml.direction.Print;
@@ -39,6 +40,7 @@ public class MeasureBuilder extends BaseBuilder {
     public StringBuilder build() {
         append("<measure");
         buildAttribute("number", measure.getNumber());
+        buildAttribute("width", BuilderUtil.stringValue(measure.getWidth()));
         appendLine(">");
         for (MusicData musicData : measure.getMusicDataList()) {
             BaseBuilder baseBuilder = null;

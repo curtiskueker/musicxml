@@ -2,21 +2,21 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "x_position")
 public class XPosition extends DatabaseItem {
-    @Transient
+    @Column(name = "default_x")
     private BigDecimal defaultX;
-    @Transient
+    @Column(name = "default_y")
     private BigDecimal defaultY;
-    @Transient
+    @Column(name = "relative_x")
     private BigDecimal relativeX;
-    @Transient
+    @Column(name = "relative_y")
     private BigDecimal relativeY;
 
     public XPosition() {

@@ -34,11 +34,15 @@ public class MusicXmlUtil {
         return sessionFactory.getTransaction();
     }
 
-    public static String getXmlResults(Score score) throws XmlException {
+    public static String getXmlResults(Score score) {
         ScoreBuilder scoreBuilder = new ScoreBuilder(score);
         String results = scoreBuilder.build().toString();
 
-        SchemaValidator.getInstance().validate(results);
+        try {
+            SchemaValidator.getInstance().validate(results);
+        } catch (XmlException e) {
+            System.err.println(e.getMessage());
+        }
 
         return results;
     }

@@ -26,11 +26,11 @@ public class Ending extends DatabaseItem {
     private Boolean printObject;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Column(name = "end_length")
     private BigDecimal endLength;
-    @Transient
+    @Column(name = "text_x")
     private BigDecimal textX;
-    @Transient
+    @Column(name = "text_y")
     private BigDecimal textY;
 
     public Ending() {

@@ -34,6 +34,9 @@ public class BarlineBuilder extends BaseBuilder {
             Map<String, String> attributes = new HashMap<>();
             attributes.put("number", ending.getNumber());
             attributes.put("type", BuilderUtil.enumValue(ending.getType()));
+            attributes.put("end-length", BuilderUtil.stringValue(ending.getEndLength()));
+            attributes.put("text-x", BuilderUtil.stringValue(ending.getTextX()));
+            attributes.put("text-y", BuilderUtil.stringValue(ending.getTextY()));
             buildElementWithValueAndAttributes("ending", ending.getValue(), attributes);
         }
         Repeat repeat = barline.getRepeat();

@@ -101,7 +101,10 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildWedge(Wedge wedge) {
-        buildElementWithAttribute("wedge", "type", BuilderUtil.enumValue(wedge.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(wedge.getType()));
+        attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
+        buildElementWithAttributes("wedge", attributes);
     }
 
     private void buildDynamics(Dynamics dynamics) {
@@ -113,7 +116,10 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildBracket(Bracket bracket) {
-        buildElementWithAttribute("bracket", "line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
+        attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
+        buildElementWithAttributes("bracket", attributes);
     }
 
     private void buildPedal(Pedal pedal) {

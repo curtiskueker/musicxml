@@ -73,6 +73,8 @@ public class HarmonyBuilder extends BaseBuilder {
         Frame frame = harmony.getFrame();
         if (frame != null) {
             append("<frame");
+            buildAttribute("height", BuilderUtil.stringValue(frame.getHeight()));
+            buildAttribute("width", BuilderUtil.stringValue(frame.getWidth()));
             buildAttribute("unplayed", frame.getUnplayed());
             appendLine(">");
             buildElementWithValue("frame-strings", frame.getFrameStrings());

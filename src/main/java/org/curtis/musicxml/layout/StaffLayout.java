@@ -2,6 +2,7 @@ package org.curtis.musicxml.layout;
 
 import org.curtis.database.DatabaseItem;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "staff_layout")
 public class StaffLayout extends DatabaseItem {
-    @Transient
+    @Column(name = "staff_distance")
     private BigDecimal staffDistance;
     @Transient
     private Integer number;

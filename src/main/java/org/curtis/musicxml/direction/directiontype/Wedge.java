@@ -20,7 +20,7 @@ public class Wedge extends DirectionType {
     private WedgeType type;
     @Transient
     private Integer number;
-    @Transient
+    @Column
     private BigDecimal spread;
     @Transient
     private Boolean niente;

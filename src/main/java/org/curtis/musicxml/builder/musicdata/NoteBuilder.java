@@ -19,6 +19,8 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
+import org.curtis.musicxml.note.XPosition;
+import org.curtis.musicxml.note.YPosition;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
@@ -43,7 +45,15 @@ public class NoteBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (note == null) return stringBuilder;
 
-        appendLine("<note>");
+        append("<note");
+        XPosition xPosition = note.getxPosition();
+        if (xPosition != null) {
+            buildAttribute("default-x", BuilderUtil.stringValue(xPosition.getDefaultX()));
+            buildAttribute("default-y", BuilderUtil.stringValue(xPosition.getDefaultY()));
+            buildAttribute("relative-x", BuilderUtil.stringValue(xPosition.getRelativeX()));
+            buildAttribute("relative-y", BuilderUtil.stringValue(xPosition.getRelativeY()));
+        }
+        appendLine(">");
         Grace grace = note.getGrace();
         if (grace != null) buildElement("grace");
         buildFullNote(note.getFullNote());
@@ -72,7 +82,15 @@ public class NoteBuilder extends BaseBuilder {
         }
         Stem stem = note.getStem();
         if (stem != null) {
-            buildElementWithValue("stem", BuilderUtil.enumValue(stem.getType()));
+            Map<String, String> attributes = new HashMap<>();
+            YPosition yPosition = stem.getyPosition();
+            if (yPosition != null) {
+                attributes.put("default-x", BuilderUtil.stringValue(yPosition.getDefaultX()));
+                attributes.put("default-y", BuilderUtil.stringValue(yPosition.getDefaultY()));
+                attributes.put("relative-x", BuilderUtil.stringValue(yPosition.getRelativeX()));
+                attributes.put("relative-y", BuilderUtil.stringValue(yPosition.getRelativeY()));
+            }
+            buildElementWithValueAndAttributes("stem", BuilderUtil.enumValue(stem.getType()), attributes);
         }
         Notehead notehead = note.getNotehead();
         if (notehead != null) {

@@ -12,6 +12,8 @@ public class FileUtil {
     }
 
     public static void stringToFile(String input, String filename) throws FileException {
+        if (input == null) throw new FileException("File input is null");
+
         File file = new File(filename);
         FileWriter fileWriter = null;
 

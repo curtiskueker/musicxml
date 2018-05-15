@@ -3,6 +3,8 @@ package org.curtis.musicxml.builder.util;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.util.StringUtil;
 
+import java.math.BigDecimal;
+
 public class BuilderUtil {
 
     public static String enumValue(Enum enumValue) {
@@ -20,6 +22,10 @@ public class BuilderUtil {
 
     public static String stringValue(Integer integerValue) {
         return integerValue == null ? "" : String.valueOf(integerValue);
+    }
+
+    public static String stringValue(BigDecimal bigDecimalValue) {
+        return bigDecimalValue == null ? "" : String.valueOf(bigDecimalValue);
     }
 
     public static String noteTypeValue(NoteTypeValue noteTypeValue) {

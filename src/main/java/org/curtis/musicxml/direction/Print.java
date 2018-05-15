@@ -35,7 +35,7 @@ public class Print extends MusicData {
     private NameDisplay partNameDisplay;
     @Transient
     private NameDisplay partAbbreviationDisplay;
-    @Transient
+    @Column(name = "staff_spacing")
     private BigDecimal staffSpacing;
     @Transient
     private Boolean newSystem = false;

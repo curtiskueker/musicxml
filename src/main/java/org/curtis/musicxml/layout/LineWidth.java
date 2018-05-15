@@ -5,13 +5,12 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "line_width")
 public class LineWidth extends DatabaseItem {
-    @Transient
+    @Column
     private BigDecimal value;
     @Column(name = "line_width_type")
     private String lineWidthType;

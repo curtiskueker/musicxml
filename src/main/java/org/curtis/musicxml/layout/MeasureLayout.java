@@ -2,15 +2,15 @@ package org.curtis.musicxml.layout;
 
 import org.curtis.database.DatabaseItem;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "measure_layout")
 public class MeasureLayout extends DatabaseItem {
-    @Transient
+    @Column(name = "measure_distance")
     private BigDecimal measureDistance;
 
     public MeasureLayout() {

@@ -41,9 +41,9 @@ public class Frame extends DatabaseItem {
     private Location halign;
     @Transient
     private Location valignImage;
-    @Transient
+    @Column
     private BigDecimal height;
-    @Transient
+    @Column
     private BigDecimal width;
     @Column
     private String unplayed;

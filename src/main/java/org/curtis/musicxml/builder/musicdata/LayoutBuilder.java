@@ -3,6 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.OutputBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.layout.Layout;
+import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.layout.StaffLayout;
@@ -24,15 +25,17 @@ public class LayoutBuilder extends OutputBuilder {
         PageLayout pageLayout = layout.getPageLayout();
         if (pageLayout != null) {
             layoutBuilder.appendLine("<page-layout>");
+            layoutBuilder.buildElementWithValue("page-height", BuilderUtil.stringValue(pageLayout.getPageHeight()));
+            layoutBuilder.buildElementWithValue("page-width", BuilderUtil.stringValue(pageLayout.getPageWidth()));
             for (PageMargins pageMargins : pageLayout.getPageMargins().values()) {
                 layoutBuilder.append("<page-margins");
                 layoutBuilder.buildAttribute("type", BuilderUtil.enumValue(pageMargins.getType()));
                 layoutBuilder.appendLine(">");
-                // TODO: margins
-                layoutBuilder.buildElementWithValue("left-margin", 100);
-                layoutBuilder.buildElementWithValue("right-margin", 100);
-                layoutBuilder.buildElementWithValue("top-margin", 100);
-                layoutBuilder.buildElementWithValue("bottom-margin", 100);
+                Margins margins = pageMargins.getMargins();
+                layoutBuilder.buildElementWithValue("left-margin", BuilderUtil.stringValue(margins.getLeftMargin()));
+                layoutBuilder.buildElementWithValue("right-margin", BuilderUtil.stringValue(margins.getRightMargin()));
+                layoutBuilder.buildElementWithValue("top-margin", BuilderUtil.stringValue(margins.getTopMargin()));
+                layoutBuilder.buildElementWithValue("bottom-margin", BuilderUtil.stringValue(margins.getBottomMargin()));
                 layoutBuilder.appendLine("</page-margins>");
             }
             layoutBuilder.appendLine("</page-layout>");
@@ -43,8 +46,13 @@ public class LayoutBuilder extends OutputBuilder {
             BigDecimal leftMargin = systemLayout.getLeftMargin();
             BigDecimal rightMargin = systemLayout.getRightMargin();
             if (leftMargin != null || rightMargin != null) {
-                layoutBuilder.buildElement("system-margins");
+                layoutBuilder.appendLine("<system-margins>");
+                layoutBuilder.buildElementWithValue("left-margin", BuilderUtil.stringValue(leftMargin));
+                layoutBuilder.buildElementWithValue("right-margin", BuilderUtil.stringValue(rightMargin));
+                layoutBuilder.appendLine("</system-margins>");
             }
+            layoutBuilder.buildElementWithValue("system-distance", BuilderUtil.stringValue(systemLayout.getSystemDistance()));
+            layoutBuilder.buildElementWithValue("top-system-distance", BuilderUtil.stringValue(systemLayout.getTopSystemDistance()));
             SystemDividers systemDividers = systemLayout.getSystemDividers();
             if (systemDividers != null) {
                 layoutBuilder.appendLine("<system-dividers>");
@@ -55,7 +63,9 @@ public class LayoutBuilder extends OutputBuilder {
             layoutBuilder.appendLine("</system-layout>");
         }
         for (StaffLayout staffLayout : layout.getStaffLayouts()) {
-            layoutBuilder.buildElement("staff-layout");
+            layoutBuilder.appendLine("<staff-layout>");
+            layoutBuilder.buildElementWithValue("staff-distance", BuilderUtil.stringValue(staffLayout.getStaffDistance()));
+            layoutBuilder.appendLine("</staff-layout>");
         }
 
         return layoutBuilder.getStringBuilder().toString();

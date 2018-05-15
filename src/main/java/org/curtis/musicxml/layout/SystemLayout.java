@@ -3,23 +3,23 @@ package org.curtis.musicxml.layout;
 import org.curtis.database.DatabaseItem;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "system_layout")
 public class SystemLayout extends DatabaseItem {
-    @Transient
+    @Column(name = "left_margin")
     private BigDecimal leftMargin;
-    @Transient
+    @Column(name = "right_margin")
     private BigDecimal rightMargin;
-    @Transient
+    @Column(name = "system_distance")
     private BigDecimal systemDistance;
-    @Transient
+    @Column(name = "top_system_distance")
     private BigDecimal topSystemDistance;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "system_dividers_id")
