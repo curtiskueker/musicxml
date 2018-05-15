@@ -24,7 +24,8 @@ public class Tuplet extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tuplet_normal_id")
     private TupletPortion tupletNormal;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Integer number;

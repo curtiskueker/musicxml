@@ -5,6 +5,8 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Connection;
 
 import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
@@ -12,7 +14,8 @@ import javax.persistence.Transient;
 public abstract class HammerOnPullOff extends Technical {
     @Column
     private String value;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Integer number = 1;

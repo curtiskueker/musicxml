@@ -153,8 +153,10 @@ public class DirectionTypeBuilder extends BaseBuilder {
         }
         MetronomeTuplet metronomeTuplet = metronomeNote.getMetronomeTuplet();
         if (metronomeTuplet != null) {
-            appendLine("<metronome-tuplet>");
+            append("<metronome-tuplet");
+            buildAttribute("type", BuilderUtil.enumValue(metronomeTuplet.getType()));
             buildAttribute("show-number", BuilderUtil.enumValue(metronomeTuplet.getShowNumber()));
+            appendLine(">");
             buildTimeModification(metronomeTuplet.getTimeModification());
             appendLine("<metronome-tuplet>");
         }
@@ -204,10 +206,13 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildPrincipalVoice(PrincipalVoice principalVoice) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(principalVoice.getType()));
         String symbol = BuilderUtil.enumValue(principalVoice.getSymbol());
         symbol = symbol.replace("hauptstimme", "Hauptstimme");
         symbol = symbol.replace("nebenstimme", "Nebenstimme");
-        buildElementWithValueAndAttribute("principal-voice", principalVoice.getPrincipalVoice(), "symbol", symbol);
+        attributes.put("symbol", symbol);
+        buildElementWithValueAndAttributes("principal-voice", principalVoice.getPrincipalVoice(), attributes);
     }
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {

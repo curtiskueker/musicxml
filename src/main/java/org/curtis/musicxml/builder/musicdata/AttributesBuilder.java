@@ -27,6 +27,9 @@ import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.score.PartSymbol;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AttributesBuilder extends BaseBuilder {
     private Attributes attributes;
 
@@ -106,11 +109,15 @@ public class AttributesBuilder extends BaseBuilder {
             if (measureStyle instanceof MultipleRest) buildElement("multiple-rest");
             else if (measureStyle instanceof MeasureRepeat) {
                 MeasureRepeat measureRepeat = (MeasureRepeat)measureStyle;
-                buildElementWithAttribute("measure-repeat", "slashes", measureRepeat.getSlashes());
+                Map<String, String> attributes = new HashMap<>();
+                attributes.put("type", BuilderUtil.enumValue(measureRepeat.getType()));
+                attributes.put("slashes", BuilderUtil.stringValue(measureRepeat.getSlashes()));
+                buildElementWithAttributes("measure-repeat", attributes);
             }
             else if (measureStyle instanceof BeatRepeat) {
                 BeatRepeat beatRepeat = (BeatRepeat)measureStyle;
                 append("<beat-repeat");
+                buildAttribute("type", BuilderUtil.enumValue(beatRepeat.getType()));
                 buildAttribute("slashes", beatRepeat.getSlashes());
                 appendLine(">");
                 buildSlashGroup(beatRepeat.getSlashGroup());
@@ -118,7 +125,9 @@ public class AttributesBuilder extends BaseBuilder {
             }
             else if (measureStyle instanceof Slash) {
                 Slash slash = (Slash)measureStyle;
-                appendLine("<slash>");
+                append("<slash");
+                buildAttribute("type", BuilderUtil.enumValue(slash.getType()));
+                appendLine(">");
                 buildSlashGroup(slash.getSlashGroup());
                 appendLine("</slash>");
             }

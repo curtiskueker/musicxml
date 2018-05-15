@@ -86,7 +86,7 @@ public class HarmonyBuilder extends BaseBuilder {
         for (FrameNote frameNote : frame.getFrameNotes()) {
             appendLine("<frame-note>");
             Barre barre = frameNote.getBarre();
-            if (barre != null) buildElement("barre");
+            if (barre != null) buildElementWithAttribute("barre", "type", BuilderUtil.enumValue(barre.getType()));
             appendLine("</frame-note>");
         }
         appendLine("</harmony>");

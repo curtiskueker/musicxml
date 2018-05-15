@@ -3,8 +3,11 @@ package org.curtis.musicxml.attributes.measure;
 import org.curtis.musicxml.common.Connection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -15,7 +18,8 @@ public class Slash extends MeasureStyle {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "slash_group_id")
     private SlashGroup slashGroup;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Boolean useDots;

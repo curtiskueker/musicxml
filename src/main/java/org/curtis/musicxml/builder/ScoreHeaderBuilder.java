@@ -199,8 +199,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
 
     private void buildPartGroup(PartGroup partGroup) {
         append("<part-group");
-        // TODO: part-group type
-        buildAttribute("type", "start");
+        buildAttribute("type", BuilderUtil.enumValue(partGroup.getType()));
         buildAttribute("number", partGroup.getNumber());
         appendLine(">");
         buildGroupName("group-name", partGroup.getGroupName());

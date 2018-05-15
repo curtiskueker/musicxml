@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -35,7 +37,8 @@ public class PartGroup extends PartItem {
     private Boolean groupTime;
     @Transient
     private Editorial editorial;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Column
     private String number = "1";

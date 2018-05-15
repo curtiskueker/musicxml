@@ -63,8 +63,7 @@ public class NotationBuilder extends BaseBuilder {
 
     private void buildTuplet(Tuplet tuplet) {
         append("<tuplet");
-        //TODO: tuplet type
-        buildAttribute("type", "start");
+        buildAttribute("type", BuilderUtil.enumValue(tuplet.getType()));
         buildAttribute("show-number", BuilderUtil.enumValue(tuplet.getShowNumber()));
         buildAttribute("show-type", BuilderUtil.enumValue(tuplet.getShowType()));
         buildAttribute("line-shape", BuilderUtil.enumValue(tuplet.getLineShape()));
@@ -93,11 +92,11 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildGlissando(Glissando glissando) {
-        buildElementWithValue("glissando", glissando.getValue());
+        buildElementWithValueAndAttribute("glissando", glissando.getValue(), "type", BuilderUtil.enumValue(glissando.getType()));
     }
 
     private void buildSlide(Slide slide) {
-        buildElementWithValue("slide", slide.getValue());
+        buildElementWithValueAndAttribute("slide", slide.getValue(), "type", BuilderUtil.enumValue(slide.getType()));
     }
 
     private void buildOrnaments(Ornaments ornaments) {

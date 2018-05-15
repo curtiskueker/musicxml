@@ -15,7 +15,8 @@ import javax.persistence.Transient;
 public class PrincipalVoice extends DirectionType {
     @Column(name = "principal_voice")
     private String principalVoice;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Enumerated(EnumType.STRING)
     @Column

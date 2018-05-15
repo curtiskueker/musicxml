@@ -21,7 +21,8 @@ public class MetronomeTuplet extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "time_modification_id")
     private TimeModification timeModification;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Boolean bracket;

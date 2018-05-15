@@ -102,7 +102,7 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildHammerOnPullOf(HammerOnPullOff hammerOnPullOff) {
         String elementName = hammerOnPullOff instanceof HammerOn ? "hammer-on" : "pull-off";
-        buildElementWithValue(elementName, hammerOnPullOff.getValue());
+        buildElementWithValueAndAttribute(elementName, hammerOnPullOff.getValue(), "type", BuilderUtil.enumValue(hammerOnPullOff.getType()));
     }
 
     private void buildBend(Bend bend) {

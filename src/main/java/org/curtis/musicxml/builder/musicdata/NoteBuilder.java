@@ -59,8 +59,7 @@ public class NoteBuilder extends BaseBuilder {
         buildFullNote(note.getFullNote());
         // TODO: duration
         if (grace == null) buildElementWithValue("duration", 1);
-        // TODO: tie type
-        for (Tie tie : note.getTies()) buildElementWithAttribute("tie", "type", "start");
+        for (Tie tie : note.getTies()) buildElementWithAttribute("tie", "type", BuilderUtil.enumValue(tie.getType()));
         String instrument = note.getInstrument();
         if (StringUtil.isNotEmpty(instrument)) buildElementWithAttribute("instrument", "id", instrument);
         NoteType noteType = note.getType();

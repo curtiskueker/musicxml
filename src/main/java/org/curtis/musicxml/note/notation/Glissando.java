@@ -8,6 +8,8 @@ import org.curtis.musicxml.note.LineType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
@@ -15,7 +17,8 @@ import javax.persistence.Transient;
 public class Glissando extends Notation {
     @Column
     private String value;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Transient
     private Integer number = 1;
