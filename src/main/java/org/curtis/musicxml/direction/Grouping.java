@@ -9,10 +9,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class Grouping extends MusicData {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "grouping_id", nullable = false)
     private List<Feature> features = new ArrayList<>();
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type;
     @Column
     private String number = "1";

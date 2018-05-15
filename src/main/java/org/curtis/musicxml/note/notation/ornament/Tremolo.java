@@ -7,6 +7,8 @@ import org.curtis.musicxml.common.Connection;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
@@ -14,7 +16,8 @@ import javax.persistence.Transient;
 public class Tremolo extends Ornament {
     @Column(name = "tremolo_marks")
     private Integer tremoloMarks;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Connection type = Connection.SINGLE;
     @Transient
     private PrintStyle printStyle;

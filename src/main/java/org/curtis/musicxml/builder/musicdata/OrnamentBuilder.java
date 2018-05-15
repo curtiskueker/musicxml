@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.DelayedTurn;
 import org.curtis.musicxml.note.notation.ornament.InvertedMordent;
@@ -82,7 +83,7 @@ public class OrnamentBuilder extends BaseBuilder {
     }
 
     private void buildTremolo(Tremolo tremolo) {
-        buildElementWithValue("tremolo", tremolo.getTremoloMarks());
+        buildElementWithValueAndAttribute("tremolo", tremolo.getTremoloMarks(), "type", BuilderUtil.enumValue(tremolo.getType()));
     }
 
     private void buildOtherOrnament(OtherOrnament otherOrnament) {

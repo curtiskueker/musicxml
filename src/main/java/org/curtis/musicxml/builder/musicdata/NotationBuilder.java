@@ -138,6 +138,6 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildOtherNotation(OtherNotation otherNotation) {
-        buildElementWithValue("other-notation", otherNotation.getValue());
+        buildElementWithValueAndAttribute("other-notation", otherNotation.getValue(), "type", BuilderUtil.enumValue(otherNotation.getType()));
     }
 }
