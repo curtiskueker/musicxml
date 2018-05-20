@@ -34,4 +34,9 @@ public class BuilderUtil {
         String value = enumValue(noteTypeValue);
         return value.replace("-", "");
     }
+
+    public static String yesOrNo(Boolean booleanValue) {
+        if (booleanValue == null) return "";
+        return booleanValue ? "yes" : "no";
+    }
 }

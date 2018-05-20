@@ -14,7 +14,7 @@ public class KeyOctave extends DatabaseItem {
     private Integer octave;
     @Column
     private Integer number;
-    @Transient
+    @Column
     private Boolean cancel;
 
     public KeyOctave() {

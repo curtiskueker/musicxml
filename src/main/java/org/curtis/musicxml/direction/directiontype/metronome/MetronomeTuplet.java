@@ -13,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "metronome_tuplet")
@@ -24,7 +23,7 @@ public class MetronomeTuplet extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column
     private Boolean bracket;
     @Enumerated(EnumType.STRING)
     @Column(name = "show_number")

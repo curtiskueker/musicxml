@@ -104,6 +104,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(wedge.getType()));
         attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
+        attributes.put("niente", BuilderUtil.yesOrNo(wedge.getNiente()));
         buildElementWithAttributes("wedge", attributes);
     }
 
@@ -124,11 +125,17 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildPedal(Pedal pedal) {
-        buildElementWithAttribute("pedal", "type", BuilderUtil.enumValue(pedal.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(pedal.getType()));
+        attributes.put("line", BuilderUtil.yesOrNo(pedal.getLine()));
+        attributes.put("sign", BuilderUtil.yesOrNo(pedal.getSign()));
+        buildElementWithAttributes("pedal", attributes);
     }
 
     private void buildMetronome(Metronome metronome) {
-        appendLine("<metronome>");
+        append("<metronome");
+        buildAttribute("parentheses", BuilderUtil.yesOrNo(metronome.getParentheses()));
+        appendLine(">");
         if (metronome instanceof BeatMetronome) buildBeatMetronome((BeatMetronome)metronome);
         else if (metronome instanceof NoteMetronome) buildNoteMetronome((NoteMetronome)metronome);
         appendLine("</metronome>");
@@ -156,6 +163,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         if (metronomeTuplet != null) {
             append("<metronome-tuplet");
             buildAttribute("type", BuilderUtil.enumValue(metronomeTuplet.getType()));
+            buildAttribute("bracket", BuilderUtil.yesOrNo(metronomeTuplet.getBracket()));
             buildAttribute("show-number", BuilderUtil.enumValue(metronomeTuplet.getShowNumber()));
             appendLine(">");
             buildTimeModification(metronomeTuplet.getTimeModification());

@@ -16,9 +16,9 @@ public class Notehead extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private NoteheadType type;
-    @Transient
+    @Column
     private Boolean filled;
-    @Transient
+    @Column
     private Boolean parentheses;
     @Transient
     private Font font;

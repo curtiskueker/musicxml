@@ -3,6 +3,7 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -15,7 +16,7 @@ public class DegreeAlter extends DatabaseItem {
     private BigDecimal semitones;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Column(name = "plus_minus")
     private Boolean plusMinus;
 
     public DegreeAlter() {

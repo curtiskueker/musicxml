@@ -40,6 +40,8 @@ public class MeasureBuilder extends BaseBuilder {
     public StringBuilder build() {
         append("<measure");
         buildAttribute("number", measure.getNumber());
+        buildAttribute("implicit", BuilderUtil.yesOrNo(measure.getImplicit()));
+        buildAttribute("non-controlling", BuilderUtil.yesOrNo(measure.getNonControlling()));
         buildAttribute("width", BuilderUtil.stringValue(measure.getWidth()));
         appendLine(">");
         for (MusicData musicData : measure.getMusicDataList()) {

@@ -2,8 +2,10 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.DelayedTurn;
+import org.curtis.musicxml.note.notation.ornament.HorizontalTurn;
 import org.curtis.musicxml.note.notation.ornament.InvertedMordent;
 import org.curtis.musicxml.note.notation.ornament.InvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.Mordent;
@@ -27,14 +29,10 @@ public class OrnamentBuilder extends BaseBuilder {
         if (ornament == null) return stringBuilder;
 
         if (ornament instanceof TrillMark) buildTrillMark((TrillMark)ornament);
-        else if (ornament instanceof Turn) buildTurn((Turn)ornament);
-        else if (ornament instanceof DelayedTurn) buildDelayedTurn((DelayedTurn)ornament);
-        else if (ornament instanceof InvertedTurn) buildInvertedTurn((InvertedTurn)ornament);
-        else if (ornament instanceof DelayedInvertedTurn) buildDelayedInvertedTurn((DelayedInvertedTurn)ornament);
+        else if (ornament instanceof HorizontalTurn) buildHorizontalTurn((HorizontalTurn)ornament);
         else if (ornament instanceof VerticalTurn) buildVerticalTurn((VerticalTurn)ornament);
         else if (ornament instanceof Shake) buildShake((Shake)ornament);
-        else if (ornament instanceof Mordent) buildMordent((Mordent)ornament);
-        else if (ornament instanceof InvertedMordent) buildInvertedMordent((InvertedMordent)ornament);
+        else if (ornament instanceof AbstractMordent) buildAbstractMordent((AbstractMordent)ornament);
         else if (ornament instanceof Schleifer) buildSchleifer((Schleifer)ornament);
         else if (ornament instanceof Tremolo) buildTremolo((Tremolo)ornament);
         else if (ornament instanceof OtherOrnament) buildOtherOrnament((OtherOrnament)ornament);
@@ -46,20 +44,15 @@ public class OrnamentBuilder extends BaseBuilder {
         buildElement("trill-mark");
     }
 
-    private void buildTurn(Turn turn) {
-        buildElement("turn");
-    }
+    private void buildHorizontalTurn(HorizontalTurn horizontalTurn) {
+        String elementName;
+        if (horizontalTurn instanceof Turn) elementName = "turn";
+        else if (horizontalTurn instanceof DelayedTurn) elementName = "delayed-turn";
+        else if (horizontalTurn instanceof InvertedTurn) elementName = "inverted-turn";
+        else if (horizontalTurn instanceof DelayedInvertedTurn) elementName = "delayed-inverted-turn";
+        else return;
 
-    private void buildDelayedTurn(DelayedTurn delayedTurn) {
-        buildElement("delayed-turn");
-    }
-
-    private void buildInvertedTurn(InvertedTurn invertedTurn) {
-        buildElement("inverted-turn");
-    }
-
-    private void buildDelayedInvertedTurn(DelayedInvertedTurn delayedInvertedTurn) {
-        buildElement("delayed-inverted-turn");
+        buildElementWithAttribute(elementName, "slash", BuilderUtil.yesOrNo(horizontalTurn.getSlash()));
     }
 
     private void buildVerticalTurn(VerticalTurn verticalTurn) {
@@ -70,12 +63,13 @@ public class OrnamentBuilder extends BaseBuilder {
         buildElement("shake");
     }
 
-    private void buildMordent(Mordent mordent) {
-        buildElement("mordent");
-    }
+    private void buildAbstractMordent(AbstractMordent abstractMordent) {
+        String elementName;
+        if (abstractMordent instanceof Mordent) elementName = "mordent";
+        else if (abstractMordent instanceof InvertedMordent) elementName = "inverted-mordent";
+        else return;
 
-    private void buildInvertedMordent(InvertedMordent invertedMordent) {
-        buildElement("inverted-mordent");
+        buildElementWithAttribute(elementName, "long", BuilderUtil.yesOrNo(abstractMordent.getLongMordent()));
     }
 
     private void buildSchleifer(Schleifer schleifer) {

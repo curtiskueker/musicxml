@@ -27,9 +27,9 @@ public class Measure extends DatabaseItem {
     private List<MusicData> musicDataList = new ArrayList<>();
     @Column
     private String number;
-    @Transient
+    @Column
     private Boolean implicit = false;
-    @Transient
+    @Column(name = "non_controlling")
     private Boolean nonControlling;
     @Column
     private BigDecimal width;

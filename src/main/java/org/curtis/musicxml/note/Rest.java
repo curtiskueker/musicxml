@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -11,7 +12,7 @@ public class Rest extends FullNoteType {
     private Step displayStep;
     @Transient
     private Integer displayOctave;
-    @Transient
+    @Column
     private Boolean measure = false;
 
     public Rest() {

@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("slash")
@@ -21,9 +20,9 @@ public class Slash extends MeasureStyle {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column(name = "use_dots")
     private Boolean useDots;
-    @Transient
+    @Column(name = "use_stems")
     private Boolean useStems;
 
     public Slash() {

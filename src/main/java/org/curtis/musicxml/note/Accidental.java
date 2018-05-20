@@ -4,6 +4,7 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -13,9 +14,9 @@ import javax.persistence.Transient;
 public class Accidental extends DatabaseItem {
     @Transient
     private AccidentalType accidentalType;
-    @Transient
+    @Column
     private Boolean cautionary;
-    @Transient
+    @Column
     private Boolean editorial;
     @Transient
     private LevelDisplay levelDisplay;

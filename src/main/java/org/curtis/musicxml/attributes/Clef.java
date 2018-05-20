@@ -23,11 +23,11 @@ public class Clef extends DatabaseItem {
     private Integer clefOctaveChange;
     @Transient
     private Integer number;
-    @Transient
+    @Column
     private Boolean additional;
     @Transient
     private SymbolSize size;
-    @Transient
+    @Column(name = "after_barline")
     private Boolean afterBarline;
     @Transient
     private PrintStyle printStyle;

@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -25,7 +26,7 @@ public class FiguredBass extends MusicData {
     private PrintStyle printStyle;
     @Transient
     private Printout printout;
-    @Transient
+    @Column
     private Boolean parentheses;
 
     public FiguredBass() {

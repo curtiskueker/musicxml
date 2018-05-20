@@ -62,6 +62,7 @@ public class NotationBuilder extends BaseBuilder {
     private void buildTuplet(Tuplet tuplet) {
         append("<tuplet");
         buildAttribute("type", BuilderUtil.enumValue(tuplet.getType()));
+        buildAttribute("bracket", BuilderUtil.yesOrNo(tuplet.getBracket()));
         buildAttribute("show-number", BuilderUtil.enumValue(tuplet.getShowNumber()));
         buildAttribute("show-type", BuilderUtil.enumValue(tuplet.getShowType()));
         buildAttribute("line-shape", BuilderUtil.enumValue(tuplet.getLineShape()));

@@ -4,6 +4,7 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
@@ -13,7 +14,7 @@ public abstract class Metronome extends DirectionType {
     private PrintStyleAlign printStyleAlign;
     @Transient
     private Location justify;
-    @Transient
+    @Column
     private Boolean parentheses;
 
     public PrintStyleAlign getPrintStyleAlign() {

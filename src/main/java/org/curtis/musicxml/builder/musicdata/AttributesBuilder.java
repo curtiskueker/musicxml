@@ -44,7 +44,10 @@ public class AttributesBuilder extends BaseBuilder {
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);
             else if (key instanceof NonTraditionalKey) buildNonTraditionalKey((NonTraditionalKey)key);
             for (KeyOctave keyOctave : key.getKeyOctaves()) {
-                buildElementWithAttribute("key-octave", "number", keyOctave.getNumber());
+                Map<String, String> attributes = new HashMap<>();
+                attributes.put("number", BuilderUtil.stringValue(keyOctave.getNumber()));
+                attributes.put("cancel", BuilderUtil.yesOrNo(keyOctave.getCancel()));
+                buildElementWithAttributes("key-octave", attributes);
             }
             appendLine("</key>");
         }
@@ -62,7 +65,10 @@ public class AttributesBuilder extends BaseBuilder {
         if (partSymbol != null) buildElementWithValue("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()));
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {
-            appendLine("<clef>");
+            append("<clef");
+            buildAttribute("additional", BuilderUtil.yesOrNo(clef.getAdditional()));
+            buildAttribute("after-barline", BuilderUtil.yesOrNo(clef.getAfterBarline()));
+            appendLine(">");
             String clefSign = BuilderUtil.enumValue(clef.getSign());
             switch (clefSign) {
                 case "g":
@@ -106,7 +112,10 @@ public class AttributesBuilder extends BaseBuilder {
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             appendLine("<measure-style>");
-            if (measureStyle instanceof MultipleRest) buildElement("multiple-rest");
+            if (measureStyle instanceof MultipleRest) {
+                MultipleRest multipleRest = (MultipleRest)measureStyle;
+                buildElementWithAttribute("multiple-rest", "use-symbols", BuilderUtil.yesOrNo(multipleRest.getUseSymbols()));
+            }
             else if (measureStyle instanceof MeasureRepeat) {
                 MeasureRepeat measureRepeat = (MeasureRepeat)measureStyle;
                 Map<String, String> attributes = new HashMap<>();
@@ -119,6 +128,7 @@ public class AttributesBuilder extends BaseBuilder {
                 append("<beat-repeat");
                 buildAttribute("type", BuilderUtil.enumValue(beatRepeat.getType()));
                 buildAttribute("slashes", beatRepeat.getSlashes());
+                buildAttribute("use-dots", BuilderUtil.yesOrNo(beatRepeat.getUseDots()));
                 appendLine(">");
                 buildSlashGroup(beatRepeat.getSlashGroup());
                 appendLine("</beat-repeat>");
@@ -127,6 +137,8 @@ public class AttributesBuilder extends BaseBuilder {
                 Slash slash = (Slash)measureStyle;
                 append("<slash");
                 buildAttribute("type", BuilderUtil.enumValue(slash.getType()));
+                buildAttribute("use-dots", BuilderUtil.yesOrNo(slash.getUseDots()));
+                buildAttribute("use-stems", BuilderUtil.yesOrNo(slash.getUseStems()));
                 appendLine(">");
                 buildSlashGroup(slash.getSlashGroup());
                 appendLine("</slash>");

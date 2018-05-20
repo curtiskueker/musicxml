@@ -114,7 +114,7 @@ public class Note extends MusicData {
     private BigDecimal release;
     @Transient
     private String timeOnly;
-    @Transient
+    @Column
     private Boolean pizzicato;
     @Transient
     private List<Direction> directions = new ArrayList<>();

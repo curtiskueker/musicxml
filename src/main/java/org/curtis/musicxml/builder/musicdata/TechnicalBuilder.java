@@ -118,7 +118,7 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildHeelToe(HeelToe heelToe) {
         String elementName = heelToe instanceof Heel ? "heel" : "toe";
-        buildPlacement(elementName, heelToe.getPlacement());
+        buildPlacementWithAttribute(elementName, heelToe.getPlacement(), "substitution", BuilderUtil.yesOrNo(heelToe.getSubstitution()));
     }
 
     private void buildFingernails(Fingernails fingernails) {

@@ -17,7 +17,7 @@ public class Beam extends DatabaseItem {
     private BeamType type;
     @Column
     private Integer number = 1;
-    @Transient
+    @Column
     private Boolean repeater;
     @Enumerated(EnumType.STRING)
     @Column

@@ -17,15 +17,15 @@ public class Kind extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "kind_value")
     private KindValue kindValue;
-    @Transient
+    @Column(name = "use_symbols")
     private Boolean useSymbols;
     @Column
     private String text;
-    @Transient
+    @Column(name = "stack_degrees")
     private Boolean stackDegrees;
-    @Transient
+    @Column(name = "parentheses_degrees")
     private Boolean parenthesesDegrees;
-    @Transient
+    @Column(name = "bracket_degrees")
     private Boolean bracketDegrees;
     @Transient
     private PrintStyle printStyle;

@@ -1,5 +1,6 @@
 package org.curtis.musicxml.attributes.measure;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -9,7 +10,7 @@ import javax.persistence.Transient;
 public class MultipleRest extends MeasureStyle {
     @Transient
     private Integer value;
-    @Transient
+    @Column(name = "use_symbols")
     private Boolean useSymbols;
 
     public MultipleRest() {

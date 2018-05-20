@@ -32,7 +32,7 @@ public class Sound extends MusicData {
     private BigDecimal tempo;
     @Transient
     private BigDecimal dynamics;
-    @Transient
+    @Column
     private Boolean dacapo;
     @Column
     private String segno;
@@ -44,13 +44,13 @@ public class Sound extends MusicData {
     private String tocoda;
     @Transient
     private BigDecimal divisions;
-    @Transient
+    @Column(name = "forward_repeat")
     private Boolean forwardRepeat;
     @Column
     private String fine;
     @Transient
     private String timeOnly;
-    @Transient
+    @Column
     private Boolean pizzicato;
     @Transient
     private BigDecimal pan;

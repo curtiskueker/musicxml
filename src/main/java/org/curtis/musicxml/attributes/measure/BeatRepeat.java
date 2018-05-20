@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("beat repeat")
@@ -23,7 +22,7 @@ public class BeatRepeat extends MeasureStyle {
     private Connection type;
     @Column
     private Integer slashes;
-    @Transient
+    @Column(name = "use_dots")
     private Boolean useDots;
 
     public BeatRepeat() {

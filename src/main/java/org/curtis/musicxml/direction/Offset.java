@@ -2,6 +2,7 @@ package org.curtis.musicxml.direction;
 
 import org.curtis.database.DatabaseItem;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 public class Offset extends DatabaseItem {
     @Transient
     private BigDecimal divisions;
-    @Transient
+    @Column
     private Boolean sound;
 
     public Offset() {

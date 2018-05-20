@@ -7,6 +7,7 @@ import org.curtis.musicxml.direction.harmony.Bass;
 import org.curtis.musicxml.direction.harmony.BassAlter;
 import org.curtis.musicxml.direction.harmony.BassStep;
 import org.curtis.musicxml.direction.harmony.Degree;
+import org.curtis.musicxml.direction.harmony.DegreeAlter;
 import org.curtis.musicxml.direction.harmony.DegreeType;
 import org.curtis.musicxml.direction.harmony.DegreeValue;
 import org.curtis.musicxml.direction.harmony.FirstFret;
@@ -34,6 +35,7 @@ public class HarmonyBuilder extends BaseBuilder {
     public StringBuilder build() {
         append("<harmony");
         buildAttribute("type", BuilderUtil.enumValue(harmony.getType()));
+        buildAttribute("print-frame", BuilderUtil.yesOrNo(harmony.getPrintFrame()));
         appendLine(">");
         for (HarmonyChord harmonyChord : harmony.getHarmonyChords()) {
             if (harmonyChord instanceof Root) buildRoot((Root)harmonyChord);
@@ -45,7 +47,13 @@ public class HarmonyBuilder extends BaseBuilder {
             kindValue = kindValue.replace("french", "French");
             kindValue = kindValue.replace("german", "German");
             kindValue = kindValue.replace("tristan", "Tristan");
-            buildElementWithValueAndAttribute("kind", kindValue, "text", kind.getText());
+            Map<String, String> kindAttributes = new HashMap<>();
+            kindAttributes.put("use-symbols", BuilderUtil.yesOrNo(kind.getUseSymbols()));
+            kindAttributes.put("text", kind.getText());
+            kindAttributes.put("stack-degrees", BuilderUtil.yesOrNo(kind.getStackDegrees()));
+            kindAttributes.put("parentheses-degrees", BuilderUtil.yesOrNo(kind.getParenthesesDegrees()));
+            kindAttributes.put("bracket-degrees", BuilderUtil.yesOrNo(kind.getBracketDegrees()));
+            buildElementWithValueAndAttributes("kind", kindValue, kindAttributes);
             Inversion inversion = harmonyChord.getInversion();
             if (inversion != null) buildElementWithValue("inversion", inversion.getValue());
             Bass bass = harmonyChord.getBass();
@@ -60,11 +68,12 @@ public class HarmonyBuilder extends BaseBuilder {
             for (Degree degree : harmonyChord.getDegrees()) {
                 appendLine("<degree>");
                 DegreeValue degreeValue = degree.getDegreeValue();
-                Map<String, String> attributes = new HashMap<>();
-                attributes.put("symbol", BuilderUtil.enumValue(degreeValue.getSymbol()));
-                attributes.put("text", degreeValue.getText());
-                buildElementWithValueAndAttributes("degree-value", degreeValue.getValue(), attributes);
-                buildElement("degree-alter");
+                Map<String, String> degreeAttributes = new HashMap<>();
+                degreeAttributes.put("symbol", BuilderUtil.enumValue(degreeValue.getSymbol()));
+                degreeAttributes.put("text", degreeValue.getText());
+                buildElementWithValueAndAttributes("degree-value", degreeValue.getValue(), degreeAttributes);
+                DegreeAlter degreeAlter = degree.getDegreeAlter();
+                buildElementWithAttribute("degree-alter", "plus-minus", BuilderUtil.yesOrNo(degreeAlter.getPlusMinus()));
                 DegreeType degreeType = degree.getDegreeType();
                 buildElementWithValueAndAttribute("degree-type", BuilderUtil.enumValue(degreeType.getValue()), "text", degreeType.getText());
                 appendLine("</degree>");

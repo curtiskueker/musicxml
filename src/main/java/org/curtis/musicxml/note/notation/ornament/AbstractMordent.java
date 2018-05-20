@@ -2,12 +2,13 @@ package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.common.Location;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class AbstractMordent extends PlacedTrillSound {
-    @Transient
+    @Column(name = "long_mordent")
     private Boolean longMordent;
     @Transient
     private Location approach;

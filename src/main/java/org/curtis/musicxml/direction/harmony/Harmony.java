@@ -44,7 +44,7 @@ public class Harmony extends MusicData {
     private HarmonyType type;
     @Transient
     private Boolean printObject;
-    @Transient
+    @Column(name = "print_frame")
     private Boolean printFrame;
     @Transient
     private PrintStyle printStyle;

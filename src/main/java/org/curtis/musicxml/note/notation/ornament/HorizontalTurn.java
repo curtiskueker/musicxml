@@ -3,6 +3,7 @@ package org.curtis.musicxml.note.notation.ornament;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
@@ -14,7 +15,7 @@ public abstract class HorizontalTurn extends Ornament {
     private Location placement;
     @Transient
     private TrillSound trillSound;
-    @Transient
+    @Column
     private Boolean slash;
 
     public PrintStyle getPrintStyle() {

@@ -29,7 +29,7 @@ public class Tuplet extends Notation {
     private Connection type;
     @Transient
     private Integer number;
-    @Transient
+    @Column
     private Boolean bracket;
     @Enumerated(EnumType.STRING)
     @Column(name = "show_number")

@@ -16,9 +16,9 @@ public class Pedal extends DirectionType {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column
     private Boolean line;
-    @Transient
+    @Column
     private Boolean sign;
     @Transient
     private PrintStyleAlign printStyleAlign;

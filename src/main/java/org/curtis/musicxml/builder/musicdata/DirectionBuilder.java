@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.EditorialVoiceDirection;
 import org.curtis.musicxml.direction.Offset;
@@ -43,7 +44,7 @@ public class DirectionBuilder extends BaseBuilder {
         if (offset == null) return stringBuilder;
 
         // TODO offset value
-        buildElementWithValue("offset", 0);
+        buildElementWithValueAndAttribute("offset", 0, "sound", BuilderUtil.yesOrNo(offset.getSound()));
 
         return stringBuilder;
     }

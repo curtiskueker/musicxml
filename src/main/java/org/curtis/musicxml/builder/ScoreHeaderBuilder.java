@@ -96,8 +96,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
                 else if (encoding instanceof Supports) {
                     Supports supports = (Supports)encoding;
                     Map<String, String> attributes = new HashMap<>();
-                    // TODO: supports type
-                    attributes.put("type", "yes");
+                    attributes.put("type", BuilderUtil.yesOrNo(supports.getType()));
                     attributes.put("element", supports.getElement());
                     attributes.put("attribute", supports.getAttribute());
                     attributes.put("value", supports.getValue());

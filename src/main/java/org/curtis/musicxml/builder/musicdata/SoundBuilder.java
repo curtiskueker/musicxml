@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.Sound;
 
 public class SoundBuilder extends BaseBuilder {
@@ -13,14 +14,18 @@ public class SoundBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (sound == null) return stringBuilder;
 
-        appendLine("<sound>");
+        append("<sound");
+        buildAttribute("dacapo", BuilderUtil.yesOrNo(sound.getDacapo()));
+        buildAttribute("segno", sound.getSegno());
+        buildAttribute("dalsegno", sound.getDalsegno());
+        buildAttribute("coda", sound.getCoda());
+        buildAttribute("tocoda", sound.getTocoda());
+        buildAttribute("forward-repeat", BuilderUtil.yesOrNo(sound.getForwardRepeat()));
+        buildAttribute("pizzicato", BuilderUtil.yesOrNo(sound.getPizzicato()));
+        buildAttribute("fine", sound.getFine());
+        appendLine(">");
         DirectionBuilder directionBuilder = new DirectionBuilder();
         append(directionBuilder.buildOffset(sound.getOffset()).toString());
-        buildElementWithValue("segno", sound.getSegno());
-        buildElementWithValue("dalsegno", sound.getDalsegno());
-        buildElementWithValue("coda", sound.getCoda());
-        buildElementWithValue("tocoda", sound.getTocoda());
-        buildElementWithValue("fine", sound.getFine());
         appendLine("</sound>");
 
         return stringBuilder;

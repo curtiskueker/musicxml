@@ -53,9 +53,10 @@ public class NoteBuilder extends BaseBuilder {
             buildAttribute("relative-x", BuilderUtil.stringValue(xPosition.getRelativeX()));
             buildAttribute("relative-y", BuilderUtil.stringValue(xPosition.getRelativeY()));
         }
+        buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
         appendLine(">");
         Grace grace = note.getGrace();
-        if (grace != null) buildElement("grace");
+        if (grace != null) buildElementWithAttribute("grace", "slash", BuilderUtil.yesOrNo(grace.getSlash()));
         buildFullNote(note.getFullNote());
         // TODO: duration
         if (grace == null) buildElementWithValue("duration", 1);
@@ -72,7 +73,12 @@ public class NoteBuilder extends BaseBuilder {
         }
         Accidental accidental = note.getAccidental();
         // TODO: accidental-value
-        if (accidental != null) buildElementWithValue("accidental", "sharp");
+        if (accidental != null) {
+            Map<String, String> accidentalAttributes = new HashMap<>();
+            accidentalAttributes.put("cautionary", BuilderUtil.yesOrNo(accidental.getCautionary()));
+            accidentalAttributes.put("editorial", BuilderUtil.yesOrNo(accidental.getCautionary()));
+            buildElementWithValueAndAttributes("accidental", "sharp", accidentalAttributes);
+        }
         TimeModification timeModification = note.getTimeModification();
         if (timeModification != null) {
             appendLine("<time-modification>");
@@ -101,7 +107,10 @@ public class NoteBuilder extends BaseBuilder {
             noteheadType = noteheadType.replace("circle-dot", "circle dot");
             noteheadType = noteheadType.replace("left-triangle", "left triangle");
             noteheadType = noteheadType.replace("fa-up", "fa up");
-            buildElementWithValue("notehead", noteheadType);
+            Map<String, String> noteheadAttributes = new HashMap<>();
+            noteheadAttributes.put("filled", BuilderUtil.yesOrNo(notehead.getFilled()));
+            noteheadAttributes.put("parentheses", BuilderUtil.yesOrNo(notehead.getParentheses()));
+            buildElementWithValueAndAttributes("notehead", noteheadType, noteheadAttributes);
         }
         List<NoteheadText> noteheadTextList = note.getNoteheadTextList();
         if (!noteheadTextList.isEmpty()) buildElement("notehead-text");
@@ -110,6 +119,7 @@ public class NoteBuilder extends BaseBuilder {
             for (Beam beam : beams) {
                 Map<String, String> attributes = new HashMap<>();
                 attributes.put("number", BuilderUtil.stringValue(beam.getNumber()));
+                attributes.put("repeater", BuilderUtil.yesOrNo(beam.getRepeater()));
                 attributes.put("fan", BuilderUtil.enumValue(beam.getFan()));
                 buildElementWithValueAndAttributes("beam", buildBeamType(beam.getType()), attributes);
             }
@@ -146,7 +156,7 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     private void buildRest(Rest rest) {
-        buildElement("rest");
+        buildElementWithAttribute("rest", "measure", BuilderUtil.yesOrNo(rest.getMeasure()));
     }
 
     public static String buildBeamType(BeamType beamType) {
