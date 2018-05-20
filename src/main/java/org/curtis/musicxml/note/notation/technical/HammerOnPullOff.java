@@ -17,7 +17,7 @@ public abstract class HammerOnPullOff extends Technical {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column
     private Integer number = 1;
     @Transient
     private PrintStyle printStyle;

@@ -65,7 +65,7 @@ public class NoteBuilder extends BaseBuilder {
         if (StringUtil.isNotEmpty(instrument)) buildElementWithAttribute("instrument", "id", instrument);
         NoteType noteType = note.getType();
         if (noteType != null) {
-            buildElementWithValue("type", BuilderUtil.noteTypeValue(noteType.getValue()));
+            buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", BuilderUtil.enumValue(noteType.getSize()));
         }
         // TODO: note dot Placement
         for (Integer dotCount = 1; dotCount <= note.getDots(); dotCount++) {

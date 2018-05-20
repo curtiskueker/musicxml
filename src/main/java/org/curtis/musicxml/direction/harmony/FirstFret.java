@@ -5,8 +5,9 @@ import org.curtis.musicxml.common.Location;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "first_fret")
@@ -15,7 +16,8 @@ public class FirstFret extends DatabaseItem {
     private Integer value;
     @Column
     private String text;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location location;
 
     public FirstFret() {

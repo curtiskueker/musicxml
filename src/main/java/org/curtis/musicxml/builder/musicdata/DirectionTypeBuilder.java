@@ -103,6 +103,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildWedge(Wedge wedge) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(wedge.getType()));
+        attributes.put("number", BuilderUtil.stringValue(wedge.getNumber()));
         attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
         attributes.put("niente", BuilderUtil.yesOrNo(wedge.getNiente()));
         buildElementWithAttributes("wedge", attributes);
@@ -113,12 +114,16 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildDashes(Dashes dashes) {
-        buildElementWithAttribute("dashes", "type", BuilderUtil.enumValue(dashes.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(dashes.getType()));
+        attributes.put("number", BuilderUtil.stringValue(dashes.getNumber()));
+        buildElementWithAttributes("dashes", attributes);
     }
 
     private void buildBracket(Bracket bracket) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(bracket.getType()));
+        attributes.put("number", BuilderUtil.stringValue(bracket.getNumber()));
         attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
         attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
         buildElementWithAttributes("bracket", attributes);
@@ -174,6 +179,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildOctaveShift(OctaveShift octaveShift) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(octaveShift.getType()));
+        attributes.put("number", BuilderUtil.stringValue(octaveShift.getNumber()));
         attributes.put("size", BuilderUtil.stringValue(octaveShift.getSize()));
         buildElementWithAttributes("octave-shift", attributes);
     }
@@ -199,7 +205,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildStringMute(StringMute stringMute) {
-        buildElement("string-mute");
+        buildElementWithAttribute("string-mute", "type", BuilderUtil.enumValue(stringMute.getType()));
     }
 
     private void buildScordatura(Scordatura scordatura) {

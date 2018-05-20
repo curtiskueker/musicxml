@@ -18,7 +18,7 @@ public class Wedge extends DirectionType {
     @Enumerated(EnumType.STRING)
     @Column
     private WedgeType type;
-    @Transient
+    @Column
     private Integer number;
     @Column
     private BigDecimal spread;

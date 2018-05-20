@@ -16,7 +16,8 @@ public class NoteType extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private NoteTypeValue value;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private SymbolSize size;
 
     public NoteType() {

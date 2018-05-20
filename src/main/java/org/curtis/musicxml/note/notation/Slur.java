@@ -19,7 +19,7 @@ public class Slur extends Notation {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection connectionType;
-    @Transient
+    @Column
     private Integer number = 1;
     @Transient
     private LineType lineType;

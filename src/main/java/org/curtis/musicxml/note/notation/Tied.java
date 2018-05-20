@@ -19,7 +19,7 @@ public class Tied extends Notation {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column
     private Integer number;
     @Transient
     private LineType lineType;

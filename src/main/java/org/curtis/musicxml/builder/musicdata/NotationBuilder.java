@@ -23,7 +23,9 @@ import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.technical.Technical;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NotationBuilder extends BaseBuilder {
     private Notation notation;
@@ -52,16 +54,23 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildTied(Tied tied) {
-        buildElementWithAttribute("tied", "type", BuilderUtil.enumValue(tied.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(tied.getType()));
+        attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
+        buildElementWithAttributes("tied", attributes);
     }
 
     private void buildSlur(Slur slur) {
-        buildElementWithAttribute("slur", "type", BuilderUtil.enumValue(slur.getConnectionType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(slur.getConnectionType()));
+        attributes.put("number", BuilderUtil.stringValue(slur.getNumber()));
+        buildElementWithAttributes("slur", attributes);
     }
 
     private void buildTuplet(Tuplet tuplet) {
         append("<tuplet");
         buildAttribute("type", BuilderUtil.enumValue(tuplet.getType()));
+        buildAttribute("number", BuilderUtil.stringValue(tuplet.getNumber()));
         buildAttribute("bracket", BuilderUtil.yesOrNo(tuplet.getBracket()));
         buildAttribute("show-number", BuilderUtil.enumValue(tuplet.getShowNumber()));
         buildAttribute("show-type", BuilderUtil.enumValue(tuplet.getShowType()));
@@ -91,11 +100,17 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildGlissando(Glissando glissando) {
-        buildElementWithValueAndAttribute("glissando", glissando.getValue(), "type", BuilderUtil.enumValue(glissando.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(glissando.getType()));
+        attributes.put("number", BuilderUtil.stringValue(glissando.getNumber()));
+        buildElementWithValueAndAttributes("glissando", glissando.getValue(), attributes);
     }
 
     private void buildSlide(Slide slide) {
-        buildElementWithValueAndAttribute("slide", slide.getValue(), "type", BuilderUtil.enumValue(slide.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(slide.getType()));
+        attributes.put("number", BuilderUtil.stringValue(slide.getNumber()));
+        buildElementWithValueAndAttributes("slide", slide.getValue(), attributes);
     }
 
     private void buildOrnaments(Ornaments ornaments) {
@@ -127,11 +142,17 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildArpeggiate(Arpeggiate arpeggiate) {
-        buildElement("arpeggiate");
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("number", BuilderUtil.stringValue(arpeggiate.getNumber()));
+        attributes.put("direction", BuilderUtil.enumValue(arpeggiate.getDirection()));
+        buildElementWithAttributes("arpeggiate", attributes);
     }
 
     private void buildNonArpeggiate(NonArpeggiate nonArpeggiate) {
-        buildElement("non-arpeggiate");
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(nonArpeggiate.getType()));
+        attributes.put("number", BuilderUtil.stringValue(nonArpeggiate.getNumber()));
+        buildElementWithAttributes("non-arpeggiate", attributes);
     }
 
     private void buildAccidentalMark(AccidentalMark accidentalMark) {
@@ -139,6 +160,9 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildOtherNotation(OtherNotation otherNotation) {
-        buildElementWithValueAndAttribute("other-notation", otherNotation.getValue(), "type", BuilderUtil.enumValue(otherNotation.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(otherNotation.getType()));
+        attributes.put("number", BuilderUtil.stringValue(otherNotation.getNumber()));
+        buildElementWithValueAndAttributes("other-notation", otherNotation.getValue(), attributes);
     }
 }

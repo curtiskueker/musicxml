@@ -4,11 +4,13 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.note.Placement;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("strong accent")
@@ -16,7 +18,8 @@ public class StrongAccent extends Articulation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "placement_id")
     private Placement placement;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location type = Location.UP;
 
     public StrongAccent() {

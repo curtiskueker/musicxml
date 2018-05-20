@@ -16,7 +16,7 @@ public class OctaveShift extends DirectionType {
     @Enumerated(EnumType.STRING)
     @Column
     private OctaveShiftType type;
-    @Transient
+    @Column
     private Integer number;
     @Column
     private Integer size = 8;

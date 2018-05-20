@@ -27,7 +27,7 @@ public class Tuplet extends Notation {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column
     private Integer number;
     @Column
     private Boolean bracket;

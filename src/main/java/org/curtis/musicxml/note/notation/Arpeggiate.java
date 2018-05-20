@@ -3,16 +3,20 @@ package org.curtis.musicxml.note.notation;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("arpeggiate")
 public class Arpeggiate extends Notation {
-    @Transient
+    @Column
     private Integer number;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location direction;
     @Transient
     private Position position;

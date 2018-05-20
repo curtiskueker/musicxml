@@ -4,7 +4,10 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -18,7 +21,8 @@ public class BassAlter extends DatabaseItem {
     private Boolean printObject;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location location;
 
     public BassAlter() {

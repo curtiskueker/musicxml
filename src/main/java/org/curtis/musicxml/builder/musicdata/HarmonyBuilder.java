@@ -62,7 +62,7 @@ public class HarmonyBuilder extends BaseBuilder {
                 BassStep bassStep = bass.getBassStep();
                 buildElementWithAttribute("bass-step", "text", bassStep.getText());
                 BassAlter bassAlter = bass.getBassAlter();
-                if (bassAlter != null) buildElement("bass-alter");
+                if (bassAlter != null) buildElementWithAttribute("bass-alter", "location", BuilderUtil.enumValue(bassAlter.getLocation()));
                 appendLine("</bass>");
             }
             for (Degree degree : harmonyChord.getDegrees()) {
@@ -89,7 +89,12 @@ public class HarmonyBuilder extends BaseBuilder {
             buildElementWithValue("frame-strings", frame.getFrameStrings());
             buildElementWithValue("frame-frets", frame.getFrameFrets());
             FirstFret firstFret = frame.getFirstFret();
-            if (firstFret != null) buildElementWithValueAndAttribute("first-fret", firstFret.getValue(), "text", firstFret.getText());
+            if (firstFret != null) {
+                Map<String, String> firstFretAttributes = new HashMap<>();
+                firstFretAttributes.put("text", firstFret.getText());
+                firstFretAttributes.put("location", BuilderUtil.enumValue(firstFret.getLocation()));
+                buildElementWithValueAndAttributes("first-fret", firstFret.getValue(), firstFretAttributes);
+            }
             appendLine("</frame>");
         }
         for (FrameNote frameNote : frame.getFrameNotes()) {
@@ -109,7 +114,7 @@ public class HarmonyBuilder extends BaseBuilder {
         buildElementWithAttribute("root-step", "text", rootStep.getText());
         RootAlter rootAlter = root.getRootAlter();
         if (rootAlter != null) {
-            buildElement("root-alter");
+            buildElementWithAttribute("root-alter", "location", BuilderUtil.enumValue(rootAlter.getLocation()));
         }
         appendLine("</root>");
     }

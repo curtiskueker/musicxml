@@ -19,7 +19,7 @@ public class Bracket extends DirectionType {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column(name = "line_end")

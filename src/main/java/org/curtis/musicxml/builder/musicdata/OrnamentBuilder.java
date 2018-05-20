@@ -18,6 +18,9 @@ import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.note.notation.ornament.Turn;
 import org.curtis.musicxml.note.notation.ornament.VerticalTurn;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OrnamentBuilder extends BaseBuilder {
     private Ornament ornament;
 
@@ -69,7 +72,11 @@ public class OrnamentBuilder extends BaseBuilder {
         else if (abstractMordent instanceof InvertedMordent) elementName = "inverted-mordent";
         else return;
 
-        buildElementWithAttribute(elementName, "long", BuilderUtil.yesOrNo(abstractMordent.getLongMordent()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("long", BuilderUtil.yesOrNo(abstractMordent.getLongMordent()));
+        attributes.put("approach", BuilderUtil.enumValue(abstractMordent.getApproach()));
+        attributes.put("departure", BuilderUtil.enumValue(abstractMordent.getDeparture()));
+        buildElementWithAttributes(elementName, attributes);
     }
 
     private void buildSchleifer(Schleifer schleifer) {

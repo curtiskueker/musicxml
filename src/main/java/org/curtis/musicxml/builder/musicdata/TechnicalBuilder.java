@@ -27,6 +27,9 @@ import org.curtis.musicxml.note.notation.technical.TripleTongue;
 import org.curtis.musicxml.note.notation.technical.UpBow;
 import org.curtis.util.StringUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TechnicalBuilder extends BaseBuilder {
     private Technical technical;
 
@@ -102,7 +105,10 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildHammerOnPullOf(HammerOnPullOff hammerOnPullOff) {
         String elementName = hammerOnPullOff instanceof HammerOn ? "hammer-on" : "pull-off";
-        buildElementWithValueAndAttribute(elementName, hammerOnPullOff.getValue(), "type", BuilderUtil.enumValue(hammerOnPullOff.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(hammerOnPullOff.getType()));
+        attributes.put("number", BuilderUtil.stringValue(hammerOnPullOff.getNumber()));
+        buildElementWithValueAndAttributes(elementName, hammerOnPullOff.getValue(), attributes);
     }
 
     private void buildBend(Bend bend) {
