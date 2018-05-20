@@ -56,11 +56,11 @@ public class Sound extends MusicData {
     private BigDecimal pan;
     @Transient
     private BigDecimal elevation;
-    @Transient
+    @Column(name = "damper_pedal")
     private String damperPedal;
-    @Transient
+    @Column(name = "soft_pedal")
     private String softPedal;
-    @Transient
+    @Column(name = "sostenuto_pedal")
     private String sostenutoPedal;
 
     public Sound() {

@@ -21,8 +21,11 @@ public class SoundBuilder extends BaseBuilder {
         buildAttribute("coda", sound.getCoda());
         buildAttribute("tocoda", sound.getTocoda());
         buildAttribute("forward-repeat", BuilderUtil.yesOrNo(sound.getForwardRepeat()));
-        buildAttribute("pizzicato", BuilderUtil.yesOrNo(sound.getPizzicato()));
         buildAttribute("fine", sound.getFine());
+        buildAttribute("pizzicato", BuilderUtil.yesOrNo(sound.getPizzicato()));
+        buildAttribute("damper-pedal", sound.getDamperPedal());
+        buildAttribute("soft-pedal", sound.getSoftPedal());
+        buildAttribute("sostenuto-pedal", sound.getSostenutoPedal());
         appendLine(">");
         DirectionBuilder directionBuilder = new DirectionBuilder();
         append(directionBuilder.buildOffset(sound.getOffset()).toString());
