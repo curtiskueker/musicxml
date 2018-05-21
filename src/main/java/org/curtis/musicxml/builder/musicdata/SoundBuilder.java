@@ -20,6 +20,7 @@ public class SoundBuilder extends BaseBuilder {
         buildAttribute("dalsegno", sound.getDalsegno());
         buildAttribute("coda", sound.getCoda());
         buildAttribute("tocoda", sound.getTocoda());
+        buildAttribute("divisions", BuilderUtil.stringValue(sound.getDivisions()));
         buildAttribute("forward-repeat", BuilderUtil.yesOrNo(sound.getForwardRepeat()));
         buildAttribute("fine", sound.getFine());
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(sound.getPizzicato()));

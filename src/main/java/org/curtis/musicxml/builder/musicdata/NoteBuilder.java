@@ -54,13 +54,19 @@ public class NoteBuilder extends BaseBuilder {
             buildAttribute("relative-x", BuilderUtil.stringValue(xPosition.getRelativeX()));
             buildAttribute("relative-y", BuilderUtil.stringValue(xPosition.getRelativeY()));
         }
+        buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
+        buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
         appendLine(">");
         Grace grace = note.getGrace();
-        if (grace != null) buildElementWithAttribute("grace", "slash", BuilderUtil.yesOrNo(grace.getSlash()));
+        if (grace != null) {
+            Map<String, String> graceAttributes = new HashMap<>();
+            graceAttributes.put("make-time", BuilderUtil.stringValue(grace.getMakeTime()));
+            graceAttributes.put("slash", BuilderUtil.yesOrNo(grace.getSlash()));
+            buildElementWithAttributes("grace", graceAttributes);
+        }
         buildFullNote(note.getFullNote());
-        // TODO: duration
-        if (grace == null) buildElementWithValue("duration", 1);
+        if (grace == null) buildElementWithValue("duration", BuilderUtil.stringValue(note.getDuration()));
         for (Tie tie : note.getTies()) buildElementWithAttribute("tie", "type", BuilderUtil.enumValue(tie.getType()));
         String instrument = note.getInstrument();
         if (StringUtil.isNotEmpty(instrument)) buildElementWithAttribute("instrument", "id", instrument);

@@ -81,6 +81,8 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         if (bezier == null) return attributes;
 
+        attributes.put("bezier-offset", BuilderUtil.stringValue(bezier.getBezierOffset()));
+        attributes.put("bezier-offset2", BuilderUtil.stringValue(bezier.getBezierOffset2()));
         attributes.put("bezier-x", BuilderUtil.stringValue(bezier.getBezierX()));
         attributes.put("bezier-y", BuilderUtil.stringValue(bezier.getBezierY()));
         attributes.put("bezier-x2", BuilderUtil.stringValue(bezier.getBezierX2()));

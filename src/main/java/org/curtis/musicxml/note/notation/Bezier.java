@@ -5,15 +5,14 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bezier")
 public class Bezier extends DatabaseItem {
-    @Transient
+    @Column(name = "bezier_offset")
     private BigDecimal bezierOffset;
-    @Transient
+    @Column(name = "bezier_offset2")
     private BigDecimal bezierOffset2;
     @Column(name = "bezier_x")
     private BigDecimal bezierX;

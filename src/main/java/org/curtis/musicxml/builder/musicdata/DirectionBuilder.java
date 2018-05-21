@@ -46,8 +46,7 @@ public class DirectionBuilder extends BaseBuilder {
         clear();
         if (offset == null) return stringBuilder;
 
-        // TODO offset value
-        buildElementWithValueAndAttribute("offset", 0, "sound", BuilderUtil.yesOrNo(offset.getSound()));
+        buildElementWithValueAndAttribute("offset", BuilderUtil.stringValue(offset.getDivisions()), "sound", BuilderUtil.yesOrNo(offset.getSound()));
 
         return stringBuilder;
     }

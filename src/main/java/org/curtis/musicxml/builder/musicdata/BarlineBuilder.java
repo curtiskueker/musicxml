@@ -24,6 +24,7 @@ public class BarlineBuilder extends BaseBuilder {
         buildAttribute("location", BuilderUtil.enumValue(barline.getLocation()));
         buildAttribute("segno", barline.getSegno());
         buildAttribute("coda", barline.getCoda());
+        buildAttribute("divisions", BuilderUtil.stringValue(barline.getDivisions()));
         appendLine(">");
         BarStyleColor barStyleColor = barline.getBarStyle();
         if (barStyleColor != null) {

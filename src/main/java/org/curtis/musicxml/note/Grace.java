@@ -18,7 +18,7 @@ public class Grace extends DatabaseItem {
     private BigDecimal stealTimePrevious;
     @Transient
     private BigDecimal stealTimeFollowing;
-    @Transient
+    @Column(name = "make_time")
     private BigDecimal makeTime;
     @Column
     private Boolean slash;

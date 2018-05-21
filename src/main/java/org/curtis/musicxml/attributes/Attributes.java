@@ -27,7 +27,7 @@ import java.util.List;
 public class Attributes extends MusicData {
     @Transient
     private Editorial editorial;
-    @Transient
+    @Column
     private BigDecimal divisions;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

@@ -18,7 +18,7 @@ import java.util.List;
 public class FiguredBass extends MusicData {
     @Transient
     private List<Figure> figures = new ArrayList<>();
-    @Transient
+    @Column
     private BigDecimal duration;
     @Transient
     private Editorial editorial;

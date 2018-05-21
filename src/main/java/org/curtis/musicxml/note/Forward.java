@@ -3,6 +3,7 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("forward")
 public class Forward extends MusicData {
-    @Transient
+    @Column
     private BigDecimal duration;
     @Transient
     private EditorialVoice editorialVoice;

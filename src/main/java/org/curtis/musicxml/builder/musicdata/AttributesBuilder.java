@@ -28,6 +28,7 @@ import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.score.PartSymbol;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,8 @@ public class AttributesBuilder extends BaseBuilder {
 
     public StringBuilder build() {
         appendLine("<attributes>");
+        BigDecimal divisions = attributes.getDivisions();
+        if (divisions !=  null) buildElementWithValue("divisions", BuilderUtil.stringValue(divisions));
         for (Key key : attributes.getKeys()) {
             appendLine("<key>");
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);

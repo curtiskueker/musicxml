@@ -23,6 +23,7 @@ public class FiguredBassBuilder extends BaseBuilder {
             buildExtend(figure.getExtend());
             appendLine("</figure>");
         }
+        buildElementWithValue("duration", BuilderUtil.stringValue(figuredBass.getDuration()));
         appendLine("</figured-bass>");
 
         return stringBuilder;

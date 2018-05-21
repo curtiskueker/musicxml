@@ -41,7 +41,7 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "full_note_id")
     private FullNote fullNote;
-    @Transient
+    @Column
     private BigDecimal duration = MathUtil.ZERO;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -108,9 +108,9 @@ public class Note extends MusicData {
     private BigDecimal dynamics;
     @Transient
     private BigDecimal endDynamics;
-    @Transient
+    @Column(name = "attack_length")
     private BigDecimal attack;
-    @Transient
+    @Column(name = "release_length")
     private BigDecimal release;
     @Transient
     private String timeOnly;

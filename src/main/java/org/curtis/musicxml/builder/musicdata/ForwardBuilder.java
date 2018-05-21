@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.Forward;
 
 public class ForwardBuilder extends BaseBuilder {
@@ -13,9 +14,8 @@ public class ForwardBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (forward == null) return stringBuilder;
 
-        // TODO: forward duration
         appendLine("<forward>");
-        buildElementWithValue("duration", 1);
+        buildElementWithValue("duration", BuilderUtil.stringValue(forward.getDuration()));
         appendLine("</forward>");
 
 

@@ -5,13 +5,12 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "offset")
 public class Offset extends DatabaseItem {
-    @Transient
+    @Column
     private BigDecimal divisions;
     @Column
     private Boolean sound;

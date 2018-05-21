@@ -42,7 +42,7 @@ public class Sound extends MusicData {
     private String coda;
     @Column
     private String tocoda;
-    @Transient
+    @Column
     private BigDecimal divisions;
     @Column(name = "forward_repeat")
     private Boolean forwardRepeat;
