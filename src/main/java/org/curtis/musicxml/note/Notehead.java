@@ -3,10 +3,13 @@ package org.curtis.musicxml.note;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -20,7 +23,8 @@ public class Notehead extends DatabaseItem {
     private Boolean filled;
     @Column
     private Boolean parentheses;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "font_id")
     private Font font;
     @Transient
     private String color;

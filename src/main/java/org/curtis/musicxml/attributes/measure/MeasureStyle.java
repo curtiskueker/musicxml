@@ -3,10 +3,13 @@ package org.curtis.musicxml.attributes.measure;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,7 +20,8 @@ import javax.persistence.Transient;
 public abstract class MeasureStyle extends DatabaseItem {
     @Transient
     private Integer number;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "font_id")
     private Font font;
     @Transient
     private String color;

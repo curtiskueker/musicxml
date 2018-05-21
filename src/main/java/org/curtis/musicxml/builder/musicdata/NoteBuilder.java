@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.Accidental;
@@ -54,6 +55,7 @@ public class NoteBuilder extends BaseBuilder {
             buildAttribute("relative-x", BuilderUtil.stringValue(xPosition.getRelativeX()));
             buildAttribute("relative-y", BuilderUtil.stringValue(xPosition.getRelativeY()));
         }
+        FormattingBuilder.buildFont(note.getFont()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
         buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
@@ -117,6 +119,7 @@ public class NoteBuilder extends BaseBuilder {
             Map<String, String> noteheadAttributes = new HashMap<>();
             noteheadAttributes.put("filled", BuilderUtil.yesOrNo(notehead.getFilled()));
             noteheadAttributes.put("parentheses", BuilderUtil.yesOrNo(notehead.getParentheses()));
+            noteheadAttributes.putAll(FormattingBuilder.buildFont(notehead.getFont()));
             buildElementWithValueAndAttributes("notehead", noteheadType, noteheadAttributes);
         }
         List<NoteheadText> noteheadTextList = note.getNoteheadTextList();
@@ -191,10 +194,18 @@ public class NoteBuilder extends BaseBuilder {
             LyricText lyricText = (LyricText)lyricItem;
             for (LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
                 TextFontColor lyricElision = lyricSyllable.getLyricElision();
-                if (lyricElision != null) buildElementWithValueAndAttribute("elision", lyricElision.getValue(), "xml:lang", lyricElision.getLang());
+                if (lyricElision != null) {
+                    Map<String, String> elisionAttributes = new HashMap<>();
+                    elisionAttributes.putAll(FormattingBuilder.buildFont(lyricElision.getFont()));
+                    elisionAttributes.put("xml:lang", lyricElision.getLang());
+                    buildElementWithValueAndAttributes("elision", lyricElision.getValue(), elisionAttributes);
+                }
                 buildElementWithValue("syllabic", BuilderUtil.enumValue(lyricSyllable.getSyllabic()));
                 TextData lyricSyllableText = lyricSyllable.getText();
-                buildElementWithValueAndAttribute("text", lyricSyllableText.getValue(), "xml:lang", lyricSyllableText.getLang());
+                Map<String, String> textAttributes = new HashMap<>();
+                textAttributes.putAll(FormattingBuilder.buildFont(lyricSyllableText.getFont()));
+                textAttributes.put("xml:lang", lyricSyllableText.getLang());
+                buildElementWithValueAndAttributes("text", lyricSyllableText.getValue(), textAttributes);
             }
             buildExtend(lyricText.getExtend());
         }

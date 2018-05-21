@@ -2,6 +2,7 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.directiontype.Accord;
@@ -33,6 +34,7 @@ import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet;
 import org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome;
+import org.curtis.musicxml.direction.directiontype.metronome.PerMinute;
 import org.curtis.musicxml.direction.directiontype.percussion.Beater;
 import org.curtis.musicxml.direction.directiontype.percussion.Effect;
 import org.curtis.musicxml.direction.directiontype.percussion.Glass;
@@ -152,7 +154,8 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildBeatMetronome(BeatMetronome beatMetronome) {
         buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatMetronome.getBeatUnit1().getBeatUnit()));
-        buildElementWithValue("per-minute", beatMetronome.getPerMinute().getPerMinute());
+        PerMinute perMinute = beatMetronome.getPerMinute();
+        buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
         BeatUnit beatUnit2 = beatMetronome.getBeatUnit2();
         if (beatUnit2 != null) buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit2.getBeatUnit()));
     }

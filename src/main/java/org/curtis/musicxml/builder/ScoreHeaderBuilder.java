@@ -145,9 +145,8 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", otherAppearance.getType());
             appendLine("</appearance>");
         }
-        FormattingBuilder formattingBuilder = new FormattingBuilder();
-        append(formattingBuilder.buildFont("music-font", defaults.getMusicFont()));
-        append(formattingBuilder.buildFont("word-font", defaults.getWordFont()));
+        buildElementWithAttributes("music-font", FormattingBuilder.buildFont(defaults.getMusicFont()));
+        buildElementWithAttributes("word-font", FormattingBuilder.buildFont(defaults.getWordFont()));
         for (LyricFont lyricFont : defaults.getLyricFonts()) buildLyricFont(lyricFont);
         for (LyricLanguage lyricLanguage : defaults.getLyricLanguages()) buildLyricLanguage(lyricLanguage);
         appendLine("</defaults>");
@@ -159,6 +158,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("number", lyricFont.getNumber());
         attributes.put("name", lyricFont.getName());
+        attributes.putAll(FormattingBuilder.buildFont(lyricFont.getFont()));
         buildElementWithAttributes("lyric-font", attributes);
     }
 

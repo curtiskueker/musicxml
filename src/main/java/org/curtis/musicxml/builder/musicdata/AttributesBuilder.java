@@ -24,6 +24,7 @@ import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.attributes.time.TimeSignature;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.score.PartSymbol;
@@ -115,7 +116,9 @@ public class AttributesBuilder extends BaseBuilder {
             buildElementWithValueAndAttribute("directive", directive.getValue(), "xml:lang", directive.getLang());
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
-            appendLine("<measure-style>");
+            append("<measure-style");
+            FormattingBuilder.buildFont(measureStyle.getFont()).forEach((k, v) -> buildAttribute(k, v));
+            appendLine(">");
             if (measureStyle instanceof MultipleRest) {
                 MultipleRest multipleRest = (MultipleRest)measureStyle;
                 buildElementWithAttribute("multiple-rest", "use-symbols", BuilderUtil.yesOrNo(multipleRest.getUseSymbols()));

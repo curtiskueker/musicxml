@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.AccidentalMark;
@@ -119,10 +120,10 @@ public class NotationBuilder extends BaseBuilder {
 
     private void buildTupletPortion(TupletPortion tupletPortion) {
         TupletNumber tupletNumber = tupletPortion.getTupletNumber();
-        if (tupletNumber != null) buildElementWithValue("tuplet-number", tupletNumber.getValue());
+        if (tupletNumber != null) buildElementWithValueAndAttributes("tuplet-number", tupletNumber.getValue(), FormattingBuilder.buildFont(tupletNumber.getFont()));
         TupletType tupletType = tupletPortion.getTupletType();
-        if (tupletType != null) buildElementWithValue("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()));
-        for (TupletDot tupletDot : tupletPortion.getTupletDots()) buildElement("tuplet-dot");
+        if (tupletType != null) buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()), FormattingBuilder.buildFont(tupletType.getFont()));
+        for (TupletDot tupletDot : tupletPortion.getTupletDots()) buildElementWithAttributes("tuplet-dot", FormattingBuilder.buildFont(tupletDot.getFont()));
     }
 
     private void buildGlissando(Glissando glissando) {

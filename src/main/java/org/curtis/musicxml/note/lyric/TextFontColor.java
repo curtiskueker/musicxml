@@ -5,8 +5,11 @@ import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextDecoration;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -16,7 +19,8 @@ import java.math.BigDecimal;
 public class TextFontColor extends DatabaseItem {
     @Column
     private String value;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "font_id")
     private Font font;
     @Transient
     private String color;

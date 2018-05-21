@@ -3,8 +3,11 @@ package org.curtis.musicxml.note.notation;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -13,7 +16,8 @@ import javax.persistence.Transient;
 public class TupletNumber extends DatabaseItem {
     @Column
     private Integer value;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "font_id")
     private Font font;
     @Transient
     private String color;
