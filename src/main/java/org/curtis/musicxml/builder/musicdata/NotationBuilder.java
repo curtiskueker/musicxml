@@ -6,6 +6,7 @@ import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Articulations;
+import org.curtis.musicxml.note.notation.Bezier;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.NonArpeggiate;
 import org.curtis.musicxml.note.notation.Notation;
@@ -61,6 +62,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.putAll(PlacementBuilder.buildPosition(tied.getPosition()));
         attributes.put("placement", BuilderUtil.enumValue(tied.getPlacement()));
         attributes.put("orientation", BuilderUtil.enumValue(tied.getOrientation()));
+        attributes.putAll(buildBezier(tied.getBezier()));
         buildElementWithAttributes("tied", attributes);
     }
 
@@ -71,7 +73,20 @@ public class NotationBuilder extends BaseBuilder {
         attributes.putAll(PlacementBuilder.buildPosition(slur.getPosition()));
         attributes.put("placement", BuilderUtil.enumValue(slur.getPlacement()));
         attributes.put("orientation", BuilderUtil.enumValue(slur.getOrientation()));
+        attributes.putAll(buildBezier(slur.getBezier()));
         buildElementWithAttributes("slur", attributes);
+    }
+
+    private Map<String, String> buildBezier(Bezier bezier) {
+        Map<String, String> attributes = new HashMap<>();
+        if (bezier == null) return attributes;
+
+        attributes.put("bezier-x", BuilderUtil.stringValue(bezier.getBezierX()));
+        attributes.put("bezier-y", BuilderUtil.stringValue(bezier.getBezierY()));
+        attributes.put("bezier-x2", BuilderUtil.stringValue(bezier.getBezierX2()));
+        attributes.put("bezier-y2", BuilderUtil.stringValue(bezier.getBezierY2()));
+
+        return attributes;
     }
 
     private void buildTuplet(Tuplet tuplet) {

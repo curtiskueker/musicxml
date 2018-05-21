@@ -24,6 +24,7 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class NotationFactory {
@@ -300,13 +301,22 @@ public class NotationFactory {
     public static Bezier newBezier(Element element) {
         if (element == null) return null;
 
+        BigDecimal bezierOffset = MathUtil.newBigDecimal(element.getAttribute("bezier-offset"));
+        BigDecimal bezierOffset2 = MathUtil.newBigDecimal(element.getAttribute("bezier-offset2"));
+        BigDecimal bezierX = MathUtil.newBigDecimal(element.getAttribute("bezier-x"));
+        BigDecimal bezierY = MathUtil.newBigDecimal(element.getAttribute("bezier-y"));
+        BigDecimal bezierX2 = MathUtil.newBigDecimal(element.getAttribute("bezier-x2"));
+        BigDecimal bezierY2 = MathUtil.newBigDecimal(element.getAttribute("bezier-y2"));
+
+        if (bezierOffset == null && bezierOffset2 == null && bezierX == null && bezierY == null && bezierX2 == null && bezierY2 == null) return null;
+
         Bezier bezier = new Bezier();
-        bezier.setBezierOffset(MathUtil.newBigDecimal(element.getAttribute("bezier-offset")));
-        bezier.setBezierOffset2(MathUtil.newBigDecimal(element.getAttribute("bezier-offset2")));
-        bezier.setBezierX(MathUtil.newBigDecimal(element.getAttribute("bezier-x")));
-        bezier.setBezierY(MathUtil.newBigDecimal(element.getAttribute("bezier-y")));
-        bezier.setBezierX2(MathUtil.newBigDecimal(element.getAttribute("bezier-x2")));
-        bezier.setBezierY2(MathUtil.newBigDecimal(element.getAttribute("bezier-y2")));
+        bezier.setBezierOffset(bezierOffset);
+        bezier.setBezierOffset2(bezierOffset2);
+        bezier.setBezierX(bezierX);
+        bezier.setBezierY(bezierY);
+        bezier.setBezierX2(bezierX2);
+        bezier.setBezierY2(bezierY2);
 
         return bezier;
     }

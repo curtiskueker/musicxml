@@ -37,7 +37,8 @@ public class Slur extends Notation {
     @Enumerated(EnumType.STRING)
     @Column
     private Location orientation;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bezier_id")
     private Bezier bezier;
     @Transient
     private String color;

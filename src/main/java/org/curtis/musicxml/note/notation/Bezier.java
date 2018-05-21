@@ -1,13 +1,27 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Bezier {
+@Entity
+@Table(name = "bezier")
+public class Bezier extends DatabaseItem {
+    @Transient
     private BigDecimal bezierOffset;
+    @Transient
     private BigDecimal bezierOffset2;
+    @Column(name = "bezier_x")
     private BigDecimal bezierX;
+    @Column(name = "bezier_y")
     private BigDecimal bezierY;
+    @Column(name = "bezier_x2")
     private BigDecimal bezierX2;
+    @Column(name = "bezier_y2")
     private BigDecimal bezierY2;
 
     public Bezier() {
