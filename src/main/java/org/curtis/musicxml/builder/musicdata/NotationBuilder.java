@@ -59,6 +59,8 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(tied.getType()));
         attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
         attributes.putAll(PlacementBuilder.buildPosition(tied.getPosition()));
+        attributes.put("placement", BuilderUtil.enumValue(tied.getPlacement()));
+        attributes.put("orientation", BuilderUtil.enumValue(tied.getOrientation()));
         buildElementWithAttributes("tied", attributes);
     }
 
@@ -67,6 +69,8 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(slur.getConnectionType()));
         attributes.put("number", BuilderUtil.stringValue(slur.getNumber()));
         attributes.putAll(PlacementBuilder.buildPosition(slur.getPosition()));
+        attributes.put("placement", BuilderUtil.enumValue(slur.getPlacement()));
+        attributes.put("orientation", BuilderUtil.enumValue(slur.getOrientation()));
         buildElementWithAttributes("slur", attributes);
     }
 
@@ -79,6 +83,7 @@ public class NotationBuilder extends BaseBuilder {
         buildAttribute("show-type", BuilderUtil.enumValue(tuplet.getShowType()));
         buildAttribute("line-shape", BuilderUtil.enumValue(tuplet.getLineShape()));
         PlacementBuilder.buildPosition(tuplet.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttribute("placement", BuilderUtil.enumValue(tuplet.getPlacement()));
         appendLine(">");
         TupletPortion tupletActual = tuplet.getTupletActual();
         if (tupletActual != null) {
@@ -150,6 +155,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("number", BuilderUtil.stringValue(arpeggiate.getNumber()));
         attributes.put("direction", BuilderUtil.enumValue(arpeggiate.getDirection()));
         attributes.putAll(PlacementBuilder.buildPosition(arpeggiate.getPosition()));
+        attributes.put("placement", BuilderUtil.enumValue(arpeggiate.getPlacement()));
         buildElementWithAttributes("arpeggiate", attributes);
     }
 
@@ -158,17 +164,19 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(nonArpeggiate.getType()));
         attributes.put("number", BuilderUtil.stringValue(nonArpeggiate.getNumber()));
         attributes.putAll(PlacementBuilder.buildPosition(nonArpeggiate.getPosition()));
+        attributes.put("placement", BuilderUtil.enumValue(nonArpeggiate.getPlacement()));
         buildElementWithAttributes("non-arpeggiate", attributes);
     }
 
     private void buildAccidentalMark(AccidentalMark accidentalMark) {
-        buildElement("accidental-mark");
+        buildElementWithAttribute("accidental-mark", "placement", BuilderUtil.enumValue(accidentalMark.getPlacement()));
     }
 
     private void buildOtherNotation(OtherNotation otherNotation) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(otherNotation.getType()));
         attributes.put("number", BuilderUtil.stringValue(otherNotation.getNumber()));
+        attributes.put("placement", BuilderUtil.enumValue(otherNotation.getPlacement()));
         buildElementWithValueAndAttributes("other-notation", otherNotation.getValue(), attributes);
     }
 }

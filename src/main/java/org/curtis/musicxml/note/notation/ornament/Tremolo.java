@@ -21,7 +21,8 @@ public class Tremolo extends Ornament {
     private Connection type = Connection.SINGLE;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public Tremolo() {

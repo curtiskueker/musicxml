@@ -25,7 +25,8 @@ public class Hole extends Technical {
     private String holeShape;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public Hole() {

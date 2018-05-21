@@ -9,6 +9,7 @@ import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class OutputBuilder {
@@ -167,15 +168,20 @@ public abstract class OutputBuilder {
     }
 
     protected void buildPlacementWithAttribute(String elementName, Placement placement, String attributeName, String attributeValue) {
-        buildElement(elementName);
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("placement", BuilderUtil.enumValue(placement.getPlacement()));
+        if (StringUtil.isNotEmpty(attributeValue)) attributes.put(attributeName, attributeValue);
+        buildElementWithAttributes(elementName, attributes);
     }
 
     protected void buildPlacementText(String elementName, PlacementText placementText) {
-        String value = placementText == null ? "" : placementText.getValue();
-        buildElementWithValue(elementName, value);
+        buildElementWithValueAndAttribute(elementName, placementText.getValue(), "placement", BuilderUtil.enumValue(placementText.getPlacement()));
     }
 
     protected void buildLine(String elementName, Line line) {
-        buildElementWithAttribute(elementName, "line-shape", BuilderUtil.enumValue(line.getLineShape()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("line-shape", BuilderUtil.enumValue(line.getLineShape()));
+        attributes.put("placement", BuilderUtil.enumValue(line.getPlacement()));
+        buildElementWithAttributes(elementName, attributes);
     }
 }

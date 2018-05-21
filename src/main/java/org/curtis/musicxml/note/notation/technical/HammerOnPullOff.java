@@ -21,7 +21,8 @@ public abstract class HammerOnPullOff extends Technical {
     private Integer number = 1;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public String getValue() {

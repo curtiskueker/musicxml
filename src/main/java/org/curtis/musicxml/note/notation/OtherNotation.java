@@ -25,7 +25,8 @@ public class OtherNotation extends Notation {
     private Boolean printObject;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public OtherNotation() {

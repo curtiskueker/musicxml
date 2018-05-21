@@ -10,6 +10,8 @@ import org.curtis.musicxml.note.notation.Tuplet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -37,7 +39,8 @@ public class Lyric extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
     @Transient
     private String color;

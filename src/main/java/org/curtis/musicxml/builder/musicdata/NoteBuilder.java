@@ -178,6 +178,7 @@ public class NoteBuilder extends BaseBuilder {
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
         PlacementBuilder.buildPosition(lyric.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttribute("placement", BuilderUtil.enumValue(lyric.getPlacement()));
         appendLine(">");
         LyricItem lyricItem = lyric.getLyricItem();
         if (lyricItem instanceof LyricText) {

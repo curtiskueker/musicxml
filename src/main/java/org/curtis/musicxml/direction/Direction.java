@@ -7,8 +7,11 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -34,9 +37,10 @@ public class Direction extends MusicData {
     private Integer staff;
     @Transient
     private Sound sound;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
-    @Transient
+    @Column
     private Boolean directive;
 
     public Direction() {

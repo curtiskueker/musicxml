@@ -24,7 +24,8 @@ public class Arrow extends Technical {
     private CircularArrow circularArrow;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public Arrow() {

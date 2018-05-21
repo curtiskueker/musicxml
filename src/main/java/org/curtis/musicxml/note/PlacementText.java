@@ -6,6 +6,8 @@ import org.curtis.musicxml.common.PrintStyle;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,7 +18,8 @@ public class PlacementText extends DatabaseItem {
     private String value;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public PlacementText() {

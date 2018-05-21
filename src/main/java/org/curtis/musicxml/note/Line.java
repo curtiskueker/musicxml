@@ -24,7 +24,8 @@ public class Line extends DatabaseItem {
     private DashedFormatting dashedFormatting;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public Line() {

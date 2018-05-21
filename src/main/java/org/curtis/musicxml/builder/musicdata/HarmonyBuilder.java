@@ -37,6 +37,7 @@ public class HarmonyBuilder extends BaseBuilder {
         append("<harmony");
         buildAttribute("type", BuilderUtil.enumValue(harmony.getType()));
         buildAttribute("print-frame", BuilderUtil.yesOrNo(harmony.getPrintFrame()));
+        buildAttribute("placement", BuilderUtil.enumValue(harmony.getPlacement()));
         appendLine(">");
         for (HarmonyChord harmonyChord : harmony.getHarmonyChords()) {
             if (harmonyChord instanceof Root) buildRoot((Root)harmonyChord);

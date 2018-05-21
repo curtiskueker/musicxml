@@ -3,18 +3,23 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("handbell")
 public class Handbell extends Technical {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private HandbellType handbellType;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public Handbell() {

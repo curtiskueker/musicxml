@@ -24,7 +24,8 @@ public class NonArpeggiate extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
     @Transient
     private String color;

@@ -31,9 +31,11 @@ public class Slur extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location orientation;
     @Transient
     private Bezier bezier;

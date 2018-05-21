@@ -72,7 +72,7 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHarmonic(Harmonic harmonic) {
-        buildElement("harmonic");
+        buildElementWithAttribute("harmonic", "placement", BuilderUtil.enumValue(harmonic.getPlacement()));
     }
 
     private void buildOpenString(OpenString openString) {
@@ -108,6 +108,7 @@ public class TechnicalBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(hammerOnPullOff.getType()));
         attributes.put("number", BuilderUtil.stringValue(hammerOnPullOff.getNumber()));
+        attributes.put("placement", BuilderUtil.enumValue(hammerOnPullOff.getPlacement()));
         buildElementWithValueAndAttributes(elementName, hammerOnPullOff.getValue(), attributes);
     }
 
@@ -132,7 +133,9 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHole(Hole hole) {
-        appendLine("<hole>");
+        append("<hole");
+        buildAttribute("placement", BuilderUtil.enumValue(hole.getPlacement()));
+        appendLine(">");
         String holeType = hole.getHoleType();
         if (StringUtil.isNotEmpty(holeType)) buildElementWithValue("hole-type", holeType);
         buildElementWithValueAndAttribute("hole-closed", BuilderUtil.enumValue(hole.getHoleClosedType()), "location", BuilderUtil.enumValue(hole.getHoleClosedLocation()));
@@ -142,7 +145,9 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildArrow(Arrow arrow) {
-        appendLine("<arrow>");
+        append("<arrow");
+        buildAttribute("placement", BuilderUtil.enumValue(arrow.getPlacement()));
+        appendLine(">");
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
         buildElementWithValue("arrow-style", BuilderUtil.enumValue(arrow.getArrowStyle()));
         buildElementWithValue("circular-arrow", BuilderUtil.enumValue(arrow.getCircularArrow()));
@@ -150,7 +155,7 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHandbell(Handbell handbell) {
-        buildElementWithValue("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()));
+        buildElementWithValueAndAttribute("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), "placement", BuilderUtil.enumValue(handbell.getPlacement()));
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {

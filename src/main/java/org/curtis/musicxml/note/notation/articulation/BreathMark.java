@@ -18,7 +18,8 @@ public class BreathMark extends Articulation {
     private BreathMarkType breathMarkValue;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public BreathMark() {

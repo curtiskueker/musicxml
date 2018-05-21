@@ -48,7 +48,8 @@ public class Harmony extends MusicData {
     private Boolean printFrame;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
     @Transient
     private BigDecimal totalBeats;

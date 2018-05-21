@@ -21,6 +21,9 @@ import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.articulation.Unstress;
 import org.curtis.util.StringUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ArticulationBuilder extends BaseBuilder {
     private Articulation articulation;
 
@@ -98,8 +101,10 @@ public class ArticulationBuilder extends BaseBuilder {
     private void buildBreathMark(BreathMark breathMark) {
         String elementName = "breath-mark";
         String breathMarkValue = BuilderUtil.enumValue(breathMark.getBreathMarkValue());
-        if (StringUtil.isEmpty(breathMarkValue)) buildElement(elementName);
-        else buildElementWithValue(elementName, breathMarkValue);
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("placement", BuilderUtil.enumValue(breathMark.getPlacement()));
+        if (StringUtil.isEmpty(breathMarkValue)) buildElementWithAttributes(elementName, attributes);
+        else buildElementWithValueAndAttributes(elementName, breathMarkValue, attributes);
     }
 
     private void buildCaesura(Caesura caesura) {
