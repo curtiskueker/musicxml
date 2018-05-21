@@ -3,10 +3,13 @@ package org.curtis.musicxml.score;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Position;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,7 +19,8 @@ public class GroupSymbol extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "group_symbol_type")
     private GroupSymbolType groupSymbolType;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "position_id")
     private Position position;
     @Transient
     private String color;

@@ -34,7 +34,8 @@ public class Lyric extends DatabaseItem {
     private String name;
     @Transient
     private Location justify;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "position_id")
     private Position position;
     @Transient
     private Location placement;

@@ -3,11 +3,14 @@ package org.curtis.musicxml.note.notation;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -18,7 +21,8 @@ public class NonArpeggiate extends Notation {
     private Location type;
     @Column
     private Integer number;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "position_id")
     private Position position;
     @Transient
     private Location placement;

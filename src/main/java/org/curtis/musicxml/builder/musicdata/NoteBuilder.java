@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
@@ -176,6 +177,7 @@ public class NoteBuilder extends BaseBuilder {
         append("<lyric");
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
+        PlacementBuilder.buildPosition(lyric.getPosition()).forEach((k, v) -> buildAttribute(k, v));
         appendLine(">");
         LyricItem lyricItem = lyric.getLyricItem();
         if (lyricItem instanceof LyricText) {

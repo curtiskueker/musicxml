@@ -181,6 +181,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         for (String creditType : credit.getCreditTypes()) {
             buildElementWithValue("credit-type", creditType);
         }
+        // TODO: credit-image
         // TODO: credit-words
         appendLine("<credit-words>Text</credit-words>");
         appendLine("</credit>");
@@ -205,7 +206,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildGroupName("group-abbreviation", partGroup.getGroupAbbreviation());
         GroupSymbol groupSymbol = partGroup.getGroupSymbol();
         if (groupSymbol != null) {
-            buildElementWithValue("group-symbol", BuilderUtil.enumValue(groupSymbol.getGroupSymbolType()));
+            buildElementWithValueAndAttributes("group-symbol", BuilderUtil.enumValue(groupSymbol.getGroupSymbolType()), PlacementBuilder.buildPosition(groupSymbol.getPosition()));
         }
         GroupBarline groupBarline = partGroup.getGroupBarline();
         if (groupBarline != null) {

@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
@@ -57,6 +58,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(tied.getType()));
         attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
+        attributes.putAll(PlacementBuilder.buildPosition(tied.getPosition()));
         buildElementWithAttributes("tied", attributes);
     }
 
@@ -64,6 +66,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(slur.getConnectionType()));
         attributes.put("number", BuilderUtil.stringValue(slur.getNumber()));
+        attributes.putAll(PlacementBuilder.buildPosition(slur.getPosition()));
         buildElementWithAttributes("slur", attributes);
     }
 
@@ -75,6 +78,7 @@ public class NotationBuilder extends BaseBuilder {
         buildAttribute("show-number", BuilderUtil.enumValue(tuplet.getShowNumber()));
         buildAttribute("show-type", BuilderUtil.enumValue(tuplet.getShowType()));
         buildAttribute("line-shape", BuilderUtil.enumValue(tuplet.getLineShape()));
+        PlacementBuilder.buildPosition(tuplet.getPosition()).forEach((k, v) -> buildAttribute(k, v));
         appendLine(">");
         TupletPortion tupletActual = tuplet.getTupletActual();
         if (tupletActual != null) {
@@ -145,6 +149,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("number", BuilderUtil.stringValue(arpeggiate.getNumber()));
         attributes.put("direction", BuilderUtil.enumValue(arpeggiate.getDirection()));
+        attributes.putAll(PlacementBuilder.buildPosition(arpeggiate.getPosition()));
         buildElementWithAttributes("arpeggiate", attributes);
     }
 
@@ -152,6 +157,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(nonArpeggiate.getType()));
         attributes.put("number", BuilderUtil.stringValue(nonArpeggiate.getNumber()));
+        attributes.putAll(PlacementBuilder.buildPosition(nonArpeggiate.getPosition()));
         buildElementWithAttributes("non-arpeggiate", attributes);
     }
 

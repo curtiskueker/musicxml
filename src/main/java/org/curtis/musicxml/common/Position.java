@@ -1,11 +1,22 @@
 package org.curtis.musicxml.common;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
-public class Position {
+@Entity
+@Table(name = "position")
+public class Position extends DatabaseItem {
+    @Column(name = "default_x")
     private BigDecimal defaultX;
+    @Column(name = "default_y")
     private BigDecimal defaultY;
+    @Column(name = "relative_x")
     private BigDecimal relativeX;
+    @Column(name = "relative_y")
     private BigDecimal relativeY;
 
     public Position() {

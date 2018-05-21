@@ -9,7 +9,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("link")
@@ -22,7 +21,8 @@ public class Link extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "element_position_id")
     private ElementPosition elementPosition;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "position_id")
     private Position position;
 
     public Link() {

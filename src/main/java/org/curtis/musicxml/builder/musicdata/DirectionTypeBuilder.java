@@ -2,6 +2,7 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
@@ -106,6 +107,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("number", BuilderUtil.stringValue(wedge.getNumber()));
         attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
         attributes.put("niente", BuilderUtil.yesOrNo(wedge.getNiente()));
+        attributes.putAll(PlacementBuilder.buildPosition(wedge.getPosition()));
         buildElementWithAttributes("wedge", attributes);
     }
 
@@ -117,6 +119,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(dashes.getType()));
         attributes.put("number", BuilderUtil.stringValue(dashes.getNumber()));
+        attributes.putAll(PlacementBuilder.buildPosition(dashes.getPosition()));
         buildElementWithAttributes("dashes", attributes);
     }
 
@@ -126,6 +129,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("number", BuilderUtil.stringValue(bracket.getNumber()));
         attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
         attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
+        attributes.putAll(PlacementBuilder.buildPosition(bracket.getPosition()));
         buildElementWithAttributes("bracket", attributes);
     }
 
@@ -217,7 +221,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildImage(Image image) {
-        buildElement("image");
+        buildElementWithAttributes("image", PlacementBuilder.buildPosition(image.getPosition()));
     }
 
     private void buildPrincipalVoice(PrincipalVoice principalVoice) {

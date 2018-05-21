@@ -24,6 +24,7 @@ import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.attributes.time.TimeSignature;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.score.PartSymbol;
 
@@ -62,7 +63,7 @@ public class AttributesBuilder extends BaseBuilder {
         }
         buildElementWithValue("staves", attributes.getStaves());
         PartSymbol partSymbol = attributes.getPartSymbol();
-        if (partSymbol != null) buildElementWithValue("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()));
+        if (partSymbol != null) buildElementWithValueAndAttributes("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()), PlacementBuilder.buildPosition(partSymbol.getPosition()));
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {
             append("<clef");

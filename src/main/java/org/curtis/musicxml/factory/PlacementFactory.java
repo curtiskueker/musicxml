@@ -10,6 +10,8 @@ import org.curtis.util.MathUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
+import java.math.BigDecimal;
+
 public class PlacementFactory {
     private PlacementFactory() {
 
@@ -50,12 +52,19 @@ public class PlacementFactory {
             return null;
         }
 
+        BigDecimal defaultX = MathUtil.newBigDecimal(positionElement.getAttribute("default-x"));
+        BigDecimal defaultY = MathUtil.newBigDecimal(positionElement.getAttribute("default-y"));
+        BigDecimal relativeX = MathUtil.newBigDecimal(positionElement.getAttribute("relative-x"));
+        BigDecimal relativeY = MathUtil.newBigDecimal(positionElement.getAttribute("relative-y"));
+
+        if (defaultX == null && defaultY == null && relativeX == null && relativeY == null) return null;
+
         Position position = new Position();
 
-        position.setDefaultX(MathUtil.newBigDecimal(positionElement.getAttribute("default-x")));
-        position.setDefaultY(MathUtil.newBigDecimal(positionElement.getAttribute("default-y")));
-        position.setRelativeX(MathUtil.newBigDecimal(positionElement.getAttribute("relative-x")));
-        position.setRelativeY(MathUtil.newBigDecimal(positionElement.getAttribute("relative-y")));
+        position.setDefaultX(defaultX);
+        position.setDefaultY(defaultY);
+        position.setRelativeX(relativeX);
+        position.setRelativeY(relativeY);
 
         return position;
     }

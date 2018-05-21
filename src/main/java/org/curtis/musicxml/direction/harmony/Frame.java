@@ -33,7 +33,8 @@ public class Frame extends DatabaseItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "frame_id", nullable = false)
     private List<FrameNote> frameNotes = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "position_id")
     private Position position;
     @Transient
     private String color;

@@ -4,11 +4,14 @@ import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.note.LineType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 
@@ -28,7 +31,8 @@ public class Wedge extends DirectionType {
     private LineType lineType;
     @Transient
     private DashedFormatting dashedFormatting;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "position_id")
     private Position position;
     @Transient
     private String color;

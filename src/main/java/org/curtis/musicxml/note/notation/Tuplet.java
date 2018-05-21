@@ -40,7 +40,8 @@ public class Tuplet extends Notation {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_shape")
     private LineShape lineShape;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "position_id")
     private Position position;
     @Transient
     private Location placement;

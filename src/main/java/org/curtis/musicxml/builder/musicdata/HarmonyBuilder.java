@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.harmony.Barre;
 import org.curtis.musicxml.direction.harmony.Bass;
@@ -82,6 +83,7 @@ public class HarmonyBuilder extends BaseBuilder {
         Frame frame = harmony.getFrame();
         if (frame != null) {
             append("<frame");
+            PlacementBuilder.buildPosition(frame.getPosition()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("height", BuilderUtil.stringValue(frame.getHeight()));
             buildAttribute("width", BuilderUtil.stringValue(frame.getWidth()));
             buildAttribute("unplayed", frame.getUnplayed());
