@@ -29,9 +29,11 @@ public class Kind extends DatabaseItem {
     private Boolean bracketDegrees;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location halign;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location valign;
 
     public Kind() {

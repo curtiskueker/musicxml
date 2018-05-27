@@ -186,6 +186,7 @@ public class NoteBuilder extends BaseBuilder {
         append("<lyric");
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
+        buildAttribute("justify", BuilderUtil.enumValue(lyric.getJustify()));
         PlacementBuilder.buildPosition(lyric.getPosition()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(lyric.getPlacement()));
         appendLine(">");
@@ -197,14 +198,22 @@ public class NoteBuilder extends BaseBuilder {
                 if (lyricElision != null) {
                     Map<String, String> elisionAttributes = new HashMap<>();
                     elisionAttributes.putAll(FormattingBuilder.buildFont(lyricElision.getFont()));
+                    elisionAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricElision.getTextDecoration()));
+                    elisionAttributes.put("rotation", BuilderUtil.stringValue(lyricElision.getTextRotation()));
+                    elisionAttributes.put("letter-spacing", lyricElision.getLetterSpacing());
                     elisionAttributes.put("xml:lang", lyricElision.getLang());
+                    elisionAttributes.put("dir", BuilderUtil.enumValue(lyricElision.getTextDirection()));
                     buildElementWithValueAndAttributes("elision", lyricElision.getValue(), elisionAttributes);
                 }
                 buildElementWithValue("syllabic", BuilderUtil.enumValue(lyricSyllable.getSyllabic()));
                 TextData lyricSyllableText = lyricSyllable.getText();
                 Map<String, String> textAttributes = new HashMap<>();
                 textAttributes.putAll(FormattingBuilder.buildFont(lyricSyllableText.getFont()));
+                textAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricSyllableText.getTextDecoration()));
+                textAttributes.put("rotation", BuilderUtil.stringValue(lyricSyllableText.getTextRotation()));
+                textAttributes.put("letter-spacing", lyricSyllableText.getLetterSpacing());
                 textAttributes.put("xml:lang", lyricSyllableText.getLang());
+                textAttributes.put("dir", BuilderUtil.enumValue(lyricSyllableText.getTextDirection()));
                 buildElementWithValueAndAttributes("text", lyricSyllableText.getValue(), textAttributes);
             }
             buildExtend(lyricText.getExtend());

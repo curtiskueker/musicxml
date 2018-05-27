@@ -52,9 +52,9 @@ public class Sound extends MusicData {
     private String timeOnly;
     @Column
     private Boolean pizzicato;
-    @Transient
+    @Column
     private BigDecimal pan;
-    @Transient
+    @Column
     private BigDecimal elevation;
     @Column(name = "damper_pedal")
     private String damperPedal;

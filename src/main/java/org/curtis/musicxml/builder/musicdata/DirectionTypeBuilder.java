@@ -145,6 +145,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildMetronome(Metronome metronome) {
         append("<metronome");
+        buildAttribute("justify", BuilderUtil.enumValue(metronome.getJustify()));
         buildAttribute("parentheses", BuilderUtil.yesOrNo(metronome.getParentheses()));
         appendLine(">");
         if (metronome instanceof BeatMetronome) buildBeatMetronome((BeatMetronome)metronome);
@@ -224,7 +225,11 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildImage(Image image) {
-        buildElementWithAttributes("image", PlacementBuilder.buildPosition(image.getPosition()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(PlacementBuilder.buildPosition(image.getPosition()));
+        attributes.put("halign", BuilderUtil.enumValue(image.getHalign()));
+        attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
+        buildElementWithAttributes("image", attributes);
     }
 
     private void buildPrincipalVoice(PrincipalVoice principalVoice) {
@@ -244,7 +249,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildPercussion(Percussion percussion) {
-        appendLine("<percussion>");
+        append("<percussion");
+        buildAttribute("enclosure", BuilderUtil.enumValue(percussion.getEnclosure()));
+        appendLine(">");
         if (percussion instanceof Glass) buildGlass((Glass)percussion);
         else if (percussion instanceof Metal) buildMetal((Metal)percussion);
         else if (percussion instanceof Wood) buildWood((Wood)percussion);

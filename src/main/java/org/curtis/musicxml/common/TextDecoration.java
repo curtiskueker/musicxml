@@ -1,8 +1,19 @@
 package org.curtis.musicxml.common;
 
-public class TextDecoration {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "text_decoration")
+public class TextDecoration extends DatabaseItem {
+    @Column
     private Integer underline;
+    @Column
     private Integer overline;
+    @Column(name = "line_through")
     private Integer lineThrough;
 
     public TextDecoration() {

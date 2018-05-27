@@ -55,6 +55,8 @@ public class HarmonyBuilder extends BaseBuilder {
             kindAttributes.put("stack-degrees", BuilderUtil.yesOrNo(kind.getStackDegrees()));
             kindAttributes.put("parentheses-degrees", BuilderUtil.yesOrNo(kind.getParenthesesDegrees()));
             kindAttributes.put("bracket-degrees", BuilderUtil.yesOrNo(kind.getBracketDegrees()));
+            kindAttributes.put("halign", BuilderUtil.enumValue(kind.getHalign()));
+            kindAttributes.put("valign", BuilderUtil.enumValue(kind.getValign()));
             buildElementWithValueAndAttributes("kind", kindValue, kindAttributes);
             Inversion inversion = harmonyChord.getInversion();
             if (inversion != null) buildElementWithValue("inversion", inversion.getValue());
@@ -85,6 +87,8 @@ public class HarmonyBuilder extends BaseBuilder {
         if (frame != null) {
             append("<frame");
             PlacementBuilder.buildPosition(frame.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttribute("halign", BuilderUtil.enumValue(frame.getHalign()));
+            buildAttribute("valign", BuilderUtil.enumValue(frame.getValignImage()));
             buildAttribute("height", BuilderUtil.stringValue(frame.getHeight()));
             buildAttribute("width", BuilderUtil.stringValue(frame.getWidth()));
             buildAttribute("unplayed", frame.getUnplayed());

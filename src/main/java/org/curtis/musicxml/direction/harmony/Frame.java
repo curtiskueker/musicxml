@@ -9,6 +9,8 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -38,9 +40,11 @@ public class Frame extends DatabaseItem {
     private Position position;
     @Transient
     private String color;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location halign;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "valign_image")
     private Location valignImage;
     @Column
     private BigDecimal height;

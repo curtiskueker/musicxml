@@ -9,6 +9,8 @@ import org.curtis.musicxml.common.TextDecoration;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,15 +27,17 @@ public class TextData extends DatabaseItem {
     private Font font;
     @Transient
     private String color;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
-    @Transient
+    @Column(name = "text_rotation")
     private BigDecimal textRotation;
-    @Transient
+    @Column(name = "letter_spacing")
     private String letterSpacing;
     @Column
     private String lang;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "text_direction")
     private Location textDirection;
 
     public TextData() {

@@ -4,6 +4,9 @@ import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
@@ -11,7 +14,8 @@ import javax.persistence.Transient;
 public abstract class Percussion extends DirectionType {
     @Transient
     private PrintStyleAlign printStyleAlign;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private EnclosureShape enclosure;
 
     public PrintStyleAlign getPrintStyleAlign() {

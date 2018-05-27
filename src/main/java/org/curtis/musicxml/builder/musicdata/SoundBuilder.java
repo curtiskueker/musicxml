@@ -24,6 +24,8 @@ public class SoundBuilder extends BaseBuilder {
         buildAttribute("forward-repeat", BuilderUtil.yesOrNo(sound.getForwardRepeat()));
         buildAttribute("fine", sound.getFine());
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(sound.getPizzicato()));
+        buildAttribute("pan", BuilderUtil.stringValue(sound.getPan()));
+        buildAttribute("elevation", BuilderUtil.stringValue(sound.getElevation()));
         buildAttribute("damper-pedal", sound.getDamperPedal());
         buildAttribute("soft-pedal", sound.getSoftPedal());
         buildAttribute("sostenuto-pedal", sound.getSostenutoPedal());

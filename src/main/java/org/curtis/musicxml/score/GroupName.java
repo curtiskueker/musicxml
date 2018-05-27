@@ -6,6 +6,8 @@ import org.curtis.musicxml.common.Location;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,7 +18,8 @@ public class GroupName extends DatabaseItem {
     private String groupName;
     @Transient
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location justify;
 
     public GroupName() {
