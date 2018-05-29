@@ -1,11 +1,13 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.OutputBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
+import org.curtis.musicxml.layout.PrintObjectStyleAlign;
 import org.curtis.musicxml.layout.StaffLayout;
 import org.curtis.musicxml.layout.SystemDividers;
 import org.curtis.musicxml.layout.SystemLayout;
@@ -56,8 +58,10 @@ public class LayoutBuilder extends OutputBuilder {
             SystemDividers systemDividers = systemLayout.getSystemDividers();
             if (systemDividers != null) {
                 layoutBuilder.appendLine("<system-dividers>");
-                layoutBuilder.buildElement("left-divider");
-                layoutBuilder.buildElement("right-divider");
+                PrintObjectStyleAlign leftDivider = systemDividers.getLeftDivider();
+                layoutBuilder.buildElementWithAttributes("left-divider", FormattingBuilder.buildPrintStyleAlign(leftDivider.getPrintStyleAlign()));
+                PrintObjectStyleAlign rightDivider = systemDividers.getRightDivider();
+                layoutBuilder.buildElementWithAttributes("right-divider", FormattingBuilder.buildPrintStyleAlign(rightDivider.getPrintStyleAlign()));
                 layoutBuilder.appendLine("</system-dividers>");
             }
             layoutBuilder.appendLine("</system-layout>");

@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.CssFontSize;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
 
 import java.math.BigDecimal;
@@ -54,6 +55,17 @@ public class FormattingBuilder extends OutputBuilder {
         attributes.putAll(PlacementBuilder.buildPosition(printStyle.getPosition()));
         attributes.putAll(buildFont(printStyle.getFont()));
         attributes.put("color", printStyle.getColor());
+
+        return attributes;
+    }
+
+    public static Map<String, String> buildPrintStyleAlign(PrintStyleAlign printStyleAlign) {
+        Map<String, String> attributes = new HashMap<>();
+        if (printStyleAlign == null) return attributes;
+
+        attributes.putAll(buildPrintStyle(printStyleAlign.getPrintStyle()));
+        attributes.put("halign", BuilderUtil.enumValue(printStyleAlign.getHalign()));
+        attributes.put("valign", BuilderUtil.enumValue(printStyleAlign.getValign()));
 
         return attributes;
     }

@@ -29,7 +29,8 @@ public class Print extends MusicData {
     @Enumerated(EnumType.STRING)
     @Column(name = "measure_numbering_value")
     private MeasureNumberingType measureNumberingValue;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
     @Transient
     private NameDisplay partNameDisplay;

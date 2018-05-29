@@ -1,7 +1,9 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.direction.MeasureNumberingType;
 import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.layout.MeasureLayout;
 
@@ -29,7 +31,8 @@ public class PrintBuilder extends BaseBuilder {
             buildElementWithValue("measure-distance", BuilderUtil.stringValue(measureLayout.getMeasureDistance()));
             appendLine("</measure-layout>");
         }
-        buildElementWithValue("measure-numbering", BuilderUtil.enumValue(print.getMeasureNumberingValue()));
+        MeasureNumberingType measureNumberingValue = print.getMeasureNumberingValue();
+        if (measureNumberingValue != null) buildElementWithValueAndAttributes("measure-numbering", BuilderUtil.enumValue(measureNumberingValue), FormattingBuilder.buildPrintStyleAlign(print.getPrintStyleAlign()));
         appendLine("</print>");
 
         return stringBuilder;

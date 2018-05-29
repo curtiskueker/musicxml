@@ -1,8 +1,27 @@
 package org.curtis.musicxml.common;
 
-public class PrintStyleAlign {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "print_style_align")
+public class PrintStyleAlign extends DatabaseItem {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location halign;
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location valign;
 
     public PrintStyleAlign() {

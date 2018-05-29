@@ -3,7 +3,10 @@ package org.curtis.musicxml.layout;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -12,7 +15,8 @@ import javax.persistence.Transient;
 public class PrintObjectStyleAlign extends DatabaseItem {
     @Transient
     private Boolean printObject;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
 
     public PrintObjectStyleAlign() {

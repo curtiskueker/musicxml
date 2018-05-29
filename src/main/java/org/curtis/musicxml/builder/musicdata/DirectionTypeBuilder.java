@@ -143,11 +143,13 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(pedal.getType()));
         attributes.put("line", BuilderUtil.yesOrNo(pedal.getLine()));
         attributes.put("sign", BuilderUtil.yesOrNo(pedal.getSign()));
+        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(pedal.getPrintStyleAlign()));
         buildElementWithAttributes("pedal", attributes);
     }
 
     private void buildMetronome(Metronome metronome) {
         append("<metronome");
+        FormattingBuilder.buildPrintStyleAlign(metronome.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("justify", BuilderUtil.enumValue(metronome.getJustify()));
         buildAttribute("parentheses", BuilderUtil.yesOrNo(metronome.getParentheses()));
         appendLine(">");
@@ -197,7 +199,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildHarpPedals(HarpPedals harpPedals) {
-        appendLine("<harp-pedals>");
+        append("<harp-pedals");
+        FormattingBuilder.buildPrintStyleAlign(harpPedals.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+        appendLine(">");
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
             buildElement("pedal-tuning");
         }
@@ -217,7 +221,10 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildStringMute(StringMute stringMute) {
-        buildElementWithAttribute("string-mute", "type", BuilderUtil.enumValue(stringMute.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(stringMute.getType()));
+        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(stringMute.getPrintStyleAlign()));
+        buildElementWithAttributes("string-mute", attributes);
     }
 
     private void buildScordatura(Scordatura scordatura) {
@@ -243,17 +250,21 @@ public class DirectionTypeBuilder extends BaseBuilder {
         symbol = symbol.replace("hauptstimme", "Hauptstimme");
         symbol = symbol.replace("nebenstimme", "Nebenstimme");
         attributes.put("symbol", symbol);
+        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(principalVoice.getPrintStyleAlign()));
         buildElementWithValueAndAttributes("principal-voice", principalVoice.getPrincipalVoice(), attributes);
     }
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {
-        appendLine("<accordion-registration>");
+        append("<accordion-registration");
+        FormattingBuilder.buildPrintStyleAlign(accordionRegistration.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+        appendLine(">");
         buildElementWithValue("accordion-middle", accordionRegistration.getAccordionMiddle());
         appendLine("</accordion-registration>");
     }
 
     private void buildPercussion(Percussion percussion) {
         append("<percussion");
+        FormattingBuilder.buildPrintStyleAlign(percussion.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("enclosure", BuilderUtil.enumValue(percussion.getEnclosure()));
         appendLine(">");
         if (percussion instanceof Glass) buildGlass((Glass)percussion);
@@ -334,6 +345,6 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildOtherDirection(OtherDirection otherDirection) {
-        buildElementWithValue("other-direction", otherDirection.getValue());
+        buildElementWithValueAndAttributes("other-direction", otherDirection.getValue(), FormattingBuilder.buildPrintStyleAlign(otherDirection.getPrintStyleAlign()));
     }
 }

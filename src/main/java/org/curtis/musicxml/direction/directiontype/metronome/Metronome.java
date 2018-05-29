@@ -4,15 +4,18 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import javax.persistence.OneToOne;
 
 @MappedSuperclass
 public abstract class Metronome extends DirectionType {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
     @Enumerated(EnumType.STRING)
     @Column

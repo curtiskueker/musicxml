@@ -1,19 +1,28 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @DiscriminatorValue("harp pedals")
 public class HarpPedals extends DirectionType {
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "harp_pedals_id", nullable = false)
     private List<PedalTuning> pedalTunings = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
 
     public HarpPedals() {

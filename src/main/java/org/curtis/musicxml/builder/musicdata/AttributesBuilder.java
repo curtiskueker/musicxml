@@ -62,6 +62,7 @@ public class AttributesBuilder extends BaseBuilder {
             append("<time");
             buildAttribute("symbol", BuilderUtil.enumValue(time.getSymbol()));
             buildAttribute("separator", BuilderUtil.enumValue(time.getSeparator()));
+            FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
             appendLine(">");
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
             else if (time instanceof SenzaMisura) buildSenzaMisura((SenzaMisura)time);
