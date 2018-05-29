@@ -27,7 +27,8 @@ public class Wedge extends DirectionType {
     private BigDecimal spread;
     @Column
     private Boolean niente;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_type")
     private LineType lineType;
     @Transient
     private DashedFormatting dashedFormatting;

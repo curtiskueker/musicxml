@@ -29,9 +29,11 @@ public class Barline extends MusicData {
     private Editorial editorial;
     @Transient
     private WavyLine wavyLine;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "segno_print_id")
     private PrintStyleAlign segnoPrint;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "coda_print_id")
     private PrintStyleAlign codaPrint;
     @Transient
     private List<Fermata> fermataList = new ArrayList<>();

@@ -24,7 +24,8 @@ public class Tied extends Notation {
     private Connection type;
     @Column
     private Integer number;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_type")
     private LineType lineType;
     @Transient
     private DashedFormatting dashedFormatting;

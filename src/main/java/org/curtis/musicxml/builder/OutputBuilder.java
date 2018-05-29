@@ -188,6 +188,7 @@ public abstract class OutputBuilder {
     protected void buildLine(String elementName, Line line) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("line-shape", BuilderUtil.enumValue(line.getLineShape()));
+        attributes.put("line-type", BuilderUtil.enumValue(line.getLineType()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(line.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(line.getPlacement()));
         buildElementWithAttributes(elementName, attributes);

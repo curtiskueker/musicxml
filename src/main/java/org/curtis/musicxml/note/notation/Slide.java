@@ -26,7 +26,8 @@ public class Slide extends Notation {
     private Connection type;
     @Column
     private Integer number = 1;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_type")
     private LineType lineType;
     @Transient
     private DashedFormatting dashedFormatting;

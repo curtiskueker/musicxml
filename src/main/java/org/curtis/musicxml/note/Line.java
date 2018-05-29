@@ -21,7 +21,8 @@ public class Line extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_shape")
     private LineShape lineShape;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_type")
     private LineType lineType;
     @Transient
     private DashedFormatting dashedFormatting;

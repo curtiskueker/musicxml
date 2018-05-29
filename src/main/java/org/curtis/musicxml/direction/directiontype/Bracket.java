@@ -29,7 +29,8 @@ public class Bracket extends DirectionType {
     private LineEnd lineEnd;
     @Column(name = "end_length")
     private BigDecimal endLength;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_type")
     private LineType lineType;
     @Transient
     private DashedFormatting dashedFormatting;

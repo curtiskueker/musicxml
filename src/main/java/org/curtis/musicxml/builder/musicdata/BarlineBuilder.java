@@ -7,6 +7,7 @@ import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.common.PrintStyleAlign;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,10 @@ public class BarlineBuilder extends BaseBuilder {
         if (barStyleColor != null) {
             buildElementWithValueAndAttribute("bar-style", BuilderUtil.enumValue(barStyleColor.getBarStyle()), "color", barStyleColor.getColor());
         }
+        PrintStyleAlign segnoPrint = barline.getSegnoPrint();
+        if (segnoPrint != null) buildElementWithAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segnoPrint));
+        PrintStyleAlign codaPrint = barline.getCodaPrint();
+        if (codaPrint != null) buildElementWithAttributes("coda", FormattingBuilder.buildPrintStyleAlign(codaPrint));
         Ending ending = barline.getEnding();
         if (ending != null) {
             Map<String, String> attributes = new HashMap<>();

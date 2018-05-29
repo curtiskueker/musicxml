@@ -92,7 +92,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildSegno(Segno segno) {
-        buildElement("segno");
+        buildElementWithAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign()));
     }
 
     private void buildWords(Words words) {
@@ -100,7 +100,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildCoda(Coda coda) {
-        buildElement("coda");
+        buildElementWithAttributes("coda", FormattingBuilder.buildPrintStyleAlign(coda.getPrintStyleAlign()));
     }
 
     private void buildWedge(Wedge wedge) {
@@ -109,6 +109,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("number", BuilderUtil.stringValue(wedge.getNumber()));
         attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
         attributes.put("niente", BuilderUtil.yesOrNo(wedge.getNiente()));
+        attributes.put("line-type", BuilderUtil.enumValue(wedge.getLineType()));
         attributes.putAll(PlacementBuilder.buildPosition(wedge.getPosition()));
         attributes.put("color", wedge.getColor());
         buildElementWithAttributes("wedge", attributes);
@@ -133,6 +134,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("number", BuilderUtil.stringValue(bracket.getNumber()));
         attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
         attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
+        attributes.put("line-type", BuilderUtil.enumValue(bracket.getLineType()));
         attributes.putAll(PlacementBuilder.buildPosition(bracket.getPosition()));
         attributes.put("color", bracket.getColor());
         buildElementWithAttributes("bracket", attributes);
@@ -209,15 +211,15 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildDamp(Damp damp) {
-        buildElement("damp");
+        buildElementWithAttributes("damp", FormattingBuilder.buildPrintStyleAlign(damp.getPrintStyleAlign()));
     }
 
     private void buildDampAll(DampAll dampAll) {
-        buildElement("damp-all");
+        buildElementWithAttributes("damp-all", FormattingBuilder.buildPrintStyleAlign(dampAll.getPrintStyleAlign()));
     }
 
     private void buildEyglasses(Eyeglasses eyeglasses) {
-        buildElement("eyeglasses");
+        buildElementWithAttributes("eyeglasses", FormattingBuilder.buildPrintStyleAlign(eyeglasses.getPrintStyleAlign()));
     }
 
     private void buildStringMute(StringMute stringMute) {
