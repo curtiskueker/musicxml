@@ -64,6 +64,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("placement", BuilderUtil.enumValue(tied.getPlacement()));
         attributes.put("orientation", BuilderUtil.enumValue(tied.getOrientation()));
         attributes.putAll(buildBezier(tied.getBezier()));
+        attributes.put("color", tied.getColor());
         buildElementWithAttributes("tied", attributes);
     }
 
@@ -75,6 +76,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("placement", BuilderUtil.enumValue(slur.getPlacement()));
         attributes.put("orientation", BuilderUtil.enumValue(slur.getOrientation()));
         attributes.putAll(buildBezier(slur.getBezier()));
+        attributes.put("color", slur.getColor());
         buildElementWithAttributes("slur", attributes);
     }
 
@@ -120,10 +122,25 @@ public class NotationBuilder extends BaseBuilder {
 
     private void buildTupletPortion(TupletPortion tupletPortion) {
         TupletNumber tupletNumber = tupletPortion.getTupletNumber();
-        if (tupletNumber != null) buildElementWithValueAndAttributes("tuplet-number", tupletNumber.getValue(), FormattingBuilder.buildFont(tupletNumber.getFont()));
+        if (tupletNumber != null) {
+            Map<String, String> tupletNumberAttributes = new HashMap<>();
+            tupletNumberAttributes.putAll(FormattingBuilder.buildFont(tupletNumber.getFont()));
+            tupletNumberAttributes.put("color", tupletNumber.getColor());
+            buildElementWithValueAndAttributes("tuplet-number", tupletNumber.getValue(), tupletNumberAttributes);
+        }
         TupletType tupletType = tupletPortion.getTupletType();
-        if (tupletType != null) buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()), FormattingBuilder.buildFont(tupletType.getFont()));
-        for (TupletDot tupletDot : tupletPortion.getTupletDots()) buildElementWithAttributes("tuplet-dot", FormattingBuilder.buildFont(tupletDot.getFont()));
+        if (tupletType != null) {
+            Map<String, String> tupletTypeAttributes = new HashMap<>();
+            tupletTypeAttributes.putAll(FormattingBuilder.buildFont(tupletType.getFont()));
+            tupletTypeAttributes.put("color", tupletType.getColor());
+            buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()), tupletTypeAttributes);
+        }
+        for (TupletDot tupletDot : tupletPortion.getTupletDots()) {
+            Map<String, String> tupletDotAttributes = new HashMap<>();
+            tupletDotAttributes.putAll(FormattingBuilder.buildFont(tupletDot.getFont()));
+            tupletDotAttributes.put("color", tupletDot.getColor());
+            buildElementWithAttributes("tuplet-dot", tupletDotAttributes);
+        }
     }
 
     private void buildGlissando(Glissando glissando) {
@@ -176,6 +193,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("direction", BuilderUtil.enumValue(arpeggiate.getDirection()));
         attributes.putAll(PlacementBuilder.buildPosition(arpeggiate.getPosition()));
         attributes.put("placement", BuilderUtil.enumValue(arpeggiate.getPlacement()));
+        attributes.put("color", arpeggiate.getColor());
         buildElementWithAttributes("arpeggiate", attributes);
     }
 
@@ -185,6 +203,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("number", BuilderUtil.stringValue(nonArpeggiate.getNumber()));
         attributes.putAll(PlacementBuilder.buildPosition(nonArpeggiate.getPosition()));
         attributes.put("placement", BuilderUtil.enumValue(nonArpeggiate.getPlacement()));
+        attributes.put("color", nonArpeggiate.getColor());
         buildElementWithAttributes("non-arpeggiate", attributes);
     }
 

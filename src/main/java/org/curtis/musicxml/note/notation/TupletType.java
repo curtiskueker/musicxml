@@ -12,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tuplet_type")
@@ -23,7 +22,7 @@ public class TupletType extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")
     private Font font;
-    @Transient
+    @Column
     private String color;
 
     public TupletType() {

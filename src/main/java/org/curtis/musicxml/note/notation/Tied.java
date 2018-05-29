@@ -40,7 +40,7 @@ public class Tied extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bezier_id")
     private Bezier bezier;
-    @Transient
+    @Column
     private String color;
 
     public Tied() {

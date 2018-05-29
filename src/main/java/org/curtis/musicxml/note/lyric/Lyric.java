@@ -43,7 +43,7 @@ public class Lyric extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
-    @Transient
+    @Column
     private String color;
     @Transient
     private Boolean printObject;

@@ -101,7 +101,7 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")
     private Font font;
-    @Transient
+    @Column
     private String color;
     @Transient
     private Printout printout;

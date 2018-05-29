@@ -4,6 +4,7 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -23,7 +24,7 @@ public abstract class MeasureStyle extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")
     private Font font;
-    @Transient
+    @Column
     private String color;
 
     public Integer getNumber() {

@@ -206,13 +206,16 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildGroupName("group-abbreviation", partGroup.getGroupAbbreviation());
         GroupSymbol groupSymbol = partGroup.getGroupSymbol();
         if (groupSymbol != null) {
-            buildElementWithValueAndAttributes("group-symbol", BuilderUtil.enumValue(groupSymbol.getGroupSymbolType()), PlacementBuilder.buildPosition(groupSymbol.getPosition()));
+            Map<String, String> groupSymbolAttributes = new HashMap<>();
+            groupSymbolAttributes.putAll(PlacementBuilder.buildPosition(groupSymbol.getPosition()));
+            groupSymbolAttributes.put("color", groupSymbol.getColor());
+            buildElementWithValueAndAttributes("group-symbol", BuilderUtil.enumValue(groupSymbol.getGroupSymbolType()), groupSymbolAttributes);
         }
         GroupBarline groupBarline = partGroup.getGroupBarline();
         if (groupBarline != null) {
             String groupBarlineValue = BuilderUtil.enumValue(groupBarline.getGroupBarlineType());
             groupBarlineValue = groupBarlineValue.replace("mensurstrich", "Mensurstrich");
-            buildElementWithValue("group-barline", groupBarlineValue);
+            buildElementWithValueAndAttribute("group-barline", groupBarlineValue, "color", groupBarline.getColor());
         }
         appendLine("</part-group>");
     }

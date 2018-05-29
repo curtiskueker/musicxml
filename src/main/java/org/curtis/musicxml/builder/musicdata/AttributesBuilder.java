@@ -69,7 +69,12 @@ public class AttributesBuilder extends BaseBuilder {
         }
         buildElementWithValue("staves", attributes.getStaves());
         PartSymbol partSymbol = attributes.getPartSymbol();
-        if (partSymbol != null) buildElementWithValueAndAttributes("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()), PlacementBuilder.buildPosition(partSymbol.getPosition()));
+        if (partSymbol != null) {
+            Map<String, String> partSymbolAttributes = new HashMap<>();
+            partSymbolAttributes.putAll(PlacementBuilder.buildPosition(partSymbol.getPosition()));
+            partSymbolAttributes.put("color", partSymbol.getColor());
+            buildElementWithValueAndAttributes("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()), partSymbolAttributes);
+        }
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {
             append("<clef");
@@ -124,6 +129,7 @@ public class AttributesBuilder extends BaseBuilder {
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             append("<measure-style");
             FormattingBuilder.buildFont(measureStyle.getFont()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttribute("color", measureStyle.getColor());
             appendLine(">");
             if (measureStyle instanceof MultipleRest) {
                 MultipleRest multipleRest = (MultipleRest)measureStyle;

@@ -40,7 +40,7 @@ public class Slur extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bezier_id")
     private Bezier bezier;
-    @Transient
+    @Column
     private String color;
     @Transient
     private SlurType slurType;

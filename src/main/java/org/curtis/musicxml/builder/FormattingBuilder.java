@@ -53,6 +53,7 @@ public class FormattingBuilder extends OutputBuilder {
 
         attributes.putAll(PlacementBuilder.buildPosition(printStyle.getPosition()));
         attributes.putAll(buildFont(printStyle.getFont()));
+        attributes.put("color", printStyle.getColor());
 
         return attributes;
     }

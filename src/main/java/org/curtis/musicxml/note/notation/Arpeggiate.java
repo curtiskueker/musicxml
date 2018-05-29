@@ -11,7 +11,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("arpeggiate")
@@ -27,7 +26,7 @@ public class Arpeggiate extends Notation {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
-    @Transient
+    @Column
     private String color;
 
     public Arpeggiate() {

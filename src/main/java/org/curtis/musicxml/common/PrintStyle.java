@@ -3,6 +3,7 @@ package org.curtis.musicxml.common;
 import org.curtis.database.DatabaseItem;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -18,7 +19,7 @@ public class PrintStyle extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")
     private Font font;
-    @Transient
+    @Column
     private String color;
 
     public PrintStyle() {

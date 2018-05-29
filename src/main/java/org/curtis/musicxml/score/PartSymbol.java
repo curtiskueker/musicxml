@@ -26,7 +26,7 @@ public class PartSymbol extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
-    @Transient
+    @Column
     private String color;
 
     public PartSymbol() {

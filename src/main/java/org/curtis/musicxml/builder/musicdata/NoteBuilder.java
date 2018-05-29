@@ -56,6 +56,7 @@ public class NoteBuilder extends BaseBuilder {
             buildAttribute("relative-y", BuilderUtil.stringValue(xPosition.getRelativeY()));
         }
         FormattingBuilder.buildFont(note.getFont()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttribute("color", note.getColor());
         buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
         buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
@@ -97,15 +98,16 @@ public class NoteBuilder extends BaseBuilder {
         }
         Stem stem = note.getStem();
         if (stem != null) {
-            Map<String, String> attributes = new HashMap<>();
+            Map<String, String> stemAttributes = new HashMap<>();
             YPosition yPosition = stem.getyPosition();
             if (yPosition != null) {
-                attributes.put("default-x", BuilderUtil.stringValue(yPosition.getDefaultX()));
-                attributes.put("default-y", BuilderUtil.stringValue(yPosition.getDefaultY()));
-                attributes.put("relative-x", BuilderUtil.stringValue(yPosition.getRelativeX()));
-                attributes.put("relative-y", BuilderUtil.stringValue(yPosition.getRelativeY()));
+                stemAttributes.put("default-x", BuilderUtil.stringValue(yPosition.getDefaultX()));
+                stemAttributes.put("default-y", BuilderUtil.stringValue(yPosition.getDefaultY()));
+                stemAttributes.put("relative-x", BuilderUtil.stringValue(yPosition.getRelativeX()));
+                stemAttributes.put("relative-y", BuilderUtil.stringValue(yPosition.getRelativeY()));
             }
-            buildElementWithValueAndAttributes("stem", BuilderUtil.enumValue(stem.getType()), attributes);
+            stemAttributes.put("color", stem.getColor());
+            buildElementWithValueAndAttributes("stem", BuilderUtil.enumValue(stem.getType()), stemAttributes);
         }
         Notehead notehead = note.getNotehead();
         if (notehead != null) {
@@ -121,6 +123,7 @@ public class NoteBuilder extends BaseBuilder {
             noteheadAttributes.put("filled", BuilderUtil.yesOrNo(notehead.getFilled()));
             noteheadAttributes.put("parentheses", BuilderUtil.yesOrNo(notehead.getParentheses()));
             noteheadAttributes.putAll(FormattingBuilder.buildFont(notehead.getFont()));
+            noteheadAttributes.put("color", notehead.getColor());
             buildElementWithValueAndAttributes("notehead", noteheadType, noteheadAttributes);
         }
         List<NoteheadText> noteheadTextList = note.getNoteheadTextList();
@@ -128,11 +131,12 @@ public class NoteBuilder extends BaseBuilder {
         List<Beam> beams = note.getBeams();
         if (!beams.isEmpty()) {
             for (Beam beam : beams) {
-                Map<String, String> attributes = new HashMap<>();
-                attributes.put("number", BuilderUtil.stringValue(beam.getNumber()));
-                attributes.put("repeater", BuilderUtil.yesOrNo(beam.getRepeater()));
-                attributes.put("fan", BuilderUtil.enumValue(beam.getFan()));
-                buildElementWithValueAndAttributes("beam", buildBeamType(beam.getType()), attributes);
+                Map<String, String> beamAttributes = new HashMap<>();
+                beamAttributes.put("number", BuilderUtil.stringValue(beam.getNumber()));
+                beamAttributes.put("repeater", BuilderUtil.yesOrNo(beam.getRepeater()));
+                beamAttributes.put("fan", BuilderUtil.enumValue(beam.getFan()));
+                beamAttributes.put("color", beam.getColor());
+                buildElementWithValueAndAttributes("beam", buildBeamType(beam.getType()), beamAttributes);
             }
         }
         List<Notations> notationsList = note.getNotationsList();
@@ -190,6 +194,7 @@ public class NoteBuilder extends BaseBuilder {
         buildAttribute("justify", BuilderUtil.enumValue(lyric.getJustify()));
         PlacementBuilder.buildPosition(lyric.getPosition()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(lyric.getPlacement()));
+        buildAttribute("color", lyric.getColor());
         appendLine(">");
         LyricItem lyricItem = lyric.getLyricItem();
         if (lyricItem instanceof LyricText) {
@@ -199,6 +204,7 @@ public class NoteBuilder extends BaseBuilder {
                 if (lyricElision != null) {
                     Map<String, String> elisionAttributes = new HashMap<>();
                     elisionAttributes.putAll(FormattingBuilder.buildFont(lyricElision.getFont()));
+                    elisionAttributes.put("color", lyricElision.getColor());
                     elisionAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricElision.getTextDecoration()));
                     elisionAttributes.put("rotation", BuilderUtil.stringValue(lyricElision.getTextRotation()));
                     elisionAttributes.put("letter-spacing", lyricElision.getLetterSpacing());
@@ -210,6 +216,7 @@ public class NoteBuilder extends BaseBuilder {
                 TextData lyricSyllableText = lyricSyllable.getText();
                 Map<String, String> textAttributes = new HashMap<>();
                 textAttributes.putAll(FormattingBuilder.buildFont(lyricSyllableText.getFont()));
+                textAttributes.put("color", lyricSyllableText.getColor());
                 textAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricSyllableText.getTextDecoration()));
                 textAttributes.put("rotation", BuilderUtil.stringValue(lyricSyllableText.getTextRotation()));
                 textAttributes.put("letter-spacing", lyricSyllableText.getLetterSpacing());

@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "beam")
@@ -22,7 +21,7 @@ public class Beam extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private BeamFan fan;
-    @Transient
+    @Column
     private String color;
 
     public Beam() {

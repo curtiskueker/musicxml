@@ -110,6 +110,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
         attributes.put("niente", BuilderUtil.yesOrNo(wedge.getNiente()));
         attributes.putAll(PlacementBuilder.buildPosition(wedge.getPosition()));
+        attributes.put("color", wedge.getColor());
         buildElementWithAttributes("wedge", attributes);
     }
 
@@ -122,6 +123,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(dashes.getType()));
         attributes.put("number", BuilderUtil.stringValue(dashes.getNumber()));
         attributes.putAll(PlacementBuilder.buildPosition(dashes.getPosition()));
+        attributes.put("color", dashes.getColor());
         buildElementWithAttributes("dashes", attributes);
     }
 
@@ -132,6 +134,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
         attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
         attributes.putAll(PlacementBuilder.buildPosition(bracket.getPosition()));
+        attributes.put("color", bracket.getColor());
         buildElementWithAttributes("bracket", attributes);
     }
 

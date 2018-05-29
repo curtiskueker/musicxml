@@ -29,7 +29,7 @@ public class BarlineBuilder extends BaseBuilder {
         appendLine(">");
         BarStyleColor barStyleColor = barline.getBarStyle();
         if (barStyleColor != null) {
-            buildElementWithValue("bar-style", BuilderUtil.enumValue(barStyleColor.getBarStyle()));
+            buildElementWithValueAndAttribute("bar-style", BuilderUtil.enumValue(barStyleColor.getBarStyle()), "color", barStyleColor.getColor());
         }
         Ending ending = barline.getEnding();
         if (ending != null) {

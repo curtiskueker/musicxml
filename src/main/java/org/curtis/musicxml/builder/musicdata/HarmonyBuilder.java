@@ -105,6 +105,7 @@ public class HarmonyBuilder extends BaseBuilder {
         if (frame != null) {
             append("<frame");
             PlacementBuilder.buildPosition(frame.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttribute("color", frame.getColor());
             buildAttribute("halign", BuilderUtil.enumValue(frame.getHalign()));
             buildAttribute("valign", BuilderUtil.enumValue(frame.getValignImage()));
             buildAttribute("height", BuilderUtil.stringValue(frame.getHeight()));
@@ -125,7 +126,12 @@ public class HarmonyBuilder extends BaseBuilder {
         for (FrameNote frameNote : frame.getFrameNotes()) {
             appendLine("<frame-note>");
             Barre barre = frameNote.getBarre();
-            if (barre != null) buildElementWithAttribute("barre", "type", BuilderUtil.enumValue(barre.getType()));
+            if (barre != null) {
+                Map<String, String> barreAttributes = new HashMap<>();
+                barreAttributes.put("type", BuilderUtil.enumValue(barre.getType()));
+                barreAttributes.put("color", barre.getColor());
+                buildElementWithAttributes("barre", barreAttributes);
+            }
             appendLine("</frame-note>");
         }
         appendLine("</harmony>");
