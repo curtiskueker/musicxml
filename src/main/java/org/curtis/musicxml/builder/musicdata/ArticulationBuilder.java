@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
@@ -102,6 +103,7 @@ public class ArticulationBuilder extends BaseBuilder {
         String elementName = "breath-mark";
         String breathMarkValue = BuilderUtil.enumValue(breathMark.getBreathMarkValue());
         Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(breathMark.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(breathMark.getPlacement()));
         if (StringUtil.isEmpty(breathMarkValue)) buildElementWithAttributes(elementName, attributes);
         else buildElementWithValueAndAttributes(elementName, breathMarkValue, attributes);

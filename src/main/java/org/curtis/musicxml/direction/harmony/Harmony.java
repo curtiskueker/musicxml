@@ -46,7 +46,8 @@ public class Harmony extends MusicData {
     private Boolean printObject;
     @Column(name = "print_frame")
     private Boolean printFrame;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Enumerated(EnumType.STRING)
     @Column

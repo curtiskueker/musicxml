@@ -220,7 +220,10 @@ public class ScoreHeaderBuilder extends BaseBuilder {
     private void buildGroupName(String elementName, GroupName groupName) {
         if (groupName == null) return;
 
-        buildElementWithValueAndAttribute(elementName, groupName.getGroupName(), "justify", BuilderUtil.enumValue(groupName.getJustify()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(groupName.getPrintStyle()));
+        attributes.put("justify", BuilderUtil.enumValue(groupName.getJustify()));
+        buildElementWithValueAndAttributes(elementName, groupName.getGroupName(), attributes);
     }
 
     private void buildSscorePart(ScorePart scorePart) {
@@ -239,7 +242,10 @@ public class ScoreHeaderBuilder extends BaseBuilder {
     private void buildPartName(String elementName, PartName partName) {
         if (partName == null) return;
 
-        buildElementWithValueAndAttribute(elementName, partName.getPartName(), "justify", BuilderUtil.enumValue(partName.getPartNameJustify()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(partName.getPartNamePrintStyle()));
+        attributes.put("justify", BuilderUtil.enumValue(partName.getPartNameJustify()));
+        buildElementWithValueAndAttributes(elementName, partName.getPartName(), attributes);
     }
 
     private void buildTypedText(TypedText typedText, String elementName) {

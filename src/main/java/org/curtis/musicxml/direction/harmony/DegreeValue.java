@@ -3,12 +3,14 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "degree_value")
@@ -20,7 +22,8 @@ public class DegreeValue extends DatabaseItem {
     private DegreeSymbol symbol;
     @Column
     private String text;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
 
     public DegreeValue() {

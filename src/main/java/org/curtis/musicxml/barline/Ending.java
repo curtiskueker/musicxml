@@ -4,10 +4,13 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -24,7 +27,8 @@ public class Ending extends DatabaseItem {
     private Connection type;
     @Transient
     private Boolean printObject;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Column(name = "end_length")
     private BigDecimal endLength;

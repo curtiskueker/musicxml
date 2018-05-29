@@ -86,6 +86,7 @@ public class NoteBuilder extends BaseBuilder {
             Map<String, String> accidentalAttributes = new HashMap<>();
             accidentalAttributes.put("cautionary", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.put("editorial", BuilderUtil.yesOrNo(accidental.getCautionary()));
+            accidentalAttributes.putAll(FormattingBuilder.buildPrintStyle(accidental.getPrintStyle()));
             buildElementWithValueAndAttributes("accidental", "sharp", accidentalAttributes);
         }
         TimeModification timeModification = note.getTimeModification();

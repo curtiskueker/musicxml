@@ -130,6 +130,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(glissando.getType()));
         attributes.put("number", BuilderUtil.stringValue(glissando.getNumber()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(glissando.getPrintStyle()));
         buildElementWithValueAndAttributes("glissando", glissando.getValue(), attributes);
     }
 
@@ -137,6 +138,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(slide.getType()));
         attributes.put("number", BuilderUtil.stringValue(slide.getNumber()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(slide.getPrintStyle()));
         buildElementWithValueAndAttributes("slide", slide.getValue(), attributes);
     }
 
@@ -187,13 +189,17 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildAccidentalMark(AccidentalMark accidentalMark) {
-        buildElementWithAttribute("accidental-mark", "placement", BuilderUtil.enumValue(accidentalMark.getPlacement()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(accidentalMark.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(accidentalMark.getPlacement()));
+        buildElementWithAttributes("accidental-mark", attributes);
     }
 
     private void buildOtherNotation(OtherNotation otherNotation) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(otherNotation.getType()));
         attributes.put("number", BuilderUtil.stringValue(otherNotation.getNumber()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(otherNotation.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(otherNotation.getPlacement()));
         buildElementWithValueAndAttributes("other-notation", otherNotation.getValue(), attributes);
     }

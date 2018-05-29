@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.harmony.Barre;
@@ -37,6 +38,7 @@ public class HarmonyBuilder extends BaseBuilder {
         append("<harmony");
         buildAttribute("type", BuilderUtil.enumValue(harmony.getType()));
         buildAttribute("print-frame", BuilderUtil.yesOrNo(harmony.getPrintFrame()));
+        FormattingBuilder.buildPrintStyle(harmony.getPrintStyle()).forEach((k,v ) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(harmony.getPlacement()));
         appendLine(">");
         for (HarmonyChord harmonyChord : harmony.getHarmonyChords()) {
@@ -55,18 +57,27 @@ public class HarmonyBuilder extends BaseBuilder {
             kindAttributes.put("stack-degrees", BuilderUtil.yesOrNo(kind.getStackDegrees()));
             kindAttributes.put("parentheses-degrees", BuilderUtil.yesOrNo(kind.getParenthesesDegrees()));
             kindAttributes.put("bracket-degrees", BuilderUtil.yesOrNo(kind.getBracketDegrees()));
+            kindAttributes.putAll(FormattingBuilder.buildPrintStyle(kind.getPrintStyle()));
             kindAttributes.put("halign", BuilderUtil.enumValue(kind.getHalign()));
             kindAttributes.put("valign", BuilderUtil.enumValue(kind.getValign()));
             buildElementWithValueAndAttributes("kind", kindValue, kindAttributes);
             Inversion inversion = harmonyChord.getInversion();
-            if (inversion != null) buildElementWithValue("inversion", inversion.getValue());
+            if (inversion != null) buildElementWithValueAndAttributes("inversion", inversion.getValue(), FormattingBuilder.buildPrintStyle(inversion.getPrintStyle()));
             Bass bass = harmonyChord.getBass();
             if (bass != null) {
                 appendLine("<bass>");
                 BassStep bassStep = bass.getBassStep();
-                buildElementWithAttribute("bass-step", "text", bassStep.getText());
+                Map<String, String> bassStepAttributes = new HashMap<>();
+                bassStepAttributes.put("text", bassStep.getText());
+                bassStepAttributes.putAll(FormattingBuilder.buildPrintStyle(bassStep.getPrintStyle()));
+                buildElementWithAttributes("bass-step", bassStepAttributes);
                 BassAlter bassAlter = bass.getBassAlter();
-                if (bassAlter != null) buildElementWithAttribute("bass-alter", "location", BuilderUtil.enumValue(bassAlter.getLocation()));
+                if (bassAlter != null) {
+                    Map<String, String> bassAlterAttributes = new HashMap<>();
+                    bassAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(bassAlter.getPrintStyle()));
+                    bassAlterAttributes.put("location", BuilderUtil.enumValue(bassAlter.getLocation()));
+                    buildElementWithAttributes("bass-alter", bassAlterAttributes);
+                }
                 appendLine("</bass>");
             }
             for (Degree degree : harmonyChord.getDegrees()) {
@@ -75,11 +86,18 @@ public class HarmonyBuilder extends BaseBuilder {
                 Map<String, String> degreeAttributes = new HashMap<>();
                 degreeAttributes.put("symbol", BuilderUtil.enumValue(degreeValue.getSymbol()));
                 degreeAttributes.put("text", degreeValue.getText());
+                degreeAttributes.putAll(FormattingBuilder.buildPrintStyle(degreeValue.getPrintStyle()));
                 buildElementWithValueAndAttributes("degree-value", degreeValue.getValue(), degreeAttributes);
                 DegreeAlter degreeAlter = degree.getDegreeAlter();
-                buildElementWithAttribute("degree-alter", "plus-minus", BuilderUtil.yesOrNo(degreeAlter.getPlusMinus()));
+                Map<String, String> degreeAlterAttributes = new HashMap<>();
+                degreeAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(degreeAlter.getPrintStyle()));
+                degreeAlterAttributes.put("plus-minus", BuilderUtil.yesOrNo(degreeAlter.getPlusMinus()));
+                buildElementWithAttributes("degree-alter", degreeAlterAttributes);
                 DegreeType degreeType = degree.getDegreeType();
-                buildElementWithValueAndAttribute("degree-type", BuilderUtil.enumValue(degreeType.getValue()), "text", degreeType.getText());
+                Map<String, String> degreeTypeAttributes = new HashMap<>();
+                degreeTypeAttributes.put("text", degreeType.getText());
+                degreeTypeAttributes.putAll(FormattingBuilder.buildPrintStyle(degreeType.getPrintStyle()));
+                buildElementWithValueAndAttributes("degree-type", BuilderUtil.enumValue(degreeType.getValue()), degreeTypeAttributes);
                 appendLine("</degree>");
             }
         }
@@ -118,10 +136,16 @@ public class HarmonyBuilder extends BaseBuilder {
     private void buildRoot(Root root) {
         appendLine("<root>");
         RootStep rootStep = root.getRootStep();
-        buildElementWithAttribute("root-step", "text", rootStep.getText());
+        Map<String, String> rootStepAttributes = new HashMap<>();
+        rootStepAttributes.put("text", rootStep.getText());
+        rootStepAttributes.putAll(FormattingBuilder.buildPrintStyle(rootStep.getPrintStyle()));
+        buildElementWithAttributes("root-step", rootStepAttributes);
         RootAlter rootAlter = root.getRootAlter();
         if (rootAlter != null) {
-            buildElementWithAttribute("root-alter", "location", BuilderUtil.enumValue(rootAlter.getLocation()));
+            Map<String, String> rootAlterAttributes = new HashMap<>();
+            rootAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(rootAlter.getPrintStyle()));
+            rootAlterAttributes.put("location", BuilderUtil.enumValue(rootAlter.getLocation()));
+            buildElementWithAttributes("root-alter", rootAlterAttributes);
         }
         appendLine("</root>");
     }

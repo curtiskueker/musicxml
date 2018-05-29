@@ -2,7 +2,6 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
@@ -19,7 +18,6 @@ import org.curtis.musicxml.note.NoteheadDisplayText;
 import org.curtis.musicxml.note.NoteheadText;
 import org.curtis.musicxml.note.NoteheadType;
 import org.curtis.musicxml.note.Pitch;
-import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;

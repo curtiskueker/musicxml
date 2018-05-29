@@ -189,6 +189,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(octaveShift.getType()));
         attributes.put("number", BuilderUtil.stringValue(octaveShift.getNumber()));
         attributes.put("size", BuilderUtil.stringValue(octaveShift.getSize()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(octaveShift.getPrintStyle()));
         buildElementWithAttributes("octave-shift", attributes);
     }
 

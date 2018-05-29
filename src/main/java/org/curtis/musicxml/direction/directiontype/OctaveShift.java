@@ -3,11 +3,14 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -22,7 +25,8 @@ public class OctaveShift extends DirectionType {
     private Integer size = 8;
     @Transient
     private DashedFormatting dashedFormatting;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
 
     public OctaveShift() {

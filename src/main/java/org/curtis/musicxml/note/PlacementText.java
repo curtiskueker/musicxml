@@ -4,19 +4,22 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "placement_text")
 public class PlacementText extends DatabaseItem {
     @Column
     private String value;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Enumerated(EnumType.STRING)
     @Column

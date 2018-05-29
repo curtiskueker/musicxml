@@ -5,9 +5,12 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.score.MusicData;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,7 +25,8 @@ public class FiguredBass extends MusicData {
     private BigDecimal duration;
     @Transient
     private Editorial editorial;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Transient
     private Printout printout;

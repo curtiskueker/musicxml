@@ -4,6 +4,7 @@ import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.CssFontSize;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
+import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.TextDecoration;
 
 import java.math.BigDecimal;
@@ -42,6 +43,16 @@ public class FormattingBuilder extends OutputBuilder {
         attributes.put("underline", BuilderUtil.stringValue(textDecoration.getUnderline()));
         attributes.put("overline", BuilderUtil.stringValue(textDecoration.getOverline()));
         attributes.put("line-through", BuilderUtil.stringValue(textDecoration.getLineThrough()));
+
+        return attributes;
+    }
+
+    public static Map<String, String> buildPrintStyle(PrintStyle printStyle) {
+        Map<String, String> attributes = new HashMap<>();
+        if (printStyle == null) return attributes;
+
+        attributes.putAll(PlacementBuilder.buildPosition(printStyle.getPosition()));
+        attributes.putAll(buildFont(printStyle.getFont()));
 
         return attributes;
     }

@@ -4,10 +4,13 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Location;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,7 +19,8 @@ import javax.persistence.Transient;
 public class PartName extends DatabaseItem {
     @Column(name = "part_name")
     private String partName;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle partNamePrintStyle;
     @Transient
     private Boolean partNamePrintObject;

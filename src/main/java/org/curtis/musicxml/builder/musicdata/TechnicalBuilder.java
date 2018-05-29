@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.notation.technical.Arrow;
@@ -72,7 +73,10 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHarmonic(Harmonic harmonic) {
-        buildElementWithAttribute("harmonic", "placement", BuilderUtil.enumValue(harmonic.getPlacement()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(harmonic.getPlacement()));
+        buildElementWithAttributes("harmonic", attributes);
     }
 
     private void buildOpenString(OpenString openString) {
@@ -108,12 +112,15 @@ public class TechnicalBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(hammerOnPullOff.getType()));
         attributes.put("number", BuilderUtil.stringValue(hammerOnPullOff.getNumber()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(hammerOnPullOff.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(hammerOnPullOff.getPlacement()));
         buildElementWithValueAndAttributes(elementName, hammerOnPullOff.getValue(), attributes);
     }
 
     private void buildBend(Bend bend) {
-        appendLine("<bend>");
+        append("<bend");
+        FormattingBuilder.buildPrintStyle(bend.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+        appendLine(">");
         PlacementText withBar = bend.getWithBar();
         if (withBar != null) buildPlacementText("with-bar", withBar);
         appendLine("</bend>");
@@ -134,6 +141,7 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildHole(Hole hole) {
         append("<hole");
+        FormattingBuilder.buildPrintStyle(hole.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(hole.getPlacement()));
         appendLine(">");
         String holeType = hole.getHoleType();
@@ -146,6 +154,7 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildArrow(Arrow arrow) {
         append("<arrow");
+        FormattingBuilder.buildPrintStyle(arrow.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(arrow.getPlacement()));
         appendLine(">");
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
@@ -155,7 +164,10 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHandbell(Handbell handbell) {
-        buildElementWithValueAndAttribute("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), "placement", BuilderUtil.enumValue(handbell.getPlacement()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(handbell.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(handbell.getPlacement()));
+        buildElementWithValueAndAttributes("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), attributes);
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {

@@ -4,8 +4,11 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -20,7 +23,8 @@ public class Accidental extends DatabaseItem {
     private Boolean editorial;
     @Transient
     private LevelDisplay levelDisplay;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
 
     public Accidental() {

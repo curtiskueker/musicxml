@@ -45,7 +45,9 @@ public class AttributesBuilder extends BaseBuilder {
         BigDecimal divisions = attributes.getDivisions();
         if (divisions !=  null) buildElementWithValue("divisions", BuilderUtil.stringValue(divisions));
         for (Key key : attributes.getKeys()) {
-            appendLine("<key>");
+            append("<key");
+            FormattingBuilder.buildPrintStyle(key.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+            appendLine(">");
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);
             else if (key instanceof NonTraditionalKey) buildNonTraditionalKey((NonTraditionalKey)key);
             for (KeyOctave keyOctave : key.getKeyOctaves()) {
@@ -73,6 +75,7 @@ public class AttributesBuilder extends BaseBuilder {
             append("<clef");
             buildAttribute("additional", BuilderUtil.yesOrNo(clef.getAdditional()));
             buildAttribute("after-barline", BuilderUtil.yesOrNo(clef.getAfterBarline()));
+            FormattingBuilder.buildPrintStyle(clef.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
             appendLine(">");
             String clefSign = BuilderUtil.enumValue(clef.getSign());
             switch (clefSign) {
@@ -113,7 +116,10 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine("</transpose>");
         }
         for (Directive directive : attributes.getDirectives()) {
-            buildElementWithValueAndAttribute("directive", directive.getValue(), "xml:lang", directive.getLang());
+            Map<String, String> directiveAttributes = new HashMap<>();
+            directiveAttributes.putAll(FormattingBuilder.buildPrintStyle(directive.getPrintStyle()));
+            directiveAttributes.put("xml:lang", directive.getLang());
+            buildElementWithValueAndAttributes("directive", directive.getValue(), directiveAttributes);
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             append("<measure-style");

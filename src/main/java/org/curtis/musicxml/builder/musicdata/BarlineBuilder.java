@@ -5,6 +5,7 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class BarlineBuilder extends BaseBuilder {
             Map<String, String> attributes = new HashMap<>();
             attributes.put("number", ending.getNumber());
             attributes.put("type", BuilderUtil.enumValue(ending.getType()));
+            attributes.putAll(FormattingBuilder.buildPrintStyle(ending.getPrintStyle()));
             attributes.put("end-length", BuilderUtil.stringValue(ending.getEndLength()));
             attributes.put("text-x", BuilderUtil.stringValue(ending.getTextX()));
             attributes.put("text-y", BuilderUtil.stringValue(ending.getTextY()));

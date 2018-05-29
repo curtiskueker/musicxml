@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
@@ -43,6 +44,7 @@ public class OrnamentBuilder extends BaseBuilder {
 
     private void buildPlacedTrillSound(PlacedTrillSound placedTrillSound) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(placedTrillSound.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placedTrillSound.getPlacement()));
 
         String elementName;
@@ -67,6 +69,7 @@ public class OrnamentBuilder extends BaseBuilder {
         else return;
 
         Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(horizontalTurn.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(horizontalTurn.getPlacement()));
         attributes.put("slash", BuilderUtil.yesOrNo(horizontalTurn.getSlash()));
         buildElementWithAttributes(elementName, attributes);
@@ -93,6 +96,7 @@ public class OrnamentBuilder extends BaseBuilder {
     private void buildTremolo(Tremolo tremolo) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(tremolo.getType()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(tremolo.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(tremolo.getPlacement()));
         buildElementWithValueAndAttributes("tremolo", tremolo.getTremoloMarks(), attributes);
     }

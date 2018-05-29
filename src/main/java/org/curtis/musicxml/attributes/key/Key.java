@@ -13,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ public abstract class Key extends DatabaseItem {
     private List<KeyOctave> keyOctaves = new ArrayList<>();
     @Transient
     private Integer number;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Transient
     private Boolean printObject;

@@ -19,7 +19,6 @@ import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Notehead;
 import org.curtis.musicxml.note.NoteheadType;
 import org.curtis.musicxml.note.Pitch;
-import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;

@@ -160,7 +160,10 @@ public abstract class OutputBuilder {
     protected void buildExtend(Extend extend) {
         if (extend == null) return;
 
-        buildElementWithAttribute("extend", "type", BuilderUtil.enumValue(extend.getType()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(extend.getType()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(extend.getPrintStyle()));
+        buildElementWithAttributes("extend", attributes);
     }
 
     protected void buildPlacement(String elementName, Placement placement) {
@@ -169,18 +172,23 @@ public abstract class OutputBuilder {
 
     protected void buildPlacementWithAttribute(String elementName, Placement placement, String attributeName, String attributeValue) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(placement.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placement.getPlacement()));
         if (StringUtil.isNotEmpty(attributeValue)) attributes.put(attributeName, attributeValue);
         buildElementWithAttributes(elementName, attributes);
     }
 
     protected void buildPlacementText(String elementName, PlacementText placementText) {
-        buildElementWithValueAndAttribute(elementName, placementText.getValue(), "placement", BuilderUtil.enumValue(placementText.getPlacement()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
+        buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
     }
 
     protected void buildLine(String elementName, Line line) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("line-shape", BuilderUtil.enumValue(line.getLineShape()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(line.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(line.getPlacement()));
         buildElementWithAttributes(elementName, attributes);
     }
