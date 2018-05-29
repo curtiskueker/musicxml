@@ -34,6 +34,7 @@
         <class>org.curtis.musicxml.barline.BarStyleColor</class>
         <class>org.curtis.musicxml.barline.Ending</class>
         <class>org.curtis.musicxml.barline.Repeat</class>
+        <class>org.curtis.musicxml.common.DashedFormatting</class>
         <class>org.curtis.musicxml.common.Font</class>
         <class>org.curtis.musicxml.common.Position</class>
         <class>org.curtis.musicxml.common.PrintStyle</class>

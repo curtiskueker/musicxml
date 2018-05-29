@@ -27,7 +27,8 @@ public class Slur extends Notation {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")
     private LineType lineType;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")

@@ -13,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "line")
@@ -24,7 +23,8 @@ public class Line extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")
     private LineType lineType;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

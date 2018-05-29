@@ -12,7 +12,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -30,7 +29,8 @@ public class Wedge extends DirectionType {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")
     private LineType lineType;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")

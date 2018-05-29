@@ -61,6 +61,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(tied.getType()));
         attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(tied.getLineType()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(tied.getDashedFormatting()));
         attributes.putAll(PlacementBuilder.buildPosition(tied.getPosition()));
         attributes.put("placement", BuilderUtil.enumValue(tied.getPlacement()));
         attributes.put("orientation", BuilderUtil.enumValue(tied.getOrientation()));
@@ -74,6 +75,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(slur.getConnectionType()));
         attributes.put("number", BuilderUtil.stringValue(slur.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(slur.getLineType()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(slur.getDashedFormatting()));
         attributes.putAll(PlacementBuilder.buildPosition(slur.getPosition()));
         attributes.put("placement", BuilderUtil.enumValue(slur.getPlacement()));
         attributes.put("orientation", BuilderUtil.enumValue(slur.getOrientation()));
@@ -150,6 +152,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(glissando.getType()));
         attributes.put("number", BuilderUtil.stringValue(glissando.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(glissando.getLineType()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(glissando.getDashedFormatting()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(glissando.getPrintStyle()));
         buildElementWithValueAndAttributes("glissando", glissando.getValue(), attributes);
     }
@@ -159,6 +162,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(slide.getType()));
         attributes.put("number", BuilderUtil.stringValue(slide.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(slide.getLineType()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(slide.getDashedFormatting()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(slide.getPrintStyle()));
         buildElementWithValueAndAttributes("slide", slide.getValue(), attributes);
     }

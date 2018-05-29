@@ -110,6 +110,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
         attributes.put("niente", BuilderUtil.yesOrNo(wedge.getNiente()));
         attributes.put("line-type", BuilderUtil.enumValue(wedge.getLineType()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(wedge.getDashedFormatting()));
         attributes.putAll(PlacementBuilder.buildPosition(wedge.getPosition()));
         attributes.put("color", wedge.getColor());
         buildElementWithAttributes("wedge", attributes);
@@ -123,6 +124,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(dashes.getType()));
         attributes.put("number", BuilderUtil.stringValue(dashes.getNumber()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(dashes.getDashedFormatting()));
         attributes.putAll(PlacementBuilder.buildPosition(dashes.getPosition()));
         attributes.put("color", dashes.getColor());
         buildElementWithAttributes("dashes", attributes);
@@ -135,6 +137,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
         attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
         attributes.put("line-type", BuilderUtil.enumValue(bracket.getLineType()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(bracket.getDashedFormatting()));
         attributes.putAll(PlacementBuilder.buildPosition(bracket.getPosition()));
         attributes.put("color", bracket.getColor());
         buildElementWithAttributes("bracket", attributes);
@@ -196,6 +199,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(octaveShift.getType()));
         attributes.put("number", BuilderUtil.stringValue(octaveShift.getNumber()));
         attributes.put("size", BuilderUtil.stringValue(octaveShift.getSize()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(octaveShift.getDashedFormatting()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(octaveShift.getPrintStyle()));
         buildElementWithAttributes("octave-shift", attributes);
     }

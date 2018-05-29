@@ -2,6 +2,7 @@ package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.CssFontSize;
+import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.PrintStyle;
@@ -66,6 +67,16 @@ public class FormattingBuilder extends OutputBuilder {
         attributes.putAll(buildPrintStyle(printStyleAlign.getPrintStyle()));
         attributes.put("halign", BuilderUtil.enumValue(printStyleAlign.getHalign()));
         attributes.put("valign", BuilderUtil.enumValue(printStyleAlign.getValign()));
+
+        return attributes;
+    }
+
+    public static Map<String, String> buildDashedFormatting(DashedFormatting dashedFormatting) {
+        Map<String, String> attributes = new HashMap<>();
+        if (dashedFormatting == null) return attributes;
+
+        attributes.put("dash-length", BuilderUtil.stringValue(dashedFormatting.getDashLength()));
+        attributes.put("space-length", BuilderUtil.stringValue(dashedFormatting.getSpaceLength()));
 
         return attributes;
     }
