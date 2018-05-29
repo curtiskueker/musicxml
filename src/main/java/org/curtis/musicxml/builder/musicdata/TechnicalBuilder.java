@@ -74,6 +74,7 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildHarmonic(Harmonic harmonic) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("print-object", BuilderUtil.yesOrNo(harmonic.getPrintObject()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(harmonic.getPlacement()));
         buildElementWithAttributes("harmonic", attributes);

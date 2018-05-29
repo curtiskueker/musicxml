@@ -25,7 +25,7 @@ public class Ending extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

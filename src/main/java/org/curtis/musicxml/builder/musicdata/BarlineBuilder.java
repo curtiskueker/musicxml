@@ -41,6 +41,7 @@ public class BarlineBuilder extends BaseBuilder {
             Map<String, String> attributes = new HashMap<>();
             attributes.put("number", ending.getNumber());
             attributes.put("type", BuilderUtil.enumValue(ending.getType()));
+            attributes.put("print-object", BuilderUtil.yesOrNo(ending.getPrintObject()));
             attributes.putAll(FormattingBuilder.buildPrintStyle(ending.getPrintStyle()));
             attributes.put("end-length", BuilderUtil.stringValue(ending.getEndLength()));
             attributes.put("text-x", BuilderUtil.stringValue(ending.getTextX()));

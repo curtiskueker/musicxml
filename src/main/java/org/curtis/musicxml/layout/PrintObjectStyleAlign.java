@@ -4,16 +4,16 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyleAlign;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "print_object_style_align")
 public class PrintObjectStyleAlign extends DatabaseItem {
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")

@@ -179,7 +179,9 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     private void buildNotations(Notations notations) {
-        appendLine("<notations>");
+        append("<notations");
+        buildAttribute("print-object", BuilderUtil.yesOrNo(notations.getPrintObject()));
+        appendLine(">");
         for (Notation notation : notations.getNotations()) {
             NotationBuilder notationBuilder = new NotationBuilder(notation);
             append(notationBuilder.build().toString());
@@ -195,6 +197,7 @@ public class NoteBuilder extends BaseBuilder {
         PlacementBuilder.buildPosition(lyric.getPosition()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(lyric.getPlacement()));
         buildAttribute("color", lyric.getColor());
+        buildAttribute("print-object", BuilderUtil.yesOrNo(lyric.getPrintObject()));
         appendLine(">");
         LyricItem lyricItem = lyric.getLyricItem();
         if (lyricItem instanceof LyricText) {

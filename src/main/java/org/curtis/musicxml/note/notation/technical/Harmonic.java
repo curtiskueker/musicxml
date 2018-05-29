@@ -20,7 +20,7 @@ public class Harmonic extends Technical {
     private HarmonicType harmonicType;
     @Transient
     private HarmonicPitch harmonicPitch;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

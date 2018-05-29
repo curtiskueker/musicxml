@@ -6,6 +6,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,7 @@ public abstract class Key extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
 
     public List<KeyOctave> getKeyOctaves() {

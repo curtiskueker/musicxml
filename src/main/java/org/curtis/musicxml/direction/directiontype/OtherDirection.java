@@ -8,14 +8,13 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("other direction")
 public class OtherDirection extends DirectionType {
     @Column
     private String value;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")

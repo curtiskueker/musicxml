@@ -45,7 +45,7 @@ public class Lyric extends DatabaseItem {
     private Location placement;
     @Column
     private String color;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @Transient
     private BigDecimal totalBeats;

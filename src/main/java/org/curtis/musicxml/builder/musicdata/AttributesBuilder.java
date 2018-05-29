@@ -47,6 +47,7 @@ public class AttributesBuilder extends BaseBuilder {
         for (Key key : attributes.getKeys()) {
             append("<key");
             FormattingBuilder.buildPrintStyle(key.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttribute("print-object", BuilderUtil.yesOrNo(key.getPrintObject()));
             appendLine(">");
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);
             else if (key instanceof NonTraditionalKey) buildNonTraditionalKey((NonTraditionalKey)key);
@@ -63,6 +64,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildAttribute("symbol", BuilderUtil.enumValue(time.getSymbol()));
             buildAttribute("separator", BuilderUtil.enumValue(time.getSeparator()));
             FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttribute("print-object", BuilderUtil.yesOrNo(time.getPrintObject()));
             appendLine(">");
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
             else if (time instanceof SenzaMisura) buildSenzaMisura((SenzaMisura)time);
@@ -82,6 +84,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildAttribute("additional", BuilderUtil.yesOrNo(clef.getAdditional()));
             buildAttribute("after-barline", BuilderUtil.yesOrNo(clef.getAfterBarline()));
             FormattingBuilder.buildPrintStyle(clef.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttribute("print-object", BuilderUtil.yesOrNo(clef.getPrintObject()));
             appendLine(">");
             String clefSign = BuilderUtil.enumValue(clef.getSign());
             switch (clefSign) {
@@ -106,6 +109,8 @@ public class AttributesBuilder extends BaseBuilder {
         for (StaffDetails staffDetails : attributes.getStaffDetailsList()) {
             append("<staff-details");
             buildAttribute("show-frets", BuilderUtil.enumValue(staffDetails.getShowFrets()));
+            buildAttribute("print-object", BuilderUtil.yesOrNo(staffDetails.getPrintObject()));
+            buildAttribute("print-spacing", BuilderUtil.yesOrNo(staffDetails.getPrintSpacing()));
             appendLine(">");
             buildElementWithValue("staff-type", BuilderUtil.enumValue(staffDetails.getStaffType()));
             buildElementWithValue("staff-lines", staffDetails.getStaffLines());

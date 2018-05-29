@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class BassAlter extends DatabaseItem {
     @Transient
     private BigDecimal semitones;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

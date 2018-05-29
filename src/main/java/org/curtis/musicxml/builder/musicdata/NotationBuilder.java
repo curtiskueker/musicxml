@@ -226,6 +226,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(otherNotation.getType()));
         attributes.put("number", BuilderUtil.stringValue(otherNotation.getNumber()));
+        attributes.put("print-object", BuilderUtil.yesOrNo(otherNotation.getPrintObject()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(otherNotation.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(otherNotation.getPlacement()));
         buildElementWithValueAndAttributes("other-notation", otherNotation.getValue(), attributes);

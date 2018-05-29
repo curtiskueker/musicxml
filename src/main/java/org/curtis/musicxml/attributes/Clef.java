@@ -35,7 +35,7 @@ public class Clef extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
 
     public Clef() {

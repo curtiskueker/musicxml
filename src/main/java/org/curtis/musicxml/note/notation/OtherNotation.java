@@ -12,7 +12,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("other notation")
@@ -24,7 +23,7 @@ public class OtherNotation extends Notation {
     private Connection type;
     @Column
     private Integer number = 1;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

@@ -351,6 +351,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildOtherDirection(OtherDirection otherDirection) {
-        buildElementWithValueAndAttributes("other-direction", otherDirection.getValue(), FormattingBuilder.buildPrintStyleAlign(otherDirection.getPrintStyleAlign()));
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("print-object", BuilderUtil.yesOrNo(otherDirection.getPrintObject()));
+        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(otherDirection.getPrintStyleAlign()));
+        buildElementWithValueAndAttributes("other-direction", otherDirection.getValue(), attributes);
     }
 }

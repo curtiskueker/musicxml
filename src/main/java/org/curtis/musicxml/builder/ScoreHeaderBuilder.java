@@ -246,6 +246,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         if (partName == null) return;
 
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("print-object", BuilderUtil.yesOrNo(partName.getPartNamePrintObject()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(partName.getPartNamePrintStyle()));
         attributes.put("justify", BuilderUtil.enumValue(partName.getPartNameJustify()));
         buildElementWithValueAndAttributes(elementName, partName.getPartName(), attributes);

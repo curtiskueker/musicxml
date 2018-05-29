@@ -42,7 +42,7 @@ public class Harmony extends MusicData {
     @Enumerated(EnumType.STRING)
     @Column
     private HarmonyType type;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
     @Column(name = "print_frame")
     private Boolean printFrame;

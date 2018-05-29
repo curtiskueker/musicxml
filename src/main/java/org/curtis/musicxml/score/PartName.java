@@ -12,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "part_name")
@@ -20,9 +19,9 @@ public class PartName extends DatabaseItem {
     @Column(name = "part_name")
     private String partName;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
+    @JoinColumn(name = "part_name_print_style_id")
     private PrintStyle partNamePrintStyle;
-    @Transient
+    @Column(name = "part_name_print_object")
     private Boolean partNamePrintObject;
     @Enumerated(EnumType.STRING)
     @Column(name = "part_name_justify")

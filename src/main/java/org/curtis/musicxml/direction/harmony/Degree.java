@@ -3,11 +3,11 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.database.DatabaseItem;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "degree")
@@ -21,7 +21,7 @@ public class Degree extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "degree_type_id")
     private DegreeType degreeType;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
 
     public Degree() {

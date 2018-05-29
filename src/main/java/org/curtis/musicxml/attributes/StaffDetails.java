@@ -38,9 +38,9 @@ public class StaffDetails extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "show_frets")
     private ShowFrets showFrets;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
-    @Transient
+    @Column(name = "print_spacing")
     private Boolean printSpacing;
 
     public StaffDetails() {

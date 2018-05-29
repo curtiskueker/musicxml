@@ -32,7 +32,7 @@ public abstract class Time extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
 
     public Integer getNumber() {

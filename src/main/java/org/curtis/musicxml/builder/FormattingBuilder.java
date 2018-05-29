@@ -8,6 +8,7 @@ import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
+import org.curtis.musicxml.layout.PrintObjectStyleAlign;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -67,6 +68,16 @@ public class FormattingBuilder extends OutputBuilder {
         attributes.putAll(buildPrintStyle(printStyleAlign.getPrintStyle()));
         attributes.put("halign", BuilderUtil.enumValue(printStyleAlign.getHalign()));
         attributes.put("valign", BuilderUtil.enumValue(printStyleAlign.getValign()));
+
+        return attributes;
+    }
+
+    public static Map<String, String> buildPrintObjectStyleAlign(PrintObjectStyleAlign printObjectStyleAlign) {
+        Map<String, String> attributes = new HashMap<>();
+        if (printObjectStyleAlign == null) return attributes;
+
+        attributes.put("print-object", BuilderUtil.yesOrNo(printObjectStyleAlign.getPrintObject()));
+        attributes.putAll(buildPrintStyleAlign(printObjectStyleAlign.getPrintStyleAlign()));
 
         return attributes;
     }

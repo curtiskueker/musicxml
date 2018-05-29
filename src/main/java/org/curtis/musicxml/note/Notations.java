@@ -7,6 +7,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -25,7 +26,7 @@ public class Notations extends DatabaseItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "notations_id", nullable = false)
     private List<Notation> notations = new ArrayList<>();
-    @Transient
+    @Column(name = "print_object")
     private Boolean printObject;
 
     public Notations() {

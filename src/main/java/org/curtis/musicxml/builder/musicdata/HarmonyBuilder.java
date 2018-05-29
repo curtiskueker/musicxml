@@ -37,6 +37,7 @@ public class HarmonyBuilder extends BaseBuilder {
     public StringBuilder build() {
         append("<harmony");
         buildAttribute("type", BuilderUtil.enumValue(harmony.getType()));
+        buildAttribute("print-object", BuilderUtil.yesOrNo(harmony.getPrintObject()));
         buildAttribute("print-frame", BuilderUtil.yesOrNo(harmony.getPrintFrame()));
         FormattingBuilder.buildPrintStyle(harmony.getPrintStyle()).forEach((k,v ) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(harmony.getPlacement()));
@@ -74,6 +75,7 @@ public class HarmonyBuilder extends BaseBuilder {
                 BassAlter bassAlter = bass.getBassAlter();
                 if (bassAlter != null) {
                     Map<String, String> bassAlterAttributes = new HashMap<>();
+                    bassAlterAttributes.put("print-object", BuilderUtil.yesOrNo(bassAlter.getPrintObject()));
                     bassAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(bassAlter.getPrintStyle()));
                     bassAlterAttributes.put("location", BuilderUtil.enumValue(bassAlter.getLocation()));
                     buildElementWithAttributes("bass-alter", bassAlterAttributes);
@@ -81,7 +83,9 @@ public class HarmonyBuilder extends BaseBuilder {
                 appendLine("</bass>");
             }
             for (Degree degree : harmonyChord.getDegrees()) {
-                appendLine("<degree>");
+                append("<degree");
+                buildAttribute("print-object", BuilderUtil.yesOrNo(degree.getPrintObject()));
+                appendLine(">");
                 DegreeValue degreeValue = degree.getDegreeValue();
                 Map<String, String> degreeAttributes = new HashMap<>();
                 degreeAttributes.put("symbol", BuilderUtil.enumValue(degreeValue.getSymbol()));
@@ -149,6 +153,7 @@ public class HarmonyBuilder extends BaseBuilder {
         RootAlter rootAlter = root.getRootAlter();
         if (rootAlter != null) {
             Map<String, String> rootAlterAttributes = new HashMap<>();
+            rootAlterAttributes.put("print-object", BuilderUtil.yesOrNo(rootAlter.getPrintObject()));
             rootAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(rootAlter.getPrintStyle()));
             rootAlterAttributes.put("location", BuilderUtil.enumValue(rootAlter.getLocation()));
             buildElementWithAttributes("root-alter", rootAlterAttributes);
