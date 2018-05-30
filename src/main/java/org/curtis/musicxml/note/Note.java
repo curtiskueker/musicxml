@@ -103,7 +103,8 @@ public class Note extends MusicData {
     private Font font;
     @Column
     private String color;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "printout_id")
     private Printout printout;
     @Transient
     private BigDecimal dynamics;

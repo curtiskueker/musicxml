@@ -28,7 +28,8 @@ public class FiguredBass extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "printout_id")
     private Printout printout;
     @Column
     private Boolean parentheses;

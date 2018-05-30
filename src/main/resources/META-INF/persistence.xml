@@ -37,6 +37,7 @@
         <class>org.curtis.musicxml.common.DashedFormatting</class>
         <class>org.curtis.musicxml.common.Font</class>
         <class>org.curtis.musicxml.common.Position</class>
+        <class>org.curtis.musicxml.common.Printout</class>
         <class>org.curtis.musicxml.common.PrintStyle</class>
         <class>org.curtis.musicxml.common.PrintStyleAlign</class>
         <class>org.curtis.musicxml.common.TextDecoration</class>

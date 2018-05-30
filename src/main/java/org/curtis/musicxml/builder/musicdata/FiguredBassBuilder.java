@@ -18,6 +18,7 @@ public class FiguredBassBuilder extends BaseBuilder {
 
         append("<figured-bass");
         FormattingBuilder.buildPrintStyle(figuredBass.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+        FormattingBuilder.buildPrintout(figuredBass.getPrintout()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("parentheses", BuilderUtil.yesOrNo(figuredBass.getParentheses()));
         appendLine(">");
         for (Figure figure : figuredBass.getFigures()) {

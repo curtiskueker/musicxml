@@ -57,6 +57,7 @@ public class NoteBuilder extends BaseBuilder {
         }
         FormattingBuilder.buildFont(note.getFont()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("color", note.getColor());
+        FormattingBuilder.buildPrintout(note.getPrintout()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
         buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));

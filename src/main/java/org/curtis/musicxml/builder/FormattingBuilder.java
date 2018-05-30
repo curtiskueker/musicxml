@@ -7,6 +7,7 @@ import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.layout.PrintObjectStyleAlign;
 
@@ -88,6 +89,18 @@ public class FormattingBuilder extends OutputBuilder {
 
         attributes.put("dash-length", BuilderUtil.stringValue(dashedFormatting.getDashLength()));
         attributes.put("space-length", BuilderUtil.stringValue(dashedFormatting.getSpaceLength()));
+
+        return attributes;
+    }
+
+    public static Map<String, String> buildPrintout(Printout printout) {
+        Map<String, String> attributes = new HashMap<>();
+        if (printout == null) return attributes;
+
+        attributes.put("print-object", BuilderUtil.yesOrNo(printout.getPrintObject()));
+        attributes.put("print-dot", BuilderUtil.yesOrNo(printout.getPrintDot()));
+        attributes.put("print-spacing", BuilderUtil.yesOrNo(printout.getPrintSpacing()));
+        attributes.put("print-lyric", BuilderUtil.yesOrNo(printout.getPrintLyric()));
 
         return attributes;
     }

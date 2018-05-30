@@ -1,9 +1,21 @@
 package org.curtis.musicxml.common;
 
-public class Printout {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "printout")
+public class Printout extends DatabaseItem {
+    @Column(name = "print_object")
     private Boolean printObject;
+    @Column(name = "print_dot")
     private Boolean printDot;
+    @Column(name = "print_spacing")
     private Boolean printSpacing;
+    @Column(name = "print_lyric")
     private Boolean printLyric;
 
     public Printout() {
