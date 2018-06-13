@@ -1,11 +1,22 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
-public class BendSound {
+@Entity
+@Table(name = "bend_sound")
+public class BendSound extends DatabaseItem {
+    @Column
     private Boolean accelerate;
+    @Column
     private BigDecimal beats;
+    @Column(name = "first_beat")
     private BigDecimal firstBeat;
+    @Column(name = "last_beat")
     private BigDecimal lastBeat;
 
     public BendSound() {

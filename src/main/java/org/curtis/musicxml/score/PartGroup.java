@@ -35,7 +35,8 @@ public class PartGroup extends PartItem {
     private GroupBarline groupBarline;
     @Transient
     private Boolean groupTime;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Enumerated(EnumType.STRING)
     @Column

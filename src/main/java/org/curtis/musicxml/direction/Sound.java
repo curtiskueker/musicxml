@@ -48,7 +48,7 @@ public class Sound extends MusicData {
     private Boolean forwardRepeat;
     @Column
     private String fine;
-    @Transient
+    @Column(name = "time_only")
     private String timeOnly;
     @Column
     private Boolean pizzicato;

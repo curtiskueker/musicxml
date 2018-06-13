@@ -1,9 +1,22 @@
 package org.curtis.musicxml.common;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.curtis.database.DatabaseItem;
 
-public class FormattedText {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "formatted_text")
+public class FormattedText extends DatabaseItem {
+    @Column
     private String value;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "text_formatting_id")
     private TextFormatting textFormatting;
 
     public FormattedText() {

@@ -14,7 +14,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("slide")
@@ -35,7 +34,8 @@ public class Slide extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bend_sound_id")
     private BendSound bendSound;
 
     public Slide() {

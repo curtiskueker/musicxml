@@ -16,6 +16,7 @@ public class ForwardBuilder extends BaseBuilder {
 
         appendLine("<forward>");
         buildElementWithValue("duration", BuilderUtil.stringValue(forward.getDuration()));
+        buildEditorialVoice(forward.getEditorialVoice());
         appendLine("</forward>");
 
 

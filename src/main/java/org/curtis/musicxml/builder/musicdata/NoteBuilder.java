@@ -14,6 +14,8 @@ import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Notehead;
+import org.curtis.musicxml.note.NoteheadAccidentalText;
+import org.curtis.musicxml.note.NoteheadDisplayText;
 import org.curtis.musicxml.note.NoteheadText;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Rest;
@@ -60,20 +62,28 @@ public class NoteBuilder extends BaseBuilder {
         FormattingBuilder.buildPrintout(note.getPrintout()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
         buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
+        buildAttribute("time-only", note.getTimeOnly());
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
         appendLine(">");
         Grace grace = note.getGrace();
         if (grace != null) {
             Map<String, String> graceAttributes = new HashMap<>();
+            graceAttributes.put("steal-time-previous", BuilderUtil.stringValue(grace.getStealTimePrevious()));
+            graceAttributes.put("steal-time-following", BuilderUtil.stringValue(grace.getStealTimeFollowing()));
             graceAttributes.put("make-time", BuilderUtil.stringValue(grace.getMakeTime()));
             graceAttributes.put("slash", BuilderUtil.yesOrNo(grace.getSlash()));
             buildElementWithAttributes("grace", graceAttributes);
         }
         buildFullNote(note.getFullNote());
         if (grace == null) buildElementWithValue("duration", BuilderUtil.stringValue(note.getDuration()));
-        for (Tie tie : note.getTies()) buildElementWithAttribute("tie", "type", BuilderUtil.enumValue(tie.getType()));
-        String instrument = note.getInstrument();
-        if (StringUtil.isNotEmpty(instrument)) buildElementWithAttribute("instrument", "id", instrument);
+        for (Tie tie : note.getTies()) {
+            Map<String, String> tieAttributes = new HashMap<>();
+            tieAttributes.put("type", BuilderUtil.enumValue(tie.getType()));
+            tieAttributes.put("time-only", tie.getTimeOnly());
+            buildElementWithAttributes("tie", tieAttributes);
+        }
+        buildElementWithAttribute("instrument", "id", note.getInstrument());
+        buildEditorialVoice(note.getEditorialVoice());
         NoteType noteType = note.getType();
         if (noteType != null) {
             buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", BuilderUtil.enumValue(noteType.getSize()));
@@ -88,6 +98,7 @@ public class NoteBuilder extends BaseBuilder {
             Map<String, String> accidentalAttributes = new HashMap<>();
             accidentalAttributes.put("cautionary", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.put("editorial", BuilderUtil.yesOrNo(accidental.getCautionary()));
+            accidentalAttributes.putAll(FormattingBuilder.buildLevelDisplay(accidental.getLevelDisplay()));
             accidentalAttributes.putAll(FormattingBuilder.buildPrintStyle(accidental.getPrintStyle()));
             buildElementWithValueAndAttributes("accidental", "sharp", accidentalAttributes);
         }
@@ -128,7 +139,18 @@ public class NoteBuilder extends BaseBuilder {
             buildElementWithValueAndAttributes("notehead", noteheadType, noteheadAttributes);
         }
         List<NoteheadText> noteheadTextList = note.getNoteheadTextList();
-        if (!noteheadTextList.isEmpty()) buildElement("notehead-text");
+        if (!noteheadTextList.isEmpty()) {
+            appendLine("<notehead-text>");
+            for (NoteheadText noteheadText : noteheadTextList) {
+                if (noteheadText instanceof NoteheadDisplayText) {
+                    NoteheadDisplayText noteheadDisplayText = (NoteheadDisplayText)noteheadText;
+                    buildFormattedText("display-text", noteheadDisplayText.getText());
+                } else if (noteheadText instanceof NoteheadAccidentalText) {
+
+                }
+            }
+            appendLine("</notehead_text>");
+        }
         List<Beam> beams = note.getBeams();
         if (!beams.isEmpty()) {
             for (Beam beam : beams) {
@@ -183,6 +205,7 @@ public class NoteBuilder extends BaseBuilder {
         append("<notations");
         buildAttribute("print-object", BuilderUtil.yesOrNo(notations.getPrintObject()));
         appendLine(">");
+        buildEditorial(notations.getEditorial());
         for (Notation notation : notations.getNotations()) {
             NotationBuilder notationBuilder = new NotationBuilder(notation);
             append(notationBuilder.build().toString());
@@ -231,6 +254,7 @@ public class NoteBuilder extends BaseBuilder {
             buildExtend(lyricText.getExtend());
         }
         else if (lyricItem instanceof Extend) buildExtend((Extend)lyricItem);
+        buildEditorial(lyric.getEditorial());
         appendLine("</lyric>");
     }
 }

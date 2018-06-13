@@ -125,19 +125,20 @@ public class HarmonyBuilder extends BaseBuilder {
                 firstFretAttributes.put("location", BuilderUtil.enumValue(firstFret.getLocation()));
                 buildElementWithValueAndAttributes("first-fret", firstFret.getValue(), firstFretAttributes);
             }
+            for (FrameNote frameNote : frame.getFrameNotes()) {
+                appendLine("<frame-note>");
+                Barre barre = frameNote.getBarre();
+                if (barre != null) {
+                    Map<String, String> barreAttributes = new HashMap<>();
+                    barreAttributes.put("type", BuilderUtil.enumValue(barre.getType()));
+                    barreAttributes.put("color", barre.getColor());
+                    buildElementWithAttributes("barre", barreAttributes);
+                }
+                appendLine("</frame-note>");
+            }
             appendLine("</frame>");
         }
-        for (FrameNote frameNote : frame.getFrameNotes()) {
-            appendLine("<frame-note>");
-            Barre barre = frameNote.getBarre();
-            if (barre != null) {
-                Map<String, String> barreAttributes = new HashMap<>();
-                barreAttributes.put("type", BuilderUtil.enumValue(barre.getType()));
-                barreAttributes.put("color", barre.getColor());
-                buildElementWithAttributes("barre", barreAttributes);
-            }
-            appendLine("</frame-note>");
-        }
+        buildEditorial(harmony.getEditorial());
         appendLine("</harmony>");
 
         return stringBuilder;
@@ -162,6 +163,6 @@ public class HarmonyBuilder extends BaseBuilder {
     }
 
     private void buildFunction(Function function) {
-        buildElement("function");
+        buildStyleText("function", function.getFunction());
     }
 }

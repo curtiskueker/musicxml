@@ -88,7 +88,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildRehearsal(Rehearsal rehearsal) {
-        buildElement("rehearsal");
+        buildFormattedText("rehearsal", rehearsal.getFormattedText());
     }
 
     private void buildSegno(Segno segno) {
@@ -96,7 +96,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildWords(Words words) {
-        buildElement("words");
+        buildFormattedText("words", words.getFormattedText());
     }
 
     private void buildCoda(Coda coda) {

@@ -24,7 +24,8 @@ public class Bend extends Technical {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bend_sound_id")
     private BendSound bendSound;
 
     public Bend() {

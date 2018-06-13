@@ -25,7 +25,8 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("attributes")
 public class Attributes extends MusicData {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Column
     private BigDecimal divisions;

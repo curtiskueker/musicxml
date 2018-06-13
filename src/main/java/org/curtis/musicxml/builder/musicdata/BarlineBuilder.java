@@ -28,6 +28,7 @@ public class BarlineBuilder extends BaseBuilder {
         buildAttribute("coda", barline.getCoda());
         buildAttribute("divisions", BuilderUtil.stringValue(barline.getDivisions()));
         appendLine(">");
+        buildEditorial(barline.getEditorial());
         BarStyleColor barStyleColor = barline.getBarStyle();
         if (barStyleColor != null) {
             buildElementWithValueAndAttribute("bar-style", BuilderUtil.enumValue(barStyleColor.getBarStyle()), "color", barStyleColor.getColor());

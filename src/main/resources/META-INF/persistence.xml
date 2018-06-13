@@ -35,12 +35,18 @@
         <class>org.curtis.musicxml.barline.Ending</class>
         <class>org.curtis.musicxml.barline.Repeat</class>
         <class>org.curtis.musicxml.common.DashedFormatting</class>
+        <class>org.curtis.musicxml.common.Editorial</class>
+        <class>org.curtis.musicxml.common.EditorialVoice</class>
         <class>org.curtis.musicxml.common.Font</class>
+        <class>org.curtis.musicxml.common.FormattedText</class>
+        <class>org.curtis.musicxml.common.LevelDisplay</class>
         <class>org.curtis.musicxml.common.Position</class>
         <class>org.curtis.musicxml.common.Printout</class>
         <class>org.curtis.musicxml.common.PrintStyle</class>
         <class>org.curtis.musicxml.common.PrintStyleAlign</class>
+        <class>org.curtis.musicxml.common.StyleText</class>
         <class>org.curtis.musicxml.common.TextDecoration</class>
+        <class>org.curtis.musicxml.common.TextFormatting</class>
         <class>org.curtis.musicxml.direction.Direction</class>
         <class>org.curtis.musicxml.direction.EditorialVoiceDirection</class>
         <class>org.curtis.musicxml.direction.Feature</class>
@@ -210,11 +216,13 @@
         <class>org.curtis.musicxml.note.notation.ornament.Shake</class>
         <class>org.curtis.musicxml.note.notation.ornament.Tremolo</class>
         <class>org.curtis.musicxml.note.notation.ornament.TrillMark</class>
+        <class>org.curtis.musicxml.note.notation.ornament.TrillSound</class>
         <class>org.curtis.musicxml.note.notation.ornament.Turn</class>
         <class>org.curtis.musicxml.note.notation.ornament.VerticalTurn</class>
         <class>org.curtis.musicxml.note.notation.ornament.WavyLine</class>
         <class>org.curtis.musicxml.note.notation.technical.Arrow</class>
         <class>org.curtis.musicxml.note.notation.technical.Bend</class>
+        <class>org.curtis.musicxml.note.notation.technical.BendSound</class>
         <class>org.curtis.musicxml.note.notation.technical.DownBow</class>
         <class>org.curtis.musicxml.note.notation.technical.DoubleTongue</class>
         <class>org.curtis.musicxml.note.notation.technical.Fingering</class>

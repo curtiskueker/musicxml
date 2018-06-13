@@ -6,6 +6,7 @@ import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.notation.technical.Arrow;
 import org.curtis.musicxml.note.notation.technical.Bend;
+import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.DoubleTongue;
 import org.curtis.musicxml.note.notation.technical.DownBow;
 import org.curtis.musicxml.note.notation.technical.Fingernails;
@@ -121,6 +122,7 @@ public class TechnicalBuilder extends BaseBuilder {
     private void buildBend(Bend bend) {
         append("<bend");
         FormattingBuilder.buildPrintStyle(bend.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+        buildBendSound(bend.getBendSound()).forEach((k, v) -> buildAttribute(k, v));
         appendLine(">");
         PlacementText withBar = bend.getWithBar();
         if (withBar != null) buildPlacementText("with-bar", withBar);
@@ -173,5 +175,17 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {
         buildPlacementText("other-technical", otherTechnical.getPlacementText());
+    }
+
+    public static Map<String, String> buildBendSound(BendSound bendSound) {
+        Map<String, String> attributes = new HashMap<>();
+        if (bendSound ==  null) return attributes;
+
+        attributes.put("accelerate", BuilderUtil.yesOrNo(bendSound.getAccelerate()));
+        attributes.put("beats", BuilderUtil.stringValue(bendSound.getBeats()));
+        attributes.put("first-beat", BuilderUtil.stringValue(bendSound.getFirstBeat()));
+        attributes.put("last-beat", BuilderUtil.stringValue(bendSound.getLastBeat()));
+
+        return attributes;
     }
 }

@@ -2,12 +2,15 @@ package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.musicxml.common.StyleText;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @DiscriminatorValue("function")
 public class Function extends HarmonyChord {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "function_id")
     private StyleText function;
 
     public Function() {

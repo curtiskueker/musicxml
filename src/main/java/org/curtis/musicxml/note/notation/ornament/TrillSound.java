@@ -1,14 +1,34 @@
 package org.curtis.musicxml.note.notation.ornament;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class TrillSound {
+@Entity
+@Table(name = "trill_sound")
+public class TrillSound extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "start_note")
     private StartNote startNote;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "trill_step")
     private TrillStep trillStep;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "two_note_turn")
     private TwoNoteTurn twoNoteTurn;
+    @Column
     private Boolean accelerate;
+    @Column
     private BigDecimal beats;
+    @Column(name = "second_beat")
     private BigDecimal secondBeat;
+    @Column(name = "last_beat")
     private BigDecimal lastBeat;
 
     public TrillSound() {

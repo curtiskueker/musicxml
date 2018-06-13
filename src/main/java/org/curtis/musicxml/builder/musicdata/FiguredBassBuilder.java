@@ -23,10 +23,14 @@ public class FiguredBassBuilder extends BaseBuilder {
         appendLine(">");
         for (Figure figure : figuredBass.getFigures()) {
             appendLine("<figure>");
+            buildStyleText("prefix", figure.getPrefix());
+            buildStyleText("figure-number", figure.getFigureNumber());
+            buildStyleText("suffix", figure.getSuffix());
             buildExtend(figure.getExtend());
             appendLine("</figure>");
         }
         buildElementWithValue("duration", BuilderUtil.stringValue(figuredBass.getDuration()));
+        buildEditorial(figuredBass.getEditorial());
         appendLine("</figured-bass>");
 
         return stringBuilder;

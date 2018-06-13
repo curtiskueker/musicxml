@@ -10,7 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class PlacedTrillSound extends Ornament {
@@ -20,7 +19,8 @@ public abstract class PlacedTrillSound extends Ornament {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trill_sound_id")
     private TrillSound trillSound;
 
     public PrintStyle getPrintStyle() {

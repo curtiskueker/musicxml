@@ -21,7 +21,8 @@ public class Accidental extends DatabaseItem {
     private Boolean cautionary;
     @Column
     private Boolean editorial;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "level_display_id")
     private LevelDisplay levelDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

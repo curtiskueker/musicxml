@@ -14,9 +14,9 @@ import java.math.BigDecimal;
 public class Grace extends DatabaseItem {
     @Transient
     private Connection graceType;
-    @Transient
+    @Column(name = "steal_time_previous")
     private BigDecimal stealTimePrevious;
-    @Transient
+    @Column(name = "steal_time_following")
     private BigDecimal stealTimeFollowing;
     @Column(name = "make_time")
     private BigDecimal makeTime;

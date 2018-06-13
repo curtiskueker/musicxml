@@ -28,7 +28,8 @@ public class Lyric extends DatabaseItem {
     private Boolean endLine;
     @Transient
     private Boolean endParagraph;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Column
     private String number;

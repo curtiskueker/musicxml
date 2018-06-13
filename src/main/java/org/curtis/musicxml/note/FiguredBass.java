@@ -23,7 +23,8 @@ public class FiguredBass extends MusicData {
     private List<Figure> figures = new ArrayList<>();
     @Column
     private BigDecimal duration;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

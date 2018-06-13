@@ -35,7 +35,8 @@ public class Harmony extends MusicData {
     private Frame frame;
     @Transient
     private Offset offset;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Transient
     private Integer staff;

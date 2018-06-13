@@ -217,6 +217,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             groupBarlineValue = groupBarlineValue.replace("mensurstrich", "Mensurstrich");
             buildElementWithValueAndAttribute("group-barline", groupBarlineValue, "color", groupBarline.getColor());
         }
+        buildEditorial(partGroup.getEditorial());
         appendLine("</part-group>");
     }
 

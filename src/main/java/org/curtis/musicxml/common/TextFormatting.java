@@ -1,17 +1,44 @@
 package org.curtis.musicxml.common;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
-public class TextFormatting {
+@Entity
+@Table(name = "text_formatting")
+public class TextFormatting extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location justify;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
+    @Column(name = "text_rotation")
     private BigDecimal textRotation;
+    @Column(name = "letter_spacing")
     private String letterSpacing;
+    @Column(name = "line_height")
     private String lineHeight;
+    @Column(name = "lang")
     private String lang;
+    @Column(name = "space")
     private String space;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "text_direction")
     private Location textDirection;
+    @Enumerated(EnumType.STRING)
+    @Column
     private EnclosureShape enclosure;
 
     public TextFormatting() {

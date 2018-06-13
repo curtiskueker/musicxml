@@ -17,6 +17,7 @@ import org.curtis.musicxml.note.notation.ornament.Schleifer;
 import org.curtis.musicxml.note.notation.ornament.Shake;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
+import org.curtis.musicxml.note.notation.ornament.TrillSound;
 import org.curtis.musicxml.note.notation.ornament.Turn;
 import org.curtis.musicxml.note.notation.ornament.VerticalTurn;
 
@@ -46,6 +47,7 @@ public class OrnamentBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.putAll(FormattingBuilder.buildPrintStyle(placedTrillSound.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placedTrillSound.getPlacement()));
+        attributes.putAll(buildTrillSound(placedTrillSound.getTrillSound()));
 
         String elementName;
         if (placedTrillSound instanceof TrillMark) elementName = "trill-mark";
@@ -71,6 +73,7 @@ public class OrnamentBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.putAll(FormattingBuilder.buildPrintStyle(horizontalTurn.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(horizontalTurn.getPlacement()));
+        attributes.putAll(buildTrillSound(horizontalTurn.getTrillSound()));
         attributes.put("slash", BuilderUtil.yesOrNo(horizontalTurn.getSlash()));
         buildElementWithAttributes(elementName, attributes);
     }
@@ -103,5 +106,20 @@ public class OrnamentBuilder extends BaseBuilder {
 
     private void buildOtherOrnament(OtherOrnament otherOrnament) {
         buildPlacementText("other-ornament", otherOrnament.getPlacementText());
+    }
+
+    public static Map<String, String> buildTrillSound(TrillSound trillSound) {
+        Map<String, String> attributes = new HashMap<>();
+        if (trillSound == null) return attributes;
+
+        attributes.put("start-note", BuilderUtil.enumValue(trillSound.getStartNote()));
+        attributes.put("trill-step", BuilderUtil.enumValue(trillSound.getTrillStep()));
+        attributes.put("two-note-turn", BuilderUtil.enumValue(trillSound.getTwoNoteTurn()));
+        attributes.put("accelerate", BuilderUtil.yesOrNo(trillSound.getAccelerate()));
+        attributes.put("beats", BuilderUtil.stringValue(trillSound.getBeats()));
+        attributes.put("second-beat", BuilderUtil.stringValue(trillSound.getSecondBeat()));
+        attributes.put("last-beat", BuilderUtil.stringValue(trillSound.getLastBeat()));
+
+        return attributes;
     }
 }

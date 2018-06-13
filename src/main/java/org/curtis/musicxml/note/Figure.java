@@ -9,16 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "figure")
 public class Figure extends DatabaseItem {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "prefix_id")
     private StyleText prefix;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "figure_number_id")
     private StyleText figureNumber;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "suffix_id")
     private StyleText suffix;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "extend_id")

@@ -164,6 +164,7 @@ public class NotationBuilder extends BaseBuilder {
         attributes.put("line-type", BuilderUtil.enumValue(slide.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(slide.getDashedFormatting()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(slide.getPrintStyle()));
+        attributes.putAll(TechnicalBuilder.buildBendSound(slide.getBendSound()));
         buildElementWithValueAndAttributes("slide", slide.getValue(), attributes);
     }
 

@@ -1,6 +1,10 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.common.EditorialVoice;
+import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.PlacementText;
@@ -193,5 +197,34 @@ public abstract class OutputBuilder {
         attributes.putAll(FormattingBuilder.buildPrintStyle(line.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(line.getPlacement()));
         buildElementWithAttributes(elementName, attributes);
+    }
+
+    protected void buildStyleText(String elementName, StyleText styleText) {
+        if (styleText ==  null) return;
+
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(styleText.getPrintStyle()));
+        buildElementWithValueAndAttributes(elementName, styleText.getValue(), attributes);
+    }
+
+    protected void buildEditorial(Editorial editorial) {
+        if (editorial == null) return;
+
+        buildFormattedText("footnote", editorial.getFootnote());
+        buildElement("level");
+    }
+
+    protected void buildEditorialVoice(EditorialVoice editorialVoice) {
+        if (editorialVoice == null) return;
+
+        buildFormattedText("footnote", editorialVoice.getFootnote());
+        buildElement("level");
+        buildElement("voice");
+    }
+
+    protected void buildFormattedText(String elementName, FormattedText formattedText) {
+        if (formattedText == null) return;
+
+        buildElementWithValueAndAttributes(elementName, formattedText.getValue(), FormattingBuilder.buildTextFormatting(formattedText.getTextFormatting()));
     }
 }

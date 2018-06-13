@@ -20,7 +20,8 @@ public abstract class HorizontalTurn extends Ornament {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trill_sound_id")
     private TrillSound trillSound;
     @Column
     private Boolean slash;

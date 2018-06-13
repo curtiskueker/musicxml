@@ -4,14 +4,18 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "editorial_voice_direction")
 public class EditorialVoiceDirection extends DatabaseItem {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "footnote_id")
     private FormattedText footnote;
     @Transient
     private Level level;

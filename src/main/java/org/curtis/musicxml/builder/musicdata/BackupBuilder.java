@@ -16,6 +16,7 @@ public class BackupBuilder extends BaseBuilder {
 
         appendLine("<backup>");
         buildElementWithValue("duration", BuilderUtil.stringValue(backup.getDuration()));
+        buildEditorial(backup.getEditorial());
         appendLine("</backup>");
 
         return stringBuilder;

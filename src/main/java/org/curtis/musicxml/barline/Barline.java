@@ -25,7 +25,8 @@ import java.util.List;
 public class Barline extends MusicData {
     @Transient
     private BarStyleColor barStyle;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Transient
     private WavyLine wavyLine;

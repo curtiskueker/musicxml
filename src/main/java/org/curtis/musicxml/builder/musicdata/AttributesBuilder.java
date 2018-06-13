@@ -42,6 +42,7 @@ public class AttributesBuilder extends BaseBuilder {
 
     public StringBuilder build() {
         appendLine("<attributes>");
+        buildEditorial(attributes.getEditorial());
         BigDecimal divisions = attributes.getDivisions();
         if (divisions !=  null) buildElementWithValue("divisions", BuilderUtil.stringValue(divisions));
         for (Key key : attributes.getKeys()) {

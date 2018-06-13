@@ -23,6 +23,7 @@ public class SoundBuilder extends BaseBuilder {
         buildAttribute("divisions", BuilderUtil.stringValue(sound.getDivisions()));
         buildAttribute("forward-repeat", BuilderUtil.yesOrNo(sound.getForwardRepeat()));
         buildAttribute("fine", sound.getFine());
+        buildAttribute("time-only", sound.getTimeOnly());
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(sound.getPizzicato()));
         buildAttribute("pan", BuilderUtil.stringValue(sound.getPan()));
         buildAttribute("elevation", BuilderUtil.stringValue(sound.getElevation()));

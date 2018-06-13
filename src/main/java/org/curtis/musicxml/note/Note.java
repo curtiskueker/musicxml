@@ -49,7 +49,8 @@ public class Note extends MusicData {
     private List<Tie> ties = new ArrayList<>();
     @Column
     private String instrument;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_voice_id")
     private EditorialVoice editorialVoice = new EditorialVoice();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id")
@@ -114,7 +115,7 @@ public class Note extends MusicData {
     private BigDecimal attack;
     @Column(name = "release_length")
     private BigDecimal release;
-    @Transient
+    @Column(name = "time_only")
     private String timeOnly;
     @Column
     private Boolean pizzicato;

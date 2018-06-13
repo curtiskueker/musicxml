@@ -1,8 +1,22 @@
 package org.curtis.musicxml.common;
 
-public class LevelDisplay {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "level_display")
+public class LevelDisplay extends DatabaseItem {
+    @Column
     private Boolean parentheses;
+    @Column
     private Boolean bracket;
+    @Enumerated(EnumType.STRING)
+    @Column
     private SymbolSize size;
 
     public LevelDisplay() {
