@@ -17,8 +17,8 @@ public class Transpose extends DatabaseItem {
     private BigDecimal chromatic;
     @Column(name = "octave_change")
     private Integer octaveChange;
-    @Transient
-    private Boolean doubled;
+    @Column
+    private Boolean doubled = false;
     @Column
     private Integer number;
 

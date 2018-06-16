@@ -15,6 +15,8 @@ public class SoundBuilder extends BaseBuilder {
         if (sound == null) return stringBuilder;
 
         append("<sound");
+        buildAttribute("tempo", BuilderUtil.stringValue(sound.getTempo()));
+        buildAttribute("dynamics", BuilderUtil.stringValue(sound.getDynamics()));
         buildAttribute("dacapo", BuilderUtil.yesOrNo(sound.getDacapo()));
         buildAttribute("segno", sound.getSegno());
         buildAttribute("dalsegno", sound.getDalsegno());

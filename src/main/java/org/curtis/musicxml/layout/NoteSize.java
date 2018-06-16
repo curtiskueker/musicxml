@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "note_size")
 public class NoteSize extends DatabaseItem {
-    @Transient
+    @Column
     private BigDecimal value;
     @Enumerated(EnumType.STRING)
     @Column

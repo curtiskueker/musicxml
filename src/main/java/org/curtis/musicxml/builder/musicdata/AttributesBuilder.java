@@ -125,6 +125,7 @@ public class AttributesBuilder extends BaseBuilder {
                 buildElementWithAttribute("staff-tuning", "line", staffTuning.getLine());
             }
             buildElementWithValue("capo", staffDetails.getCapo());
+            buildElementWithValue("staff-size", staffDetails.getStaffSize());
             appendLine("</staff-details>");
         }
         for (Transpose transpose : attributes.getTranspositions()) {
@@ -133,6 +134,7 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine(">");
             buildElementWithValue("diatonic", transpose.getDiatonic());
             buildElementWithValue("octave-change", transpose.getOctaveChange());
+            if (transpose.getDoubled()) buildElement("double");
             appendLine("</transpose>");
         }
         for (Directive directive : attributes.getDirectives()) {
@@ -149,14 +151,14 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine(">");
             if (measureStyle instanceof MultipleRest) {
                 MultipleRest multipleRest = (MultipleRest)measureStyle;
-                buildElementWithAttribute("multiple-rest", "use-symbols", BuilderUtil.yesOrNo(multipleRest.getUseSymbols()));
+                buildElementWithValueAndAttribute("multiple-rest", multipleRest.getValue(),"use-symbols", BuilderUtil.yesOrNo(multipleRest.getUseSymbols()));
             }
             else if (measureStyle instanceof MeasureRepeat) {
                 MeasureRepeat measureRepeat = (MeasureRepeat)measureStyle;
                 Map<String, String> attributes = new HashMap<>();
                 attributes.put("type", BuilderUtil.enumValue(measureRepeat.getType()));
                 attributes.put("slashes", BuilderUtil.stringValue(measureRepeat.getSlashes()));
-                buildElementWithAttributes("measure-repeat", attributes);
+                buildElementWithValueAndAttributes("measure-repeat", measureRepeat.getValue(), attributes);
             }
             else if (measureStyle instanceof BeatRepeat) {
                 BeatRepeat beatRepeat = (BeatRepeat)measureStyle;
@@ -230,5 +232,6 @@ public class AttributesBuilder extends BaseBuilder {
         if (slashGroup == null) return;
 
         buildElementWithValue("slash-type", BuilderUtil.noteTypeValue(slashGroup.getSlashType()));
+        for (int dotCount = 1; dotCount <= slashGroup.getSlashDots(); dotCount++) buildElement("slash-dot");
     }
 }

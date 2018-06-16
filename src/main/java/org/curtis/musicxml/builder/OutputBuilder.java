@@ -160,6 +160,7 @@ public abstract class OutputBuilder {
         buildElementWithValue("actual-notes", timeModification.getActualNotes());
         buildElementWithValue("normal-notes", timeModification.getNormalNotes());
         buildElementWithValue("normal-type", BuilderUtil.noteTypeValue(timeModification.getNormalType()));
+        for (int normalDots = 1; normalDots <= timeModification.getNormalDots(); normalDots++) buildElement("normal-dot");
     }
 
     protected void buildExtend(Extend extend) {

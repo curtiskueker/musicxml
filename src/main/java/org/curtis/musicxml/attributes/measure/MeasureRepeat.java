@@ -7,12 +7,11 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("measure repeat")
 public class MeasureRepeat extends MeasureStyle {
-    @Transient
+    @Column
     private Integer value;
     @Enumerated(EnumType.STRING)
     @Column

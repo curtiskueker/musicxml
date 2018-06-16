@@ -32,7 +32,12 @@ import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.musicxml.score.instrument.Ensemble;
+import org.curtis.musicxml.score.instrument.InstrumentType;
+import org.curtis.musicxml.score.instrument.ScoreInstrument;
+import org.curtis.musicxml.score.instrument.Solo;
 import org.curtis.util.DateUtil;
+import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -136,8 +141,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
                 buildElementWithValueAndAttribute("line-width", BuilderUtil.stringValue(lineWidth.getValue()), "type", lineWidth.getLineWidthType());
             }
             for (NoteSize noteSize : appearance.getNoteSizes()) {
-                // TODO: note size decimal
-                buildElementWithValueAndAttribute("note-size", 100, "type", BuilderUtil.enumValue(noteSize.getType()));
+                buildElementWithValueAndAttribute("note-size", BuilderUtil.stringValue(noteSize.getValue()), "type", BuilderUtil.enumValue(noteSize.getType()));
             }
             for (Distance distance : appearance.getDistances()) {
                 buildElementWithValueAndAttribute("distance", BuilderUtil.stringValue(distance.getValue()), "type", distance.getType());
@@ -217,6 +221,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             groupBarlineValue = groupBarlineValue.replace("mensurstrich", "Mensurstrich");
             buildElementWithValueAndAttribute("group-barline", groupBarlineValue, "color", groupBarline.getColor());
         }
+        if (partGroup.getGroupTime()) buildElement("group-time");
         buildEditorial(partGroup.getEditorial());
         appendLine("</part-group>");
     }
@@ -239,6 +244,31 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildPartName("part-abbreviation", scorePart.getPartAbbreviation());
         for (String group : scorePart.getGroups()) {
             buildElementWithValue("group", group);
+        }
+        for (ScoreInstrument scoreInstrument : scorePart.getScoreInstruments()) {
+            append("<score-instrument");
+            buildAttribute("id", scoreInstrument.getScoreInstrumentId());
+            appendLine(">");
+            buildElementWithValue("instrument-name", scoreInstrument.getInstrumentName());
+            buildElementWithValue("instrument-abbreviation", scoreInstrument.getInstrumentAbbreviation());
+            buildElementWithValue("instrument-sound", scoreInstrument.getInstrumentSound());
+            InstrumentType instrumentType = scoreInstrument.getInstrumentType();
+            if (instrumentType != null) {
+                if (instrumentType instanceof Solo) buildElement("solo");
+                else if (instrumentType instanceof Ensemble) {
+                    Ensemble ensemble = (Ensemble)instrumentType;
+                    buildElementWithValue("ensemble", ensemble.getValue());
+                }
+            }
+            String virtualLibrary = scoreInstrument.getVirtualLibrary();
+            String virtualName = scoreInstrument.getVirtualName();
+            if (StringUtil.isNotEmpty(virtualLibrary) || StringUtil.isNotEmpty(virtualName)) {
+                appendLine("<virtual-instrument>");
+                buildElementWithValue("virtual-library", virtualLibrary);
+                buildElementWithValue("virtual-name", virtualName);
+                appendLine("</virtual-instrument>");
+            }
+            appendLine("</score-instrument>");
         }
         appendLine("</score-part>");
     }

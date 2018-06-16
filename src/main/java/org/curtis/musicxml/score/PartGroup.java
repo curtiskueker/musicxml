@@ -33,8 +33,8 @@ public class PartGroup extends PartItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_barline_id")
     private GroupBarline groupBarline;
-    @Transient
-    private Boolean groupTime;
+    @Column(name = "group_time")
+    private Boolean groupTime = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;

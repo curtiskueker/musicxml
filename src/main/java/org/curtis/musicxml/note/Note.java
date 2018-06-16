@@ -36,7 +36,7 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grace_id")
     private Grace grace;
-    @Transient
+    @Column
     private Boolean cue = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "full_note_id")
@@ -107,9 +107,9 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "printout_id")
     private Printout printout;
-    @Transient
+    @Column
     private BigDecimal dynamics;
-    @Transient
+    @Column(name = "end_dynamics")
     private BigDecimal endDynamics;
     @Column(name = "attack_length")
     private BigDecimal attack;

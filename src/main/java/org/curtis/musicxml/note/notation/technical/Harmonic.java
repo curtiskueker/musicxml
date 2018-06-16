@@ -16,9 +16,11 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue("harmonic")
 public class Harmonic extends Technical {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "harmonic_type")
     private HarmonicType harmonicType;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "harmonic_pitch")
     private HarmonicPitch harmonicPitch;
     @Column(name = "print_object")
     private Boolean printObject;

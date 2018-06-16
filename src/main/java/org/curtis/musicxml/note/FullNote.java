@@ -4,6 +4,7 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -13,7 +14,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "full_note")
 public class FullNote extends DatabaseItem {
-    @Transient
+    @Column
     private Boolean chord = false;
     @Transient
     private Connection chordType;

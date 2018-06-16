@@ -26,6 +26,8 @@ import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.XPosition;
 import org.curtis.musicxml.note.YPosition;
 import org.curtis.musicxml.note.lyric.Extend;
+import org.curtis.musicxml.note.lyric.Humming;
+import org.curtis.musicxml.note.lyric.Laughing;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
@@ -33,7 +35,6 @@ import org.curtis.musicxml.note.lyric.LyricText;
 import org.curtis.musicxml.note.lyric.TextData;
 import org.curtis.musicxml.note.lyric.TextFontColor;
 import org.curtis.musicxml.note.notation.Notation;
-import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,11 +61,14 @@ public class NoteBuilder extends BaseBuilder {
         FormattingBuilder.buildFont(note.getFont()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("color", note.getColor());
         FormattingBuilder.buildPrintout(note.getPrintout()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttribute("dynamics", BuilderUtil.stringValue(note.getDynamics()));
+        buildAttribute("end-dynamics", BuilderUtil.stringValue(note.getEndDynamics()));
         buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
         buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
         buildAttribute("time-only", note.getTimeOnly());
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
         appendLine(">");
+        if (note.getCue()) buildElement("cue");
         Grace grace = note.getGrace();
         if (grace != null) {
             Map<String, String> graceAttributes = new HashMap<>();
@@ -176,6 +180,7 @@ public class NoteBuilder extends BaseBuilder {
     private void buildFullNote(FullNote fullNote) {
         if (fullNote == null) return;
 
+        if (fullNote.isChord()) buildElement("chord");
         FullNoteType fullNoteType = fullNote.getFullNoteType();
         if (fullNoteType instanceof Pitch) buildPitch((Pitch)fullNoteType);
         else if (fullNoteType instanceof Unpitched) buildUnpitched((Unpitched)fullNoteType);
@@ -255,6 +260,10 @@ public class NoteBuilder extends BaseBuilder {
             buildExtend(lyricText.getExtend());
         }
         else if (lyricItem instanceof Extend) buildExtend((Extend)lyricItem);
+        else if (lyricItem instanceof Laughing) buildElement("laughing");
+        else if (lyricItem instanceof Humming) buildElement("humming");
+        if (lyric.getEndLine()) buildElement("end-line");
+        if (lyric.getEndParagraph()) buildElement("end-paragraph");
         buildEditorial(lyric.getEditorial());
         appendLine("</lyric>");
     }

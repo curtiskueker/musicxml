@@ -8,16 +8,15 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("accordion registration")
 public class AccordionRegistration extends DirectionType {
-    @Transient
-    private Boolean accordionHigh;
+    @Column(name = "accordion_high")
+    private Boolean accordionHigh = false;
     @Column(name = "accordion_middle")
     private Integer accordionMiddle;
-    @Transient
+    @Column(name = "accordion_low")
     private Boolean accordionLow;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")

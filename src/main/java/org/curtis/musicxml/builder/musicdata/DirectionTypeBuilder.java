@@ -174,11 +174,16 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildBeatMetronome(BeatMetronome beatMetronome) {
-        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatMetronome.getBeatUnit1().getBeatUnit()));
+        BeatUnit beatUnit1 = beatMetronome.getBeatUnit1();
+        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit1.getBeatUnit()));
+        for (int beatUnitDots = 1; beatUnitDots <= beatUnit1.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
         PerMinute perMinute = beatMetronome.getPerMinute();
         buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
         BeatUnit beatUnit2 = beatMetronome.getBeatUnit2();
-        if (beatUnit2 != null) buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit2.getBeatUnit()));
+        if (beatUnit2 != null) {
+            buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit2.getBeatUnit()));
+            for (int beatUnitDots = 1; beatUnitDots <= beatUnit2.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
+        }
     }
 
     private void buildNoteMetronome(NoteMetronome noteMetronome) {
@@ -189,6 +194,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildMetronomeNote(MetronomeNote metronomeNote) {
         buildElementWithValue("metronome-type", BuilderUtil.noteTypeValue(metronomeNote.getMetronomeType()));
+        for (int metronomeDots = 1; metronomeDots <= metronomeNote.getMetronomeDots(); metronomeDots++) buildElement("metronome-dot");
         for (MetronomeBeam metronomeBeam : metronomeNote.getMetronomeBeams()) {
             buildElementWithValueAndAttribute("metronome-beam", NoteBuilder.buildBeamType(metronomeBeam.getBeamType()), "number", metronomeBeam.getNumber());
         }
@@ -274,7 +280,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
         append("<accordion-registration");
         FormattingBuilder.buildPrintStyleAlign(accordionRegistration.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         appendLine(">");
+        if (accordionRegistration.getAccordionHigh()) buildElement("accordion-high");
         buildElementWithValue("accordion-middle", accordionRegistration.getAccordionMiddle());
+        if (accordionRegistration.getAccordionLow()) buildElement("accordion-low");
         appendLine("</accordion-registration>");
     }
 

@@ -28,9 +28,9 @@ public class Sound extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
     private Offset offset;
-    @Transient
+    @Column
     private BigDecimal tempo;
-    @Transient
+    @Column
     private BigDecimal dynamics;
     @Column
     private Boolean dacapo;

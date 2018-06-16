@@ -24,10 +24,10 @@ public class Lyric extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lyric_item_id")
     private LyricItem lyricItem;
-    @Transient
-    private Boolean endLine;
-    @Transient
-    private Boolean endParagraph;
+    @Column(name = "end_line")
+    private Boolean endLine = false;
+    @Column(name = "end_paragraph")
+    private Boolean endParagraph = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;

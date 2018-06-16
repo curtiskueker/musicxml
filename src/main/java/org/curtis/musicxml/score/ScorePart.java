@@ -5,6 +5,8 @@ import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -12,7 +14,9 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -40,7 +44,9 @@ public class ScorePart extends PartItem {
     @CollectionTable(name = "score_part_group", joinColumns = @JoinColumn(name = "score_part_id"))
     @Column(name = "group_name")
     private List<String> groups = new ArrayList<>();
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "score_part_id", nullable = false)
     private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
     @Transient
     private List<MidiDevice> midiDevices = new ArrayList<>();

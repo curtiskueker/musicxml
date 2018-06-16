@@ -18,7 +18,8 @@ public class TimeModification extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "normal_type")
     private NoteTypeValue normalType;
-    private Integer normalDots;
+    @Column(name = "normal_dots")
+    private Integer normalDots = 0;
 
     public TimeModification() {
 

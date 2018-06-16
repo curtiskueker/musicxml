@@ -7,6 +7,7 @@ import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.notation.technical.Arrow;
 import org.curtis.musicxml.note.notation.technical.Bend;
 import org.curtis.musicxml.note.notation.technical.BendSound;
+import org.curtis.musicxml.note.notation.technical.BendType;
 import org.curtis.musicxml.note.notation.technical.DoubleTongue;
 import org.curtis.musicxml.note.notation.technical.DownBow;
 import org.curtis.musicxml.note.notation.technical.Fingernails;
@@ -14,6 +15,8 @@ import org.curtis.musicxml.note.notation.technical.HammerOn;
 import org.curtis.musicxml.note.notation.technical.HammerOnPullOff;
 import org.curtis.musicxml.note.notation.technical.Handbell;
 import org.curtis.musicxml.note.notation.technical.Harmonic;
+import org.curtis.musicxml.note.notation.technical.HarmonicPitch;
+import org.curtis.musicxml.note.notation.technical.HarmonicType;
 import org.curtis.musicxml.note.notation.technical.Heel;
 import org.curtis.musicxml.note.notation.technical.HeelToe;
 import org.curtis.musicxml.note.notation.technical.Hole;
@@ -74,11 +77,37 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHarmonic(Harmonic harmonic) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("print-object", BuilderUtil.yesOrNo(harmonic.getPrintObject()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(harmonic.getPlacement()));
-        buildElementWithAttributes("harmonic", attributes);
+        append("<harmonic");
+        buildAttribute("print-object", BuilderUtil.yesOrNo(harmonic.getPrintObject()));
+        FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttribute("placement", BuilderUtil.enumValue(harmonic.getPlacement()));
+        appendLine(">");
+        HarmonicType harmonicType = harmonic.getHarmonicType();
+        if (harmonicType != null) {
+            switch (harmonicType) {
+                case NATURAL:
+                    buildElement("natural");
+                    break;
+                case ARTIFICIAL:
+                    buildElement("artificial");
+                    break;
+            }
+        }
+        HarmonicPitch harmonicPitch = harmonic.getHarmonicPitch();
+        if (harmonicPitch != null) {
+            switch (harmonicPitch) {
+                case BASE_PITCH:
+                    buildElement("base-pitch");
+                    break;
+                case TOUCHING_PITCH:
+                    buildElement("touching-pitch");
+                    break;
+                case SOUNDING_PITCH:
+                    buildElement("sounding-pitch");
+                    break;
+            }
+        }
+        appendLine("</harmonic>");
     }
 
     private void buildOpenString(OpenString openString) {
@@ -124,6 +153,17 @@ public class TechnicalBuilder extends BaseBuilder {
         FormattingBuilder.buildPrintStyle(bend.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildBendSound(bend.getBendSound()).forEach((k, v) -> buildAttribute(k, v));
         appendLine(">");
+        BendType bendType = bend.getBendType();
+        if (bendType != null) {
+            switch (bendType) {
+                case PRE_BEND:
+                    buildElement("pre-bend");
+                    break;
+                case RELEASE:
+                    buildElement("release");
+                    break;
+            }
+        }
         PlacementText withBar = bend.getWithBar();
         if (withBar != null) buildPlacementText("with-bar", withBar);
         appendLine("</bend>");

@@ -4,8 +4,11 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.PlacementText;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -16,7 +19,8 @@ import java.math.BigDecimal;
 public class Bend extends Technical {
     @Transient
     private BigDecimal bendAlter;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bend_type")
     private BendType bendType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "with_bar_id")

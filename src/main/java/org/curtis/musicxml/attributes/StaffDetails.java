@@ -13,7 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class StaffDetails extends DatabaseItem {
     private List<StaffTuning> staffTunings;
     @Column
     private Integer capo;
-    @Transient
+    @Column(name = "staff_size")
     private BigDecimal staffSize;
     @Column
     private Integer number;

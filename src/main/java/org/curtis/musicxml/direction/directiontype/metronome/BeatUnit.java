@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "beat_unit")
@@ -16,7 +15,7 @@ public class BeatUnit extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "beat_unit")
     private NoteTypeValue beatUnit;
-    @Transient
+    @Column(name = "beat_unit_dots")
     private Integer beatUnitDots = 0;
 
     public BeatUnit() {

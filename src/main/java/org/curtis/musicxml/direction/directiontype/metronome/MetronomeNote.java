@@ -25,7 +25,7 @@ public class MetronomeNote extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "metronome_type")
     private NoteTypeValue metronomeType;
-    @Transient
+    @Column(name = "metronome_dots")
     private Integer metronomeDots = 0;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
