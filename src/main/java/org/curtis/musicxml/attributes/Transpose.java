@@ -19,7 +19,7 @@ public class Transpose extends DatabaseItem {
     private Integer octaveChange;
     @Transient
     private Boolean doubled;
-    @Transient
+    @Column
     private Integer number;
 
     public Transpose() {

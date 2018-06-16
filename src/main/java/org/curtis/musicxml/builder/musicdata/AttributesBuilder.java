@@ -47,6 +47,7 @@ public class AttributesBuilder extends BaseBuilder {
         if (divisions !=  null) buildElementWithValue("divisions", BuilderUtil.stringValue(divisions));
         for (Key key : attributes.getKeys()) {
             append("<key");
+            buildAttribute("number", key.getNumber());
             FormattingBuilder.buildPrintStyle(key.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("print-object", BuilderUtil.yesOrNo(key.getPrintObject()));
             appendLine(">");
@@ -62,6 +63,7 @@ public class AttributesBuilder extends BaseBuilder {
         }
         for (Time time : attributes.getTimeList()) {
             append("<time");
+            buildAttribute("number", time.getNumber());
             buildAttribute("symbol", BuilderUtil.enumValue(time.getSymbol()));
             buildAttribute("separator", BuilderUtil.enumValue(time.getSeparator()));
             FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
@@ -75,6 +77,8 @@ public class AttributesBuilder extends BaseBuilder {
         PartSymbol partSymbol = attributes.getPartSymbol();
         if (partSymbol != null) {
             Map<String, String> partSymbolAttributes = new HashMap<>();
+            partSymbolAttributes.put("top-staff", BuilderUtil.stringValue(partSymbol.getTopStaff()));
+            partSymbolAttributes.put("bottom-staff", BuilderUtil.stringValue(partSymbol.getBottomStaff()));
             partSymbolAttributes.putAll(PlacementBuilder.buildPosition(partSymbol.getPosition()));
             partSymbolAttributes.put("color", partSymbol.getColor());
             buildElementWithValueAndAttributes("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()), partSymbolAttributes);
@@ -82,6 +86,7 @@ public class AttributesBuilder extends BaseBuilder {
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {
             append("<clef");
+            buildAttribute("number", BuilderUtil.stringValue(clef.getNumber()));
             buildAttribute("additional", BuilderUtil.yesOrNo(clef.getAdditional()));
             buildAttribute("after-barline", BuilderUtil.yesOrNo(clef.getAfterBarline()));
             FormattingBuilder.buildPrintStyle(clef.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
@@ -109,6 +114,7 @@ public class AttributesBuilder extends BaseBuilder {
         }
         for (StaffDetails staffDetails : attributes.getStaffDetailsList()) {
             append("<staff-details");
+            buildAttribute("number", BuilderUtil.stringValue(staffDetails.getNumber()));
             buildAttribute("show-frets", BuilderUtil.enumValue(staffDetails.getShowFrets()));
             buildAttribute("print-object", BuilderUtil.yesOrNo(staffDetails.getPrintObject()));
             buildAttribute("print-spacing", BuilderUtil.yesOrNo(staffDetails.getPrintSpacing()));
@@ -122,7 +128,9 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine("</staff-details>");
         }
         for (Transpose transpose : attributes.getTranspositions()) {
-            appendLine("<transpose>");
+            append("<transpose");
+            buildAttribute("number", transpose.getNumber());
+            appendLine(">");
             buildElementWithValue("diatonic", transpose.getDiatonic());
             buildElementWithValue("octave-change", transpose.getOctaveChange());
             appendLine("</transpose>");
@@ -135,6 +143,7 @@ public class AttributesBuilder extends BaseBuilder {
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             append("<measure-style");
+            buildAttribute("number", measureStyle.getNumber());
             FormattingBuilder.buildFont(measureStyle.getFont()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("color", measureStyle.getColor());
             appendLine(">");

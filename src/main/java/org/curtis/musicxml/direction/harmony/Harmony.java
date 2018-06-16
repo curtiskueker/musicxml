@@ -38,7 +38,7 @@ public class Harmony extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
-    @Transient
+    @Column
     private Integer staff;
     @Enumerated(EnumType.STRING)
     @Column

@@ -49,6 +49,7 @@ public class NotationBuilder extends BaseBuilder {
         else if (notation instanceof Ornaments) buildOrnaments((Ornaments)notation);
         else if (notation instanceof Technicals) buildTechnicals((Technicals)notation);
         else if (notation instanceof Articulations) buildArticulations((Articulations)notation);
+        // TODO: dynamics notations
         else if (notation instanceof Fermata) buildFermata((Fermata)notation);
         else if (notation instanceof Arpeggiate) buildArpeggiate((Arpeggiate)notation);
         else if (notation instanceof NonArpeggiate) buildNonArpeggiate((NonArpeggiate)notation);

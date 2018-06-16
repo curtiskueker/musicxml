@@ -151,6 +151,7 @@ public class NoteBuilder extends BaseBuilder {
             }
             appendLine("</notehead_text>");
         }
+        buildElementWithValue("staff", note.getStaff());
         List<Beam> beams = note.getBeams();
         if (!beams.isEmpty()) {
             for (Beam beam : beams) {

@@ -12,14 +12,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "measure_style")
 @DiscriminatorColumn(name = "measure_style_type")
 public abstract class MeasureStyle extends DatabaseItem {
-    @Transient
+    @Column
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")

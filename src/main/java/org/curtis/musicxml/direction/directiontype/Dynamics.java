@@ -5,24 +5,39 @@ import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @DiscriminatorValue("dynamics")
 public class Dynamics extends DirectionType {
-    @Transient
+    @ElementCollection(targetClass = DynamicsType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "dynamics_type", joinColumns = @JoinColumn(name = "direction_type_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dynamics_type")
     private List<DynamicsType> types = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private EnclosureShape enclosure;
 
     public Dynamics() {

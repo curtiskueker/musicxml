@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public abstract class Key extends DatabaseItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "key_id", nullable = false)
     private List<KeyOctave> keyOctaves = new ArrayList<>();
-    @Transient
+    @Column
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

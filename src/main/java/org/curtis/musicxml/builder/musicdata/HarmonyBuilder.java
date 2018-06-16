@@ -139,6 +139,7 @@ public class HarmonyBuilder extends BaseBuilder {
             appendLine("</frame>");
         }
         buildEditorial(harmony.getEditorial());
+        buildElementWithValue("staff", harmony.getStaff());
         appendLine("</harmony>");
 
         return stringBuilder;

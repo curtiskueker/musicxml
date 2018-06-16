@@ -14,14 +14,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "time")
 @DiscriminatorColumn(name = "time_type")
 public abstract class Time extends DatabaseItem {
-    @Transient
+    @Column
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column

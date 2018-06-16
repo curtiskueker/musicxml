@@ -64,7 +64,9 @@ public class LayoutBuilder extends OutputBuilder {
             layoutBuilder.appendLine("</system-layout>");
         }
         for (StaffLayout staffLayout : layout.getStaffLayouts()) {
-            layoutBuilder.appendLine("<staff-layout>");
+            layoutBuilder.append("<staff-layout");
+            layoutBuilder.buildAttribute("number", staffLayout.getNumber());
+            layoutBuilder.appendLine(">");
             layoutBuilder.buildElementWithValue("staff-distance", BuilderUtil.stringValue(staffLayout.getStaffDistance()));
             layoutBuilder.appendLine("</staff-layout>");
         }

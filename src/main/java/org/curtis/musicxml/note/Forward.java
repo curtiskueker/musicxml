@@ -9,7 +9,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -20,7 +19,7 @@ public class Forward extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_voice_id")
     private EditorialVoice editorialVoice;
-    @Transient
+    @Column
     private Integer staff;
 
     public Forward() {

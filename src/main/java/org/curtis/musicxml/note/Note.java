@@ -74,7 +74,7 @@ public class Note extends MusicData {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
     private List<NoteheadText> noteheadTextList = new ArrayList<>();
-    @Transient
+    @Column
     private Integer staff;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

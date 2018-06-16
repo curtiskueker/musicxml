@@ -37,6 +37,7 @@ public class DirectionBuilder extends BaseBuilder {
             buildLevel(editorialVoiceDirection.getLevel());
             buildElementWithValue("voice", editorialVoiceDirection.getVoice());
         }
+        buildElementWithValue("staff", direction.getStaff());
         SoundBuilder soundBuilder = new SoundBuilder(direction.getSound());
         append(soundBuilder.build().toString());
         appendLine("</direction>");

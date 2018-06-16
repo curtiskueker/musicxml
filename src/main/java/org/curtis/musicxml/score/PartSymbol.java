@@ -19,9 +19,9 @@ public class PartSymbol extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "group_symbol_type")
     private GroupSymbolType groupSymbolType;
-    @Transient
+    @Column(name = "top_staff")
     private Integer topStaff;
-    @Transient
+    @Column(name = "bottom_staff")
     private Integer bottomStaff;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")

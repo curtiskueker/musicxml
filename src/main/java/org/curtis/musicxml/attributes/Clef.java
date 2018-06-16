@@ -24,7 +24,7 @@ public class Clef extends DatabaseItem {
     private Integer line;
     @Column(name = "clef_octave_change")
     private Integer clefOctaveChange;
-    @Transient
+    @Column
     private Integer number;
     @Column
     private Boolean additional;

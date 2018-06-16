@@ -33,7 +33,7 @@ public class StaffDetails extends DatabaseItem {
     private Integer capo;
     @Transient
     private BigDecimal staffSize;
-    @Transient
+    @Column
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column(name = "show_frets")
