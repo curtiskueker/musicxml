@@ -4,6 +4,7 @@ import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.Placement;
@@ -211,20 +212,29 @@ public abstract class OutputBuilder {
         if (editorial == null) return;
 
         buildFormattedText("footnote", editorial.getFootnote());
-        buildElement("level");
+        buildLevel(editorial.getLevel());
     }
 
     protected void buildEditorialVoice(EditorialVoice editorialVoice) {
         if (editorialVoice == null) return;
 
         buildFormattedText("footnote", editorialVoice.getFootnote());
-        buildElement("level");
-        buildElement("voice");
+        buildLevel(editorialVoice.getLevel());
+        buildElementWithValue("voice", editorialVoice.getVoice());
     }
 
     protected void buildFormattedText(String elementName, FormattedText formattedText) {
         if (formattedText == null) return;
 
         buildElementWithValueAndAttributes(elementName, formattedText.getValue(), FormattingBuilder.buildTextFormatting(formattedText.getTextFormatting()));
+    }
+
+    protected void buildLevel(Level level) {
+        if (level ==  null) return;
+
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("reference", BuilderUtil.yesOrNo(level.getReference()));
+        attributes.putAll(FormattingBuilder.buildLevelDisplay(level.getLevelDisplay()));
+        buildElementWithValueAndAttributes("level", level.getValue(), attributes);
     }
 }

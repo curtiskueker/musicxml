@@ -28,15 +28,17 @@ public class BarlineBuilder extends BaseBuilder {
         buildAttribute("coda", barline.getCoda());
         buildAttribute("divisions", BuilderUtil.stringValue(barline.getDivisions()));
         appendLine(">");
-        buildEditorial(barline.getEditorial());
         BarStyleColor barStyleColor = barline.getBarStyle();
         if (barStyleColor != null) {
             buildElementWithValueAndAttribute("bar-style", BuilderUtil.enumValue(barStyleColor.getBarStyle()), "color", barStyleColor.getColor());
         }
+        buildEditorial(barline.getEditorial());
+        // TODO: barline wavy-line
         PrintStyleAlign segnoPrint = barline.getSegnoPrint();
         if (segnoPrint != null) buildElementWithAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segnoPrint));
         PrintStyleAlign codaPrint = barline.getCodaPrint();
         if (codaPrint != null) buildElementWithAttributes("coda", FormattingBuilder.buildPrintStyleAlign(codaPrint));
+        // TODO: barline fermatas
         Ending ending = barline.getEnding();
         if (ending != null) {
             Map<String, String> attributes = new HashMap<>();

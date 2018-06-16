@@ -2,18 +2,26 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("fermata")
 public class Fermata extends Notation {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "fermata_shape")
     private FermataShape fermataShape;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private FermataType type;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
 
     public Fermata() {

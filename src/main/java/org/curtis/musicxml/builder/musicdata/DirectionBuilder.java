@@ -34,8 +34,8 @@ public class DirectionBuilder extends BaseBuilder {
         EditorialVoiceDirection editorialVoiceDirection = direction.getEditorialVoiceDirection();
         if (editorialVoiceDirection != null) {
             buildFormattedText("footnote", editorialVoiceDirection.getFootnote());
-            buildElement("level");
-            buildElement("voice");
+            buildLevel(editorialVoiceDirection.getLevel());
+            buildElementWithValue("voice", editorialVoiceDirection.getVoice());
         }
         SoundBuilder soundBuilder = new SoundBuilder(direction.getSound());
         append(soundBuilder.build().toString());

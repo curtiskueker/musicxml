@@ -2,6 +2,7 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
@@ -20,6 +21,7 @@ import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.note.notation.ornament.TrillSound;
 import org.curtis.musicxml.note.notation.ornament.Turn;
 import org.curtis.musicxml.note.notation.ornament.VerticalTurn;
+import org.curtis.musicxml.note.notation.ornament.WavyLine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +38,7 @@ public class OrnamentBuilder extends BaseBuilder {
 
         if (ornament instanceof PlacedTrillSound) buildPlacedTrillSound((PlacedTrillSound)ornament);
         else if (ornament instanceof HorizontalTurn) buildHorizontalTurn((HorizontalTurn)ornament);
+        else if (ornament instanceof WavyLine) buildWavyLine((WavyLine)ornament);
         else if (ornament instanceof Schleifer) buildSchleifer((Schleifer)ornament);
         else if (ornament instanceof Tremolo) buildTremolo((Tremolo)ornament);
         else if (ornament instanceof OtherOrnament) buildOtherOrnament((OtherOrnament)ornament);
@@ -90,6 +93,17 @@ public class OrnamentBuilder extends BaseBuilder {
         attributes.put("approach", BuilderUtil.enumValue(abstractMordent.getApproach()));
         attributes.put("departure", BuilderUtil.enumValue(abstractMordent.getDeparture()));
         buildElementWithAttributes(elementName, attributes);
+    }
+
+    private void buildWavyLine(WavyLine wavyLine) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(wavyLine.getType()));
+        attributes.put("number", BuilderUtil.stringValue(wavyLine.getNumber()));
+        attributes.putAll(PlacementBuilder.buildPosition(wavyLine.getPosition()));
+        attributes.put("placement", BuilderUtil.enumValue(wavyLine.getPlacement()));
+        attributes.put("color", wavyLine.getColor());
+        attributes.putAll(buildTrillSound(wavyLine.getTrillSound()));
+        buildElementWithAttributes("wavy-line", attributes);
     }
 
     private void buildSchleifer(Schleifer schleifer) {

@@ -39,6 +39,7 @@
         <class>org.curtis.musicxml.common.EditorialVoice</class>
         <class>org.curtis.musicxml.common.Font</class>
         <class>org.curtis.musicxml.common.FormattedText</class>
+        <class>org.curtis.musicxml.common.Level</class>
         <class>org.curtis.musicxml.common.LevelDisplay</class>
         <class>org.curtis.musicxml.common.Position</class>
         <class>org.curtis.musicxml.common.Printout</class>

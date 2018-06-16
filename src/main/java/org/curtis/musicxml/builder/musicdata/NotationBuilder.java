@@ -8,6 +8,7 @@ import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.Bezier;
+import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.NonArpeggiate;
 import org.curtis.musicxml.note.notation.Notation;
@@ -48,6 +49,7 @@ public class NotationBuilder extends BaseBuilder {
         else if (notation instanceof Ornaments) buildOrnaments((Ornaments)notation);
         else if (notation instanceof Technicals) buildTechnicals((Technicals)notation);
         else if (notation instanceof Articulations) buildArticulations((Articulations)notation);
+        else if (notation instanceof Fermata) buildFermata((Fermata)notation);
         else if (notation instanceof Arpeggiate) buildArpeggiate((Arpeggiate)notation);
         else if (notation instanceof NonArpeggiate) buildNonArpeggiate((NonArpeggiate)notation);
         else if (notation instanceof AccidentalMark) buildAccidentalMark((AccidentalMark)notation);
@@ -194,6 +196,13 @@ public class NotationBuilder extends BaseBuilder {
             append(articulationBuilder.build().toString());
         }
         appendLine("</articulations>");
+    }
+
+    private void buildFermata(Fermata fermata) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(fermata.getType()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(fermata.getPrintStyle()));
+        buildElementWithValueAndAttributes("fermzta", BuilderUtil.enumValue(fermata.getFermataShape()), attributes);
     }
 
     private void buildArpeggiate(Arpeggiate arpeggiate) {
