@@ -108,7 +108,7 @@ public class HarmonyBuilder extends BaseBuilder {
         Frame frame = harmony.getFrame();
         if (frame != null) {
             buildOpenElement("frame");
-            PlacementBuilder.buildPosition(frame.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttributes(PlacementBuilder.buildPosition(frame.getPosition()));
             buildAttribute("color", frame.getColor());
             buildAttribute("halign", BuilderUtil.enumValue(frame.getHalign()));
             buildAttribute("valign", BuilderUtil.enumValue(frame.getValignImage()));

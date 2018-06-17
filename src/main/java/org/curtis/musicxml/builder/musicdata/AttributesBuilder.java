@@ -48,7 +48,7 @@ public class AttributesBuilder extends BaseBuilder {
         for (Key key : attributes.getKeys()) {
             buildOpenElement("key");
             buildAttribute("number", key.getNumber());
-            FormattingBuilder.buildPrintStyle(key.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttributes(FormattingBuilder.buildPrintStyle(key.getPrintStyle()));
             buildAttribute("print-object", BuilderUtil.yesOrNo(key.getPrintObject()));
             buildCloseElement();
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);
@@ -66,7 +66,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildAttribute("number", time.getNumber());
             buildAttribute("symbol", BuilderUtil.enumValue(time.getSymbol()));
             buildAttribute("separator", BuilderUtil.enumValue(time.getSeparator()));
-            FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttributes(FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()));
             buildAttribute("print-object", BuilderUtil.yesOrNo(time.getPrintObject()));
             buildCloseElement();
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
@@ -89,7 +89,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildAttribute("number", BuilderUtil.stringValue(clef.getNumber()));
             buildAttribute("additional", BuilderUtil.yesOrNo(clef.getAdditional()));
             buildAttribute("after-barline", BuilderUtil.yesOrNo(clef.getAfterBarline()));
-            FormattingBuilder.buildPrintStyle(clef.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttributes(FormattingBuilder.buildPrintStyle(clef.getPrintStyle()));
             buildAttribute("print-object", BuilderUtil.yesOrNo(clef.getPrintObject()));
             buildCloseElement();
             String clefSign = BuilderUtil.enumValue(clef.getSign());
@@ -151,7 +151,7 @@ public class AttributesBuilder extends BaseBuilder {
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             buildOpenElement("measure-style");
             buildAttribute("number", measureStyle.getNumber());
-            FormattingBuilder.buildFont(measureStyle.getFont()).forEach((k, v) -> buildAttribute(k, v));
+            buildAttributes(FormattingBuilder.buildFont(measureStyle.getFont()));
             buildAttribute("color", measureStyle.getColor());
             buildCloseElement();
             if (measureStyle instanceof MultipleRest) {

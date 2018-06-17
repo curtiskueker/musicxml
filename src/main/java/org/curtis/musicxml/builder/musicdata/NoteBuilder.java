@@ -58,9 +58,9 @@ public class NoteBuilder extends BaseBuilder {
             buildAttribute("relative-x", BuilderUtil.stringValue(xPosition.getRelativeX()));
             buildAttribute("relative-y", BuilderUtil.stringValue(xPosition.getRelativeY()));
         }
-        FormattingBuilder.buildFont(note.getFont()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildFont(note.getFont()));
         buildAttribute("color", note.getColor());
-        FormattingBuilder.buildPrintout(note.getPrintout()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintout(note.getPrintout()));
         buildAttribute("dynamics", BuilderUtil.stringValue(note.getDynamics()));
         buildAttribute("end-dynamics", BuilderUtil.stringValue(note.getEndDynamics()));
         buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
@@ -230,7 +230,7 @@ public class NoteBuilder extends BaseBuilder {
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
         buildAttribute("justify", BuilderUtil.enumValue(lyric.getJustify()));
-        PlacementBuilder.buildPosition(lyric.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(PlacementBuilder.buildPosition(lyric.getPosition()));
         buildAttribute("placement", BuilderUtil.enumValue(lyric.getPlacement()));
         buildAttribute("color", lyric.getColor());
         buildAttribute("print-object", BuilderUtil.yesOrNo(lyric.getPrintObject()));

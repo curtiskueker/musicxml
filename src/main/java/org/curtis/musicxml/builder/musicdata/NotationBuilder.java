@@ -109,7 +109,7 @@ public class NotationBuilder extends BaseBuilder {
         buildAttribute("show-number", BuilderUtil.enumValue(tuplet.getShowNumber()));
         buildAttribute("show-type", BuilderUtil.enumValue(tuplet.getShowType()));
         buildAttribute("line-shape", BuilderUtil.enumValue(tuplet.getLineShape()));
-        PlacementBuilder.buildPosition(tuplet.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(PlacementBuilder.buildPosition(tuplet.getPosition()));
         buildAttribute("placement", BuilderUtil.enumValue(tuplet.getPlacement()));
         buildCloseElement();
         TupletPortion tupletActual = tuplet.getTupletActual();

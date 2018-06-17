@@ -119,9 +119,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildDynamics(Dynamics dynamics) {
         buildOpenElement("dynamics");
-        FormattingBuilder.buildPrintStyleAlign(dynamics.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyleAlign(dynamics.getPrintStyleAlign()));
         buildAttribute("placement", BuilderUtil.enumValue(dynamics.getPlacement()));
-        FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()));
         buildAttribute("enclosure", BuilderUtil.enumValue(dynamics.getEnclosure()));
         buildCloseElement();
         for (DynamicsType dynamicsType : dynamics.getTypes()) {
@@ -164,7 +164,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildMetronome(Metronome metronome) {
         buildOpenElement("metronome");
-        FormattingBuilder.buildPrintStyleAlign(metronome.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyleAlign(metronome.getPrintStyleAlign()));
         buildAttribute("justify", BuilderUtil.enumValue(metronome.getJustify()));
         buildAttribute("parentheses", BuilderUtil.yesOrNo(metronome.getParentheses()));
         buildCloseElement();
@@ -222,7 +222,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildHarpPedals(HarpPedals harpPedals) {
         buildOpenElement("harp-pedals");
-        FormattingBuilder.buildPrintStyleAlign(harpPedals.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyleAlign(harpPedals.getPrintStyleAlign()));
         buildCloseElement();
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
             buildStartElement("pedal-tuning");
@@ -285,7 +285,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {
         buildOpenElement("accordion-registration");
-        FormattingBuilder.buildPrintStyleAlign(accordionRegistration.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyleAlign(accordionRegistration.getPrintStyleAlign()));
         buildCloseElement();
         if (accordionRegistration.getAccordionHigh()) buildElement("accordion-high");
         buildElementWithValue("accordion-middle", accordionRegistration.getAccordionMiddle());
@@ -295,7 +295,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
 
     private void buildPercussion(Percussion percussion) {
         buildOpenElement("percussion");
-        FormattingBuilder.buildPrintStyleAlign(percussion.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyleAlign(percussion.getPrintStyleAlign()));
         buildAttribute("enclosure", BuilderUtil.enumValue(percussion.getEnclosure()));
         buildCloseElement();
         if (percussion instanceof Glass) buildGlass((Glass)percussion);

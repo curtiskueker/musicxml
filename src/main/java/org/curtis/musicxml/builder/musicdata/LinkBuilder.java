@@ -19,7 +19,7 @@ public class LinkBuilder extends BaseBuilder {
         append(xLinkBuilder.buildLinkAttributes(link.getLinkAttributes()));
         buildAttribute("name", link.getName());
         append(xLinkBuilder.buildElementPosition(link.getElementPosition()));
-        PlacementBuilder.buildPosition(link.getPosition()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(PlacementBuilder.buildPosition(link.getPosition()));
         buildEndElement("link");
 
         return stringBuilder;

@@ -54,6 +54,12 @@ public abstract class OutputBuilder {
         append("\"");
     }
 
+    protected void buildAttributes(Map<String, String> attributes) {
+        if (attributes == null || attributes.isEmpty()) return;
+
+        attributes.forEach((k, v) -> buildAttribute(k, v));
+    }
+
     protected void buildAttribute(String attributeName, Integer attributeValue) {
         if (attributeValue == null) return;
 

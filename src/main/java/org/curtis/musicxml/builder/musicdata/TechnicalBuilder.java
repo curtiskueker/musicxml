@@ -85,7 +85,7 @@ public class TechnicalBuilder extends BaseBuilder {
     private void buildHarmonic(Harmonic harmonic) {
         buildOpenElement("harmonic");
         buildAttribute("print-object", BuilderUtil.yesOrNo(harmonic.getPrintObject()));
-        FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()));
         buildAttribute("placement", BuilderUtil.enumValue(harmonic.getPlacement()));
         buildCloseElement();
         HarmonicType harmonicType = harmonic.getHarmonicType();
@@ -179,8 +179,8 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildBend(Bend bend) {
         buildOpenElement("bend");
-        FormattingBuilder.buildPrintStyle(bend.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
-        buildBendSound(bend.getBendSound()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyle(bend.getPrintStyle()));
+        buildAttributes(buildBendSound(bend.getBendSound()));
         buildCloseElement();
         buildElementWithValue("bend-alter", bend.getBendAlter());
         BendType bendType = bend.getBendType();
@@ -214,7 +214,7 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildHole(Hole hole) {
         buildOpenElement("hole");
-        FormattingBuilder.buildPrintStyle(hole.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyle(hole.getPrintStyle()));
         buildAttribute("placement", BuilderUtil.enumValue(hole.getPlacement()));
         buildCloseElement();
         String holeType = hole.getHoleType();
@@ -227,7 +227,7 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildArrow(Arrow arrow) {
         buildOpenElement("arrow");
-        FormattingBuilder.buildPrintStyle(arrow.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyle(arrow.getPrintStyle()));
         buildAttribute("placement", BuilderUtil.enumValue(arrow.getPlacement()));
         buildCloseElement();
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));

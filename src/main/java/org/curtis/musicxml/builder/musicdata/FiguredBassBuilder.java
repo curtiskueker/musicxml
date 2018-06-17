@@ -17,8 +17,8 @@ public class FiguredBassBuilder extends BaseBuilder {
         if (figuredBass == null) return stringBuilder;
 
         buildOpenElement("figured-bass");
-        FormattingBuilder.buildPrintStyle(figuredBass.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
-        FormattingBuilder.buildPrintout(figuredBass.getPrintout()).forEach((k, v) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyle(figuredBass.getPrintStyle()));
+        buildAttributes(FormattingBuilder.buildPrintout(figuredBass.getPrintout()));
         buildAttribute("parentheses", BuilderUtil.yesOrNo(figuredBass.getParentheses()));
         buildCloseElement();
         for (Figure figure : figuredBass.getFigures()) {
