@@ -225,7 +225,10 @@ public class DirectionTypeBuilder extends BaseBuilder {
         FormattingBuilder.buildPrintStyleAlign(harpPedals.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         appendLine(">");
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
-            buildElement("pedal-tuning");
+            appendLine("<pedal-tuning>");
+            buildElementWithValue("pedal-step", BuilderUtil.enumValue(pedalTuning.getPedalStep()).toUpperCase());
+            buildElementWithValue("pedal-alter", pedalTuning.getPedalAlter());
+            appendLine("</pedal-tuning>");
         }
         appendLine("</harp-pedals>");
     }
@@ -252,7 +255,11 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildScordatura(Scordatura scordatura) {
         appendLine("<scordatura>");
         for (Accord accord : scordatura.getAccords()) {
-            buildElement("accord");
+            append("<accord");
+            buildAttribute("string", accord.getString());
+            appendLine(">");
+            buildTuning(accord.getTuning());
+            appendLine("</accord>");
         }
         appendLine("</scordatura>");
     }

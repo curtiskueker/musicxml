@@ -122,7 +122,11 @@ public class AttributesBuilder extends BaseBuilder {
             buildElementWithValue("staff-type", BuilderUtil.enumValue(staffDetails.getStaffType()));
             buildElementWithValue("staff-lines", staffDetails.getStaffLines());
             for (StaffTuning staffTuning : staffDetails.getStaffTunings()) {
-                buildElementWithAttribute("staff-tuning", "line", staffTuning.getLine());
+                append("<staff-tuning");
+                buildAttribute("line", staffTuning.getLine());
+                appendLine(">");
+                buildTuning(staffTuning.getTuning());
+                appendLine("</staff-tuning>");
             }
             buildElementWithValue("capo", staffDetails.getCapo());
             buildElementWithValue("staff-size", staffDetails.getStaffSize());
@@ -133,6 +137,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildAttribute("number", transpose.getNumber());
             appendLine(">");
             buildElementWithValue("diatonic", transpose.getDiatonic());
+            buildElementWithValue("chromatic", transpose.getChromatic());
             buildElementWithValue("octave-change", transpose.getOctaveChange());
             if (transpose.getDoubled()) buildElement("double");
             appendLine("</transpose>");
@@ -196,7 +201,8 @@ public class AttributesBuilder extends BaseBuilder {
 
     private void buildNonTraditionalKey(NonTraditionalKey nonTraditionalKey) {
         for (NonTraditionalKeyType nonTraditionalKeyType : nonTraditionalKey.getNonTraditionalKeyList()) {
-
+            buildElementWithValue("key-step", BuilderUtil.enumValue(nonTraditionalKeyType.getKeyStep()).toUpperCase());
+            buildElementWithValue("key-alter", nonTraditionalKeyType.getKeyAlter());
         }
     }
 

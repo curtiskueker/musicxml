@@ -3,22 +3,29 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("fingering")
 public class Fingering extends Technical {
-    @Transient
+    @Column
     private String value;
-    @Transient
+    @Column
     private Boolean substitution;
-    @Transient
+    @Column
     private Boolean alternate;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Location placement;
 
     public Fingering() {

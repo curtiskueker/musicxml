@@ -2,18 +2,22 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Font;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("fret")
 public class Fret extends Technical {
-    @Transient
+    @Column
     private Integer value;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "font_id")
     private Font font;
-    @Transient
+    @Column
     private String color;
 
     public Fret() {

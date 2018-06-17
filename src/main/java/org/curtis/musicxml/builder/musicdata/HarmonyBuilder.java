@@ -71,14 +71,14 @@ public class HarmonyBuilder extends BaseBuilder {
                 Map<String, String> bassStepAttributes = new HashMap<>();
                 bassStepAttributes.put("text", bassStep.getText());
                 bassStepAttributes.putAll(FormattingBuilder.buildPrintStyle(bassStep.getPrintStyle()));
-                buildElementWithAttributes("bass-step", bassStepAttributes);
+                buildElementWithValueAndAttributes("bass-step", BuilderUtil.enumValue(bassStep.getStep()).toUpperCase(), bassStepAttributes);
                 BassAlter bassAlter = bass.getBassAlter();
                 if (bassAlter != null) {
                     Map<String, String> bassAlterAttributes = new HashMap<>();
                     bassAlterAttributes.put("print-object", BuilderUtil.yesOrNo(bassAlter.getPrintObject()));
                     bassAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(bassAlter.getPrintStyle()));
                     bassAlterAttributes.put("location", BuilderUtil.enumValue(bassAlter.getLocation()));
-                    buildElementWithAttributes("bass-alter", bassAlterAttributes);
+                    buildElementWithValueAndAttributes("bass-alter", BuilderUtil.stringValue(bassAlter.getSemitones()), bassAlterAttributes);
                 }
                 appendLine("</bass>");
             }
@@ -96,7 +96,7 @@ public class HarmonyBuilder extends BaseBuilder {
                 Map<String, String> degreeAlterAttributes = new HashMap<>();
                 degreeAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(degreeAlter.getPrintStyle()));
                 degreeAlterAttributes.put("plus-minus", BuilderUtil.yesOrNo(degreeAlter.getPlusMinus()));
-                buildElementWithAttributes("degree-alter", degreeAlterAttributes);
+                buildElementWithValueAndAttributes("degree-alter", BuilderUtil.stringValue(degreeAlter.getSemitones()), degreeAlterAttributes);
                 DegreeType degreeType = degree.getDegreeType();
                 Map<String, String> degreeTypeAttributes = new HashMap<>();
                 degreeTypeAttributes.put("text", degreeType.getText());
@@ -127,6 +127,9 @@ public class HarmonyBuilder extends BaseBuilder {
             }
             for (FrameNote frameNote : frame.getFrameNotes()) {
                 appendLine("<frame-note>");
+                // TODO: frame note string
+                // TODO: frame note fret
+                // TODO: frame note fingering
                 Barre barre = frameNote.getBarre();
                 if (barre != null) {
                     Map<String, String> barreAttributes = new HashMap<>();
@@ -151,14 +154,14 @@ public class HarmonyBuilder extends BaseBuilder {
         Map<String, String> rootStepAttributes = new HashMap<>();
         rootStepAttributes.put("text", rootStep.getText());
         rootStepAttributes.putAll(FormattingBuilder.buildPrintStyle(rootStep.getPrintStyle()));
-        buildElementWithAttributes("root-step", rootStepAttributes);
+        buildElementWithValueAndAttributes("root-step", BuilderUtil.enumValue(rootStep.getStep()).toUpperCase(), rootStepAttributes);
         RootAlter rootAlter = root.getRootAlter();
         if (rootAlter != null) {
             Map<String, String> rootAlterAttributes = new HashMap<>();
             rootAlterAttributes.put("print-object", BuilderUtil.yesOrNo(rootAlter.getPrintObject()));
             rootAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(rootAlter.getPrintStyle()));
             rootAlterAttributes.put("location", BuilderUtil.enumValue(rootAlter.getLocation()));
-            buildElementWithAttributes("root-alter", rootAlterAttributes);
+            buildElementWithValueAndAttributes("root-alter", BuilderUtil.stringValue(rootAlter.getSemitones()), rootAlterAttributes);
         }
         appendLine("</root>");
     }

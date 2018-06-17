@@ -3,16 +3,20 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.attributes.Tuning;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "accord")
 public class Accord extends DatabaseItem {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tuning_id")
     private Tuning tuning;
-    @Transient
+    @Column
     private Integer string;
 
     public Accord() {

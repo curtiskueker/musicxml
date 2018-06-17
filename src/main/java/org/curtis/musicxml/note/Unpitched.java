@@ -1,13 +1,17 @@
 package org.curtis.musicxml.note;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("unpitched")
 public class Unpitched extends FullNoteType {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "display_step")
     private Step displayStep;
     @Transient
     private Integer displayOctave;

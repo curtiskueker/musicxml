@@ -11,13 +11,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("bend")
 public class Bend extends Technical {
-    @Transient
+    @Column(name = "bend_alter")
     private BigDecimal bendAlter;
     @Enumerated(EnumType.STRING)
     @Column(name = "bend_type")

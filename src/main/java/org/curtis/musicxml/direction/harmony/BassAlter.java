@@ -12,13 +12,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bass_alter")
 public class BassAlter extends DatabaseItem {
-    @Transient
+    @Column
     private BigDecimal semitones;
     @Column(name = "print_object")
     private Boolean printObject;

@@ -189,14 +189,16 @@ public class NoteBuilder extends BaseBuilder {
 
     private void buildPitch(Pitch pitch) {
         appendLine("<pitch>");
-        // TODO: pitch values
-        buildElementWithValue("step", "A");
+        buildElementWithValue("step", BuilderUtil.enumValue(pitch.getStep()).toUpperCase());
+        buildElementWithValue("alter", pitch.getAlter());
         buildElementWithValue("octave", 0);
         appendLine("</pitch>");
     }
 
     private void buildUnpitched(Unpitched unpitched) {
-        buildElement("unpitched");
+        appendLine("<unpitched>");
+        buildElementWithValue("display-step", BuilderUtil.enumValue(unpitched.getDisplayStep()).toUpperCase());
+        appendLine("</unpitched>");
     }
 
     private void buildRest(Rest rest) {

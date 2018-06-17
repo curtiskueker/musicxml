@@ -1,12 +1,25 @@
 package org.curtis.musicxml.attributes;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.note.Step;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
-public class Tuning {
+@Entity
+@Table(name = "tuning")
+public class Tuning extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tuning_step")
     private Step tuningStep;
+    @Column(name = "tuning_alter")
     private BigDecimal tuningAlter;
+    @Transient
     private Integer tuningOctave;
 
     public Tuning() {

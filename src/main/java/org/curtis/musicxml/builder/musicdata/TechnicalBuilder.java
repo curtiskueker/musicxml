@@ -10,7 +10,9 @@ import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.BendType;
 import org.curtis.musicxml.note.notation.technical.DoubleTongue;
 import org.curtis.musicxml.note.notation.technical.DownBow;
+import org.curtis.musicxml.note.notation.technical.Fingering;
 import org.curtis.musicxml.note.notation.technical.Fingernails;
+import org.curtis.musicxml.note.notation.technical.Fret;
 import org.curtis.musicxml.note.notation.technical.HammerOn;
 import org.curtis.musicxml.note.notation.technical.HammerOnPullOff;
 import org.curtis.musicxml.note.notation.technical.Handbell;
@@ -25,6 +27,7 @@ import org.curtis.musicxml.note.notation.technical.OtherTechnical;
 import org.curtis.musicxml.note.notation.technical.Pluck;
 import org.curtis.musicxml.note.notation.technical.SnapPizzicato;
 import org.curtis.musicxml.note.notation.technical.Stopped;
+import org.curtis.musicxml.note.notation.technical.StringNumber;
 import org.curtis.musicxml.note.notation.technical.Tap;
 import org.curtis.musicxml.note.notation.technical.Technical;
 import org.curtis.musicxml.note.notation.technical.ThumbPosition;
@@ -50,11 +53,14 @@ public class TechnicalBuilder extends BaseBuilder {
         else if (technical instanceof Harmonic) buildHarmonic((Harmonic)technical);
         else if (technical instanceof OpenString) buildOpenString((OpenString)technical);
         else if (technical instanceof ThumbPosition) buildThumbPosition((ThumbPosition)technical);
+        else if (technical instanceof Fingering) buildFingering((Fingering)technical);
         else if (technical instanceof Pluck) buildPluck((Pluck)technical);
         else if (technical instanceof DoubleTongue) buildDoubleTongue((DoubleTongue)technical);
         else if (technical instanceof TripleTongue) buildTripleTongue((TripleTongue)technical);
         else if (technical instanceof Stopped) buildStopped((Stopped)technical);
         else if (technical instanceof SnapPizzicato) buildSnapPizzicato((SnapPizzicato)technical);
+        else if (technical instanceof Fret) buildFret((Fret)technical);
+        else if (technical instanceof StringNumber) buildStringNumber((StringNumber)technical);
         else if (technical instanceof HammerOnPullOff) buildHammerOnPullOf((HammerOnPullOff)technical);
         else if (technical instanceof Bend) buildBend((Bend)technical);
         else if (technical instanceof Tap) buildTap((Tap)technical);
@@ -118,6 +124,15 @@ public class TechnicalBuilder extends BaseBuilder {
         buildPlacement("thumb-position", thumbPosition.getPlacement());
     }
 
+    private void buildFingering(Fingering fingering) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("substitution", BuilderUtil.yesOrNo(fingering.getSubstitution()));
+        attributes.put("alternate", BuilderUtil.yesOrNo(fingering.getAlternate()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(fingering.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(fingering.getPlacement()));
+        buildElementWithValueAndAttributes("fingering", fingering.getValue(), attributes);
+    }
+
     private void buildPluck(Pluck pluck) {
         buildPlacementText("pluck", pluck.getPlacementText());
     }
@@ -138,6 +153,20 @@ public class TechnicalBuilder extends BaseBuilder {
         buildPlacement("snap-pizzicato", snapPizzicato.getPlacement());
     }
 
+    private void buildFret(Fret fret) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildFont(fret.getFont()));
+        attributes.put("color", fret.getColor());
+        buildElementWithValueAndAttributes("fret", fret.getValue(), attributes);
+    }
+
+    private void buildStringNumber(StringNumber stringNumber) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(stringNumber.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(stringNumber.getPlacement()));
+        buildElementWithValueAndAttributes("string", stringNumber.getStringNumber(), attributes);
+    }
+
     private void buildHammerOnPullOf(HammerOnPullOff hammerOnPullOff) {
         String elementName = hammerOnPullOff instanceof HammerOn ? "hammer-on" : "pull-off";
         Map<String, String> attributes = new HashMap<>();
@@ -153,6 +182,7 @@ public class TechnicalBuilder extends BaseBuilder {
         FormattingBuilder.buildPrintStyle(bend.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildBendSound(bend.getBendSound()).forEach((k, v) -> buildAttribute(k, v));
         appendLine(">");
+        buildElementWithValue("bend-alter", bend.getBendAlter());
         BendType bendType = bend.getBendType();
         if (bendType != null) {
             switch (bendType) {

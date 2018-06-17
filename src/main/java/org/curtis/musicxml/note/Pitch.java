@@ -1,16 +1,20 @@
 package org.curtis.musicxml.note;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("pitch")
 public class Pitch extends FullNoteType {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private Step step;
-    @Transient
+    @Column(name = "pitch_alter")
     private BigDecimal alter;
     @Transient
     private Integer octave;

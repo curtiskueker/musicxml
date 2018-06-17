@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.attributes.Tuning;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;
@@ -82,6 +83,8 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElementWithValue(String elementName, BigDecimal elementValue) {
+        if (elementValue == null) return;
+
         buildElementWithValue(elementName, elementValue.toString());
     }
 
@@ -237,5 +240,12 @@ public abstract class OutputBuilder {
         attributes.put("reference", BuilderUtil.yesOrNo(level.getReference()));
         attributes.putAll(FormattingBuilder.buildLevelDisplay(level.getLevelDisplay()));
         buildElementWithValueAndAttributes("level", level.getValue(), attributes);
+    }
+
+    protected void buildTuning(Tuning tuning) {
+        if (tuning == null) return;
+
+        buildElementWithValue("tuning-step", BuilderUtil.enumValue(tuning.getTuningStep()).toUpperCase());
+        buildElementWithValue("tuning-alter", tuning.getTuningAlter());
     }
 }

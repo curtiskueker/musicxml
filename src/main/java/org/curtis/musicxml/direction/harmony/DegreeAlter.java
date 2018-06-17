@@ -9,13 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "degree_alter")
 public class DegreeAlter extends DatabaseItem {
-    @Transient
+    @Column
     private BigDecimal semitones;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

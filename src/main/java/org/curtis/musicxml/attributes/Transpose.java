@@ -5,7 +5,6 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -13,7 +12,7 @@ import java.math.BigDecimal;
 public class Transpose extends DatabaseItem {
     @Column
     private Integer diatonic;
-    @Transient
+    @Column
     private BigDecimal chromatic;
     @Column(name = "octave_change")
     private Integer octaveChange;
