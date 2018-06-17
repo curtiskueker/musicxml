@@ -40,10 +40,6 @@ public abstract class OutputBuilder {
         stringBuilder.append(string);
     }
 
-    protected void clear() {
-        stringBuilder = new StringBuilder();
-    }
-
     protected void buildAttribute(String attributeName, String attributeValue) {
         if (StringUtil.isEmpty(attributeValue)) return;
 

@@ -15,8 +15,7 @@ public class BookmarkBuilder extends BaseBuilder {
         buildOpenElement("bookmark");
         buildAttribute("id", bookmark.getBookmarkId());
         buildAttribute("name", bookmark.getName());
-        XLinkBuilder xLinkBuilder = new XLinkBuilder();
-        append(xLinkBuilder.buildElementPosition(bookmark.getElementPosition()));
+        append(XLinkBuilder.buildElementPosition(bookmark.getElementPosition()));
         buildCloseEmptyElement();
 
         return stringBuilder;

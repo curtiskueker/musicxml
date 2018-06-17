@@ -15,10 +15,9 @@ public class LinkBuilder extends BaseBuilder {
     public StringBuilder build() {
         buildOpenElement("link");
         buildCloseElement();
-        XLinkBuilder xLinkBuilder = new XLinkBuilder();
-        append(xLinkBuilder.buildLinkAttributes(link.getLinkAttributes()));
+        append(XLinkBuilder.buildLinkAttributes(link.getLinkAttributes()));
         buildAttribute("name", link.getName());
-        append(xLinkBuilder.buildElementPosition(link.getElementPosition()));
+        append(XLinkBuilder.buildElementPosition(link.getElementPosition()));
         buildAttributes(PlacementBuilder.buildPosition(link.getPosition()));
         buildEndElement("link");
 

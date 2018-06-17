@@ -57,8 +57,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         LinkAttributes opus = scoreHeader.getOpus();
         if (opus != null) {
             buildOpenElement("opus");
-            XLinkBuilder xLinkBuilder = new XLinkBuilder();
-            append(xLinkBuilder.buildLinkAttributes(opus));
+            append(XLinkBuilder.buildLinkAttributes(opus));
             buildCloseEmptyElement();
         }
         buildEndElement("work");

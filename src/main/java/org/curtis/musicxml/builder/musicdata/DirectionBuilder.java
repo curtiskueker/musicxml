@@ -29,8 +29,7 @@ public class DirectionBuilder extends BaseBuilder {
             append(directionTypeBuilder.build().toString());
             buildEndElement("direction-type");
         }
-        DirectionBuilder directionBuilder = new DirectionBuilder();
-        append(directionBuilder.buildOffset(direction.getOffset()).toString());
+        append(buildOffset(direction.getOffset()));
         EditorialVoiceDirection editorialVoiceDirection = direction.getEditorialVoiceDirection();
         if (editorialVoiceDirection != null) {
             buildFormattedText("footnote", editorialVoiceDirection.getFootnote());
@@ -45,12 +44,12 @@ public class DirectionBuilder extends BaseBuilder {
         return stringBuilder;
     }
 
-    public StringBuilder buildOffset(Offset offset) {
-        clear();
-        if (offset == null) return stringBuilder;
+    public static String buildOffset(Offset offset) {
+        if (offset == null) return "";
 
-        buildElementWithValueAndAttribute("offset", BuilderUtil.stringValue(offset.getDivisions()), "sound", BuilderUtil.yesOrNo(offset.getSound()));
+        DirectionBuilder directionBuilder = new DirectionBuilder();
+        directionBuilder.buildElementWithValueAndAttribute("offset", BuilderUtil.stringValue(offset.getDivisions()), "sound", BuilderUtil.yesOrNo(offset.getSound()));
 
-        return stringBuilder;
+        return directionBuilder.stringBuilder.toString();
     }
 }

@@ -33,8 +33,7 @@ public class SoundBuilder extends BaseBuilder {
         buildAttribute("soft-pedal", sound.getSoftPedal());
         buildAttribute("sostenuto-pedal", sound.getSostenutoPedal());
         buildCloseElement();
-        DirectionBuilder directionBuilder = new DirectionBuilder();
-        append(directionBuilder.buildOffset(sound.getOffset()).toString());
+        append(DirectionBuilder.buildOffset(sound.getOffset()));
         buildEndElement("sound");
 
         return stringBuilder;
