@@ -107,9 +107,9 @@ public class NoteBuilder extends BaseBuilder {
         }
         TimeModification timeModification = note.getTimeModification();
         if (timeModification != null) {
-            appendLine("<time-modification>");
+            buildStartElement("time-modification");
             buildTimeModification(note.getTimeModification());
-            appendLine("</time-modification>");
+            buildEndElement("time-modification");
         }
         Stem stem = note.getStem();
         if (stem != null) {
@@ -143,7 +143,7 @@ public class NoteBuilder extends BaseBuilder {
         }
         List<NoteheadText> noteheadTextList = note.getNoteheadTextList();
         if (!noteheadTextList.isEmpty()) {
-            appendLine("<notehead-text>");
+            buildStartElement("notehead-text");
             for (NoteheadText noteheadText : noteheadTextList) {
                 if (noteheadText instanceof NoteheadDisplayText) {
                     buildFormattedText("display-text", ((NoteheadDisplayText)noteheadText).getText());
@@ -151,7 +151,7 @@ public class NoteBuilder extends BaseBuilder {
                     buildAccidentalText(((NoteheadAccidentalText) noteheadText).getText());
                 }
             }
-            appendLine("</notehead_text>");
+            buildEndElement("notehead_text");
         }
         buildElementWithValue("staff", note.getStaff());
         List<Beam> beams = note.getBeams();
@@ -170,7 +170,7 @@ public class NoteBuilder extends BaseBuilder {
             for (Notations notations : notationsList) buildNotations(notations);
         }
         for (Lyric lyric : note.getLyrics()) buildLyric(lyric);
-        appendLine("</note>");
+        buildEndElement("note");
 
         return stringBuilder;
     }
@@ -186,18 +186,18 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     private void buildPitch(Pitch pitch) {
-        appendLine("<pitch>");
+        buildStartElement("pitch");
         buildElementWithValue("step", BuilderUtil.enumValue(pitch.getStep()).toUpperCase());
         buildElementWithValue("alter", pitch.getAlter());
         buildElementWithValue("octave", pitch.getOctave());
-        appendLine("</pitch>");
+        buildEndElement("pitch");
     }
 
     private void buildUnpitched(Unpitched unpitched) {
-        appendLine("<unpitched>");
+        buildStartElement("unpitched");
         buildElementWithValue("display-step", BuilderUtil.enumValue(unpitched.getDisplayStep()).toUpperCase());
         buildElementWithValue("display-octave", unpitched.getDisplayOctave());
-        appendLine("</unpitched>");
+        buildEndElement("unpitched");
     }
 
     private void buildRest(Rest rest) {
@@ -206,7 +206,7 @@ public class NoteBuilder extends BaseBuilder {
         buildCloseElement();
         buildElementWithValue("display-step", BuilderUtil.enumValue(rest.getDisplayStep()).toUpperCase());
         buildElementWithValue("display-octave", rest.getDisplayOctave());
-        appendLine("</rest>");
+        buildEndElement("rest");
     }
 
     public static String buildBeamType(BeamType beamType) {
@@ -222,7 +222,7 @@ public class NoteBuilder extends BaseBuilder {
             NotationBuilder notationBuilder = new NotationBuilder(notation);
             append(notationBuilder.build().toString());
         }
-        appendLine("</notations>");
+        buildEndElement("notations");
     }
 
     private void buildLyric(Lyric lyric) {
@@ -271,6 +271,6 @@ public class NoteBuilder extends BaseBuilder {
         if (lyric.getEndLine()) buildElement("end-line");
         if (lyric.getEndParagraph()) buildElement("end-paragraph");
         buildEditorial(lyric.getEditorial());
-        appendLine("</lyric>");
+        buildEndElement("lyric");
     }
 }

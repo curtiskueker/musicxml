@@ -41,7 +41,7 @@ public class AttributesBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        appendLine("<attributes>");
+        buildStartElement("attributes");
         buildEditorial(attributes.getEditorial());
         BigDecimal divisions = attributes.getDivisions();
         if (divisions !=  null) buildElementWithValue("divisions", BuilderUtil.stringValue(divisions));
@@ -59,7 +59,7 @@ public class AttributesBuilder extends BaseBuilder {
                 attributes.put("cancel", BuilderUtil.yesOrNo(keyOctave.getCancel()));
                 buildElementWithValueAndAttributes("key-octave", keyOctave.getOctave(), attributes);
             }
-            appendLine("</key>");
+            buildEndElement("key");
         }
         for (Time time : attributes.getTimeList()) {
             buildOpenElement("time");
@@ -71,7 +71,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildCloseElement();
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
             else if (time instanceof SenzaMisura) buildSenzaMisura((SenzaMisura)time);
-            appendLine("</time>");
+            buildEndElement("time");
         }
         buildElementWithValue("staves", attributes.getStaves());
         PartSymbol partSymbol = attributes.getPartSymbol();
@@ -110,7 +110,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildElementWithValue("sign", clefSign);
             buildElementWithValue("line", clef.getLine());
             buildElementWithValue("clef-octave-change", clef.getClefOctaveChange());
-            appendLine("</clef>");
+            buildEndElement("clef");
         }
         for (StaffDetails staffDetails : attributes.getStaffDetailsList()) {
             buildOpenElement("staff-details");
@@ -126,11 +126,11 @@ public class AttributesBuilder extends BaseBuilder {
                 buildAttribute("line", staffTuning.getLine());
                 buildCloseElement();
                 buildTuning(staffTuning.getTuning());
-                appendLine("</staff-tuning>");
+                buildEndElement("staff-tuning");
             }
             buildElementWithValue("capo", staffDetails.getCapo());
             buildElementWithValue("staff-size", staffDetails.getStaffSize());
-            appendLine("</staff-details>");
+            buildEndElement("staff-details");
         }
         for (Transpose transpose : attributes.getTranspositions()) {
             buildOpenElement("transpose");
@@ -140,7 +140,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildElementWithValue("chromatic", transpose.getChromatic());
             buildElementWithValue("octave-change", transpose.getOctaveChange());
             if (transpose.getDoubled()) buildElement("double");
-            appendLine("</transpose>");
+            buildEndElement("transpose");
         }
         for (Directive directive : attributes.getDirectives()) {
             Map<String, String> directiveAttributes = new HashMap<>();
@@ -173,7 +173,7 @@ public class AttributesBuilder extends BaseBuilder {
                 buildAttribute("use-dots", BuilderUtil.yesOrNo(beatRepeat.getUseDots()));
                 buildCloseElement();
                 buildSlashGroup(beatRepeat.getSlashGroup());
-                appendLine("</beat-repeat>");
+                buildEndElement("beat-repeat");
             }
             else if (measureStyle instanceof Slash) {
                 Slash slash = (Slash)measureStyle;
@@ -183,11 +183,11 @@ public class AttributesBuilder extends BaseBuilder {
                 buildAttribute("use-stems", BuilderUtil.yesOrNo(slash.getUseStems()));
                 buildCloseElement();
                 buildSlashGroup(slash.getSlashGroup());
-                appendLine("</slash>");
+                buildEndElement("slash");
             }
-            appendLine("</measure-style>");
+            buildEndElement("measure-style");
         }
-        appendLine("</attributes>");
+        buildEndElement("attributes");
 
         return stringBuilder;
     }
@@ -222,7 +222,7 @@ public class AttributesBuilder extends BaseBuilder {
             for (TimeSignatureType timeSignatureType : interchangeableTimeSignature.getTimeSignatureList()) {
                 buildTimeSignatureType(timeSignatureType);
             }
-            appendLine("</interchangeable>");
+            buildEndElement("interchangeable");
         }
     }
 

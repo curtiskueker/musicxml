@@ -20,7 +20,7 @@ public class LinkBuilder extends BaseBuilder {
         buildAttribute("name", link.getName());
         append(xLinkBuilder.buildElementPosition(link.getElementPosition()));
         PlacementBuilder.buildPosition(link.getPosition()).forEach((k, v) -> buildAttribute(k, v));
-        appendLine("</link>");
+        buildEndElement("link");
 
         return stringBuilder;
     }

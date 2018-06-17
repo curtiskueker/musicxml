@@ -127,7 +127,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         for (DynamicsType dynamicsType : dynamics.getTypes()) {
             buildElement(BuilderUtil.enumValue(dynamicsType));
         }
-        appendLine("</dynamics>");
+        buildEndElement("dynamics");
     }
 
     private void buildDashes(Dashes dashes) {
@@ -170,7 +170,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         buildCloseElement();
         if (metronome instanceof BeatMetronome) buildBeatMetronome((BeatMetronome)metronome);
         else if (metronome instanceof NoteMetronome) buildNoteMetronome((NoteMetronome)metronome);
-        appendLine("</metronome>");
+        buildEndElement("metronome");
     }
 
     private void buildBeatMetronome(BeatMetronome beatMetronome) {
@@ -206,7 +206,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
             buildAttribute("show-number", BuilderUtil.enumValue(metronomeTuplet.getShowNumber()));
             buildCloseElement();
             buildTimeModification(metronomeTuplet.getTimeModification());
-            appendLine("<metronome-tuplet>");
+            buildStartElement("metronome-tuplet");
         }
     }
 
@@ -225,12 +225,12 @@ public class DirectionTypeBuilder extends BaseBuilder {
         FormattingBuilder.buildPrintStyleAlign(harpPedals.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         buildCloseElement();
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
-            appendLine("<pedal-tuning>");
+            buildStartElement("pedal-tuning");
             buildElementWithValue("pedal-step", BuilderUtil.enumValue(pedalTuning.getPedalStep()).toUpperCase());
             buildElementWithValue("pedal-alter", pedalTuning.getPedalAlter());
-            appendLine("</pedal-tuning>");
+            buildEndElement("pedal-tuning");
         }
-        appendLine("</harp-pedals>");
+        buildEndElement("harp-pedals");
     }
 
     private void buildDamp(Damp damp) {
@@ -253,15 +253,15 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildScordatura(Scordatura scordatura) {
-        appendLine("<scordatura>");
+        buildStartElement("scordatura");
         for (Accord accord : scordatura.getAccords()) {
             buildOpenElement("accord");
             buildAttribute("string", accord.getString());
             buildCloseElement();
             buildTuning(accord.getTuning());
-            appendLine("</accord>");
+            buildEndElement("accord");
         }
-        appendLine("</scordatura>");
+        buildEndElement("scordatura");
     }
 
     private void buildImage(Image image) {
@@ -290,7 +290,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         if (accordionRegistration.getAccordionHigh()) buildElement("accordion-high");
         buildElementWithValue("accordion-middle", accordionRegistration.getAccordionMiddle());
         if (accordionRegistration.getAccordionLow()) buildElement("accordion-low");
-        appendLine("</accordion-registration>");
+        buildEndElement("accordion-registration");
     }
 
     private void buildPercussion(Percussion percussion) {
@@ -309,7 +309,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         else if (percussion instanceof Stick) buildStick((Stick)percussion);
         else if (percussion instanceof StickLocation) buildStickLocation((StickLocation)percussion);
         else if (percussion instanceof OtherPercussion) buildOtherPercussion((OtherPercussion)percussion);
-        appendLine("</percussion>");
+        buildEndElement("percussion");
     }
 
     private void buildGlass(Glass glass) {
@@ -364,7 +364,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         buildCloseElement();
         buildElementWithValue("stick-type", BuilderUtil.enumValueWithSpaces(stick.getStickType()));
         buildElementWithValue("stick-material", BuilderUtil.enumValue(stick.getStickMaterial()));
-        appendLine("</stick>");
+        buildEndElement("stick");
     }
 
     private void buildStickLocation(StickLocation stickLocation) {

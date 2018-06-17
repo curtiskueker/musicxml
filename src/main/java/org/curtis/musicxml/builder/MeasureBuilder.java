@@ -61,7 +61,7 @@ public class MeasureBuilder extends BaseBuilder {
             else if (musicData instanceof Bookmark) baseBuilder = new BookmarkBuilder((Bookmark)musicData);
             if (baseBuilder != null) append(baseBuilder.build().toString());
         }
-        appendLine("</measure>");
+        buildEndElement("measure");
 
         return stringBuilder;
     }

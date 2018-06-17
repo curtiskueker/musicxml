@@ -21,7 +21,7 @@ public class GroupingBuilder extends BaseBuilder {
         buildAttribute("number-of", grouping.getNumberOf());
         buildCloseElement();
         for (Feature feature : grouping.getFeatures()) buildElementWithValueAndAttribute("feature", feature.getValue(), "type", feature.getType());
-        appendLine("</grouping>");
+        buildEndElement("grouping");
 
         return stringBuilder;
     }

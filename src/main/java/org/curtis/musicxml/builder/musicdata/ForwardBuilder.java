@@ -14,11 +14,11 @@ public class ForwardBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (forward == null) return stringBuilder;
 
-        appendLine("<forward>");
+        buildStartElement("forward");
         buildElementWithValue("duration", BuilderUtil.stringValue(forward.getDuration()));
         buildEditorialVoice(forward.getEditorialVoice());
         buildElementWithValue("staff", forward.getStaff());
-        appendLine("</forward>");
+        buildEndElement("forward");
 
 
         return stringBuilder;

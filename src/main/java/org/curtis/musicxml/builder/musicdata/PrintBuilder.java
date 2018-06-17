@@ -27,13 +27,13 @@ public class PrintBuilder extends BaseBuilder {
         append(LayoutBuilder.buildLayout(print.getLayout()));
         MeasureLayout measureLayout = print.getMeasureLayout();
         if (measureLayout != null) {
-            appendLine("<measure-layout>");
+            buildStartElement("measure-layout");
             buildElementWithValue("measure-distance", BuilderUtil.stringValue(measureLayout.getMeasureDistance()));
-            appendLine("</measure-layout>");
+            buildEndElement("measure-layout");
         }
         MeasureNumberingType measureNumberingValue = print.getMeasureNumberingValue();
         if (measureNumberingValue != null) buildElementWithValueAndAttributes("measure-numbering", BuilderUtil.enumValue(measureNumberingValue), FormattingBuilder.buildPrintStyleAlign(print.getPrintStyleAlign()));
-        appendLine("</print>");
+        buildEndElement("print");
 
         return stringBuilder;
     }

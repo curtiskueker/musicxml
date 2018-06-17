@@ -14,10 +14,10 @@ public class BackupBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (backup == null) return stringBuilder;
 
-        appendLine("<backup>");
+        buildStartElement("backup");
         buildElementWithValue("duration", BuilderUtil.stringValue(backup.getDuration()));
         buildEditorial(backup.getEditorial());
-        appendLine("</backup>");
+        buildEndElement("backup");
 
         return stringBuilder;
     }

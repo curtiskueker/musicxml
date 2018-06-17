@@ -22,16 +22,16 @@ public class FiguredBassBuilder extends BaseBuilder {
         buildAttribute("parentheses", BuilderUtil.yesOrNo(figuredBass.getParentheses()));
         buildCloseElement();
         for (Figure figure : figuredBass.getFigures()) {
-            appendLine("<figure>");
+            buildStartElement("figure");
             buildStyleText("prefix", figure.getPrefix());
             buildStyleText("figure-number", figure.getFigureNumber());
             buildStyleText("suffix", figure.getSuffix());
             buildExtend(figure.getExtend());
-            appendLine("</figure>");
+            buildEndElement("figure");
         }
         buildElementWithValue("duration", BuilderUtil.stringValue(figuredBass.getDuration()));
         buildEditorial(figuredBass.getEditorial());
-        appendLine("</figured-bass>");
+        buildEndElement("figured-bass");
 
         return stringBuilder;
     }

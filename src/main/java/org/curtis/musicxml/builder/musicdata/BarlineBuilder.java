@@ -59,7 +59,7 @@ public class BarlineBuilder extends BaseBuilder {
             attributes.put("winged", BuilderUtil.enumValue(repeat.getWinged()));
             buildElementWithAttributes("repeat", attributes);
         }
-        appendLine("</barline>");
+        buildEndElement("barline");
 
         return stringBuilder;
     }

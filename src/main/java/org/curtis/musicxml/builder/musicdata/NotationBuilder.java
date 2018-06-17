@@ -114,17 +114,17 @@ public class NotationBuilder extends BaseBuilder {
         buildCloseElement();
         TupletPortion tupletActual = tuplet.getTupletActual();
         if (tupletActual != null) {
-            appendLine("<tuplet-actual>");
+            buildStartElement("tuplet-actual");
             buildTupletPortion(tupletActual);
-            appendLine("</tuplet-actual>");
+            buildEndElement("tuplet-actual");
         }
         TupletPortion tupletNormal = tuplet.getTupletNormal();
         if (tupletNormal != null) {
-            appendLine("<tuplet-normal>");
+            buildStartElement("tuplet-normal");
             buildTupletPortion(tupletNormal);
-            appendLine("</tuplet-normal>");
+            buildEndElement("tuplet-normal");
         }
-        appendLine("</tuplet>");
+        buildEndElement("tuplet");
     }
 
     private void buildTupletPortion(TupletPortion tupletPortion) {
@@ -172,32 +172,32 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildOrnaments(Ornaments ornaments) {
-        appendLine("<ornaments>");
+        buildStartElement("ornaments");
         List<Ornament> ornamentList = ornaments.getOrnaments();
         for (Ornament ornament : ornamentList) {
             OrnamentBuilder ornamentBuilder = new OrnamentBuilder(ornament);
             append(ornamentBuilder.build().toString());
         }
         // TODO: ornaments accidental marks
-        appendLine("</ornaments>");
+        buildEndElement("ornaments");
     }
 
     private void buildTechnicals(Technicals technicals) {
-        appendLine("<technical>");
+        buildStartElement("technical");
         for (Technical technical : technicals.getTechnicals()) {
             TechnicalBuilder technicalBuilder = new TechnicalBuilder(technical);
             append(technicalBuilder.build().toString());
         }
-        appendLine("</technical>");
+        buildEndElement("technical");
     }
 
     private void buildArticulations(Articulations articulations) {
-        appendLine("<articulations>");
+        buildStartElement("articulations");
         for (Articulation articulation : articulations.getArticulationList()) {
             ArticulationBuilder articulationBuilder = new ArticulationBuilder(articulation);
             append(articulationBuilder.build().toString());
         }
-        appendLine("</articulations>");
+        buildEndElement("articulations");
     }
 
     private void buildFermata(Fermata fermata) {

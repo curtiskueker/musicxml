@@ -25,7 +25,7 @@ public class LayoutBuilder extends OutputBuilder {
 
         PageLayout pageLayout = layout.getPageLayout();
         if (pageLayout != null) {
-            layoutBuilder.appendLine("<page-layout>");
+            layoutBuilder.buildStartElement("page-layout");
             layoutBuilder.buildElementWithValue("page-height", BuilderUtil.stringValue(pageLayout.getPageHeight()));
             layoutBuilder.buildElementWithValue("page-width", BuilderUtil.stringValue(pageLayout.getPageWidth()));
             for (PageMargins pageMargins : pageLayout.getPageMargins().values()) {
@@ -37,38 +37,38 @@ public class LayoutBuilder extends OutputBuilder {
                 layoutBuilder.buildElementWithValue("right-margin", BuilderUtil.stringValue(margins.getRightMargin()));
                 layoutBuilder.buildElementWithValue("top-margin", BuilderUtil.stringValue(margins.getTopMargin()));
                 layoutBuilder.buildElementWithValue("bottom-margin", BuilderUtil.stringValue(margins.getBottomMargin()));
-                layoutBuilder.appendLine("</page-margins>");
+                layoutBuilder.buildEndElement("page-margins");
             }
-            layoutBuilder.appendLine("</page-layout>");
+            layoutBuilder.buildEndElement("page-layout");
         }
         SystemLayout systemLayout = layout.getSystemLayout();
         if (systemLayout != null) {
-            layoutBuilder.appendLine("<system-layout>");
+            layoutBuilder.buildStartElement("system-layout");
             BigDecimal leftMargin = systemLayout.getLeftMargin();
             BigDecimal rightMargin = systemLayout.getRightMargin();
             if (leftMargin != null || rightMargin != null) {
-                layoutBuilder.appendLine("<system-margins>");
+                layoutBuilder.buildStartElement("system-margins");
                 layoutBuilder.buildElementWithValue("left-margin", BuilderUtil.stringValue(leftMargin));
                 layoutBuilder.buildElementWithValue("right-margin", BuilderUtil.stringValue(rightMargin));
-                layoutBuilder.appendLine("</system-margins>");
+                layoutBuilder.buildEndElement("system-margins");
             }
             layoutBuilder.buildElementWithValue("system-distance", BuilderUtil.stringValue(systemLayout.getSystemDistance()));
             layoutBuilder.buildElementWithValue("top-system-distance", BuilderUtil.stringValue(systemLayout.getTopSystemDistance()));
             SystemDividers systemDividers = systemLayout.getSystemDividers();
             if (systemDividers != null) {
-                layoutBuilder.appendLine("<system-dividers>");
+                layoutBuilder.buildStartElement("system-dividers");
                 layoutBuilder.buildElementWithAttributes("left-divider", FormattingBuilder.buildPrintObjectStyleAlign(systemDividers.getLeftDivider()));
                 layoutBuilder.buildElementWithAttributes("right-divider", FormattingBuilder.buildPrintObjectStyleAlign(systemDividers.getRightDivider()));
-                layoutBuilder.appendLine("</system-dividers>");
+                layoutBuilder.buildEndElement("system-dividers");
             }
-            layoutBuilder.appendLine("</system-layout>");
+            layoutBuilder.buildEndElement("system-layout");
         }
         for (StaffLayout staffLayout : layout.getStaffLayouts()) {
             layoutBuilder.buildOpenElement("staff-layout");
             layoutBuilder.buildAttribute("number", staffLayout.getNumber());
             layoutBuilder.buildCloseElement();
             layoutBuilder.buildElementWithValue("staff-distance", BuilderUtil.stringValue(staffLayout.getStaffDistance()));
-            layoutBuilder.appendLine("</staff-layout>");
+            layoutBuilder.buildEndElement("staff-layout");
         }
 
         return layoutBuilder.getStringBuilder().toString();

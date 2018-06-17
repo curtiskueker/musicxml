@@ -51,7 +51,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        appendLine("<work>");
+        buildStartElement("work");
         buildElementWithValue("work-number", scoreHeader.getWorkNumber());
         buildElementWithValue("work-title", scoreHeader.getWorkTitle());
         LinkAttributes opus = scoreHeader.getOpus();
@@ -59,9 +59,9 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             buildOpenElement("opus");
             XLinkBuilder xLinkBuilder = new XLinkBuilder();
             append(xLinkBuilder.buildLinkAttributes(opus));
-            appendLine("/>");
+            buildCloseEmptyElement();
         }
-        appendLine("</work>");
+        buildEndElement("work");
         buildElementWithValue("movement-number", scoreHeader.getMovementNumber());
         buildElementWithValue("movement-title", scoreHeader.getMovementTitle());
         buildIdentification(scoreHeader.getIdentification());
@@ -77,10 +77,10 @@ public class ScoreHeaderBuilder extends BaseBuilder {
     private void buildIdentification(Identification identification) {
         if (identification == null) return;
 
-        appendLine("<identification>");
+        buildStartElement("identification");
         List<Encoding> encodings = identification.getEncodings();
         if (!encodings.isEmpty()) {
-            appendLine("<encoding>");
+            buildStartElement("encoding");
             for (Encoding encoding : encodings) {
                 if (encoding instanceof EncodingDate) {
                     EncodingDate encodingDate = (EncodingDate)encoding;
@@ -111,32 +111,32 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             buildElementWithValue("source", identification.getSource());
             Miscellaneous miscellaneous = identification.getMiscellaneous();
             if (miscellaneous != null) {
-                appendLine("<miscellaneous>");
+                buildStartElement("miscellaneous");
                 for (MiscellaneousField miscellaneousField : miscellaneous.getMiscellaneousFields()) buildElementWithValueAndAttribute("miscellaneous-field", miscellaneousField.getValue(), "name", miscellaneousField.getName());
-                appendLine("</miscellaneous>");
+                buildEndElement("miscellaneous");
             }
-            appendLine("</encoding>");
+            buildEndElement("encoding");
         }
         buildElementWithValue("source", identification.getSource());
-        appendLine("</identification>");
+        buildEndElement("identification");
     }
 
     private void buildDefaults() {
         Defaults defaults = scoreHeader.getDefaults();
 
         if (defaults == null) return;
-        appendLine("<defaults>");
+        buildStartElement("defaults");
         Scaling scaling = defaults.getScaling();
         if (scaling != null) {
-            appendLine("<scaling>");
+            buildStartElement("scaling");
             buildElementWithValue("millimeters", scaling.getMillimeters());
             buildElementWithValue("tenths", BuilderUtil.stringValue(scaling.getTenths()));
-            appendLine("</scaling>");
+            buildEndElement("scaling");
         }
         append(LayoutBuilder.buildLayout(defaults.getLayout()));
         Appearance appearance = defaults.getAppearance();
         if (appearance != null) {
-            appendLine("<appearance>");
+            buildStartElement("appearance");
             for (LineWidth lineWidth : appearance.getLineWidths()) {
                 buildElementWithValueAndAttribute("line-width", BuilderUtil.stringValue(lineWidth.getValue()), "type", lineWidth.getLineWidthType());
             }
@@ -147,13 +147,13 @@ public class ScoreHeaderBuilder extends BaseBuilder {
                 buildElementWithValueAndAttribute("distance", BuilderUtil.stringValue(distance.getValue()), "type", distance.getType());
             }
             for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", otherAppearance.getType());
-            appendLine("</appearance>");
+            buildEndElement("appearance");
         }
         buildElementWithAttributes("music-font", FormattingBuilder.buildFont(defaults.getMusicFont()));
         buildElementWithAttributes("word-font", FormattingBuilder.buildFont(defaults.getWordFont()));
         for (LyricFont lyricFont : defaults.getLyricFonts()) buildLyricFont(lyricFont);
         for (LyricLanguage lyricLanguage : defaults.getLyricLanguages()) buildLyricLanguage(lyricLanguage);
-        appendLine("</defaults>");
+        buildEndElement("defaults");
     }
 
     private void buildLyricFont(LyricFont lyricFont) {
@@ -188,17 +188,17 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         // TODO: credit-image
         // TODO: credit-words
         appendLine("<credit-words>Text</credit-words>");
-        appendLine("</credit>");
+        buildEndElement("credit");
     }
 
     private void buildPartList() {
-        appendLine("<part-list>");
+        buildStartElement("part-list");
         PartList partList = scoreHeader.getPartList();
         for (PartItem partItem : partList.getPartItems()) {
             if (partItem instanceof PartGroup) buildPartGroup((PartGroup)partItem);
             else if (partItem instanceof ScorePart) buildSscorePart((ScorePart)partItem);
         }
-        appendLine("</part-list>");
+        buildEndElement("part-list");
     }
 
     private void buildPartGroup(PartGroup partGroup) {
@@ -223,7 +223,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         }
         if (partGroup.getGroupTime()) buildElement("group-time");
         buildEditorial(partGroup.getEditorial());
-        appendLine("</part-group>");
+        buildEndElement("part-group");
     }
 
     private void buildGroupName(String elementName, GroupName groupName) {
@@ -263,14 +263,14 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             String virtualLibrary = scoreInstrument.getVirtualLibrary();
             String virtualName = scoreInstrument.getVirtualName();
             if (StringUtil.isNotEmpty(virtualLibrary) || StringUtil.isNotEmpty(virtualName)) {
-                appendLine("<virtual-instrument>");
+                buildStartElement("virtual-instrument");
                 buildElementWithValue("virtual-library", virtualLibrary);
                 buildElementWithValue("virtual-name", virtualName);
-                appendLine("</virtual-instrument>");
+                buildEndElement("virtual-instrument");
             }
-            appendLine("</score-instrument>");
+            buildEndElement("score-instrument");
         }
-        appendLine("</score-part>");
+        buildEndElement("score-part");
     }
 
     private void buildPartName(String elementName, PartName partName) {

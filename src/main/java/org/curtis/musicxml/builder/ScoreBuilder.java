@@ -27,7 +27,7 @@ public class ScoreBuilder extends BaseBuilder {
             append(partBuilder.build().toString());
         }
 
-        appendLine("</score-partwise>");
+        buildEndElement("score-partwise");
 
         return stringBuilder;
     }

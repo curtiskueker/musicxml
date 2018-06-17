@@ -24,10 +24,10 @@ public class DirectionBuilder extends BaseBuilder {
         buildAttribute("directive", BuilderUtil.yesOrNo(direction.getDirective()));
         buildCloseElement();
         for (DirectionType directionType : direction.getDirectionTypes()) {
-            appendLine("<direction-type>");
+            buildStartElement("direction-type");
             DirectionTypeBuilder directionTypeBuilder = new DirectionTypeBuilder(directionType);
             append(directionTypeBuilder.build().toString());
-            appendLine("</direction-type>");
+            buildEndElement("direction-type");
         }
         DirectionBuilder directionBuilder = new DirectionBuilder();
         append(directionBuilder.buildOffset(direction.getOffset()).toString());
@@ -40,7 +40,7 @@ public class DirectionBuilder extends BaseBuilder {
         buildElementWithValue("staff", direction.getStaff());
         SoundBuilder soundBuilder = new SoundBuilder(direction.getSound());
         append(soundBuilder.build().toString());
-        appendLine("</direction>");
+        buildEndElement("direction");
 
         return stringBuilder;
     }

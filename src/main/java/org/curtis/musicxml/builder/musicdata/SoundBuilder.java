@@ -35,7 +35,7 @@ public class SoundBuilder extends BaseBuilder {
         buildCloseElement();
         DirectionBuilder directionBuilder = new DirectionBuilder();
         append(directionBuilder.buildOffset(sound.getOffset()).toString());
-        appendLine("</sound>");
+        buildEndElement("sound");
 
         return stringBuilder;
     }

@@ -113,7 +113,7 @@ public class TechnicalBuilder extends BaseBuilder {
                     break;
             }
         }
-        appendLine("</harmonic>");
+        buildEndElement("harmonic");
     }
 
     private void buildOpenString(OpenString openString) {
@@ -196,7 +196,7 @@ public class TechnicalBuilder extends BaseBuilder {
         }
         PlacementText withBar = bend.getWithBar();
         if (withBar != null) buildPlacementText("with-bar", withBar);
-        appendLine("</bend>");
+        buildEndElement("bend");
     }
 
     private void buildTap(Tap tap) {
@@ -222,7 +222,7 @@ public class TechnicalBuilder extends BaseBuilder {
         buildElementWithValueAndAttribute("hole-closed", BuilderUtil.enumValue(hole.getHoleClosedType()), "location", BuilderUtil.enumValue(hole.getHoleClosedLocation()));
         String holeShape = hole.getHoleShape();
         if (StringUtil.isNotEmpty(holeShape)) buildElementWithValue("hole-shape", holeShape);
-        appendLine("</hole>");
+        buildEndElement("hole");
     }
 
     private void buildArrow(Arrow arrow) {
@@ -233,7 +233,7 @@ public class TechnicalBuilder extends BaseBuilder {
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
         buildElementWithValue("arrow-style", BuilderUtil.enumValue(arrow.getArrowStyle()));
         buildElementWithValue("circular-arrow", BuilderUtil.enumValue(arrow.getCircularArrow()));
-        appendLine("</arrow>");
+        buildEndElement("arrow");
     }
 
     private void buildHandbell(Handbell handbell) {
