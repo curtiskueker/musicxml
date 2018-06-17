@@ -5,7 +5,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -16,7 +15,7 @@ public class Pitch extends FullNoteType {
     private Step step;
     @Column(name = "pitch_alter")
     private BigDecimal alter;
-    @Transient
+    @Column
     private Integer octave;
 
     public Pitch() {

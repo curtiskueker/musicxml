@@ -1,9 +1,25 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.TextFormatting;
 
-public class AccidentalText {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "accidental_text")
+public class AccidentalText extends DatabaseItem {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "accidental_type")
     private AccidentalType accidentalType;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "text_formatting_id")
     private TextFormatting textFormatting;
 
     public AccidentalText() {

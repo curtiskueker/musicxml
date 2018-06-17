@@ -73,7 +73,7 @@ public class ScorePartFactory {
         if (element == null) return null;
 
         MidiDevice midiDevice = new MidiDevice();
-        midiDevice.setId(element.getAttribute("id"));
+        midiDevice.setMidiDeviceId(element.getAttribute("id"));
         midiDevice.setValue(XmlUtil.getElementText(element));
         midiDevice.setPort(StringUtil.getInteger(element.getAttribute("port")));
 

@@ -11,7 +11,6 @@ import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.OtherOrnament;
 import org.curtis.musicxml.note.notation.ornament.Schleifer;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
-import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -68,11 +67,12 @@ public class OrnamentHandler extends AbstractHandler {
                     otherOrnament.setPlacementText(PlacementFactory.newPlacementText(ornamentElement));
                     ornament = otherOrnament;
                     break;
-                case "accidental-mark":
-                    if (ornament != null) ornament.getAccidentalMarks().add(NotationFactory.newAccidentalMark(ornamentElement));
-                    continue;
             }
             if (ornament != null) ornaments.getOrnaments().add(ornament);
+        }
+        List<Element> accidentalMarkElements = XmlUtil.getChildElements(element, "accidental-mark");
+        for (Element accidentalMarkElement : accidentalMarkElements) {
+            ornaments.getAccidentalMarks().add(NotationFactory.newAccidentalMark(accidentalMarkElement));
         }
         ornaments.setPrintObject(FormattingFactory.getPrintObject(element));
         notationList.add(ornaments);

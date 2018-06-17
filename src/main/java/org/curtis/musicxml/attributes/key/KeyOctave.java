@@ -5,12 +5,11 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "key_octave")
 public class KeyOctave extends DatabaseItem {
-    @Transient
+    @Column
     private Integer octave;
     @Column
     private Integer number;

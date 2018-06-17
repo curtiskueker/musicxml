@@ -57,7 +57,7 @@ public class AttributesBuilder extends BaseBuilder {
                 Map<String, String> attributes = new HashMap<>();
                 attributes.put("number", BuilderUtil.stringValue(keyOctave.getNumber()));
                 attributes.put("cancel", BuilderUtil.yesOrNo(keyOctave.getCancel()));
-                buildElementWithAttributes("key-octave", attributes);
+                buildElementWithValueAndAttributes("key-octave", keyOctave.getOctave(), attributes);
             }
             appendLine("</key>");
         }
@@ -203,6 +203,7 @@ public class AttributesBuilder extends BaseBuilder {
         for (NonTraditionalKeyType nonTraditionalKeyType : nonTraditionalKey.getNonTraditionalKeyList()) {
             buildElementWithValue("key-step", BuilderUtil.enumValue(nonTraditionalKeyType.getKeyStep()).toUpperCase());
             buildElementWithValue("key-alter", nonTraditionalKeyType.getKeyAlter());
+            buildElementWithValue("key-accidental", BuilderUtil.enumValue(nonTraditionalKeyType.getKeyAccidental()));
         }
     }
 

@@ -3,14 +3,16 @@ package org.curtis.musicxml.note;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("rest")
 public class Rest extends FullNoteType {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "display_step")
     private Step displayStep;
-    @Transient
+    @Column(name = "display_octave")
     private Integer displayOctave;
     @Column
     private Boolean measure = false;

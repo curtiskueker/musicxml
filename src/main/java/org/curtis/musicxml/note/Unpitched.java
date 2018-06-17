@@ -5,7 +5,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("unpitched")
@@ -13,7 +12,7 @@ public class Unpitched extends FullNoteType {
     @Enumerated(EnumType.STRING)
     @Column(name = "display_step")
     private Step displayStep;
-    @Transient
+    @Column(name = "display_octave")
     private Integer displayOctave;
 
     public Unpitched() {

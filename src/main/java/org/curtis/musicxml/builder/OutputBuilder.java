@@ -6,7 +6,9 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
+import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.StyleText;
+import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.PlacementText;
@@ -247,5 +249,18 @@ public abstract class OutputBuilder {
 
         buildElementWithValue("tuning-step", BuilderUtil.enumValue(tuning.getTuningStep()).toUpperCase());
         buildElementWithValue("tuning-alter", tuning.getTuningAlter());
+        buildElementWithValue("tuning-octave", tuning.getTuningOctave());
+    }
+
+    protected void buildAccidentalText(AccidentalText accidentalText) {
+        if (accidentalText == null) return;
+
+        buildElementWithValueAndAttributes("accidental-text", BuilderUtil.enumValue(accidentalText.getAccidentalType()), FormattingBuilder.buildTextFormatting(accidentalText.getTextFormatting()));
+    }
+
+    protected void buildMidiDevice(MidiDevice midiDevice) {
+        if (midiDevice == null) return;
+
+        buildElementWithValueAndAttribute("midi-device", midiDevice.getValue(), "id", midiDevice.getMidiDeviceId());
     }
 }

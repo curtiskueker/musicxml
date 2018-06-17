@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class Ornaments extends Notation {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "ornaments_id", nullable = false)
     private List<Ornament> ornaments = new ArrayList<>();
+    @Transient
+    private List<AccidentalMark> accidentalMarks = new ArrayList<>();
 
     public Ornaments() {
 
@@ -31,5 +34,13 @@ public class Ornaments extends Notation {
 
     public void setOrnaments(List<Ornament> ornaments) {
         this.ornaments = ornaments;
+    }
+
+    public List<AccidentalMark> getAccidentalMarks() {
+        return accidentalMarks;
+    }
+
+    public void setAccidentalMarks(List<AccidentalMark> accidentalMarks) {
+        this.accidentalMarks = accidentalMarks;
     }
 }

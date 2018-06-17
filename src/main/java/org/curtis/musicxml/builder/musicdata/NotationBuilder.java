@@ -178,6 +178,7 @@ public class NotationBuilder extends BaseBuilder {
             OrnamentBuilder ornamentBuilder = new OrnamentBuilder(ornament);
             append(ornamentBuilder.build().toString());
         }
+        // TODO: ornaments accidental marks
         appendLine("</ornaments>");
     }
 
@@ -230,7 +231,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.putAll(FormattingBuilder.buildPrintStyle(accidentalMark.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(accidentalMark.getPlacement()));
-        buildElementWithAttributes("accidental-mark", attributes);
+        buildElementWithValueAndAttributes("accidental-mark", BuilderUtil.enumValue(accidentalMark.getAccidentalType()), attributes);
     }
 
     private void buildOtherNotation(OtherNotation otherNotation) {

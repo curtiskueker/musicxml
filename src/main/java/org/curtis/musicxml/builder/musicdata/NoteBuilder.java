@@ -97,14 +97,13 @@ public class NoteBuilder extends BaseBuilder {
             buildElement("dot");
         }
         Accidental accidental = note.getAccidental();
-        // TODO: accidental-value
         if (accidental != null) {
             Map<String, String> accidentalAttributes = new HashMap<>();
             accidentalAttributes.put("cautionary", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.put("editorial", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.putAll(FormattingBuilder.buildLevelDisplay(accidental.getLevelDisplay()));
             accidentalAttributes.putAll(FormattingBuilder.buildPrintStyle(accidental.getPrintStyle()));
-            buildElementWithValueAndAttributes("accidental", "sharp", accidentalAttributes);
+            buildElementWithValueAndAttributes("accidental", BuilderUtil.enumValue(accidental.getAccidentalType()), accidentalAttributes);
         }
         TimeModification timeModification = note.getTimeModification();
         if (timeModification != null) {
@@ -147,10 +146,9 @@ public class NoteBuilder extends BaseBuilder {
             appendLine("<notehead-text>");
             for (NoteheadText noteheadText : noteheadTextList) {
                 if (noteheadText instanceof NoteheadDisplayText) {
-                    NoteheadDisplayText noteheadDisplayText = (NoteheadDisplayText)noteheadText;
-                    buildFormattedText("display-text", noteheadDisplayText.getText());
+                    buildFormattedText("display-text", ((NoteheadDisplayText)noteheadText).getText());
                 } else if (noteheadText instanceof NoteheadAccidentalText) {
-
+                    buildAccidentalText(((NoteheadAccidentalText) noteheadText).getText());
                 }
             }
             appendLine("</notehead_text>");
@@ -191,18 +189,24 @@ public class NoteBuilder extends BaseBuilder {
         appendLine("<pitch>");
         buildElementWithValue("step", BuilderUtil.enumValue(pitch.getStep()).toUpperCase());
         buildElementWithValue("alter", pitch.getAlter());
-        buildElementWithValue("octave", 0);
+        buildElementWithValue("octave", pitch.getOctave());
         appendLine("</pitch>");
     }
 
     private void buildUnpitched(Unpitched unpitched) {
         appendLine("<unpitched>");
         buildElementWithValue("display-step", BuilderUtil.enumValue(unpitched.getDisplayStep()).toUpperCase());
+        buildElementWithValue("display-octave", unpitched.getDisplayOctave());
         appendLine("</unpitched>");
     }
 
     private void buildRest(Rest rest) {
-        buildElementWithAttribute("rest", "measure", BuilderUtil.yesOrNo(rest.getMeasure()));
+        append("<rest");
+        buildAttribute("measure", BuilderUtil.yesOrNo(rest.getMeasure()));
+        appendLine(">");
+        buildElementWithValue("display-step", BuilderUtil.enumValue(rest.getDisplayStep()).toUpperCase());
+        buildElementWithValue("display-octave", rest.getDisplayOctave());
+        appendLine("</rest>");
     }
 
     public static String buildBeamType(BeamType beamType) {

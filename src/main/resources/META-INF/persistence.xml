@@ -42,6 +42,7 @@
         <class>org.curtis.musicxml.common.FormattedText</class>
         <class>org.curtis.musicxml.common.Level</class>
         <class>org.curtis.musicxml.common.LevelDisplay</class>
+        <class>org.curtis.musicxml.common.MidiDevice</class>
         <class>org.curtis.musicxml.common.Position</class>
         <class>org.curtis.musicxml.common.Printout</class>
         <class>org.curtis.musicxml.common.PrintStyle</class>
@@ -141,6 +142,7 @@
         <class>org.curtis.musicxml.link.Link</class>
         <class>org.curtis.musicxml.link.LinkAttributes</class>
         <class>org.curtis.musicxml.note.Accidental</class>
+        <class>org.curtis.musicxml.note.AccidentalText</class>
         <class>org.curtis.musicxml.note.Backup</class>
         <class>org.curtis.musicxml.note.Beam</class>
         <class>org.curtis.musicxml.note.FiguredBass</class>

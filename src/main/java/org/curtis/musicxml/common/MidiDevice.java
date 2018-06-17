@@ -1,9 +1,21 @@
 package org.curtis.musicxml.common;
 
-public class MidiDevice {
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "midi_device")
+public class MidiDevice extends DatabaseItem {
+    @Column
     private String value;
+    @Transient
     private Integer port;
-    private String id;
+    @Column(name = "midi_device_id")
+    private String midiDeviceId;
 
     public MidiDevice() {
 
@@ -25,11 +37,11 @@ public class MidiDevice {
         this.port = port;
     }
 
-    public String getId() {
-        return id;
+    public String getMidiDeviceId() {
+        return midiDeviceId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMidiDeviceId(String midiDeviceId) {
+        this.midiDeviceId = midiDeviceId;
     }
 }

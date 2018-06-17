@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -19,7 +18,7 @@ public class Tuning extends DatabaseItem {
     private Step tuningStep;
     @Column(name = "tuning_alter")
     private BigDecimal tuningAlter;
-    @Transient
+    @Column(name = "tuning_octave")
     private Integer tuningOctave;
 
     public Tuning() {

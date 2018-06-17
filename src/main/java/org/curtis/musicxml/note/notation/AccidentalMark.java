@@ -12,12 +12,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("accidental mark")
 public class AccidentalMark extends Notation {
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "accidental_type")
     private AccidentalType accidentalType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

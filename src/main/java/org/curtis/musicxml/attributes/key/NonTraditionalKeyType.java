@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -20,7 +19,8 @@ public class NonTraditionalKeyType extends DatabaseItem {
     private Step keyStep;
     @Column(name = "key_alter")
     private BigDecimal keyAlter;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "key_accidental")
     private AccidentalType keyAccidental;
 
     public NonTraditionalKeyType() {
