@@ -38,12 +38,12 @@ public class MeasureBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        append("<measure");
+        buildOpenElement("measure");
         buildAttribute("number", measure.getNumber());
         buildAttribute("implicit", BuilderUtil.yesOrNo(measure.getImplicit()));
         buildAttribute("non-controlling", BuilderUtil.yesOrNo(measure.getNonControlling()));
         buildAttribute("width", BuilderUtil.stringValue(measure.getWidth()));
-        appendLine(">");
+        buildCloseElement();
         for (MusicData musicData : measure.getMusicDataList()) {
             BaseBuilder baseBuilder = null;
             if (musicData instanceof Note) baseBuilder = new NoteBuilder((Note)musicData);

@@ -83,11 +83,11 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHarmonic(Harmonic harmonic) {
-        append("<harmonic");
+        buildOpenElement("harmonic");
         buildAttribute("print-object", BuilderUtil.yesOrNo(harmonic.getPrintObject()));
         FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(harmonic.getPlacement()));
-        appendLine(">");
+        buildCloseElement();
         HarmonicType harmonicType = harmonic.getHarmonicType();
         if (harmonicType != null) {
             switch (harmonicType) {
@@ -178,10 +178,10 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildBend(Bend bend) {
-        append("<bend");
+        buildOpenElement("bend");
         FormattingBuilder.buildPrintStyle(bend.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildBendSound(bend.getBendSound()).forEach((k, v) -> buildAttribute(k, v));
-        appendLine(">");
+        buildCloseElement();
         buildElementWithValue("bend-alter", bend.getBendAlter());
         BendType bendType = bend.getBendType();
         if (bendType != null) {
@@ -213,10 +213,10 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildHole(Hole hole) {
-        append("<hole");
+        buildOpenElement("hole");
         FormattingBuilder.buildPrintStyle(hole.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(hole.getPlacement()));
-        appendLine(">");
+        buildCloseElement();
         String holeType = hole.getHoleType();
         if (StringUtil.isNotEmpty(holeType)) buildElementWithValue("hole-type", holeType);
         buildElementWithValueAndAttribute("hole-closed", BuilderUtil.enumValue(hole.getHoleClosedType()), "location", BuilderUtil.enumValue(hole.getHoleClosedLocation()));
@@ -226,10 +226,10 @@ public class TechnicalBuilder extends BaseBuilder {
     }
 
     private void buildArrow(Arrow arrow) {
-        append("<arrow");
+        buildOpenElement("arrow");
         FormattingBuilder.buildPrintStyle(arrow.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(arrow.getPlacement()));
-        appendLine(">");
+        buildCloseElement();
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
         buildElementWithValue("arrow-style", BuilderUtil.enumValue(arrow.getArrowStyle()));
         buildElementWithValue("circular-arrow", BuilderUtil.enumValue(arrow.getCircularArrow()));

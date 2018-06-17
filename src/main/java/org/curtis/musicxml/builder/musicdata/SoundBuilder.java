@@ -14,7 +14,7 @@ public class SoundBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (sound == null) return stringBuilder;
 
-        append("<sound");
+        buildOpenElement("sound");
         buildAttribute("tempo", BuilderUtil.stringValue(sound.getTempo()));
         buildAttribute("dynamics", BuilderUtil.stringValue(sound.getDynamics()));
         buildAttribute("dacapo", BuilderUtil.yesOrNo(sound.getDacapo()));
@@ -32,7 +32,7 @@ public class SoundBuilder extends BaseBuilder {
         buildAttribute("damper-pedal", sound.getDamperPedal());
         buildAttribute("soft-pedal", sound.getSoftPedal());
         buildAttribute("sostenuto-pedal", sound.getSostenutoPedal());
-        appendLine(">");
+        buildCloseElement();
         DirectionBuilder directionBuilder = new DirectionBuilder();
         append(directionBuilder.buildOffset(sound.getOffset()).toString());
         appendLine("</sound>");

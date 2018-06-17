@@ -118,12 +118,12 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildDynamics(Dynamics dynamics) {
-        append("<dynamics");
+        buildOpenElement("dynamics");
         FormattingBuilder.buildPrintStyleAlign(dynamics.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(dynamics.getPlacement()));
         FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("enclosure", BuilderUtil.enumValue(dynamics.getEnclosure()));
-        appendLine(">");
+        buildCloseElement();
         for (DynamicsType dynamicsType : dynamics.getTypes()) {
             buildElement(BuilderUtil.enumValue(dynamicsType));
         }
@@ -163,11 +163,11 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildMetronome(Metronome metronome) {
-        append("<metronome");
+        buildOpenElement("metronome");
         FormattingBuilder.buildPrintStyleAlign(metronome.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("justify", BuilderUtil.enumValue(metronome.getJustify()));
         buildAttribute("parentheses", BuilderUtil.yesOrNo(metronome.getParentheses()));
-        appendLine(">");
+        buildCloseElement();
         if (metronome instanceof BeatMetronome) buildBeatMetronome((BeatMetronome)metronome);
         else if (metronome instanceof NoteMetronome) buildNoteMetronome((NoteMetronome)metronome);
         appendLine("</metronome>");
@@ -200,11 +200,11 @@ public class DirectionTypeBuilder extends BaseBuilder {
         }
         MetronomeTuplet metronomeTuplet = metronomeNote.getMetronomeTuplet();
         if (metronomeTuplet != null) {
-            append("<metronome-tuplet");
+            buildOpenElement("metronome-tuplet");
             buildAttribute("type", BuilderUtil.enumValue(metronomeTuplet.getType()));
             buildAttribute("bracket", BuilderUtil.yesOrNo(metronomeTuplet.getBracket()));
             buildAttribute("show-number", BuilderUtil.enumValue(metronomeTuplet.getShowNumber()));
-            appendLine(">");
+            buildCloseElement();
             buildTimeModification(metronomeTuplet.getTimeModification());
             appendLine("<metronome-tuplet>");
         }
@@ -221,9 +221,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildHarpPedals(HarpPedals harpPedals) {
-        append("<harp-pedals");
+        buildOpenElement("harp-pedals");
         FormattingBuilder.buildPrintStyleAlign(harpPedals.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
-        appendLine(">");
+        buildCloseElement();
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
             appendLine("<pedal-tuning>");
             buildElementWithValue("pedal-step", BuilderUtil.enumValue(pedalTuning.getPedalStep()).toUpperCase());
@@ -255,9 +255,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildScordatura(Scordatura scordatura) {
         appendLine("<scordatura>");
         for (Accord accord : scordatura.getAccords()) {
-            append("<accord");
+            buildOpenElement("accord");
             buildAttribute("string", accord.getString());
-            appendLine(">");
+            buildCloseElement();
             buildTuning(accord.getTuning());
             appendLine("</accord>");
         }
@@ -284,9 +284,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {
-        append("<accordion-registration");
+        buildOpenElement("accordion-registration");
         FormattingBuilder.buildPrintStyleAlign(accordionRegistration.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
-        appendLine(">");
+        buildCloseElement();
         if (accordionRegistration.getAccordionHigh()) buildElement("accordion-high");
         buildElementWithValue("accordion-middle", accordionRegistration.getAccordionMiddle());
         if (accordionRegistration.getAccordionLow()) buildElement("accordion-low");
@@ -294,10 +294,10 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildPercussion(Percussion percussion) {
-        append("<percussion");
+        buildOpenElement("percussion");
         FormattingBuilder.buildPrintStyleAlign(percussion.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("enclosure", BuilderUtil.enumValue(percussion.getEnclosure()));
-        appendLine(">");
+        buildCloseElement();
         if (percussion instanceof Glass) buildGlass((Glass)percussion);
         else if (percussion instanceof Metal) buildMetal((Metal)percussion);
         else if (percussion instanceof Wood) buildWood((Wood)percussion);
@@ -359,9 +359,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildStick(Stick stick) {
-        append("<stick");
+        buildOpenElement("stick");
         buildAttribute("tip", BuilderUtil.enumValue(stick.getTip()));
-        appendLine(">");
+        buildCloseElement();
         buildElementWithValue("stick-type", BuilderUtil.enumValueWithSpaces(stick.getStickType()));
         buildElementWithValue("stick-material", BuilderUtil.enumValue(stick.getStickMaterial()));
         appendLine("</stick>");

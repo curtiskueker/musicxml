@@ -13,8 +13,8 @@ public class LinkBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        append("<link");
-        appendLine(">");
+        buildOpenElement("link");
+        buildCloseElement();
         XLinkBuilder xLinkBuilder = new XLinkBuilder();
         append(xLinkBuilder.buildLinkAttributes(link.getLinkAttributes()));
         buildAttribute("name", link.getName());

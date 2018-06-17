@@ -29,9 +29,9 @@ public class LayoutBuilder extends OutputBuilder {
             layoutBuilder.buildElementWithValue("page-height", BuilderUtil.stringValue(pageLayout.getPageHeight()));
             layoutBuilder.buildElementWithValue("page-width", BuilderUtil.stringValue(pageLayout.getPageWidth()));
             for (PageMargins pageMargins : pageLayout.getPageMargins().values()) {
-                layoutBuilder.append("<page-margins");
+                layoutBuilder.buildOpenElement("page-margins");
                 layoutBuilder.buildAttribute("type", BuilderUtil.enumValue(pageMargins.getType()));
-                layoutBuilder.appendLine(">");
+                layoutBuilder.buildCloseElement();
                 Margins margins = pageMargins.getMargins();
                 layoutBuilder.buildElementWithValue("left-margin", BuilderUtil.stringValue(margins.getLeftMargin()));
                 layoutBuilder.buildElementWithValue("right-margin", BuilderUtil.stringValue(margins.getRightMargin()));
@@ -64,9 +64,9 @@ public class LayoutBuilder extends OutputBuilder {
             layoutBuilder.appendLine("</system-layout>");
         }
         for (StaffLayout staffLayout : layout.getStaffLayouts()) {
-            layoutBuilder.append("<staff-layout");
+            layoutBuilder.buildOpenElement("staff-layout");
             layoutBuilder.buildAttribute("number", staffLayout.getNumber());
-            layoutBuilder.appendLine(">");
+            layoutBuilder.buildCloseElement();
             layoutBuilder.buildElementWithValue("staff-distance", BuilderUtil.stringValue(staffLayout.getStaffDistance()));
             layoutBuilder.appendLine("</staff-layout>");
         }

@@ -46,11 +46,11 @@ public class AttributesBuilder extends BaseBuilder {
         BigDecimal divisions = attributes.getDivisions();
         if (divisions !=  null) buildElementWithValue("divisions", BuilderUtil.stringValue(divisions));
         for (Key key : attributes.getKeys()) {
-            append("<key");
+            buildOpenElement("key");
             buildAttribute("number", key.getNumber());
             FormattingBuilder.buildPrintStyle(key.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("print-object", BuilderUtil.yesOrNo(key.getPrintObject()));
-            appendLine(">");
+            buildCloseElement();
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);
             else if (key instanceof NonTraditionalKey) buildNonTraditionalKey((NonTraditionalKey)key);
             for (KeyOctave keyOctave : key.getKeyOctaves()) {
@@ -62,13 +62,13 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine("</key>");
         }
         for (Time time : attributes.getTimeList()) {
-            append("<time");
+            buildOpenElement("time");
             buildAttribute("number", time.getNumber());
             buildAttribute("symbol", BuilderUtil.enumValue(time.getSymbol()));
             buildAttribute("separator", BuilderUtil.enumValue(time.getSeparator()));
             FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("print-object", BuilderUtil.yesOrNo(time.getPrintObject()));
-            appendLine(">");
+            buildCloseElement();
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
             else if (time instanceof SenzaMisura) buildSenzaMisura((SenzaMisura)time);
             appendLine("</time>");
@@ -85,13 +85,13 @@ public class AttributesBuilder extends BaseBuilder {
         }
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {
-            append("<clef");
+            buildOpenElement("clef");
             buildAttribute("number", BuilderUtil.stringValue(clef.getNumber()));
             buildAttribute("additional", BuilderUtil.yesOrNo(clef.getAdditional()));
             buildAttribute("after-barline", BuilderUtil.yesOrNo(clef.getAfterBarline()));
             FormattingBuilder.buildPrintStyle(clef.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("print-object", BuilderUtil.yesOrNo(clef.getPrintObject()));
-            appendLine(">");
+            buildCloseElement();
             String clefSign = BuilderUtil.enumValue(clef.getSign());
             switch (clefSign) {
                 case "g":
@@ -113,18 +113,18 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine("</clef>");
         }
         for (StaffDetails staffDetails : attributes.getStaffDetailsList()) {
-            append("<staff-details");
+            buildOpenElement("staff-details");
             buildAttribute("number", BuilderUtil.stringValue(staffDetails.getNumber()));
             buildAttribute("show-frets", BuilderUtil.enumValue(staffDetails.getShowFrets()));
             buildAttribute("print-object", BuilderUtil.yesOrNo(staffDetails.getPrintObject()));
             buildAttribute("print-spacing", BuilderUtil.yesOrNo(staffDetails.getPrintSpacing()));
-            appendLine(">");
+            buildCloseElement();
             buildElementWithValue("staff-type", BuilderUtil.enumValue(staffDetails.getStaffType()));
             buildElementWithValue("staff-lines", staffDetails.getStaffLines());
             for (StaffTuning staffTuning : staffDetails.getStaffTunings()) {
-                append("<staff-tuning");
+                buildOpenElement("staff-tuning");
                 buildAttribute("line", staffTuning.getLine());
-                appendLine(">");
+                buildCloseElement();
                 buildTuning(staffTuning.getTuning());
                 appendLine("</staff-tuning>");
             }
@@ -133,9 +133,9 @@ public class AttributesBuilder extends BaseBuilder {
             appendLine("</staff-details>");
         }
         for (Transpose transpose : attributes.getTranspositions()) {
-            append("<transpose");
+            buildOpenElement("transpose");
             buildAttribute("number", transpose.getNumber());
-            appendLine(">");
+            buildCloseElement();
             buildElementWithValue("diatonic", transpose.getDiatonic());
             buildElementWithValue("chromatic", transpose.getChromatic());
             buildElementWithValue("octave-change", transpose.getOctaveChange());
@@ -149,11 +149,11 @@ public class AttributesBuilder extends BaseBuilder {
             buildElementWithValueAndAttributes("directive", directive.getValue(), directiveAttributes);
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
-            append("<measure-style");
+            buildOpenElement("measure-style");
             buildAttribute("number", measureStyle.getNumber());
             FormattingBuilder.buildFont(measureStyle.getFont()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("color", measureStyle.getColor());
-            appendLine(">");
+            buildCloseElement();
             if (measureStyle instanceof MultipleRest) {
                 MultipleRest multipleRest = (MultipleRest)measureStyle;
                 buildElementWithValueAndAttribute("multiple-rest", multipleRest.getValue(),"use-symbols", BuilderUtil.yesOrNo(multipleRest.getUseSymbols()));
@@ -167,21 +167,21 @@ public class AttributesBuilder extends BaseBuilder {
             }
             else if (measureStyle instanceof BeatRepeat) {
                 BeatRepeat beatRepeat = (BeatRepeat)measureStyle;
-                append("<beat-repeat");
+                buildOpenElement("beat-repeat");
                 buildAttribute("type", BuilderUtil.enumValue(beatRepeat.getType()));
                 buildAttribute("slashes", beatRepeat.getSlashes());
                 buildAttribute("use-dots", BuilderUtil.yesOrNo(beatRepeat.getUseDots()));
-                appendLine(">");
+                buildCloseElement();
                 buildSlashGroup(beatRepeat.getSlashGroup());
                 appendLine("</beat-repeat>");
             }
             else if (measureStyle instanceof Slash) {
                 Slash slash = (Slash)measureStyle;
-                append("<slash");
+                buildOpenElement("slash");
                 buildAttribute("type", BuilderUtil.enumValue(slash.getType()));
                 buildAttribute("use-dots", BuilderUtil.yesOrNo(slash.getUseDots()));
                 buildAttribute("use-stems", BuilderUtil.yesOrNo(slash.getUseStems()));
-                appendLine(">");
+                buildCloseElement();
                 buildSlashGroup(slash.getSlashGroup());
                 appendLine("</slash>");
             }
@@ -213,10 +213,10 @@ public class AttributesBuilder extends BaseBuilder {
         }
         Interchangeable interchangeable = timeSignature.getInterchangeable();
         if (interchangeable != null) {
-            append("<interchangeable");
+            buildOpenElement("interchangeable");
             buildAttribute("symbol", BuilderUtil.enumValue(interchangeable.getSymbol()));
             buildAttribute("separator", BuilderUtil.enumValue(interchangeable.getSeparator()));
-            appendLine(">");
+            buildCloseElement();
             buildElementWithValue("time-relation", BuilderUtil.enumValue(interchangeable.getTimeRelation()));
             TimeSignature interchangeableTimeSignature = interchangeable.getTimeSignature();
             for (TimeSignatureType timeSignatureType : interchangeableTimeSignature.getTimeSignatureList()) {

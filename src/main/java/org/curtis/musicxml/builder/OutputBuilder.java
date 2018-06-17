@@ -61,21 +61,34 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElement(String elementName) {
+        buildOpenElement(elementName);
+        appendLine("/>");
+    }
+
+    protected void buildOpenElement(String elementName) {
         append("<");
         append(elementName);
-        appendLine("/>");
+    }
+
+    protected void buildCloseElement() {
+        appendLine(">");
+    }
+
+    protected void buildEndElement(String elementName) {
+        append("</");
+        append(elementName);
+        buildCloseElement();
     }
 
     protected void buildElementWithValue(String elementName, String elementValue) {
         if (StringUtil.isEmpty(elementValue)) return;
 
-        append("<");
-        append(elementName);
+        buildOpenElement(elementName);
         append(">");
         append(elementValue);
         append("</");
         append(elementName);
-        appendLine(">");
+        buildCloseElement();
     }
 
     protected void buildElementWithValue(String elementName, Integer elementValue) {
@@ -93,8 +106,7 @@ public abstract class OutputBuilder {
     protected void buildElementWithAttribute(String elementName, String attributeName, String attributeValue) {
         if (StringUtil.isEmpty(attributeValue)) return;
 
-        append("<");
-        append(elementName);
+        buildOpenElement(elementName);
         buildAttribute(attributeName, attributeValue);
         appendLine("/>");
     }
@@ -108,8 +120,7 @@ public abstract class OutputBuilder {
     protected void buildElementWithAttributes(String elementName, Map<String, String> attributes) {
         if (attributes == null || attributes.isEmpty()) return;
 
-        append("<");
-        append(elementName);
+        buildOpenElement(elementName);
         for (String attributeName : attributes.keySet()) {
             buildAttribute(attributeName, attributes.get(attributeName));
         }
@@ -119,14 +130,13 @@ public abstract class OutputBuilder {
     protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, String attributeValue) {
         if (StringUtil.isEmpty(elementValue)) return;
 
-        append("<");
-        append(elementName);
+        buildOpenElement(elementName);
         buildAttribute(attributeName, attributeValue);
         append(">");
         append(elementValue);
         append("</");
         append(elementName);
-        appendLine(">");
+        buildCloseElement();
     }
 
     protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, Integer attributeValue) {
@@ -141,8 +151,7 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElementWithValueAndAttributes(String elementName, String elementValue, Map<String, String> attributes) {
-        append("<");
-        append(elementName);
+        buildOpenElement(elementName);
         if (attributes != null && !attributes.isEmpty()) {
             for (String attributeName : attributes.keySet()) {
                 buildAttribute(attributeName, attributes.get(attributeName));
@@ -152,7 +161,7 @@ public abstract class OutputBuilder {
         if (StringUtil.isNotEmpty(elementValue)) append(elementValue);
         append("</");
         append(elementName);
-        appendLine(">");
+        buildCloseElement();
     }
 
     protected void buildElementWithValueAndAttributes(String elementName, Integer elementValue, Map<String, String> attributes) {

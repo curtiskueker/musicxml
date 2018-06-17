@@ -11,13 +11,13 @@ public class ScoreBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        append("<score-partwise");
+        buildOpenElement("score-partwise");
 
         append(" version=\"");
         append(score.getVersion());
         append("\"");
 
-        appendLine(">");
+        buildCloseElement();
 
         ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(score.getScoreHeader());
         append(scoreHeaderBuilder.build().toString());

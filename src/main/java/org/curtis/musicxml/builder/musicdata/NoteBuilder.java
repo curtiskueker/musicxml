@@ -50,7 +50,7 @@ public class NoteBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (note == null) return stringBuilder;
 
-        append("<note");
+        buildOpenElement("note");
         XPosition xPosition = note.getxPosition();
         if (xPosition != null) {
             buildAttribute("default-x", BuilderUtil.stringValue(xPosition.getDefaultX()));
@@ -67,7 +67,7 @@ public class NoteBuilder extends BaseBuilder {
         buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
         buildAttribute("time-only", note.getTimeOnly());
         buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
-        appendLine(">");
+        buildCloseElement();
         if (note.getCue()) buildElement("cue");
         Grace grace = note.getGrace();
         if (grace != null) {
@@ -201,9 +201,9 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     private void buildRest(Rest rest) {
-        append("<rest");
+        buildOpenElement("rest");
         buildAttribute("measure", BuilderUtil.yesOrNo(rest.getMeasure()));
-        appendLine(">");
+        buildCloseElement();
         buildElementWithValue("display-step", BuilderUtil.enumValue(rest.getDisplayStep()).toUpperCase());
         buildElementWithValue("display-octave", rest.getDisplayOctave());
         appendLine("</rest>");
@@ -214,9 +214,9 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     private void buildNotations(Notations notations) {
-        append("<notations");
+        buildOpenElement("notations");
         buildAttribute("print-object", BuilderUtil.yesOrNo(notations.getPrintObject()));
-        appendLine(">");
+        buildCloseElement();
         buildEditorial(notations.getEditorial());
         for (Notation notation : notations.getNotations()) {
             NotationBuilder notationBuilder = new NotationBuilder(notation);
@@ -226,7 +226,7 @@ public class NoteBuilder extends BaseBuilder {
     }
 
     private void buildLyric(Lyric lyric) {
-        append("<lyric");
+        buildOpenElement("lyric");
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
         buildAttribute("justify", BuilderUtil.enumValue(lyric.getJustify()));
@@ -234,7 +234,7 @@ public class NoteBuilder extends BaseBuilder {
         buildAttribute("placement", BuilderUtil.enumValue(lyric.getPlacement()));
         buildAttribute("color", lyric.getColor());
         buildAttribute("print-object", BuilderUtil.yesOrNo(lyric.getPrintObject()));
-        appendLine(">");
+        buildCloseElement();
         LyricItem lyricItem = lyric.getLyricItem();
         if (lyricItem instanceof LyricText) {
             LyricText lyricText = (LyricText)lyricItem;

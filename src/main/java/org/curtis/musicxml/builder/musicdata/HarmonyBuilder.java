@@ -35,13 +35,13 @@ public class HarmonyBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        append("<harmony");
+        buildOpenElement("harmony");
         buildAttribute("type", BuilderUtil.enumValue(harmony.getType()));
         buildAttribute("print-object", BuilderUtil.yesOrNo(harmony.getPrintObject()));
         buildAttribute("print-frame", BuilderUtil.yesOrNo(harmony.getPrintFrame()));
         FormattingBuilder.buildPrintStyle(harmony.getPrintStyle()).forEach((k,v ) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(harmony.getPlacement()));
-        appendLine(">");
+        buildCloseElement();
         for (HarmonyChord harmonyChord : harmony.getHarmonyChords()) {
             if (harmonyChord instanceof Root) buildRoot((Root)harmonyChord);
             else if (harmonyChord instanceof Function) buildFunction((Function)harmonyChord);
@@ -83,9 +83,9 @@ public class HarmonyBuilder extends BaseBuilder {
                 appendLine("</bass>");
             }
             for (Degree degree : harmonyChord.getDegrees()) {
-                append("<degree");
+                buildOpenElement("degree");
                 buildAttribute("print-object", BuilderUtil.yesOrNo(degree.getPrintObject()));
-                appendLine(">");
+                buildCloseElement();
                 DegreeValue degreeValue = degree.getDegreeValue();
                 Map<String, String> degreeAttributes = new HashMap<>();
                 degreeAttributes.put("symbol", BuilderUtil.enumValue(degreeValue.getSymbol()));
@@ -107,7 +107,7 @@ public class HarmonyBuilder extends BaseBuilder {
         }
         Frame frame = harmony.getFrame();
         if (frame != null) {
-            append("<frame");
+            buildOpenElement("frame");
             PlacementBuilder.buildPosition(frame.getPosition()).forEach((k, v) -> buildAttribute(k, v));
             buildAttribute("color", frame.getColor());
             buildAttribute("halign", BuilderUtil.enumValue(frame.getHalign()));
@@ -115,7 +115,7 @@ public class HarmonyBuilder extends BaseBuilder {
             buildAttribute("height", BuilderUtil.stringValue(frame.getHeight()));
             buildAttribute("width", BuilderUtil.stringValue(frame.getWidth()));
             buildAttribute("unplayed", frame.getUnplayed());
-            appendLine(">");
+            buildCloseElement();
             buildElementWithValue("frame-strings", frame.getFrameStrings());
             buildElementWithValue("frame-frets", frame.getFrameFrets());
             FirstFret firstFret = frame.getFirstFret();

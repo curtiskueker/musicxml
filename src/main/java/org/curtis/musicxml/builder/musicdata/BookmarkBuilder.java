@@ -12,7 +12,7 @@ public class BookmarkBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        append("<bookmark");
+        buildOpenElement("bookmark");
         buildAttribute("id", bookmark.getBookmarkId());
         buildAttribute("name", bookmark.getName());
         XLinkBuilder xLinkBuilder = new XLinkBuilder();

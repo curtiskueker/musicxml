@@ -56,7 +56,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildElementWithValue("work-title", scoreHeader.getWorkTitle());
         LinkAttributes opus = scoreHeader.getOpus();
         if (opus != null) {
-            append("<opus");
+            buildOpenElement("opus");
             XLinkBuilder xLinkBuilder = new XLinkBuilder();
             append(xLinkBuilder.buildLinkAttributes(opus));
             appendLine("/>");
@@ -179,9 +179,9 @@ public class ScoreHeaderBuilder extends BaseBuilder {
     private void buildCredit(Credit credit) {
         if (credit == null) return;
 
-        append("<credit");
+        buildOpenElement("credit");
         buildAttribute("page", credit.getPage());
-        appendLine(">");
+        buildCloseElement();
         for (String creditType : credit.getCreditTypes()) {
             buildElementWithValue("credit-type", creditType);
         }
@@ -202,10 +202,10 @@ public class ScoreHeaderBuilder extends BaseBuilder {
     }
 
     private void buildPartGroup(PartGroup partGroup) {
-        append("<part-group");
+        buildOpenElement("part-group");
         buildAttribute("type", BuilderUtil.enumValue(partGroup.getType()));
         buildAttribute("number", partGroup.getNumber());
-        appendLine(">");
+        buildCloseElement();
         buildGroupName("group-name", partGroup.getGroupName());
         buildGroupName("group-abbreviation", partGroup.getGroupAbbreviation());
         GroupSymbol groupSymbol = partGroup.getGroupSymbol();
@@ -236,9 +236,9 @@ public class ScoreHeaderBuilder extends BaseBuilder {
     }
 
     private void buildSscorePart(ScorePart scorePart) {
-        append("<score-part");
+        buildOpenElement("score-part");
         buildAttribute("id", scorePart.getScorePartId());
-        appendLine(">");
+        buildCloseElement();
         buildIdentification(scorePart.getIdentification());
         buildPartName("part-name", scorePart.getPartName());
         buildPartName("part-abbreviation", scorePart.getPartAbbreviation());
@@ -246,9 +246,9 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             buildElementWithValue("group", group);
         }
         for (ScoreInstrument scoreInstrument : scorePart.getScoreInstruments()) {
-            append("<score-instrument");
+            buildOpenElement("score-instrument");
             buildAttribute("id", scoreInstrument.getScoreInstrumentId());
-            appendLine(">");
+            buildCloseElement();
             buildElementWithValue("instrument-name", scoreInstrument.getInstrumentName());
             buildElementWithValue("instrument-abbreviation", scoreInstrument.getInstrumentAbbreviation());
             buildElementWithValue("instrument-sound", scoreInstrument.getInstrumentSound());

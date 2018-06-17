@@ -11,9 +11,9 @@ public class PartBuilder extends BaseBuilder {
     }
 
     public StringBuilder build() {
-        append("<part");
+        buildOpenElement("part");
         buildAttribute("id", part.getPartId());
-        appendLine(">");
+        buildCloseElement();
         for (Measure measure : part.getMeasures()) {
             MeasureBuilder measureBuilder = new MeasureBuilder(measure);
             append(measureBuilder.build().toString());

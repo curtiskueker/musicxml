@@ -17,13 +17,13 @@ public class PrintBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (print == null) return stringBuilder;
 
-        append("<print");
+        buildOpenElement("print");
         buildAttribute("staff-spacing", BuilderUtil.stringValue(print.getStaffSpacing()));
         buildAttribute("new-system", BuilderUtil.yesOrNo(print.getNewSystem()));
         buildAttribute("new-page", BuilderUtil.yesOrNo(print.getNewPage()));
         buildAttribute("blank-page", print.getBlankPage());
         buildAttribute("page-number", print.getPageNumber());
-        appendLine(">");
+        buildCloseElement();
         append(LayoutBuilder.buildLayout(print.getLayout()));
         MeasureLayout measureLayout = print.getMeasureLayout();
         if (measureLayout != null) {

@@ -15,11 +15,11 @@ public class GroupingBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (grouping == null) return stringBuilder;
 
-        append("<grouping");
+        buildOpenElement("grouping");
         buildAttribute("type", BuilderUtil.enumValue(grouping.getType()));
         buildAttribute("number", grouping.getNumber());
         buildAttribute("number-of", grouping.getNumberOf());
-        appendLine(">");
+        buildCloseElement();
         for (Feature feature : grouping.getFeatures()) buildElementWithValueAndAttribute("feature", feature.getValue(), "type", feature.getType());
         appendLine("</grouping>");
 

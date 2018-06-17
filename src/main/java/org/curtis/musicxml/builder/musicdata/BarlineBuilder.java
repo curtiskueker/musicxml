@@ -22,12 +22,12 @@ public class BarlineBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (barline == null) return stringBuilder;
 
-        append("<barline");
+        buildOpenElement("barline");
         buildAttribute("location", BuilderUtil.enumValue(barline.getLocation()));
         buildAttribute("segno", barline.getSegno());
         buildAttribute("coda", barline.getCoda());
         buildAttribute("divisions", BuilderUtil.stringValue(barline.getDivisions()));
-        appendLine(">");
+        buildCloseElement();
         BarStyleColor barStyleColor = barline.getBarStyle();
         if (barStyleColor != null) {
             buildElementWithValueAndAttribute("bar-style", BuilderUtil.enumValue(barStyleColor.getBarStyle()), "color", barStyleColor.getColor());

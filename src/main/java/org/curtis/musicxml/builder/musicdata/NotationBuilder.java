@@ -102,7 +102,7 @@ public class NotationBuilder extends BaseBuilder {
     }
 
     private void buildTuplet(Tuplet tuplet) {
-        append("<tuplet");
+        buildOpenElement("tuplet");
         buildAttribute("type", BuilderUtil.enumValue(tuplet.getType()));
         buildAttribute("number", BuilderUtil.stringValue(tuplet.getNumber()));
         buildAttribute("bracket", BuilderUtil.yesOrNo(tuplet.getBracket()));
@@ -111,7 +111,7 @@ public class NotationBuilder extends BaseBuilder {
         buildAttribute("line-shape", BuilderUtil.enumValue(tuplet.getLineShape()));
         PlacementBuilder.buildPosition(tuplet.getPosition()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(tuplet.getPlacement()));
-        appendLine(">");
+        buildCloseElement();
         TupletPortion tupletActual = tuplet.getTupletActual();
         if (tupletActual != null) {
             appendLine("<tuplet-actual>");

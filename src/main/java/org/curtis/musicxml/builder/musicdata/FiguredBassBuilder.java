@@ -16,11 +16,11 @@ public class FiguredBassBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (figuredBass == null) return stringBuilder;
 
-        append("<figured-bass");
+        buildOpenElement("figured-bass");
         FormattingBuilder.buildPrintStyle(figuredBass.getPrintStyle()).forEach((k, v) -> buildAttribute(k, v));
         FormattingBuilder.buildPrintout(figuredBass.getPrintout()).forEach((k, v) -> buildAttribute(k, v));
         buildAttribute("parentheses", BuilderUtil.yesOrNo(figuredBass.getParentheses()));
-        appendLine(">");
+        buildCloseElement();
         for (Figure figure : figuredBass.getFigures()) {
             appendLine("<figure>");
             buildStyleText("prefix", figure.getPrefix());

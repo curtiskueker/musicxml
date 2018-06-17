@@ -19,10 +19,10 @@ public class DirectionBuilder extends BaseBuilder {
     public StringBuilder build() {
         if (direction == null) return stringBuilder;
 
-        append("<direction");
+        buildOpenElement("direction");
         buildAttribute("placement", BuilderUtil.enumValue(direction.getPlacement()));
         buildAttribute("directive", BuilderUtil.yesOrNo(direction.getDirective()));
-        appendLine(">");
+        buildCloseElement();
         for (DirectionType directionType : direction.getDirectionTypes()) {
             appendLine("<direction-type>");
             DirectionTypeBuilder directionTypeBuilder = new DirectionTypeBuilder(directionType);
