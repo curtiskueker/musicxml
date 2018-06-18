@@ -317,6 +317,9 @@ public abstract class OutputBuilder {
     protected void buildMidiDevice(MidiDevice midiDevice) {
         if (midiDevice == null) return;
 
-        buildElementWithValueAndAttribute("midi-device", midiDevice.getValue(), "id", midiDevice.getMidiDeviceId());
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("port", BuilderUtil.stringValue(midiDevice.getPort()));
+        attributes.put("id", midiDevice.getMidiDeviceId());
+        buildElementWithValueAndAttributes("midi-device", midiDevice.getValue(), attributes);
     }
 }

@@ -21,11 +21,13 @@ public class PartGroup extends PartItem {
     @JoinColumn(name = "group_name_id")
     private GroupName groupName;
     @Transient
+    // transient collection
     private NameDisplay groupNameDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_abbreviation_id")
     private GroupName groupAbbreviation;
     @Transient
+    // transient collection
     private NameDisplay groupAbbreviationDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_symbol_id")

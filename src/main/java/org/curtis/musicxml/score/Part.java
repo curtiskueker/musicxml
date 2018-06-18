@@ -25,6 +25,7 @@ public class Part extends DatabaseItem {
     @JoinColumn(name = "part_id", nullable = false)
     private List<Measure> measures = new ArrayList<>();
     @Transient
+    // transient lilypond
     private Integer staffNumber;
 
     public Part() {

@@ -33,7 +33,8 @@ public class Harmony extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "frame_id")
     private Frame frame;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "offset_id")
     private Offset offset;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
@@ -54,6 +55,7 @@ public class Harmony extends MusicData {
     @Column
     private Location placement;
     @Transient
+    // transient lilypond
     private BigDecimal totalBeats;
 
     public Harmony() {

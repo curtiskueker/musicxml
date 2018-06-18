@@ -51,7 +51,7 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildOrnaments(Ornaments ornaments) throws BuildException {
-        if (!ornaments.getPrintObject()) return stringBuilder;
+        if (!ornaments.isPrintObject()) return stringBuilder;
 
         for (Ornament ornament : ornaments.getOrnaments()) {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(ornament);

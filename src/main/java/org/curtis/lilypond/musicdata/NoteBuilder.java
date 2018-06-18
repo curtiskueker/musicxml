@@ -288,9 +288,9 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private StringBuilder notationsBuild() throws BuildException {
         for(Notations notations : note.getNotationsList()) {
-            for(Notation notation : notations.getNotations()) {
-                if (!notation.getPrintObject()) continue;
+            if (!notations.getPrintObject()) continue;
 
+            for(Notation notation : notations.getNotations()) {
                 if (notation instanceof Articulations) {
                     Articulations articulations = (Articulations)notation;
                     List<Articulation> articulationList = articulations.getArticulationList();

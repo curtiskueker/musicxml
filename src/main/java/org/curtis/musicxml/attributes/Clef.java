@@ -12,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "clef")
@@ -28,7 +27,8 @@ public class Clef extends DatabaseItem {
     private Integer number;
     @Column
     private Boolean additional;
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column
     private SymbolSize size;
     @Column(name = "after_barline")
     private Boolean afterBarline;

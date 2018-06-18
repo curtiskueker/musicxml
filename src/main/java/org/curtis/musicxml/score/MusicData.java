@@ -20,6 +20,7 @@ public abstract class MusicData extends DatabaseItem {
     @JoinColumn(name = "measure_id", insertable = false, updatable = false)
     private Measure measure;
     @Transient
+    // transient lilypond
     private Integer staffNumber;
 
     public Measure getMeasure() {

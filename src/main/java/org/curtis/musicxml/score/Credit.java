@@ -24,16 +24,22 @@ public class Credit extends DatabaseItem {
     @Column(name = "credit_type")
     private List<String> creditTypes = new ArrayList<>();
     @Transient
+    // transient collection
     private List<Link> links = new ArrayList<>();
     @Transient
+    // transient collection
     private List<Bookmark> bookmarks = new ArrayList<>();
     @Transient
+    // transient collection
     private Image creditImage;
     @Transient
+    // transient collection
     private List<FormattedText> creditWordsList = new ArrayList<>();
     @Transient
+    // transient collection
     private List<Link> creditWordsLinks = new ArrayList<>();
     @Transient
+    // transient collection
     private List<Bookmark> creditWordsBookmarks = new ArrayList<>();
     @Column
     private Integer page;

@@ -5,14 +5,13 @@ import org.curtis.database.DatabaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "midi_device")
 public class MidiDevice extends DatabaseItem {
     @Column
     private String value;
-    @Transient
+    @Column
     private Integer port;
     @Column(name = "midi_device_id")
     private String midiDeviceId;

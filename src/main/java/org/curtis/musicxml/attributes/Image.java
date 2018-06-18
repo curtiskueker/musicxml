@@ -12,14 +12,13 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("image")
 public class Image extends DirectionType {
-    @Transient
+    @Column
     private String source;
-    @Transient
+    @Column
     private String type;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")

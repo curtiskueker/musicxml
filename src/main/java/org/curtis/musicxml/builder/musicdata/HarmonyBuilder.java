@@ -39,7 +39,7 @@ public class HarmonyBuilder extends BaseBuilder {
         buildAttribute("type", harmony.getType());
         buildAttribute("print-object",  harmony.getPrintObject());
         buildAttribute("print-frame",  harmony.getPrintFrame());
-        FormattingBuilder.buildPrintStyle(harmony.getPrintStyle()).forEach((k,v ) -> buildAttribute(k, v));
+        buildAttributes(FormattingBuilder.buildPrintStyle(harmony.getPrintStyle()));
         buildAttribute("placement", harmony.getPlacement());
         buildCloseElement();
         for (HarmonyChord harmonyChord : harmony.getHarmonyChords()) {
@@ -141,6 +141,7 @@ public class HarmonyBuilder extends BaseBuilder {
             }
             buildEndElement("frame");
         }
+        append(DirectionBuilder.buildOffset(harmony.getOffset()));
         buildEditorial(harmony.getEditorial());
         buildElementWithValue("staff", harmony.getStaff());
         buildEndElement("harmony");

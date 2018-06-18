@@ -20,10 +20,13 @@ import java.util.List;
 @DiscriminatorValue("sound")
 public class Sound extends MusicData {
     @Transient
+    // transient collection
     private List<MidiDevice> midiDevices = new ArrayList<>();
     @Transient
+    // transient collection
     private List<MidiInstrument> midiInstruments = new ArrayList<>();
     @Transient
+    // transient collection
     private List<Play> playList = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")

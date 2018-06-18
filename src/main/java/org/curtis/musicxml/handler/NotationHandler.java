@@ -147,7 +147,6 @@ public class NotationHandler extends AbstractHandler {
                     break;
             }
             if (notation != null) {
-                notation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
                 notationList.add(notation);
             }
         }

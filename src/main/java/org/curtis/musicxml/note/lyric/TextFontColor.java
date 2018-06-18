@@ -13,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -26,7 +25,8 @@ public class TextFontColor extends DatabaseItem {
     private Font font;
     @Column
     private String color;
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
     @Column(name = "text_rotation")
     private BigDecimal textRotation;

@@ -74,7 +74,6 @@ public class OrnamentHandler extends AbstractHandler {
         for (Element accidentalMarkElement : accidentalMarkElements) {
             ornaments.getAccidentalMarks().add(NotationFactory.newAccidentalMark(accidentalMarkElement));
         }
-        ornaments.setPrintObject(FormattingFactory.getPrintObject(element));
         notationList.add(ornaments);
     }
 }

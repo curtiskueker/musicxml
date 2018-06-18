@@ -4,14 +4,17 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.score.MusicData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,9 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("figured bass")
 public class FiguredBass extends MusicData {
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "figured_bass_id", nullable = false)
     private List<Figure> figures = new ArrayList<>();
     @Column
     private BigDecimal duration;

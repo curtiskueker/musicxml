@@ -34,11 +34,13 @@ public class ScorePart extends PartItem {
     @JoinColumn(name = "part_name_id")
     private PartName partName;
     @Transient
+    // transient collection
     private NameDisplay partNameDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "part_abbreviation_id")
     private PartName partAbbreviation;
     @Transient
+    // transient collection
     private NameDisplay partAbbreviationDisplay;
     @ElementCollection
     @CollectionTable(name = "score_part_group", joinColumns = @JoinColumn(name = "score_part_id"))
@@ -49,8 +51,10 @@ public class ScorePart extends PartItem {
     @JoinColumn(name = "score_part_id", nullable = false)
     private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
     @Transient
+    // transient collection
     private List<MidiDevice> midiDevices = new ArrayList<>();
     @Transient
+    // transient collection
     private List<MidiInstrument> midiInstruments = new ArrayList<>();
 
     public ScorePart() {

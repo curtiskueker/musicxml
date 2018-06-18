@@ -81,20 +81,24 @@ public class Note extends MusicData {
     @JoinColumn(name = "note_id", nullable = false)
     private List<Beam> beams = new ArrayList<>();
     @Transient
+    // transient lilypond
     private Boolean isBeginBeam = false;
     @Transient
+    // transient lilypond
     private Boolean isEndBeam = false;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Notations> notationsList = new ArrayList<>();
     @Transient
+    // transient lilypond
     private Connection tupletType;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Lyric> lyrics = new ArrayList<>();
     @Transient
+    // transient collection
     private Play play;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "x_position_id")
@@ -120,6 +124,7 @@ public class Note extends MusicData {
     @Column
     private Boolean pizzicato;
     @Transient
+    // transient lilypond
     private List<Direction> directions = new ArrayList<>();
 
     public Note() {

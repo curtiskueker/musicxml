@@ -36,6 +36,7 @@ public class Direction extends MusicData {
     @Column
     private Integer staff;
     @Transient
+    // transient collection
     private Sound sound;
     @Enumerated(EnumType.STRING)
     @Column

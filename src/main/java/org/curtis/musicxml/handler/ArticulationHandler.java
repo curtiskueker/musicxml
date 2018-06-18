@@ -150,7 +150,6 @@ public class ArticulationHandler extends AbstractHandler {
             }
             if (articulation != null) articulations.getArticulationList().add(articulation);
         }
-        articulations.setPrintObject(FormattingFactory.getPrintObject(element));
         notationList.add(articulations);
     }
 }

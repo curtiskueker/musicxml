@@ -60,12 +60,10 @@ public class OtherNotation extends Notation {
         this.number = number;
     }
 
-    @Override
     public Boolean getPrintObject() {
         return printObject;
     }
 
-    @Override
     public void setPrintObject(Boolean printObject) {
         this.printObject = printObject;
     }

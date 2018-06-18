@@ -33,8 +33,10 @@ public class Print extends MusicData {
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
     @Transient
+    // transient collection
     private NameDisplay partNameDisplay;
     @Transient
+    // transient collection
     private NameDisplay partAbbreviationDisplay;
     @Column(name = "staff_spacing")
     private BigDecimal staffSpacing;

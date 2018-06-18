@@ -23,12 +23,14 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("barline")
 public class Barline extends MusicData {
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bar_style_id")
     private BarStyleColor barStyle;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Transient
+    // Transient collection
     private WavyLine wavyLine;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "segno_print_id")
@@ -37,8 +39,10 @@ public class Barline extends MusicData {
     @JoinColumn(name = "coda_print_id")
     private PrintStyleAlign codaPrint;
     @Transient
+    // Transient collection
     private List<Fermata> fermataList = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ending_id")
     private Ending ending;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "repeat_id")

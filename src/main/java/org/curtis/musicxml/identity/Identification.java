@@ -21,8 +21,10 @@ import java.util.List;
 @Table(name = "identification")
 public class Identification extends DatabaseItem {
     @Transient
+    // transient collection
     private List<TypedText> creators = new ArrayList<>();
     @Transient
+    // transient collection
     private List<TypedText> rightsList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -31,6 +33,7 @@ public class Identification extends DatabaseItem {
     @Column
     private String source;
     @Transient
+    // transient collection
     private List<TypedText> relations = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "miscellaneous_id")

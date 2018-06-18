@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Table(name = "grace")
 public class Grace extends DatabaseItem {
     @Transient
+    // transient lilypond
     private Connection graceType;
     @Column(name = "steal_time_previous")
     private BigDecimal stealTimePrevious;

@@ -16,6 +16,7 @@ public class Words extends DirectionType {
     @JoinColumn(name = "fomatted_text_id")
     private FormattedText formattedText;
     @Transient
+    // transient lilypond
     private boolean textMark = false;
 
     public Words() {

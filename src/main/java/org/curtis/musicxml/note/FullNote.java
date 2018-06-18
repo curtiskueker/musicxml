@@ -17,6 +17,7 @@ public class FullNote extends DatabaseItem {
     @Column
     private Boolean chord = false;
     @Transient
+    // transient lilypond
     private Connection chordType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "full_note_type_id")

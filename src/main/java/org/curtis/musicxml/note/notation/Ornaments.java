@@ -22,7 +22,11 @@ public class Ornaments extends Notation {
     @JoinColumn(name = "ornaments_id", nullable = false)
     private List<Ornament> ornaments = new ArrayList<>();
     @Transient
+    // transient collection
     private List<AccidentalMark> accidentalMarks = new ArrayList<>();
+    @Transient
+    // transient lilypond
+    private boolean printObject = true;
 
     public Ornaments() {
 
@@ -42,5 +46,13 @@ public class Ornaments extends Notation {
 
     public void setAccidentalMarks(List<AccidentalMark> accidentalMarks) {
         this.accidentalMarks = accidentalMarks;
+    }
+
+    public boolean isPrintObject() {
+        return printObject;
+    }
+
+    public void setPrintObject(boolean printObject) {
+        this.printObject = printObject;
     }
 }

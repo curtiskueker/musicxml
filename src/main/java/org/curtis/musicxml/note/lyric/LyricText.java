@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,8 @@ public class LyricText extends LyricItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "lyric_text_id", nullable = false)
     private List<LyricSyllable> lyricSyllables = new ArrayList<>();
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "extend_id")
     private Extend extend;
 
     public LyricText() {

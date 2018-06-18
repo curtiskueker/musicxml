@@ -89,6 +89,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildAttribute("number", clef.getNumber());
             buildAttribute("additional", clef.getAdditional());
             buildAttribute("after-barline", clef.getAfterBarline());
+            buildAttribute("size", clef.getSize());
             buildAttributes(FormattingBuilder.buildPrintStyle(clef.getPrintStyle()));
             buildAttribute("print-object", clef.getPrintObject());
             buildCloseElement();

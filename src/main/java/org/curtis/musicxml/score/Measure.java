@@ -34,14 +34,19 @@ public class Measure extends DatabaseItem {
     @Column
     private BigDecimal width;
     @Transient
+    // transient lilypond
     private RepeatBlock repeatBlock;
     @Transient
+    // transient lilypond
     private Integer staffNumber;
     @Transient
+    // transient lilypond
     private boolean isFirstMeasure = false;
     @Transient
+    // transient lilypond
     private boolean isLastMeasure = false;
     @Transient
+    // transient lilypond
     private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {
