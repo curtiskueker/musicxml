@@ -172,7 +172,6 @@ public class ScoreBuilder extends AbstractBuilder {
         Part[] staffParts = new Part[staves];
         for(int index = 0; index < staves; index++) {
             staffParts[index] = new Part();
-            staffParts[index].setStaffNumber(index + 1);
             staffParts[index].setPartId(scorePart.getScorePartId() + ", staff " + String.valueOf(index + 1));
         }
 

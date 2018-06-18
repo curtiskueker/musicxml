@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +23,6 @@ public class Part extends DatabaseItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "part_id", nullable = false)
     private List<Measure> measures = new ArrayList<>();
-    @Transient
-    // transient lilypond
-    private Integer staffNumber;
 
     public Part() {
 
@@ -46,13 +42,5 @@ public class Part extends DatabaseItem {
 
     public void setMeasures(List<Measure> measures) {
         this.measures = measures;
-    }
-
-    public Integer getStaffNumber() {
-        return staffNumber;
-    }
-
-    public void setStaffNumber(Integer staffNumber) {
-        this.staffNumber = staffNumber;
     }
 }

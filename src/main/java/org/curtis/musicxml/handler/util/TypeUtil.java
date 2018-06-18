@@ -8,7 +8,7 @@ public class TypeUtil {
     }
 
     public static Boolean getYesNo(String value) {
-        if(StringUtil.isEmpty(value)) return null;
+        if(StringUtil.isEmpty(value)) return false;
 
         switch (value) {
             case "yes":
