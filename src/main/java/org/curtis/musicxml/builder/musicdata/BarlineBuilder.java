@@ -23,14 +23,14 @@ public class BarlineBuilder extends BaseBuilder {
         if (barline == null) return stringBuilder;
 
         buildOpenElement("barline");
-        buildAttribute("location", BuilderUtil.enumValue(barline.getLocation()));
+        buildAttribute("location", barline.getLocation());
         buildAttribute("segno", barline.getSegno());
         buildAttribute("coda", barline.getCoda());
-        buildAttribute("divisions", BuilderUtil.stringValue(barline.getDivisions()));
+        buildAttribute("divisions", barline.getDivisions());
         buildCloseElement();
         BarStyleColor barStyleColor = barline.getBarStyle();
         if (barStyleColor != null) {
-            buildElementWithValueAndAttribute("bar-style", BuilderUtil.enumValue(barStyleColor.getBarStyle()), "color", barStyleColor.getColor());
+            buildElementWithValueAndAttribute("bar-style", barStyleColor.getBarStyle(), "color", barStyleColor.getColor());
         }
         buildEditorial(barline.getEditorial());
         // TODO: barline wavy-line

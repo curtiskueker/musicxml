@@ -16,7 +16,7 @@ public class GroupingBuilder extends BaseBuilder {
         if (grouping == null) return stringBuilder;
 
         buildOpenElement("grouping");
-        buildAttribute("type", BuilderUtil.enumValue(grouping.getType()));
+        buildAttribute("type", grouping.getType());
         buildAttribute("number", grouping.getNumber());
         buildAttribute("number-of", grouping.getNumberOf());
         buildCloseElement();

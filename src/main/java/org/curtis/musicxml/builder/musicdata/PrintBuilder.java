@@ -18,9 +18,9 @@ public class PrintBuilder extends BaseBuilder {
         if (print == null) return stringBuilder;
 
         buildOpenElement("print");
-        buildAttribute("staff-spacing", BuilderUtil.stringValue(print.getStaffSpacing()));
-        buildAttribute("new-system", BuilderUtil.yesOrNo(print.getNewSystem()));
-        buildAttribute("new-page", BuilderUtil.yesOrNo(print.getNewPage()));
+        buildAttribute("staff-spacing", print.getStaffSpacing());
+        buildAttribute("new-system",  print.getNewSystem());
+        buildAttribute("new-page",  print.getNewPage());
         buildAttribute("blank-page", print.getBlankPage());
         buildAttribute("page-number", print.getPageNumber());
         buildCloseElement();
@@ -32,7 +32,7 @@ public class PrintBuilder extends BaseBuilder {
             buildEndElement("measure-layout");
         }
         MeasureNumberingType measureNumberingValue = print.getMeasureNumberingValue();
-        if (measureNumberingValue != null) buildElementWithValueAndAttributes("measure-numbering", BuilderUtil.enumValue(measureNumberingValue), FormattingBuilder.buildPrintStyleAlign(print.getPrintStyleAlign()));
+        if (measureNumberingValue != null) buildElementWithValueAndAttributes("measure-numbering", measureNumberingValue, FormattingBuilder.buildPrintStyleAlign(print.getPrintStyleAlign()));
         buildEndElement("print");
 
         return stringBuilder;

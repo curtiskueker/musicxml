@@ -50,16 +50,26 @@ public abstract class OutputBuilder {
         append("\"");
     }
 
+    protected void buildAttribute(String attributeName, Integer attributeValue) {
+        buildAttribute(attributeName, BuilderUtil.stringValue(attributeValue));
+    }
+
+    protected void buildAttribute(String attributeName, BigDecimal attributeValue) {
+        buildAttribute(attributeName, BuilderUtil.stringValue(attributeValue));
+    }
+
+    protected void buildAttribute(String attributeName, Boolean attributeValue) {
+        buildAttribute(attributeName, BuilderUtil.yesOrNo(attributeValue));
+    }
+
+    protected void buildAttribute(String attributeName, Enum attributeValue) {
+        buildAttribute(attributeName, BuilderUtil.enumValue(attributeValue));
+    }
+
     protected void buildAttributes(Map<String, String> attributes) {
         if (attributes == null || attributes.isEmpty()) return;
 
         attributes.forEach((k, v) -> buildAttribute(k, v));
-    }
-
-    protected void buildAttribute(String attributeName, Integer attributeValue) {
-        if (attributeValue == null) return;
-
-        buildAttribute(attributeName, String.valueOf(attributeValue));
     }
 
     protected void buildElement(String elementName) {
@@ -102,15 +112,15 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElementWithValue(String elementName, Integer elementValue) {
-        if (elementValue == null) return;
-
-        buildElementWithValue(elementName, String.valueOf(elementValue));
+        buildElementWithValue(elementName, BuilderUtil.stringValue(elementValue));
     }
 
     protected void buildElementWithValue(String elementName, BigDecimal elementValue) {
-        if (elementValue == null) return;
+        buildElementWithValue(elementName, BuilderUtil.stringValue(elementValue));
+    }
 
-        buildElementWithValue(elementName, elementValue.toString());
+    protected void buildElementWithValue(String elementName, Enum elementValue) {
+        buildElementWithValue(elementName, BuilderUtil.enumValue(elementValue));
     }
 
     protected void buildElementWithAttribute(String elementName, String attributeName, String attributeValue) {
@@ -151,11 +161,28 @@ public abstract class OutputBuilder {
         buildElementWithValueAndAttribute(elementName, elementValue, attributeName, BuilderUtil.stringValue(attributeValue));
     }
 
+    protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, Enum attributeValue) {
+        buildElementWithValueAndAttribute(elementName, elementValue, attributeName, BuilderUtil.enumValue(attributeValue));
+    }
 
     protected void buildElementWithValueAndAttribute(String elementName, Integer elementValue, String attributeName, String attributeValue) {
-        if (elementValue == null) return;
+        buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, attributeValue);
+    }
 
-        buildElementWithValueAndAttribute(elementName, String.valueOf(elementValue), attributeName, attributeValue);
+    protected void buildElementWithValueAndAttribute(String elementName, BigDecimal elementValue, String attributeName, Enum attributeValue) {
+        buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, BuilderUtil.enumValue(attributeValue));
+    }
+
+    protected void buildElementWithValueAndAttribute(String elementName, Integer elementValue, String attributeName, Enum attributeValue) {
+        buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, BuilderUtil.enumValue(attributeValue));
+    }
+
+    protected void buildElementWithValueAndAttribute(String elementName, Enum elementValue, String attributeName, String attributeValue) {
+        buildElementWithValueAndAttribute(elementName, BuilderUtil.enumValue(elementValue), attributeName, attributeValue);
+    }
+
+    protected void buildElementWithValueAndAttribute(String elementName, Enum elementValue, String attributeName, Enum attributeValue) {
+        buildElementWithValueAndAttribute(elementName, BuilderUtil.enumValue(elementValue), attributeName, BuilderUtil.enumValue(attributeValue));
     }
 
     protected void buildElementWithValueAndAttributes(String elementName, String elementValue, Map<String, String> attributes) {
@@ -172,6 +199,10 @@ public abstract class OutputBuilder {
 
     protected void buildElementWithValueAndAttributes(String elementName, Integer elementValue, Map<String, String> attributes) {
         buildElementWithValueAndAttributes(elementName, BuilderUtil.stringValue(elementValue), attributes);
+    }
+
+    protected void buildElementWithValueAndAttributes(String elementName, Enum elementValue, Map<String, String> attributes) {
+        buildElementWithValueAndAttributes(elementName, BuilderUtil.enumValue(elementValue), attributes);
     }
 
     protected void buildTimeModification(TimeModification timeModification) {
@@ -270,7 +301,7 @@ public abstract class OutputBuilder {
     protected void buildAccidentalText(AccidentalText accidentalText) {
         if (accidentalText == null) return;
 
-        buildElementWithValueAndAttributes("accidental-text", BuilderUtil.enumValue(accidentalText.getAccidentalType()), FormattingBuilder.buildTextFormatting(accidentalText.getTextFormatting()));
+        buildElementWithValueAndAttributes("accidental-text", accidentalText.getAccidentalType(), FormattingBuilder.buildTextFormatting(accidentalText.getTextFormatting()));
     }
 
     protected void buildMidiDevice(MidiDevice midiDevice) {

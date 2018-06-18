@@ -36,9 +36,9 @@ public class HarmonyBuilder extends BaseBuilder {
 
     public StringBuilder build() {
         buildOpenElement("harmony");
-        buildAttribute("type", BuilderUtil.enumValue(harmony.getType()));
-        buildAttribute("print-object", BuilderUtil.yesOrNo(harmony.getPrintObject()));
-        buildAttribute("print-frame", BuilderUtil.yesOrNo(harmony.getPrintFrame()));
+        buildAttribute("type", harmony.getType());
+        buildAttribute("print-object",  harmony.getPrintObject());
+        buildAttribute("print-frame",  harmony.getPrintFrame());
         FormattingBuilder.buildPrintStyle(harmony.getPrintStyle()).forEach((k,v ) -> buildAttribute(k, v));
         buildAttribute("placement", BuilderUtil.enumValue(harmony.getPlacement()));
         buildCloseElement();
@@ -84,7 +84,7 @@ public class HarmonyBuilder extends BaseBuilder {
             }
             for (Degree degree : harmonyChord.getDegrees()) {
                 buildOpenElement("degree");
-                buildAttribute("print-object", BuilderUtil.yesOrNo(degree.getPrintObject()));
+                buildAttribute("print-object",  degree.getPrintObject());
                 buildCloseElement();
                 DegreeValue degreeValue = degree.getDegreeValue();
                 Map<String, String> degreeAttributes = new HashMap<>();
@@ -101,7 +101,7 @@ public class HarmonyBuilder extends BaseBuilder {
                 Map<String, String> degreeTypeAttributes = new HashMap<>();
                 degreeTypeAttributes.put("text", degreeType.getText());
                 degreeTypeAttributes.putAll(FormattingBuilder.buildPrintStyle(degreeType.getPrintStyle()));
-                buildElementWithValueAndAttributes("degree-type", BuilderUtil.enumValue(degreeType.getValue()), degreeTypeAttributes);
+                buildElementWithValueAndAttributes("degree-type", degreeType.getValue(), degreeTypeAttributes);
                 buildEndElement("degree");
             }
         }
@@ -110,10 +110,10 @@ public class HarmonyBuilder extends BaseBuilder {
             buildOpenElement("frame");
             buildAttributes(PlacementBuilder.buildPosition(frame.getPosition()));
             buildAttribute("color", frame.getColor());
-            buildAttribute("halign", BuilderUtil.enumValue(frame.getHalign()));
-            buildAttribute("valign", BuilderUtil.enumValue(frame.getValignImage()));
-            buildAttribute("height", BuilderUtil.stringValue(frame.getHeight()));
-            buildAttribute("width", BuilderUtil.stringValue(frame.getWidth()));
+            buildAttribute("halign", frame.getHalign());
+            buildAttribute("valign", frame.getValignImage());
+            buildAttribute("height", frame.getHeight());
+            buildAttribute("width", frame.getWidth());
             buildAttribute("unplayed", frame.getUnplayed());
             buildCloseElement();
             buildElementWithValue("frame-strings", frame.getFrameStrings());

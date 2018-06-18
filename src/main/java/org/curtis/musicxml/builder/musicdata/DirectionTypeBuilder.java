@@ -120,9 +120,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildDynamics(Dynamics dynamics) {
         buildOpenElement("dynamics");
         buildAttributes(FormattingBuilder.buildPrintStyleAlign(dynamics.getPrintStyleAlign()));
-        buildAttribute("placement", BuilderUtil.enumValue(dynamics.getPlacement()));
+        buildAttribute("placement", dynamics.getPlacement());
         buildAttributes(FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()));
-        buildAttribute("enclosure", BuilderUtil.enumValue(dynamics.getEnclosure()));
+        buildAttribute("enclosure", dynamics.getEnclosure());
         buildCloseElement();
         for (DynamicsType dynamicsType : dynamics.getTypes()) {
             buildElement(BuilderUtil.enumValue(dynamicsType));
@@ -165,8 +165,8 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildMetronome(Metronome metronome) {
         buildOpenElement("metronome");
         buildAttributes(FormattingBuilder.buildPrintStyleAlign(metronome.getPrintStyleAlign()));
-        buildAttribute("justify", BuilderUtil.enumValue(metronome.getJustify()));
-        buildAttribute("parentheses", BuilderUtil.yesOrNo(metronome.getParentheses()));
+        buildAttribute("justify", metronome.getJustify());
+        buildAttribute("parentheses", metronome.getParentheses());
         buildCloseElement();
         if (metronome instanceof BeatMetronome) buildBeatMetronome((BeatMetronome)metronome);
         else if (metronome instanceof NoteMetronome) buildNoteMetronome((NoteMetronome)metronome);
@@ -201,9 +201,9 @@ public class DirectionTypeBuilder extends BaseBuilder {
         MetronomeTuplet metronomeTuplet = metronomeNote.getMetronomeTuplet();
         if (metronomeTuplet != null) {
             buildOpenElement("metronome-tuplet");
-            buildAttribute("type", BuilderUtil.enumValue(metronomeTuplet.getType()));
-            buildAttribute("bracket", BuilderUtil.yesOrNo(metronomeTuplet.getBracket()));
-            buildAttribute("show-number", BuilderUtil.enumValue(metronomeTuplet.getShowNumber()));
+            buildAttribute("type", metronomeTuplet.getType());
+            buildAttribute("bracket", metronomeTuplet.getBracket());
+            buildAttribute("show-number", metronomeTuplet.getShowNumber());
             buildCloseElement();
             buildTimeModification(metronomeTuplet.getTimeModification());
             buildStartElement("metronome-tuplet");
@@ -296,7 +296,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
     private void buildPercussion(Percussion percussion) {
         buildOpenElement("percussion");
         buildAttributes(FormattingBuilder.buildPrintStyleAlign(percussion.getPrintStyleAlign()));
-        buildAttribute("enclosure", BuilderUtil.enumValue(percussion.getEnclosure()));
+        buildAttribute("enclosure", percussion.getEnclosure());
         buildCloseElement();
         if (percussion instanceof Glass) buildGlass((Glass)percussion);
         else if (percussion instanceof Metal) buildMetal((Metal)percussion);
@@ -355,15 +355,15 @@ public class DirectionTypeBuilder extends BaseBuilder {
     }
 
     private void buildBeater(Beater beater) {
-        buildElementWithValueAndAttribute("beater", BuilderUtil.enumValue(beater.getBeaterValue()), "tip", BuilderUtil.enumValue(beater.getTip()));
+        buildElementWithValueAndAttribute("beater", beater.getBeaterValue(), "tip", beater.getTip());
     }
 
     private void buildStick(Stick stick) {
         buildOpenElement("stick");
-        buildAttribute("tip", BuilderUtil.enumValue(stick.getTip()));
+        buildAttribute("tip", stick.getTip());
         buildCloseElement();
         buildElementWithValue("stick-type", BuilderUtil.enumValueWithSpaces(stick.getStickType()));
-        buildElementWithValue("stick-material", BuilderUtil.enumValue(stick.getStickMaterial()));
+        buildElementWithValue("stick-material", stick.getStickMaterial());
         buildEndElement("stick");
     }
 

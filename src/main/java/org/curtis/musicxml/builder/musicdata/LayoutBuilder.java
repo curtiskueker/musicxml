@@ -30,7 +30,7 @@ public class LayoutBuilder extends OutputBuilder {
             layoutBuilder.buildElementWithValue("page-width", BuilderUtil.stringValue(pageLayout.getPageWidth()));
             for (PageMargins pageMargins : pageLayout.getPageMargins().values()) {
                 layoutBuilder.buildOpenElement("page-margins");
-                layoutBuilder.buildAttribute("type", BuilderUtil.enumValue(pageMargins.getType()));
+                layoutBuilder.buildAttribute("type", pageMargins.getType());
                 layoutBuilder.buildCloseElement();
                 Margins margins = pageMargins.getMargins();
                 layoutBuilder.buildElementWithValue("left-margin", BuilderUtil.stringValue(margins.getLeftMargin()));

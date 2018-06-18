@@ -103,14 +103,14 @@ public class NotationBuilder extends BaseBuilder {
 
     private void buildTuplet(Tuplet tuplet) {
         buildOpenElement("tuplet");
-        buildAttribute("type", BuilderUtil.enumValue(tuplet.getType()));
-        buildAttribute("number", BuilderUtil.stringValue(tuplet.getNumber()));
-        buildAttribute("bracket", BuilderUtil.yesOrNo(tuplet.getBracket()));
-        buildAttribute("show-number", BuilderUtil.enumValue(tuplet.getShowNumber()));
-        buildAttribute("show-type", BuilderUtil.enumValue(tuplet.getShowType()));
-        buildAttribute("line-shape", BuilderUtil.enumValue(tuplet.getLineShape()));
+        buildAttribute("type", tuplet.getType());
+        buildAttribute("number", tuplet.getNumber());
+        buildAttribute("bracket",  tuplet.getBracket());
+        buildAttribute("show-number", tuplet.getShowNumber());
+        buildAttribute("show-type", tuplet.getShowType());
+        buildAttribute("line-shape", tuplet.getLineShape());
         buildAttributes(PlacementBuilder.buildPosition(tuplet.getPosition()));
-        buildAttribute("placement", BuilderUtil.enumValue(tuplet.getPlacement()));
+        buildAttribute("placement", tuplet.getPlacement());
         buildCloseElement();
         TupletPortion tupletActual = tuplet.getTupletActual();
         if (tupletActual != null) {
@@ -204,7 +204,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(fermata.getType()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(fermata.getPrintStyle()));
-        buildElementWithValueAndAttributes("fermzta", BuilderUtil.enumValue(fermata.getFermataShape()), attributes);
+        buildElementWithValueAndAttributes("fermzta", fermata.getFermataShape(), attributes);
     }
 
     private void buildArpeggiate(Arpeggiate arpeggiate) {
@@ -231,7 +231,7 @@ public class NotationBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.putAll(FormattingBuilder.buildPrintStyle(accidentalMark.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(accidentalMark.getPlacement()));
-        buildElementWithValueAndAttributes("accidental-mark", BuilderUtil.enumValue(accidentalMark.getAccidentalType()), attributes);
+        buildElementWithValueAndAttributes("accidental-mark", accidentalMark.getAccidentalType(), attributes);
     }
 
     private void buildOtherNotation(OtherNotation otherNotation) {

@@ -129,7 +129,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         if (scaling != null) {
             buildStartElement("scaling");
             buildElementWithValue("millimeters", scaling.getMillimeters());
-            buildElementWithValue("tenths", BuilderUtil.stringValue(scaling.getTenths()));
+            buildElementWithValue("tenths", scaling.getTenths());
             buildEndElement("scaling");
         }
         append(LayoutBuilder.buildLayout(defaults.getLayout()));
@@ -140,7 +140,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
                 buildElementWithValueAndAttribute("line-width", BuilderUtil.stringValue(lineWidth.getValue()), "type", lineWidth.getLineWidthType());
             }
             for (NoteSize noteSize : appearance.getNoteSizes()) {
-                buildElementWithValueAndAttribute("note-size", BuilderUtil.stringValue(noteSize.getValue()), "type", BuilderUtil.enumValue(noteSize.getType()));
+                buildElementWithValueAndAttribute("note-size", noteSize.getValue(), "type", noteSize.getType());
             }
             for (Distance distance : appearance.getDistances()) {
                 buildElementWithValueAndAttribute("distance", BuilderUtil.stringValue(distance.getValue()), "type", distance.getType());
@@ -212,7 +212,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
             Map<String, String> groupSymbolAttributes = new HashMap<>();
             groupSymbolAttributes.putAll(PlacementBuilder.buildPosition(groupSymbol.getPosition()));
             groupSymbolAttributes.put("color", groupSymbol.getColor());
-            buildElementWithValueAndAttributes("group-symbol", BuilderUtil.enumValue(groupSymbol.getGroupSymbolType()), groupSymbolAttributes);
+            buildElementWithValueAndAttributes("group-symbol", groupSymbol.getGroupSymbolType(), groupSymbolAttributes);
         }
         GroupBarline groupBarline = partGroup.getGroupBarline();
         if (groupBarline != null) {

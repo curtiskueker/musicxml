@@ -20,8 +20,8 @@ public class DirectionBuilder extends BaseBuilder {
         if (direction == null) return stringBuilder;
 
         buildOpenElement("direction");
-        buildAttribute("placement", BuilderUtil.enumValue(direction.getPlacement()));
-        buildAttribute("directive", BuilderUtil.yesOrNo(direction.getDirective()));
+        buildAttribute("placement", direction.getPlacement());
+        buildAttribute("directive", direction.getDirective());
         buildCloseElement();
         for (DirectionType directionType : direction.getDirectionTypes()) {
             buildStartElement("direction-type");

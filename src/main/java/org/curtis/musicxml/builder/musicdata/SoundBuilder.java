@@ -15,20 +15,20 @@ public class SoundBuilder extends BaseBuilder {
         if (sound == null) return stringBuilder;
 
         buildOpenElement("sound");
-        buildAttribute("tempo", BuilderUtil.stringValue(sound.getTempo()));
-        buildAttribute("dynamics", BuilderUtil.stringValue(sound.getDynamics()));
-        buildAttribute("dacapo", BuilderUtil.yesOrNo(sound.getDacapo()));
+        buildAttribute("tempo", sound.getTempo());
+        buildAttribute("dynamics", sound.getDynamics());
+        buildAttribute("dacapo",  sound.getDacapo());
         buildAttribute("segno", sound.getSegno());
         buildAttribute("dalsegno", sound.getDalsegno());
         buildAttribute("coda", sound.getCoda());
         buildAttribute("tocoda", sound.getTocoda());
-        buildAttribute("divisions", BuilderUtil.stringValue(sound.getDivisions()));
-        buildAttribute("forward-repeat", BuilderUtil.yesOrNo(sound.getForwardRepeat()));
+        buildAttribute("divisions", sound.getDivisions());
+        buildAttribute("forward-repeat",  sound.getForwardRepeat());
         buildAttribute("fine", sound.getFine());
         buildAttribute("time-only", sound.getTimeOnly());
-        buildAttribute("pizzicato", BuilderUtil.yesOrNo(sound.getPizzicato()));
-        buildAttribute("pan", BuilderUtil.stringValue(sound.getPan()));
-        buildAttribute("elevation", BuilderUtil.stringValue(sound.getElevation()));
+        buildAttribute("pizzicato",  sound.getPizzicato());
+        buildAttribute("pan", sound.getPan());
+        buildAttribute("elevation", sound.getElevation());
         buildAttribute("damper-pedal", sound.getDamperPedal());
         buildAttribute("soft-pedal", sound.getSoftPedal());
         buildAttribute("sostenuto-pedal", sound.getSostenutoPedal());

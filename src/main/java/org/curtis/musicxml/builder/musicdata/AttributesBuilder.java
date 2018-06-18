@@ -49,7 +49,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildOpenElement("key");
             buildAttribute("number", key.getNumber());
             buildAttributes(FormattingBuilder.buildPrintStyle(key.getPrintStyle()));
-            buildAttribute("print-object", BuilderUtil.yesOrNo(key.getPrintObject()));
+            buildAttribute("print-object", key.getPrintObject());
             buildCloseElement();
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);
             else if (key instanceof NonTraditionalKey) buildNonTraditionalKey((NonTraditionalKey)key);
@@ -64,10 +64,10 @@ public class AttributesBuilder extends BaseBuilder {
         for (Time time : attributes.getTimeList()) {
             buildOpenElement("time");
             buildAttribute("number", time.getNumber());
-            buildAttribute("symbol", BuilderUtil.enumValue(time.getSymbol()));
-            buildAttribute("separator", BuilderUtil.enumValue(time.getSeparator()));
+            buildAttribute("symbol", time.getSymbol());
+            buildAttribute("separator", time.getSeparator());
             buildAttributes(FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()));
-            buildAttribute("print-object", BuilderUtil.yesOrNo(time.getPrintObject()));
+            buildAttribute("print-object", time.getPrintObject());
             buildCloseElement();
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
             else if (time instanceof SenzaMisura) buildSenzaMisura((SenzaMisura)time);
@@ -81,16 +81,16 @@ public class AttributesBuilder extends BaseBuilder {
             partSymbolAttributes.put("bottom-staff", BuilderUtil.stringValue(partSymbol.getBottomStaff()));
             partSymbolAttributes.putAll(PlacementBuilder.buildPosition(partSymbol.getPosition()));
             partSymbolAttributes.put("color", partSymbol.getColor());
-            buildElementWithValueAndAttributes("part-symbol", BuilderUtil.enumValue(partSymbol.getGroupSymbolType()), partSymbolAttributes);
+            buildElementWithValueAndAttributes("part-symbol", partSymbol.getGroupSymbolType(), partSymbolAttributes);
         }
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {
             buildOpenElement("clef");
-            buildAttribute("number", BuilderUtil.stringValue(clef.getNumber()));
-            buildAttribute("additional", BuilderUtil.yesOrNo(clef.getAdditional()));
-            buildAttribute("after-barline", BuilderUtil.yesOrNo(clef.getAfterBarline()));
+            buildAttribute("number", clef.getNumber());
+            buildAttribute("additional", clef.getAdditional());
+            buildAttribute("after-barline", clef.getAfterBarline());
             buildAttributes(FormattingBuilder.buildPrintStyle(clef.getPrintStyle()));
-            buildAttribute("print-object", BuilderUtil.yesOrNo(clef.getPrintObject()));
+            buildAttribute("print-object", clef.getPrintObject());
             buildCloseElement();
             String clefSign = BuilderUtil.enumValue(clef.getSign());
             switch (clefSign) {
@@ -114,12 +114,12 @@ public class AttributesBuilder extends BaseBuilder {
         }
         for (StaffDetails staffDetails : attributes.getStaffDetailsList()) {
             buildOpenElement("staff-details");
-            buildAttribute("number", BuilderUtil.stringValue(staffDetails.getNumber()));
-            buildAttribute("show-frets", BuilderUtil.enumValue(staffDetails.getShowFrets()));
-            buildAttribute("print-object", BuilderUtil.yesOrNo(staffDetails.getPrintObject()));
-            buildAttribute("print-spacing", BuilderUtil.yesOrNo(staffDetails.getPrintSpacing()));
+            buildAttribute("number", staffDetails.getNumber());
+            buildAttribute("show-frets", staffDetails.getShowFrets());
+            buildAttribute("print-object", staffDetails.getPrintObject());
+            buildAttribute("print-spacing", staffDetails.getPrintSpacing());
             buildCloseElement();
-            buildElementWithValue("staff-type", BuilderUtil.enumValue(staffDetails.getStaffType()));
+            buildElementWithValue("staff-type", staffDetails.getStaffType());
             buildElementWithValue("staff-lines", staffDetails.getStaffLines());
             for (StaffTuning staffTuning : staffDetails.getStaffTunings()) {
                 buildOpenElement("staff-tuning");
@@ -168,9 +168,9 @@ public class AttributesBuilder extends BaseBuilder {
             else if (measureStyle instanceof BeatRepeat) {
                 BeatRepeat beatRepeat = (BeatRepeat)measureStyle;
                 buildOpenElement("beat-repeat");
-                buildAttribute("type", BuilderUtil.enumValue(beatRepeat.getType()));
+                buildAttribute("type", beatRepeat.getType());
                 buildAttribute("slashes", beatRepeat.getSlashes());
-                buildAttribute("use-dots", BuilderUtil.yesOrNo(beatRepeat.getUseDots()));
+                buildAttribute("use-dots", beatRepeat.getUseDots());
                 buildCloseElement();
                 buildSlashGroup(beatRepeat.getSlashGroup());
                 buildEndElement("beat-repeat");
@@ -178,9 +178,9 @@ public class AttributesBuilder extends BaseBuilder {
             else if (measureStyle instanceof Slash) {
                 Slash slash = (Slash)measureStyle;
                 buildOpenElement("slash");
-                buildAttribute("type", BuilderUtil.enumValue(slash.getType()));
-                buildAttribute("use-dots", BuilderUtil.yesOrNo(slash.getUseDots()));
-                buildAttribute("use-stems", BuilderUtil.yesOrNo(slash.getUseStems()));
+                buildAttribute("type", slash.getType());
+                buildAttribute("use-dots", slash.getUseDots());
+                buildAttribute("use-stems", slash.getUseStems());
                 buildCloseElement();
                 buildSlashGroup(slash.getSlashGroup());
                 buildEndElement("slash");
@@ -194,7 +194,7 @@ public class AttributesBuilder extends BaseBuilder {
 
     private void buildTraditionalKey(TraditionalKey traditionalKey) {
         Cancel cancel = traditionalKey.getCancel();
-        if (cancel != null) buildElementWithValueAndAttribute("cancel", cancel.getFifths(), "location", BuilderUtil.enumValue(cancel.getLocation()));
+        if (cancel != null) buildElementWithValueAndAttribute("cancel", cancel.getFifths(), "location", cancel.getLocation());
         buildElementWithValue("fifths", traditionalKey.getFifths());
         buildElementWithValue("mode", traditionalKey.getMode());
     }
@@ -203,7 +203,7 @@ public class AttributesBuilder extends BaseBuilder {
         for (NonTraditionalKeyType nonTraditionalKeyType : nonTraditionalKey.getNonTraditionalKeyList()) {
             buildElementWithValue("key-step", BuilderUtil.enumValue(nonTraditionalKeyType.getKeyStep()).toUpperCase());
             buildElementWithValue("key-alter", nonTraditionalKeyType.getKeyAlter());
-            buildElementWithValue("key-accidental", BuilderUtil.enumValue(nonTraditionalKeyType.getKeyAccidental()));
+            buildElementWithValue("key-accidental", nonTraditionalKeyType.getKeyAccidental());
         }
     }
 
@@ -214,10 +214,10 @@ public class AttributesBuilder extends BaseBuilder {
         Interchangeable interchangeable = timeSignature.getInterchangeable();
         if (interchangeable != null) {
             buildOpenElement("interchangeable");
-            buildAttribute("symbol", BuilderUtil.enumValue(interchangeable.getSymbol()));
-            buildAttribute("separator", BuilderUtil.enumValue(interchangeable.getSeparator()));
+            buildAttribute("symbol", interchangeable.getSymbol());
+            buildAttribute("separator", interchangeable.getSeparator());
             buildCloseElement();
-            buildElementWithValue("time-relation", BuilderUtil.enumValue(interchangeable.getTimeRelation()));
+            buildElementWithValue("time-relation", interchangeable.getTimeRelation());
             TimeSignature interchangeableTimeSignature = interchangeable.getTimeSignature();
             for (TimeSignatureType timeSignatureType : interchangeableTimeSignature.getTimeSignatureList()) {
                 buildTimeSignatureType(timeSignatureType);

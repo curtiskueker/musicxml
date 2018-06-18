@@ -53,20 +53,20 @@ public class NoteBuilder extends BaseBuilder {
         buildOpenElement("note");
         XPosition xPosition = note.getxPosition();
         if (xPosition != null) {
-            buildAttribute("default-x", BuilderUtil.stringValue(xPosition.getDefaultX()));
-            buildAttribute("default-y", BuilderUtil.stringValue(xPosition.getDefaultY()));
-            buildAttribute("relative-x", BuilderUtil.stringValue(xPosition.getRelativeX()));
-            buildAttribute("relative-y", BuilderUtil.stringValue(xPosition.getRelativeY()));
+            buildAttribute("default-x", xPosition.getDefaultX());
+            buildAttribute("default-y", xPosition.getDefaultY());
+            buildAttribute("relative-x", xPosition.getRelativeX());
+            buildAttribute("relative-y", xPosition.getRelativeY());
         }
         buildAttributes(FormattingBuilder.buildFont(note.getFont()));
         buildAttribute("color", note.getColor());
         buildAttributes(FormattingBuilder.buildPrintout(note.getPrintout()));
-        buildAttribute("dynamics", BuilderUtil.stringValue(note.getDynamics()));
-        buildAttribute("end-dynamics", BuilderUtil.stringValue(note.getEndDynamics()));
-        buildAttribute("attack", BuilderUtil.stringValue(note.getAttack()));
-        buildAttribute("release", BuilderUtil.stringValue(note.getRelease()));
+        buildAttribute("dynamics", note.getDynamics());
+        buildAttribute("end-dynamics", note.getEndDynamics());
+        buildAttribute("attack", note.getAttack());
+        buildAttribute("release", note.getRelease());
         buildAttribute("time-only", note.getTimeOnly());
-        buildAttribute("pizzicato", BuilderUtil.yesOrNo(note.getPizzicato()));
+        buildAttribute("pizzicato",  note.getPizzicato());
         buildCloseElement();
         if (note.getCue()) buildElement("cue");
         Grace grace = note.getGrace();
@@ -90,7 +90,7 @@ public class NoteBuilder extends BaseBuilder {
         buildEditorialVoice(note.getEditorialVoice());
         NoteType noteType = note.getType();
         if (noteType != null) {
-            buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", BuilderUtil.enumValue(noteType.getSize()));
+            buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", noteType.getSize());
         }
         // TODO: note dot Placement
         for (Integer dotCount = 1; dotCount <= note.getDots(); dotCount++) {
@@ -103,7 +103,7 @@ public class NoteBuilder extends BaseBuilder {
             accidentalAttributes.put("editorial", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.putAll(FormattingBuilder.buildLevelDisplay(accidental.getLevelDisplay()));
             accidentalAttributes.putAll(FormattingBuilder.buildPrintStyle(accidental.getPrintStyle()));
-            buildElementWithValueAndAttributes("accidental", BuilderUtil.enumValue(accidental.getAccidentalType()), accidentalAttributes);
+            buildElementWithValueAndAttributes("accidental", accidental.getAccidentalType(), accidentalAttributes);
         }
         TimeModification timeModification = note.getTimeModification();
         if (timeModification != null) {
@@ -122,7 +122,7 @@ public class NoteBuilder extends BaseBuilder {
                 stemAttributes.put("relative-y", BuilderUtil.stringValue(yPosition.getRelativeY()));
             }
             stemAttributes.put("color", stem.getColor());
-            buildElementWithValueAndAttributes("stem", BuilderUtil.enumValue(stem.getType()), stemAttributes);
+            buildElementWithValueAndAttributes("stem", stem.getType(), stemAttributes);
         }
         Notehead notehead = note.getNotehead();
         if (notehead != null) {
@@ -202,7 +202,7 @@ public class NoteBuilder extends BaseBuilder {
 
     private void buildRest(Rest rest) {
         buildOpenElement("rest");
-        buildAttribute("measure", BuilderUtil.yesOrNo(rest.getMeasure()));
+        buildAttribute("measure",  rest.getMeasure());
         buildCloseElement();
         buildElementWithValue("display-step", BuilderUtil.enumValue(rest.getDisplayStep()).toUpperCase());
         buildElementWithValue("display-octave", rest.getDisplayOctave());
@@ -215,7 +215,7 @@ public class NoteBuilder extends BaseBuilder {
 
     private void buildNotations(Notations notations) {
         buildOpenElement("notations");
-        buildAttribute("print-object", BuilderUtil.yesOrNo(notations.getPrintObject()));
+        buildAttribute("print-object",  notations.getPrintObject());
         buildCloseElement();
         buildEditorial(notations.getEditorial());
         for (Notation notation : notations.getNotations()) {
@@ -229,11 +229,11 @@ public class NoteBuilder extends BaseBuilder {
         buildOpenElement("lyric");
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
-        buildAttribute("justify", BuilderUtil.enumValue(lyric.getJustify()));
+        buildAttribute("justify", lyric.getJustify());
         buildAttributes(PlacementBuilder.buildPosition(lyric.getPosition()));
-        buildAttribute("placement", BuilderUtil.enumValue(lyric.getPlacement()));
+        buildAttribute("placement", lyric.getPlacement());
         buildAttribute("color", lyric.getColor());
-        buildAttribute("print-object", BuilderUtil.yesOrNo(lyric.getPrintObject()));
+        buildAttribute("print-object",  lyric.getPrintObject());
         buildCloseElement();
         LyricItem lyricItem = lyric.getLyricItem();
         if (lyricItem instanceof LyricText) {
@@ -251,7 +251,7 @@ public class NoteBuilder extends BaseBuilder {
                     elisionAttributes.put("dir", BuilderUtil.enumValue(lyricElision.getTextDirection()));
                     buildElementWithValueAndAttributes("elision", lyricElision.getValue(), elisionAttributes);
                 }
-                buildElementWithValue("syllabic", BuilderUtil.enumValue(lyricSyllable.getSyllabic()));
+                buildElementWithValue("syllabic", lyricSyllable.getSyllabic());
                 TextData lyricSyllableText = lyricSyllable.getText();
                 Map<String, String> textAttributes = new HashMap<>();
                 textAttributes.putAll(FormattingBuilder.buildFont(lyricSyllableText.getFont()));

@@ -84,9 +84,9 @@ public class TechnicalBuilder extends BaseBuilder {
 
     private void buildHarmonic(Harmonic harmonic) {
         buildOpenElement("harmonic");
-        buildAttribute("print-object", BuilderUtil.yesOrNo(harmonic.getPrintObject()));
+        buildAttribute("print-object",  harmonic.getPrintObject());
         buildAttributes(FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()));
-        buildAttribute("placement", BuilderUtil.enumValue(harmonic.getPlacement()));
+        buildAttribute("placement", harmonic.getPlacement());
         buildCloseElement();
         HarmonicType harmonicType = harmonic.getHarmonicType();
         if (harmonicType != null) {
@@ -215,11 +215,11 @@ public class TechnicalBuilder extends BaseBuilder {
     private void buildHole(Hole hole) {
         buildOpenElement("hole");
         buildAttributes(FormattingBuilder.buildPrintStyle(hole.getPrintStyle()));
-        buildAttribute("placement", BuilderUtil.enumValue(hole.getPlacement()));
+        buildAttribute("placement", hole.getPlacement());
         buildCloseElement();
         String holeType = hole.getHoleType();
         if (StringUtil.isNotEmpty(holeType)) buildElementWithValue("hole-type", holeType);
-        buildElementWithValueAndAttribute("hole-closed", BuilderUtil.enumValue(hole.getHoleClosedType()), "location", BuilderUtil.enumValue(hole.getHoleClosedLocation()));
+        buildElementWithValueAndAttribute("hole-closed", hole.getHoleClosedType(), "location", hole.getHoleClosedLocation());
         String holeShape = hole.getHoleShape();
         if (StringUtil.isNotEmpty(holeShape)) buildElementWithValue("hole-shape", holeShape);
         buildEndElement("hole");
@@ -228,11 +228,11 @@ public class TechnicalBuilder extends BaseBuilder {
     private void buildArrow(Arrow arrow) {
         buildOpenElement("arrow");
         buildAttributes(FormattingBuilder.buildPrintStyle(arrow.getPrintStyle()));
-        buildAttribute("placement", BuilderUtil.enumValue(arrow.getPlacement()));
+        buildAttribute("placement", arrow.getPlacement());
         buildCloseElement();
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
-        buildElementWithValue("arrow-style", BuilderUtil.enumValue(arrow.getArrowStyle()));
-        buildElementWithValue("circular-arrow", BuilderUtil.enumValue(arrow.getCircularArrow()));
+        buildElementWithValue("arrow-style", arrow.getArrowStyle());
+        buildElementWithValue("circular-arrow", arrow.getCircularArrow());
         buildEndElement("arrow");
     }
 

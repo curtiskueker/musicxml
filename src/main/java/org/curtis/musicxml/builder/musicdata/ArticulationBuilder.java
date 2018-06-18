@@ -60,7 +60,7 @@ public class ArticulationBuilder extends BaseBuilder {
     }
 
     private void buildStrongAccent(StrongAccent strongAccent) {
-        buildPlacementWithAttribute("strong-accent", strongAccent.getPlacement(), "type",BuilderUtil.enumValue(strongAccent.getType()));
+        buildPlacementWithAttribute("strong-accent", strongAccent.getPlacement(), "type", BuilderUtil.enumValue(strongAccent.getType()));
     }
 
     private void buildStaccato(Staccato staccato) {
