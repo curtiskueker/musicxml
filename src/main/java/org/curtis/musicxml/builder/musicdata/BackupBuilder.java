@@ -1,7 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.Backup;
 
 public class BackupBuilder extends BaseBuilder {
@@ -15,7 +14,7 @@ public class BackupBuilder extends BaseBuilder {
         if (backup == null) return stringBuilder;
 
         buildStartElement("backup");
-        buildElementWithValue("duration", BuilderUtil.stringValue(backup.getDuration()));
+        buildElementWithValue("duration", backup.getDuration());
         buildEditorial(backup.getEditorial());
         buildEndElement("backup");
 

@@ -78,7 +78,7 @@ public class HarmonyBuilder extends BaseBuilder {
                     bassAlterAttributes.put("print-object", BuilderUtil.yesOrNo(bassAlter.getPrintObject()));
                     bassAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(bassAlter.getPrintStyle()));
                     bassAlterAttributes.put("location", BuilderUtil.enumValue(bassAlter.getLocation()));
-                    buildElementWithValueAndAttributes("bass-alter", BuilderUtil.stringValue(bassAlter.getSemitones()), bassAlterAttributes);
+                    buildElementWithValueAndAttributes("bass-alter", bassAlter.getSemitones(), bassAlterAttributes);
                 }
                 buildEndElement("bass");
             }
@@ -96,7 +96,7 @@ public class HarmonyBuilder extends BaseBuilder {
                 Map<String, String> degreeAlterAttributes = new HashMap<>();
                 degreeAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(degreeAlter.getPrintStyle()));
                 degreeAlterAttributes.put("plus-minus", BuilderUtil.yesOrNo(degreeAlter.getPlusMinus()));
-                buildElementWithValueAndAttributes("degree-alter", BuilderUtil.stringValue(degreeAlter.getSemitones()), degreeAlterAttributes);
+                buildElementWithValueAndAttributes("degree-alter", degreeAlter.getSemitones(), degreeAlterAttributes);
                 DegreeType degreeType = degree.getDegreeType();
                 Map<String, String> degreeTypeAttributes = new HashMap<>();
                 degreeTypeAttributes.put("text", degreeType.getText());
@@ -161,7 +161,7 @@ public class HarmonyBuilder extends BaseBuilder {
             rootAlterAttributes.put("print-object", BuilderUtil.yesOrNo(rootAlter.getPrintObject()));
             rootAlterAttributes.putAll(FormattingBuilder.buildPrintStyle(rootAlter.getPrintStyle()));
             rootAlterAttributes.put("location", BuilderUtil.enumValue(rootAlter.getLocation()));
-            buildElementWithValueAndAttributes("root-alter", BuilderUtil.stringValue(rootAlter.getSemitones()), rootAlterAttributes);
+            buildElementWithValueAndAttributes("root-alter", rootAlter.getSemitones(), rootAlterAttributes);
         }
         buildEndElement("root");
     }

@@ -26,17 +26,17 @@ public class LayoutBuilder extends OutputBuilder {
         PageLayout pageLayout = layout.getPageLayout();
         if (pageLayout != null) {
             layoutBuilder.buildStartElement("page-layout");
-            layoutBuilder.buildElementWithValue("page-height", BuilderUtil.stringValue(pageLayout.getPageHeight()));
-            layoutBuilder.buildElementWithValue("page-width", BuilderUtil.stringValue(pageLayout.getPageWidth()));
+            layoutBuilder.buildElementWithValue("page-height", pageLayout.getPageHeight());
+            layoutBuilder.buildElementWithValue("page-width", pageLayout.getPageWidth());
             for (PageMargins pageMargins : pageLayout.getPageMargins().values()) {
                 layoutBuilder.buildOpenElement("page-margins");
                 layoutBuilder.buildAttribute("type", pageMargins.getType());
                 layoutBuilder.buildCloseElement();
                 Margins margins = pageMargins.getMargins();
-                layoutBuilder.buildElementWithValue("left-margin", BuilderUtil.stringValue(margins.getLeftMargin()));
-                layoutBuilder.buildElementWithValue("right-margin", BuilderUtil.stringValue(margins.getRightMargin()));
-                layoutBuilder.buildElementWithValue("top-margin", BuilderUtil.stringValue(margins.getTopMargin()));
-                layoutBuilder.buildElementWithValue("bottom-margin", BuilderUtil.stringValue(margins.getBottomMargin()));
+                layoutBuilder.buildElementWithValue("left-margin", margins.getLeftMargin());
+                layoutBuilder.buildElementWithValue("right-margin", margins.getRightMargin());
+                layoutBuilder.buildElementWithValue("top-margin", margins.getTopMargin());
+                layoutBuilder.buildElementWithValue("bottom-margin", margins.getBottomMargin());
                 layoutBuilder.buildEndElement("page-margins");
             }
             layoutBuilder.buildEndElement("page-layout");
@@ -48,12 +48,12 @@ public class LayoutBuilder extends OutputBuilder {
             BigDecimal rightMargin = systemLayout.getRightMargin();
             if (leftMargin != null || rightMargin != null) {
                 layoutBuilder.buildStartElement("system-margins");
-                layoutBuilder.buildElementWithValue("left-margin", BuilderUtil.stringValue(leftMargin));
-                layoutBuilder.buildElementWithValue("right-margin", BuilderUtil.stringValue(rightMargin));
+                layoutBuilder.buildElementWithValue("left-margin", leftMargin);
+                layoutBuilder.buildElementWithValue("right-margin", rightMargin);
                 layoutBuilder.buildEndElement("system-margins");
             }
-            layoutBuilder.buildElementWithValue("system-distance", BuilderUtil.stringValue(systemLayout.getSystemDistance()));
-            layoutBuilder.buildElementWithValue("top-system-distance", BuilderUtil.stringValue(systemLayout.getTopSystemDistance()));
+            layoutBuilder.buildElementWithValue("system-distance", systemLayout.getSystemDistance());
+            layoutBuilder.buildElementWithValue("top-system-distance", systemLayout.getTopSystemDistance());
             SystemDividers systemDividers = systemLayout.getSystemDividers();
             if (systemDividers != null) {
                 layoutBuilder.buildStartElement("system-dividers");
@@ -67,7 +67,7 @@ public class LayoutBuilder extends OutputBuilder {
             layoutBuilder.buildOpenElement("staff-layout");
             layoutBuilder.buildAttribute("number", staffLayout.getNumber());
             layoutBuilder.buildCloseElement();
-            layoutBuilder.buildElementWithValue("staff-distance", BuilderUtil.stringValue(staffLayout.getStaffDistance()));
+            layoutBuilder.buildElementWithValue("staff-distance", staffLayout.getStaffDistance());
             layoutBuilder.buildEndElement("staff-layout");
         }
 

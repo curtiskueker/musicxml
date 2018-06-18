@@ -137,13 +137,13 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         if (appearance != null) {
             buildStartElement("appearance");
             for (LineWidth lineWidth : appearance.getLineWidths()) {
-                buildElementWithValueAndAttribute("line-width", BuilderUtil.stringValue(lineWidth.getValue()), "type", lineWidth.getLineWidthType());
+                buildElementWithValueAndAttribute("line-width", lineWidth.getValue(), "type", lineWidth.getLineWidthType());
             }
             for (NoteSize noteSize : appearance.getNoteSizes()) {
                 buildElementWithValueAndAttribute("note-size", noteSize.getValue(), "type", noteSize.getType());
             }
             for (Distance distance : appearance.getDistances()) {
-                buildElementWithValueAndAttribute("distance", BuilderUtil.stringValue(distance.getValue()), "type", distance.getType());
+                buildElementWithValueAndAttribute("distance", distance.getValue(), "type", distance.getType());
             }
             for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", otherAppearance.getType());
             buildEndElement("appearance");

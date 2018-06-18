@@ -48,7 +48,7 @@ public class DirectionBuilder extends BaseBuilder {
         if (offset == null) return "";
 
         DirectionBuilder directionBuilder = new DirectionBuilder();
-        directionBuilder.buildElementWithValueAndAttribute("offset", BuilderUtil.stringValue(offset.getDivisions()), "sound", BuilderUtil.yesOrNo(offset.getSound()));
+        directionBuilder.buildElementWithValueAndAttribute("offset", offset.getDivisions(), "sound", offset.getSound());
 
         return directionBuilder.stringBuilder.toString();
     }

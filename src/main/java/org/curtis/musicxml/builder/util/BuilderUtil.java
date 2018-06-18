@@ -20,19 +20,19 @@ public class BuilderUtil {
         return enumValue(enumValue).replace("-", " ");
     }
 
+    public static String noteTypeValue(NoteTypeValue noteTypeValue) {
+        if (noteTypeValue == null) return "";
+
+        String value = enumValue(noteTypeValue);
+        return value.replace("-", "");
+    }
+
     public static String stringValue(Integer integerValue) {
         return integerValue == null ? "" : String.valueOf(integerValue);
     }
 
     public static String stringValue(BigDecimal bigDecimalValue) {
         return bigDecimalValue == null ? "" : String.valueOf(bigDecimalValue);
-    }
-
-    public static String noteTypeValue(NoteTypeValue noteTypeValue) {
-        if (noteTypeValue == null) return "";
-
-        String value = enumValue(noteTypeValue);
-        return value.replace("-", "");
     }
 
     public static String yesOrNo(Boolean booleanValue) {

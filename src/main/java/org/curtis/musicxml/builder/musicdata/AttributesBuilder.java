@@ -44,7 +44,7 @@ public class AttributesBuilder extends BaseBuilder {
         buildStartElement("attributes");
         buildEditorial(attributes.getEditorial());
         BigDecimal divisions = attributes.getDivisions();
-        if (divisions !=  null) buildElementWithValue("divisions", BuilderUtil.stringValue(divisions));
+        if (divisions !=  null) buildElementWithValue("divisions", divisions);
         for (Key key : attributes.getKeys()) {
             buildOpenElement("key");
             buildAttribute("number", key.getNumber());
@@ -156,7 +156,7 @@ public class AttributesBuilder extends BaseBuilder {
             buildCloseElement();
             if (measureStyle instanceof MultipleRest) {
                 MultipleRest multipleRest = (MultipleRest)measureStyle;
-                buildElementWithValueAndAttribute("multiple-rest", multipleRest.getValue(),"use-symbols", BuilderUtil.yesOrNo(multipleRest.getUseSymbols()));
+                buildElementWithValueAndAttribute("multiple-rest", multipleRest.getValue(), "use-symbols", multipleRest.getUseSymbols());
             }
             else if (measureStyle instanceof MeasureRepeat) {
                 MeasureRepeat measureRepeat = (MeasureRepeat)measureStyle;

@@ -2,7 +2,6 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.Figure;
 import org.curtis.musicxml.note.FiguredBass;
 
@@ -29,7 +28,7 @@ public class FiguredBassBuilder extends BaseBuilder {
             buildExtend(figure.getExtend());
             buildEndElement("figure");
         }
-        buildElementWithValue("duration", BuilderUtil.stringValue(figuredBass.getDuration()));
+        buildElementWithValue("duration", figuredBass.getDuration());
         buildEditorial(figuredBass.getEditorial());
         buildEndElement("figured-bass");
 

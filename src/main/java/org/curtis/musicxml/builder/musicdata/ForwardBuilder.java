@@ -15,7 +15,7 @@ public class ForwardBuilder extends BaseBuilder {
         if (forward == null) return stringBuilder;
 
         buildStartElement("forward");
-        buildElementWithValue("duration", BuilderUtil.stringValue(forward.getDuration()));
+        buildElementWithValue("duration", forward.getDuration());
         buildEditorialVoice(forward.getEditorialVoice());
         buildElementWithValue("staff", forward.getStaff());
         buildEndElement("forward");

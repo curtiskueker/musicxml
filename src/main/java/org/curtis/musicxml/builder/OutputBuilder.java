@@ -135,12 +135,6 @@ public abstract class OutputBuilder {
         buildCloseEmptyElement();
     }
 
-    protected void buildElementWithAttribute(String elementName, String attributeName, Integer attributeValue) {
-        if (attributeValue == null) return;
-
-        buildElementWithAttribute(elementName, attributeName, String.valueOf(attributeValue));
-    }
-
     protected void buildElementWithAttributes(String elementName, Map<String, String> attributes) {
         if (attributes == null || attributes.isEmpty()) return;
 
@@ -169,12 +163,20 @@ public abstract class OutputBuilder {
         buildElementWithValueAndAttribute(elementName, elementValue, attributeName, BuilderUtil.enumValue(attributeValue));
     }
 
-    protected void buildElementWithValueAndAttribute(String elementName, Integer elementValue, String attributeName, String attributeValue) {
+    protected void buildElementWithValueAndAttribute(String elementName, Integer elementValue, String attributeName, Boolean attributeValue) {
+        buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, BuilderUtil.yesOrNo(attributeValue));
+    }
+
+    protected void buildElementWithValueAndAttribute(String elementName, BigDecimal elementValue, String attributeName, String attributeValue) {
         buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, attributeValue);
     }
 
     protected void buildElementWithValueAndAttribute(String elementName, BigDecimal elementValue, String attributeName, Enum attributeValue) {
         buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, BuilderUtil.enumValue(attributeValue));
+    }
+
+    protected void buildElementWithValueAndAttribute(String elementName, BigDecimal elementValue, String attributeName, Boolean attributeValue) {
+        buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, BuilderUtil.yesOrNo(attributeValue));
     }
 
     protected void buildElementWithValueAndAttribute(String elementName, Integer elementValue, String attributeName, Enum attributeValue) {
@@ -202,6 +204,10 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElementWithValueAndAttributes(String elementName, Integer elementValue, Map<String, String> attributes) {
+        buildElementWithValueAndAttributes(elementName, BuilderUtil.stringValue(elementValue), attributes);
+    }
+
+    protected void buildElementWithValueAndAttributes(String elementName, BigDecimal elementValue, Map<String, String> attributes) {
         buildElementWithValueAndAttributes(elementName, BuilderUtil.stringValue(elementValue), attributes);
     }
 

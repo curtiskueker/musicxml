@@ -79,7 +79,7 @@ public class NoteBuilder extends BaseBuilder {
             buildElementWithAttributes("grace", graceAttributes);
         }
         buildFullNote(note.getFullNote());
-        if (grace == null) buildElementWithValue("duration", BuilderUtil.stringValue(note.getDuration()));
+        if (grace == null) buildElementWithValue("duration", note.getDuration());
         for (Tie tie : note.getTies()) {
             Map<String, String> tieAttributes = new HashMap<>();
             tieAttributes.put("type", BuilderUtil.enumValue(tie.getType()));
