@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.harmony;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.score.MusicData;

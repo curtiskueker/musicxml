@@ -1,8 +1,8 @@
 package org.curtis.musicxml.direction.directiontype;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
-import org.curtis.musicxml.common.Connection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

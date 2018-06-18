@@ -1,10 +1,10 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.note.LineType;
-import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.note.LineType;
+import org.curtis.musicxml.note.notation.technical.BendSound;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

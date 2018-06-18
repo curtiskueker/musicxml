@@ -2,6 +2,7 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.Fingering;
 import org.curtis.musicxml.note.notation.technical.Fret;
 import org.curtis.musicxml.note.notation.technical.HammerOn;
@@ -10,7 +11,6 @@ import org.curtis.musicxml.note.notation.technical.Heel;
 import org.curtis.musicxml.note.notation.technical.HeelToe;
 import org.curtis.musicxml.note.notation.technical.PullOff;
 import org.curtis.musicxml.note.notation.technical.StringNumber;
-import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.Toe;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;

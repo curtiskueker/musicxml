@@ -2,8 +2,8 @@ package org.curtis.musicxml.note.lyric;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Editorial;
-import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.Tuplet;
 

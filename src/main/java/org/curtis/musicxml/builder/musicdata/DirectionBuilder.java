@@ -1,7 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.BaseBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.EditorialVoiceDirection;
 import org.curtis.musicxml.direction.Offset;

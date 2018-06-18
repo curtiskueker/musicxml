@@ -10,7 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class HorizontalTurn extends Ornament {

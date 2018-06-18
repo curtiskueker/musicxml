@@ -1,8 +1,8 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
 import javax.persistence.CascadeType;

@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.EnclosureShape;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
 

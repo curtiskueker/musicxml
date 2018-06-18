@@ -1,8 +1,8 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.common.Connection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

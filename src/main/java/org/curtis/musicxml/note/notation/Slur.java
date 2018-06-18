@@ -1,9 +1,9 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.LineType;
 
 import javax.persistence.CascadeType;

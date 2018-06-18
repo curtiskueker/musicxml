@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
-import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
 import javax.persistence.CascadeType;

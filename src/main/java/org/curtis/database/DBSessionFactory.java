@@ -4,10 +4,10 @@ import org.curtis.musicxml.bin.MusicXml2Db;
 import org.curtis.properties.AppProperties;
 import org.curtis.util.StringUtil;
 
-import java.util.Properties;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.Properties;
 
 public class DBSessionFactory {
     private static DBSessionFactory sessionFactory;

@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.lyric;
 
-import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.PrintStyle;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

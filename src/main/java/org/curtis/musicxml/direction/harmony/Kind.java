@@ -1,8 +1,8 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.common.PrintStyle;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

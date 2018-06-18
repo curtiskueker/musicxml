@@ -2,8 +2,8 @@ package org.curtis.musicxml.barline;
 
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
 

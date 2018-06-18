@@ -2,7 +2,6 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.OutputBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;

@@ -1,8 +1,8 @@
 package org.curtis.musicxml.direction.directiontype;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.LineType;
 
 import javax.persistence.CascadeType;
@@ -13,7 +13,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity

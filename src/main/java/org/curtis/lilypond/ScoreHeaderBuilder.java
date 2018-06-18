@@ -1,8 +1,8 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.lilypond.util.ScoreDefaults;
+import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextFormatting;
@@ -11,7 +11,6 @@ import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.layout.MarginType;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
-import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;

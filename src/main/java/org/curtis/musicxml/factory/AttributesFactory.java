@@ -1,13 +1,5 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.attributes.time.Interchangeable;
-import org.curtis.musicxml.attributes.time.SenzaMisura;
-import org.curtis.musicxml.attributes.time.Time;
-import org.curtis.musicxml.attributes.time.TimeRelation;
-import org.curtis.musicxml.attributes.time.TimeSeparator;
-import org.curtis.musicxml.attributes.time.TimeSignature;
-import org.curtis.musicxml.attributes.time.TimeSignatureType;
-import org.curtis.musicxml.attributes.time.TimeSymbol;
 import org.curtis.musicxml.attributes.Tuning;
 import org.curtis.musicxml.attributes.key.Cancel;
 import org.curtis.musicxml.attributes.key.CancelLocation;
@@ -16,6 +8,14 @@ import org.curtis.musicxml.attributes.key.NonTraditionalKey;
 import org.curtis.musicxml.attributes.key.NonTraditionalKeyType;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
 import org.curtis.musicxml.attributes.measure.SlashGroup;
+import org.curtis.musicxml.attributes.time.Interchangeable;
+import org.curtis.musicxml.attributes.time.SenzaMisura;
+import org.curtis.musicxml.attributes.time.Time;
+import org.curtis.musicxml.attributes.time.TimeRelation;
+import org.curtis.musicxml.attributes.time.TimeSeparator;
+import org.curtis.musicxml.attributes.time.TimeSignature;
+import org.curtis.musicxml.attributes.time.TimeSignatureType;
+import org.curtis.musicxml.attributes.time.TimeSymbol;
 import org.curtis.musicxml.score.GroupSymbolType;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;

@@ -2,8 +2,8 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.MeasureBuilder;
-import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.handler.ScoreHandler;
 
 import java.lang.reflect.InvocationTargetException;

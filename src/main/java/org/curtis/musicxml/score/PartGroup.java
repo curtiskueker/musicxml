@@ -1,7 +1,7 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.NameDisplay;
 
 import javax.persistence.CascadeType;

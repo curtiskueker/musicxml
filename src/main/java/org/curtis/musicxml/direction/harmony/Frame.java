@@ -1,8 +1,8 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.common.Position;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
