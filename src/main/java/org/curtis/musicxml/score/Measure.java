@@ -41,12 +41,6 @@ public class Measure extends DatabaseItem {
     private Integer staffNumber;
     @Transient
     // transient lilypond
-    private boolean isFirstMeasure = false;
-    @Transient
-    // transient lilypond
-    private boolean isLastMeasure = false;
-    @Transient
-    // transient lilypond
     private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {
@@ -107,22 +101,6 @@ public class Measure extends DatabaseItem {
 
     public void setStaffNumber(Integer staffNumber) {
         this.staffNumber = staffNumber;
-    }
-
-    public boolean isFirstMeasure() {
-        return isFirstMeasure;
-    }
-
-    public void setFirstMeasure(boolean firstMeasure) {
-        isFirstMeasure = firstMeasure;
-    }
-
-    public boolean isLastMeasure() {
-        return isLastMeasure;
-    }
-
-    public void setLastMeasure(boolean lastMeasure) {
-        isLastMeasure = lastMeasure;
     }
 
     public SortedSet<String> getVoices() {

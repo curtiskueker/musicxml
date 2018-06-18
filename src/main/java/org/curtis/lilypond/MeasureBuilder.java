@@ -60,12 +60,22 @@ public class MeasureBuilder extends AbstractBuilder {
     private BigDecimal measureDuration = MathUtil.ZERO;
     private BigDecimal voiceDuration = MathUtil.ZERO;
     public static String CURRENT_MEASURE_NUMBER;
+    private boolean isFirstMeasure = false;
+    private boolean isLastMeasure = false;
 
     public MeasureBuilder(Measure measure, String voice, String defaultVoice) {
         this.measure = measure;
         CURRENT_MEASURE_NUMBER = measure.getNumber();
         this.voice = voice;
         this.defaultVoice = defaultVoice;
+    }
+
+    public void isFirstMeasure() {
+        isFirstMeasure = true;
+    }
+
+    public void isLastMeasure() {
+        isLastMeasure = true;
     }
 
     public StringBuilder build() throws BuildException {
@@ -254,9 +264,9 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         if(!MathUtil.equalTo(wholeMeasureDuration, voiceDuration)) {
-            if (measure.isFirstMeasure()) {
+            if (isFirstMeasure) {
                 measure.setImplicit(true);
-            } else if (!measure.isLastMeasure()){
+            } else if (!isLastMeasure){
                 // Expected voice duration falls short
                 // Attempt to add a spacer at the end of the measure
                 BigDecimal wholeMeasureDurationDifference = MathUtil.subtract(wholeMeasureDuration, voiceDuration);
@@ -307,7 +317,7 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        if (DEBUG) if (!measure.isLastMeasure()) append(" | ");
+        if (DEBUG) if (!isLastMeasure) append(" | ");
 
         appendLine();
 

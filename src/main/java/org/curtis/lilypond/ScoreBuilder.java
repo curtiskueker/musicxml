@@ -92,9 +92,6 @@ public class ScoreBuilder extends AbstractBuilder {
             throw new BuildException("Part " + partId + " has no measures");
         }
 
-        measures.get(0).setFirstMeasure(true);
-        measures.get(measures.size() - 1).setLastMeasure(true);
-
         // pre-processing loop
         //
         // test for multi-staff part: default to 1 staff
@@ -230,8 +227,6 @@ public class ScoreBuilder extends AbstractBuilder {
             if (partMeasures.isEmpty()) {
                 throw new BuildException(staffPart.getPartId() + " has no measures");
             }
-            partMeasures.get(0).setFirstMeasure(true);
-            partMeasures.get(partMeasures.size() - 1).setLastMeasure(true);
 
             PartBuilder partBuilder = new PartBuilder(staffPart);
             append(partBuilder.build().toString());

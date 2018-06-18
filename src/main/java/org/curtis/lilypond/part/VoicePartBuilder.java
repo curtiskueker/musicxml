@@ -18,12 +18,15 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private Part part;
     private int currentVoiceCount = 0;
     private List<Measure> currentMeasureList = new ArrayList<>();
+    private int totalMeasureCount;
+    private int currentMeasureCount = 0;
 
     public VoicePartBuilder(Part part) {
         this.part = part;
     }
 
     public StringBuilder build() throws BuildException {
+        totalMeasureCount = part.getMeasures().size();
         appendLine("{");
 
         for(Measure measure : part.getMeasures()) {
@@ -113,7 +116,10 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             }
 
             for (Measure measure : currentMeasureList) {
+                currentMeasureCount++;
                 MeasureBuilder measureBuilder = new MeasureBuilder(measure, voice, defaultVoice);
+                if (currentMeasureCount == 1) measureBuilder.isFirstMeasure();
+                if (currentMeasureCount == totalMeasureCount) measureBuilder.isLastMeasure();
                 append(measureBuilder.build().toString());
             }
 
