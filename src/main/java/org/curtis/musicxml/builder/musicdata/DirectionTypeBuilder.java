@@ -125,7 +125,7 @@ public class DirectionTypeBuilder extends BaseBuilder {
         buildAttribute("enclosure", dynamics.getEnclosure());
         buildCloseElement();
         for (DynamicsType dynamicsType : dynamics.getTypes()) {
-            buildElement(BuilderUtil.enumValue(dynamicsType));
+            buildElement(dynamicsType);
         }
         buildEndElement("dynamics");
     }

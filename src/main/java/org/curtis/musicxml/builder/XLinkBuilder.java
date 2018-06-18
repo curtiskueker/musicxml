@@ -14,10 +14,10 @@ public class XLinkBuilder extends OutputBuilder {
 
         XLinkBuilder xLinkBuilder = new XLinkBuilder();
         xLinkBuilder.buildAttribute("xlink:href", linkAttributes.getHref());
-        xLinkBuilder.buildAttribute("xlink:type", BuilderUtil.enumValue(linkAttributes.getType()));
+        xLinkBuilder.buildAttribute("xlink:type", linkAttributes.getType());
         xLinkBuilder.buildAttribute("xlink:role", linkAttributes.getRole());
         xLinkBuilder.buildAttribute("xlink:title", linkAttributes.getTitle());
-        xLinkBuilder.buildAttribute("xlink:show", BuilderUtil.enumValue(linkAttributes.getShow()));
+        xLinkBuilder.buildAttribute("xlink:show", linkAttributes.getShow());
         String actuate = BuilderUtil.enumValue(linkAttributes.getActuate());
         actuate = actuate.replace("on-request", "onRequest");
         actuate = actuate.replace("on-load", "onLoad");

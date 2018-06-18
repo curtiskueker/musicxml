@@ -77,6 +77,10 @@ public abstract class OutputBuilder {
         buildCloseEmptyElement();
     }
 
+    protected void buildElement(Enum elementName) {
+        buildElement(BuilderUtil.enumValue(elementName));
+    }
+
     protected void buildOpenElement(String elementName) {
         append("<");
         append(elementName);

@@ -202,7 +202,7 @@ public class ScoreHeaderBuilder extends BaseBuilder {
 
     private void buildPartGroup(PartGroup partGroup) {
         buildOpenElement("part-group");
-        buildAttribute("type", BuilderUtil.enumValue(partGroup.getType()));
+        buildAttribute("type", partGroup.getType());
         buildAttribute("number", partGroup.getNumber());
         buildCloseElement();
         buildGroupName("group-name", partGroup.getGroupName());

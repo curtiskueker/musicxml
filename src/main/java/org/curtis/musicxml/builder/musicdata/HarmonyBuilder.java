@@ -40,7 +40,7 @@ public class HarmonyBuilder extends BaseBuilder {
         buildAttribute("print-object",  harmony.getPrintObject());
         buildAttribute("print-frame",  harmony.getPrintFrame());
         FormattingBuilder.buildPrintStyle(harmony.getPrintStyle()).forEach((k,v ) -> buildAttribute(k, v));
-        buildAttribute("placement", BuilderUtil.enumValue(harmony.getPlacement()));
+        buildAttribute("placement", harmony.getPlacement());
         buildCloseElement();
         for (HarmonyChord harmonyChord : harmony.getHarmonyChords()) {
             if (harmonyChord instanceof Root) buildRoot((Root)harmonyChord);
