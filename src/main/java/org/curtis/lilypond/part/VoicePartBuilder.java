@@ -19,25 +19,26 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private int currentVoiceCount = 0;
     private List<MeasureBuilder> measureBuilderList = new ArrayList<>();
     private List<MeasureBuilder> currentMeasureBuilderList = new ArrayList<>();
-    private int totalMeasureCount;
-    private int currentMeasureCount = 0;
 
     public VoicePartBuilder(Part part) {
         this.part = part;
     }
 
     public StringBuilder build() throws BuildException {
-        totalMeasureCount = part.getMeasures().size();
         appendLine("{");
 
         // Pre-processing specific to VoicePartBuilder measure handling
         for(Measure measure : part.getMeasures()) {
             MeasureBuilder measureBuilder = new MeasureBuilder(measure);
             measureBuilderList.add(measureBuilder);
-            // TODO; set isFirstMeasure and isLastMeasure here
             // TODO: set RepeatBlock in MeasureBuilder here, taking code from PartBuilder
             // TODO: Measure voices: move from PartBuilder to here
         }
+
+        if (measureBuilderList.isEmpty()) throw new BuildException("VoicePartBuilder: empty MeasureBuilder list");
+
+        measureBuilderList.get(0).isFirstMeasure();
+        measureBuilderList.get(measureBuilderList.size() -1).isLastMeasure();
 
         // Process the the measures
         for(MeasureBuilder measureBuilder : measureBuilderList) {
@@ -128,11 +129,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             }
 
             for (MeasureBuilder measureBuilder : currentMeasureBuilderList) {
-                currentMeasureCount++;
                 measureBuilder.setVoice(voice);
                 measureBuilder.setDefaultVoice(defaultVoice);
-                if (currentMeasureCount == 1) measureBuilder.isFirstMeasure();
-                if (currentMeasureCount == totalMeasureCount) measureBuilder.isLastMeasure();
                 append(measureBuilder.build().toString());
             }
 
