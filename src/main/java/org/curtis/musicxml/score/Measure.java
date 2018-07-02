@@ -35,9 +35,6 @@ public class Measure extends DatabaseItem {
     private BigDecimal width;
     @Transient
     // transient lilypond
-    private Integer staffNumber;
-    @Transient
-    // transient lilypond
     private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {
@@ -82,14 +79,6 @@ public class Measure extends DatabaseItem {
 
     public void setWidth(BigDecimal width) {
         this.width = width;
-    }
-
-    public Integer getStaffNumber() {
-        return staffNumber;
-    }
-
-    public void setStaffNumber(Integer staffNumber) {
-        this.staffNumber = staffNumber;
     }
 
     public SortedSet<String> getVoices() {

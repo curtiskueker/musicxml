@@ -176,7 +176,6 @@ public class ScoreBuilder extends AbstractBuilder {
             Measure[] staffMeasures = new Measure[staves];
             for(int index = 0; index < staves; index++) {
                 staffMeasures[index] = new Measure();
-                staffMeasures[index].setStaffNumber(index + 1);
             }
             Integer currentStaff = 1;
             Backup currentBackup = null;
@@ -192,6 +191,7 @@ public class ScoreBuilder extends AbstractBuilder {
                     }
                     staffMeasures[staff - 1].getMusicDataList().add(direction);
                     currentBackup = null;
+                    currentStaff = staff;
                 } else if(musicData instanceof Note) {
                     Note note = (Note)musicData;
                     Integer staff = note.getStaff();
@@ -203,6 +203,7 @@ public class ScoreBuilder extends AbstractBuilder {
                     }
                     staffMeasures[staff - 1].getMusicDataList().add(note);
                     currentBackup = null;
+                    currentStaff = staff;
                 } else if(musicData instanceof Backup) {
                     currentBackup = (Backup)musicData;
                 } else {
@@ -210,6 +211,8 @@ public class ScoreBuilder extends AbstractBuilder {
                         staffMeasure.getMusicDataList().add(musicData);
                     }
                 }
+
+                musicData.setStaffNumber(currentStaff);
             }
 
             for(Measure staffMeasure : staffMeasures) {

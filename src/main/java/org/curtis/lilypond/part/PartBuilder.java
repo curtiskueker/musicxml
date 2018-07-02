@@ -55,8 +55,6 @@ public class PartBuilder extends AbstractBuilder {
         for(Measure measure : measures) {
             List<MusicData> musicDataList = measure.getMusicDataList();
             for(MusicData musicData : musicDataList) {
-                musicData.setStaffNumber(measure.getStaffNumber());
-
                 if(musicData instanceof Note) {
                     Note note = (Note)musicData;
                     FullNote fullNote = note.getFullNote();
