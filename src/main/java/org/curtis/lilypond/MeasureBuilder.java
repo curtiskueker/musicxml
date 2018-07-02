@@ -30,6 +30,7 @@ import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.RepeatBlock;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
@@ -62,6 +63,7 @@ public class MeasureBuilder extends AbstractBuilder {
     public static String CURRENT_MEASURE_NUMBER;
     private boolean isFirstMeasure = false;
     private boolean isLastMeasure = false;
+    private RepeatBlock repeatBlock;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -97,6 +99,14 @@ public class MeasureBuilder extends AbstractBuilder {
 
     public void isLastMeasure() {
         isLastMeasure = true;
+    }
+
+    public RepeatBlock getRepeatBlock() {
+        return repeatBlock;
+    }
+
+    public void setRepeatBlock(RepeatBlock repeatBlock) {
+        this.repeatBlock = repeatBlock;
     }
 
     public StringBuilder build() throws BuildException {

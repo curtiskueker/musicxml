@@ -35,9 +35,6 @@ public class Measure extends DatabaseItem {
     private BigDecimal width;
     @Transient
     // transient lilypond
-    private RepeatBlock repeatBlock;
-    @Transient
-    // transient lilypond
     private Integer staffNumber;
     @Transient
     // transient lilypond
@@ -85,14 +82,6 @@ public class Measure extends DatabaseItem {
 
     public void setWidth(BigDecimal width) {
         this.width = width;
-    }
-
-    public RepeatBlock getRepeatBlock() {
-        return repeatBlock;
-    }
-
-    public void setRepeatBlock(RepeatBlock repeatBlock) {
-        this.repeatBlock = repeatBlock;
     }
 
     public Integer getStaffNumber() {
