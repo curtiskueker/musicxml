@@ -55,18 +55,39 @@ public class MeasureBuilder extends AbstractBuilder {
     private TupletNotes currentTuplet = null;
     private TupletNotes lastTuplet = null;
     private String currentVoice;
-    private String defaultVoice;
     private String voice;
+    private String defaultVoice;
     private BigDecimal measureDuration = MathUtil.ZERO;
     private BigDecimal voiceDuration = MathUtil.ZERO;
     public static String CURRENT_MEASURE_NUMBER;
     private boolean isFirstMeasure = false;
     private boolean isLastMeasure = false;
 
-    public MeasureBuilder(Measure measure, String voice, String defaultVoice) {
+    public MeasureBuilder(Measure measure) {
         this.measure = measure;
-        CURRENT_MEASURE_NUMBER = measure.getNumber();
+    }
+
+    public Measure getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
+    }
+
+    public String getVoice() {
+        return voice;
+    }
+
+    public void setVoice(String voice) {
         this.voice = voice;
+    }
+
+    public String getDefaultVoice() {
+        return defaultVoice;
+    }
+
+    public void setDefaultVoice(String defaultVoice) {
         this.defaultVoice = defaultVoice;
     }
 
@@ -79,6 +100,9 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     public StringBuilder build() throws BuildException {
+        clearBuilder();
+
+        CURRENT_MEASURE_NUMBER = measure.getNumber();
         List<MusicData> musicDataList = measure.getMusicDataList();
 
         append("% measure ");
@@ -426,5 +450,10 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         return isDeferred;
+    }
+
+    private void clearBuilder() {
+        clear();
+        musicDataBuilders.clear();
     }
 }
