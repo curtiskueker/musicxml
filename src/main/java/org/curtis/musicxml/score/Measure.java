@@ -11,12 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 @Entity
 @Table(name = "measure")
@@ -33,9 +30,6 @@ public class Measure extends DatabaseItem {
     private Boolean nonControlling;
     @Column
     private BigDecimal width;
-    @Transient
-    // transient lilypond
-    private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {
         setId(0);
@@ -79,13 +73,5 @@ public class Measure extends DatabaseItem {
 
     public void setWidth(BigDecimal width) {
         this.width = width;
-    }
-
-    public SortedSet<String> getVoices() {
-        return voices;
-    }
-
-    public void setVoices(SortedSet<String> voices) {
-        this.voices = voices;
     }
 }

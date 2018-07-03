@@ -4,7 +4,7 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.musicdata.DirectionBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
-import org.curtis.lilypond.part.PartBuilder;
+import org.curtis.lilypond.part.VoicePartBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
@@ -64,6 +66,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean isFirstMeasure = false;
     private boolean isLastMeasure = false;
     private RepeatBlock repeatBlock;
+    private SortedSet<String> voices = new TreeSet<>();
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -109,6 +112,14 @@ public class MeasureBuilder extends AbstractBuilder {
         this.repeatBlock = repeatBlock;
     }
 
+    public SortedSet<String> getVoices() {
+        return voices;
+    }
+
+    public void setVoices(SortedSet<String> voices) {
+        this.voices = voices;
+    }
+
     public StringBuilder build() throws BuildException {
         clearBuilder();
 
@@ -138,7 +149,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNote.getDuration());
                 }
 
-                if(PartBuilder.skipNote(currentNote)) {
+                if(VoicePartBuilder.skipNote(currentNote)) {
                     continue;
                 }
 
