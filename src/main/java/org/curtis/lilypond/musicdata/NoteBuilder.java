@@ -49,6 +49,8 @@ public class NoteBuilder extends MusicDataBuilder {
     private Note note;
     private List<Direction> directions = new ArrayList<>();
     private List<Object> deferredNotations = new ArrayList<>();
+    private Boolean isBeginBeam = false;
+    private Boolean isEndBeam = false;
 
     public NoteBuilder(Note note) {
         super(note);
@@ -73,6 +75,22 @@ public class NoteBuilder extends MusicDataBuilder {
 
     public void setDirections(List<Direction> directions) {
         this.directions = directions;
+    }
+
+    public Boolean getBeginBeam() {
+        return isBeginBeam;
+    }
+
+    public void setBeginBeam(Boolean beginBeam) {
+        isBeginBeam = beginBeam;
+    }
+
+    public Boolean getEndBeam() {
+        return isEndBeam;
+    }
+
+    public void setEndBeam(Boolean endBeam) {
+        isEndBeam = endBeam;
     }
 
     public StringBuilder build() throws BuildException {
@@ -314,9 +332,9 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder beamBuild() {
-        if(note.getBeginBeam()) {
+        if(getBeginBeam()) {
             append("[");
-        } else if(note.getEndBeam()) {
+        } else if(getEndBeam()) {
             append("]");
         }
 

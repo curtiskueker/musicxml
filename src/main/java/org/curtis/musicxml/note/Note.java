@@ -80,12 +80,6 @@ public class Note extends MusicData {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Beam> beams = new ArrayList<>();
-    @Transient
-    // transient lilypond
-    private Boolean isBeginBeam = false;
-    @Transient
-    // transient lilypond
-    private Boolean isEndBeam = false;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
@@ -261,22 +255,6 @@ public class Note extends MusicData {
 
     public void setBeams(List<Beam> beams) {
         this.beams = beams;
-    }
-
-    public Boolean getBeginBeam() {
-        return isBeginBeam;
-    }
-
-    public void setBeginBeam(Boolean beginBeam) {
-        isBeginBeam = beginBeam;
-    }
-
-    public Boolean getEndBeam() {
-        return isEndBeam;
-    }
-
-    public void setEndBeam(Boolean endBeam) {
-        isEndBeam = endBeam;
     }
 
     public List<Notations> getNotationsList() {
