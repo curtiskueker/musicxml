@@ -4,6 +4,7 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.part.HarmonyPartBuilder;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.harmony.Harmony;
@@ -207,12 +208,15 @@ public class ScoreBuilder extends AbstractBuilder {
                 } else if(musicData instanceof Backup) {
                     currentBackup = (Backup)musicData;
                 } else {
+                    if (musicData instanceof Attributes) {
+                        Attributes attributes = (Attributes)musicData;
+                        List<Clef> clefs = attributes.getClefs();
+                        for (Clef clef : clefs) clef.setPrintObject(clef.getNumber() == null || currentStaff.equals(clef.getNumber()));
+                    }
                     for(Measure staffMeasure : staffMeasures) {
                         staffMeasure.getMusicDataList().add(musicData);
                     }
                 }
-
-                musicData.setStaffNumber(currentStaff);
             }
 
             for(Measure staffMeasure : staffMeasures) {
