@@ -166,20 +166,20 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         Connection tupletType = tuplet.getType();
                         switch (tupletType) {
                             case START:
-                                note.setTupletType(Connection.START);
+                                measureBuilder.setTupletType(note, Connection.START);
                                 tupletsOn.put(voice, true);
                                 break;
                             case STOP:
-                                note.setTupletType(Connection.STOP);
+                                measureBuilder.setTupletType(note, Connection.STOP);
                                 tupletsOn.put(voice, false);
                                 break;
                         }
-                    } else if(note.getFullNote().isChord() && previousNote.getFullNote().isChord() && previousNote.getTupletType() == Connection.STOP) {
+                    } else if(note.getFullNote().isChord() && previousNote.getFullNote().isChord() && measureBuilder.getTupletType(previousNote) == Connection.STOP) {
                         // adjust end tuplet on chords
-                        previousNote.setTupletType(Connection.CONTINUE);
-                        note.setTupletType(Connection.STOP);
+                        measureBuilder.setTupletType(previousNote, Connection.CONTINUE);
+                        measureBuilder.setTupletType(note, Connection.STOP);
                     } else if(tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) {
-                        note.setTupletType(Connection.CONTINUE);
+                        measureBuilder.setTupletType(note, Connection.CONTINUE);
                     }
 
                     previousNote = note;

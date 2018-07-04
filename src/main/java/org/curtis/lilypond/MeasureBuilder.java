@@ -37,8 +37,10 @@ import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -68,6 +70,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean isLastMeasure = false;
     private RepeatBlock repeatBlock;
     private SortedSet<String> voices = new TreeSet<>();
+    private Map<Note, Connection> tupletTypes = new HashMap<>();
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -121,6 +124,14 @@ public class MeasureBuilder extends AbstractBuilder {
         this.voices = voices;
     }
 
+    public void setTupletType(Note note, Connection connection) {
+        tupletTypes.put(note, connection);
+    }
+
+    public Connection getTupletType(Note note) {
+        return tupletTypes.get(note);
+    }
+
     public StringBuilder build() throws BuildException {
         clearBuilder();
 
@@ -157,7 +168,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 if (!isCurrentVoice()) continue;
 
                 // chords and tuplets
-                Connection tupletType = currentNote.getTupletType();
+                Connection tupletType = getTupletType(currentNote);
                 lastTuplet = null;
                 if (chordType != null || tupletType != null) {
                     if (chordType != null) {
