@@ -27,45 +27,45 @@ public class AttributesBuilder extends MusicDataBuilder {
         }
 
         for (Clef clef : attributes.getClefs()) {
-            if(attributes.getStaffNumber() == null || attributes.getStaffNumber().equals(clef.getNumber())) {
-                append("\\clef \"");
-                ClefSign clefSign = clef.getSign();
-                Integer line = clef.getLine();
-                switch (clefSign) {
-                    case G:
-                        if(line == 2) append("treble");
-                        break;
-                    case F:
-                        if(line == 4) append("bass");
-                        break;
-                    case C:
-                        if(line == 3) append("alto");
-                        else if (line == 4) append("tenor");
-                        break;
-                    case PERCUSSION:
-                        append("percussion");
-                        break;
-                    default:
-                        throw new BuildException("ClefSign " + clefSign + " not implemented");
-                }
+            if (!clef.getPrintObject()) continue;
 
-                Integer clefOctaveChange = clef.getClefOctaveChange();
-                if (clefOctaveChange != null && !clefOctaveChange.equals(0)) {
-                    if (clefOctaveChange < 0) {
-                        append("_");
-                    } else {
-                        append("^");
-                    }
-
-                    clefOctaveChange = Math.abs(clefOctaveChange);
-                    Integer stepValue = 1 + (clefOctaveChange * 7);
-                    append(String.valueOf(stepValue));
-                }
-
-                appendLine("\"");
-
-                if (clefSign == ClefSign.PERCUSSION) appendLine("\\set Staff.middleCPosition = #-6");
+            append("\\clef \"");
+            ClefSign clefSign = clef.getSign();
+            Integer line = clef.getLine();
+            switch (clefSign) {
+                case G:
+                    if(line == 2) append("treble");
+                    break;
+                case F:
+                    if(line == 4) append("bass");
+                    break;
+                case C:
+                    if(line == 3) append("alto");
+                    else if (line == 4) append("tenor");
+                    break;
+                case PERCUSSION:
+                    append("percussion");
+                    break;
+                default:
+                    throw new BuildException("ClefSign " + clefSign + " not implemented");
             }
+
+            Integer clefOctaveChange = clef.getClefOctaveChange();
+            if (clefOctaveChange != null && !clefOctaveChange.equals(0)) {
+                if (clefOctaveChange < 0) {
+                    append("_");
+                } else {
+                    append("^");
+                }
+
+                clefOctaveChange = Math.abs(clefOctaveChange);
+                Integer stepValue = 1 + (clefOctaveChange * 7);
+                append(String.valueOf(stepValue));
+            }
+
+            appendLine("\"");
+
+            if (clefSign == ClefSign.PERCUSSION) appendLine("\\set Staff.middleCPosition = #-6");
         }
 
         return stringBuilder;

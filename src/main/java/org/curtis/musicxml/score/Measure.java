@@ -11,12 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 @Entity
 @Table(name = "measure")
@@ -33,21 +30,6 @@ public class Measure extends DatabaseItem {
     private Boolean nonControlling;
     @Column
     private BigDecimal width;
-    @Transient
-    // transient lilypond
-    private RepeatBlock repeatBlock;
-    @Transient
-    // transient lilypond
-    private Integer staffNumber;
-    @Transient
-    // transient lilypond
-    private boolean isFirstMeasure = false;
-    @Transient
-    // transient lilypond
-    private boolean isLastMeasure = false;
-    @Transient
-    // transient lilypond
-    private SortedSet<String> voices = new TreeSet<>();
 
     public Measure() {
         setId(0);
@@ -91,45 +73,5 @@ public class Measure extends DatabaseItem {
 
     public void setWidth(BigDecimal width) {
         this.width = width;
-    }
-
-    public RepeatBlock getRepeatBlock() {
-        return repeatBlock;
-    }
-
-    public void setRepeatBlock(RepeatBlock repeatBlock) {
-        this.repeatBlock = repeatBlock;
-    }
-
-    public Integer getStaffNumber() {
-        return staffNumber;
-    }
-
-    public void setStaffNumber(Integer staffNumber) {
-        this.staffNumber = staffNumber;
-    }
-
-    public boolean isFirstMeasure() {
-        return isFirstMeasure;
-    }
-
-    public void setFirstMeasure(boolean firstMeasure) {
-        isFirstMeasure = firstMeasure;
-    }
-
-    public boolean isLastMeasure() {
-        return isLastMeasure;
-    }
-
-    public void setLastMeasure(boolean lastMeasure) {
-        isLastMeasure = lastMeasure;
-    }
-
-    public SortedSet<String> getVoices() {
-        return voices;
-    }
-
-    public void setVoices(SortedSet<String> voices) {
-        this.voices = voices;
     }
 }

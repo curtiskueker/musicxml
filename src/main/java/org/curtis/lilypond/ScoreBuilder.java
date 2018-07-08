@@ -4,6 +4,7 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.part.HarmonyPartBuilder;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.harmony.Harmony;
@@ -92,9 +93,6 @@ public class ScoreBuilder extends AbstractBuilder {
             throw new BuildException("Part " + partId + " has no measures");
         }
 
-        measures.get(0).setFirstMeasure(true);
-        measures.get(measures.size() - 1).setLastMeasure(true);
-
         // pre-processing loop
         //
         // test for multi-staff part: default to 1 staff
@@ -172,7 +170,6 @@ public class ScoreBuilder extends AbstractBuilder {
         Part[] staffParts = new Part[staves];
         for(int index = 0; index < staves; index++) {
             staffParts[index] = new Part();
-            staffParts[index].setStaffNumber(index + 1);
             staffParts[index].setPartId(scorePart.getScorePartId() + ", staff " + String.valueOf(index + 1));
         }
 
@@ -180,7 +177,6 @@ public class ScoreBuilder extends AbstractBuilder {
             Measure[] staffMeasures = new Measure[staves];
             for(int index = 0; index < staves; index++) {
                 staffMeasures[index] = new Measure();
-                staffMeasures[index].setStaffNumber(index + 1);
             }
             Integer currentStaff = 1;
             Backup currentBackup = null;
@@ -196,6 +192,7 @@ public class ScoreBuilder extends AbstractBuilder {
                     }
                     staffMeasures[staff - 1].getMusicDataList().add(direction);
                     currentBackup = null;
+                    currentStaff = staff;
                 } else if(musicData instanceof Note) {
                     Note note = (Note)musicData;
                     Integer staff = note.getStaff();
@@ -207,9 +204,15 @@ public class ScoreBuilder extends AbstractBuilder {
                     }
                     staffMeasures[staff - 1].getMusicDataList().add(note);
                     currentBackup = null;
+                    currentStaff = staff;
                 } else if(musicData instanceof Backup) {
                     currentBackup = (Backup)musicData;
                 } else {
+                    if (musicData instanceof Attributes) {
+                        Attributes attributes = (Attributes)musicData;
+                        List<Clef> clefs = attributes.getClefs();
+                        for (Clef clef : clefs) clef.setPrintObject(clef.getNumber() == null || currentStaff.equals(clef.getNumber()));
+                    }
                     for(Measure staffMeasure : staffMeasures) {
                         staffMeasure.getMusicDataList().add(musicData);
                     }
@@ -231,8 +234,6 @@ public class ScoreBuilder extends AbstractBuilder {
             if (partMeasures.isEmpty()) {
                 throw new BuildException(staffPart.getPartId() + " has no measures");
             }
-            partMeasures.get(0).setFirstMeasure(true);
-            partMeasures.get(partMeasures.size() - 1).setLastMeasure(true);
 
             PartBuilder partBuilder = new PartBuilder(staffPart);
             append(partBuilder.build().toString());

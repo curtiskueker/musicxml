@@ -23,7 +23,7 @@ public abstract class AbstractBuilder {
         stringBuilder.append(string);
     }
 
-    protected void clear() {
+    public void clear() {
         stringBuilder = new StringBuilder();
     }
 

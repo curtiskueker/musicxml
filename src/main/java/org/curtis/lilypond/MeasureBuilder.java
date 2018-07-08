@@ -4,7 +4,8 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.musicdata.DirectionBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
-import org.curtis.lilypond.part.PartBuilder;
+import org.curtis.lilypond.musicdata.NoteBuilder;
+import org.curtis.lilypond.part.VoicePartBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
@@ -30,14 +31,19 @@ import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.RepeatBlock;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
@@ -55,20 +61,81 @@ public class MeasureBuilder extends AbstractBuilder {
     private TupletNotes currentTuplet = null;
     private TupletNotes lastTuplet = null;
     private String currentVoice;
-    private String defaultVoice;
     private String voice;
+    private String defaultVoice;
     private BigDecimal measureDuration = MathUtil.ZERO;
     private BigDecimal voiceDuration = MathUtil.ZERO;
     public static String CURRENT_MEASURE_NUMBER;
+    private boolean isFirstMeasure = false;
+    private boolean isLastMeasure = false;
+    private RepeatBlock repeatBlock;
+    private SortedSet<String> voices = new TreeSet<>();
+    private Map<Note, Connection> tupletTypes = new HashMap<>();
 
-    public MeasureBuilder(Measure measure, String voice, String defaultVoice) {
+    public MeasureBuilder(Measure measure) {
         this.measure = measure;
-        CURRENT_MEASURE_NUMBER = measure.getNumber();
+    }
+
+    public Measure getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
+    }
+
+    public String getVoice() {
+        return voice;
+    }
+
+    public void setVoice(String voice) {
         this.voice = voice;
+    }
+
+    public String getDefaultVoice() {
+        return defaultVoice;
+    }
+
+    public void setDefaultVoice(String defaultVoice) {
         this.defaultVoice = defaultVoice;
     }
 
+    public void isFirstMeasure() {
+        isFirstMeasure = true;
+    }
+
+    public void isLastMeasure() {
+        isLastMeasure = true;
+    }
+
+    public RepeatBlock getRepeatBlock() {
+        return repeatBlock;
+    }
+
+    public void setRepeatBlock(RepeatBlock repeatBlock) {
+        this.repeatBlock = repeatBlock;
+    }
+
+    public SortedSet<String> getVoices() {
+        return voices;
+    }
+
+    public void setVoices(SortedSet<String> voices) {
+        this.voices = voices;
+    }
+
+    public void setTupletType(Note note, Connection connection) {
+        tupletTypes.put(note, connection);
+    }
+
+    public Connection getTupletType(Note note) {
+        return tupletTypes.get(note);
+    }
+
     public StringBuilder build() throws BuildException {
+        clearBuilder();
+
+        CURRENT_MEASURE_NUMBER = measure.getNumber();
         List<MusicData> musicDataList = measure.getMusicDataList();
 
         append("% measure ");
@@ -94,14 +161,14 @@ public class MeasureBuilder extends AbstractBuilder {
                     if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNote.getDuration());
                 }
 
-                if(PartBuilder.skipNote(currentNote)) {
+                if(VoicePartBuilder.skipNote(currentNote)) {
                     continue;
                 }
 
                 if (!isCurrentVoice()) continue;
 
                 // chords and tuplets
-                Connection tupletType = currentNote.getTupletType();
+                Connection tupletType = getTupletType(currentNote);
                 lastTuplet = null;
                 if (chordType != null || tupletType != null) {
                     if (chordType != null) {
@@ -164,26 +231,6 @@ public class MeasureBuilder extends AbstractBuilder {
                     }
                 }
 
-                // beams
-                List<Beam> beams = currentNote.getBeams();
-                for (Beam beam : beams) {
-                    Integer beamNumber = beam.getNumber();
-                    BeamType beamType = beam.getType();
-                    switch (beamType) {
-                        case BEGIN:
-                            if(currentBeams.isEmpty()) {
-                                currentNote.setBeginBeam(true);
-                            }
-                            currentBeams.add(beamNumber);
-                            break;
-                        case END:
-                            currentBeams.remove(beamNumber);
-                            if(currentBeams.isEmpty()) {
-                                currentNote.setEndBeam(true);
-                            }
-                            break;
-                    }
-                }
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 if (isCurrentVoice()) {
@@ -254,9 +301,9 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         if(!MathUtil.equalTo(wholeMeasureDuration, voiceDuration)) {
-            if (measure.isFirstMeasure()) {
+            if (isFirstMeasure) {
                 measure.setImplicit(true);
-            } else if (!measure.isLastMeasure()){
+            } else if (!isLastMeasure){
                 // Expected voice duration falls short
                 // Attempt to add a spacer at the end of the measure
                 BigDecimal wholeMeasureDurationDifference = MathUtil.subtract(wholeMeasureDuration, voiceDuration);
@@ -307,7 +354,7 @@ public class MeasureBuilder extends AbstractBuilder {
             }
         }
 
-        if (DEBUG) if (!measure.isLastMeasure()) append(" | ");
+        if (DEBUG) if (!isLastMeasure) append(" | ");
 
         appendLine();
 
@@ -318,8 +365,38 @@ public class MeasureBuilder extends AbstractBuilder {
         MusicDataBuilder musicDataBuilder = null;
         if (isCurrentVoice() || musicData instanceof Attributes || musicData instanceof Barline) {
             checkVoiceDuration();
-            musicDataBuilder = new MusicDataBuilder(musicData);
+
+            if (musicData instanceof Note) {
+                Note note = (Note)musicData;
+                NoteBuilder noteBuilder = new NoteBuilder(note);
+
+                // beams
+                List<Beam> beams = note.getBeams();
+                for (Beam beam : beams) {
+                    Integer beamNumber = beam.getNumber();
+                    BeamType beamType = beam.getType();
+                    switch (beamType) {
+                        case BEGIN:
+                            if(currentBeams.isEmpty()) {
+                                noteBuilder.setBeginBeam(true);
+                            }
+                            currentBeams.add(beamNumber);
+                            break;
+                        case END:
+                            currentBeams.remove(beamNumber);
+                            if(currentBeams.isEmpty()) {
+                                noteBuilder.setEndBeam(true);
+                            }
+                            break;
+                    }
+                }
+                musicDataBuilder = noteBuilder;
+            } else {
+                musicDataBuilder = new MusicDataBuilder(musicData);
+            }
+
             musicDataBuilders.add(musicDataBuilder);
+
             if (musicData instanceof Note || musicData instanceof Chord) hasNoteDataBuilder = true;
         }
 
@@ -416,5 +493,10 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         return isDeferred;
+    }
+
+    private void clearBuilder() {
+        clear();
+        musicDataBuilders.clear();
     }
 }

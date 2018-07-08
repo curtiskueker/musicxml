@@ -9,7 +9,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -19,9 +18,6 @@ public abstract class MusicData extends DatabaseItem {
     @ManyToOne
     @JoinColumn(name = "measure_id", insertable = false, updatable = false)
     private Measure measure;
-    @Transient
-    // transient lilypond
-    private Integer staffNumber;
 
     public Measure getMeasure() {
         return measure;
@@ -29,13 +25,5 @@ public abstract class MusicData extends DatabaseItem {
 
     public void setMeasure(Measure measure) {
         this.measure = measure;
-    }
-
-    public Integer getStaffNumber() {
-        return staffNumber;
-    }
-
-    public void setStaffNumber(Integer staffNumber) {
-        this.staffNumber = staffNumber;
     }
 }

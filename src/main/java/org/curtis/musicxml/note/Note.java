@@ -80,19 +80,10 @@ public class Note extends MusicData {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Beam> beams = new ArrayList<>();
-    @Transient
-    // transient lilypond
-    private Boolean isBeginBeam = false;
-    @Transient
-    // transient lilypond
-    private Boolean isEndBeam = false;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Notations> notationsList = new ArrayList<>();
-    @Transient
-    // transient lilypond
-    private Connection tupletType;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
@@ -263,22 +254,6 @@ public class Note extends MusicData {
         this.beams = beams;
     }
 
-    public Boolean getBeginBeam() {
-        return isBeginBeam;
-    }
-
-    public void setBeginBeam(Boolean beginBeam) {
-        isBeginBeam = beginBeam;
-    }
-
-    public Boolean getEndBeam() {
-        return isEndBeam;
-    }
-
-    public void setEndBeam(Boolean endBeam) {
-        isEndBeam = endBeam;
-    }
-
     public List<Notations> getNotationsList() {
         return notationsList;
     }
@@ -303,14 +278,6 @@ public class Note extends MusicData {
                 .filter(notation -> notation instanceof Slur)
                 .map(notation -> (Slur)notation)
                 .collect(Collectors.toList());
-    }
-
-    public Connection getTupletType() {
-        return tupletType;
-    }
-
-    public void setTupletType(Connection tupletType) {
-        this.tupletType = tupletType;
     }
 
     public Tuplet getTuplet() {
