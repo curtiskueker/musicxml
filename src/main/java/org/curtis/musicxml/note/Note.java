@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.Printout;
@@ -115,7 +114,7 @@ public class Note extends MusicData {
     @Column
     private Boolean pizzicato;
     @Transient
-    // transient lilypond
+    // used by lilypond
     private List<Direction> directions = new ArrayList<>();
 
     public Note() {

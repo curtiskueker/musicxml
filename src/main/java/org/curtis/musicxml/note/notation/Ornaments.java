@@ -25,7 +25,7 @@ public class Ornaments extends Notation {
     // transient collection
     private List<AccidentalMark> accidentalMarks = new ArrayList<>();
     @Transient
-    // transient lilypond
+    // used by lilypond
     private boolean printObject = true;
 
     public Ornaments() {

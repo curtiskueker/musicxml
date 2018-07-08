@@ -55,7 +55,7 @@ public class Harmony extends MusicData {
     @Column
     private Location placement;
     @Transient
-    // transient lilypond
+    // used by lilypond
     private BigDecimal totalBeats;
 
     public Harmony() {

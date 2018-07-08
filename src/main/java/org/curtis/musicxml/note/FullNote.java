@@ -16,12 +16,12 @@ import javax.persistence.Transient;
 public class FullNote extends DatabaseItem {
     @Column
     private Boolean chord = false;
-    @Transient
-    // transient lilypond
-    private Connection chordType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "full_note_type_id")
     private FullNoteType fullNoteType;
+    @Transient
+    // used by lilypond
+    private Connection chordType;
 
     public Boolean isChord() {
         return chord;
@@ -31,19 +31,19 @@ public class FullNote extends DatabaseItem {
         this.chord = chord;
     }
 
-    public Connection getChordType() {
-        return chordType;
-    }
-
-    public void setChordType(Connection chordType) {
-        this.chordType = chordType;
-    }
-
     public FullNoteType getFullNoteType() {
         return fullNoteType;
     }
 
     public void setFullNoteType(FullNoteType fullNoteType) {
         this.fullNoteType = fullNoteType;
+    }
+
+    public Connection getChordType() {
+        return chordType;
+    }
+
+    public void setChordType(Connection chordType) {
+        this.chordType = chordType;
     }
 }

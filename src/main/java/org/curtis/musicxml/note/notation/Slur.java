@@ -45,7 +45,7 @@ public class Slur extends Notation {
     @Column
     private String color;
     @Transient
-    // transient lilypond
+    // used by lilypond
     private SlurType slurType;
 
     public Slur() {

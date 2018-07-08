@@ -12,9 +12,6 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "grace")
 public class Grace extends DatabaseItem {
-    @Transient
-    // transient lilypond
-    private Connection graceType;
     @Column(name = "steal_time_previous")
     private BigDecimal stealTimePrevious;
     @Column(name = "steal_time_following")
@@ -23,17 +20,12 @@ public class Grace extends DatabaseItem {
     private BigDecimal makeTime;
     @Column
     private Boolean slash;
+    @Transient
+    // used by lilypond
+    private Connection graceType;
 
     public Grace() {
 
-    }
-
-    public Connection getGraceType() {
-        return graceType;
-    }
-
-    public void setGraceType(Connection graceType) {
-        this.graceType = graceType;
     }
 
     public BigDecimal getStealTimePrevious() {
@@ -66,5 +58,13 @@ public class Grace extends DatabaseItem {
 
     public void setSlash(Boolean slash) {
         this.slash = slash;
+    }
+
+    public Connection getGraceType() {
+        return graceType;
+    }
+
+    public void setGraceType(Connection graceType) {
+        this.graceType = graceType;
     }
 }

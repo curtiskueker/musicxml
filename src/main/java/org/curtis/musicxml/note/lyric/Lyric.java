@@ -49,13 +49,13 @@ public class Lyric extends DatabaseItem {
     @Column(name = "print_object")
     private Boolean printObject;
     @Transient
-    // transient lilypond
+    // used by lilypond
     private BigDecimal totalBeats;
     @Transient
-    // transient lilypond
+    // used by lilypond
     private TimeModification timeModification;
     @Transient
-    // transient lilypond
+    // used by lilypond
     private Tuplet tuplet;
 
     public Lyric() {
