@@ -66,6 +66,7 @@
         <class>org.curtis.musicxml.direction.directiontype.Dashes</class>
         <class>org.curtis.musicxml.direction.directiontype.DirectionType</class>
         <class>org.curtis.musicxml.direction.directiontype.Dynamics</class>
+        <class>org.curtis.musicxml.direction.directiontype.DynamicsMarking</class>
         <class>org.curtis.musicxml.direction.directiontype.Eyeglasses</class>
         <class>org.curtis.musicxml.direction.directiontype.HarpPedals</class>
         <class>org.curtis.musicxml.direction.directiontype.OctaveShift</class>

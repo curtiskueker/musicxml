@@ -8,7 +8,7 @@ import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dashes;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
-import org.curtis.musicxml.direction.directiontype.DynamicsType;
+import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.OtherDirection;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Segno;
@@ -70,9 +70,9 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildDynamics(Dynamics dynamics) {
-        List<DynamicsType> dynamicsTypes = dynamics.getTypes();
-        for(DynamicsType dynamicsType : dynamicsTypes) {
-            switch (dynamicsType) {
+        List<DynamicsMarking> dynamicsMarkings = dynamics.getMarkings();
+        for(DynamicsMarking dynamicsMarking : dynamicsMarkings) {
+            switch (dynamicsMarking.getDynamicsType()) {
                 case P:
                     append("\\p");
                     break;

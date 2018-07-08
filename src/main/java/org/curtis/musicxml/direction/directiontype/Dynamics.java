@@ -4,17 +4,18 @@ import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,10 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("dynamics")
 public class Dynamics extends DirectionType {
-    @ElementCollection(targetClass = DynamicsType.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "dynamics_type", joinColumns = @JoinColumn(name = "direction_type_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "dynamics_type")
-    private List<DynamicsType> types = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "dynamics_id", nullable = false)
+    private List<DynamicsMarking> markings = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
@@ -44,12 +44,12 @@ public class Dynamics extends DirectionType {
 
     }
 
-    public List<DynamicsType> getTypes() {
-        return types;
+    public List<DynamicsMarking> getMarkings() {
+        return markings;
     }
 
-    public void setTypes(List<DynamicsType> types) {
-        this.types = types;
+    public void setMarkings(List<DynamicsMarking> markings) {
+        this.markings = markings;
     }
 
     public PrintStyleAlign getPrintStyleAlign() {

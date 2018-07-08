@@ -1,6 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.direction.directiontype.Dynamics;
+import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
@@ -202,83 +203,85 @@ public class NotationFactory {
         Dynamics dynamics = new Dynamics();
 
         List<Element> dynamicsElements = XmlUtil.getChildElements(element);
-        List<DynamicsType> dynamicsTypes = dynamics.getTypes();
+        List<DynamicsMarking> dynamicsMarkings = dynamics.getMarkings();
         for(Element dynamicsElement : dynamicsElements) {
+            DynamicsMarking dynamicsMarking = new DynamicsMarking();
             String dynamecsElementName = dynamicsElement.getTagName();
             switch (dynamecsElementName) {
                 case "p":
-                    dynamicsTypes.add(DynamicsType.P);
+                    dynamicsMarking.setDynamicsType(DynamicsType.P);
                     break;
                 case "pp":
-                    dynamicsTypes.add(DynamicsType.PP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.PP);
                     break;
                 case "ppp":
-                    dynamicsTypes.add(DynamicsType.PPP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.PPP);
                     break;
                 case "pppp":
-                    dynamicsTypes.add(DynamicsType.PPPP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.PPPP);
                     break;
                 case "ppppp":
-                    dynamicsTypes.add(DynamicsType.PPPPP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.PPPPP);
                     break;
                 case "pppppp":
-                    dynamicsTypes.add(DynamicsType.PPPPPP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.PPPPPP);
                     break;
                 case "f":
-                    dynamicsTypes.add(DynamicsType.F);
+                    dynamicsMarking.setDynamicsType(DynamicsType.F);
                     break;
                 case "ff":
-                    dynamicsTypes.add(DynamicsType.FF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.FF);
                     break;
                 case "fff":
-                    dynamicsTypes.add(DynamicsType.FFF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.FFF);
                     break;
                 case "ffff":
-                    dynamicsTypes.add(DynamicsType.FFFF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.FFFF);
                     break;
                 case "fffff":
-                    dynamicsTypes.add(DynamicsType.FFFFF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.FFFFF);
                     break;
                 case "ffffff":
-                    dynamicsTypes.add(DynamicsType.FFFFFF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.FFFFFF);
                     break;
                 case "mp":
-                    dynamicsTypes.add(DynamicsType.MP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.MP);
                     break;
                 case "mf":
-                    dynamicsTypes.add(DynamicsType.MF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.MF);
                     break;
                 case "sf":
-                    dynamicsTypes.add(DynamicsType.SF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.SF);
                     break;
                 case "sfp":
-                    dynamicsTypes.add(DynamicsType.SFP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.SFP);
                     break;
                 case "sfpp":
-                    dynamicsTypes.add(DynamicsType.SFPP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.SFPP);
                     break;
                 case "fp":
-                    dynamicsTypes.add(DynamicsType.FP);
+                    dynamicsMarking.setDynamicsType(DynamicsType.FP);
                     break;
                 case "rf":
-                    dynamicsTypes.add(DynamicsType.RF);
+                    dynamicsMarking.setDynamicsType(DynamicsType.RF);
                     break;
                 case "rfz":
-                    dynamicsTypes.add(DynamicsType.RFZ);
+                    dynamicsMarking.setDynamicsType(DynamicsType.RFZ);
                     break;
                 case "sfz":
-                    dynamicsTypes.add(DynamicsType.SFZ);
+                    dynamicsMarking.setDynamicsType(DynamicsType.SFZ);
                     break;
                 case "sffz":
-                    dynamicsTypes.add(DynamicsType.SFFZ);
+                    dynamicsMarking.setDynamicsType(DynamicsType.SFFZ);
                     break;
                 case "fz":
-                    dynamicsTypes.add(DynamicsType.FZ);
+                    dynamicsMarking.setDynamicsType(DynamicsType.FZ);
                     break;
                 case "other-dynamics":
-                    dynamicsTypes.add(DynamicsType.OTHER_DYNAMICS);
+                    dynamicsMarking.setDynamicsType(DynamicsType.OTHER_DYNAMICS);
                     break;
             }
+            dynamicsMarkings.add(dynamicsMarking);
         }
 
         dynamics.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));

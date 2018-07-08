@@ -14,7 +14,7 @@ import org.curtis.musicxml.direction.directiontype.DampAll;
 import org.curtis.musicxml.direction.directiontype.Dashes;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
-import org.curtis.musicxml.direction.directiontype.DynamicsType;
+import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.Eyeglasses;
 import org.curtis.musicxml.direction.directiontype.HarpPedals;
 import org.curtis.musicxml.direction.directiontype.OctaveShift;
@@ -124,8 +124,8 @@ public class DirectionTypeBuilder extends BaseBuilder {
         buildAttributes(FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()));
         buildAttribute("enclosure", dynamics.getEnclosure());
         buildCloseElement();
-        for (DynamicsType dynamicsType : dynamics.getTypes()) {
-            buildElement(dynamicsType);
+        for (DynamicsMarking dynamicsMarking : dynamics.getMarkings()) {
+            buildElement(dynamicsMarking.getDynamicsType());
         }
         buildEndElement("dynamics");
     }
