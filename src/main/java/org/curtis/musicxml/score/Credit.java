@@ -5,12 +5,17 @@ import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -19,10 +24,10 @@ import java.util.List;
 @Entity
 @Table(name = "credit")
 public class Credit extends DatabaseItem {
-    @ElementCollection
-    @CollectionTable(name = "credit_type", joinColumns = @JoinColumn(name = "credit_id"))
-    @Column(name = "credit_type")
-    private List<String> creditTypes = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "credit_id", nullable = false)
+    private List<CreditType> creditTypes = new ArrayList<>();
     @Transient
     // transient collection
     private List<Link> links = new ArrayList<>();
@@ -48,11 +53,11 @@ public class Credit extends DatabaseItem {
 
     }
 
-    public List<String> getCreditTypes() {
+    public List<CreditType> getCreditTypes() {
         return creditTypes;
     }
 
-    public void setCreditTypes(List<String> creditTypes) {
+    public void setCreditTypes(List<CreditType> creditTypes) {
         this.creditTypes = creditTypes;
     }
 

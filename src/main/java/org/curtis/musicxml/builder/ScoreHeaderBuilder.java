@@ -20,6 +20,7 @@ import org.curtis.musicxml.layout.OtherAppearance;
 import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.score.Credit;
+import org.curtis.musicxml.score.CreditType;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.GroupBarline;
 import org.curtis.musicxml.score.GroupName;
@@ -181,8 +182,8 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildOpenElement("credit");
         buildAttribute("page", credit.getPage());
         buildCloseElement();
-        for (String creditType : credit.getCreditTypes()) {
-            buildElementWithValue("credit-type", creditType);
+        for (CreditType creditType : credit.getCreditTypes()) {
+            buildElementWithValue("credit-type", creditType.getType());
         }
         // TODO: credit-image
         // TODO: credit-words

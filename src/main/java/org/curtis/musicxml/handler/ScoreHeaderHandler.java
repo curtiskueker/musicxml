@@ -17,6 +17,7 @@ import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.score.Credit;
+import org.curtis.musicxml.score.CreditType;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.LyricFont;
 import org.curtis.musicxml.score.LyricLanguage;
@@ -136,6 +137,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
                                 lyricFont.setName(defaultsSubelement.getAttribute("name"));
                                 lyricFont.setFont(FormattingFactory.newFont(defaultsSubelement));
                                 lyricFonts.add(lyricFont);
+                                break;
                             case "lyric-language":
                                 List<LyricLanguage> lyricLanguages = defaults.getLyricLanguages();
                                 LyricLanguage lyricLanguage = new LyricLanguage();
@@ -157,8 +159,9 @@ public class ScoreHeaderHandler extends AbstractHandler {
                         String creditSubelementName = creditSubelement.getTagName();
                         switch (creditSubelementName) {
                             case "credit-type":
-                                List<String> creditTypes = credit.getCreditTypes();
-                                creditTypes.add(XmlUtil.getElementText(creditSubelement));
+                                CreditType creditType = new CreditType();
+                                creditType.setType(XmlUtil.getElementText(creditSubelement));
+                                credit.getCreditTypes().add(creditType);
                                 break;
                             case "link":
                                 Link link = LinkFactory.newLink(creditSubelement);
