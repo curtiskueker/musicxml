@@ -1,8 +1,11 @@
 #!/bin/bash
 
-JAR_DIR=/home/curtis/.m2/repository/org/curtis/musicxml/1.0
+# SET THIS TO DIRECTORY JAR FILE RESIDES IN
+JAR_DIR=
+# SET THIS TO JAR FILE NAME
+JAR_FILE=musicxml-1.0-jar-with-dependencies.jar
 
-CLASSPATH=${JAR_DIR}/musicxml-1.0-jar-with-dependencies.jar
+CLASSPATH=${JAR_DIR}/${JAR_FILE}
 
 INPUT='EMPTY'
 OUTPUT='EMPTY'

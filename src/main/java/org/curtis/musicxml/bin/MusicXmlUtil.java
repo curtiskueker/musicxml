@@ -7,6 +7,7 @@ import org.curtis.musicxml.builder.ScoreBuilder;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Score;
 import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
 import org.curtis.xml.XmlUtil;
@@ -28,6 +29,12 @@ public class MusicXmlUtil {
     }
 
     public static DBTransaction getDbTransaction() throws DBException {
+        AppProperties.setPrefix("musicxml");
+        try {
+            AppProperties.addPropertiesFile("musicxml");
+        } catch (PropertyFileNotFoundException e) {
+            // optional properties file
+        }
         AppProperties.addPropertiesFile("properties/database");
         DBSessionFactory sessionFactory = DBSessionFactory.getInstance();
 

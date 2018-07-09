@@ -2,15 +2,14 @@ package org.curtis.properties;
 
 import org.curtis.util.StringUtil;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class AppProperties {
     private static Map<String, ResourceBundle> bundles = new HashMap<>();
+    private static String prefix = null;
 
     public static void addPropertiesFile(String filename) throws PropertyFileNotFoundException {
         if (filename == null) {
@@ -32,12 +31,29 @@ public class AppProperties {
         }
     }
 
+    public static void setPrefix(String prefix) {
+        AppProperties.prefix = prefix;
+    }
+
     public static String getString(String propertyName) throws PropertyException {
         if (StringUtil.isEmpty(propertyName)) {
             throw new PropertyException("Property name is empty");
         }
 
         String propertyValue;
+
+        for (String bundleName : bundles.keySet()) {
+            ResourceBundle resourceBundle = bundles.get(bundleName);
+
+            // find property with prefix first
+            try {
+                propertyValue = resourceBundle.getString(prefix + "." + propertyName);
+
+                return propertyValue;
+            } catch (MissingResourceException e) {
+                //Ignore
+            }
+        }
 
         for (String bundleName : bundles.keySet()) {
             ResourceBundle resourceBundle = bundles.get(bundleName);
@@ -64,57 +80,10 @@ public class AppProperties {
         return propertyValue;
     }
 
-    public static int getInt(String propertyName) throws PropertyException {
-        String propertyValue = getString(propertyName);
-
-        try {
-            return Integer.parseInt(propertyValue);
-        } catch (NumberFormatException e) {
-            throw new PropertyException("getInt(): Property " + propertyName + " value not an int");
-        }
-    }
-
-    public static long getLong(String propertyName) throws PropertyException {
-        String propertyValue = getString(propertyName);
-
-        try {
-            return Long.parseLong(propertyValue);
-        } catch (NumberFormatException e) {
-            throw new PropertyException("Properties.getLong(): Property " + propertyName + " value not a long");
-        }
-    }
-
-    public static float getFloat(String propertyName) throws PropertyException {
-        String propertyValue = getString(propertyName);
-        try {
-            return Float.parseFloat(propertyValue);
-        } catch (NumberFormatException e) {
-            throw new PropertyException("getLong(): Property " + propertyName + " value not a long");
-        }
-    }
-
     public static boolean getBoolean(String propertyName) throws PropertyException {
         String propertyValue = getString(propertyName);
 
         return propertyValue.equals("1") || Boolean.parseBoolean(propertyValue);
-    }
-
-    public static String[] getStringArray(String propertyName) throws PropertyException {
-        String propertyValue = getString(propertyName);
-        try {
-            return propertyValue.split(",");
-        } catch (NumberFormatException e) {
-            throw new PropertyException("Properties.getLong(): Property " + propertyName + " value not a String[]");
-        }
-    }
-
-    public static List getList(String propertyName) throws PropertyException {
-        String propertyValue = getString(propertyName);
-        try {
-            return Arrays.asList(propertyValue.split(","));
-        } catch (NumberFormatException e) {
-            throw new PropertyException("Properties.getLong(): Property " + propertyName + " value not a List");
-        }
     }
 
     public static String trimPropertiesFilename(String filename) {
