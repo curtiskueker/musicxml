@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.util.StringUtil;
 
@@ -92,12 +93,18 @@ public abstract class OutputBuilder {
         buildCloseElement();
     }
 
+    protected void buildElementValue(String elementValue) {
+        if (StringUtil.isEmpty(elementValue)) return;
+
+        append(StringEscapeUtils.escapeXml11(elementValue));
+    }
+
     protected void buildElementWithValue(String elementName, String elementValue) {
         if (StringUtil.isEmpty(elementValue)) return;
 
         buildOpenElement(elementName);
         append(">");
-        append(elementValue);
+        buildElementValue(elementValue);
         buildEndElement(elementName);
     }
 
@@ -137,7 +144,7 @@ public abstract class OutputBuilder {
         buildOpenElement(elementName);
         buildAttribute(attributeName, attributeValue);
         append(">");
-        append(elementValue);
+        buildElementValue(elementValue);
         buildEndElement(elementName);
     }
 
@@ -185,7 +192,7 @@ public abstract class OutputBuilder {
             }
         }
         append(">");
-        if (StringUtil.isNotEmpty(elementValue)) append(elementValue);
+        buildElementValue(elementValue);
         buildEndElement(elementName);
     }
 

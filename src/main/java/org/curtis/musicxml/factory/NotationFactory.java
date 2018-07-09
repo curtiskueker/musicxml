@@ -110,17 +110,18 @@ public class NotationFactory {
 
         Fermata fermata = new Fermata();
         String fermataShape = XmlUtil.getElementText(fermataElement);
-        switch (fermataShape) {
-            case "normal":
-            case "":
-                fermata.setFermataShape(FermataShape.NORMAL);
-                break;
-            case "angled":
-                fermata.setFermataShape(FermataShape.ANGLED);
-                break;
-            case "square":
-                fermata.setFermataShape(FermataShape.SQUARE);
-                break;
+        if (StringUtil.isNotEmpty(fermataShape)) {
+            switch (fermataShape) {
+                case "normal":
+                    fermata.setFermataShape(FermataShape.NORMAL);
+                    break;
+                case "angled":
+                    fermata.setFermataShape(FermataShape.ANGLED);
+                    break;
+                case "square":
+                    fermata.setFermataShape(FermataShape.SQUARE);
+                    break;
+            }
         }
 
         switch (fermataElement.getAttribute("type")) {

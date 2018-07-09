@@ -203,7 +203,7 @@ public class NotationBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(fermata.getType()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(fermata.getPrintStyle()));
-        buildElementWithValueAndAttributes("fermzta", fermata.getFermataShape(), attributes);
+        buildElementWithValueAndAttributes("fermata", fermata.getFermataShape(), attributes);
     }
 
     private void buildArpeggiate(Arpeggiate arpeggiate) {
