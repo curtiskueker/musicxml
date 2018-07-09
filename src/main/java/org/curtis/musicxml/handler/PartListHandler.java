@@ -12,6 +12,7 @@ import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.musicxml.score.ScorePartGroup;
 import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
 import org.curtis.musicxml.score.instrument.Solo;
@@ -79,7 +80,11 @@ public class PartListHandler extends AbstractHandler {
                     scorePart.setPartAbbreviation(ScorePartFactory.newPartName(XmlUtil.getChildElement(partListSubelement, "part-abbreviation")));
                     scorePart.setPartAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-abbreviation-display")));
                     List<Element> groupElements = XmlUtil.getChildElements(partListSubelement, "group");
-                    groupElements.forEach(groupElement -> scorePart.getGroups().add(XmlUtil.getElementText(groupElement)));
+                    for (Element groupElement : groupElements) {
+                        ScorePartGroup scorePartGroup = new ScorePartGroup();
+                        scorePartGroup.setGroup(XmlUtil.getElementText(groupElement));
+                        scorePart.getGroups().add(scorePartGroup);
+                    }
                     List<Element> scoreInstrumentElements = XmlUtil.getChildElements(partListSubelement, "score-instrument");
                     for(Element scoreInstrumentElement : scoreInstrumentElements) {
                         ScoreInstrument scoreInstrument = new ScoreInstrument();

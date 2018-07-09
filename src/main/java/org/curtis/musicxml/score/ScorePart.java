@@ -42,10 +42,10 @@ public class ScorePart extends PartItem {
     @Transient
     // transient collection
     private NameDisplay partAbbreviationDisplay;
-    @ElementCollection
-    @CollectionTable(name = "score_part_group", joinColumns = @JoinColumn(name = "score_part_id"))
-    @Column(name = "group_name")
-    private List<String> groups = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "score_part_id", nullable = false)
+    private List<ScorePartGroup> groups = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "score_part_id", nullable = false)
@@ -109,11 +109,11 @@ public class ScorePart extends PartItem {
         this.partAbbreviationDisplay = partAbbreviationDisplay;
     }
 
-    public List<String> getGroups() {
+    public List<ScorePartGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<String> groups) {
+    public void setGroups(List<ScorePartGroup> groups) {
         this.groups = groups;
     }
 

@@ -33,6 +33,7 @@ import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.musicxml.score.ScorePartGroup;
 import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.InstrumentType;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
@@ -242,8 +243,8 @@ public class ScoreHeaderBuilder extends BaseBuilder {
         buildIdentification(scorePart.getIdentification());
         buildPartName("part-name", scorePart.getPartName());
         buildPartName("part-abbreviation", scorePart.getPartAbbreviation());
-        for (String group : scorePart.getGroups()) {
-            buildElementWithValue("group", group);
+        for (ScorePartGroup group : scorePart.getGroups()) {
+            buildElementWithValue("group", group.getGroup());
         }
         for (ScoreInstrument scoreInstrument : scorePart.getScoreInstruments()) {
             buildOpenElement("score-instrument");

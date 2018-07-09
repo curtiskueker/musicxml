@@ -271,6 +271,7 @@
         <class>org.curtis.musicxml.score.Score</class>
         <class>org.curtis.musicxml.score.ScoreHeader</class>
         <class>org.curtis.musicxml.score.ScorePart</class>
+        <class>org.curtis.musicxml.score.ScorePartGroup</class>
         <class>org.curtis.musicxml.score.instrument.Ensemble</class>
         <class>org.curtis.musicxml.score.instrument.InstrumentType</class>
         <class>org.curtis.musicxml.score.instrument.ScoreInstrument</class>
