@@ -4,7 +4,6 @@ import org.curtis.musicxml.barline.BarStyleColor;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.PrintStyleAlign;
@@ -12,7 +11,7 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BarlineBuilder extends BaseBuilder {
+public class BarlineBuilder extends MusicDataBuilder {
     private Barline barline;
 
     public BarlineBuilder(Barline barline) {

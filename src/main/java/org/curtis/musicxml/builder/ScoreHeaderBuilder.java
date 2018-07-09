@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.builder.musicdata.LayoutBuilder;
+import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.Miscellaneous;
@@ -45,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScoreHeaderBuilder extends BaseBuilder {
+public class ScoreHeaderBuilder extends MusicDataBuilder {
     private ScoreHeader scoreHeader;
 
     public ScoreHeaderBuilder(ScoreHeader scoreHeader) {

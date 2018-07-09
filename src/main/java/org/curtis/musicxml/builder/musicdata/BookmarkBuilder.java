@@ -1,10 +1,9 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.XLinkBuilder;
 import org.curtis.musicxml.link.Bookmark;
 
-public class BookmarkBuilder extends BaseBuilder {
+public class BookmarkBuilder extends MusicDataBuilder {
     private Bookmark bookmark;
 
     public BookmarkBuilder(Bookmark bookmark) {

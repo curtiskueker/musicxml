@@ -1,12 +1,11 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.EditorialVoiceDirection;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
-public class DirectionBuilder extends BaseBuilder {
+public class DirectionBuilder extends MusicDataBuilder {
     private Direction direction;
 
     public DirectionBuilder() {}

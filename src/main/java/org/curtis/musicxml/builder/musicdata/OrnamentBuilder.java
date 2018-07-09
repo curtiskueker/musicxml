@@ -1,6 +1,5 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
@@ -26,7 +25,7 @@ import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrnamentBuilder extends BaseBuilder {
+public class OrnamentBuilder extends MusicDataBuilder {
     private Ornament ornament;
 
     public OrnamentBuilder(Ornament ornament) {

@@ -1,6 +1,5 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
@@ -27,7 +26,7 @@ import org.curtis.musicxml.direction.harmony.RootStep;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HarmonyBuilder extends BaseBuilder {
+public class HarmonyBuilder extends MusicDataBuilder {
     private Harmony harmony;
 
     public HarmonyBuilder(Harmony harmony) {

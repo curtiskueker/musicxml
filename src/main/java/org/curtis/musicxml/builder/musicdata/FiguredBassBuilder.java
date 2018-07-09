@@ -1,11 +1,10 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.note.Figure;
 import org.curtis.musicxml.note.FiguredBass;
 
-public class FiguredBassBuilder extends BaseBuilder {
+public class FiguredBassBuilder extends MusicDataBuilder {
     private FiguredBass figuredBass;
 
     public FiguredBassBuilder(FiguredBass figuredBass) {

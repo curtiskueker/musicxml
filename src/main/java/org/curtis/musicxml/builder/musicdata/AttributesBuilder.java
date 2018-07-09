@@ -23,7 +23,6 @@ import org.curtis.musicxml.attributes.time.SenzaMisura;
 import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.attributes.time.TimeSignature;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
@@ -33,7 +32,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AttributesBuilder extends BaseBuilder {
+public class AttributesBuilder extends MusicDataBuilder {
     private Attributes attributes;
 
     public AttributesBuilder(Attributes attributes) {

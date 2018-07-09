@@ -1,12 +1,11 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.direction.MeasureNumberingType;
 import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.layout.MeasureLayout;
 
-public class PrintBuilder extends BaseBuilder {
+public class PrintBuilder extends MusicDataBuilder {
     private Print print;
 
     public PrintBuilder(Print print) {

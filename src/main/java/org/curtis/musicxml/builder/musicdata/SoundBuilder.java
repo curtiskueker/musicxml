@@ -1,9 +1,8 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.direction.Sound;
 
-public class SoundBuilder extends BaseBuilder {
+public class SoundBuilder extends MusicDataBuilder {
     private Sound sound;
 
     public SoundBuilder(Sound sound) {

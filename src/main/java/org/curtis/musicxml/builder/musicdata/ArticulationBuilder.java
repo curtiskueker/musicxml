@@ -1,6 +1,5 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.articulation.Accent;
@@ -25,7 +24,7 @@ import org.curtis.util.StringUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ArticulationBuilder extends BaseBuilder {
+public class ArticulationBuilder extends MusicDataBuilder {
     private Articulation articulation;
 
     public ArticulationBuilder(Articulation articulation) {

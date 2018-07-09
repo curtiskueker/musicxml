@@ -12,6 +12,7 @@ import org.curtis.musicxml.builder.musicdata.ForwardBuilder;
 import org.curtis.musicxml.builder.musicdata.GroupingBuilder;
 import org.curtis.musicxml.builder.musicdata.HarmonyBuilder;
 import org.curtis.musicxml.builder.musicdata.LinkBuilder;
+import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
 import org.curtis.musicxml.builder.musicdata.PrintBuilder;
 import org.curtis.musicxml.builder.musicdata.SoundBuilder;
@@ -29,7 +30,7 @@ import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 
-public class MeasureBuilder extends BaseBuilder {
+public class MeasureBuilder extends MusicDataBuilder {
     private Measure measure;
 
     public MeasureBuilder(Measure measure) {

@@ -1,6 +1,5 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.PlacementText;
@@ -38,7 +37,7 @@ import org.curtis.util.StringUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TechnicalBuilder extends BaseBuilder {
+public class TechnicalBuilder extends MusicDataBuilder {
     private Technical technical;
 
     public TechnicalBuilder(Technical technical) {

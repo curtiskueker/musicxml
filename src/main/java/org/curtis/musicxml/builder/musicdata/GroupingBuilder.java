@@ -1,10 +1,9 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.direction.Feature;
 import org.curtis.musicxml.direction.Grouping;
 
-public class GroupingBuilder extends BaseBuilder {
+public class GroupingBuilder extends MusicDataBuilder {
     private Grouping grouping;
 
     public GroupingBuilder(Grouping grouping) {

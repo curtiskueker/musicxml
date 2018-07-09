@@ -1,9 +1,10 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.Part;
 
-public class PartBuilder extends BaseBuilder {
+public class PartBuilder extends MusicDataBuilder {
     private Part part;
 
     public PartBuilder(Part part) {
