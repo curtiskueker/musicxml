@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.PlacementBuildUtil;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Print;
@@ -23,7 +24,7 @@ public class DirectionBuilder extends MusicDataBuilder {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(directionType);
             String musicDataResults = musicDataBuilder.build().toString();
             if(!musicDataResults.isEmpty()) {
-                if (!direction.getDirective()) append(PlacementBuildUtil.getPlacement(direction.getPlacement(), directionType.getClass().getSimpleName()));
+                if (!TypeUtil.getBoolean(direction.getDirective())) append(PlacementBuildUtil.getPlacement(direction.getPlacement(), directionType.getClass().getSimpleName()));
                 append(musicDataResults);
             }
         }
@@ -45,7 +46,7 @@ public class DirectionBuilder extends MusicDataBuilder {
 
     public static void setDirectionDefaults(Direction direction) {
         DirectionType words = direction.getDirectionTypes().stream()
-                .filter(directionType -> directionType instanceof Words && !direction.getDirective() && direction.getPlacement() == null)
+                .filter(directionType -> directionType instanceof Words && !TypeUtil.getBoolean(direction.getDirective()) && direction.getPlacement() == null)
                 .findAny().orElse(null);
 
         if (words != null) direction.setPlacement(Location.ABOVE);

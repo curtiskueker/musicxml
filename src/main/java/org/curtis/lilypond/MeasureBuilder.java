@@ -9,6 +9,7 @@ import org.curtis.lilypond.part.VoicePartBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.barline.Barline;
@@ -317,7 +318,7 @@ public class MeasureBuilder extends AbstractBuilder {
         transferDirections();
 
         // check that voice duration matches measure duration
-        if (!measure.getImplicit()) checkVoiceDuration();
+        if (!TypeUtil.getBoolean(measure.getImplicit())) checkVoiceDuration();
 
         // put any barline at the end
         if(currentBarline != null) {
@@ -327,7 +328,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // OUTPUT
         //
         // Partial measure
-        if(measure.getImplicit()) {
+        if(TypeUtil.getBoolean(measure.getImplicit())) {
             try {
                 BigDecimal numerator = MathUtil.multiply(MathUtil.divide(measureDuration, wholeMeasureDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
                 BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
@@ -471,11 +472,11 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private boolean deferredDirection(Direction direction) {
         boolean isDeferred = true;
-        if (direction.getDirective()) isDeferred = false;
+        if (TypeUtil.getBoolean(direction.getDirective())) isDeferred = false;
 
         for (DirectionType directionType : direction.getDirectionTypes()) {
             if (directionType instanceof Metronome) isDeferred = false;
-            if (directionType instanceof Words && direction.getDirective()) isDeferred = false;
+            if (directionType instanceof Words && TypeUtil.getBoolean(direction.getDirective())) isDeferred = false;
             if (directionType instanceof Rehearsal) isDeferred = false;
 
             if (!isDeferred) break;

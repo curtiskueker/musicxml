@@ -25,7 +25,7 @@ public class Measure extends DatabaseItem {
     @Column
     private String number;
     @Column
-    private Boolean implicit = false;
+    private Boolean implicit;
     @Column(name = "non_controlling")
     private Boolean nonControlling;
     @Column
