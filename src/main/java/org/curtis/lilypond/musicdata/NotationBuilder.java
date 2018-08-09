@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.PlacementBuildUtil;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Articulations;
@@ -51,7 +52,7 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildOrnaments(Ornaments ornaments) throws BuildException {
-        if (!ornaments.isPrintObject()) return stringBuilder;
+        if (!TypeUtil.getBooleanDefaultYes(ornaments.isPrintObject())) return stringBuilder;
 
         for (Ornament ornament : ornaments.getOrnaments()) {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(ornament);

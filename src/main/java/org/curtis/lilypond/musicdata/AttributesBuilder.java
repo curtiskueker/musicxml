@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.AttributesUtil;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.attributes.ClefSign;
@@ -27,7 +28,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         }
 
         for (Clef clef : attributes.getClefs()) {
-            if (!clef.getPrintObject()) continue;
+            if (!TypeUtil.getBooleanDefaultYes(clef.getPrintObject())) continue;
 
             append("\\clef \"");
             ClefSign clefSign = clef.getSign();

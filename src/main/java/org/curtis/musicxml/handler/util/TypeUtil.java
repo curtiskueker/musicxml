@@ -18,10 +18,4 @@ public class TypeUtil {
                 return false;
         }
     }
-
-    public static Boolean getYesNoDefaultYes(String value) {
-        if(StringUtil.isEmpty(value)) return true;
-
-        return getYesNo(value);
-    }
 }

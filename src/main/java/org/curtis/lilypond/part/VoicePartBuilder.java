@@ -3,6 +3,7 @@ package org.curtis.lilypond.part;
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.AttributesUtil;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
@@ -403,6 +404,6 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
     public static boolean skipNote(Note note) {
         // skip cues and non-printed chords as redundant
-        return note.getCue() || !note.getPrintout().getPrintObject();
+        return note.getCue() || !TypeUtil.getBooleanDefaultYes(note.getPrintout().getPrintObject());
     }
 }

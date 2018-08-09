@@ -209,17 +209,17 @@ public class FormattingFactory {
     }
 
     public static Boolean getPrintObject(Element element) {
-        if (element == null) return true;
+        if (element == null) return null;
 
-        return TypeUtil.getYesNoDefaultYes(element.getAttribute("print-object"));
+        return TypeUtil.getYesNo(element.getAttribute("print-object"));
     }
 
     public static Printout newPrintout(Element element) {
         Printout printout = new Printout();
         printout.setPrintObject(getPrintObject(element));
-        printout.setPrintDot(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-dot")));
-        printout.setPrintSpacing(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-spacing")));
-        printout.setPrintLyric(TypeUtil.getYesNoDefaultYes(element.getAttribute("print-lyric")));
+        printout.setPrintDot(TypeUtil.getYesNo(element.getAttribute("print-dot")));
+        printout.setPrintSpacing(TypeUtil.getYesNo(element.getAttribute("print-spacing")));
+        printout.setPrintLyric(TypeUtil.getYesNo(element.getAttribute("print-lyric")));
 
         return printout;
     }

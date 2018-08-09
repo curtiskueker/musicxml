@@ -15,7 +15,7 @@ public class Rest extends FullNoteType {
     @Column(name = "display_octave")
     private Integer displayOctave;
     @Column
-    private Boolean measure = false;
+    private Boolean measure;
 
     public Rest() {
 

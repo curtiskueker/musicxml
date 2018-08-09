@@ -1,6 +1,7 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
 import org.curtis.util.StringUtil;
 
@@ -48,7 +49,7 @@ public class KeyBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildTraditionalKey(TraditionalKey traditionalKey) throws BuildException {
-        if (!traditionalKey.getPrintObject()) appendLine("\\override Staff.KeySignature.stencil = ##f ");
+        if (!TypeUtil.getBooleanDefaultYes(traditionalKey.getPrintObject())) appendLine("\\override Staff.KeySignature.stencil = ##f ");
         append("\\key ");
 
         String mode = traditionalKey.getMode();

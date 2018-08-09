@@ -94,6 +94,7 @@ public class NoteHandler extends MusicDataHandler {
                     rest.setDisplayStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
                     rest.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
                     fullNote.setFullNoteType(rest);
+                    rest.setMeasure(TypeUtil.getYesNo(noteSubelement.getAttribute("measure")));
                     break;
                 case "duration":
                     note.setDuration(MathUtil.newBigDecimal(XmlUtil.getElementText(noteSubelement)));

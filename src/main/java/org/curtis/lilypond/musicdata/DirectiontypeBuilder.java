@@ -1,5 +1,6 @@
 package org.curtis.lilypond.musicdata;
 
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.PrintStyle;
@@ -122,7 +123,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
     public StringBuilder buildOtherDirection(OtherDirection otherDirection) {
         System.err.println("Warning: OrnamentBuilder.buildOtherDirection not implemented");
 
-        if (!otherDirection.getPrintObject()) return stringBuilder;
+        if (!TypeUtil.getBooleanDefaultYes(otherDirection.getPrintObject())) return stringBuilder;
 
         return stringBuilder;
     }

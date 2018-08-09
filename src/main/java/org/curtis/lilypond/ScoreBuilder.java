@@ -3,6 +3,7 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.part.HarmonyPartBuilder;
 import org.curtis.lilypond.part.PartBuilder;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.common.Connection;
@@ -130,14 +131,14 @@ public class ScoreBuilder extends AbstractBuilder {
         appendLine("\\with {");
 
         PartName partName = scorePart.getPartName();
-        if (partName.getPartNamePrintObject()) {
+        if (TypeUtil.getBooleanDefaultYes(partName.getPartNamePrintObject())) {
             append("instrumentName = #\"");
             append(partName.getPartName());
             appendLine("\"");
         }
 
         PartName partAbbreviation = scorePart.getPartAbbreviation();
-        if (partAbbreviation != null && partAbbreviation.getPartNamePrintObject()) {
+        if (partAbbreviation != null && TypeUtil.getBooleanDefaultYes(partAbbreviation.getPartNamePrintObject())) {
             append("shortInstrumentName = #\"");
             append(partAbbreviation.getPartName());
             appendLine("\"");
@@ -153,14 +154,14 @@ public class ScoreBuilder extends AbstractBuilder {
         appendLine("\\new GrandStaff <<");
 
         PartName partName = scorePart.getPartName();
-        if (partName.getPartNamePrintObject()) {
+        if (TypeUtil.getBooleanDefaultYes(partName.getPartNamePrintObject())) {
             append("\\set GrandStaff.instrumentName = #\"");
             append(partName.getPartName());
             appendLine("\"");
         }
 
         PartName partAbbreviation = scorePart.getPartAbbreviation();
-        if (partAbbreviation != null && partAbbreviation.getPartNamePrintObject()) {
+        if (partAbbreviation != null && TypeUtil.getBooleanDefaultYes(partAbbreviation.getPartNamePrintObject())) {
             append("\\set GrandStaff.shortInstrumentName = #\"");
             append(partAbbreviation.getPartName());
             appendLine("\"");

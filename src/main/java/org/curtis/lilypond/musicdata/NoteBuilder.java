@@ -5,6 +5,7 @@ import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
@@ -111,7 +112,7 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder noteTypeBuild() throws BuildException {
-        if (note.getCue() || !note.getPrintout().getPrintObject()) {
+        if (note.getCue() || !TypeUtil.getBooleanDefaultYes(note.getPrintout().getPrintObject())) {
             append(" s");
             return stringBuilder;
         }
@@ -133,7 +134,7 @@ public class NoteBuilder extends MusicDataBuilder {
             pitchOctaveBuild(unpitched.getDisplayOctave());
         } else if (fullNoteType instanceof Rest) {
             Rest rest = (Rest)fullNoteType;
-            Boolean measure = rest.getMeasure();
+            Boolean measure = TypeUtil.getBoolean(rest.getMeasure());
             NoteType noteType = note.getType();
             BigDecimal duration = note.getDuration();
             BigDecimal wholeMeasureDuration = null;
@@ -306,7 +307,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private StringBuilder notationsBuild() throws BuildException {
         for(Notations notations : note.getNotationsList()) {
-            if (!notations.getPrintObject()) continue;
+            if (!TypeUtil.getBooleanDefaultYes(notations.getPrintObject())) continue;
 
             for(Notation notation : notations.getNotations()) {
                 if (notation instanceof Articulations) {
