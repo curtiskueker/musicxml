@@ -120,6 +120,11 @@ public abstract class OutputBuilder {
         buildElementWithValue(elementName, BuilderUtil.enumValue(elementValue));
     }
 
+    protected void buildElementWithOptionalValue(String elementName, Integer elementValue) {
+        if (elementValue == null) buildElement(elementName);
+        else buildElementWithValue(elementName, BuilderUtil.stringValue(elementValue));
+    }
+
     protected void buildElementWithAttribute(String elementName, String attributeName, String attributeValue) {
         if (StringUtil.isEmpty(attributeValue)) return;
 
@@ -139,7 +144,7 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, String attributeValue) {
-        if (StringUtil.isEmpty(elementValue)) return;
+        if (StringUtil.isEmpty(elementValue) && StringUtil.isEmpty(attributeValue)) return;
 
         buildOpenElement(elementName);
         buildAttribute(attributeName, attributeValue);
@@ -185,6 +190,11 @@ public abstract class OutputBuilder {
     }
 
     protected void buildElementWithValueAndAttributes(String elementName, String elementValue, Map<String, String> attributes) {
+        if ((attributes == null || attributes.isEmpty()) && StringUtil.isEmpty(elementValue)) {
+            buildElement(elementName);
+            return;
+        }
+
         buildOpenElement(elementName);
         if (attributes != null && !attributes.isEmpty()) {
             for (String attributeName : attributes.keySet()) {

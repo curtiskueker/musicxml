@@ -99,13 +99,10 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildBreathMark(BreathMark breathMark) {
-        String elementName = "breath-mark";
-        String breathMarkValue = BuilderUtil.enumValue(breathMark.getBreathMarkValue());
         Map<String, String> attributes = new HashMap<>();
         attributes.putAll(FormattingBuilder.buildPrintStyle(breathMark.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(breathMark.getPlacement()));
-        if (StringUtil.isEmpty(breathMarkValue)) buildElementWithAttributes(elementName, attributes);
-        else buildElementWithValueAndAttributes(elementName, breathMarkValue, attributes);
+        buildElementWithValueAndAttributes("breath-mark", breathMark.getBreathMarkValue(), attributes);
     }
 
     private void buildCaesura(Caesura caesura) {

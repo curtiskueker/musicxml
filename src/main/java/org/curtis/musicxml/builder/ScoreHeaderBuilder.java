@@ -259,7 +259,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                 if (instrumentType instanceof Solo) buildElement("solo");
                 else if (instrumentType instanceof Ensemble) {
                     Ensemble ensemble = (Ensemble)instrumentType;
-                    buildElementWithValue("ensemble", ensemble.getValue());
+                    buildElementWithOptionalValue("ensemble", ensemble.getValue());
                 }
             }
             String virtualLibrary = scoreInstrument.getVirtualLibrary();
