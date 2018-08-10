@@ -35,8 +35,8 @@ public class Direction extends MusicData {
     private EditorialVoiceDirection editorialVoiceDirection;
     @Column
     private Integer staff;
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sound_id")
     private Sound sound;
     @Enumerated(EnumType.STRING)
     @Column

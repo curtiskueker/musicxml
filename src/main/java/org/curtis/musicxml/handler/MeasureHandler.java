@@ -85,6 +85,7 @@ public class MeasureHandler extends AbstractHandler {
 
             if(musicData != null) {
                 musicDataList.add(musicData);
+                musicData.setMeasure(measure);
             }
         }
 

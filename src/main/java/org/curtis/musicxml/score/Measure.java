@@ -20,7 +20,7 @@ import java.util.List;
 public class Measure extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "measure_id", nullable = false)
+    @JoinColumn(name = "measure_id")
     private List<MusicData> musicDataList = new ArrayList<>();
     @Column
     private String number;
