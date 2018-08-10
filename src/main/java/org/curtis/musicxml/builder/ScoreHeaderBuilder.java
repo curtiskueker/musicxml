@@ -35,6 +35,7 @@ import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.score.ScorePartGroup;
+import org.curtis.musicxml.score.Work;
 import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.InstrumentType;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
@@ -54,16 +55,19 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
-        buildStartElement("work");
-        buildElementWithValue("work-number", scoreHeader.getWorkNumber());
-        buildElementWithValue("work-title", scoreHeader.getWorkTitle());
-        LinkAttributes opus = scoreHeader.getOpus();
-        if (opus != null) {
-            buildOpenElement("opus");
-            append(XLinkBuilder.buildLinkAttributes(opus));
-            buildCloseEmptyElement();
+        Work work = scoreHeader.getWork();
+        if (work != null) {
+            buildStartElement("work");
+            buildElementWithValue("work-number", work.getWorkNumber());
+            buildElementWithValue("work-title", work.getWorkTitle());
+            LinkAttributes opus = work.getOpus();
+            if (opus != null) {
+                buildOpenElement("opus");
+                append(XLinkBuilder.buildLinkAttributes(opus));
+                buildCloseEmptyElement();
+            }
+            buildEndElement("work");
         }
-        buildEndElement("work");
         buildElementWithValue("movement-number", scoreHeader.getMovementNumber());
         buildElementWithValue("movement-title", scoreHeader.getMovementTitle());
         buildIdentification(scoreHeader.getIdentification());

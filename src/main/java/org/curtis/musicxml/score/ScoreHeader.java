@@ -2,7 +2,6 @@ package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.identity.Identification;
-import org.curtis.musicxml.link.LinkAttributes;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -20,13 +19,9 @@ import java.util.List;
 @Entity
 @Table(name = "score_header")
 public class ScoreHeader extends DatabaseItem {
-    @Column(name = "work_number")
-    private String workNumber;
-    @Column(name = "work_title")
-    private String workTitle;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "opus_id")
-    private LinkAttributes opus;
+    @JoinColumn(name = "work_id")
+    private Work work;
     @Column(name = "movement_number")
     private String movementNumber;
     @Column(name = "movement_title")
@@ -49,28 +44,12 @@ public class ScoreHeader extends DatabaseItem {
 
     }
 
-    public String getWorkNumber() {
-        return workNumber;
+    public Work getWork() {
+        return work;
     }
 
-    public void setWorkNumber(String workNumber) {
-        this.workNumber = workNumber;
-    }
-
-    public String getWorkTitle() {
-        return workTitle;
-    }
-
-    public void setWorkTitle(String workTitle) {
-        this.workTitle = workTitle;
-    }
-
-    public LinkAttributes getOpus() {
-        return opus;
-    }
-
-    public void setOpus(LinkAttributes opus) {
-        this.opus = opus;
+    public void setWork(Work work) {
+        this.work = work;
     }
 
     public String getMovementNumber() {

@@ -23,6 +23,7 @@ import org.curtis.musicxml.score.LyricFont;
 import org.curtis.musicxml.score.LyricLanguage;
 import org.curtis.musicxml.score.PartList;
 import org.curtis.musicxml.score.ScoreHeader;
+import org.curtis.musicxml.score.Work;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -45,9 +46,11 @@ public class ScoreHeaderHandler extends AbstractHandler {
             String subelementName = subelement.getTagName();
             switch (subelementName) {
                 case "work":
-                    scoreHeader.setWorkNumber(XmlUtil.getChildElementText(subelement, "work-number"));
-                    scoreHeader.setWorkTitle(XmlUtil.getChildElementText(subelement, "work-title"));
-                    scoreHeader.setOpus(LinkFactory.newLinkAttributes(XmlUtil.getChildElement(subelement, "opus")));
+                    Work work = new Work();
+                    work.setWorkNumber(XmlUtil.getChildElementText(subelement, "work-number"));
+                    work.setWorkTitle(XmlUtil.getChildElementText(subelement, "work-title"));
+                    work.setOpus(LinkFactory.newLinkAttributes(XmlUtil.getChildElement(subelement, "opus")));
+                    scoreHeader.setWork(work);
                     break;
                 case "movement-number":
                     scoreHeader.setMovementNumber(XmlUtil.getChildElementText(subelement, "movement-number"));
