@@ -2,7 +2,6 @@ package org.curtis.xml;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.XMLReader;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -13,7 +12,6 @@ import java.io.ByteArrayInputStream;
 
 public class SchemaValidator {
     private static SchemaValidator instance;
-    private XMLReader xmlReader;
 
     private SchemaValidator() {
     }
