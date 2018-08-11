@@ -66,7 +66,6 @@ public class MusicXmlUtil {
             System.err.println(e.getMessage());
         }
 
-        System.err.println(getFormattedXml(results));
         return getFormattedXml(results);
     }
 

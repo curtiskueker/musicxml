@@ -39,8 +39,6 @@ public class ScoreHeaderHandler extends AbstractHandler {
     }
 
     public void handle(Element element) {
-        scoreHeader.setMovementTitle(XmlUtil.getChildElementText(element, "movement-title"));
-
         List<Element> subelements = XmlUtil.getChildElements(element);
         for (Element subelement : subelements) {
             String subelementName = subelement.getTagName();
@@ -53,10 +51,10 @@ public class ScoreHeaderHandler extends AbstractHandler {
                     scoreHeader.setWork(work);
                     break;
                 case "movement-number":
-                    scoreHeader.setMovementNumber(XmlUtil.getChildElementText(subelement, "movement-number"));
+                    scoreHeader.setMovementNumber(XmlUtil.getElementText(subelement));
                     break;
                 case "movement-title":
-                    scoreHeader.setMovementTitle(XmlUtil.getChildElementText(subelement, "movement-title"));
+                    scoreHeader.setMovementTitle(XmlUtil.getElementText(subelement));
                     break;
                 case "identification":
                     Identification identification = IdentityFactory.newIdentification(subelement);
