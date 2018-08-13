@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "margins")
 public class Margins extends DatabaseItem {
-    @Column(name = "left_margin")
+    @Column(name = "left_margin", precision = 10, scale = 4)
     private BigDecimal leftMargin;
-    @Column(name = "right_margin")
+    @Column(name = "right_margin", precision = 10, scale = 4)
     private BigDecimal rightMargin;
-    @Column(name = "top_margin")
+    @Column(name = "top_margin", precision = 10, scale = 4)
     private BigDecimal topMargin;
-    @Column(name = "bottom_margin")
+    @Column(name = "bottom_margin", precision = 10, scale = 4)
     private BigDecimal bottomMargin;
 
     public Margins() {

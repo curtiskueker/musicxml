@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "line_width")
 public class LineWidth extends DatabaseItem {
-    @Column
+    @Column(precision = 10, scale = 4)
     private BigDecimal value;
     @Column(name = "line_width_type")
     private String lineWidthType;
