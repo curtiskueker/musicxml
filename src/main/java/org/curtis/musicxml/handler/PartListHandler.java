@@ -67,6 +67,7 @@ public class PartListHandler extends AbstractHandler {
                                 break;
                         }
                         groupBarline.setColor(groupBarlineElement.getAttribute("color"));
+                        partGroup.setGroupBarline(groupBarline);
                     }
                     partGroup.setGroupTime(XmlUtil.hasChildElement(partListSubelement, "group-time"));
                     partList.getPartItems().add(partGroup);
