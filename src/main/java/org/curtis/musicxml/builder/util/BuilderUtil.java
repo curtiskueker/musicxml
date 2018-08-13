@@ -35,7 +35,10 @@ public class BuilderUtil {
     }
 
     public static String stringValue(BigDecimal bigDecimalValue) {
-        return bigDecimalValue == null ? "" : String.valueOf(bigDecimalValue);
+        if (bigDecimalValue == null) return "";
+
+        String value = String.valueOf(bigDecimalValue.stripTrailingZeros());
+        return value.contains("E") ? Integer.toString(bigDecimalValue.intValue()) : value;
     }
 
     public static String yesOrNo(Boolean booleanValue) {
