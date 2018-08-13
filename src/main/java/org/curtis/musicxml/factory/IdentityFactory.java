@@ -31,11 +31,15 @@ public class IdentityFactory {
             switch (identificationSubelementName) {
                 case "creator":
                     List<TypedText> creators = identification.getCreators();
-                    creators.add(newTypedText(identificationSubelement));
+                    TypedText creator = newTypedText(identificationSubelement);
+                    creators.add(creator);
+                    creator.setCreator(identification);
                     break;
                 case "rights":
                     List<TypedText> rightsList = identification.getRightsList();
-                    rightsList.add(newTypedText(identificationSubelement));
+                    TypedText rights = newTypedText(identificationSubelement);
+                    rightsList.add(rights);
+                    rights.setRights(identification);
                     break;
                 case "encoding":
                     List<Element> encodingSubelements = XmlUtil.getChildElements(identificationSubelement);
@@ -78,7 +82,9 @@ public class IdentityFactory {
                     break;
                 case "relation":
                     List<TypedText> relations = identification.getRelations();
-                    relations.add(newTypedText(identificationSubelement));
+                    TypedText relation = newTypedText(identificationSubelement);
+                    relations.add(relation);
+                    relation.setRelation(identification);
                     break;
                 case "miscellaneous":
                     Miscellaneous miscellaneous = new Miscellaneous();

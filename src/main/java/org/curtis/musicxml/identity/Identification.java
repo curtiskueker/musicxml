@@ -13,18 +13,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "identification")
 public class Identification extends DatabaseItem {
-    @Transient
-    // transient collection
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "creator_id")
     private List<TypedText> creators = new ArrayList<>();
-    @Transient
-    // transient collection
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "rights_id")
     private List<TypedText> rightsList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -32,8 +33,9 @@ public class Identification extends DatabaseItem {
     private List<Encoding> encodings = new ArrayList<>();
     @Column
     private String source;
-    @Transient
-    // transient collection
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "relation_id")
     private List<TypedText> relations = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "miscellaneous_id")

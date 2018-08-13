@@ -84,6 +84,8 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         if (identification == null) return;
 
         buildStartElement("identification");
+        for (TypedText creator : identification.getCreators()) buildTypedText(creator, "creator");
+        for (TypedText rights : identification.getRightsList()) buildTypedText(rights, "rights");
         List<Encoding> encodings = identification.getEncodings();
         if (!encodings.isEmpty()) {
             buildStartElement("encoding");
@@ -115,6 +117,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                 }
             }
             buildElementWithValue("source", identification.getSource());
+            for (TypedText relation : identification.getRelations()) buildTypedText(relation, "relation");
             Miscellaneous miscellaneous = identification.getMiscellaneous();
             if (miscellaneous != null) {
                 buildStartElement("miscellaneous");
