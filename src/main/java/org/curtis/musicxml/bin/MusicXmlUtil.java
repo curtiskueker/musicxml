@@ -4,6 +4,7 @@ import org.curtis.database.DBException;
 import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
 import org.curtis.musicxml.builder.ScoreBuilder;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Score;
 import org.curtis.properties.AppProperties;
@@ -66,7 +67,7 @@ public class MusicXmlUtil {
             System.err.println(e.getMessage());
         }
 
-        return getFormattedXml(results);
+        return BuilderUtil.getDocumentDeclaration() + getFormattedXml(results);
     }
 
     public static String getFormattedXml(String xmlString) {
