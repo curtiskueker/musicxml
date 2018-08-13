@@ -23,8 +23,9 @@ public class IdentityFactory {
     }
 
     public static Identification newIdentification(Element element) {
-        Identification identification = new Identification();
+        if (element == null) return null;
 
+        Identification identification = new Identification();
         List<Element> identificationSubelements = XmlUtil.getChildElements(element);
         for(Element identificationSubelement : identificationSubelements) {
             String identificationSubelementName = identificationSubelement.getTagName();
@@ -104,7 +105,7 @@ public class IdentityFactory {
         return identification;
     }
 
-    public static TypedText newTypedText(Element element) {
+    private static TypedText newTypedText(Element element) {
         TypedText typedText = new TypedText();
         typedText.setType(element.getAttribute("type"));
         typedText.setValue(XmlUtil.getElementText(element));
