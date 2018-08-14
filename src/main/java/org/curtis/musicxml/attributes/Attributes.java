@@ -38,7 +38,7 @@ public class Attributes extends MusicData {
     @JoinColumn(name = "attributes_id", nullable = false)
     private List<Time> timeList = new ArrayList<>();
     @Column
-    private Integer staves = 1;
+    private Integer staves;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "part_symbol_id")
     private PartSymbol partSymbol;

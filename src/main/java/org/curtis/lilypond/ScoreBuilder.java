@@ -104,7 +104,8 @@ public class ScoreBuilder extends AbstractBuilder {
             for(MusicData musicData : measure.getMusicDataList()) {
                 if(musicData instanceof Attributes) {
                     Attributes attributes = (Attributes)musicData;
-                    if (attributes.getStaves() > 1) {
+                    Integer attributesStaves = attributes.getStaves();
+                    if (attributesStaves != null && attributesStaves > 1) {
                         staves = attributes.getStaves();
                     }
                 } else if (musicData instanceof Harmony) {
