@@ -1,17 +1,33 @@
 package org.curtis.musicxml.common;
 
+import org.curtis.database.DatabaseItem;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
-public class MidiInstrument {
+@Entity
+@Table(name = "midi_instrument")
+public class MidiInstrument extends DatabaseItem {
+    @Column(name = "midi_channel")
     private Integer midiChannel;
+    @Column(name = "midi_name")
     private String midiName;
+    @Column(name = "midi_bank")
     private Integer midiBank;
+    @Column(name = "midi_program")
     private Integer midiProgram;
+    @Column(name = "midi_unpitched")
     private Integer midiUnpitched;
+    @Column
     private BigDecimal volume;
+    @Column
     private BigDecimal pan;
+    @Column
     private BigDecimal elevation;
-    private String id;
+    @Column(name = "midi_instrumentj_id")
+    private String midiInstrumentId;
 
     public MidiInstrument() {
 
@@ -81,11 +97,11 @@ public class MidiInstrument {
         this.elevation = elevation;
     }
 
-    public String getId() {
-        return id;
+    public String getMidiInstrumentId() {
+        return midiInstrumentId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMidiInstrumentId(String midiInstrumentId) {
+        this.midiInstrumentId = midiInstrumentId;
     }
 }

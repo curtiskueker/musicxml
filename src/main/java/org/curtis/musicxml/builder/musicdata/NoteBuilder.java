@@ -169,6 +169,7 @@ public class NoteBuilder extends MusicDataBuilder {
             for (Notations notations : notationsList) buildNotations(notations);
         }
         for (Lyric lyric : note.getLyrics()) buildLyric(lyric);
+        buildPlay(note.getPlay());
         buildEndElement("note");
 
         return stringBuilder;

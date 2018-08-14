@@ -43,6 +43,7 @@
         <class>org.curtis.musicxml.common.Level</class>
         <class>org.curtis.musicxml.common.LevelDisplay</class>
         <class>org.curtis.musicxml.common.MidiDevice</class>
+        <class>org.curtis.musicxml.common.MidiInstrument</class>
         <class>org.curtis.musicxml.common.Position</class>
         <class>org.curtis.musicxml.common.Printout</class>
         <class>org.curtis.musicxml.common.PrintStyle</class>
@@ -50,6 +51,12 @@
         <class>org.curtis.musicxml.common.StyleText</class>
         <class>org.curtis.musicxml.common.TextDecoration</class>
         <class>org.curtis.musicxml.common.TextFormatting</class>
+        <class>org.curtis.musicxml.common.play.Ipa</class>
+        <class>org.curtis.musicxml.common.play.Mute</class>
+        <class>org.curtis.musicxml.common.play.OtherPlay</class>
+        <class>org.curtis.musicxml.common.play.Play</class>
+        <class>org.curtis.musicxml.common.play.PlayType</class>
+        <class>org.curtis.musicxml.common.play.SemiPitched</class>
         <class>org.curtis.musicxml.direction.Direction</class>
         <class>org.curtis.musicxml.direction.EditorialVoiceDirection</class>
         <class>org.curtis.musicxml.direction.Feature</class>
@@ -57,6 +64,7 @@
         <class>org.curtis.musicxml.direction.Offset</class>
         <class>org.curtis.musicxml.direction.Print</class>
         <class>org.curtis.musicxml.direction.Sound</class>
+        <class>org.curtis.musicxml.direction.SoundMidi</class>
         <class>org.curtis.musicxml.direction.directiontype.Accord</class>
         <class>org.curtis.musicxml.direction.directiontype.AccordionRegistration</class>
         <class>org.curtis.musicxml.direction.directiontype.Bracket</class>
@@ -272,6 +280,7 @@
         <class>org.curtis.musicxml.score.ScoreHeader</class>
         <class>org.curtis.musicxml.score.ScorePart</class>
         <class>org.curtis.musicxml.score.ScorePartGroup</class>
+        <class>org.curtis.musicxml.score.ScorePartMidi</class>
         <class>org.curtis.musicxml.score.Work</class>
         <class>org.curtis.musicxml.score.instrument.Ensemble</class>
         <class>org.curtis.musicxml.score.instrument.InstrumentType</class>

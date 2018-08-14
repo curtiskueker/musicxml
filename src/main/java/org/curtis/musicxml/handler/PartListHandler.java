@@ -11,6 +11,7 @@ import org.curtis.musicxml.score.GroupBarlineType;
 import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.PartGroup;
 import org.curtis.musicxml.score.PartList;
+import org.curtis.musicxml.score.ScorePartMidi;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.score.ScorePartGroup;
 import org.curtis.musicxml.score.instrument.Ensemble;
@@ -107,15 +108,33 @@ public class PartListHandler extends AbstractHandler {
                     }
                     List<Element> midiDeviceElements = XmlUtil.getChildElements(partListSubelement, "midi-device");
                     for (Element midiDeviceElement : midiDeviceElements) {
-                        scorePart.getMidiDevices().add(ScorePartFactory.newMidiDevice(midiDeviceElement));
+                        handleScorePartMidi(scorePart, midiDeviceElement.getAttribute("id"), midiDeviceElement, null);
                     }
                     List<Element> midiInstrumentElements = XmlUtil.getChildElements(partListSubelement, "midi-instrument");
                     for(Element midiInstrumentElement : midiInstrumentElements) {
-                        scorePart.getMidiInstruments().add(ScorePartFactory.newMidiInstrument(midiInstrumentElement));
+                        handleScorePartMidi(scorePart, midiInstrumentElement.getAttribute("id"), null, midiInstrumentElement);
                     }
                     partList.getPartItems().add(scorePart);
                     break;
             }
         }
+    }
+
+    private void handleScorePartMidi(ScorePart scorePart, String id, Element midiDeviceElement, Element midiInstrumentElement) {
+        ScorePartMidi scorePartMidi;
+        if (StringUtil.isEmpty(id)) {
+            scorePartMidi = new ScorePartMidi();
+            scorePart.getScorePartMidis().add(scorePartMidi);
+        } else {
+            scorePartMidi = scorePart.getScorePartMidis().stream().filter(spm -> spm.getScorePartMidiId().equals(id)).findAny().orElse(null);
+            if (scorePartMidi == null) {
+                scorePartMidi = new ScorePartMidi();
+                scorePartMidi.setScorePartMidiId(id);
+                scorePart.getScorePartMidis().add(scorePartMidi);
+            }
+        }
+
+        if (midiDeviceElement != null) scorePartMidi.setMidiDevice(ScorePartFactory.newMidiDevice(midiDeviceElement));
+        else if (midiInstrumentElement != null) scorePartMidi.setMidiInstrument(ScorePartFactory.newMidiInstrument(midiInstrumentElement));
     }
 }

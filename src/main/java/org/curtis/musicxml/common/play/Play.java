@@ -1,11 +1,28 @@
 package org.curtis.musicxml.common.play;
 
+import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Play {
+@Entity
+@Table(name = "play")
+public class Play extends DatabaseItem {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "play_id")
     private List<PlayType> playTypes = new ArrayList<>();
-    private String id;
+    @Column(name = "play_id")
+    private String playId;
 
     public Play() {
 
@@ -19,11 +36,11 @@ public class Play {
         this.playTypes = playTypes;
     }
 
-    public String getId() {
-        return id;
+    public String getPlayId() {
+        return playId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPlayId(String playId) {
+        this.playId = playId;
     }
 }

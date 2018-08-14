@@ -1,7 +1,5 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.musicxml.common.MidiDevice;
-import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
@@ -48,12 +46,10 @@ public class ScorePart extends PartItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "score_part_id", nullable = false)
     private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
-    @Transient
-    // transient collection
-    private List<MidiDevice> midiDevices = new ArrayList<>();
-    @Transient
-    // transient collection
-    private List<MidiInstrument> midiInstruments = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "score_part_id", nullable = false)
+    private List<ScorePartMidi> scorePartMidis = new ArrayList<>();
 
     public ScorePart() {
 
@@ -123,19 +119,11 @@ public class ScorePart extends PartItem {
         this.scoreInstruments = scoreInstruments;
     }
 
-    public List<MidiDevice> getMidiDevices() {
-        return midiDevices;
+    public List<ScorePartMidi> getScorePartMidis() {
+        return scorePartMidis;
     }
 
-    public void setMidiDevices(List<MidiDevice> midiDevices) {
-        this.midiDevices = midiDevices;
-    }
-
-    public List<MidiInstrument> getMidiInstruments() {
-        return midiInstruments;
-    }
-
-    public void setMidiInstruments(List<MidiInstrument> midiInstruments) {
-        this.midiInstruments = midiInstruments;
+    public void setScorePartMidis(List<ScorePartMidi> scorePartMidis) {
+        this.scorePartMidis = scorePartMidis;
     }
 }

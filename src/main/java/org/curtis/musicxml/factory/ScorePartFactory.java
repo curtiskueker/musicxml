@@ -84,7 +84,7 @@ public class ScorePartFactory {
         if (element == null) return null;
 
         MidiInstrument midiInstrument = new MidiInstrument();
-        midiInstrument.setId(element.getAttribute("id"));
+        midiInstrument.setMidiInstrumentId(element.getAttribute("id"));
         midiInstrument.setMidiChannel(StringUtil.getInteger(XmlUtil.getChildElementText(element, "midi-channel")));
         midiInstrument.setMidiName(XmlUtil.getChildElementText(element, "midi-name"));
         midiInstrument.setMidiBank(StringUtil.getInteger(XmlUtil.getChildElementText(element, "midi-bank")));
@@ -101,7 +101,7 @@ public class ScorePartFactory {
         if (element ==  null) return null;
 
         Play play = new Play();
-        play.setId(element.getAttribute("id"));
+        play.setPlayId(element.getAttribute("id"));
         List<Element> playSubelements = XmlUtil.getChildElements(element);
         for (Element playSubelement : playSubelements) {
             PlayType playType = null;

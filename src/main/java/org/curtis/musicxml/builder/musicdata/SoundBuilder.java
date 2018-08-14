@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.direction.Sound;
+import org.curtis.musicxml.direction.SoundMidi;
 
 public class SoundBuilder extends MusicDataBuilder {
     private Sound sound;
@@ -31,6 +32,11 @@ public class SoundBuilder extends MusicDataBuilder {
         buildAttribute("soft-pedal", sound.getSoftPedal());
         buildAttribute("sostenuto-pedal", sound.getSostenutoPedal());
         buildCloseElement();
+        for (SoundMidi soundMidi : sound.getSoundMidis()) {
+            buildMidiDevice(soundMidi.getMidiDevice());
+            buildMidiInstrument(soundMidi.getMidiInstrument());
+            buildPlay(soundMidi.getPlay());
+        }
         append(DirectionBuilder.buildOffset(sound.getOffset()));
         buildEndElement("sound");
 

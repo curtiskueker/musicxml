@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction;
 
-import org.curtis.musicxml.common.MidiDevice;
-import org.curtis.musicxml.common.MidiInstrument;
-import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.score.MusicData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +19,10 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("sound")
 public class Sound extends MusicData {
-    @Transient
-    // transient collection
-    private List<MidiDevice> midiDevices = new ArrayList<>();
-    @Transient
-    // transient collection
-    private List<MidiInstrument> midiInstruments = new ArrayList<>();
-    @Transient
-    // transient collection
-    private List<Play> playList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "sound_id", nullable = false)
+    private List<SoundMidi> soundMidis = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
     private Offset offset;
@@ -70,28 +65,12 @@ public class Sound extends MusicData {
 
     }
 
-    public List<MidiDevice> getMidiDevices() {
-        return midiDevices;
+    public List<SoundMidi> getSoundMidis() {
+        return soundMidis;
     }
 
-    public void setMidiDevices(List<MidiDevice> midiDevices) {
-        this.midiDevices = midiDevices;
-    }
-
-    public List<MidiInstrument> getMidiInstruments() {
-        return midiInstruments;
-    }
-
-    public void setMidiInstruments(List<MidiInstrument> midiInstruments) {
-        this.midiInstruments = midiInstruments;
-    }
-
-    public List<Play> getPlayList() {
-        return playList;
-    }
-
-    public void setPlayList(List<Play> playList) {
-        this.playList = playList;
+    public void setSoundMidis(List<SoundMidi> soundMidis) {
+        this.soundMidis = soundMidis;
     }
 
     public Offset getOffset() {

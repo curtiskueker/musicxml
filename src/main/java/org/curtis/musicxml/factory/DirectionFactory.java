@@ -2,6 +2,7 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.Sound;
+import org.curtis.musicxml.direction.SoundMidi;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
 import org.curtis.musicxml.direction.directiontype.Bracket;
@@ -818,21 +819,39 @@ public class DirectionFactory {
         sound.setDamperPedal(element.getAttribute("damper-pedal"));
         sound.setSoftPedal(element.getAttribute("soft-pedal"));
         sound.setSostenutoPedal(element.getAttribute("sostenuto-pedal"));
-        List<Element> soundSubelements = XmlUtil.getChildElements(element);
-        for (Element soundSubelement : soundSubelements) {
-            switch (soundSubelement.getTagName()) {
-                case "midi-device":
-                    sound.getMidiDevices().add(ScorePartFactory.newMidiDevice(soundSubelement));
-                    break;
-                case "midi-instrument":
-                    sound.getMidiInstruments().add(ScorePartFactory.newMidiInstrument(soundSubelement));
-                    break;
-                case "play":
-                    sound.getPlayList().add(ScorePartFactory.newPlay(soundSubelement));
-                    break;
-            }
+        List<Element> midiDeviceElements = XmlUtil.getChildElements(element, "midi-device");
+        for (Element midiDeviceElement : midiDeviceElements) {
+            handleSoundMidi(sound, midiDeviceElement.getAttribute("id"), midiDeviceElement, null, null);
+        }
+        List<Element> midiInstrumentElements = XmlUtil.getChildElements(element, "midi-instrument");
+        for(Element midiInstrumentElement : midiInstrumentElements) {
+            handleSoundMidi(sound, midiInstrumentElement.getAttribute("id"), null, midiInstrumentElement, null);
+        }
+        List<Element> playElements = XmlUtil.getChildElements(element, "play");
+        for(Element playElement : playElements) {
+            handleSoundMidi(sound, playElement.getAttribute("id"), null, null, playElement);
         }
 
         return sound;
     }
+
+    private static void handleSoundMidi(Sound sound, String id, Element midiDeviceElement, Element midiInstrumentElement, Element playElement) {
+        SoundMidi soundMidi;
+        if (StringUtil.isEmpty(id)) {
+            soundMidi = new SoundMidi();
+            sound.getSoundMidis().add(soundMidi);
+        } else {
+            soundMidi = sound.getSoundMidis().stream().filter(spm -> spm.getSoundMidiId().equals(id)).findAny().orElse(null);
+            if (soundMidi == null) {
+                soundMidi = new SoundMidi();
+                soundMidi.setSoundMidiId(id);
+                sound.getSoundMidis().add(soundMidi);
+            }
+        }
+
+        if (midiDeviceElement != null) soundMidi.setMidiDevice(ScorePartFactory.newMidiDevice(midiDeviceElement));
+        else if (midiInstrumentElement != null) soundMidi.setMidiInstrument(ScorePartFactory.newMidiInstrument(midiInstrumentElement));
+        else if (playElement != null) soundMidi.setPlay(ScorePartFactory.newPlay(playElement));
+    }
+
 }

@@ -35,6 +35,7 @@ import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.score.ScorePartGroup;
+import org.curtis.musicxml.score.ScorePartMidi;
 import org.curtis.musicxml.score.Work;
 import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.InstrumentType;
@@ -278,6 +279,10 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                 buildEndElement("virtual-instrument");
             }
             buildEndElement("score-instrument");
+        }
+        for (ScorePartMidi scorePartMidi : scorePart.getScorePartMidis()) {
+            buildMidiDevice(scorePartMidi.getMidiDevice());
+            buildMidiInstrument(scorePartMidi.getMidiInstrument());
         }
         buildEndElement("score-part");
     }

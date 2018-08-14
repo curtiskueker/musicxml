@@ -9,7 +9,14 @@ import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.MidiDevice;
+import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.StyleText;
+import org.curtis.musicxml.common.play.Ipa;
+import org.curtis.musicxml.common.play.Mute;
+import org.curtis.musicxml.common.play.OtherPlay;
+import org.curtis.musicxml.common.play.Play;
+import org.curtis.musicxml.common.play.PlayType;
+import org.curtis.musicxml.common.play.SemiPitched;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.Placement;
@@ -132,5 +139,50 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("port", BuilderUtil.stringValue(midiDevice.getPort()));
         attributes.put("id", midiDevice.getMidiDeviceId());
         buildElementWithValueAndAttributes("midi-device", midiDevice.getValue(), attributes);
+    }
+
+    protected void buildMidiInstrument(MidiInstrument midiInstrument) {
+        if (midiInstrument == null) return;
+
+        buildOpenElement("midi-instrument");
+        buildAttribute("id", midiInstrument.getMidiInstrumentId());
+        buildCloseElement();
+
+        buildElementWithValue("midi-channel", midiInstrument.getMidiChannel());
+        buildElementWithValue("midi-name", midiInstrument.getMidiName());
+        buildElementWithValue("midi-bank", midiInstrument.getMidiBank());
+        buildElementWithValue("midi-program", midiInstrument.getMidiProgram());
+        buildElementWithValue("midi-unpitched", midiInstrument.getMidiUnpitched());
+        buildElementWithValue("volume", midiInstrument.getVolume());
+        buildElementWithValue("pan", midiInstrument.getPan());
+        buildElementWithValue("elevation", midiInstrument.getElevation());
+
+        buildEndElement("midi-instrument");
+    }
+
+    protected void buildPlay(Play play) {
+        if (play == null) return;
+
+        buildOpenElement("play");
+        buildAttribute("id", play.getPlayId());
+        buildCloseElement();
+
+        for (PlayType playType : play.getPlayTypes()) {
+            if (playType instanceof Ipa) {
+                Ipa ipa = (Ipa)playType;
+                buildElementWithValue("ipa", ipa.getValue());
+            } else if (playType instanceof Mute) {
+                Mute mute = (Mute)playType;
+                buildElementWithValue("mute", mute.getMuteType());
+            } else if (playType instanceof SemiPitched) {
+                SemiPitched semiPitched = (SemiPitched)playType;
+                buildElementWithValue("semi-pitched", semiPitched.getSemiPitchcedType());
+            } else if (playType instanceof OtherPlay) {
+                OtherPlay otherPlay = (OtherPlay)playType;
+                buildElementWithValueAndAttribute("other-play", otherPlay.getValue(), "type", otherPlay.getType());
+            }
+        }
+
+        buildEndElement("play");
     }
 }

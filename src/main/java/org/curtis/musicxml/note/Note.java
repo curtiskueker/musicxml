@@ -87,8 +87,8 @@ public class Note extends MusicData {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Lyric> lyrics = new ArrayList<>();
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "play_id")
     private Play play;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "x_position_id")
