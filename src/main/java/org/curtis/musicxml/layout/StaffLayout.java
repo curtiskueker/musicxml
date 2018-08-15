@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "staff_layout")
 public class StaffLayout extends DatabaseItem {
-    @Column(name = "staff_distance")
+    @Column(name = "staff_distance", precision = 10, scale = 4)
     private BigDecimal staffDistance;
     @Column
     private Integer number;

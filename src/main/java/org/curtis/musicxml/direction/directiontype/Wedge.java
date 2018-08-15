@@ -22,7 +22,7 @@ public class Wedge extends DirectionType {
     private WedgeType type;
     @Column
     private Integer number;
-    @Column
+    @Column(precision = 10, scale = 4)
     private BigDecimal spread;
     @Column
     private Boolean niente;

@@ -29,11 +29,11 @@ public class Ending extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
-    @Column(name = "end_length")
+    @Column(name = "end_length", precision = 10, scale = 4)
     private BigDecimal endLength;
-    @Column(name = "text_x")
+    @Column(name = "text_x", precision = 10, scale = 4)
     private BigDecimal textX;
-    @Column(name = "text_y")
+    @Column(name = "text_y", precision = 10, scale = 4)
     private BigDecimal textY;
 
     public Ending() {

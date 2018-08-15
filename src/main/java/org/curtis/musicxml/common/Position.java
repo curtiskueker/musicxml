@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "position")
 public class Position extends DatabaseItem {
-    @Column(name = "default_x")
+    @Column(name = "default_x", precision = 10, scale = 4)
     private BigDecimal defaultX;
-    @Column(name = "default_y")
+    @Column(name = "default_y", precision = 10, scale = 4)
     private BigDecimal defaultY;
-    @Column(name = "relative_x")
+    @Column(name = "relative_x", precision = 10, scale = 4)
     private BigDecimal relativeX;
-    @Column(name = "relative_y")
+    @Column(name = "relative_y", precision = 10, scale = 4)
     private BigDecimal relativeY;
 
     public Position() {

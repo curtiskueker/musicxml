@@ -28,7 +28,7 @@ public class Measure extends DatabaseItem {
     private Boolean implicit;
     @Column(name = "non_controlling")
     private Boolean nonControlling;
-    @Column
+    @Column(precision = 10, scale = 4)
     private BigDecimal width;
 
     public Measure() {

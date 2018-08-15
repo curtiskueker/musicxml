@@ -21,9 +21,9 @@ import java.util.Map;
 @Entity
 @Table(name = "page_layout")
 public class PageLayout extends DatabaseItem {
-    @Column(name = "page_height")
+    @Column(name = "page_height", precision = 10, scale = 4)
     private BigDecimal pageHeight;
-    @Column(name = "page_width")
+    @Column(name = "page_width", precision = 10, scale = 4)
     private BigDecimal pageWidth;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

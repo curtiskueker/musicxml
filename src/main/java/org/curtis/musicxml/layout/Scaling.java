@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "scaling")
 public class Scaling extends DatabaseItem {
-    @Column
+    @Column(precision = 10, scale = 4)
     private BigDecimal millimeters;
-    @Column
+    @Column(precision = 10, scale = 4)
     private BigDecimal tenths;
 
     public Scaling() {

@@ -26,7 +26,7 @@ public class Bracket extends DirectionType {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_end")
     private LineEnd lineEnd;
-    @Column(name = "end_length")
+    @Column(name = "end_length", precision = 10, scale = 4)
     private BigDecimal endLength;
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")

@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "dashed_formatting")
 public class DashedFormatting extends DatabaseItem {
-    @Column(name = "dash_length")
+    @Column(name = "dash_length", precision = 10, scale = 4)
     private BigDecimal dashLength;
-    @Column(name = "space_length")
+    @Column(name = "space_length", precision = 10, scale = 4)
     private BigDecimal spaceLength;
 
     public DashedFormatting() {
