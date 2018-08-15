@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "formatted_text")
 public class FormattedText extends DatabaseItem {
-    @Column
+    @Column(columnDefinition = "text")
     private String value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_formatting_id")

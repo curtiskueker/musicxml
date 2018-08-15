@@ -177,7 +177,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit1.getBeatUnit()));
         for (int beatUnitDots = 1; beatUnitDots <= beatUnit1.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
         PerMinute perMinute = beatMetronome.getPerMinute();
-        buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
+        if (perMinute != null) buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
         BeatUnit beatUnit2 = beatMetronome.getBeatUnit2();
         if (beatUnit2 != null) {
             buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit2.getBeatUnit()));
