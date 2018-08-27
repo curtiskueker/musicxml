@@ -1,12 +1,29 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.ElementPosition;
+import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.link.LinkAttributes;
 
 public class XLinkBuilder extends OutputBuilder {
     private XLinkBuilder() {
 
+    }
+
+    public static String buildLink(Link link) {
+        if (link == null) return "";
+
+        XLinkBuilder xLinkBuilder = new XLinkBuilder();
+        xLinkBuilder.buildOpenElement("link");
+        xLinkBuilder.buildCloseElement();
+        xLinkBuilder.append(XLinkBuilder.buildLinkAttributes(link.getLinkAttributes()));
+        xLinkBuilder.buildAttribute("name", link.getName());
+        xLinkBuilder.append(XLinkBuilder.buildElementPosition(link.getElementPosition()));
+        xLinkBuilder.buildAttributes(PlacementBuilder.buildPosition(link.getPosition()));
+        xLinkBuilder.buildEndElement("link");
+
+        return xLinkBuilder.stringBuilder.toString();
     }
 
     public static String buildLinkAttributes(LinkAttributes linkAttributes) {
@@ -22,6 +39,19 @@ public class XLinkBuilder extends OutputBuilder {
         actuate = actuate.replace("on-request", "onRequest");
         actuate = actuate.replace("on-load", "onLoad");
         xLinkBuilder.buildAttribute("xlinf:actuate", actuate);
+
+        return xLinkBuilder.stringBuilder.toString();
+    }
+
+    public static String buildBookmark(Bookmark bookmark) {
+        if (bookmark == null) return "";
+
+        XLinkBuilder xLinkBuilder = new XLinkBuilder();
+        xLinkBuilder.buildOpenElement("bookmark");
+        xLinkBuilder.buildAttribute("id", bookmark.getBookmarkId());
+        xLinkBuilder.buildAttribute("name", bookmark.getName());
+        xLinkBuilder.append(XLinkBuilder.buildElementPosition(bookmark.getElementPosition()));
+        xLinkBuilder.buildCloseEmptyElement();
 
         return xLinkBuilder.stringBuilder.toString();
     }

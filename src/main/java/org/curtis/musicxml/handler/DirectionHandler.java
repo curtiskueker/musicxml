@@ -39,7 +39,10 @@ public class DirectionHandler extends MusicDataHandler {
                     List<Element> directionTypeSubelements = XmlUtil.getChildElements(directionSubelement);
                     for(Element directionTypeSubelement : directionTypeSubelements) {
                         DirectionType directionType = DirectionFactory.newDirectionType(directionTypeSubelement);
-                        if(directionType != null) directionTypes.add(directionType);
+                        if(directionType != null) {
+                            directionTypes.add(directionType);
+                            directionType.setDirection(direction);
+                        }
                     }
                     break;
                 case "offset":

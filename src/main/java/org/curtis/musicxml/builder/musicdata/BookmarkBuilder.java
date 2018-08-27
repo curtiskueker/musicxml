@@ -11,11 +11,7 @@ public class BookmarkBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
-        buildOpenElement("bookmark");
-        buildAttribute("id", bookmark.getBookmarkId());
-        buildAttribute("name", bookmark.getName());
-        append(XLinkBuilder.buildElementPosition(bookmark.getElementPosition()));
-        buildCloseEmptyElement();
+        append(XLinkBuilder.buildBookmark(bookmark));
 
         return stringBuilder;
     }

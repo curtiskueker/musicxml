@@ -11,6 +11,8 @@ import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.layout.MarginType;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
+import org.curtis.musicxml.score.CreditDisplay;
+import org.curtis.musicxml.score.CreditWords;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -106,45 +108,50 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
             }
         }
 
-        List<FormattedText> creditWordsList = new ArrayList<>();
+        List<CreditDisplay> creditDisplays = new ArrayList<>();
         scoreHeader.getCredits().stream()
                 .filter(credit -> credit.getPage() == null || credit.getPage().equals(1))
-                .collect(Collectors.toList()).forEach(credit -> creditWordsList.addAll(credit.getCreditWordsList()));
+                .collect(Collectors.toList()).forEach(credit -> creditDisplays.addAll(credit.getCreditDisplays()));
 
-        if(!creditWordsList.isEmpty()) {
+        if(!creditDisplays.isEmpty()) {
             appendLine("title =");
             appendLine("  \\markup {");
             appendLine("    \\column {");
 
-            for(FormattedText creditWord : creditWordsList) {
-                TextFormatting textFormatting = creditWord.getTextFormatting();
-                Location justify = textFormatting.getJustify();
-                if (justify != null) {
-                    switch (justify) {
-                        case LEFT:
-                            append("\\left-align");
-                            break;
-                        case CENTER:
-                            append("\\center-align");
-                            break;
-                        case RIGHT:
-                            append("\\right-align");
-                            break;
+            for (CreditDisplay creditDisplay : creditDisplays) {
+                if (creditDisplay instanceof CreditWords) {
+                    CreditWords creditWords = (CreditWords)creditDisplay;
+                    FormattedText creditWord = creditWords.getCreditWords();
+                    if (creditWord == null) continue;
+                    TextFormatting textFormatting = creditWord.getTextFormatting();
+                    Location justify = textFormatting.getJustify();
+                    if (justify != null) {
+                        switch (justify) {
+                            case LEFT:
+                                append("\\left-align");
+                                break;
+                            case CENTER:
+                                append("\\center-align");
+                                break;
+                            case RIGHT:
+                                append("\\right-align");
+                                break;
+                        }
                     }
+
+                    append(" { ");
+
+                    BigDecimal fontSize = textFormatting.getPrintStyleAlign().getPrintStyle().getFont().getFontSize().getFontSize();
+                    if(fontSize != null) {
+                        append("\\abs-fontsize #");
+                        append(String.valueOf(fontSize.intValue()));
+                        append(" ");
+                    }
+
+                    append("\"");
+                    append(StringUtil.nullToString(creditWord.getValue()));
+                    appendLine("\" }");
                 }
-
-                append(" { ");
-
-                BigDecimal fontSize = textFormatting.getPrintStyleAlign().getPrintStyle().getFont().getFontSize().getFontSize();
-                if(fontSize != null) {
-                    append("\\abs-fontsize #");
-                    append(String.valueOf(fontSize.intValue()));
-                    append(" ");
-                }
-
-                append("\"");
-                append(StringUtil.nullToString(creditWord.getValue()));
-                appendLine("\" }");
             }
 
             appendLine("            }");

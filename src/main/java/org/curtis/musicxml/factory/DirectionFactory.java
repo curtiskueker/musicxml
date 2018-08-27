@@ -1,5 +1,6 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.SoundMidi;
@@ -244,6 +245,8 @@ public class DirectionFactory {
                     accords.add(accord);
                 }
                 return scordatura;
+            case "image":
+                return newImage(element);
             case "principal-voice":
                 PrincipalVoice principalVoice = new PrincipalVoice();
                 principalVoice.setPrincipalVoice(XmlUtil.getElementText(element));
@@ -854,4 +857,16 @@ public class DirectionFactory {
         else if (playElement != null) soundMidi.setPlay(ScorePartFactory.newPlay(playElement));
     }
 
+    public static Image newImage(Element element) {
+        if (element == null) return null;
+
+        Image image = new Image();
+        image.setSource(element.getAttribute("source"));
+        image.setType(element.getAttribute("type"));
+        image.setPosition(PlacementFactory.newPosition(element));
+        image.setHalign(PlacementUtil.getLocation(element.getAttribute("halign")));
+        image.setValignImage(PlacementUtil.getLocation(element.getAttribute("valign")));
+
+        return image;
+    }
 }

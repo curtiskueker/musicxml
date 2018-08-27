@@ -263,16 +263,6 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         buildEndElement("scordatura");
     }
 
-    private void buildImage(Image image) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("source", image.getSource());
-        attributes.put("type", image.getType());
-        attributes.putAll(PlacementBuilder.buildPosition(image.getPosition()));
-        attributes.put("halign", BuilderUtil.enumValue(image.getHalign()));
-        attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
-        buildElementWithAttributes("image", attributes);
-    }
-
     private void buildPrincipalVoice(PrincipalVoice principalVoice) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(principalVoice.getType()));

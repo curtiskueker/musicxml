@@ -1,5 +1,6 @@
 package org.curtis.musicxml.link;
 
+import org.curtis.musicxml.score.CreditDisplay;
 import org.curtis.musicxml.score.MusicData;
 
 import javax.persistence.CascadeType;
@@ -7,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -19,6 +21,9 @@ public class Bookmark extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "element_position_id")
     private ElementPosition elementPosition;
+    @ManyToOne
+    @JoinColumn(name = "credit_display_id")
+    private CreditDisplay creditDisplay;
 
     public Bookmark() {
 
@@ -46,5 +51,13 @@ public class Bookmark extends MusicData {
 
     public void setElementPosition(ElementPosition elementPosition) {
         this.elementPosition = elementPosition;
+    }
+
+    public CreditDisplay getCreditDisplay() {
+        return creditDisplay;
+    }
+
+    public void setCreditDisplay(CreditDisplay creditDisplay) {
+        this.creditDisplay = creditDisplay;
     }
 }

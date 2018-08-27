@@ -19,9 +19,14 @@ import org.curtis.musicxml.layout.LineWidth;
 import org.curtis.musicxml.layout.NoteSize;
 import org.curtis.musicxml.layout.OtherAppearance;
 import org.curtis.musicxml.layout.Scaling;
+import org.curtis.musicxml.link.Bookmark;
+import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.score.Credit;
+import org.curtis.musicxml.score.CreditDisplay;
+import org.curtis.musicxml.score.CreditImage;
 import org.curtis.musicxml.score.CreditType;
+import org.curtis.musicxml.score.CreditWords;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.GroupBarline;
 import org.curtis.musicxml.score.GroupName;
@@ -195,9 +200,21 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         for (CreditType creditType : credit.getCreditTypes()) {
             buildElementWithValue("credit-type", creditType.getType());
         }
-        // TODO: credit-image
-        // TODO: credit-words
-        appendLine("<credit-words>Text</credit-words>");
+        for (CreditDisplay creditDisplay : credit.getCreditDisplays()) {
+            for (Link link : creditDisplay.getLinks()) {
+                append(XLinkBuilder.buildLink(link));
+            }
+            for (Bookmark bookmark : creditDisplay.getBookmarks()) {
+                append(XLinkBuilder.buildBookmark(bookmark));
+            }
+            if (creditDisplay instanceof CreditImage) {
+                CreditImage creditImage = (CreditImage)creditDisplay;
+                buildImage(creditImage.getImage());
+            } else if (creditDisplay instanceof CreditWords) {
+                CreditWords creditWords = (CreditWords)creditDisplay;
+                buildFormattedText("credit-words", creditWords.getCreditWords());
+            }
+        }
         buildEndElement("credit");
     }
 

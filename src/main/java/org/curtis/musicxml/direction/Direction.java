@@ -25,7 +25,7 @@ import java.util.List;
 public class Direction extends MusicData {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "direction_id", nullable = false)
+    @JoinColumn(name = "direction_id")
     private List<DirectionType> directionTypes = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")

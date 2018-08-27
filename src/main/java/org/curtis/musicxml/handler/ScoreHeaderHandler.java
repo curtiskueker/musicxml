@@ -1,6 +1,6 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
@@ -17,7 +17,9 @@ import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.score.Credit;
+import org.curtis.musicxml.score.CreditImage;
 import org.curtis.musicxml.score.CreditType;
+import org.curtis.musicxml.score.CreditWords;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.LyricFont;
 import org.curtis.musicxml.score.LyricLanguage;
@@ -29,6 +31,7 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreHeaderHandler extends AbstractHandler {
@@ -155,7 +158,8 @@ public class ScoreHeaderHandler extends AbstractHandler {
                     Credit credit = new Credit();
                     credit.setPage(StringUtil.getInteger(subelement.getAttribute("page")));
                     List<Element> creditSubelements = XmlUtil.getChildElements(subelement);
-                    boolean creditWordsAdded = false;
+                    List<Link> currentLinks = new ArrayList<>();
+                    List<Bookmark> currentBookmarks = new ArrayList<>();
                     for(Element creditSubelement : creditSubelements) {
                         String creditSubelementName = creditSubelement.getTagName();
                         switch (creditSubelementName) {
@@ -166,20 +170,41 @@ public class ScoreHeaderHandler extends AbstractHandler {
                                 break;
                             case "link":
                                 Link link = LinkFactory.newLink(creditSubelement);
-                                if (creditWordsAdded) credit.getLinks().add(link);
-                                else credit.getCreditWordsLinks().add(link);
+                                currentLinks.add(link);
                                 break;
                             case "bookmark":
                                 Bookmark bookmark = LinkFactory.newBookmark(creditSubelement);
-                                if (creditWordsAdded) credit.getBookmarks().add(bookmark);
-                                else credit.getCreditWordsBookmarks().add(bookmark);
+                                currentBookmarks.add(bookmark);
                                 break;
                             case "credit-image":
+                                CreditImage creditImage = new CreditImage();
+                                creditImage.setImage(DirectionFactory.newImage(creditSubelement));
+                                for (Link imageLink : currentLinks) {
+                                    imageLink.setCreditDisplay(creditImage);
+                                    creditImage.getLinks().add(imageLink);
+                                }
+                                currentLinks.clear();
+                                for (Bookmark imageBookmark : currentBookmarks) {
+                                    imageBookmark.setCreditDisplay(creditImage);
+                                    creditImage.getBookmarks().add(imageBookmark);
+                                }
+                                currentBookmarks.clear();
+                                credit.getCreditDisplays().add(creditImage);
                                 break;
                             case "credit-words":
-                                creditWordsAdded = true;
-                                List<FormattedText> creditWordsList = credit.getCreditWordsList();
-                                creditWordsList.add(FormattingFactory.newFormattedText(creditSubelement));
+                                CreditWords creditWords = new CreditWords();
+                                creditWords.setCreditWords(FormattingFactory.newFormattedText(creditSubelement));
+                                for (Link creditWordsLink : currentLinks) {
+                                    creditWordsLink.setCreditDisplay(creditWords);
+                                    creditWords.getLinks().add(creditWordsLink);
+                                }
+                                currentLinks.clear();
+                                for (Bookmark creditWordsBookmark : currentBookmarks) {
+                                    creditWordsBookmark.setCreditDisplay(creditWords);
+                                    creditWords.getBookmarks().add(creditWordsBookmark);
+                                }
+                                currentBookmarks.clear();
+                                credit.getCreditDisplays().add(creditWords);
                                 break;
                         }
                     }

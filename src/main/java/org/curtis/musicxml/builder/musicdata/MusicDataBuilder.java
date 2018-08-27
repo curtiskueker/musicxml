@@ -1,8 +1,10 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.attributes.Tuning;
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;
@@ -184,5 +186,17 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         }
 
         buildEndElement("play");
+    }
+
+    protected void buildImage(Image image) {
+        if (image == null) return;
+
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("source", image.getSource());
+        attributes.put("type", image.getType());
+        attributes.putAll(PlacementBuilder.buildPosition(image.getPosition()));
+        attributes.put("halign", BuilderUtil.enumValue(image.getHalign()));
+        attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
+        buildElementWithAttributes("image", attributes);
     }
 }
