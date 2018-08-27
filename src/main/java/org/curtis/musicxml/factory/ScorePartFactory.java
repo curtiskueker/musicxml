@@ -3,6 +3,7 @@ package org.curtis.musicxml.factory;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.NameDisplay;
+import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.common.play.Ipa;
 import org.curtis.musicxml.common.play.Mute;
 import org.curtis.musicxml.common.play.MuteType;
@@ -42,14 +43,10 @@ public class ScorePartFactory {
 
         NameDisplay nameDisplay = new NameDisplay();
         for(Element subelement : XmlUtil.getChildElements(element)) {
-            String subelementName = subelement.getTagName();
-            switch (subelementName) {
-                case "display-text":
-                    nameDisplay.getDisplayTextList().add(FormattingFactory.newFormattedText(subelement));
-                    break;
-                case "accidental-text":
-                    nameDisplay.getAccidentalTextList().add(NoteFactory.newAccidentalText(subelement));
-                    break;
+            Text text = FormattingFactory.newText(subelement);
+            if (text != null) {
+                nameDisplay.getTextList().add(text);
+                text.setNameDisplay(nameDisplay);
             }
         }
         nameDisplay.setPrintObject(FormattingFactory.getPrintObject(element));

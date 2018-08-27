@@ -1,33 +1,39 @@
 package org.curtis.musicxml.common;
 
-import org.curtis.musicxml.note.AccidentalText;
+import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NameDisplay {
-    private List<FormattedText> displayTextList = new ArrayList<>();
-    private List<AccidentalText> accidentalTextList = new ArrayList<>();
+@Entity
+@Table(name = "name_display")
+public class NameDisplay extends DatabaseItem {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "name_display_id")
+    private List<Text> textList = new ArrayList<>();
+    @Column(name = "print_object")
     private Boolean printObject;
 
     public NameDisplay() {
 
     }
 
-    public List<FormattedText> getDisplayTextList() {
-        return displayTextList;
+    public List<Text> getTextList() {
+        return textList;
     }
 
-    public void setDisplayTextList(List<FormattedText> displayTextList) {
-        this.displayTextList = displayTextList;
-    }
-
-    public List<AccidentalText> getAccidentalTextList() {
-        return accidentalTextList;
-    }
-
-    public void setAccidentalTextList(List<AccidentalText> accidentalTextList) {
-        this.accidentalTextList = accidentalTextList;
+    public void setTextList(List<Text> textList) {
+        this.textList = textList;
     }
 
     public Boolean getPrintObject() {

@@ -6,13 +6,16 @@ import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.common.DisplayText;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
+import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.common.StyleText;
+import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.common.play.Ipa;
 import org.curtis.musicxml.common.play.Mute;
 import org.curtis.musicxml.common.play.OtherPlay;
@@ -132,6 +135,30 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         if (accidentalText == null) return;
 
         buildElementWithValueAndAttributes("accidental-text", accidentalText.getAccidentalType(), FormattingBuilder.buildTextFormatting(accidentalText.getTextFormatting()));
+    }
+
+    protected void buildText(Text text) {
+        if (text == null) return;
+
+        if (text instanceof DisplayText) {
+            buildFormattedText("display-text", ((DisplayText)text).getDisplayText());
+        } else if (text instanceof AccidentalText) {
+            buildAccidentalText(((AccidentalText)text));
+        }
+    }
+
+    protected void buildNameDisplay(String elementName, NameDisplay nameDisplay) {
+        if (nameDisplay == null) return;
+
+        buildOpenElement(elementName);
+        buildAttribute("print-object", nameDisplay.getPrintObject());
+        buildCloseElement();
+
+        for (Text text : nameDisplay.getTextList()) {
+            buildText(text);
+        }
+
+        buildEndElement(elementName);
     }
 
     protected void buildMidiDevice(MidiDevice midiDevice) {

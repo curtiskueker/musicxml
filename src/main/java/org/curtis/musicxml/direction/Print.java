@@ -14,7 +14,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 @Entity
@@ -32,11 +31,11 @@ public class Print extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_name_display_id")
     private NameDisplay partNameDisplay;
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_abbreviation_display_id")
     private NameDisplay partAbbreviationDisplay;
     @Column(name = "staff_spacing", precision = 10, scale = 4)
     private BigDecimal staffSpacing;

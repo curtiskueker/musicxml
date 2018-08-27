@@ -2,6 +2,7 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.CssFontSize;
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.common.DisplayText;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.EnclosureShape;
@@ -18,6 +19,7 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.common.SymbolSize;
+import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
@@ -66,6 +68,25 @@ public class FormattingFactory {
         styleText.setPrintStyle(newPrintStyle(element));
 
         return styleText;
+    }
+
+    public static Text newText(Element element) {
+        if (element == null) return null;
+
+        Text text = null;
+        String subelementName = element.getTagName();
+        switch (subelementName) {
+            case "display-text":
+                DisplayText displayText = new DisplayText();
+                displayText.setDisplayText(FormattingFactory.newFormattedText(element));
+                text = displayText;
+                break;
+            case "accidental-text":
+                text = NoteFactory.newAccidentalText(element);
+                break;
+        }
+
+        return text;
     }
 
     public static PrintStyleAlign newPrintStyleAlign(Element printStyleAlignElement) {

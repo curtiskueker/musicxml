@@ -223,7 +223,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         PartList partList = scoreHeader.getPartList();
         for (PartItem partItem : partList.getPartItems()) {
             if (partItem instanceof PartGroup) buildPartGroup((PartGroup)partItem);
-            else if (partItem instanceof ScorePart) buildSscorePart((ScorePart)partItem);
+            else if (partItem instanceof ScorePart) buildScorePart((ScorePart)partItem);
         }
         buildEndElement("part-list");
     }
@@ -234,7 +234,9 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         buildAttribute("number", partGroup.getNumber());
         buildCloseElement();
         buildGroupName("group-name", partGroup.getGroupName());
+        buildNameDisplay("group-name-display", partGroup.getGroupNameDisplay());
         buildGroupName("group-abbreviation", partGroup.getGroupAbbreviation());
+        buildNameDisplay("group-abbreviation-display", partGroup.getGroupAbbreviationDisplay());
         GroupSymbol groupSymbol = partGroup.getGroupSymbol();
         if (groupSymbol != null) {
             Map<String, String> groupSymbolAttributes = new HashMap<>();
@@ -262,13 +264,15 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         buildElementWithValueAndAttributes(elementName, groupName.getGroupName(), attributes);
     }
 
-    private void buildSscorePart(ScorePart scorePart) {
+    private void buildScorePart(ScorePart scorePart) {
         buildOpenElement("score-part");
         buildAttribute("id", scorePart.getScorePartId());
         buildCloseElement();
         buildIdentification(scorePart.getIdentification());
         buildPartName("part-name", scorePart.getPartName());
+        buildNameDisplay("part-name-display", scorePart.getPartNameDisplay());
         buildPartName("part-abbreviation", scorePart.getPartAbbreviation());
+        buildNameDisplay("part-abbreviation-display", scorePart.getPartAbbreviationDisplay());
         for (ScorePartGroup group : scorePart.getGroups()) {
             buildElementWithValue("group", group.getGroup());
         }

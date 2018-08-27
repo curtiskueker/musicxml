@@ -36,6 +36,7 @@
         <class>org.curtis.musicxml.barline.Ending</class>
         <class>org.curtis.musicxml.barline.Repeat</class>
         <class>org.curtis.musicxml.common.DashedFormatting</class>
+        <class>org.curtis.musicxml.common.DisplayText</class>
         <class>org.curtis.musicxml.common.Editorial</class>
         <class>org.curtis.musicxml.common.EditorialVoice</class>
         <class>org.curtis.musicxml.common.Font</class>
@@ -44,11 +45,13 @@
         <class>org.curtis.musicxml.common.LevelDisplay</class>
         <class>org.curtis.musicxml.common.MidiDevice</class>
         <class>org.curtis.musicxml.common.MidiInstrument</class>
+        <class>org.curtis.musicxml.common.NameDisplay</class>
         <class>org.curtis.musicxml.common.Position</class>
         <class>org.curtis.musicxml.common.Printout</class>
         <class>org.curtis.musicxml.common.PrintStyle</class>
         <class>org.curtis.musicxml.common.PrintStyleAlign</class>
         <class>org.curtis.musicxml.common.StyleText</class>
+        <class>org.curtis.musicxml.common.Text</class>
         <class>org.curtis.musicxml.common.TextDecoration</class>
         <class>org.curtis.musicxml.common.TextFormatting</class>
         <class>org.curtis.musicxml.common.play.Ipa</class>
@@ -162,8 +165,6 @@
         <class>org.curtis.musicxml.note.Notations</class>
         <class>org.curtis.musicxml.note.Note</class>
         <class>org.curtis.musicxml.note.Notehead</class>
-        <class>org.curtis.musicxml.note.NoteheadAccidentalText</class>
-        <class>org.curtis.musicxml.note.NoteheadDisplayText</class>
         <class>org.curtis.musicxml.note.NoteheadText</class>
         <class>org.curtis.musicxml.note.NoteType</class>
         <class>org.curtis.musicxml.note.Pitch</class>

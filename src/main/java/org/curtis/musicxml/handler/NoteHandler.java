@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
@@ -14,8 +15,6 @@ import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Notehead;
-import org.curtis.musicxml.note.NoteheadAccidentalText;
-import org.curtis.musicxml.note.NoteheadDisplayText;
 import org.curtis.musicxml.note.NoteheadText;
 import org.curtis.musicxml.note.NoteheadType;
 import org.curtis.musicxml.note.Pitch;
@@ -251,23 +250,15 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "notehead-text":
                     List<Element> noteheadTextSubelements = XmlUtil.getChildElements(noteSubelement);
+                    NoteheadText noteheadText = new NoteheadText();
                     for(Element noteheadTextSubelement : noteheadTextSubelements) {
-                        NoteheadText noteheadText = null;
-                        String noteheadTextSubelementName = noteheadTextSubelement.getTagName();
-                        switch (noteheadTextSubelementName) {
-                            case "display-text":
-                                NoteheadDisplayText noteheadDisplayText = new NoteheadDisplayText();
-                                noteheadDisplayText.setText(FormattingFactory.newFormattedText(noteheadTextSubelement));
-                                noteheadText = noteheadDisplayText;
-                                break;
-                            case "accidental-text":
-                                NoteheadAccidentalText noteheadAccidentalText = new NoteheadAccidentalText();
-                                noteheadAccidentalText.setText(NoteFactory.newAccidentalText(noteheadTextSubelement));
-                                noteheadText = noteheadAccidentalText;
-                                break;
+                        Text text = FormattingFactory.newText(noteheadTextSubelement);
+                        if (text != null) {
+                            noteheadText.getTextList().add(text);
+                            text.setNoteheadText(noteheadText);
                         }
-                        if (noteheadText != null) note.getNoteheadTextList().add(noteheadText);
                     }
+                    note.setNoteheadText(noteheadText);
                     break;
                 case "staff":
                     note.setStaff(StringUtil.getInteger(XmlUtil.getElementText(noteSubelement)));

@@ -69,10 +69,9 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "notehead_id")
     private Notehead notehead;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "note_id", nullable = false)
-    private List<NoteheadText> noteheadTextList = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "notehead_text_id")
+    private NoteheadText noteheadText;
     @Column
     private Integer staff;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -229,12 +228,12 @@ public class Note extends MusicData {
         this.notehead = notehead;
     }
 
-    public List<NoteheadText> getNoteheadTextList() {
-        return noteheadTextList;
+    public NoteheadText getNoteheadText() {
+        return noteheadText;
     }
 
-    public void setNoteheadTextList(List<NoteheadText> noteheadTextList) {
-        this.noteheadTextList = noteheadTextList;
+    public void setNoteheadText(NoteheadText noteheadText) {
+        this.noteheadText = noteheadText;
     }
 
     public Integer getStaff() {

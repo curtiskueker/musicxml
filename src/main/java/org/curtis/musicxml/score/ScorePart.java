@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +28,14 @@ public class ScorePart extends PartItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "part_name_id")
     private PartName partName;
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_name_display_id")
     private NameDisplay partNameDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "part_abbreviation_id")
     private PartName partAbbreviation;
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_abbreviation_display_id")
     private NameDisplay partAbbreviationDisplay;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

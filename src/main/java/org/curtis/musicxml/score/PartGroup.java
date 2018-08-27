@@ -12,7 +12,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("part group")
@@ -20,14 +19,14 @@ public class PartGroup extends PartItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_name_id")
     private GroupName groupName;
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_name_display_id")
     private NameDisplay groupNameDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_abbreviation_id")
     private GroupName groupAbbreviation;
-    @Transient
-    // transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_abbreviation_display_id")
     private NameDisplay groupAbbreviationDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_symbol_id")

@@ -31,6 +31,8 @@ public class PrintBuilder extends MusicDataBuilder {
         }
         MeasureNumberingType measureNumberingValue = print.getMeasureNumberingValue();
         if (measureNumberingValue != null) buildElementWithValueAndAttributes("measure-numbering", measureNumberingValue, FormattingBuilder.buildPrintStyleAlign(print.getPrintStyleAlign()));
+        buildNameDisplay("part-name-display", print.getPartNameDisplay());
+        buildNameDisplay("part-abbreviation-display", print.getPartAbbreviationDisplay());
         buildEndElement("print");
 
         return stringBuilder;
