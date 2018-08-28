@@ -147,7 +147,7 @@ public class ScoreHeaderHandler extends AbstractHandler {
                                 LyricLanguage lyricLanguage = new LyricLanguage();
                                 lyricLanguage.setNumber(defaultsSubelement.getAttribute("number"));
                                 lyricLanguage.setName(defaultsSubelement.getAttribute("name"));
-                                lyricLanguage.setLang(defaultsSubelement.getAttribute("lang"));
+                                lyricLanguage.setLang(defaultsSubelement.getAttribute("xml:lang"));
                                 lyricLanguages.add(lyricLanguage);
                         }
                     }

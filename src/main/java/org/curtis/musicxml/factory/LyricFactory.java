@@ -24,7 +24,7 @@ public class LyricFactory {
         textData.setTextDecoration(newTextDecoration(element));
         textData.setTextRotation(MathUtil.newBigDecimal(element.getAttribute("rotation")));
         textData.setLetterSpacing(element.getAttribute("letter-spacing"));
-        textData.setLang(element.getAttribute("lang"));
+        textData.setLang(element.getAttribute("xml:lang"));
         textData.setTextDirection(PlacementUtil.getLocation(element.getAttribute("dir")));
 
         return textData;

@@ -57,6 +57,13 @@ public class FormattingFactory {
         TextFormatting textFormatting = new TextFormatting();
         textFormatting.setJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
         textFormatting.setPrintStyleAlign(newPrintStyleAlign(element));
+        textFormatting.setTextDecoration(LyricFactory.newTextDecoration(element));
+        textFormatting.setTextRotation(MathUtil.newBigDecimal(element.getAttribute("rotation")));
+        textFormatting.setLetterSpacing(element.getAttribute("letter-spacing"));
+        textFormatting.setLineHeight(element.getAttribute("line-height"));
+        textFormatting.setLang(element.getAttribute("xml:lang"));
+        textFormatting.setSpace(element.getAttribute("xml:space"));
+        textFormatting.setTextDirection(PlacementUtil.getLocation(element.getAttribute("dir")));
         textFormatting.setEnclosure(newEnclosureShape(element));
 
         return textFormatting;

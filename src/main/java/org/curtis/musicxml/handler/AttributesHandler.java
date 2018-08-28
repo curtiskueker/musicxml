@@ -207,7 +207,7 @@ public class AttributesHandler extends MusicDataHandler {
                     Directive directive = new Directive();
                     directive.setValue(XmlUtil.getElementText(attributeSubelement));
                     directive.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
-                    directive.setLang(attributeSubelement.getAttribute("lang"));
+                    directive.setLang(attributeSubelement.getAttribute("xml:lang"));
                     break;
                 case "measure-style":
                     List<MeasureStyle> measureStyles = attributes.getMeasureStyles();

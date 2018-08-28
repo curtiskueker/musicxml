@@ -69,7 +69,7 @@ public class LyricHandler extends AbstractHandler {
                                 textFontColor.setTextDecoration(LyricFactory.newTextDecoration(textElement));
                                 textFontColor.setTextRotation(MathUtil.newBigDecimal(textElement.getAttribute("rotation")));
                                 textFontColor.setLetterSpacing(textElement.getAttribute("letter-spacing"));
-                                textFontColor.setLang(textElement.getAttribute("lang"));
+                                textFontColor.setLang(textElement.getAttribute("xml:lang"));
                                 textFontColor.setTextDirection(PlacementUtil.getLocation(textElement.getAttribute("dir")));
                                 lyricSyllable.setLyricElision(textFontColor);
                                 break;
