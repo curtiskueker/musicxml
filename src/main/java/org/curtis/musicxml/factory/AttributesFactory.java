@@ -59,6 +59,7 @@ public class AttributesFactory {
                         break;
                 }
             }
+            traditionalKey.setCancel(cancel);
         }
         traditionalKey.setFifths(StringUtil.getInteger(XmlUtil.getChildElementText(element, "fifths")));
         traditionalKey.setMode(XmlUtil.getChildElementText(element, "mode"));

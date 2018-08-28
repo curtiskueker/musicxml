@@ -20,7 +20,7 @@ public class MidiInstrument extends DatabaseItem {
     private Integer midiProgram;
     @Column(name = "midi_unpitched")
     private Integer midiUnpitched;
-    @Column
+    @Column(precision = 10, scale = 4)
     private BigDecimal volume;
     @Column
     private BigDecimal pan;
