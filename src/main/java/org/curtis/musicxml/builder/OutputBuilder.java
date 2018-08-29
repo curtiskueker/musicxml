@@ -120,6 +120,11 @@ public abstract class OutputBuilder {
         buildElementWithValue(elementName, BuilderUtil.enumValue(elementValue));
     }
 
+    protected void buildElementWithOptionalValue(String elementName, String elementValue) {
+        if (StringUtil.isEmpty(elementValue)) buildElement(elementName);
+        else buildElementWithValue(elementName, elementValue);
+    }
+
     protected void buildElementWithOptionalValue(String elementName, Integer elementValue) {
         if (elementValue == null) buildElement(elementName);
         else buildElementWithValue(elementName, BuilderUtil.stringValue(elementValue));

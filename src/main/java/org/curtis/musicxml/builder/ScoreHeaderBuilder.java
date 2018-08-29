@@ -280,7 +280,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             buildOpenElement("score-instrument");
             buildAttribute("id", scoreInstrument.getScoreInstrumentId());
             buildCloseElement();
-            buildElementWithValue("instrument-name", scoreInstrument.getInstrumentName());
+            buildElementWithOptionalValue("instrument-name", scoreInstrument.getInstrumentName());
             buildElementWithValue("instrument-abbreviation", scoreInstrument.getInstrumentAbbreviation());
             buildElementWithValue("instrument-sound", scoreInstrument.getInstrumentSound());
             InstrumentType instrumentType = scoreInstrument.getInstrumentType();
