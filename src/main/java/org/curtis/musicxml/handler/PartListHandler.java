@@ -126,7 +126,7 @@ public class PartListHandler extends AbstractHandler {
             scorePartMidi = new ScorePartMidi();
             scorePart.getScorePartMidis().add(scorePartMidi);
         } else {
-            scorePartMidi = scorePart.getScorePartMidis().stream().filter(spm -> spm.getScorePartMidiId().equals(id)).findAny().orElse(null);
+            scorePartMidi = scorePart.getScorePartMidis().stream().filter(spm -> (spm.getScorePartMidiId() != null && spm.getScorePartMidiId().equals(id))).findAny().orElse(null);
             if (scorePartMidi == null) {
                 scorePartMidi = new ScorePartMidi();
                 scorePartMidi.setScorePartMidiId(id);
