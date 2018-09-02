@@ -1,7 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
@@ -17,7 +16,6 @@ import org.curtis.musicxml.note.notation.ornament.Schleifer;
 import org.curtis.musicxml.note.notation.ornament.Shake;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
-import org.curtis.musicxml.note.notation.ornament.TrillSound;
 import org.curtis.musicxml.note.notation.ornament.Turn;
 import org.curtis.musicxml.note.notation.ornament.VerticalTurn;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
@@ -94,17 +92,6 @@ public class OrnamentBuilder extends MusicDataBuilder {
         buildElementWithAttributes(elementName, attributes);
     }
 
-    private void buildWavyLine(WavyLine wavyLine) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("type", BuilderUtil.enumValue(wavyLine.getType()));
-        attributes.put("number", BuilderUtil.stringValue(wavyLine.getNumber()));
-        attributes.putAll(PlacementBuilder.buildPosition(wavyLine.getPosition()));
-        attributes.put("placement", BuilderUtil.enumValue(wavyLine.getPlacement()));
-        attributes.put("color", wavyLine.getColor());
-        attributes.putAll(buildTrillSound(wavyLine.getTrillSound()));
-        buildElementWithAttributes("wavy-line", attributes);
-    }
-
     private void buildSchleifer(Schleifer schleifer) {
         buildPlacement("schleifer", schleifer.getPlacement());
     }
@@ -119,20 +106,5 @@ public class OrnamentBuilder extends MusicDataBuilder {
 
     private void buildOtherOrnament(OtherOrnament otherOrnament) {
         buildPlacementText("other-ornament", otherOrnament.getPlacementText());
-    }
-
-    public static Map<String, String> buildTrillSound(TrillSound trillSound) {
-        Map<String, String> attributes = new HashMap<>();
-        if (trillSound == null) return attributes;
-
-        attributes.put("start-note", BuilderUtil.enumValue(trillSound.getStartNote()));
-        attributes.put("trill-step", BuilderUtil.enumValue(trillSound.getTrillStep()));
-        attributes.put("two-note-turn", BuilderUtil.enumValue(trillSound.getTwoNoteTurn()));
-        attributes.put("accelerate", BuilderUtil.yesOrNo(trillSound.getAccelerate()));
-        attributes.put("beats", BuilderUtil.stringValue(trillSound.getBeats()));
-        attributes.put("second-beat", BuilderUtil.stringValue(trillSound.getSecondBeat()));
-        attributes.put("last-beat", BuilderUtil.stringValue(trillSound.getLastBeat()));
-
-        return attributes;
     }
 }

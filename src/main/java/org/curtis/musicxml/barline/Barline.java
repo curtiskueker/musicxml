@@ -6,6 +6,8 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +15,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
@@ -29,8 +33,11 @@ public class Barline extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
+    /*
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "wavy_line_id")
+    */
     @Transient
-    // Transient collection
     private WavyLine wavyLine;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "segno_print_id")
@@ -38,8 +45,12 @@ public class Barline extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coda_print_id")
     private PrintStyleAlign codaPrint;
+    /*
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "barline_id")
+    */
     @Transient
-    // Transient collection
     private List<Fermata> fermataList = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ending_id")

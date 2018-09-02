@@ -3,7 +3,6 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
-import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Technicals;
 import org.curtis.musicxml.note.notation.technical.Arrow;
 import org.curtis.musicxml.note.notation.technical.ArrowDirection;
@@ -40,15 +39,23 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 public class TechnicalHandler extends AbstractHandler {
-    private List<Notation> notationList;
+    private Technicals technicals;
 
-    public TechnicalHandler(List<Notation> notationList) {
-        this.notationList = notationList;
+    public TechnicalHandler() {
+
+    }
+
+    public Technicals getTechnicals() {
+        return technicals;
+    }
+
+    public void setTechnicals(Technicals technicals) {
+        this.technicals = technicals;
     }
 
     public void handle(Element element) {
         List<Element> technicalElements = XmlUtil.getChildElements(element);
-        Technicals technicals = new Technicals();
+        technicals = new Technicals();
         for (Element technicalElement : technicalElements) {
             String technicalElementName = technicalElement.getTagName();
             Technical technical = null;
@@ -351,6 +358,5 @@ public class TechnicalHandler extends AbstractHandler {
             }
             if (technical != null) technicals.getTechnicals().add(technical);
         }
-        notationList.add(technicals);
     }
 }

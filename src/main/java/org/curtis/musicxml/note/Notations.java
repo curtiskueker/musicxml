@@ -25,7 +25,7 @@ public class Notations extends DatabaseItem {
     private Editorial editorial;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "notations_id", nullable = false)
+    @JoinColumn(name = "notations_id")
     private List<Notation> notations = new ArrayList<>();
     @Column(name = "print_object")
     private Boolean printObject;

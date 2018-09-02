@@ -19,7 +19,7 @@ import java.util.List;
 public class Ornaments extends Notation {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "ornaments_id", nullable = false)
+    @JoinColumn(name = "ornaments_id")
     private List<Ornament> ornaments = new ArrayList<>();
     @Transient
     // transient collection

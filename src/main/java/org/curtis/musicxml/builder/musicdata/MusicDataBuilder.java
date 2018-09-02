@@ -28,6 +28,9 @@ import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.lyric.Extend;
+import org.curtis.musicxml.note.notation.Fermata;
+import org.curtis.musicxml.note.notation.ornament.TrillSound;
+import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
@@ -225,5 +228,42 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("halign", BuilderUtil.enumValue(image.getHalign()));
         attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
         buildElementWithAttributes("image", attributes);
+    }
+
+    protected void buildWavyLine(WavyLine wavyLine) {
+        if (wavyLine == null) return;
+
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(wavyLine.getType()));
+        attributes.put("number", BuilderUtil.stringValue(wavyLine.getNumber()));
+        attributes.putAll(PlacementBuilder.buildPosition(wavyLine.getPosition()));
+        attributes.put("placement", BuilderUtil.enumValue(wavyLine.getPlacement()));
+        attributes.put("color", wavyLine.getColor());
+        attributes.putAll(buildTrillSound(wavyLine.getTrillSound()));
+        buildElementWithAttributes("wavy-line", attributes);
+    }
+
+    protected static Map<String, String> buildTrillSound(TrillSound trillSound) {
+        Map<String, String> attributes = new HashMap<>();
+        if (trillSound == null) return attributes;
+
+        attributes.put("start-note", BuilderUtil.enumValue(trillSound.getStartNote()));
+        attributes.put("trill-step", BuilderUtil.enumValue(trillSound.getTrillStep()));
+        attributes.put("two-note-turn", BuilderUtil.enumValue(trillSound.getTwoNoteTurn()));
+        attributes.put("accelerate", BuilderUtil.yesOrNo(trillSound.getAccelerate()));
+        attributes.put("beats", BuilderUtil.stringValue(trillSound.getBeats()));
+        attributes.put("second-beat", BuilderUtil.stringValue(trillSound.getSecondBeat()));
+        attributes.put("last-beat", BuilderUtil.stringValue(trillSound.getLastBeat()));
+
+        return attributes;
+    }
+
+    protected void buildFermata(Fermata fermata) {
+        if (fermata == null) return;
+
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(fermata.getType()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(fermata.getPrintStyle()));
+        buildElementWithValueAndAttributes("fermata", fermata.getFermataShape(), attributes);
     }
 }

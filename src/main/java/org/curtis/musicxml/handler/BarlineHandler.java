@@ -89,7 +89,9 @@ public class BarlineHandler extends MusicDataHandler {
                     break;
                 case "fermata":
                     List<Fermata> fermataList = barline.getFermataList();
-                    fermataList.add(NotationFactory.newFermata(barlineSubelement));
+                    Fermata fermata = NotationFactory.newFermata(barlineSubelement);
+                    fermataList.add(fermata);
+                    fermata.setBarline(barline);
                     break;
                 case "ending":
                     Ending ending = new Ending();

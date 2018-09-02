@@ -199,13 +199,6 @@ public class NotationBuilder extends MusicDataBuilder {
         buildEndElement("articulations");
     }
 
-    private void buildFermata(Fermata fermata) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("type", BuilderUtil.enumValue(fermata.getType()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(fermata.getPrintStyle()));
-        buildElementWithValueAndAttributes("fermata", fermata.getFermataShape(), attributes);
-    }
-
     private void buildArpeggiate(Arpeggiate arpeggiate) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("number", BuilderUtil.stringValue(arpeggiate.getNumber()));

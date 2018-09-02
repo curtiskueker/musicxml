@@ -93,16 +93,19 @@ public class NotationHandler extends AbstractHandler {
                     notation = slide;
                     break;
                 case "ornaments":
-                    OrnamentHandler ornamentHandler = new OrnamentHandler(notationList);
+                    OrnamentHandler ornamentHandler = new OrnamentHandler();
                     ornamentHandler.handle(notationsSubelement);
+                    notation = ornamentHandler.getOrnaments();
                     break;
                 case "technical":
-                    TechnicalHandler technicalHandler = new TechnicalHandler(notationList);
+                    TechnicalHandler technicalHandler = new TechnicalHandler();
                     technicalHandler.handle(notationsSubelement);
+                    notation = technicalHandler.getTechnicals();
                     break;
                 case "articulations":
-                    ArticulationHandler articulationHandler = new ArticulationHandler(notationList);
+                    ArticulationHandler articulationHandler = new ArticulationHandler();
                     articulationHandler.handle(notationsSubelement);
+                    notation = articulationHandler.getArticulations();
                     break;
                 case "dynamics":
                     notation = NotationFactory.newDynamicsNotation(notationsSubelement);
@@ -148,6 +151,7 @@ public class NotationHandler extends AbstractHandler {
             }
             if (notation != null) {
                 notationList.add(notation);
+                notation.setNotations(notations);
             }
         }
         notations.setNotations(notationList);

@@ -5,7 +5,6 @@ import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
-import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.OtherOrnament;
@@ -18,15 +17,23 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 public class OrnamentHandler extends AbstractHandler {
-    private List<Notation> notationList;
+    private Ornaments ornaments;
 
-    public OrnamentHandler(List<Notation> notationList) {
-        this.notationList = notationList;
+    public OrnamentHandler() {
+
+    }
+
+    public Ornaments getOrnaments() {
+        return ornaments;
+    }
+
+    public void setOrnaments(Ornaments ornaments) {
+        this.ornaments = ornaments;
     }
 
     public void handle(Element element) {
         List<Element> ornamentElements = XmlUtil.getChildElements(element);
-        Ornaments ornaments = new Ornaments();
+        ornaments = new Ornaments();
         Ornament ornament = null;
         for(Element ornamentElement : ornamentElements) {
             String ornamentElementName = ornamentElement.getTagName();
@@ -74,6 +81,5 @@ public class OrnamentHandler extends AbstractHandler {
         for (Element accidentalMarkElement : accidentalMarkElements) {
             ornaments.getAccidentalMarks().add(NotationFactory.newAccidentalMark(accidentalMarkElement));
         }
-        notationList.add(ornaments);
     }
 }

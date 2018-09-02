@@ -7,6 +7,7 @@ import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.note.notation.Fermata;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +33,12 @@ public class BarlineBuilder extends MusicDataBuilder {
             buildElementWithValueAndAttribute("bar-style", barStyleColor.getBarStyle(), "color", barStyleColor.getColor());
         }
         buildEditorial(barline.getEditorial());
-        // TODO: barline wavy-line
+        buildWavyLine(barline.getWavyLine());
         PrintStyleAlign segnoPrint = barline.getSegnoPrint();
         if (segnoPrint != null) buildElementWithAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segnoPrint));
         PrintStyleAlign codaPrint = barline.getCodaPrint();
         if (codaPrint != null) buildElementWithAttributes("coda", FormattingBuilder.buildPrintStyleAlign(codaPrint));
-        // TODO: barline fermatas
+        for (Fermata fermata : barline.getFermataList()) buildFermata(fermata);
         Ending ending = barline.getEnding();
         if (ending != null) {
             Map<String, String> attributes = new HashMap<>();
