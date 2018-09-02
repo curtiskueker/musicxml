@@ -26,7 +26,7 @@ public class Score extends DatabaseItem {
     @JoinColumn(name = "score_id", nullable = false)
     private List<Part> parts = new ArrayList<>();
     @Column
-    private String version = "1.0";
+    private String version;
 
     public Score() {
 

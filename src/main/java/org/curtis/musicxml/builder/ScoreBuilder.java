@@ -13,11 +13,7 @@ public class ScoreBuilder extends MusicDataBuilder {
 
     public StringBuilder build() {
         buildOpenElement("score-partwise");
-
-        append(" version=\"");
-        append(score.getVersion());
-        append("\"");
-
+        buildAttribute("version", score.getVersion());
         buildCloseElement();
 
         ScoreHeaderBuilder scoreHeaderBuilder = new ScoreHeaderBuilder(score.getScoreHeader());
