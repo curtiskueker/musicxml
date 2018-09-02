@@ -250,7 +250,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 // hold on the final barline until the very end
                 Barline barline = (Barline)musicData;
                 Location barlineLocation = barline.getLocation();
-                if (barlineLocation == Location.RIGHT) {
+                if (barlineLocation == null || barlineLocation == Location.RIGHT) {
                     currentBarline = barline;
                     continue;
                 }

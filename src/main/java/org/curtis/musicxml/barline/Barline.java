@@ -49,7 +49,7 @@ public class Barline extends MusicData {
     private Repeat repeat;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location location = Location.RIGHT;
+    private Location location;
     @Column
     private String segno;
     @Column
