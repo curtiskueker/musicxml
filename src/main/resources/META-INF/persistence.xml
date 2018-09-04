@@ -273,6 +273,7 @@
         <class>org.curtis.musicxml.score.LyricFont</class>
         <class>org.curtis.musicxml.score.LyricLanguage</class>
         <class>org.curtis.musicxml.score.Measure</class>
+        <class>org.curtis.musicxml.score.MeasureItem</class>
         <class>org.curtis.musicxml.score.MusicData</class>
         <class>org.curtis.musicxml.score.Part</class>
         <class>org.curtis.musicxml.score.PartGroup</class>

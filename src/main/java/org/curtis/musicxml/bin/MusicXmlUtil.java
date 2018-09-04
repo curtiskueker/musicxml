@@ -30,6 +30,8 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 
 public class MusicXmlUtil {
+    private static DBSessionFactory sessionFactory;
+
     private MusicXmlUtil() {
 
     }
@@ -45,14 +47,17 @@ public class MusicXmlUtil {
     }
 
     public static DBTransaction getDbTransaction() throws DBException {
-        AppProperties.setPrefix("musicxml");
-        try {
-            AppProperties.addPropertiesFile("musicxml");
-        } catch (PropertyFileNotFoundException e) {
-            // optional properties file
+        if (sessionFactory == null) {
+            AppProperties.setPrefix("musicxml");
+            try {
+                AppProperties.addPropertiesFile("musicxml");
+            } catch (PropertyFileNotFoundException e) {
+                // optional properties file
+            }
+            AppProperties.addPropertiesFile("properties/database");
+
+            sessionFactory = DBSessionFactory.getInstance();
         }
-        AppProperties.addPropertiesFile("properties/database");
-        DBSessionFactory sessionFactory = DBSessionFactory.getInstance();
 
         return sessionFactory.getTransaction();
     }

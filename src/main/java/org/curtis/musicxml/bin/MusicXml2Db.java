@@ -5,6 +5,10 @@ import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
+import org.curtis.musicxml.score.Measure;
+import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.Part;
+import org.curtis.musicxml.score.Score;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
 
@@ -19,7 +23,21 @@ public class MusicXml2Db {
 
             if (StringUtil.isNotEmpty(INPUT_FILE)) {
                 ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(INPUT_FILE);
-                dbTransaction.create(scoreHandler.getScore());
+                Score score = scoreHandler.getScore();
+
+                dbTransaction.create(score);
+
+                Integer ordering = 1;
+                for (Part part : score.getParts()) {
+                    for (Measure measure : part.getMeasures()) {
+                        for (MusicData musicData : measure.getMusicDataList()) {
+                            musicData.setMeasure(measure);
+                            musicData.setOrdering(ordering);
+                            ordering++;
+                            dbTransaction.create(musicData);
+                        }
+                    }
+                }
             }
 
             DBSessionFactory.getInstance().closeTransaction();

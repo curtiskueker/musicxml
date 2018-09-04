@@ -1,7 +1,9 @@
 package org.curtis.musicxml.builder;
 
+import org.curtis.database.DBException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.bin.MusicXmlUtil;
 import org.curtis.musicxml.builder.musicdata.AttributesBuilder;
 import org.curtis.musicxml.builder.musicdata.BackupBuilder;
 import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
@@ -28,7 +30,7 @@ import org.curtis.musicxml.note.FiguredBass;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MeasureItem;
 
 public class MeasureBuilder extends MusicDataBuilder {
     private Measure measure;
@@ -44,21 +46,27 @@ public class MeasureBuilder extends MusicDataBuilder {
         buildAttribute("non-controlling", measure.getNonControlling());
         buildAttribute("width", measure.getWidth());
         buildCloseElement();
-        for (MusicData musicData : measure.getMusicDataList()) {
+        for (MeasureItem measureItem : measure.getMeasureItems()) {
             BaseBuilder baseBuilder = null;
-            if (musicData instanceof Note) baseBuilder = new NoteBuilder((Note)musicData);
-            else if (musicData instanceof Backup) baseBuilder = new BackupBuilder((Backup)musicData);
-            else if (musicData instanceof Forward) baseBuilder = new ForwardBuilder((Forward)musicData);
-            else if (musicData instanceof Direction) baseBuilder = new DirectionBuilder((Direction)musicData);
-            else if (musicData instanceof Attributes) baseBuilder = new AttributesBuilder((Attributes)musicData);
-            else if (musicData instanceof Harmony) baseBuilder = new HarmonyBuilder((Harmony)musicData);
-            else if (musicData instanceof FiguredBass) baseBuilder = new FiguredBassBuilder((FiguredBass)musicData);
-            else if (musicData instanceof Print) baseBuilder = new PrintBuilder((Print)musicData);
-            else if (musicData instanceof Sound) baseBuilder = new SoundBuilder((Sound)musicData);
-            else if (musicData instanceof Barline) baseBuilder = new BarlineBuilder((Barline)musicData);
-            else if (musicData instanceof Grouping) baseBuilder = new GroupingBuilder((Grouping)musicData);
-            else if (musicData instanceof Link) baseBuilder = new LinkBuilder((Link)musicData);
-            else if (musicData instanceof Bookmark) baseBuilder = new BookmarkBuilder((Bookmark)musicData);
+            Integer measureItemId = measureItem.getId();
+            String musicDataType = measureItem.getMusicDataType();
+            try {
+                if (musicDataType.equals("note")) baseBuilder = new NoteBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Note.class, measureItemId));
+                else if (musicDataType.equals("backup")) baseBuilder = new BackupBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Backup.class, measureItemId));
+                else if (musicDataType.equals("forward")) baseBuilder = new ForwardBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Forward.class, measureItemId));
+                else if (musicDataType.equals("direction")) baseBuilder = new DirectionBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Direction.class, measureItemId));
+                else if (musicDataType.equals("attributes")) baseBuilder = new AttributesBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Attributes.class, measureItemId));
+                else if (musicDataType.equals("harmony")) baseBuilder = new HarmonyBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Harmony.class, measureItemId));
+                else if (musicDataType.equals("figured bass")) baseBuilder = new FiguredBassBuilder(MusicXmlUtil.getDbTransaction().getObjectById(FiguredBass.class, measureItemId));
+                else if (musicDataType.equals("print")) baseBuilder = new PrintBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Print.class, measureItemId));
+                else if (musicDataType.equals("sound")) baseBuilder = new SoundBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Sound.class, measureItemId));
+                else if (musicDataType.equals("barline")) baseBuilder = new BarlineBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Barline.class, measureItemId));
+                else if (musicDataType.equals("grouping")) baseBuilder = new GroupingBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Grouping.class, measureItemId));
+                else if (musicDataType.equals("link")) baseBuilder = new LinkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Link.class, measureItemId));
+                else if (musicDataType.equals("bookmark")) baseBuilder = new BookmarkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Bookmark.class, measureItemId));
+            } catch (DBException e) {
+                e.printStackTrace();
+            }
             if (baseBuilder != null) append(baseBuilder.build().toString());
         }
         buildEndElement("measure");

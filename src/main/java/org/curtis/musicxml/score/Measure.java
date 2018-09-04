@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,6 @@ import java.util.List;
 @Entity
 @Table(name = "measure")
 public class Measure extends DatabaseItem {
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "measure_id")
-    private List<MusicData> musicDataList = new ArrayList<>();
     @Column
     private String number;
     @Column
@@ -30,17 +27,15 @@ public class Measure extends DatabaseItem {
     private Boolean nonControlling;
     @Column(precision = 10, scale = 4)
     private BigDecimal width;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "measure_id")
+    private List<MeasureItem> measureItems = new ArrayList<>();
+    @Transient
+    private List<MusicData> musicDataList = new ArrayList<>();
 
     public Measure() {
         setId(0);
-    }
-
-    public List<MusicData> getMusicDataList() {
-        return musicDataList;
-    }
-
-    public void setMusicDataList(List<MusicData> musicDataList) {
-        this.musicDataList = musicDataList;
     }
 
     public String getNumber() {
@@ -73,5 +68,21 @@ public class Measure extends DatabaseItem {
 
     public void setWidth(BigDecimal width) {
         this.width = width;
+    }
+
+    public List<MeasureItem> getMeasureItems() {
+        return measureItems;
+    }
+
+    public void setMeasureItems(List<MeasureItem> measureItems) {
+        this.measureItems = measureItems;
+    }
+
+    public List<MusicData> getMusicDataList() {
+        return musicDataList;
+    }
+
+    public void setMusicDataList(List<MusicData> musicDataList) {
+        this.musicDataList = musicDataList;
     }
 }
