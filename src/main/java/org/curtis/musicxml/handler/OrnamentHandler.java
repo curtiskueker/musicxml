@@ -75,7 +75,10 @@ public class OrnamentHandler extends AbstractHandler {
                     ornament = otherOrnament;
                     break;
             }
-            if (ornament != null) ornaments.getOrnaments().add(ornament);
+            if (ornament != null) {
+                ornaments.getOrnaments().add(ornament);
+                ornament.setOrnaments(ornaments);
+            }
         }
         List<Element> accidentalMarkElements = XmlUtil.getChildElements(element, "accidental-mark");
         for (Element accidentalMarkElement : accidentalMarkElements) {
