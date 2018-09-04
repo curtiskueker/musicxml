@@ -24,6 +24,7 @@ public class Ornaments extends Notation {
     //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@Fetch(FetchMode.SUBSELECT)
     //@JoinColumn(name = "ornaments_id")
+    // TODO: ornament accidental marks
     @Transient
     private List<AccidentalMark> accidentalMarks = new ArrayList<>();
     @Transient
