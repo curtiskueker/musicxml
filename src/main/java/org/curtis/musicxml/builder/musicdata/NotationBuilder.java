@@ -177,7 +177,9 @@ public class NotationBuilder extends MusicDataBuilder {
             OrnamentBuilder ornamentBuilder = new OrnamentBuilder(ornament);
             append(ornamentBuilder.build().toString());
         }
-        // TODO: ornaments accidental marks
+        for (AccidentalMark accidentalMark : ornaments.getAccidentalMarks()) {
+            buildAccidentalMark(accidentalMark);
+        }
         buildEndElement("ornaments");
     }
 

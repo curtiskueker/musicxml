@@ -51,19 +51,47 @@ public class MeasureBuilder extends MusicDataBuilder {
             Integer measureItemId = measureItem.getId();
             String musicDataType = measureItem.getMusicDataType();
             try {
-                if (musicDataType.equals("note")) baseBuilder = new NoteBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Note.class, measureItemId));
-                else if (musicDataType.equals("backup")) baseBuilder = new BackupBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Backup.class, measureItemId));
-                else if (musicDataType.equals("forward")) baseBuilder = new ForwardBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Forward.class, measureItemId));
-                else if (musicDataType.equals("direction")) baseBuilder = new DirectionBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Direction.class, measureItemId));
-                else if (musicDataType.equals("attributes")) baseBuilder = new AttributesBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Attributes.class, measureItemId));
-                else if (musicDataType.equals("harmony")) baseBuilder = new HarmonyBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Harmony.class, measureItemId));
-                else if (musicDataType.equals("figured bass")) baseBuilder = new FiguredBassBuilder(MusicXmlUtil.getDbTransaction().getObjectById(FiguredBass.class, measureItemId));
-                else if (musicDataType.equals("print")) baseBuilder = new PrintBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Print.class, measureItemId));
-                else if (musicDataType.equals("sound")) baseBuilder = new SoundBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Sound.class, measureItemId));
-                else if (musicDataType.equals("barline")) baseBuilder = new BarlineBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Barline.class, measureItemId));
-                else if (musicDataType.equals("grouping")) baseBuilder = new GroupingBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Grouping.class, measureItemId));
-                else if (musicDataType.equals("link")) baseBuilder = new LinkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Link.class, measureItemId));
-                else if (musicDataType.equals("bookmark")) baseBuilder = new BookmarkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Bookmark.class, measureItemId));
+                switch (musicDataType) {
+                    case "note":
+                        baseBuilder = new NoteBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Note.class, measureItemId));
+                        break;
+                    case "backup":
+                        baseBuilder = new BackupBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Backup.class, measureItemId));
+                        break;
+                    case "forward":
+                        baseBuilder = new ForwardBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Forward.class, measureItemId));
+                        break;
+                    case "direction":
+                        baseBuilder = new DirectionBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Direction.class, measureItemId));
+                        break;
+                    case "attributes":
+                        baseBuilder = new AttributesBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Attributes.class, measureItemId));
+                        break;
+                    case "harmony":
+                        baseBuilder = new HarmonyBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Harmony.class, measureItemId));
+                        break;
+                    case "figured bass":
+                        baseBuilder = new FiguredBassBuilder(MusicXmlUtil.getDbTransaction().getObjectById(FiguredBass.class, measureItemId));
+                        break;
+                    case "print":
+                        baseBuilder = new PrintBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Print.class, measureItemId));
+                        break;
+                    case "sound":
+                        baseBuilder = new SoundBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Sound.class, measureItemId));
+                        break;
+                    case "barline":
+                        baseBuilder = new BarlineBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Barline.class, measureItemId));
+                        break;
+                    case "grouping":
+                        baseBuilder = new GroupingBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Grouping.class, measureItemId));
+                        break;
+                    case "link":
+                        baseBuilder = new LinkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Link.class, measureItemId));
+                        break;
+                    case "bookmark":
+                        baseBuilder = new BookmarkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Bookmark.class, measureItemId));
+                        break;
+                }
             } catch (DBException e) {
                 e.printStackTrace();
             }

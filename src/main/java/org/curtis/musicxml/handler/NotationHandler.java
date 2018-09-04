@@ -2,12 +2,10 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
-import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.Notations;
-import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.NonArpeggiate;
@@ -132,11 +130,7 @@ public class NotationHandler extends AbstractHandler {
                     notation = nonArpeggiate;
                     break;
                 case "accidental-mark":
-                    AccidentalMark accidentalMark = new AccidentalMark();
-                    accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(notationsSubelement));
-                    accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
-                    accidentalMark.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
-                    notation = accidentalMark;
+                    notation = NotationFactory.newAccidentalMark(notationsSubelement);
                     break;
                 case "other-notation":
                     OtherNotation otherNotation = new OtherNotation();

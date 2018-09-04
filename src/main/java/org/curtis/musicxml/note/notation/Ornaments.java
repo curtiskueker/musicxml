@@ -21,8 +21,10 @@ public class Ornaments extends Notation {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "ornaments_id")
     private List<Ornament> ornaments = new ArrayList<>();
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@Fetch(FetchMode.SUBSELECT)
+    //@JoinColumn(name = "ornaments_id")
     @Transient
-    // transient collection
     private List<AccidentalMark> accidentalMarks = new ArrayList<>();
     @Transient
     // used by lilypond
