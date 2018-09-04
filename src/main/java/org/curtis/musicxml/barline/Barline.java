@@ -19,7 +19,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +32,8 @@ public class Barline extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
-    /*
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "wavy_line_id")
-    */
-    @Transient
     private WavyLine wavyLine;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "segno_print_id")
@@ -45,12 +41,9 @@ public class Barline extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coda_print_id")
     private PrintStyleAlign codaPrint;
-    /*
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "barline_id")
-    */
-    @Transient
     private List<Fermata> fermataList = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ending_id")
