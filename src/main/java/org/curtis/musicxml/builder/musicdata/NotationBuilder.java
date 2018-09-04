@@ -7,6 +7,7 @@ import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.Bezier;
+import org.curtis.musicxml.note.notation.DynamicsNotation;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.NonArpeggiate;
@@ -48,7 +49,7 @@ public class NotationBuilder extends MusicDataBuilder {
         else if (notation instanceof Ornaments) buildOrnaments((Ornaments)notation);
         else if (notation instanceof Technicals) buildTechnicals((Technicals)notation);
         else if (notation instanceof Articulations) buildArticulations((Articulations)notation);
-        // TODO: dynamics notations
+        else if (notation instanceof DynamicsNotation) buildDynamicsNotation((DynamicsNotation)notation);
         else if (notation instanceof Fermata) buildFermata((Fermata)notation);
         else if (notation instanceof Arpeggiate) buildArpeggiate((Arpeggiate)notation);
         else if (notation instanceof NonArpeggiate) buildNonArpeggiate((NonArpeggiate)notation);
@@ -199,6 +200,10 @@ public class NotationBuilder extends MusicDataBuilder {
             append(articulationBuilder.build().toString());
         }
         buildEndElement("articulations");
+    }
+
+    private void buildDynamicsNotation(DynamicsNotation dynamicsNotation) {
+        buildDynamics(dynamicsNotation.getDynamics());
     }
 
     private void buildArpeggiate(Arpeggiate arpeggiate) {

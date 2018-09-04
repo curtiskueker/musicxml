@@ -187,6 +187,7 @@
         <class>org.curtis.musicxml.note.notation.Arpeggiate</class>
         <class>org.curtis.musicxml.note.notation.Articulations</class>
         <class>org.curtis.musicxml.note.notation.Bezier</class>
+        <class>org.curtis.musicxml.note.notation.DynamicsNotation</class>
         <class>org.curtis.musicxml.note.notation.Fermata</class>
         <class>org.curtis.musicxml.note.notation.Glissando</class>
         <class>org.curtis.musicxml.note.notation.NonArpeggiate</class>

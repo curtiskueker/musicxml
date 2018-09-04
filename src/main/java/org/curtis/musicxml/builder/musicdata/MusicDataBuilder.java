@@ -22,6 +22,8 @@ import org.curtis.musicxml.common.play.OtherPlay;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.common.play.PlayType;
 import org.curtis.musicxml.common.play.SemiPitched;
+import org.curtis.musicxml.direction.directiontype.Dynamics;
+import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.Placement;
@@ -265,5 +267,20 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(fermata.getType()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(fermata.getPrintStyle()));
         buildElementWithValueAndAttributes("fermata", fermata.getFermataShape(), attributes);
+    }
+
+    protected void buildDynamics(Dynamics dynamics) {
+        if (dynamics == null) return;
+
+        buildOpenElement("dynamics");
+        buildAttributes(FormattingBuilder.buildPrintStyleAlign(dynamics.getPrintStyleAlign()));
+        buildAttribute("placement", dynamics.getPlacement());
+        buildAttributes(FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()));
+        buildAttribute("enclosure", dynamics.getEnclosure());
+        buildCloseElement();
+        for (DynamicsMarking dynamicsMarking : dynamics.getMarkings()) {
+            buildElement(dynamicsMarking.getDynamicsType());
+        }
+        buildEndElement("dynamics");
     }
 }
