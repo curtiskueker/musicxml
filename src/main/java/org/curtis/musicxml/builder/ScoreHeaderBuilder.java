@@ -122,6 +122,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                     buildElementWithAttributes("supports", attributes);
                 }
             }
+            buildEndElement("encoding");
             buildElementWithValue("source", identification.getSource());
             for (TypedText relation : identification.getRelations()) buildTypedText(relation, "relation");
             Miscellaneous miscellaneous = identification.getMiscellaneous();
@@ -130,7 +131,6 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                 for (MiscellaneousField miscellaneousField : miscellaneous.getMiscellaneousFields()) buildElementWithValueAndAttribute("miscellaneous-field", miscellaneousField.getValue(), "name", miscellaneousField.getName());
                 buildEndElement("miscellaneous");
             }
-            buildEndElement("encoding");
         }
         buildElementWithValue("source", identification.getSource());
         buildEndElement("identification");
