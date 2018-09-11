@@ -120,7 +120,7 @@ public class LyricHandler extends AbstractHandler {
         lyric.setEditorial(FormattingFactory.newEditorial(element));
         lyric.setNumber(element.getAttribute("number"));
         lyric.setName(element.getAttribute("name"));
-        lyric.setJustify(PlacementUtil.getLocation("justify"));
+        lyric.setJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
         lyric.setPosition(PlacementFactory.newPosition(element));
         lyric.setPlacement(PlacementFactory.newPlacementLocation(element));
         lyric.setColor(element.getAttribute("color"));
