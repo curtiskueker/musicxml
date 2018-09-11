@@ -4,6 +4,7 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.EditorialVoiceDirection;
 import org.curtis.musicxml.direction.Offset;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 
 public class DirectionBuilder extends MusicDataBuilder {
     private Direction direction;
@@ -21,10 +22,12 @@ public class DirectionBuilder extends MusicDataBuilder {
         buildAttribute("placement", direction.getPlacement());
         buildAttribute("directive", direction.getDirective());
         buildCloseElement();
-        for (DirectionType directionType : direction.getDirectionTypes()) {
+        for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
             buildStartElement("direction-type");
-            DirectionTypeBuilder directionTypeBuilder = new DirectionTypeBuilder(directionType);
-            append(directionTypeBuilder.build().toString());
+            for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
+                DirectionTypeBuilder directionTypeBuilder = new DirectionTypeBuilder(directionType);
+                append(directionTypeBuilder.build().toString());
+            }
             buildEndElement("direction-type");
         }
         append(buildOffset(direction.getOffset()));

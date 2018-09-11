@@ -7,9 +7,8 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.Words;
-
-import java.util.List;
 
 import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
 
@@ -19,13 +18,14 @@ public class DirectionBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildDirection(Direction direction) throws BuildException {
-        List<DirectionType> directionTypes = direction.getDirectionTypes();
-        for(DirectionType directionType : directionTypes) {
-            MusicDataBuilder musicDataBuilder = new MusicDataBuilder(directionType);
-            String musicDataResults = musicDataBuilder.build().toString();
-            if(!musicDataResults.isEmpty()) {
-                if (!TypeUtil.getBoolean(direction.getDirective())) append(PlacementBuildUtil.getPlacement(direction.getPlacement(), directionType.getClass().getSimpleName()));
-                append(musicDataResults);
+        for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
+            for(DirectionType directionType : directionTypeList.getDirectionTypes()) {
+                MusicDataBuilder musicDataBuilder = new MusicDataBuilder(directionType);
+                String musicDataResults = musicDataBuilder.build().toString();
+                if(!musicDataResults.isEmpty()) {
+                    if (!TypeUtil.getBoolean(direction.getDirective())) append(PlacementBuildUtil.getPlacement(direction.getPlacement(), directionType.getClass().getSimpleName()));
+                    append(musicDataResults);
+                }
             }
         }
 
@@ -45,7 +45,7 @@ public class DirectionBuilder extends MusicDataBuilder {
     }
 
     public static void setDirectionDefaults(Direction direction) {
-        DirectionType words = direction.getDirectionTypes().stream()
+        DirectionType words = direction.getDirectionTypeLists().stream().flatMap(typeList -> typeList.getDirectionTypes().stream())
                 .filter(directionType -> directionType instanceof Words && !TypeUtil.getBoolean(direction.getDirective()) && direction.getPlacement() == null)
                 .findAny().orElse(null);
 

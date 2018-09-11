@@ -1,7 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.direction.Direction;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -20,14 +19,15 @@ import java.util.List;
 public abstract class DirectionType extends DatabaseItem {
     public static List<String> MULTIPLE_DIRECTION_TYPES = Arrays.asList("Dynamics", "Wedge");
     @ManyToOne
-    @JoinColumn(name = "direction_id")
-    private Direction direction;
+    @JoinColumn(name = "direction_type_list_id")
+    private DirectionTypeList directionTypeList;
 
-    public Direction getDirection() {
-        return direction;
+
+    public DirectionTypeList getDirectionTypeList() {
+        return directionTypeList;
     }
 
-    public void setDirection(Direction direction) {
-        this.direction = direction;
+    public void setDirectionTypeList(DirectionTypeList directionTypeList) {
+        this.directionTypeList = directionTypeList;
     }
 }

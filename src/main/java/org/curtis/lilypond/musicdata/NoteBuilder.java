@@ -10,6 +10,7 @@ import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
@@ -359,7 +360,7 @@ public class NoteBuilder extends MusicDataBuilder {
             return stringBuilder;
         }
 
-        int directionTypeCount = directions.stream().mapToInt(direction -> direction.getDirectionTypes().size()).sum();
+        int directionTypeCount = directions.stream().flatMap(typeList -> typeList.getDirectionTypeLists().stream()).mapToInt(direction -> direction.getDirectionTypes().size()).sum();
         directions.forEach(DirectionBuilder::setDirectionDefaults);
 
         // create list spacers with durations
@@ -373,7 +374,9 @@ public class NoteBuilder extends MusicDataBuilder {
 
         Iterator<Direction> directionIterator = directions.iterator();
         Direction direction = directionIterator.next();
-        Iterator<DirectionType> directionTypeIterator = direction.getDirectionTypes().iterator();
+        Iterator<DirectionTypeList> directionTypeListIterator = direction.getDirectionTypeLists().iterator();
+        DirectionTypeList directionTypeList = directionTypeListIterator.next();
+        Iterator<DirectionType> directionTypeIterator = directionTypeList.getDirectionTypes().iterator();
         DirectionType directionType;
 
         append(" { ");
@@ -383,11 +386,18 @@ public class NoteBuilder extends MusicDataBuilder {
             try {
                 append(NoteUtil.getSpacerRepresentation(spacerDuration));
                 if (!directionTypeIterator.hasNext()) {
-                    if (directionIterator.hasNext()) {
-                        direction = directionIterator.next();
-                        directionTypeIterator = direction.getDirectionTypes().iterator();
+                    if (directionTypeListIterator.hasNext()) {
+                        directionTypeList = directionTypeListIterator.next();
+                        directionTypeIterator = directionTypeList.getDirectionTypes().iterator();
                     } else {
-                        break;
+                        if (directionIterator.hasNext()) {
+                            direction = directionIterator.next();
+                            directionTypeListIterator = direction.getDirectionTypeLists().iterator();
+                            directionTypeList = directionTypeListIterator.next();
+                            directionTypeIterator = directionTypeList.getDirectionTypes().iterator();
+                        } else {
+                            break;
+                        }
                     }
                 }
                 directionType = directionTypeIterator.next();
@@ -586,11 +596,13 @@ public class NoteBuilder extends MusicDataBuilder {
     private boolean hasMultipleDirections() {
         Map<String, Integer> directionTypeCounts = new HashMap<>();
         for (Direction direction : directions) {
-            for (DirectionType directionType : direction.getDirectionTypes()) {
-                String name = directionType.getClass().getSimpleName();
-                Integer directionTypeCount = directionTypeCounts.computeIfAbsent(name, count -> 0);
-                directionTypeCount++;
-                directionTypeCounts.put(name, directionTypeCount);
+            for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
+                for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
+                    String name = directionType.getClass().getSimpleName();
+                    Integer directionTypeCount = directionTypeCounts.computeIfAbsent(name, count -> 0);
+                    directionTypeCount++;
+                    directionTypeCounts.put(name, directionTypeCount);
+                }
             }
         }
 

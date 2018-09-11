@@ -76,6 +76,7 @@
         <class>org.curtis.musicxml.direction.directiontype.DampAll</class>
         <class>org.curtis.musicxml.direction.directiontype.Dashes</class>
         <class>org.curtis.musicxml.direction.directiontype.DirectionType</class>
+        <class>org.curtis.musicxml.direction.directiontype.DirectionTypeList</class>
         <class>org.curtis.musicxml.direction.directiontype.Dynamics</class>
         <class>org.curtis.musicxml.direction.directiontype.DynamicsMarking</class>
         <class>org.curtis.musicxml.direction.directiontype.Eyeglasses</class>

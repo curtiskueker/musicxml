@@ -18,6 +18,7 @@ import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
@@ -463,7 +464,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 currentNote.getDirections().add(direction);
             }
         } else {
-            currentDirections.stream().flatMap(direction -> direction.getDirectionTypes().stream()).collect(Collectors.toList())
+            currentDirections.stream().flatMap(typeList -> typeList.getDirectionTypeLists().stream()).flatMap(direction -> direction.getDirectionTypes().stream()).collect(Collectors.toList())
                     .forEach(directionType -> displayMeasureMessage(measure, "Skipping direction type: " + directionType.getClass().getSimpleName()));
         }
 
@@ -474,21 +475,25 @@ public class MeasureBuilder extends AbstractBuilder {
         boolean isDeferred = true;
         if (TypeUtil.getBoolean(direction.getDirective())) isDeferred = false;
 
-        for (DirectionType directionType : direction.getDirectionTypes()) {
-            if (directionType instanceof Metronome) isDeferred = false;
-            if (directionType instanceof Words && TypeUtil.getBoolean(direction.getDirective())) isDeferred = false;
-            if (directionType instanceof Rehearsal) isDeferred = false;
+        for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
+            for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
+                if (directionType instanceof Metronome) isDeferred = false;
+                if (directionType instanceof Words && TypeUtil.getBoolean(direction.getDirective())) isDeferred = false;
+                if (directionType instanceof Rehearsal) isDeferred = false;
 
-            if (!isDeferred) break;
+                if (!isDeferred) break;
+            }
         }
 
         // reset any relevant direction type values if it's deferred
         if (!isDeferred) {
             direction.setDirective(true);
-            for (DirectionType directionType : direction.getDirectionTypes()) {
-                if (directionType instanceof Words) {
-                    Words words = (Words)directionType;
-                    words.setTextMark(true);
+            for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
+                for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
+                    if (directionType instanceof Words) {
+                        Words words = (Words)directionType;
+                        words.setTextMark(true);
+                    }
                 }
             }
         }

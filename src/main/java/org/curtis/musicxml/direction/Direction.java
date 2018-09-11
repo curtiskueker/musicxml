@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -16,7 +16,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class Direction extends MusicData {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "direction_id")
-    private List<DirectionType> directionTypes = new ArrayList<>();
+    private List<DirectionTypeList> directionTypeLists = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
     private Offset offset;
@@ -48,12 +47,12 @@ public class Direction extends MusicData {
 
     }
 
-    public List<DirectionType> getDirectionTypes() {
-        return directionTypes;
+    public List<DirectionTypeList> getDirectionTypeLists() {
+        return directionTypeLists;
     }
 
-    public void setDirectionTypes(List<DirectionType> directionTypes) {
-        this.directionTypes = directionTypes;
+    public void setDirectionTypeLists(List<DirectionTypeList> directionTypeLists) {
+        this.directionTypeLists = directionTypeLists;
     }
 
     public Offset getOffset() {
