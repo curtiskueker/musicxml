@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.common.Position;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,8 +19,8 @@ public class Stem extends DatabaseItem {
     @Column
     private StemType type;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "y_position_id")
-    private YPosition yPosition;
+    @JoinColumn(name = "position_id")
+    private Position position;
     @Column
     private String color;
 
@@ -35,12 +36,12 @@ public class Stem extends DatabaseItem {
         this.type = type;
     }
 
-    public YPosition getyPosition() {
-        return yPosition;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setyPosition(YPosition yPosition) {
-        this.yPosition = yPosition;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public String getColor() {

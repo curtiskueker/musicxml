@@ -21,8 +21,6 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
-import org.curtis.musicxml.note.XPosition;
-import org.curtis.musicxml.note.YPosition;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
@@ -49,13 +47,7 @@ public class NoteBuilder extends MusicDataBuilder {
         if (note == null) return stringBuilder;
 
         buildOpenElement("note");
-        XPosition xPosition = note.getxPosition();
-        if (xPosition != null) {
-            buildAttribute("default-x", xPosition.getDefaultX());
-            buildAttribute("default-y", xPosition.getDefaultY());
-            buildAttribute("relative-x", xPosition.getRelativeX());
-            buildAttribute("relative-y", xPosition.getRelativeY());
-        }
+        buildAttributes(PlacementBuilder.buildPosition(note.getPosition()));
         buildAttributes(FormattingBuilder.buildFont(note.getFont()));
         buildAttribute("color", note.getColor());
         buildAttributes(FormattingBuilder.buildPrintout(note.getPrintout()));
@@ -112,13 +104,7 @@ public class NoteBuilder extends MusicDataBuilder {
         Stem stem = note.getStem();
         if (stem != null) {
             Map<String, String> stemAttributes = new HashMap<>();
-            YPosition yPosition = stem.getyPosition();
-            if (yPosition != null) {
-                stemAttributes.put("default-x", BuilderUtil.stringValue(yPosition.getDefaultX()));
-                stemAttributes.put("default-y", BuilderUtil.stringValue(yPosition.getDefaultY()));
-                stemAttributes.put("relative-x", BuilderUtil.stringValue(yPosition.getRelativeX()));
-                stemAttributes.put("relative-y", BuilderUtil.stringValue(yPosition.getRelativeY()));
-            }
+            stemAttributes.putAll(PlacementBuilder.buildPosition(stem.getPosition()));
             stemAttributes.put("color", stem.getColor());
             buildElementWithValueAndAttributes("stem", stem.getType(), stemAttributes);
         }

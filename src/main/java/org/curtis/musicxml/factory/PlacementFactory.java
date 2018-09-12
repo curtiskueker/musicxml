@@ -4,6 +4,7 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.handler.util.PlacementUtil;
+import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Placement;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.util.MathUtil;
@@ -47,15 +48,20 @@ public class PlacementFactory {
         return placementText;
     }
 
-    public static Position newPosition(Element positionElement) {
-        if(positionElement == null) {
+    public static Position newPosition(Element element) {
+        if(element == null) {
             return null;
         }
 
-        BigDecimal defaultX = MathUtil.newBigDecimal(positionElement.getAttribute("default-x"));
-        BigDecimal defaultY = MathUtil.newBigDecimal(positionElement.getAttribute("default-y"));
-        BigDecimal relativeX = MathUtil.newBigDecimal(positionElement.getAttribute("relative-x"));
-        BigDecimal relativeY = MathUtil.newBigDecimal(positionElement.getAttribute("relative-y"));
+        BigDecimal defaultX = MathUtil.newBigDecimal(element.getAttribute("default-x"));
+        BigDecimal defaultY = MathUtil.newBigDecimal(element.getAttribute("default-y"));
+        BigDecimal relativeX = MathUtil.newBigDecimal(element.getAttribute("relative-x"));
+        BigDecimal relativeY = MathUtil.newBigDecimal(element.getAttribute("relative-y"));
+
+        if (!validPositionValue(defaultX, "default-x")) defaultX = null;
+        if (!validPositionValue(defaultY, "default-y")) defaultY = null;
+        if (!validPositionValue(relativeX, "relative-x")) relativeX = null;
+        if (!validPositionValue(relativeY, "relative-y")) relativeY = null;
 
         if (defaultX == null && defaultY == null && relativeX == null && relativeY == null) return null;
 
@@ -67,5 +73,16 @@ public class PlacementFactory {
         position.setRelativeY(relativeY);
 
         return position;
+    }
+
+    private static boolean validPositionValue(BigDecimal positionValue, String fieldName) {
+        if (positionValue == null) return true;
+
+        if (MathUtil.largerThan(positionValue.abs(), TypeUtil.MAXIMUM_POSITION_VALUE)) {
+            System.err.println("WARNING: " + fieldName + " value" + positionValue + " exceeds maximum allowed value " + TypeUtil.MAXIMUM_POSITION_VALUE + ".  Setting value to null.");
+            return false;
+        }
+
+        return true;
     }
 }

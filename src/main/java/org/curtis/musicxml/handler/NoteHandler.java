@@ -3,6 +3,7 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
+import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
@@ -23,8 +24,6 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.StemType;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.Unpitched;
-import org.curtis.musicxml.note.XPosition;
-import org.curtis.musicxml.note.YPosition;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -43,13 +42,7 @@ public class NoteHandler extends MusicDataHandler {
         Note note = new Note();
         FullNote fullNote = new FullNote();
 
-        XPosition xPosition = new XPosition();
-        xPosition.setDefaultX(MathUtil.newBigDecimal(element.getAttribute("default-x")));
-        xPosition.setDefaultY(MathUtil.newBigDecimal(element.getAttribute("default-y")));
-        xPosition.setRelativeX(MathUtil.newBigDecimal(element.getAttribute("relative-x")));
-        xPosition.setRelativeY(MathUtil.newBigDecimal(element.getAttribute("relative-y")));
-        note.setxPosition(xPosition);
-
+        note.setPosition(PlacementFactory.newPosition(element));
         note.setEditorialVoice(FormattingFactory.newEditorialVoice(element));
         note.setFont(FormattingFactory.newFont(element));
         note.setColor(element.getAttribute("color"));
@@ -149,12 +142,7 @@ public class NoteHandler extends MusicDataHandler {
                             stem.setType(StemType.NONE);
                             break;
                     }
-                    YPosition yPosition = new YPosition();
-                    yPosition.setDefaultX(MathUtil.newBigDecimal(noteSubelement.getAttribute("default-x")));
-                    yPosition.setDefaultY(MathUtil.newBigDecimal(noteSubelement.getAttribute("default-y")));
-                    yPosition.setRelativeX(MathUtil.newBigDecimal(noteSubelement.getAttribute("relative-x")));
-                    yPosition.setRelativeX(MathUtil.newBigDecimal(noteSubelement.getAttribute("relative-x")));
-                    stem.setyPosition(yPosition);
+                    stem.setPosition(PlacementFactory.newPosition(noteSubelement));
                     stem.setColor(noteSubelement.getAttribute("color"));
                     note.setStem(stem);
                     break;

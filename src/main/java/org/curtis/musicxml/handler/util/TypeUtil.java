@@ -1,8 +1,13 @@
 package org.curtis.musicxml.handler.util;
 
+import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
+import java.math.BigDecimal;
+
 public class TypeUtil {
+    public static final BigDecimal MAXIMUM_POSITION_VALUE = MathUtil.newBigDecimal(999999);
+
     private TypeUtil() {
 
     }

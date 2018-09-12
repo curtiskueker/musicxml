@@ -2,6 +2,7 @@ package org.curtis.musicxml.note;
 
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.direction.Direction;
@@ -90,8 +91,8 @@ public class Note extends MusicData {
     @JoinColumn(name = "play_id")
     private Play play;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "x_position_id")
-    private XPosition xPosition;
+    @JoinColumn(name = "position_id")
+    private Position position;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")
     private Font font;
@@ -302,12 +303,12 @@ public class Note extends MusicData {
         this.play = play;
     }
 
-    public XPosition getxPosition() {
-        return xPosition;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setxPosition(XPosition xPosition) {
-        this.xPosition = xPosition;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Font getFont() {
