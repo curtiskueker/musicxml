@@ -66,6 +66,12 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     }
 
     protected void buildPlacementWithAttribute(String elementName, Placement placement, String attributeName, String attributeValue) {
+        if (placement == null) {
+            if (StringUtil.isEmpty(attributeValue)) buildElement(elementName);
+            else buildElementWithAttribute(elementName, attributeName, attributeValue);
+            return;
+        }
+
         Map<String, String> attributes = new HashMap<>();
         attributes.putAll(FormattingBuilder.buildPrintStyle(placement.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placement.getPlacement()));
