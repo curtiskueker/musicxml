@@ -85,7 +85,7 @@ public class LyricHandler extends AbstractHandler {
                 }
 
                 // Set the extend value
-                lyricText.setExtend(LyricFactory.newExtend(XmlUtil.getChildElement(lyricItemElement, "extend")));
+                lyricText.setExtend(LyricFactory.newExtend(XmlUtil.getChildElement(element, "extend")));
 
                 lyricItem = lyricText;
                 break;
