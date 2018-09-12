@@ -147,7 +147,7 @@ public class AttributesHandler extends MusicDataHandler {
                                 }
                                 break;
                             case "staff-lines":
-                                staffDetails.setStaffLines(StringUtil.getInteger(XmlUtil.getChildElementText(staffDetailsSubelement, "staff-lines")));
+                                staffDetails.setStaffLines(StringUtil.getInteger(XmlUtil.getElementText(staffDetailsSubelement)));
                                 break;
                             case "staff-tuning":
                                 List<StaffTuning> staffTunings = staffDetails.getStaffTunings();
