@@ -21,12 +21,14 @@ public class PlacementFactory {
     public static Placement newPlacement(Element element) {
         if (element == null) return null;
 
-        Placement placement = new Placement();
-
         PrintStyle printStyle = FormattingFactory.newPrintStyle(element);
-        placement.setPrintStyle(printStyle);
+        Location placementLocation = PlacementFactory.newPlacementLocation(element);
 
-        placement.setPlacement(PlacementFactory.newPlacementLocation(element));
+        if (printStyle == null && placementLocation == null) return null;
+
+        Placement placement = new Placement();
+        placement.setPrintStyle(printStyle);
+        placement.setPlacement(placementLocation);
 
         return placement;
     }

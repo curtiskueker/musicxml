@@ -7,6 +7,7 @@ import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
+import org.curtis.musicxml.note.Dot;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Grace;
@@ -82,9 +83,8 @@ public class NoteBuilder extends MusicDataBuilder {
         if (noteType != null) {
             buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", noteType.getSize());
         }
-        // TODO: note dot Placement
-        for (Integer dotCount = 1; dotCount <= note.getDots(); dotCount++) {
-            buildElement("dot");
+        for (Dot dot : note.getDots()) {
+            buildPlacement("dot", dot.getPlacement());
         }
         Accidental accidental = note.getAccidental();
         if (accidental != null) {

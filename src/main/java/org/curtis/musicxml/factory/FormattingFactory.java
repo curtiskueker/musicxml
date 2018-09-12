@@ -116,15 +116,16 @@ public class FormattingFactory {
             return null;
         }
 
-        PrintStyle printStyle = new PrintStyle();
-
         Position position = PlacementFactory.newPosition(printStyleElement);
-        printStyle.setPosition(position);
-
         Font font = newFont(printStyleElement);
-        printStyle.setFont(font);
+        String color = printStyleElement.getAttribute("color");
 
-        printStyle.setColor(printStyleElement.getAttribute("color"));
+        if (position == null && font == null && StringUtil.isEmpty(color)) return null;
+
+        PrintStyle printStyle = new PrintStyle();
+        printStyle.setPosition(position);
+        printStyle.setFont(font);
+        printStyle.setColor(color);
 
         return printStyle;
     }
@@ -144,10 +145,16 @@ public class FormattingFactory {
             return null;
         }
 
-        Font font = new Font();
-        font.setFontFamily(fontElement.getAttribute("font-family"));
-
+        String fontFamily = fontElement.getAttribute("font-family");
         String fontStyle = fontElement.getAttribute("font-style");
+        String fontSizeValue = fontElement.getAttribute("font-size");
+        String fontWeight = fontElement.getAttribute("font-weight");
+
+        if (StringUtil.isEmpty(fontFamily) && StringUtil.isEmpty(fontStyle) && StringUtil.isEmpty(fontSizeValue) && StringUtil.isEmpty(fontWeight)) return null;
+
+        Font font = new Font();
+        font.setFontFamily(fontFamily);
+
         if(StringUtil.isNotEmpty(fontStyle)) {
             switch (fontStyle) {
                 case "normal":
@@ -159,9 +166,8 @@ public class FormattingFactory {
             }
         }
 
-        FontSize fontSize = new FontSize();
-        String fontSizeValue = fontElement.getAttribute("font-size");
         if (StringUtil.isNotEmpty(fontSizeValue)) {
+            FontSize fontSize = new FontSize();
             switch (fontSizeValue) {
                 case "xx-small":
                     fontSize.setCssFontSize(CssFontSize.XX_SMALL);
@@ -188,10 +194,9 @@ public class FormattingFactory {
                     BigDecimal fontSizeNumber = MathUtil.newBigDecimal(fontSizeValue);
                     fontSize.setFontSize(fontSizeNumber);
             }
+            font.setFontSize(fontSize);
         }
-        font.setFontSize(fontSize);
 
-        String fontWeight = fontElement.getAttribute("font-weight");
         if (StringUtil.isNotEmpty(fontWeight)) {
             switch (fontWeight) {
                 case "normal":

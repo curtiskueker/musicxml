@@ -12,6 +12,7 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.note.Chord;
+import org.curtis.musicxml.note.Dot;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
@@ -79,20 +80,12 @@ public class NoteBuilder extends MusicDataBuilder {
         this.directions = directions;
     }
 
-    public Boolean getBeginBeam() {
-        return isBeginBeam;
+    public void setBeginBeam() {
+        isBeginBeam = true;
     }
 
-    public void setBeginBeam(Boolean beginBeam) {
-        isBeginBeam = beginBeam;
-    }
-
-    public Boolean getEndBeam() {
-        return isEndBeam;
-    }
-
-    public void setEndBeam(Boolean endBeam) {
-        isEndBeam = endBeam;
+    public void setEndBeam() {
+        isEndBeam = true;
     }
 
     public StringBuilder build() throws BuildException {
@@ -275,8 +268,7 @@ public class NoteBuilder extends MusicDataBuilder {
         NoteType noteType = note.getType();
         if (noteType == null) return stringBuilder;
         append(NoteUtil.getNoteTypeValue(noteType.getValue()));
-        Integer dots = note.getDots();
-        for(int dotCount = 1; dotCount <= dots; dotCount++) append(".");
+        for(Dot dot : note.getDots()) append(".");
 
         return stringBuilder;
     }
@@ -334,9 +326,9 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder beamBuild() {
-        if(getBeginBeam()) {
+        if(isBeginBeam) {
             append("[");
-        } else if(getEndBeam()) {
+        } else if(isEndBeam) {
             append("]");
         }
 

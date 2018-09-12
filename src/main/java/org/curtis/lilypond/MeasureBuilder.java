@@ -380,14 +380,14 @@ public class MeasureBuilder extends AbstractBuilder {
                     switch (beamType) {
                         case BEGIN:
                             if(currentBeams.isEmpty()) {
-                                noteBuilder.setBeginBeam(true);
+                                noteBuilder.setBeginBeam();
                             }
                             currentBeams.add(beamNumber);
                             break;
                         case END:
                             currentBeams.remove(beamNumber);
                             if(currentBeams.isEmpty()) {
-                                noteBuilder.setEndBeam(true);
+                                noteBuilder.setEndBeam();
                             }
                             break;
                     }

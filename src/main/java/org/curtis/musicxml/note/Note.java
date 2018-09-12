@@ -55,9 +55,10 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id")
     private NoteType type;
-    // TODO: dot Placement
-    @Column
-    private Integer dots = 0;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "note_id", nullable = false)
+    private List<Dot> dots = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "accidental_id")
     private Accidental accidental;
@@ -189,11 +190,11 @@ public class Note extends MusicData {
         this.type = type;
     }
 
-    public Integer getDots() {
+    public List<Dot> getDots() {
         return dots;
     }
 
-    public void setDots(Integer dots) {
+    public void setDots(List<Dot> dots) {
         this.dots = dots;
     }
 

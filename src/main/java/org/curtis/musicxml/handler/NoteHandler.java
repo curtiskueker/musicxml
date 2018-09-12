@@ -10,6 +10,7 @@ import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamFan;
+import org.curtis.musicxml.note.Dot;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
@@ -110,9 +111,9 @@ public class NoteHandler extends MusicDataHandler {
                     noteType.setSize(FormattingFactory.newSymbolSize(noteSubelement));
                     break;
                 case "dot":
-                    Integer dots = note.getDots();
-                    dots++;
-                    note.setDots(dots);
+                    Dot dot = new Dot();
+                    dot.setPlacement(PlacementFactory.newPlacement(noteSubelement));
+                    note.getDots().add(dot);
                     break;
                 case "accidental":
                     Accidental accidental = new Accidental();

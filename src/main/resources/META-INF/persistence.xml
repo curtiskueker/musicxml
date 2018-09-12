@@ -158,6 +158,7 @@
         <class>org.curtis.musicxml.note.AccidentalText</class>
         <class>org.curtis.musicxml.note.Backup</class>
         <class>org.curtis.musicxml.note.Beam</class>
+        <class>org.curtis.musicxml.note.Dot</class>
         <class>org.curtis.musicxml.note.FiguredBass</class>
         <class>org.curtis.musicxml.note.Forward</class>
         <class>org.curtis.musicxml.note.FullNote</class>
@@ -174,8 +175,6 @@
         <class>org.curtis.musicxml.note.Rest</class>
         <class>org.curtis.musicxml.note.Tie</class>
         <class>org.curtis.musicxml.note.TimeModification</class>
-        <class>org.curtis.musicxml.note.XPosition</class>
-        <class>org.curtis.musicxml.note.YPosition</class>
         <class>org.curtis.musicxml.note.lyric.Extend</class>
         <class>org.curtis.musicxml.note.lyric.Humming</class>
         <class>org.curtis.musicxml.note.lyric.Laughing</class>
