@@ -292,5 +292,6 @@
         <class>org.curtis.musicxml.score.instrument.InstrumentType</class>
         <class>org.curtis.musicxml.score.instrument.ScoreInstrument</class>
         <class>org.curtis.musicxml.score.instrument.Solo</class>
+        <class>org.curtis.musicxml.score.instrument.VirtualInstrument</class>
     </persistence-unit>
 </persistence>

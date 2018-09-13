@@ -46,8 +46,8 @@ import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.InstrumentType;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
 import org.curtis.musicxml.score.instrument.Solo;
+import org.curtis.musicxml.score.instrument.VirtualInstrument;
 import org.curtis.util.DateUtil;
-import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -291,12 +291,11 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                     buildElementWithOptionalValue("ensemble", ensemble.getValue());
                 }
             }
-            String virtualLibrary = scoreInstrument.getVirtualLibrary();
-            String virtualName = scoreInstrument.getVirtualName();
-            if (StringUtil.isNotEmpty(virtualLibrary) || StringUtil.isNotEmpty(virtualName)) {
+            VirtualInstrument virtualInstrument = scoreInstrument.getVirtualInstrument();
+            if (virtualInstrument != null) {
                 buildStartElement("virtual-instrument");
-                buildElementWithValue("virtual-library", virtualLibrary);
-                buildElementWithValue("virtual-name", virtualName);
+                buildElementWithValue("virtual-library", virtualInstrument.getVirtualLibrary());
+                buildElementWithValue("virtual-name", virtualInstrument.getVirtualName());
                 buildEndElement("virtual-instrument");
             }
             buildEndElement("score-instrument");

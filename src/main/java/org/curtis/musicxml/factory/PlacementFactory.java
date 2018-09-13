@@ -81,7 +81,7 @@ public class PlacementFactory {
         if (positionValue == null) return true;
 
         if (MathUtil.largerThan(positionValue.abs(), TypeUtil.MAXIMUM_POSITION_VALUE)) {
-            System.err.println("WARNING: " + fieldName + " value" + positionValue + " exceeds maximum allowed value " + TypeUtil.MAXIMUM_POSITION_VALUE + ".  Setting value to null.");
+            System.err.println("Warning: " + fieldName + " value " + positionValue + " exceeds maximum allowed value " + TypeUtil.MAXIMUM_POSITION_VALUE + ".  Setting value to null.");
             return false;
         }
 

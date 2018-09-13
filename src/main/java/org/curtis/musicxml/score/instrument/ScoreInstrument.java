@@ -21,10 +21,9 @@ public class ScoreInstrument extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instrument_type_id")
     private InstrumentType instrumentType;
-    @Column(name = "virtual_library")
-    private String virtualLibrary;
-    @Column(name = "virtual_name")
-    private String virtualName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "virtual_instrument_id")
+    private VirtualInstrument virtualInstrument;
     @Column(name = "score_instrument_id")
     private String scoreInstrumentId;
 
@@ -64,20 +63,12 @@ public class ScoreInstrument extends DatabaseItem {
         this.instrumentType = instrumentType;
     }
 
-    public String getVirtualLibrary() {
-        return virtualLibrary;
+    public VirtualInstrument getVirtualInstrument() {
+        return virtualInstrument;
     }
 
-    public void setVirtualLibrary(String virtualLibrary) {
-        this.virtualLibrary = virtualLibrary;
-    }
-
-    public String getVirtualName() {
-        return virtualName;
-    }
-
-    public void setVirtualName(String virtualName) {
-        this.virtualName = virtualName;
+    public void setVirtualInstrument(VirtualInstrument virtualInstrument) {
+        this.virtualInstrument = virtualInstrument;
     }
 
     public String getScoreInstrumentId() {

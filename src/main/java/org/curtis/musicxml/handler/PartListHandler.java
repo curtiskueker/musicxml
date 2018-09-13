@@ -17,6 +17,7 @@ import org.curtis.musicxml.score.ScorePartGroup;
 import org.curtis.musicxml.score.instrument.Ensemble;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
 import org.curtis.musicxml.score.instrument.Solo;
+import org.curtis.musicxml.score.instrument.VirtualInstrument;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -102,8 +103,12 @@ public class PartListHandler extends AbstractHandler {
                             scoreInstrument.setInstrumentType(ensemble);
                         }
                         Element virtualInstrumentElement = XmlUtil.getChildElement(partListSubelement, "virtual-instrument");
-                        scoreInstrument.setVirtualLibrary(XmlUtil.getChildElementText(virtualInstrumentElement, "virtual-library"));
-                        scoreInstrument.setVirtualName(XmlUtil.getChildElementText(virtualInstrumentElement, "virtual-name"));
+                        if (virtualInstrumentElement != null) {
+                            VirtualInstrument virtualInstrument = new VirtualInstrument();
+                            virtualInstrument.setVirtualLibrary(XmlUtil.getChildElementText(virtualInstrumentElement, "virtual-library"));
+                            virtualInstrument.setVirtualName(XmlUtil.getChildElementText(virtualInstrumentElement, "virtual-name"));
+                            scoreInstrument.setVirtualInstrument(virtualInstrument);
+                        }
                         scorePart.getScoreInstruments().add(scoreInstrument);
                     }
                     List<Element> midiDeviceElements = XmlUtil.getChildElements(partListSubelement, "midi-device");
