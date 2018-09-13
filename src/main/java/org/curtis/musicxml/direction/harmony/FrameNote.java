@@ -16,13 +16,13 @@ import javax.persistence.Transient;
 @Table(name = "frame_note")
 public class FrameNote extends DatabaseItem {
     @Transient
-    // transient collection
+    // TODO: transient collection
     private StringNumber string;
     @Transient
-    // transient collection
+    // TODO: transient collection
     private Fret fret;
     @Transient
-    // transient collection
+    // TODO: transient collection
     private Fingering fingering;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "barre_id")
