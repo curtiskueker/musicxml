@@ -168,7 +168,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             else if (measureStyle instanceof BeatRepeat) {
                 BeatRepeat beatRepeat = (BeatRepeat)measureStyle;
                 buildOpenElement("beat-repeat");
-                buildAttribute("type", beatRepeat.getType());
+                buildAttribute("type", BuilderUtil.enumValue(beatRepeat.getType()));
                 buildAttribute("slashes", beatRepeat.getSlashes());
                 buildAttribute("use-dots", beatRepeat.getUseDots());
                 buildCloseElement();
@@ -178,7 +178,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             else if (measureStyle instanceof Slash) {
                 Slash slash = (Slash)measureStyle;
                 buildOpenElement("slash");
-                buildAttribute("type", slash.getType());
+                buildAttribute("type", BuilderUtil.enumValue(slash.getType()));
                 buildAttribute("use-dots", slash.getUseDots());
                 buildAttribute("use-stems", slash.getUseStems());
                 buildCloseElement();

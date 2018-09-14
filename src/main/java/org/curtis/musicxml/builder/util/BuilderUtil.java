@@ -6,6 +6,8 @@ import org.curtis.util.StringUtil;
 import java.math.BigDecimal;
 
 public class BuilderUtil {
+    public static String REQUIRED_ATTRIBUTE = "REQUIRED_ATTRIBUTE";
+
     private BuilderUtil() {
 
     }
@@ -54,5 +56,9 @@ public class BuilderUtil {
         builder.append("\n");
 
         return builder.toString();
+    }
+
+    public static String requiredValue(String value) {
+        return StringUtil.isEmpty(value) ? REQUIRED_ATTRIBUTE : value;
     }
 }

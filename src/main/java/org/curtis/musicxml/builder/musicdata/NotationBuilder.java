@@ -103,7 +103,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildTuplet(Tuplet tuplet) {
         buildOpenElement("tuplet");
-        buildAttribute("type", tuplet.getType());
+        buildAttribute("type", BuilderUtil.enumValue(tuplet.getType()));
         buildAttribute("number", tuplet.getNumber());
         buildAttribute("bracket",  tuplet.getBracket());
         buildAttribute("show-number", tuplet.getShowNumber());

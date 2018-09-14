@@ -42,7 +42,7 @@ public class BarlineBuilder extends MusicDataBuilder {
         Ending ending = barline.getEnding();
         if (ending != null) {
             Map<String, String> attributes = new HashMap<>();
-            attributes.put("number", ending.getNumber());
+            attributes.put("number", BuilderUtil.requiredValue(ending.getNumber()));
             attributes.put("type", BuilderUtil.enumValue(ending.getType()));
             attributes.put("print-object", BuilderUtil.yesOrNo(ending.getPrintObject()));
             attributes.putAll(FormattingBuilder.buildPrintStyle(ending.getPrintStyle()));

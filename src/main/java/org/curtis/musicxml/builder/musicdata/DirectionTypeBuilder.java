@@ -186,7 +186,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         MetronomeTuplet metronomeTuplet = metronomeNote.getMetronomeTuplet();
         if (metronomeTuplet != null) {
             buildOpenElement("metronome-tuplet");
-            buildAttribute("type", metronomeTuplet.getType());
+            buildAttribute("type", BuilderUtil.enumValue(metronomeTuplet.getType()));
             buildAttribute("bracket", metronomeTuplet.getBracket());
             buildAttribute("show-number", metronomeTuplet.getShowNumber());
             buildCloseElement();

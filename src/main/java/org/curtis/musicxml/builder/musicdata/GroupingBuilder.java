@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.Feature;
 import org.curtis.musicxml.direction.Grouping;
 
@@ -14,7 +15,7 @@ public class GroupingBuilder extends MusicDataBuilder {
         if (grouping == null) return stringBuilder;
 
         buildOpenElement("grouping");
-        buildAttribute("type", grouping.getType());
+        buildAttribute("type", BuilderUtil.enumValue(grouping.getType()));
         buildAttribute("number", grouping.getNumber());
         buildAttribute("number-of", grouping.getNumberOf());
         buildCloseElement();

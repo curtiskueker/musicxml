@@ -10,6 +10,7 @@ import org.curtis.musicxml.attributes.StaffTuning;
 import org.curtis.musicxml.attributes.StaffType;
 import org.curtis.musicxml.attributes.Transpose;
 import org.curtis.musicxml.attributes.key.Key;
+import org.curtis.musicxml.attributes.key.KeyOctave;
 import org.curtis.musicxml.attributes.measure.BeatRepeat;
 import org.curtis.musicxml.attributes.measure.MeasureRepeat;
 import org.curtis.musicxml.attributes.measure.MeasureStyle;
@@ -52,6 +53,14 @@ public class AttributesHandler extends MusicDataHandler {
                     key.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                     key.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
                     key.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
+                    List<Element> keyOctaveElements = XmlUtil.getChildElements(attributeSubelement, "key-octave");
+                    for (Element keyOctaveElement : keyOctaveElements) {
+                        KeyOctave keyOctave = new KeyOctave();
+                        keyOctave.setOctave(StringUtil.getInteger(XmlUtil.getElementText(keyOctaveElement)));
+                        keyOctave.setNumber(StringUtil.getInteger(keyOctaveElement.getAttribute("number")));
+                        keyOctave.setCancel(TypeUtil.getYesNo(keyOctaveElement.getAttribute("cancel")));
+                        key.getKeyOctaves().add(keyOctave);
+                    }
                     keys.add(key);
                     break;
                 case "time":

@@ -30,7 +30,7 @@ public class XLinkBuilder extends OutputBuilder {
         if (linkAttributes == null) return "";
 
         XLinkBuilder xLinkBuilder = new XLinkBuilder();
-        xLinkBuilder.buildAttribute("xlink:href", linkAttributes.getHref());
+        xLinkBuilder.buildAttribute("xlink:href", BuilderUtil.requiredValue(linkAttributes.getHref()));
         xLinkBuilder.buildAttribute("xlink:type", linkAttributes.getType());
         xLinkBuilder.buildAttribute("xlink:role", linkAttributes.getRole());
         xLinkBuilder.buildAttribute("xlink:title", linkAttributes.getTitle());

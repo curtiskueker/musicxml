@@ -116,7 +116,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                     Supports supports = (Supports)encoding;
                     Map<String, String> attributes = new HashMap<>();
                     attributes.put("type", BuilderUtil.yesOrNo(supports.getType()));
-                    attributes.put("element", supports.getElement());
+                    attributes.put("element", BuilderUtil.requiredValue(supports.getElement()));
                     attributes.put("attribute", supports.getAttribute());
                     attributes.put("value", supports.getValue());
                     buildElementWithAttributes("supports", attributes);
@@ -128,7 +128,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             Miscellaneous miscellaneous = identification.getMiscellaneous();
             if (miscellaneous != null) {
                 buildStartElement("miscellaneous");
-                for (MiscellaneousField miscellaneousField : miscellaneous.getMiscellaneousFields()) buildElementWithValueAndAttribute("miscellaneous-field", miscellaneousField.getValue(), "name", miscellaneousField.getName());
+                for (MiscellaneousField miscellaneousField : miscellaneous.getMiscellaneousFields()) buildElementWithValueAndAttribute("miscellaneous-field", miscellaneousField.getValue(), "name", BuilderUtil.requiredValue(miscellaneousField.getName()));
                 buildEndElement("miscellaneous");
             }
         }
@@ -153,15 +153,15 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         if (appearance != null) {
             buildStartElement("appearance");
             for (LineWidth lineWidth : appearance.getLineWidths()) {
-                buildElementWithValueAndAttribute("line-width", lineWidth.getValue(), "type", lineWidth.getLineWidthType());
+                buildElementWithValueAndAttribute("line-width", lineWidth.getValue(), "type", BuilderUtil.requiredValue(lineWidth.getLineWidthType()));
             }
             for (NoteSize noteSize : appearance.getNoteSizes()) {
-                buildElementWithValueAndAttribute("note-size", noteSize.getValue(), "type", noteSize.getType());
+                buildElementWithValueAndAttribute("note-size", noteSize.getValue(), "type", BuilderUtil.enumValue(noteSize.getType()));
             }
             for (Distance distance : appearance.getDistances()) {
-                buildElementWithValueAndAttribute("distance", distance.getValue(), "type", distance.getType());
+                buildElementWithValueAndAttribute("distance", distance.getValue(), "type", BuilderUtil.requiredValue(distance.getType()));
             }
-            for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", otherAppearance.getType());
+            for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", BuilderUtil.requiredValue(otherAppearance.getType()));
             buildEndElement("appearance");
         }
         buildElementWithAttributes("music-font", FormattingBuilder.buildFont(defaults.getMusicFont()));
@@ -187,7 +187,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("number", lyricLanguage.getNumber());
         attributes.put("name", lyricLanguage.getName());
-        attributes.put("xml:lang", lyricLanguage.getLang());
+        attributes.put("xml:lang", BuilderUtil.requiredValue(lyricLanguage.getLang()));
         buildElementWithAttributes("lyric-language", attributes);
     }
 
@@ -230,7 +230,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
 
     private void buildPartGroup(PartGroup partGroup) {
         buildOpenElement("part-group");
-        buildAttribute("type", partGroup.getType());
+        buildAttribute("type", BuilderUtil.enumValue(partGroup.getType()));
         buildAttribute("number", partGroup.getNumber());
         buildCloseElement();
         buildGroupName("group-name", partGroup.getGroupName());

@@ -30,6 +30,8 @@ public abstract class OutputBuilder {
     protected void buildAttribute(String attributeName, String attributeValue) {
         if (StringUtil.isEmpty(attributeValue)) return;
 
+        if (attributeValue.equals(BuilderUtil.REQUIRED_ATTRIBUTE)) attributeValue = "";
+
         append(" ");
         append(attributeName);
         append("=\"");

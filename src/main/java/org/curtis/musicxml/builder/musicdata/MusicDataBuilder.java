@@ -219,7 +219,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
                 buildElementWithValue("semi-pitched", semiPitched.getSemiPitchcedType());
             } else if (playType instanceof OtherPlay) {
                 OtherPlay otherPlay = (OtherPlay)playType;
-                buildElementWithValueAndAttribute("other-play", otherPlay.getValue(), "type", otherPlay.getType());
+                buildElementWithValueAndAttribute("other-play", otherPlay.getValue(), "type", BuilderUtil.requiredValue(otherPlay.getType()));
             }
         }
 
@@ -230,8 +230,8 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         if (image == null) return;
 
         Map<String, String> attributes = new HashMap<>();
-        attributes.put("source", image.getSource());
-        attributes.put("type", image.getType());
+        attributes.put("source", BuilderUtil.requiredValue(image.getSource()));
+        attributes.put("type", BuilderUtil.requiredValue(image.getType()));
         attributes.putAll(PlacementBuilder.buildPosition(image.getPosition()));
         attributes.put("halign", BuilderUtil.enumValue(image.getHalign()));
         attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
