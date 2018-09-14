@@ -4,9 +4,11 @@ import org.curtis.musicxml.common.StyleText;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+@Entity
 @DiscriminatorValue("function")
 public class Function extends HarmonyChord {
     @OneToOne(cascade = CascadeType.ALL)

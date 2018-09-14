@@ -120,10 +120,12 @@
         <class>org.curtis.musicxml.direction.harmony.FirstFret</class>
         <class>org.curtis.musicxml.direction.harmony.Frame</class>
         <class>org.curtis.musicxml.direction.harmony.FrameNote</class>
+        <class>org.curtis.musicxml.direction.harmony.Function</class>
         <class>org.curtis.musicxml.direction.harmony.Harmony</class>
         <class>org.curtis.musicxml.direction.harmony.HarmonyChord</class>
         <class>org.curtis.musicxml.direction.harmony.Inversion</class>
         <class>org.curtis.musicxml.direction.harmony.Kind</class>
+        <class>org.curtis.musicxml.direction.harmony.Root</class>
         <class>org.curtis.musicxml.direction.harmony.RootAlter</class>
         <class>org.curtis.musicxml.direction.harmony.RootStep</class>
         <class>org.curtis.musicxml.identity.Identification</class>

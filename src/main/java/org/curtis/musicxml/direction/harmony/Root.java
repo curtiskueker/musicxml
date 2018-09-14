@@ -2,9 +2,11 @@ package org.curtis.musicxml.direction.harmony;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+@Entity
 @DiscriminatorValue("root")
 public class Root extends HarmonyChord {
     @OneToOne(cascade = CascadeType.ALL)
