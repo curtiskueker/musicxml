@@ -148,14 +148,12 @@ public class XmlUtil {
         }
 
         Node childNode = element.getFirstChild();
-        if (childNode != null) {
-            while(childNode.getNextSibling() != null) {
-                childNode = childNode.getNextSibling();
-                if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element childElement = (Element) childNode;
-                    elements.add(childElement);
-                }
+        while (childNode != null) {
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element childElement = (Element) childNode;
+                elements.add(childElement);
             }
+            childNode = childNode.getNextSibling();
         }
 
         return elements;
