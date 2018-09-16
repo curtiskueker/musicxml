@@ -104,6 +104,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "instrument":
                     note.setInstrument(noteSubelement.getAttribute("id"));
+                    break;
                 case "type":
                     NoteType noteType = new NoteType();
                     noteType.setValue(NoteFactory.newNoteTypeValue(noteSubelement));
