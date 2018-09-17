@@ -4,7 +4,6 @@ import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.part.PartBuilder;
-import org.curtis.musicxml.handler.ScoreHandler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -51,13 +50,13 @@ public class MusicDataBuilder extends AbstractBuilder {
                 // Note exception but continue anyway
                 System.err.println(PartBuilder.CURRENT_PART_ID + ", Measure " + MeasureBuilder.CURRENT_MEASURE_NUMBER + ":  MusicData exception: " + e.getCause().getMessage());
             } else {
-                ScoreHandler.displayException(e);
+                displayException(e);
                 if(DEBUG) e.printStackTrace();
             }
         } catch (NoSuchMethodException e) {
             System.err.println("Unimplemented method: " + builderObjectName + "." + builderMethodName + "(" + objectClassName + ")");
         } catch (Exception e) {
-            ScoreHandler.displayException(e);
+            displayException(e);
             if(DEBUG) e.printStackTrace();
         }
 

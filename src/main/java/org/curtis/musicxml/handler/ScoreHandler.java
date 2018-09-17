@@ -46,16 +46,4 @@ public class ScoreHandler extends AbstractHandler {
         String scoreVersion = element.getAttribute("version");
         if (StringUtil.isNotEmpty(scoreVersion)) score.setVersion(scoreVersion);
     }
-
-    public static void displayException(Exception e) {
-        if (StringUtil.isEmpty(e.getMessage())) {
-            System.err.println("Exception: no message");
-        } else {
-            System.err.println("Exception: " + e.getMessage());
-        }
-        if (!DEBUG) return;
-
-        e.printStackTrace();
-        System.err.println("");
-    }
 }

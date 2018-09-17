@@ -337,8 +337,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         if (currentMeasureBuilderList.isEmpty()) return;
 
         SortedSet<String> measureVoices = currentMeasureBuilderList.get(0).getVoices();
-        // TODO: process when no voice elements are found
-        if (measureVoices.isEmpty()) return;
+        String NO_VOICE = "NO VOICE";
+        if (measureVoices.isEmpty()) measureVoices.add(NO_VOICE);
 
         boolean hasMultipleVoices = measureVoices.size() > 1;
         String defaultVoice = measureVoices.first();

@@ -5,6 +5,8 @@ import org.curtis.lilypond.util.ScoreDefaults;
 import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
@@ -141,11 +143,17 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
 
                     append(" { ");
 
-                    BigDecimal fontSize = textFormatting.getPrintStyleAlign().getPrintStyle().getFont().getFontSize().getFontSize();
-                    if(fontSize != null) {
-                        append("\\abs-fontsize #");
-                        append(String.valueOf(fontSize.intValue()));
-                        append(" ");
+                    PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
+                    if (printStyleAlign != null) {
+                        PrintStyle printStyle = printStyleAlign.getPrintStyle();
+                        if (printStyle != null) {
+                            BigDecimal fontSize = printStyle.getFont().getFontSize().getFontSize();
+                            if(fontSize != null) {
+                                append("\\abs-fontsize #");
+                                append(String.valueOf(fontSize.intValue()));
+                                append(" ");
+                            }
+                        }
                     }
 
                     append("\"");

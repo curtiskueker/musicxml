@@ -35,9 +35,9 @@ public class DirectionBuilder extends MusicDataBuilder {
     public StringBuilder buildPrint(Print print) {
         if (DEBUG) return stringBuilder;
 
-        if(print.getNewSystem()) {
+        if(TypeUtil.getBoolean(print.getNewSystem())) {
             appendLine("\\break");
-        } else if(print.getNewPage()) {
+        } else if(TypeUtil.getBoolean(print.getNewPage())) {
             appendLine("\\pageBreak");
         }
 

@@ -250,7 +250,7 @@ public class NoteBuilder extends MusicDataBuilder {
         try {
             if (tremolo != null &&(tremolo.getType() == Connection.START || tremolo.getType() == Connection.STOP)) {
                 append(TimeSignatureUtil.getDurationRepresentationValue(duration));
-            } else if (fullNoteType instanceof Rest && ((Rest)fullNoteType).getMeasure()) {
+            } else if (fullNoteType instanceof Rest && TypeUtil.getBoolean(((Rest)fullNoteType).getMeasure())) {
                 append(TimeSignatureUtil.getWholeMeasureRepresentation());
             } else if (noteType != null) {
                 noteTypeValueBuild();

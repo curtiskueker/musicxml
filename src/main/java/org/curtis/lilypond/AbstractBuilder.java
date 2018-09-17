@@ -5,6 +5,8 @@ import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.util.StringUtil;
 
+import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+
 public abstract class AbstractBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();
 
@@ -41,5 +43,17 @@ public abstract class AbstractBuilder {
 
     protected void displayMeasureMessage(Measure measure, String message) {
         System.err.println(getPartAndMeasure(measure) + message);
+    }
+
+    protected void displayException(Exception e) {
+        if (StringUtil.isEmpty(e.getMessage())) {
+            System.err.println("Exception: no message");
+        } else {
+            System.err.println("Exception: " + e.getMessage());
+        }
+        if (!DEBUG) return;
+
+        e.printStackTrace();
+        System.err.println("");
     }
 }
