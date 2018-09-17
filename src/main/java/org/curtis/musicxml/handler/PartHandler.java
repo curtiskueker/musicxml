@@ -7,6 +7,8 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
+
 public class PartHandler extends AbstractHandler {
     private List<Part> parts;
 
@@ -18,6 +20,7 @@ public class PartHandler extends AbstractHandler {
         Part part = new Part();
 
         part.setPartId(element.getAttribute("id"));
+        if (DEBUG) System.err.println("Part " + part.getPartId());
 
         List<Measure> measures = part.getMeasures();
         List<Element> measureElements = XmlUtil.getChildElements(element, "measure");

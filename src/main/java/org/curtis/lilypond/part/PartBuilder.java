@@ -10,7 +10,7 @@ import org.curtis.musicxml.score.Part;
 
 import java.util.List;
 
-import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
 public class PartBuilder extends AbstractBuilder {
     private Part part;

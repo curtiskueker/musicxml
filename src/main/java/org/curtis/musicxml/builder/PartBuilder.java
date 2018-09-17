@@ -4,6 +4,8 @@ import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.Part;
 
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
+
 public class PartBuilder extends MusicDataBuilder {
     private Part part;
 
@@ -12,8 +14,10 @@ public class PartBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
+        String partId = part.getPartId();
+        if (DEBUG) System.err.println("Part " + partId);
         buildOpenElement("part");
-        buildAttribute("id", part.getPartId());
+        buildAttribute("id", partId);
         buildCloseElement();
         for (Measure measure : part.getMeasures()) {
             MeasureBuilder measureBuilder = new MeasureBuilder(measure);

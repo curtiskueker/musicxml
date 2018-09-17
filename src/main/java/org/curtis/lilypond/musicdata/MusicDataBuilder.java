@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
 public class MusicDataBuilder extends AbstractBuilder {
     private Object musicData;

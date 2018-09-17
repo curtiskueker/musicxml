@@ -9,8 +9,11 @@ import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.Score;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
+
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
 public class MusicXml2Db {
     public static String GENERATE_SCHEMA_FILE = null;
@@ -57,6 +60,8 @@ public class MusicXml2Db {
                 GENERATE_SCHEMA_FILE = arg.replace("SCHEMA_FILE=", "");
             } else if (arg.equals("CREATE_SCHEMA")) {
                 CREATE_DB_SCHEMA = true;
+            } else if (arg.equals("DEBUG")) {
+                DEBUG = true;
             }
         }
         MusicXml2Db musicXmlDb = new MusicXml2Db();

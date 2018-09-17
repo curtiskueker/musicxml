@@ -5,6 +5,7 @@ import org.curtis.lilypond.ScoreBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
 import org.curtis.xml.XmlException;
 
@@ -31,11 +32,13 @@ public class MusicXml2Ly {
     public static void main(String args[]) {
         String xmlFilename = args[0];
         String outputfilename = args[1];
-        ScoreHandler.DEBUG = new Boolean(args[2]);
 
         if (xmlFilename.equals("EMPTY") || outputfilename.equals("EMPTY")) {
             System.err.println("Usage: mysicXml2Ly -f inputfile -o outputfile");
             return;
+        }
+        for (String arg : args) {
+            if (arg.equals("DEBUG")) MusicXmlUtil.DEBUG = true;
         }
 
         MusicXml2Ly musicXml2Ly = new MusicXml2Ly();

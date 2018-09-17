@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ScoreHandler extends AbstractHandler {
     private Score score;
-    public static Boolean DEBUG;
 
     public ScoreHandler() {
         

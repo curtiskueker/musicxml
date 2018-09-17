@@ -5,7 +5,7 @@ import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.util.StringUtil;
 
-import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
 public abstract class AbstractBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();

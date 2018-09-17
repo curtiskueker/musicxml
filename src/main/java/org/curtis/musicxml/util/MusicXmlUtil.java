@@ -1,4 +1,4 @@
-package org.curtis.musicxml.bin;
+package org.curtis.musicxml.util;
 
 import org.curtis.database.DBException;
 import org.curtis.database.DBSessionFactory;
@@ -31,6 +31,7 @@ import java.io.StringWriter;
 
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
+    public static Boolean DEBUG = false;
 
     private MusicXmlUtil() {
 

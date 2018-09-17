@@ -9,11 +9,11 @@ CLASSPATH=${JAR_DIR}/${JAR_FILE}
 
 INPUT='EMPTY'
 OUTPUT='EMPTY'
-DEBUG='false'
+DEBUG=''
 
 while getopts 'df:o:' flag; do
   case "${flag}" in
-    d) DEBUG='true' ;;
+    d) DEBUG="DEBUG" ;;
     f) INPUT="${OPTARG}" ;;
     o) OUTPUT="${OPTARG}" ;;
   esac

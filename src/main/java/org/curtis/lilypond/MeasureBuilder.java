@@ -48,7 +48,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
 public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;

@@ -10,7 +10,7 @@ import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.Words;
 
-import static org.curtis.musicxml.handler.ScoreHandler.DEBUG;
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
 public class DirectionBuilder extends MusicDataBuilder {
     public DirectionBuilder() {

@@ -3,7 +3,7 @@ package org.curtis.musicxml.builder;
 import org.curtis.database.DBException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.bin.MusicXmlUtil;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.musicxml.builder.musicdata.AttributesBuilder;
 import org.curtis.musicxml.builder.musicdata.BackupBuilder;
 import org.curtis.musicxml.builder.musicdata.BarlineBuilder;
@@ -33,6 +33,8 @@ import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MeasureItem;
 
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
+
 public class MeasureBuilder extends MusicDataBuilder {
     private Measure measure;
 
@@ -41,8 +43,10 @@ public class MeasureBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
+        String measureNumber = measure.getNumber();
+        if (DEBUG) System.err.println("Measure " + measureNumber);
         buildOpenElement("measure");
-        buildAttribute("number", BuilderUtil.requiredValue(measure.getNumber()));
+        buildAttribute("number", BuilderUtil.requiredValue(measureNumber));
         buildAttribute("implicit", measure.getImplicit());
         buildAttribute("non-controlling", measure.getNonControlling());
         buildAttribute("width", measure.getWidth());

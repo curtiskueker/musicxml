@@ -12,6 +12,8 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
+import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
+
 public class MeasureHandler extends AbstractHandler {
     private List<Measure> measures;
 
@@ -20,8 +22,10 @@ public class MeasureHandler extends AbstractHandler {
     }
 
     public void handle(Element element) {
+        String measureNumber = element.getAttribute("number");
+        if (DEBUG) System.err.println("Measure " + measureNumber);
         Measure measure = new Measure();
-        measure.setNumber(element.getAttribute("number"));
+        measure.setNumber(measureNumber);
         measure.setImplicit(TypeUtil.getYesNo(element.getAttribute("implicit")));
         measure.setNonControlling(TypeUtil.getYesNo(element.getAttribute("non-controlling")));
         measure.setWidth(MathUtil.newBigDecimal(element.getAttribute("width")));

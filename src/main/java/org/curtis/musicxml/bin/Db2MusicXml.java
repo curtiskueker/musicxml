@@ -5,6 +5,7 @@ import org.curtis.database.DBTransaction;
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.score.Score;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
@@ -42,6 +43,8 @@ public class Db2MusicXml {
                 SCORE_ID = Integer.parseInt(arg.replace("SCORE_ID=", ""));
             } else if (arg.startsWith("OUTPUT_FILE=")) {
                 OUTPUT_FILE = arg.replace("OUTPUT_FILE=", "");
+            } else if (arg.equals("DEBUG")) {
+                MusicXmlUtil.DEBUG = true;
             }
         }
         try {
