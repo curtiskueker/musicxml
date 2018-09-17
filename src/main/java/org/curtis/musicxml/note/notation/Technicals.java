@@ -18,7 +18,7 @@ import java.util.List;
 public class Technicals extends Notation {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "technicals_id", nullable = false)
+    @JoinColumn(name = "technicals_id")
     private List<Technical> technicals = new ArrayList<>();
 
     public Technicals() {

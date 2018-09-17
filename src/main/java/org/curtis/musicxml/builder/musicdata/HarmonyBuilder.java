@@ -126,9 +126,9 @@ public class HarmonyBuilder extends MusicDataBuilder {
             }
             for (FrameNote frameNote : frame.getFrameNotes()) {
                 buildStartElement("frame-note");
-                // TODO: frame note string
-                // TODO: frame note fret
-                // TODO: frame note fingering
+                buildStringNumber(frameNote.getString());
+                buildFret(frameNote.getFret());
+                buildFingering(frameNote.getFingering());
                 Barre barre = frameNote.getBarre();
                 if (barre != null) {
                     Map<String, String> barreAttributes = new HashMap<>();

@@ -123,15 +123,6 @@ public class TechnicalBuilder extends MusicDataBuilder {
         buildPlacement("thumb-position", thumbPosition.getPlacement());
     }
 
-    private void buildFingering(Fingering fingering) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("substitution", BuilderUtil.yesOrNo(fingering.getSubstitution()));
-        attributes.put("alternate", BuilderUtil.yesOrNo(fingering.getAlternate()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(fingering.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(fingering.getPlacement()));
-        buildElementWithValueAndAttributes("fingering", fingering.getValue(), attributes);
-    }
-
     private void buildPluck(Pluck pluck) {
         buildPlacementText("pluck", pluck.getPlacementText());
     }
@@ -150,20 +141,6 @@ public class TechnicalBuilder extends MusicDataBuilder {
 
     private void buildSnapPizzicato(SnapPizzicato snapPizzicato) {
         buildPlacement("snap-pizzicato", snapPizzicato.getPlacement());
-    }
-
-    private void buildFret(Fret fret) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildFont(fret.getFont()));
-        attributes.put("color", fret.getColor());
-        buildElementWithValueAndAttributes("fret", fret.getValue(), attributes);
-    }
-
-    private void buildStringNumber(StringNumber stringNumber) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(stringNumber.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(stringNumber.getPlacement()));
-        buildElementWithValueAndAttributes("string", stringNumber.getStringNumber(), attributes);
     }
 
     private void buildHammerOnPullOf(HammerOnPullOff hammerOnPullOff) {

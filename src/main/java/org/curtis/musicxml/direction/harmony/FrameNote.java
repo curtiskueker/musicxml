@@ -15,14 +15,14 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "frame_note")
 public class FrameNote extends DatabaseItem {
-    @Transient
-    // TODO: transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "string_id")
     private StringNumber string;
-    @Transient
-    // TODO: transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fret_id")
     private Fret fret;
-    @Transient
-    // TODO: transient collection
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fingering_id")
     private Fingering fingering;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "barre_id")

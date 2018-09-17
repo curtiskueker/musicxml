@@ -33,6 +33,9 @@ import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.ornament.TrillSound;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
+import org.curtis.musicxml.note.notation.technical.Fingering;
+import org.curtis.musicxml.note.notation.technical.Fret;
+import org.curtis.musicxml.note.notation.technical.StringNumber;
 import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
@@ -288,5 +291,28 @@ public abstract class MusicDataBuilder extends BaseBuilder {
             buildElement(dynamicsMarking.getDynamicsType());
         }
         buildEndElement("dynamics");
+    }
+
+    protected void buildStringNumber(StringNumber stringNumber) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildPrintStyle(stringNumber.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(stringNumber.getPlacement()));
+        buildElementWithValueAndAttributes("string", stringNumber.getStringNumber(), attributes);
+    }
+
+    protected void buildFret(Fret fret) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.putAll(FormattingBuilder.buildFont(fret.getFont()));
+        attributes.put("color", fret.getColor());
+        buildElementWithValueAndAttributes("fret", fret.getValue(), attributes);
+    }
+
+    protected void buildFingering(Fingering fingering) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("substitution", BuilderUtil.yesOrNo(fingering.getSubstitution()));
+        attributes.put("alternate", BuilderUtil.yesOrNo(fingering.getAlternate()));
+        attributes.putAll(FormattingBuilder.buildPrintStyle(fingering.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(fingering.getPlacement()));
+        buildElementWithValueAndAttributes("fingering", fingering.getValue(), attributes);
     }
 }

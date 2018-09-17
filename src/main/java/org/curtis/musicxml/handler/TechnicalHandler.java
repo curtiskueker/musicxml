@@ -356,7 +356,10 @@ public class TechnicalHandler extends AbstractHandler {
                     technical = otherTechnical;
                     break;
             }
-            if (technical != null) technicals.getTechnicals().add(technical);
+            if (technical != null) {
+                technicals.getTechnicals().add(technical);
+                technical.setTechnicals(technicals);
+            }
         }
     }
 }
