@@ -48,7 +48,6 @@ public class AttributesHandler extends MusicDataHandler {
                     attributes.setDivisions(new BigDecimal(XmlUtil.getElementText(attributeSubelement)));
                     break;
                 case "key":
-                    // TODO: group keys correctly
                     List<Key> keys = attributes.getKeys();
                     Key key = AttributesFactory.newKey(attributeSubelement);
                     key.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
