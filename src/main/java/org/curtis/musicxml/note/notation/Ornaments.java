@@ -21,12 +21,10 @@ public class Ornaments extends Notation {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "ornaments_id")
     private List<Ornament> ornaments = new ArrayList<>();
-    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //@Fetch(FetchMode.SUBSELECT)
-    //@JoinColumn(name = "ornaments_id")
-    // TODO: ornament accidental marks
-    @Transient
-    private List<AccidentalMark> accidentalMarks = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "ornaments_id", nullable = false)
+    private List<OrnamentAccidental> ornamentAccidentals = new ArrayList<>();
     @Transient
     // used by lilypond
     private boolean printObject = true;
@@ -43,12 +41,12 @@ public class Ornaments extends Notation {
         this.ornaments = ornaments;
     }
 
-    public List<AccidentalMark> getAccidentalMarks() {
-        return accidentalMarks;
+    public List<OrnamentAccidental> getOrnamentAccidentals() {
+        return ornamentAccidentals;
     }
 
-    public void setAccidentalMarks(List<AccidentalMark> accidentalMarks) {
-        this.accidentalMarks = accidentalMarks;
+    public void setOrnamentAccidentals(List<OrnamentAccidental> ornamentAccidentals) {
+        this.ornamentAccidentals = ornamentAccidentals;
     }
 
     public boolean isPrintObject() {

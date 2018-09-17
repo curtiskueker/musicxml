@@ -11,9 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("accidental mark")
@@ -27,10 +25,6 @@ public class AccidentalMark extends Notation {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
-    //@ManyToOne
-    //@JoinColumn(name = "ornaments_id")
-    @Transient
-    private Ornaments ornaments;
 
     public AccidentalMark() {
 
@@ -58,13 +52,5 @@ public class AccidentalMark extends Notation {
 
     public void setPlacement(Location placement) {
         this.placement = placement;
-    }
-
-    public Ornaments getOrnaments() {
-        return ornaments;
-    }
-
-    public void setOrnaments(Ornaments ornaments) {
-        this.ornaments = ornaments;
     }
 }
