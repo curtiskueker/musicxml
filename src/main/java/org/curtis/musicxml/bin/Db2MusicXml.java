@@ -32,8 +32,6 @@ public class Db2MusicXml {
             throw new MusicXmlException(e);
         } catch (Throwable e){
             e.printStackTrace();
-        } finally {
-            System.exit(0);
         }
     }
 
@@ -56,6 +54,8 @@ public class Db2MusicXml {
             db2MusicXml.execute();
         } catch (MusicXmlException e) {
             System.err.println("Fatal exception: " + e.getMessage());
+        } finally {
+            System.exit(0);
         }
     }
 }

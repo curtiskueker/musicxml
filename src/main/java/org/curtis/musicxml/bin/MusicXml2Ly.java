@@ -9,6 +9,8 @@ import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
 import org.curtis.xml.XmlException;
 
+import java.io.File;
+
 public class MusicXml2Ly {
     public static String LILYPOND_VERSION = "2.18.2";
 
@@ -17,7 +19,8 @@ public class MusicXml2Ly {
             // output file
             outputFilename += ".ly";
 
-            ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(xmlFilename);
+            File xmlFile = new File(xmlFilename);
+            ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(xmlFile);
 
             // build the score
             ScoreBuilder scoreBuilder = new ScoreBuilder(scoreHandler.getScore());
@@ -46,6 +49,8 @@ public class MusicXml2Ly {
             musicXml2Ly.execute(xmlFilename, outputfilename);
         } catch (MusicXmlException e) {
             System.err.println("Fatal exception: " + e.getMessage());
+        } finally {
+            System.exit(0);
         }
     }
 }

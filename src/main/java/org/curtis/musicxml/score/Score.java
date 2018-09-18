@@ -27,6 +27,8 @@ public class Score extends DatabaseItem {
     private List<Part> parts = new ArrayList<>();
     @Column
     private String version;
+    @Column
+    private String filename;
 
     public Score() {
 
@@ -54,5 +56,13 @@ public class Score extends DatabaseItem {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

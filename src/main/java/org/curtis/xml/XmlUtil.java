@@ -16,6 +16,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,16 +42,16 @@ public class XmlUtil {
         }
     }
 
-    public static Document fileToDocument(String xmlFilename) throws XmlException {
-        if (StringUtil.isEmpty(xmlFilename)) {
-            throw new XmlException("Invalid filename");
+    public static Document fileToDocument(File xmlFile) throws XmlException {
+        if (xmlFile == null) {
+            throw new XmlException("Invalid file");
         }
 
         // Read file as an xml document
         StringBuilder xmlStringBuilder = new StringBuilder();
 
         try {
-            FileReader reader = new FileReader(xmlFilename);
+            FileReader reader = new FileReader(xmlFile);
             int ch;
             boolean inProlog = true;
             while ((ch = reader.read()) != -1) {

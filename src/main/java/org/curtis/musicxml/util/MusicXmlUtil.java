@@ -27,6 +27,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.StringWriter;
 
 public class MusicXmlUtil {
@@ -37,8 +38,8 @@ public class MusicXmlUtil {
 
     }
 
-    public static ScoreHandler handleXmlScoreFile(String xmlFilename) throws XmlException {
-        Document xmlDocument = XmlUtil.fileToDocument(xmlFilename);
+    public static ScoreHandler handleXmlScoreFile(File xmlFile) throws XmlException {
+        Document xmlDocument = XmlUtil.fileToDocument(xmlFile);
         SchemaValidator.getInstance().validate(xmlDocument);
 
         ScoreHandler scoreHandler = new ScoreHandler();
