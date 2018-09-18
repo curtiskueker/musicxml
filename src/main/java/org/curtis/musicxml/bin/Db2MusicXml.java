@@ -1,7 +1,6 @@
 package org.curtis.musicxml.bin;
 
 import org.curtis.database.DBException;
-import org.curtis.database.DBTransaction;
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.score.Score;
@@ -9,16 +8,21 @@ import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
+import java.io.File;
+
 public class Db2MusicXml {
-    public static Integer SCORE_ID;
-    public static String OUTPUT_FILE;
+    private static Integer SCORE_ID;
+    private static String OUTPUT_FILE;
+    private static String FILENAME;
 
     private void execute() throws MusicXmlException {
         try {
             Score score = null;
             if (SCORE_ID != null) {
-                DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
-                score = dbTransaction.getObjectById(Score.class, SCORE_ID);
+                score = MusicXmlUtil.getDbTransaction().getObjectById(Score.class, SCORE_ID);
+            } else if (StringUtil.isNotEmpty(FILENAME)) {
+                File xmlFile = new File(FILENAME);
+                score = MusicXmlUtil.getDbTransaction().find(Score.class, "filename", xmlFile.getName());
             }
             if (score == null) {
                 throw new MusicXmlException("Score not found");
@@ -38,11 +42,14 @@ public class Db2MusicXml {
     public static void main(String[] args) {
         for (String arg : args) {
             if (arg.startsWith("SCORE_ID=")) {
-                SCORE_ID = Integer.parseInt(arg.replace("SCORE_ID=", ""));
+                String scoreId = arg.replace("SCORE_ID=", "");
+                if (StringUtil.isNotEmpty(scoreId)) SCORE_ID = Integer.parseInt(scoreId);
             } else if (arg.startsWith("OUTPUT_FILE=")) {
                 OUTPUT_FILE = arg.replace("OUTPUT_FILE=", "");
             } else if (arg.equals("DEBUG")) {
                 MusicXmlUtil.DEBUG = true;
+            } else if (arg.startsWith("FILENAME=")) {
+                FILENAME = arg.replace("FILENAME=", "");
             }
         }
         try {

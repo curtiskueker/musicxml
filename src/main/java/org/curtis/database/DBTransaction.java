@@ -2,13 +2,13 @@ package org.curtis.database;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class DBTransaction {
     private EntityManager em;
     private EntityTransaction transaction;
-
-    protected DBTransaction() {
-    }
 
     public DBTransaction(EntityManager em) {
         this.em = em;
@@ -29,36 +29,8 @@ public class DBTransaction {
         }
     }
 
-    public void rollback() throws DBException {
-        checkDatabase();
-
-        try {
-            transaction.rollback();
-        } catch (Exception e) {
-            throw new DBException(e);
-        }
-    }
-
     public boolean isActive() {
         return (transaction != null && transaction.isActive());
-    }
-
-    public EntityManager getEntityManager() {
-        return em;
-    }
-
-    public boolean isClosed() {
-        return (em == null || !em.isOpen());
-    }
-
-    public void clear() throws DBException {
-        checkDatabase();
-
-        try {
-            em.clear();
-        } catch (Exception e) {
-            throw new DBException(e);
-        }
     }
 
     public void create(Object object) throws DBException {
@@ -71,35 +43,6 @@ public class DBTransaction {
         }
     }
 
-    public void update(Object object) throws DBException {
-        checkDatabase();
-
-        try {
-            if (!em.contains(object)) em.refresh(object);
-        } catch (Exception e) {
-            throw new DBException(e);
-        }
-    }
-
-    public void delete(Object object) throws DBException {
-        checkDatabase();
-
-        try {
-            em.remove(object);
-        } catch (Exception e) {
-            throw new DBException(e);
-        }
-    }
-
-    public <T> T refresh(T object) throws DBException {
-        try {
-            em.refresh(object);
-        } catch (Exception e) {
-            throw new DBException(e.getMessage());
-        }
-        return object;
-    }
-
     public <T> T getObjectById(Class<T> classObject, int id) throws DBException {
         checkDatabase();
 
@@ -110,13 +53,19 @@ public class DBTransaction {
         }
     }
 
-    public <T> T load(Class<T> classObject, int id) throws DBException {
-        return getObjectById(classObject, id);
+    public <T extends DatabaseItem> T find(Class<T> classType, String field, Object value) throws DBException {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classType);
+        Root<T> root = criteriaQuery.from(classType);
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.equal(root.get(field), value));
+
+        return em.createQuery(criteriaQuery).getSingleResult();
     }
 
     // Private helper method that checks that the database is in a valid
     // state to execute against.  Throws an exception if it is not.
-    protected void checkDatabase() throws DBException {
+    private void checkDatabase() throws DBException {
         if (em == null || !em.isOpen()) {
             throw new DBException("Database is closed");
         }
