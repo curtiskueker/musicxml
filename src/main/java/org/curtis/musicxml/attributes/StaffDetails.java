@@ -30,7 +30,7 @@ public class StaffDetails extends DatabaseItem {
     private List<StaffTuning> staffTunings;
     @Column
     private Integer capo;
-    @Column(name = "staff_size")
+    @Column(name = "staff_size", precision = 12, scale = 4)
     private BigDecimal staffSize;
     @Column
     private Integer number;

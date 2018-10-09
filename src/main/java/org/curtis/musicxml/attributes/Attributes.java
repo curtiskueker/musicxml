@@ -27,7 +27,7 @@ public class Attributes extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal divisions;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

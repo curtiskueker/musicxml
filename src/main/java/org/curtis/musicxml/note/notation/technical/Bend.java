@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("bend")
 public class Bend extends Technical {
-    @Column(name = "bend_alter")
+    @Column(name = "bend_alter", precision = 12, scale = 4)
     private BigDecimal bendAlter;
     @Enumerated(EnumType.STRING)
     @Column(name = "bend_type")

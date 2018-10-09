@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "root_alter")
 public class RootAlter extends DatabaseItem {
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal semitones;
     @Column(name = "print_object")
     private Boolean printObject;

@@ -26,9 +26,9 @@ public class Sound extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
     private Offset offset;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal tempo;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal dynamics;
     @Column
     private Boolean dacapo;
@@ -40,7 +40,7 @@ public class Sound extends MusicData {
     private String coda;
     @Column
     private String tocoda;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal divisions;
     @Column(name = "forward_repeat")
     private Boolean forwardRepeat;
@@ -50,9 +50,9 @@ public class Sound extends MusicData {
     private String timeOnly;
     @Column
     private Boolean pizzicato;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal pan;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal elevation;
     @Column(name = "damper_pedal")
     private String damperPedal;

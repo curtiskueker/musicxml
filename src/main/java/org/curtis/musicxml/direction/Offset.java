@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "offset")
 public class Offset extends DatabaseItem {
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal divisions;
     @Column
     private Boolean sound;

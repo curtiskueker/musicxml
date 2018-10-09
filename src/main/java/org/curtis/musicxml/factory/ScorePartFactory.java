@@ -31,7 +31,7 @@ public class ScorePartFactory {
         if (element == null) return null;
 
         GroupName groupName = new GroupName();
-        groupName.setGroupName(XmlUtil.getChildElementText(element, "group-name"));
+        groupName.setGroupName(XmlUtil.getElementText(element));
         groupName.setPrintStyle(FormattingFactory.newPrintStyle(element));
         groupName.setJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
 

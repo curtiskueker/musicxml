@@ -41,7 +41,7 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "full_note_id")
     private FullNote fullNote;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal duration = MathUtil.ZERO;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -102,13 +102,13 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "printout_id")
     private Printout printout;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal dynamics;
-    @Column(name = "end_dynamics")
+    @Column(name = "end_dynamics", precision = 12, scale = 4)
     private BigDecimal endDynamics;
-    @Column(name = "attack_length")
+    @Column(name = "attack_length", precision = 12, scale = 4)
     private BigDecimal attack;
-    @Column(name = "release_length")
+    @Column(name = "release_length", precision = 12, scale = 4)
     private BigDecimal release;
     @Column(name = "time_only")
     private String timeOnly;

@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 public class BendSound extends DatabaseItem {
     @Column
     private Boolean accelerate;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal beats;
-    @Column(name = "first_beat")
+    @Column(name = "first_beat", precision = 12, scale = 4)
     private BigDecimal firstBeat;
-    @Column(name = "last_beat")
+    @Column(name = "last_beat", precision = 12, scale = 4)
     private BigDecimal lastBeat;
 
     public BendSound() {

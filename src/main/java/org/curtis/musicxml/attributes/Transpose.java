@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class Transpose extends DatabaseItem {
     @Column
     private Integer diatonic;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal chromatic;
     @Column(name = "octave_change")
     private Integer octaveChange;

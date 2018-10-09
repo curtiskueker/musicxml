@@ -26,7 +26,7 @@ public class FiguredBass extends MusicData {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "figured_bass_id", nullable = false)
     private List<Figure> figures = new ArrayList<>();
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal duration;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")

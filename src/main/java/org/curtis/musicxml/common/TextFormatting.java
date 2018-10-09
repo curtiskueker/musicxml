@@ -24,7 +24,7 @@ public class TextFormatting extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
-    @Column(name = "text_rotation")
+    @Column(name = "text_rotation", precision = 12, scale = 4)
     private BigDecimal textRotation;
     @Column(name = "letter_spacing")
     private String letterSpacing;

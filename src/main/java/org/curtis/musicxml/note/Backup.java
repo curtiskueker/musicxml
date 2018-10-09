@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("backup")
 public class Backup extends MusicData {
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal duration;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")

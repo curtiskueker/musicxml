@@ -13,13 +13,13 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "system_layout")
 public class SystemLayout extends DatabaseItem {
-    @Column(name = "left_margin", precision = 10, scale = 4)
+    @Column(name = "left_margin", precision = 12, scale = 4)
     private BigDecimal leftMargin;
-    @Column(name = "right_margin", precision = 10, scale = 4)
+    @Column(name = "right_margin", precision = 12, scale = 4)
     private BigDecimal rightMargin;
-    @Column(name = "system_distance", precision = 10, scale = 4)
+    @Column(name = "system_distance", precision = 12, scale = 4)
     private BigDecimal systemDistance;
-    @Column(name = "top_system_distance", precision = 10, scale = 4)
+    @Column(name = "top_system_distance", precision = 12, scale = 4)
     private BigDecimal topSystemDistance;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "system_dividers_id")

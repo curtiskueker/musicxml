@@ -13,7 +13,7 @@ public class Pitch extends FullNoteType {
     @Enumerated(EnumType.STRING)
     @Column
     private Step step;
-    @Column(name = "pitch_alter")
+    @Column(name = "pitch_alter", precision = 12, scale = 4)
     private BigDecimal alter;
     @Column
     private Integer octave;

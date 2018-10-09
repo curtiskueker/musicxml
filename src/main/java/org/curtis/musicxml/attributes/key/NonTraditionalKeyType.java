@@ -17,7 +17,7 @@ public class NonTraditionalKeyType extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "key_step")
     private Step keyStep;
-    @Column(name = "key_alter")
+    @Column(name = "key_alter", precision = 12, scale = 4)
     private BigDecimal keyAlter;
     @Enumerated(EnumType.STRING)
     @Column(name = "key_accidental")

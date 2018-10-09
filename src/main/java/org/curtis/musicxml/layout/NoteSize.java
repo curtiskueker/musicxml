@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "note_size")
 public class NoteSize extends DatabaseItem {
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal value;
     @Enumerated(EnumType.STRING)
     @Column

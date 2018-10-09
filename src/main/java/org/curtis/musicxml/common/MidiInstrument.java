@@ -20,11 +20,11 @@ public class MidiInstrument extends DatabaseItem {
     private Integer midiProgram;
     @Column(name = "midi_unpitched")
     private Integer midiUnpitched;
-    @Column(precision = 10, scale = 4)
+    @Column(precision = 12, scale = 4)
     private BigDecimal volume;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal pan;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal elevation;
     @Column(name = "midi_instrumentj_id")
     private String midiInstrumentId;

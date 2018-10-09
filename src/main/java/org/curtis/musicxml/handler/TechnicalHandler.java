@@ -72,7 +72,7 @@ public class TechnicalHandler extends AbstractHandler {
                     break;
                 case "harmonic":
                     Harmonic harmonic = new Harmonic();
-                    List<Element> harmonicElements = XmlUtil.getChildElements(element);
+                    List<Element> harmonicElements = XmlUtil.getChildElements(technicalElement);
                     for (Element harmonicElement : harmonicElements) {
                         String harmonicElementName = harmonicElement.getTagName();
                         switch (harmonicElementName) {
@@ -93,9 +93,9 @@ public class TechnicalHandler extends AbstractHandler {
                                 break;
                         }
                     }
-                    harmonic.setPrintObject(FormattingFactory.getPrintObject(element));
-                    harmonic.setPrintStyle(FormattingFactory.newPrintStyle(element));
-                    harmonic.setPlacement(PlacementFactory.newPlacementLocation(element));
+                    harmonic.setPrintObject(FormattingFactory.getPrintObject(technicalElement));
+                    harmonic.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
+                    harmonic.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = harmonic;
                     break;
                 case "open-string":

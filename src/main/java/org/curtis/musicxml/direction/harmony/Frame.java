@@ -45,9 +45,9 @@ public class Frame extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "valign_image")
     private Location valignImage;
-    @Column(precision = 10, scale = 4)
+    @Column(precision = 12, scale = 4)
     private BigDecimal height;
-    @Column(precision = 10, scale = 4)
+    @Column(precision = 12, scale = 4)
     private BigDecimal width;
     @Column
     private String unplayed;

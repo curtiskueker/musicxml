@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "degree_alter")
 public class DegreeAlter extends DatabaseItem {
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal semitones;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

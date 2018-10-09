@@ -16,7 +16,7 @@ public class Tuning extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "tuning_step")
     private Step tuningStep;
-    @Column(name = "tuning_alter")
+    @Column(name = "tuning_alter", precision = 12, scale = 4)
     private BigDecimal tuningAlter;
     @Column(name = "tuning_octave")
     private Integer tuningOctave;

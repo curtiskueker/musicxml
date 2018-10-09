@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "grace")
 public class Grace extends DatabaseItem {
-    @Column(name = "steal_time_previous")
+    @Column(name = "steal_time_previous", precision = 12, scale = 4)
     private BigDecimal stealTimePrevious;
-    @Column(name = "steal_time_following")
+    @Column(name = "steal_time_following", precision = 12, scale = 4)
     private BigDecimal stealTimeFollowing;
-    @Column(name = "make_time")
+    @Column(name = "make_time", precision = 12, scale = 4)
     private BigDecimal makeTime;
     @Column
     private Boolean slash;

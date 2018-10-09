@@ -53,10 +53,7 @@ public class NotationHandler extends AbstractHandler {
                 case "slur":
                     Slur slur = new Slur();
                     slur.setConnectionType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
-                    Integer slurNumber = StringUtil.getInteger(notationsSubelement.getAttribute("number"));
-                    if (slurNumber != null) {
-                        slur.setNumber(slurNumber);
-                    }
+                    slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slur.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slur.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     slur.setPosition(PlacementFactory.newPosition(notationsSubelement));

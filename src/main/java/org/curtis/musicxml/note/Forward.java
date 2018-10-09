@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("forward")
 public class Forward extends MusicData {
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal duration;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_voice_id")

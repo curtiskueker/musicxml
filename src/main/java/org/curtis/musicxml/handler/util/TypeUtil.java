@@ -6,7 +6,7 @@ import org.curtis.util.StringUtil;
 import java.math.BigDecimal;
 
 public class TypeUtil {
-    public static final BigDecimal MAXIMUM_POSITION_VALUE = MathUtil.newBigDecimal(999999);
+    public static final BigDecimal MAXIMUM_POSITION_VALUE = MathUtil.newBigDecimal(99999999);
 
     private TypeUtil() {
 

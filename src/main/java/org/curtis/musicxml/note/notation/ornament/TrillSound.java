@@ -23,11 +23,11 @@ public class TrillSound extends DatabaseItem {
     private TwoNoteTurn twoNoteTurn;
     @Column
     private Boolean accelerate;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal beats;
-    @Column(name = "second_beat")
+    @Column(name = "second_beat", precision = 12, scale = 4)
     private BigDecimal secondBeat;
-    @Column(name = "last_beat")
+    @Column(name = "last_beat", precision = 12, scale = 4)
     private BigDecimal lastBeat;
 
     public TrillSound() {

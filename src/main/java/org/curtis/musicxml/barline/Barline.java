@@ -58,7 +58,7 @@ public class Barline extends MusicData {
     private String segno;
     @Column
     private String coda;
-    @Column
+    @Column(precision = 12, scale = 4)
     private BigDecimal divisions;
 
     public Barline() {

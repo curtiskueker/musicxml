@@ -23,7 +23,7 @@ public class Slur extends Notation {
     @Column
     private Connection connectionType;
     @Column
-    private Integer number = 1;
+    private Integer number;
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")
     private LineType lineType;

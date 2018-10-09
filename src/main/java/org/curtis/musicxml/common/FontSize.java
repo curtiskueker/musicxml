@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "font_size")
 public class FontSize extends DatabaseItem {
-    @Column(name = "font_size")
+    @Column(name = "font_size", precision = 12, scale = 4)
     private BigDecimal fontSize;
     @Enumerated(EnumType.STRING)
     @Column(name = "css_font_size")

@@ -16,7 +16,7 @@ public class PedalTuning extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "pedal_step")
     private Step pedalStep;
-    @Column(name = "pedal_alter")
+    @Column(name = "pedal_alter", precision = 12, scale = 4)
     private BigDecimal pedalAlter;
 
     public PedalTuning() {

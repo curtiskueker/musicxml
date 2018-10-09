@@ -114,6 +114,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 Slur slur = (Slur)notation;
                                 Set<Integer> activeVoiceSlurs = activeSlurs.computeIfAbsent(voice, voiceSlurs -> new HashSet<>());
                                 Integer slurNumber = slur.getNumber();
+                                if (slurNumber == null) slurNumber = 1;
                                 boolean isActiveSlur = activeVoiceSlurs.contains(slurNumber);
                                 int activeSlurCount = activeVoiceSlurs.size();
                                 switch (slur.getConnectionType()) {

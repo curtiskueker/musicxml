@@ -10,17 +10,17 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "bezier")
 public class Bezier extends DatabaseItem {
-    @Column(name = "bezier_offset")
+    @Column(name = "bezier_offset", precision = 12, scale = 4)
     private BigDecimal bezierOffset;
-    @Column(name = "bezier_offset2")
+    @Column(name = "bezier_offset2", precision = 12, scale = 4)
     private BigDecimal bezierOffset2;
-    @Column(name = "bezier_x", precision = 10, scale = 4)
+    @Column(name = "bezier_x", precision = 12, scale = 4)
     private BigDecimal bezierX;
-    @Column(name = "bezier_y", precision = 10, scale = 4)
+    @Column(name = "bezier_y", precision = 12, scale = 4)
     private BigDecimal bezierY;
-    @Column(name = "bezier_x2", precision = 10, scale = 4)
+    @Column(name = "bezier_x2", precision = 12, scale = 4)
     private BigDecimal bezierX2;
-    @Column(name = "bezier_y2", precision = 10, scale = 4)
+    @Column(name = "bezier_y2", precision = 12, scale = 4)
     private BigDecimal bezierY2;
 
     public Bezier() {

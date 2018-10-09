@@ -26,7 +26,7 @@ public class Measure extends DatabaseItem {
     private Boolean implicit;
     @Column(name = "non_controlling")
     private Boolean nonControlling;
-    @Column(precision = 10, scale = 4)
+    @Column(precision = 12, scale = 4)
     private BigDecimal width;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
