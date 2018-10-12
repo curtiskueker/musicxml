@@ -51,11 +51,9 @@ public class LyricBuilder extends MusicDataBuilder {
             LyricText lyricText = (LyricText)lyricItem;
             for(LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
                 TextData textData = lyricSyllable.getText();
-                if(textData != null) {
-                    append("\"");
-                    append(textData.getValue());
-                    append("\"");
-                }
+                append("\"");
+                append(textData.getValue());
+                append("\"");
 
                 append(totalBeatRepresentation);
 

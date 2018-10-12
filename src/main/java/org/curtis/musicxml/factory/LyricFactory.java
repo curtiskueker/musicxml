@@ -33,10 +33,16 @@ public class LyricFactory {
     public static TextDecoration newTextDecoration(Element element) {
         if(element == null) return null;
 
+        Integer underline = StringUtil.getInteger(element.getAttribute("underline"));
+        Integer overline = StringUtil.getInteger(element.getAttribute("overline"));
+        Integer lineThrough = StringUtil.getInteger(element.getAttribute("line-through"));
+
+        if (underline == null && overline == null && lineThrough == null) return null;
+
         TextDecoration textDecoration = new TextDecoration();
-        textDecoration.setUnderline(StringUtil.getInteger(element.getAttribute("underline")));
-        textDecoration.setOverline(StringUtil.getInteger(element.getAttribute("overline")));
-        textDecoration.setLineThrough(StringUtil.getInteger(element.getAttribute("line-through")));
+        textDecoration.setUnderline(underline);
+        textDecoration.setOverline(overline);
+        textDecoration.setLineThrough(lineThrough);
 
         return textDecoration;
     }

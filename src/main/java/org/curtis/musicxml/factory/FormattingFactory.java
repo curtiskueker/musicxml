@@ -13,6 +13,7 @@ import org.curtis.musicxml.common.FontWeight;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.LevelDisplay;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
@@ -20,6 +21,7 @@ import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
@@ -43,33 +45,46 @@ public class FormattingFactory {
 
         FormattedText formattedText = new FormattedText();
         formattedText.setValue(XmlUtil.getElementText(formattedTextElement));
-
-        TextFormatting textFormatting = newTextFormatting(formattedTextElement);
-
-        PrintStyleAlign printStyleAlign = newPrintStyleAlign(formattedTextElement);
-        textFormatting.setPrintStyleAlign(printStyleAlign);
-        formattedText.setTextFormatting(textFormatting);
+        formattedText.setTextFormatting(newTextFormatting(formattedTextElement));
 
         return formattedText;
     }
 
     public static TextFormatting newTextFormatting(Element element) {
+        if (element == null) return null;
+
+        Location justify = PlacementUtil.getLocation(element.getAttribute("justify"));
+        PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
+        TextDecoration textDecoration = LyricFactory.newTextDecoration(element);
+        BigDecimal rotation = MathUtil.newBigDecimal(element.getAttribute("rotation"));
+        String letterSpacing = element.getAttribute("letter-spacing");
+        String lineHeight = element.getAttribute("line-height");
+        String lang = element.getAttribute("xml:lang");
+        String space = element.getAttribute("xml:space");
+        Location dir = PlacementUtil.getLocation(element.getAttribute("dir"));
+        EnclosureShape enclosureShape = newEnclosureShape(element);
+
+        if (justify == null && printStyleAlign == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
+                && StringUtil.isEmpty(lineHeight) && StringUtil.isEmpty(lang) && StringUtil.isEmpty(space) && dir == null && enclosureShape == null) return null;
+
         TextFormatting textFormatting = new TextFormatting();
-        textFormatting.setJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
-        textFormatting.setPrintStyleAlign(newPrintStyleAlign(element));
-        textFormatting.setTextDecoration(LyricFactory.newTextDecoration(element));
-        textFormatting.setTextRotation(MathUtil.newBigDecimal(element.getAttribute("rotation")));
-        textFormatting.setLetterSpacing(element.getAttribute("letter-spacing"));
-        textFormatting.setLineHeight(element.getAttribute("line-height"));
-        textFormatting.setLang(element.getAttribute("xml:lang"));
-        textFormatting.setSpace(element.getAttribute("xml:space"));
-        textFormatting.setTextDirection(PlacementUtil.getLocation(element.getAttribute("dir")));
-        textFormatting.setEnclosure(newEnclosureShape(element));
+        textFormatting.setJustify(justify);
+        textFormatting.setPrintStyleAlign(printStyleAlign);
+        textFormatting.setTextDecoration(textDecoration);
+        textFormatting.setTextRotation(rotation);
+        textFormatting.setLetterSpacing(letterSpacing);
+        textFormatting.setLineHeight(lineHeight);
+        textFormatting.setLang(lang);
+        textFormatting.setSpace(space);
+        textFormatting.setTextDirection(dir);
+        textFormatting.setEnclosure(enclosureShape);
 
         return textFormatting;
     }
 
     public static StyleText newStyleText(Element element) {
+        if (element == null) return null;
+
         StyleText styleText = new StyleText();
         styleText.setValue(XmlUtil.getElementText(element));
         styleText.setPrintStyle(newPrintStyle(element));
@@ -101,11 +116,15 @@ public class FormattingFactory {
             return null;
         }
 
-        PrintStyleAlign printStyleAlign = new PrintStyleAlign();
-        printStyleAlign.setHalign(PlacementUtil.getLocation(printStyleAlignElement.getAttribute("halign")));
-        printStyleAlign.setValign(PlacementUtil.getLocation(printStyleAlignElement.getAttribute("valign")));
-
+        Location halign = PlacementUtil.getLocation(printStyleAlignElement.getAttribute("halign"));
+        Location valign = PlacementUtil.getLocation(printStyleAlignElement.getAttribute("valign"));
         PrintStyle printStyle = newPrintStyle(printStyleAlignElement);
+
+        if (halign == null && valign == null && printStyle == null) return null;
+
+        PrintStyleAlign printStyleAlign = new PrintStyleAlign();
+        printStyleAlign.setHalign(halign);
+        printStyleAlign.setValign(valign);
         printStyleAlign.setPrintStyle(printStyle);
 
         return printStyleAlign;
@@ -133,9 +152,14 @@ public class FormattingFactory {
     public static PrintObjectStyleAlign newPrintObjectStyleAlign(Element element) {
         if(element == null) return null;
 
+        Boolean printObject = getPrintObject(element);
+        PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
+
+        if (printObject == null && printStyleAlign == null) return null;
+
         PrintObjectStyleAlign printObjectStyleAlign = new PrintObjectStyleAlign();
-        printObjectStyleAlign.setPrintObject(getPrintObject(element));
-        printObjectStyleAlign.setPrintStyleAlign(newPrintStyleAlign(element));
+        printObjectStyleAlign.setPrintObject(printObject);
+        printObjectStyleAlign.setPrintStyleAlign(printStyleAlign);
 
         return printObjectStyleAlign;
     }

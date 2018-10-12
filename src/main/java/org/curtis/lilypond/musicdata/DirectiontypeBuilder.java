@@ -137,32 +137,39 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
         value = value.replaceAll("[^\\x00-\\x7F]", "");
 
         TextFormatting textFormatting = formattedText.getTextFormatting();
-        PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
-        PrintStyle printStyle = printStyleAlign.getPrintStyle();
-        Font font = printStyle.getFont();
+        if (textFormatting != null) {
+            PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
+            if (printStyleAlign != null) {
+                PrintStyle printStyle = printStyleAlign.getPrintStyle();
+                if (printStyle != null) {
+                    Font font = printStyle.getFont();
+                    if (font != null) {
+                        append("\\markup { ");
 
-        append("\\markup { ");
-
-        if(font.getFontStyle() != null) {
-            switch (font.getFontStyle()) {
-                case ITALIC:
-                    append("\\italic ");
-                    break;
-            }
-        }
-        if(font.getFontWeight() != null) {
-            switch (font.getFontWeight()) {
-                case BOLD:
-                    append("\\bold ");
-                    break;
-            }
-        }
-        if (font.getFontSize() != null) {
-            BigDecimal fontSize = font.getFontSize().getFontSize();
-            if (MathUtil.isPositive(fontSize)) {
-                append("\\abs-fontsize #");
-                append(String.valueOf(fontSize.intValue()));
-                append(" ");
+                        if(font.getFontStyle() != null) {
+                            switch (font.getFontStyle()) {
+                                case ITALIC:
+                                    append("\\italic ");
+                                    break;
+                            }
+                        }
+                        if(font.getFontWeight() != null) {
+                            switch (font.getFontWeight()) {
+                                case BOLD:
+                                    append("\\bold ");
+                                    break;
+                            }
+                        }
+                        if (font.getFontSize() != null) {
+                            BigDecimal fontSize = font.getFontSize().getFontSize();
+                            if (MathUtil.isPositive(fontSize)) {
+                                append("\\abs-fontsize #");
+                                append(String.valueOf(fontSize.intValue()));
+                                append(" ");
+                            }
+                        }
+                    }
+                }
             }
         }
 
