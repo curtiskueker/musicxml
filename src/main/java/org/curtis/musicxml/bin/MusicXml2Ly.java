@@ -13,7 +13,7 @@ public class MusicXml2Ly extends MusicXmlScript {
     private void execute() throws MusicXmlException {
         try {
             // output file
-            OUTPUT_FILE += ".ly";
+            if (!OUTPUT_FILE.endsWith(".ly")) OUTPUT_FILE += ".ly";
 
             File xmlFile = new File(FILENAME);
             ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(xmlFile);

@@ -4,7 +4,7 @@ import org.curtis.musicxml.exception.MusicXmlException;
 
 public class Db2Ly extends MusicXmlScript {
     private void execute() throws MusicXmlException {
-        OUTPUT_FILE += ".ly";
+        if (!OUTPUT_FILE.endsWith(".ly")) OUTPUT_FILE += ".ly";
 
         outputScore(getScoreFromDb());
     }
