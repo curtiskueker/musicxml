@@ -3,10 +3,13 @@ package org.curtis.lilypond.part;
 import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
+import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
+import org.curtis.musicxml.util.MusicXmlUtil;
 
 import java.util.List;
 
@@ -32,8 +35,13 @@ public class PartBuilder extends AbstractBuilder {
         // check for endings
         // check for vocal part: presence of lyric is indicator
         for(Measure measure : measures) {
-            List<MusicData> musicDataList = measure.getMusicDataList();
-            for(MusicData musicData : musicDataList) {
+            for(MeasureItem measureItem : measure.getMeasureItems()) {
+                MusicData musicData;
+                try {
+                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
+                } catch (MusicXmlException e) {
+                    throw new BuildException(e);
+                }
                 if(musicData instanceof Note) {
                     Note note = (Note)musicData;
                     if (!note.getLyrics().isEmpty()) hasLyrics = true;

@@ -7,9 +7,12 @@ import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.direction.harmony.Root;
 import org.curtis.musicxml.direction.harmony.RootStep;
+import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.score.Measure;
+import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
@@ -31,7 +34,13 @@ public class HarmonyPartBuilder extends FilteredPartBuilder {
         Harmony currentHarmony = newEmptyHarmony();
 
         for(Measure measure : part.getMeasures()) {
-            for(MusicData musicData : measure.getMusicDataList()) {
+            for(MeasureItem measureItem : measure.getMeasureItems()) {
+                MusicData musicData;
+                try {
+                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
+                } catch (MusicXmlException e) {
+                    throw new BuildException(e);
+                }
                 adjustCurrentDuration(musicData);
 
                 if(musicData instanceof Harmony) {

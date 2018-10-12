@@ -3,9 +3,25 @@ package org.curtis.musicxml.util;
 import org.curtis.database.DBException;
 import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
+import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.builder.ScoreBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.Grouping;
+import org.curtis.musicxml.direction.Print;
+import org.curtis.musicxml.direction.Sound;
+import org.curtis.musicxml.direction.harmony.Harmony;
+import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
+import org.curtis.musicxml.link.Bookmark;
+import org.curtis.musicxml.link.Link;
+import org.curtis.musicxml.note.Backup;
+import org.curtis.musicxml.note.FiguredBass;
+import org.curtis.musicxml.note.Forward;
+import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.score.MeasureItem;
+import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Score;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
@@ -107,5 +123,48 @@ public class MusicXmlUtil {
         }
 
         return xmlString;
+    }
+
+    public static MusicData getMusicDataForMeasureItem(MeasureItem measureItem) throws MusicXmlException {
+        if (measureItem == null) throw new MusicXmlException("Measure Item not found");
+
+        Integer measureItemId = measureItem.getId();
+        String musicDataType = measureItem.getMusicDataType();
+
+        try {
+            switch (musicDataType) {
+                case "note":
+                    return getDbTransaction().getObjectById(Note.class, measureItemId);
+                case "backup":
+                    return getDbTransaction().getObjectById(Backup.class, measureItemId);
+                case "forward":
+                    return getDbTransaction().getObjectById(Forward.class, measureItemId);
+                case "direction":
+                    return getDbTransaction().getObjectById(Direction.class, measureItemId);
+                case "attributes":
+                    return getDbTransaction().getObjectById(Attributes.class, measureItemId);
+                case "harmony":
+                    return getDbTransaction().getObjectById(Harmony.class, measureItemId);
+                case "figured bass":
+                    return getDbTransaction().getObjectById(FiguredBass.class, measureItemId);
+                case "print":
+                    return getDbTransaction().getObjectById(Print.class, measureItemId);
+                case "sound":
+                    return getDbTransaction().getObjectById(Sound.class, measureItemId);
+                case "barline":
+                    return getDbTransaction().getObjectById(Barline.class, measureItemId);
+                case "grouping":
+                    return getDbTransaction().getObjectById(Grouping.class, measureItemId);
+                case "link":
+                    return getDbTransaction().getObjectById(Link.class, measureItemId);
+                case "bookmark":
+                    return getDbTransaction().getObjectById(Bookmark.class, measureItemId);
+                default:
+                    throw new MusicXmlException("MeasureItem type not found");
+            }
+        } catch (DBException e) {
+            throw new MusicXmlException(e);
+        }
+
     }
 }

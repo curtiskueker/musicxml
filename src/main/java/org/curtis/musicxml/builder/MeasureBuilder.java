@@ -1,8 +1,8 @@
 package org.curtis.musicxml.builder;
 
-import org.curtis.database.DBException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.musicxml.builder.musicdata.AttributesBuilder;
 import org.curtis.musicxml.builder.musicdata.BackupBuilder;
@@ -58,46 +58,46 @@ public class MeasureBuilder extends MusicDataBuilder {
             try {
                 switch (musicDataType) {
                     case "note":
-                        baseBuilder = new NoteBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Note.class, measureItemId));
+                        baseBuilder = new NoteBuilder((Note)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "backup":
-                        baseBuilder = new BackupBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Backup.class, measureItemId));
+                        baseBuilder = new BackupBuilder((Backup)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "forward":
-                        baseBuilder = new ForwardBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Forward.class, measureItemId));
+                        baseBuilder = new ForwardBuilder((Forward)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "direction":
-                        baseBuilder = new DirectionBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Direction.class, measureItemId));
+                        baseBuilder = new DirectionBuilder((Direction)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "attributes":
-                        baseBuilder = new AttributesBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Attributes.class, measureItemId));
+                        baseBuilder = new AttributesBuilder((Attributes)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "harmony":
-                        baseBuilder = new HarmonyBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Harmony.class, measureItemId));
+                        baseBuilder = new HarmonyBuilder((Harmony)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "figured bass":
-                        baseBuilder = new FiguredBassBuilder(MusicXmlUtil.getDbTransaction().getObjectById(FiguredBass.class, measureItemId));
+                        baseBuilder = new FiguredBassBuilder((FiguredBass)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "print":
-                        baseBuilder = new PrintBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Print.class, measureItemId));
+                        baseBuilder = new PrintBuilder((Print)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "sound":
-                        baseBuilder = new SoundBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Sound.class, measureItemId));
+                        baseBuilder = new SoundBuilder((Sound)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "barline":
-                        baseBuilder = new BarlineBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Barline.class, measureItemId));
+                        baseBuilder = new BarlineBuilder((Barline)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "grouping":
-                        baseBuilder = new GroupingBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Grouping.class, measureItemId));
+                        baseBuilder = new GroupingBuilder((Grouping)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "link":
-                        baseBuilder = new LinkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Link.class, measureItemId));
+                        baseBuilder = new LinkBuilder((Link)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                     case "bookmark":
-                        baseBuilder = new BookmarkBuilder(MusicXmlUtil.getDbTransaction().getObjectById(Bookmark.class, measureItemId));
+                        baseBuilder = new BookmarkBuilder((Bookmark)MusicXmlUtil.getMusicDataForMeasureItem(measureItem));
                         break;
                 }
-            } catch (DBException e) {
+            } catch (MusicXmlException e) {
                 e.printStackTrace();
             }
             if (baseBuilder != null) append(baseBuilder.build().toString());

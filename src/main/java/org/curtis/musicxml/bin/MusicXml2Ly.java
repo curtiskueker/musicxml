@@ -1,54 +1,38 @@
 package org.curtis.musicxml.bin;
 
-import org.curtis.exception.FileException;
-import org.curtis.lilypond.ScoreBuilder;
-import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.util.MusicXmlUtil;
-import org.curtis.util.FileUtil;
 import org.curtis.xml.XmlException;
 
 import java.io.File;
 
-public class MusicXml2Ly {
+public class MusicXml2Ly extends MusicXmlScript {
     public static String LILYPOND_VERSION = "2.18.2";
 
-    private void execute(String xmlFilename, String outputFilename) throws MusicXmlException {
+    private void execute() throws MusicXmlException {
         try {
             // output file
-            outputFilename += ".ly";
+            OUTPUT_FILE += ".ly";
 
-            File xmlFile = new File(xmlFilename);
+            File xmlFile = new File(FILENAME);
             ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(xmlFile);
-
-            // build the score
-            ScoreBuilder scoreBuilder = new ScoreBuilder(scoreHandler.getScore());
-            StringBuilder results = scoreBuilder.build();
-
-            FileUtil.stringToFile(results.toString(), outputFilename);
-        } catch (XmlException | FileException | BuildException e) {
+            outputScore(scoreHandler.getScore());
+        } catch (XmlException e) {
             throw new MusicXmlException(e.getMessage());
         }
     }
 
     public static void main(String args[]) {
-        String xmlFilename = args[0];
-        String outputfilename = args[1];
-
-        if (xmlFilename.equals("EMPTY") || outputfilename.equals("EMPTY")) {
-            System.err.println("Usage: mysicXml2Ly -f inputfile -o outputfile");
-            return;
-        }
-        for (String arg : args) {
-            if (arg.equals("DEBUG")) MusicXmlUtil.DEBUG = true;
-        }
-
-        MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
         try {
-            musicXml2Ly.execute(xmlFilename, outputfilename);
+            setArgs(args);
+
+            MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
+            musicXml2Ly.execute();
         } catch (MusicXmlException e) {
             System.err.println("Fatal exception: " + e.getMessage());
+        } catch (Throwable e){
+            e.printStackTrace();
         } finally {
             System.exit(0);
         }

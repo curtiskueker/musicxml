@@ -9,9 +9,11 @@ import org.curtis.musicxml.attributes.Clef;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.harmony.Harmony;
+import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
+import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;
@@ -19,6 +21,7 @@ import org.curtis.musicxml.score.PartItem;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
+import org.curtis.musicxml.util.MusicXmlUtil;
 
 import java.util.List;
 
@@ -101,7 +104,13 @@ public class ScoreBuilder extends AbstractBuilder {
         Integer staves = 1;
         boolean hasHarmony = false;
         for (Measure measure : measures) {
-            for(MusicData musicData : measure.getMusicDataList()) {
+            for(MeasureItem measureItem : measure.getMeasureItems()) {
+                MusicData musicData;
+                try {
+                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
+                } catch (MusicXmlException e) {
+                    throw new BuildException(e);
+                }
                 if(musicData instanceof Attributes) {
                     Attributes attributes = (Attributes)musicData;
                     Integer attributesStaves = attributes.getStaves();
@@ -181,8 +190,15 @@ public class ScoreBuilder extends AbstractBuilder {
                 staffMeasures[index] = new Measure();
             }
             Integer currentStaff = 1;
-            Backup currentBackup = null;
-            for(MusicData musicData : measure.getMusicDataList()) {
+            MeasureItem currentBackup = null;
+            for(MeasureItem measureItem : measure.getMeasureItems()) {
+                MusicData musicData;
+                try {
+                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
+                } catch (MusicXmlException e) {
+                    e.printStackTrace();
+                    continue;
+                }
                 if(musicData instanceof Direction) {
                     Direction direction = (Direction)musicData;
                     Integer staff = direction.getStaff();
@@ -190,9 +206,9 @@ public class ScoreBuilder extends AbstractBuilder {
                         throw new BuildException("Invalid staff number in direction");
                     }
                     if(staff.equals(currentStaff) && currentBackup != null) {
-                        staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
+                        staffMeasures[staff - 1].getMeasureItems().add(currentBackup);
                     }
-                    staffMeasures[staff - 1].getMusicDataList().add(direction);
+                    staffMeasures[staff - 1].getMeasureItems().add(measureItem);
                     currentBackup = null;
                     currentStaff = staff;
                 } else if(musicData instanceof Note) {
@@ -202,13 +218,13 @@ public class ScoreBuilder extends AbstractBuilder {
                         throw new BuildException("Invalid staff number in note");
                     }
                     if(staff.equals(currentStaff) && currentBackup != null) {
-                        staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
+                        staffMeasures[staff - 1].getMeasureItems().add(currentBackup);
                     }
-                    staffMeasures[staff - 1].getMusicDataList().add(note);
+                    staffMeasures[staff - 1].getMeasureItems().add(measureItem);
                     currentBackup = null;
                     currentStaff = staff;
                 } else if(musicData instanceof Backup) {
-                    currentBackup = (Backup)musicData;
+                    currentBackup = measureItem;
                 } else {
                     if (musicData instanceof Attributes) {
                         Attributes attributes = (Attributes)musicData;
@@ -216,7 +232,7 @@ public class ScoreBuilder extends AbstractBuilder {
                         for (Clef clef : clefs) clef.setPrintObject(clef.getNumber() == null || currentStaff.equals(clef.getNumber()));
                     }
                     for(Measure staffMeasure : staffMeasures) {
-                        staffMeasure.getMusicDataList().add(musicData);
+                        staffMeasure.getMeasureItems().add(measureItem);
                     }
                 }
             }
