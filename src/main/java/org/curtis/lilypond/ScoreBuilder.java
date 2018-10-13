@@ -202,8 +202,9 @@ public class ScoreBuilder extends AbstractBuilder {
                 if(musicData instanceof Direction) {
                     Direction direction = (Direction)musicData;
                     Integer staff = direction.getStaff();
-                    if(staff == null || staff > staves) {
-                        throw new BuildException("Invalid staff number in direction");
+                    // default direction to staff 1
+                    if(staff == null || staff < 1 || staff > staves) {
+                        staff = 1;
                     }
                     if(staff.equals(currentStaff) && currentBackup != null) {
                         staffMeasures[staff - 1].getMeasureItems().add(currentBackup);
@@ -214,7 +215,7 @@ public class ScoreBuilder extends AbstractBuilder {
                 } else if(musicData instanceof Note) {
                     Note note = (Note)musicData;
                     Integer staff = note.getStaff();
-                    if(staff == null || staff > staves) {
+                    if(staff == null || staff < 1 || staff > staves) {
                         throw new BuildException("Invalid staff number in note");
                     }
                     if(staff.equals(currentStaff) && currentBackup != null) {
