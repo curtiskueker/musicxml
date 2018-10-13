@@ -3,6 +3,8 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.ScoreDefaults;
 import org.curtis.musicxml.bin.MusicXml2Ly;
+import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
@@ -126,32 +128,40 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
                     FormattedText creditWord = creditWords.getCreditWords();
                     if (creditWord == null) continue;
                     TextFormatting textFormatting = creditWord.getTextFormatting();
-                    Location justify = textFormatting.getJustify();
-                    if (justify != null) {
-                        switch (justify) {
-                            case LEFT:
-                                append("\\left-align");
-                                break;
-                            case CENTER:
-                                append("\\center-align");
-                                break;
-                            case RIGHT:
-                                append("\\right-align");
-                                break;
+                    if (textFormatting != null) {
+                        Location justify = textFormatting.getJustify();
+                        if (justify != null) {
+                            switch (justify) {
+                                case LEFT:
+                                    append("\\left-align");
+                                    break;
+                                case CENTER:
+                                    append("\\center-align");
+                                    break;
+                                case RIGHT:
+                                    append("\\right-align");
+                                    break;
+                            }
                         }
-                    }
 
-                    append(" { ");
+                        append(" { ");
 
-                    PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
-                    if (printStyleAlign != null) {
-                        PrintStyle printStyle = printStyleAlign.getPrintStyle();
-                        if (printStyle != null) {
-                            BigDecimal fontSize = printStyle.getFont().getFontSize().getFontSize();
-                            if(fontSize != null) {
-                                append("\\abs-fontsize #");
-                                append(String.valueOf(fontSize.intValue()));
-                                append(" ");
+                        PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
+                        if (printStyleAlign != null) {
+                            PrintStyle printStyle = printStyleAlign.getPrintStyle();
+                            if (printStyle != null) {
+                                Font font = printStyle.getFont();
+                                if (font != null) {
+                                    FontSize fontSize = font.getFontSize();
+                                    if (fontSize != null) {
+                                        BigDecimal fontSizeValue = fontSize.getFontSize();
+                                        if(fontSizeValue != null) {
+                                            append("\\abs-fontsize #");
+                                            append(String.valueOf(fontSizeValue.intValue()));
+                                            append(" ");
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
