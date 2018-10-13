@@ -248,10 +248,10 @@ public class NoteBuilder extends MusicDataBuilder {
         BigDecimal duration = note.getDuration();
         Tremolo tremolo = note.getTremolo();
         try {
-            if (tremolo != null &&(tremolo.getType() == Connection.START || tremolo.getType() == Connection.STOP)) {
+            if (tremolo != null && (tremolo.getType() == Connection.START || tremolo.getType() == Connection.STOP)) {
                 append(TimeSignatureUtil.getDurationRepresentationValue(duration));
             } else if (fullNoteType instanceof Rest && TypeUtil.getBoolean(((Rest)fullNoteType).getMeasure())) {
-                append(TimeSignatureUtil.getWholeMeasureRepresentation());
+                append(TimeSignatureUtil.getWholeMeasureRestRepresentation());
             } else if (noteType != null) {
                 noteTypeValueBuild();
             } else if (MathUtil.isPositive(duration)) {

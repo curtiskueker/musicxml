@@ -18,10 +18,10 @@ public class TimeSignatureUtil {
 
     }
 
-    public static String getWholeMeasureRepresentation() throws TimeSignatureException {
+    public static String getWholeMeasureRestRepresentation() throws TimeSignatureException {
         TimeSignatureType timeSignature = getCurrentTimeSignature();
         if(timeSignature == null) return "";
-        return getWholeMeasureRepresentation(timeSignature.getBeats(), timeSignature.getBeatType());
+        return "R1*" + String.valueOf(timeSignature.getBeats()) + "/" + String.valueOf(timeSignature.getBeatType());
     }
 
     public static String getWholeMeasureRepresentation(String numerator, String denominator) throws TimeSignatureException {
@@ -70,7 +70,7 @@ public class TimeSignatureUtil {
 
         int noteRepresentation = representationValue.setScale(0, RoundingMode.HALF_UP).intValueExact();
 
-        // If represenetation isn't a multiple of 2, or loop count greater than two, throw an exception
+        // If representation isn't a multiple of 2, or loop count greater than two, throw an exception
         if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || multiplierCount > 2) {
             throw new TimeSignatureException("Duration value not processed.  Total beats: " + totalBeats + ".");
         }
