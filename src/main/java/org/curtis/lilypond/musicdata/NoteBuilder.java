@@ -541,7 +541,7 @@ public class NoteBuilder extends MusicDataBuilder {
             append(" \\once \\omit TupletNumber");
         }
 
-        if(!startTuplet.getBracket()) {
+        if(!TypeUtil.getBoolean(startTuplet.getBracket())) {
             append (" \\once \\override TupletBracket.bracket-visibility = ##f");
         }
 
