@@ -276,7 +276,7 @@ public class NoteBuilder extends MusicDataBuilder {
     private StringBuilder startGraceBuild() {
         if (note.isGraceNote()) {
             if (note.getGrace().getGraceType() == Connection.START || note.getGrace().getGraceType() == Connection.SINGLE) {
-                if(note.getGrace().getSlash()) {
+                if(TypeUtil.getBoolean(note.getGrace().getSlash())) {
                     append("\\slashedGrace ");
                 } else {
                     append("\\grace ");
