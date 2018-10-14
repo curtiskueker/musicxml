@@ -53,7 +53,6 @@ public class MeasureBuilder extends MusicDataBuilder {
         buildCloseElement();
         for (MeasureItem measureItem : measure.getMeasureItems()) {
             BaseBuilder baseBuilder = null;
-            Integer measureItemId = measureItem.getId();
             String musicDataType = measureItem.getMusicDataType();
             try {
                 switch (musicDataType) {

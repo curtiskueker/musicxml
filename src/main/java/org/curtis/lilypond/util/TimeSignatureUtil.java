@@ -24,13 +24,6 @@ public class TimeSignatureUtil {
         return "R1*" + String.valueOf(timeSignature.getBeats()) + "/" + String.valueOf(timeSignature.getBeatType());
     }
 
-    public static String getWholeMeasureRepresentation(String numerator, String denominator) throws TimeSignatureException {
-        BigDecimal numeratorValue = MathUtil.newBigDecimal(numerator);
-        BigDecimal denominatorValue = MathUtil.newBigDecimal(denominator);
-
-        return getWholeMeasureRepresentation(numeratorValue, denominatorValue);
-    }
-
     public static String getWholeMeasureRepresentation(BigDecimal numerator, BigDecimal denominator) throws TimeSignatureException {
         BigDecimal totalBeats = getTotalBeats(numerator, denominator);
 
@@ -97,6 +90,16 @@ public class TimeSignatureUtil {
     private static boolean rounds(BigDecimal value) {
         BigDecimal comparisonValue = new BigDecimal(value.toString()).setScale(0, RoundingMode.HALF_UP);
         return MathUtil.isNegative(MathUtil.subtract(MathUtil.subtract(value, comparisonValue).abs(), MathUtil.newBigDecimal(.1)));
+    }
+
+    public static String getSpacerRepresentation(BigDecimal duration) throws TimeSignatureException {
+        return "s" + getDurationRepresentationValue(duration);
+    }
+
+    public static String getWholeMeasureSpacerRepresentation() throws TimeSignatureException {
+        TimeSignatureType timeSignature = getCurrentTimeSignature();
+        if(timeSignature == null) return "";
+        return "s*" + String.valueOf(timeSignature.getBeats()) + "/" + String.valueOf(timeSignature.getBeatType());
     }
 
     public static BigDecimal getCurrentMeasureBeats() throws TimeSignatureException {

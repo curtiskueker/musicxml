@@ -376,7 +376,7 @@ public class NoteBuilder extends MusicDataBuilder {
         // for each direction type, build the spacer then the direction type with placement
         for (int spacerIndex = 1; spacerIndex <= spacerCount; spacerIndex++) {
             try {
-                append(NoteUtil.getSpacerRepresentation(spacerDuration));
+                append(TimeSignatureUtil.getSpacerRepresentation(spacerDuration));
                 if (!directionTypeIterator.hasNext()) {
                     if (directionTypeListIterator.hasNext()) {
                         directionTypeList = directionTypeListIterator.next();
@@ -577,7 +577,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
         try {
             append(" ");
-            append(NoteUtil.getSpacerRepresentation(duration));
+            append(TimeSignatureUtil.getSpacerRepresentation(duration));
         } catch (TimeSignatureException e) {
             throw new BuildException(e.getMessage());
         }

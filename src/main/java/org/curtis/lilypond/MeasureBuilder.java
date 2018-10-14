@@ -354,15 +354,25 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Main data builder processing loops
         // general list first, then each build each voice
-        if (!hasNoteDataBuilder) {
-            try {
-                append(NoteUtil.getSpacerRepresentation(measureDuration));
-            } catch (TimeSignatureException e) {
-                throw new BuildException(e.getMessage());
-            }
+        if (MathUtil.largerThan(measureDuration, wholeMeasureDuration)) {
+            System.err.println("Voice duration " + measureDuration + " exceeds expected measure duration " + wholeMeasureDuration + ".  Using whole measure spacer.");
+            appendWholeMeasureSpacerRepresentation();
         } else {
-            for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
-                append(musicDataBuilder.build().toString());
+            if (hasNoteDataBuilder) {
+                for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
+                    append(musicDataBuilder.build().toString());
+                }
+            } else {
+                if (MathUtil.equalTo(wholeMeasureDuration, measureDuration)) {
+                    appendWholeMeasureSpacerRepresentation();
+                } else {
+                    try {
+                        append(TimeSignatureUtil.getSpacerRepresentation(measureDuration));
+                    } catch (TimeSignatureException e) {
+                        System.err.println("Unable to resolve spacer representation, duration " + measureDuration + ".  Using whole measure spacer.");
+                        appendWholeMeasureSpacerRepresentation();
+                    }
+                }
             }
         }
 
@@ -511,8 +521,20 @@ public class MeasureBuilder extends AbstractBuilder {
         return isDeferred;
     }
 
+    private void appendWholeMeasureSpacerRepresentation() {
+        clear();
+        try {
+            append(TimeSignatureUtil.getWholeMeasureSpacerRepresentation());
+        } catch (TimeSignatureException e) {
+            // skip
+            e.printStackTrace();
+        }
+    }
+
     private void clearBuilder() {
         clear();
         musicDataBuilders.clear();
+        measureDuration = MathUtil.ZERO;
+        voiceDuration = MathUtil.ZERO;
     }
 }
