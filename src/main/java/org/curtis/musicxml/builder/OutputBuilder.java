@@ -184,10 +184,6 @@ public abstract class OutputBuilder {
         buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, attributeValue);
     }
 
-    protected void buildElementWithValueAndAttribute(String elementName, BigDecimal elementValue, String attributeName, Enum attributeValue) {
-        buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, BuilderUtil.enumValue(attributeValue));
-    }
-
     protected void buildElementWithValueAndAttribute(String elementName, BigDecimal elementValue, String attributeName, Boolean attributeValue) {
         buildElementWithValueAndAttribute(elementName, BuilderUtil.stringValue(elementValue), attributeName, BuilderUtil.yesOrNo(attributeValue));
     }
