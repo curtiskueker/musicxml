@@ -128,38 +128,36 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
                     FormattedText creditWord = creditWords.getCreditWords();
                     if (creditWord == null) continue;
                     TextFormatting textFormatting = creditWord.getTextFormatting();
-                    if (textFormatting != null) {
-                        Location justify = textFormatting.getJustify();
-                        if (justify != null) {
-                            switch (justify) {
-                                case LEFT:
-                                    append("\\left-align");
-                                    break;
-                                case CENTER:
-                                    append("\\center-align");
-                                    break;
-                                case RIGHT:
-                                    append("\\right-align");
-                                    break;
-                            }
+                    Location justify = textFormatting == null ? null : textFormatting.getJustify();
+                    if (justify != null) {
+                        switch (justify) {
+                            case LEFT:
+                                append("\\left-align");
+                                break;
+                            case CENTER:
+                                append("\\center-align");
+                                break;
+                            case RIGHT:
+                                append("\\right-align");
+                                break;
                         }
+                    }
 
-                        append(" { ");
+                    append(" { ");
 
-                        PrintStyleAlign printStyleAlign = textFormatting.getPrintStyleAlign();
-                        if (printStyleAlign != null) {
-                            PrintStyle printStyle = printStyleAlign.getPrintStyle();
-                            if (printStyle != null) {
-                                Font font = printStyle.getFont();
-                                if (font != null) {
-                                    FontSize fontSize = font.getFontSize();
-                                    if (fontSize != null) {
-                                        BigDecimal fontSizeValue = fontSize.getFontSize();
-                                        if(fontSizeValue != null) {
-                                            append("\\abs-fontsize #");
-                                            append(String.valueOf(fontSizeValue.intValue()));
-                                            append(" ");
-                                        }
+                    PrintStyleAlign printStyleAlign = textFormatting == null ? null : textFormatting.getPrintStyleAlign();
+                    if (printStyleAlign != null) {
+                        PrintStyle printStyle = printStyleAlign.getPrintStyle();
+                        if (printStyle != null) {
+                            Font font = printStyle.getFont();
+                            if (font != null) {
+                                FontSize fontSize = font.getFontSize();
+                                if (fontSize != null) {
+                                    BigDecimal fontSizeValue = fontSize.getFontSize();
+                                    if(fontSizeValue != null) {
+                                        append("\\abs-fontsize #");
+                                        append(String.valueOf(fontSizeValue.intValue()));
+                                        append(" ");
                                     }
                                 }
                             }
