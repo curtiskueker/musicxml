@@ -143,10 +143,18 @@ public abstract class OutputBuilder {
     protected void buildElementWithAttributes(String elementName, Map<String, String> attributes) {
         if (attributes == null || attributes.isEmpty()) return;
 
+        buildElementWithOptionalAttributes(elementName, attributes);
+    }
+
+    protected void buildElementWithOptionalAttributes(String elementName, Map<String, String> attributes) {
         buildOpenElement(elementName);
-        for (String attributeName : attributes.keySet()) {
-            buildAttribute(attributeName, attributes.get(attributeName));
+
+        if (attributes != null) {
+            for (String attributeName : attributes.keySet()) {
+                buildAttribute(attributeName, attributes.get(attributeName));
+            }
         }
+
         buildCloseEmptyElement();
     }
 

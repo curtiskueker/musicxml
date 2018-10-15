@@ -91,7 +91,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildSegno(Segno segno) {
-        buildElementWithAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign()));
     }
 
     private void buildWords(Words words) {
@@ -99,7 +99,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildCoda(Coda coda) {
-        buildElementWithAttributes("coda", FormattingBuilder.buildPrintStyleAlign(coda.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("coda", FormattingBuilder.buildPrintStyleAlign(coda.getPrintStyleAlign()));
     }
 
     private void buildWedge(Wedge wedge) {
@@ -219,15 +219,15 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildDamp(Damp damp) {
-        buildElementWithAttributes("damp", FormattingBuilder.buildPrintStyleAlign(damp.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("damp", FormattingBuilder.buildPrintStyleAlign(damp.getPrintStyleAlign()));
     }
 
     private void buildDampAll(DampAll dampAll) {
-        buildElementWithAttributes("damp-all", FormattingBuilder.buildPrintStyleAlign(dampAll.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("damp-all", FormattingBuilder.buildPrintStyleAlign(dampAll.getPrintStyleAlign()));
     }
 
     private void buildEyglasses(Eyeglasses eyeglasses) {
-        buildElementWithAttributes("eyeglasses", FormattingBuilder.buildPrintStyleAlign(eyeglasses.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("eyeglasses", FormattingBuilder.buildPrintStyleAlign(eyeglasses.getPrintStyleAlign()));
     }
 
     private void buildStringMute(StringMute stringMute) {
