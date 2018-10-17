@@ -2,16 +2,13 @@ package org.curtis.lilypond.part;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
-import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.score.Measure;
-import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
@@ -48,13 +45,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
         lyricLists.add(new ArrayList<>());
 
         for (Measure measure : part.getMeasures()) {
-            for (MeasureItem measureItem : measure.getMeasureItems()) {
-                MusicData musicData;
-                try {
-                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
-                } catch (MusicXmlException e) {
-                    throw new BuildException(e);
-                }
+            for (MusicData musicData : measure.getMusicDataList()) {
                 adjustCurrentDuration(musicData);
 
                 if (musicData instanceof Note) {

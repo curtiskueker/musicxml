@@ -120,6 +120,7 @@ public class ScoreBuilder extends AbstractBuilder {
                 } else if (musicData instanceof Harmony) {
                     hasHarmony = true;
                 }
+                measure.getMusicDataList().add(musicData);
             }
         }
 
@@ -190,15 +191,8 @@ public class ScoreBuilder extends AbstractBuilder {
                 staffMeasures[index] = new Measure();
             }
             Integer currentStaff = 1;
-            MeasureItem currentBackup = null;
-            for(MeasureItem measureItem : measure.getMeasureItems()) {
-                MusicData musicData;
-                try {
-                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
-                } catch (MusicXmlException e) {
-                    e.printStackTrace();
-                    continue;
-                }
+            MusicData currentBackup = null;
+            for(MusicData musicData : measure.getMusicDataList()) {
                 if(musicData instanceof Direction) {
                     Direction direction = (Direction)musicData;
                     Integer staff = direction.getStaff();
@@ -207,9 +201,9 @@ public class ScoreBuilder extends AbstractBuilder {
                         staff = 1;
                     }
                     if(staff.equals(currentStaff) && currentBackup != null) {
-                        staffMeasures[staff - 1].getMeasureItems().add(currentBackup);
+                        staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
                     }
-                    staffMeasures[staff - 1].getMeasureItems().add(measureItem);
+                    staffMeasures[staff - 1].getMusicDataList().add(musicData);
                     currentBackup = null;
                     currentStaff = staff;
                 } else if(musicData instanceof Note) {
@@ -219,27 +213,40 @@ public class ScoreBuilder extends AbstractBuilder {
                         throw new BuildException("Invalid staff number in note");
                     }
                     if(staff.equals(currentStaff) && currentBackup != null) {
-                        staffMeasures[staff - 1].getMeasureItems().add(currentBackup);
+                        staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
                     }
-                    staffMeasures[staff - 1].getMeasureItems().add(measureItem);
+                    staffMeasures[staff - 1].getMusicDataList().add(musicData);
                     currentBackup = null;
                     currentStaff = staff;
                 } else if(musicData instanceof Backup) {
-                    currentBackup = measureItem;
+                    currentBackup = musicData;
                 } else {
                     if (musicData instanceof Attributes) {
                         Attributes attributes = (Attributes)musicData;
                         List<Clef> clefs = attributes.getClefs();
-                        for (Clef clef : clefs) clef.setPrintObject(clef.getNumber() == null || currentStaff.equals(clef.getNumber()));
+                        for (Integer index = 0; index < staves; index++) {
+                            Integer staffNumber = index + 1;
+                            Measure staffMeasure = staffMeasures[index];
+                            Attributes staffMeasureAttributes = new Attributes();
+                            for (Clef clef : clefs) {
+                                Integer clefNumber = clef.getNumber();
+                                if (clefNumber == null || staffNumber.equals(clefNumber)) staffMeasureAttributes.getClefs().add(clef);
+                            }
+                            staffMeasure.getMusicDataList().add(staffMeasureAttributes);
+                        }
+                        clefs.clear();
                     }
                     for(Measure staffMeasure : staffMeasures) {
-                        staffMeasure.getMeasureItems().add(measureItem);
+                        staffMeasure.getMusicDataList().add(musicData);
                     }
                 }
             }
 
             for(Measure staffMeasure : staffMeasures) {
                 staffMeasure.setNumber(measure.getNumber());
+                staffMeasure.setImplicit(measure.getImplicit());
+                staffMeasure.setNonControlling(measure.getNonControlling());
+                staffMeasure.setWidth(measure.getWidth());
             }
 
             for(int index = 0; index < staves; index++) {

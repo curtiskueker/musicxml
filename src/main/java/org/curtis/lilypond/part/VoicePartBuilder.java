@@ -9,7 +9,6 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
@@ -22,12 +21,10 @@ import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.Measure;
-import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.RepeatBlock;
 import org.curtis.musicxml.score.RepeatBlockType;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
@@ -69,13 +66,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             // default repeat block measure, in case opening repeat not notated
             if (currentRepeatStartBlockMeasureBuilder == null) currentRepeatStartBlockMeasureBuilder = measureBuilder;
 
-            for(MeasureItem measureItem : measure.getMeasureItems()) {
-                MusicData musicData;
-                try {
-                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
-                } catch (MusicXmlException e) {
-                    throw new BuildException(e);
-                }
+            for(MusicData musicData : measure.getMusicDataList()) {
                 if(musicData instanceof Note) {
                     Note note = (Note) musicData;
                     FullNote fullNote = note.getFullNote();

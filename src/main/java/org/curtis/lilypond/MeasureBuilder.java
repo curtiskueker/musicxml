@@ -23,7 +23,6 @@ import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.harmony.Harmony;
-import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
@@ -33,10 +32,8 @@ import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.Measure;
-import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.RepeatBlock;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
@@ -141,7 +138,6 @@ public class MeasureBuilder extends AbstractBuilder {
         clearBuilder();
 
         CURRENT_MEASURE_NUMBER = measure.getNumber();
-        List<MeasureItem> measureItems = measure.getMeasureItems();
 
         append("% measure ");
         appendLine(CURRENT_MEASURE_NUMBER);
@@ -149,14 +145,7 @@ public class MeasureBuilder extends AbstractBuilder {
         if (DEBUG) System.err.println("Measure " + measure.getNumber());
 
         // create data builder list for processing
-        for(MeasureItem measureItem : measureItems) {
-            MusicData musicData = null;
-            try {
-                musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
-            } catch (MusicXmlException e) {
-                e.printStackTrace();
-                continue;
-            }
+        for(MusicData musicData : measure.getMusicDataList()) {
             MusicDataBuilder musicDataBuilder = null;
 
             setCurrentVoice(musicData);
