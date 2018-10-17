@@ -89,6 +89,7 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() throws BuildException {
+        directions.addAll(note.getDirections());
         preNoteBuild();
         preDirectionBuild();
         startGraceBuild();
@@ -416,7 +417,6 @@ public class NoteBuilder extends MusicDataBuilder {
 
     public StringBuilder buildNote(Note note) throws BuildException {
         this.note = note;
-        directions.addAll(note.getDirections());
         return build();
     }
 
