@@ -422,7 +422,7 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     private void addSpacerDataBuilder(BigDecimal duration) {
-        System.err.println(getPartAndMeasure(measure) + "Voice duration difference in measure: " + duration + ".  Adding spacer note.");
+        System.err.println(getPartAndMeasure(measure) + "Voice duration difference in measure: " + duration + ".  Adding spacer note.  Check voice and staff values in notes.");
         Note spacerNote = NoteUtil.getSpacerNote(duration);
         musicDataBuilders.add(new MusicDataBuilder(spacerNote));
         voiceDuration = MathUtil.add(voiceDuration, duration);

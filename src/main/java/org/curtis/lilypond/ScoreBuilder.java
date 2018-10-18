@@ -261,6 +261,7 @@ public class ScoreBuilder extends AbstractBuilder {
                 throw new BuildException(staffPart.getPartId() + " has no measures");
             }
 
+            append("\\new Staff ");
             PartBuilder partBuilder = new PartBuilder(staffPart);
             append(partBuilder.build().toString());
         }
