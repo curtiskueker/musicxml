@@ -44,7 +44,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private MeasureBuilder currentRepeatEndBlockMeasureBuilder;
     private Integer currentEndingCount = 0;
     private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
-    private MeasureBuilder previousMeasureBuilder;
+    private MeasureBuilder previousMeasureBuilder = null;
     private Note previousNote;
     private Map<String, Boolean> tupletsOn = new HashMap<>();
     private WavyLine stopWavyLine = null;
@@ -252,6 +252,12 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 break;
                         }
                     }
+                } else if (musicData instanceof Attributes) {
+                    Attributes attributes = (Attributes)musicData;
+                    if (!attributes.getTimeList().isEmpty()) {
+                        measureBuilder.isFirstMeasure();
+                        if (previousMeasureBuilder != null) previousMeasureBuilder.isLastMeasure();
+                    }
                 }
             }
 
@@ -275,10 +281,9 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             previousMeasureBuilder = measureBuilder;
         }
 
-        if (measureBuilderList.isEmpty()) throw new BuildException("VoicePartBuilder: empty MeasureBuilder list");
+        if (previousMeasureBuilder != null) previousMeasureBuilder.isLastMeasure();
 
-        measureBuilderList.get(0).isFirstMeasure();
-        measureBuilderList.get(measureBuilderList.size() -1).isLastMeasure();
+        if (measureBuilderList.isEmpty()) throw new BuildException("VoicePartBuilder: empty MeasureBuilder list");
 
         // Process the measures
         for(MeasureBuilder measureBuilder : measureBuilderList) {
