@@ -5,7 +5,6 @@ import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.musicdata.DirectionBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
 import org.curtis.lilypond.musicdata.NoteBuilder;
-import org.curtis.lilypond.part.VoicePartBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
@@ -162,11 +161,16 @@ public class MeasureBuilder extends AbstractBuilder {
                     if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNote.getDuration());
                 }
 
-                if(VoicePartBuilder.skipNote(currentNote)) {
+                if (!isCurrentVoice()) continue;
+
+                if(currentNote.getCue()) {
                     continue;
                 }
 
-                if (!isCurrentVoice()) continue;
+                if (!TypeUtil.getBooleanDefaultYes(currentNote.getPrintout().getPrintObject())) {
+                    if (chordType == null || chordType == Connection.START) addSpacerDataBuilder(currentNote.getDuration());
+                    continue;
+                }
 
                 // chords and tuplets
                 Connection tupletType = getTupletType(currentNote);
@@ -309,7 +313,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 // Attempt to add a spacer at the end of the measure
                 BigDecimal wholeMeasureDurationDifference = MathUtil.subtract(wholeMeasureDuration, voiceDuration);
                 if (MathUtil.isPositive(wholeMeasureDurationDifference)) {
-                    addSpacerDataBuilder(wholeMeasureDurationDifference);
+                    addSpacerForDurationDifference(wholeMeasureDurationDifference);
                 }
             }
         }
@@ -417,15 +421,19 @@ public class MeasureBuilder extends AbstractBuilder {
     private void checkVoiceDuration() {
         if (MathUtil.isPositive(voiceDuration) && MathUtil.smallerThan(voiceDuration, measureDuration)) {
             BigDecimal durationDifference = MathUtil.subtract(measureDuration, voiceDuration);
-            addSpacerDataBuilder(durationDifference);
+            addSpacerForDurationDifference(durationDifference);
         }
     }
 
-    private void addSpacerDataBuilder(BigDecimal duration) {
+    private void addSpacerForDurationDifference(BigDecimal duration) {
         System.err.println(getPartAndMeasure(measure) + "Voice duration difference in measure: " + duration + ".  Adding spacer note.  Check voice and staff values in notes.");
+        addSpacerDataBuilder(duration);
+        voiceDuration = MathUtil.add(voiceDuration, duration);
+    }
+
+    private void addSpacerDataBuilder(BigDecimal duration) {
         Note spacerNote = NoteUtil.getSpacerNote(duration);
         musicDataBuilders.add(new MusicDataBuilder(spacerNote));
-        voiceDuration = MathUtil.add(voiceDuration, duration);
     }
 
     private void setCurrentVoice(MusicData musicData) {

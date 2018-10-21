@@ -3,7 +3,6 @@ package org.curtis.lilypond.part;
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.AttributesUtil;
-import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
@@ -70,10 +69,6 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 if(musicData instanceof Note) {
                     Note note = (Note) musicData;
                     FullNote fullNote = note.getFullNote();
-
-                    if(skipNote(note)) {
-                        continue;
-                    }
 
                     String voice = note.getEditorialVoice().getVoice();
                     if (StringUtil.isNotEmpty(voice)) measureBuilder.getVoices().add(voice);
@@ -405,10 +400,5 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         }
 
         currentMeasureBuilderList.clear();
-    }
-
-    public static boolean skipNote(Note note) {
-        // skip cues and non-printed chords as redundant
-        return note.getCue() || !TypeUtil.getBooleanDefaultYes(note.getPrintout().getPrintObject());
     }
 }
