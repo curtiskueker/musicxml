@@ -33,10 +33,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class VoicePartBuilder extends FilteredPartBuilder {
     private Part part;
-    private int currentVoiceCount = 0;
+    private SortedSet<String> currentVoices = new TreeSet<>();
     private List<MeasureBuilder> measureBuilderList = new ArrayList<>();
     private List<MeasureBuilder> currentMeasureBuilderList = new ArrayList<>();
     private MeasureBuilder currentRepeatStartBlockMeasureBuilder;
@@ -283,12 +284,12 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         // Process the measures
         for(MeasureBuilder measureBuilder : measureBuilderList) {
             try {
-                if (isVoiceCountChange(measureBuilder) || isStartRepeatBlock(measureBuilder)) {
+                if (isVoicesChange(measureBuilder) || isStartRepeatBlock(measureBuilder)) {
                     processMeasures();
                 }
 
                 currentMeasureBuilderList.add(measureBuilder);
-                currentVoiceCount = measureBuilder.getVoices().size();
+                currentVoices = measureBuilder.getVoices();
 
                 if (isEndRepeatBlock(measureBuilder)) {
                     processMeasures();
@@ -307,10 +308,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         return stringBuilder;
     }
 
-    private boolean isVoiceCountChange(MeasureBuilder measureBuilder) {
-        int measureVoiceCount = measureBuilder.getVoices().size();
-
-        return currentVoiceCount > 0 && measureVoiceCount != currentVoiceCount;
+    private boolean isVoicesChange(MeasureBuilder measureBuilder) {
+        return currentVoices.size() > 0 && !measureBuilder.getVoices().equals(currentVoices);
     }
 
     private boolean isStartRepeatBlock(MeasureBuilder measureBuilder) {
