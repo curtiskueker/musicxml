@@ -163,11 +163,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
                 if (!isCurrentVoice()) continue;
 
-                if(currentNote.getCue()) {
-                    continue;
-                }
-
-                if (!TypeUtil.getBooleanDefaultYes(currentNote.getPrintout().getPrintObject())) {
+                if (!TypeUtil.getBooleanDefaultYes(currentNote.getPrintout().getPrintObject()) || currentNote.getCue()) {
                     if (chordType == null || chordType == Connection.START) addSpacerDataBuilder(currentNote.getDuration());
                     continue;
                 }
