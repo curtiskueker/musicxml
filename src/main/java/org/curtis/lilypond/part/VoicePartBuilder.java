@@ -2,6 +2,7 @@ package org.curtis.lilypond.part;
 
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.musicdata.NoteBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
@@ -56,6 +57,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     }
 
     public StringBuilder build() throws BuildException {
+        NoteBuilder.CURRENT_BEAMS.clear();
+
         appendLine("{");
 
         // Pre-processing specific to VoicePartBuilder measure handling

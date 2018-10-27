@@ -11,6 +11,8 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
+import org.curtis.musicxml.note.Beam;
+import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Dot;
 import org.curtis.musicxml.note.Forward;
@@ -44,16 +46,17 @@ import org.curtis.util.MathUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class NoteBuilder extends MusicDataBuilder {
     private Note note;
     private List<Direction> directions = new ArrayList<>();
     private List<Object> deferredNotations = new ArrayList<>();
-    private Boolean isBeginBeam = false;
-    private Boolean isEndBeam = false;
+    public static Set<Integer> CURRENT_BEAMS = new HashSet<>();
 
     public NoteBuilder(Note note) {
         super(note);
@@ -78,14 +81,6 @@ public class NoteBuilder extends MusicDataBuilder {
 
     public void setDirections(List<Direction> directions) {
         this.directions = directions;
-    }
-
-    public void setBeginBeam() {
-        isBeginBeam = true;
-    }
-
-    public void setEndBeam() {
-        isEndBeam = true;
     }
 
     public StringBuilder build() throws BuildException {
@@ -327,10 +322,24 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder beamBuild() {
-        if(isBeginBeam) {
-            append("[");
-        } else if(isEndBeam) {
-            append("]");
+        List<Beam> beams = note.getBeams();
+        for (Beam beam : beams) {
+            Integer beamNumber = beam.getNumber();
+            BeamType beamType = beam.getType();
+            switch (beamType) {
+                case BEGIN:
+                    if(CURRENT_BEAMS.isEmpty()) {
+                        append("[");
+                    }
+                    CURRENT_BEAMS.add(beamNumber);
+                    break;
+                case END:
+                    CURRENT_BEAMS.remove(beamNumber);
+                    if(CURRENT_BEAMS.isEmpty()) {
+                        append("]");
+                    }
+                    break;
+            }
         }
 
         return stringBuilder;
@@ -462,7 +471,11 @@ public class NoteBuilder extends MusicDataBuilder {
 
         for (NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
-            append(noteBuilder.beamBuild().toString());
+            StringBuilder beamStringBuilder = noteBuilder.beamBuild();
+            if (beamStringBuilder.length() > 0) {
+                append(beamStringBuilder.toString());
+                break;
+            }
         }
 
         for(NoteBuilder noteBuilder : noteBuilders) {

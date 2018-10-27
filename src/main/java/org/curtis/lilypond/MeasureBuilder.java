@@ -4,7 +4,6 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.musicdata.DirectionBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
-import org.curtis.lilypond.musicdata.NoteBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
@@ -23,8 +22,6 @@ import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.note.Backup;
-import org.curtis.musicxml.note.Beam;
-import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
@@ -39,10 +36,8 @@ import org.curtis.util.StringUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -55,7 +50,6 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean hasNoteDataBuilder = false;
     private Note previousNote;
     private Note currentNote;
-    private Set<Integer> currentBeams = new HashSet<>();
     private List<Direction> currentDirections = new ArrayList<>();
     private Barline currentBarline = null;
     private Chord currentChord = null;
@@ -377,35 +371,7 @@ public class MeasureBuilder extends AbstractBuilder {
         if (isCurrentVoice() || musicData instanceof Attributes || musicData instanceof Barline) {
             checkVoiceDuration();
 
-            if (musicData instanceof Note) {
-                Note note = (Note)musicData;
-                NoteBuilder noteBuilder = new NoteBuilder(note);
-
-                // beams
-                List<Beam> beams = note.getBeams();
-                for (Beam beam : beams) {
-                    Integer beamNumber = beam.getNumber();
-                    BeamType beamType = beam.getType();
-                    switch (beamType) {
-                        case BEGIN:
-                            if(currentBeams.isEmpty()) {
-                                noteBuilder.setBeginBeam();
-                            }
-                            currentBeams.add(beamNumber);
-                            break;
-                        case END:
-                            currentBeams.remove(beamNumber);
-                            if(currentBeams.isEmpty()) {
-                                noteBuilder.setEndBeam();
-                            }
-                            break;
-                    }
-                }
-                musicDataBuilder = noteBuilder;
-            } else {
-                musicDataBuilder = new MusicDataBuilder(musicData);
-            }
-
+            musicDataBuilder = new MusicDataBuilder(musicData);
             musicDataBuilders.add(musicDataBuilder);
 
             if (musicData instanceof Note || musicData instanceof Chord) hasNoteDataBuilder = true;
