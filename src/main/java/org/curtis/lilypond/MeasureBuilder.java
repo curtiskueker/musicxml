@@ -338,7 +338,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // Main data builder processing loops
         // general list first, then each build each voice
         if (MathUtil.largerThan(measureDuration, wholeMeasureDuration)) {
-            System.err.println("Voice duration " + measureDuration + " exceeds expected measure duration " + wholeMeasureDuration + ".  Using whole measure spacer.");
+            displayMeasureMessage(measure, "Voice duration " + measureDuration + " exceeds expected measure duration " + wholeMeasureDuration + ".  Using whole measure spacer.");
             appendWholeMeasureSpacerRepresentation();
         } else {
             if (hasNoteDataBuilder) {
@@ -347,12 +347,13 @@ public class MeasureBuilder extends AbstractBuilder {
                 }
             } else {
                 if (MathUtil.equalTo(wholeMeasureDuration, measureDuration)) {
+                    displayMeasureMessage(measure, "Unable to resolve note durations.  Using whole measure spacer.");
                     appendWholeMeasureSpacerRepresentation();
                 } else {
                     try {
                         append(TimeSignatureUtil.getSpacerRepresentation(measureDuration));
                     } catch (TimeSignatureException e) {
-                        System.err.println("Unable to resolve spacer representation, duration " + measureDuration + ".  Using whole measure spacer.");
+                        displayMeasureMessage(measure, "Unable to resolve spacer representation, duration " + measureDuration + ".  Using whole measure spacer.");
                         appendWholeMeasureSpacerRepresentation();
                     }
                 }
@@ -374,7 +375,7 @@ public class MeasureBuilder extends AbstractBuilder {
             musicDataBuilder = new MusicDataBuilder(musicData);
             musicDataBuilders.add(musicDataBuilder);
 
-            if (musicData instanceof Note || musicData instanceof Chord) hasNoteDataBuilder = true;
+            if (musicData instanceof Note || musicData instanceof Chord || musicData instanceof TupletNotes) hasNoteDataBuilder = true;
         }
 
         return musicDataBuilder;
@@ -388,7 +389,7 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     private void addSpacerForDurationDifference(BigDecimal duration) {
-        System.err.println(getPartAndMeasure(measure) + "Voice duration difference in measure: " + duration + ".  Adding spacer note.  Check voice and staff values in notes.");
+        displayMeasureMessage(measure, "Voice duration difference in measure: " + duration + ".  Adding spacer note.  Check voice and staff values in notes.");
         addSpacerDataBuilder(duration);
         voiceDuration = MathUtil.add(voiceDuration, duration);
     }
