@@ -132,9 +132,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
         CURRENT_MEASURE_NUMBER = measure.getNumber();
 
-        append("% measure ");
-        appendLine(CURRENT_MEASURE_NUMBER);
-
+        displayMeasure();
         if (DEBUG) System.err.println("Measure " + measure.getNumber());
 
         // create data builder list for processing
@@ -483,12 +481,23 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private void appendWholeMeasureSpacerRepresentation() {
         clear();
+        displayMeasure();
+
         try {
+            for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
+                Object musicData = musicDataBuilder.getMusicData();
+                if (musicData != null && musicData instanceof Attributes) append(musicDataBuilder.build().toString());
+            }
             append(TimeSignatureUtil.getWholeMeasureSpacerRepresentation());
-        } catch (TimeSignatureException e) {
+        } catch (Exception e) {
             // skip
             e.printStackTrace();
         }
+    }
+
+    private void displayMeasure() {
+        append("% measure ");
+        appendLine(CURRENT_MEASURE_NUMBER);
     }
 
     private void clearBuilder() {

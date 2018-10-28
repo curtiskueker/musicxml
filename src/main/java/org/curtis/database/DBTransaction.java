@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class DBTransaction {
     private EntityManager em;
@@ -60,7 +61,10 @@ public class DBTransaction {
         criteriaQuery.select(root);
         criteriaQuery.where(criteriaBuilder.equal(root.get(field), value));
 
-        return em.createQuery(criteriaQuery).getSingleResult();
+        List<T> results = em.createQuery(criteriaQuery).getResultList();
+
+        if (results == null || results.isEmpty()) return null;
+        return results.get(0);
     }
 
     // Private helper method that checks that the database is in a valid

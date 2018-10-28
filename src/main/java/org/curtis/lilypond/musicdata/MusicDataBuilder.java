@@ -24,6 +24,10 @@ public class MusicDataBuilder extends AbstractBuilder {
 
     }
 
+    public Object getMusicData() {
+        return musicData;
+    }
+
     public StringBuilder build() throws BuildException {
         if (musicData == null) return stringBuilder;
 
