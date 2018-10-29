@@ -20,6 +20,7 @@ public class LyricBuilder extends MusicDataBuilder {
         if(lyric == null) return stringBuilder;
 
         BigDecimal totalBeats = lyric.getTotalBeats();
+        if (!MathUtil.isPositive(totalBeats)) return stringBuilder;
 
         // adjust total beats
         TimeModification timeModification = lyric.getTimeModification();
