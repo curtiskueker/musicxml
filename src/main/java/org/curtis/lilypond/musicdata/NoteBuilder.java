@@ -2,6 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.TimeSignatureException;
+import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
@@ -162,7 +163,7 @@ public class NoteBuilder extends MusicDataBuilder {
         Tremolo tremolo = note.getTremolo();
         if (tremolo != null && tremolo.getType() == Connection.START) {
             append("\\repeat tremolo ");
-            noteTypeValueBuild();
+            append(String.valueOf(MathUtil.divide(note.getDuration(), MathUtil.divide(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), MathUtil.exp(MathUtil.newBigDecimal(tremolo.getTremoloMarks()), 2))).intValue()));
             append(" { ");
         }
 
@@ -245,7 +246,7 @@ public class NoteBuilder extends MusicDataBuilder {
         Tremolo tremolo = note.getTremolo();
         try {
             if (tremolo != null && (tremolo.getType() == Connection.START || tremolo.getType() == Connection.STOP)) {
-                append(TimeSignatureUtil.getDurationRepresentationValue(duration));
+                append(String.valueOf(MathUtil.exp(MathUtil.newBigDecimal(tremolo.getTremoloMarks() + 2), 2).intValue()));
             } else if (fullNoteType instanceof Rest && TypeUtil.getBoolean(((Rest)fullNoteType).getMeasure())) {
                 append(TimeSignatureUtil.getWholeMeasureRestRepresentation());
             } else if (noteType != null) {
