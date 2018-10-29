@@ -352,15 +352,17 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
             // Begin repeat endings
             MeasureBuilder firstMeasureBuilder = currentMeasureBuilderList.get(0);
-            if (isMainRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder) && voice.equals(measureVoices.first())) {
-                append("\\repeat volta #");
-                append(String.valueOf(firstMeasureBuilder.getRepeatBlock().getEndingCount()));
-                appendLine(" {");
-            } else if(isEndingRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
-                if (firstMeasureBuilder.getRepeatBlock().getEndingNumber().equals(1)) {
-                    appendLine("\\alternative {");
+            if (voice.equals(measureVoices.first())) {
+                if (isMainRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
+                    append("\\repeat volta #");
+                    append(String.valueOf(firstMeasureBuilder.getRepeatBlock().getEndingCount()));
+                    appendLine(" {");
+                } else if(isEndingRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
+                    if (firstMeasureBuilder.getRepeatBlock().getEndingNumber().equals(1)) {
+                        appendLine("\\alternative {");
+                    }
+                    appendLine("{");
                 }
-                appendLine("{");
             }
 
             if (hasMultipleVoices && voice.equals(measureVoices.first())) {
@@ -390,13 +392,15 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
             // End repeat endings
             MeasureBuilder lastMeasure = currentMeasureBuilderList.get(currentMeasureBuilderList.size() - 1);
-            if (isEndRepeatBlock(lastMeasure)) {
-                appendLine();
-                appendLine("}");
-
-                RepeatBlock repeatBlock = lastMeasure.getRepeatBlock();
-                if (isEndingRepeatBlock(lastMeasure) && repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) {
+            if (voice.equals(measureVoices.last())) {
+                if (isEndRepeatBlock(lastMeasure)) {
+                    appendLine();
                     appendLine("}");
+
+                    RepeatBlock repeatBlock = lastMeasure.getRepeatBlock();
+                    if (repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) {
+                        appendLine("}");
+                    }
                 }
             }
         }
