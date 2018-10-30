@@ -1,6 +1,7 @@
 package org.curtis.lilypond.util;
 
 import org.curtis.musicxml.common.Location;
+import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,11 @@ public class PlacementBuildUtil {
             default:
                 return "";
         }
+    }
+
+    public static String getPlacementDefaultAbove(Location placement) {
+        String placementValue = getPlacement(placement);
+        return StringUtil.isEmpty(placementValue) ? "^" : placementValue;
     }
 
     // Skips placement of objects where placement is ignored in DirectionBuilder

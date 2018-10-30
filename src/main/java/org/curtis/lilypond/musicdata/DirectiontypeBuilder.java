@@ -10,6 +10,8 @@ import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dashes;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
+import org.curtis.musicxml.direction.directiontype.OctaveShift;
+import org.curtis.musicxml.direction.directiontype.OctaveShiftType;
 import org.curtis.musicxml.direction.directiontype.OtherDirection;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Segno;
@@ -116,6 +118,24 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
                 append("\\stopTextSpan ");
                 break;
         }
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildOctaveShift(OctaveShift octaveShift) {
+        Integer size = octaveShift.getSize();
+        if (size != 8 && size != 15) {
+            System.err.println("Warning: octave shift size must be either 8 or 15");
+            return stringBuilder;
+        }
+
+        OctaveShiftType octaveShiftType = octaveShift.getType();
+        append(" \\ottava #");
+        if (octaveShiftType == OctaveShiftType.UP) append("-");
+
+        if (octaveShiftType == OctaveShiftType.STOP) append("0");
+        else if (size == 15) append("2");
+        else append("1");
 
         return stringBuilder;
     }

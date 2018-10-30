@@ -4,16 +4,21 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.AccidentalType;
+import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Ornaments;
+import org.curtis.musicxml.note.notation.Slide;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.SlurType;
+import org.curtis.musicxml.note.notation.Technicals;
 import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
+import org.curtis.musicxml.note.notation.technical.Technical;
 
 public class NotationBuilder extends MusicDataBuilder {
     public StringBuilder buildTied(Tied tied) {
@@ -51,11 +56,29 @@ public class NotationBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
+    public StringBuilder buildSlide(Slide slide) {
+        // two-note glissando/slide only
+        if (slide.getType() != Connection.START) return stringBuilder;
+
+        append("\\glissando ");
+
+        return stringBuilder;
+    }
+
     public StringBuilder buildOrnaments(Ornaments ornaments) throws BuildException {
         if (!TypeUtil.getBooleanDefaultYes(ornaments.isPrintObject())) return stringBuilder;
 
         for (Ornament ornament : ornaments.getOrnaments()) {
             MusicDataBuilder musicDataBuilder = new MusicDataBuilder(ornament);
+            append(musicDataBuilder.build().toString());
+        }
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildTechnicals(Technicals technicals) throws BuildException {
+        for (Technical technical : technicals.getTechnicals()) {
+            MusicDataBuilder musicDataBuilder = new MusicDataBuilder(technical);
             append(musicDataBuilder.build().toString());
         }
 
@@ -79,6 +102,33 @@ public class NotationBuilder extends MusicDataBuilder {
 
     public StringBuilder buildArpeggiate(Arpeggiate arpeggiate) {
         append("\\arpeggio");
+
+        return stringBuilder;
+    }
+
+    public StringBuilder buildAccidentalMark(AccidentalMark accidentalMark) {
+        AccidentalType accidentalType = accidentalMark.getAccidentalType();
+        if (accidentalType == null) return stringBuilder;
+
+        String accidentalMarkup = null;
+        switch (accidentalType) {
+            case SHARP:
+                accidentalMarkup = "sharp";
+                break;
+            case NATURAL:
+                accidentalMarkup = "natural";
+                break;
+            case FLAT:
+                accidentalMarkup = "flat";
+                break;
+        }
+        if (accidentalMarkup == null) return stringBuilder;
+
+        append(PlacementBuildUtil.getPlacementDefaultAbove(accidentalMark.getPlacement()));
+        append("\\markup ");
+        append("\\");
+        append(accidentalMarkup);
+        append(" ");
 
         return stringBuilder;
     }

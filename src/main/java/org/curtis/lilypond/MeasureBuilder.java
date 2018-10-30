@@ -17,6 +17,7 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
+import org.curtis.musicxml.direction.directiontype.OctaveShift;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
@@ -456,8 +457,9 @@ public class MeasureBuilder extends AbstractBuilder {
         for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
             for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
                 if (directionType instanceof Metronome) isDeferred = false;
-                if (directionType instanceof Words && TypeUtil.getBoolean(direction.getDirective())) isDeferred = false;
-                if (directionType instanceof Rehearsal) isDeferred = false;
+                else if (directionType instanceof Words && TypeUtil.getBoolean(direction.getDirective())) isDeferred = false;
+                else if (directionType instanceof Rehearsal) isDeferred = false;
+                else if (directionType instanceof OctaveShift) isDeferred = false;
 
                 if (!isDeferred) break;
             }

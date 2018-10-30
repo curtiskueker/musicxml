@@ -6,6 +6,7 @@ import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Print;
+import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.Words;
@@ -41,6 +42,11 @@ public class DirectionBuilder extends MusicDataBuilder {
             appendLine("\\pageBreak");
         }
 
+        return stringBuilder;
+    }
+
+    public StringBuilder buildSound(Sound sound) {
+        // do nothing
         return stringBuilder;
     }
 
