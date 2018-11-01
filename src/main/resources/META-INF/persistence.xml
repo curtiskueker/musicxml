@@ -54,6 +54,7 @@
         <class>org.curtis.musicxml.common.Text</class>
         <class>org.curtis.musicxml.common.TextDecoration</class>
         <class>org.curtis.musicxml.common.TextFormatting</class>
+        <class>org.curtis.musicxml.common.XmlComment</class>
         <class>org.curtis.musicxml.common.play.Ipa</class>
         <class>org.curtis.musicxml.common.play.Mute</class>
         <class>org.curtis.musicxml.common.play.OtherPlay</class>

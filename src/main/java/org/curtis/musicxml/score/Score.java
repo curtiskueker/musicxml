@@ -1,6 +1,7 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.common.XmlComment;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -29,6 +30,10 @@ public class Score extends DatabaseItem {
     private String version;
     @Column
     private String filename;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "score_id", nullable = false)
+    private List<XmlComment> xmlComments = new ArrayList<>();
 
     public Score() {
 
@@ -64,5 +69,13 @@ public class Score extends DatabaseItem {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public List<XmlComment> getXmlComments() {
+        return xmlComments;
+    }
+
+    public void setXmlComments(List<XmlComment> xmlComments) {
+        this.xmlComments = xmlComments;
     }
 }

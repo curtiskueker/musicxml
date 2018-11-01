@@ -7,6 +7,7 @@ import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.builder.ScoreBuilder;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.common.XmlComment;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Grouping;
 import org.curtis.musicxml.direction.Print;
@@ -28,9 +29,11 @@ import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
 import org.curtis.xml.XmlUtil;
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ProcessingInstruction;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,6 +48,8 @@ import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
@@ -60,6 +65,7 @@ public class MusicXmlUtil {
 
         ScoreHandler scoreHandler = new ScoreHandler();
         scoreHandler.handle(xmlDocument.getDocumentElement());
+        scoreHandler.getScore().setXmlComments(getXmlComments(xmlDocument));
 
         return scoreHandler;
     }
@@ -166,5 +172,43 @@ public class MusicXmlUtil {
             throw new MusicXmlException(e);
         }
 
+    }
+
+    private static List<XmlComment> getXmlComments(Node node) {
+        return getXmlComments(node, new ArrayList<String>());
+    }
+
+    private static List<XmlComment> getXmlComments(Node node, List<String> indexList) {
+        List<XmlComment> xmlComments = new ArrayList<>();
+
+        NodeList nodeList = node.getChildNodes();
+        int elementCount = 0;
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) elementCount++;
+            if (childNode.getNodeType() == Node.COMMENT_NODE || childNode.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
+                String data = "";
+                if (childNode.getNodeType() == Node.COMMENT_NODE) {
+                    Comment comment = (Comment)childNode;
+                    data = "<!-- " + comment.getData() + " -->";
+                } else if (childNode.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
+                    ProcessingInstruction processingInstruction = (ProcessingInstruction)childNode;
+                    data = "<?" + processingInstruction.getTarget() + " " + processingInstruction.getData() + "?>";
+                }
+                List<String> indexListCopy = new ArrayList<>(indexList);
+                indexListCopy.add(String.valueOf(elementCount));
+                XmlComment xmlComment = new XmlComment();
+                xmlComment.setData(data);
+                xmlComment.setLocation(String.join(".", indexListCopy));
+                xmlComments.add(xmlComment);
+            }
+            if (childNode.hasChildNodes()) {
+                List<String> indexListCopy = new ArrayList<>(indexList);
+                indexListCopy.add(String.valueOf(elementCount));
+                xmlComments.addAll(getXmlComments(childNode, indexListCopy));
+            }
+        }
+
+        return xmlComments;
     }
 }
