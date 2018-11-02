@@ -10,12 +10,22 @@ import javax.persistence.Table;
 @Table(name = "xml_comment")
 public class XmlComment extends DatabaseItem {
     @Column
+    private String target;
+    @Column
     private String data;
     @Column
     private String location;
 
     public XmlComment() {
 
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     public String getData() {

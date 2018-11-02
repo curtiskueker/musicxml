@@ -49,7 +49,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
@@ -96,13 +98,19 @@ public class MusicXmlUtil {
             System.err.println(e.getMessage());
         }
 
-        return BuilderUtil.getDocumentDeclaration() + getFormattedXml(results);
+        try {
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes("utf-8"))));
+            setXmlComments(document, score.getXmlComments());
+            results = getFormattedXml(document);
+        } catch (Exception e) {
+            // skip, use results above
+        }
+
+        return BuilderUtil.getDocumentDeclaration() + results;
     }
 
-    public static String getFormattedXml(String xmlString) {
+    private static String getFormattedXml(Document document) throws XmlException {
         try {
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(xmlString.getBytes("utf-8"))));
-
             document.normalize();
             XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList nodeList = (NodeList) xPath.evaluate("//text()[normalize-space()='']",
@@ -126,9 +134,8 @@ public class MusicXmlUtil {
             return stringWriter.toString();
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw new XmlException(e);
         }
-
-        return xmlString;
     }
 
     public static MusicData getMusicDataForMeasureItem(MeasureItem measureItem) throws MusicXmlException {
@@ -175,7 +182,7 @@ public class MusicXmlUtil {
     }
 
     private static List<XmlComment> getXmlComments(Node node) {
-        return getXmlComments(node, new ArrayList<String>());
+        return getXmlComments(node, new ArrayList<>());
     }
 
     private static List<XmlComment> getXmlComments(Node node, List<String> indexList) {
@@ -185,30 +192,92 @@ public class MusicXmlUtil {
         int elementCount = 0;
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node childNode = nodeList.item(i);
-            if (childNode.getNodeType() == Node.ELEMENT_NODE) elementCount++;
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                elementCount++;
+                if (childNode.hasChildNodes()) {
+                    List<String> indexListCopy = new ArrayList<>(indexList);
+                    indexListCopy.add(String.valueOf(elementCount));
+                    xmlComments.addAll(getXmlComments(childNode, indexListCopy));
+                }
+            }
             if (childNode.getNodeType() == Node.COMMENT_NODE || childNode.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
-                String data = "";
+                XmlComment xmlComment = new XmlComment();
                 if (childNode.getNodeType() == Node.COMMENT_NODE) {
                     Comment comment = (Comment)childNode;
-                    data = "<!-- " + comment.getData() + " -->";
+                    xmlComment.setData(comment.getData());
                 } else if (childNode.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
                     ProcessingInstruction processingInstruction = (ProcessingInstruction)childNode;
-                    data = "<?" + processingInstruction.getTarget() + " " + processingInstruction.getData() + "?>";
+                    xmlComment.setTarget(processingInstruction.getTarget());
+                    xmlComment.setData(processingInstruction.getData());
                 }
                 List<String> indexListCopy = new ArrayList<>(indexList);
                 indexListCopy.add(String.valueOf(elementCount));
-                XmlComment xmlComment = new XmlComment();
-                xmlComment.setData(data);
                 xmlComment.setLocation(String.join(".", indexListCopy));
                 xmlComments.add(xmlComment);
-            }
-            if (childNode.hasChildNodes()) {
-                List<String> indexListCopy = new ArrayList<>(indexList);
-                indexListCopy.add(String.valueOf(elementCount));
-                xmlComments.addAll(getXmlComments(childNode, indexListCopy));
             }
         }
 
         return xmlComments;
+    }
+
+    private static void setXmlComments(Document document, List<XmlComment> xmlComments) {
+        if (document == null || xmlComments == null || xmlComments.isEmpty()) return;
+
+        // create location map
+        Map<String, List<XmlComment>> locationMap = new HashMap<>();
+        for (XmlComment xmlComment : xmlComments) {
+            List<XmlComment> locationComments = locationMap.computeIfAbsent(xmlComment.getLocation(), location -> new ArrayList<>());
+            locationComments.add(xmlComment);
+        }
+
+        List<String> nodeLocation = new ArrayList<>();
+        setXmlComments(document, document, locationMap, nodeLocation);
+    }
+
+    private static void setXmlComments(Document document, Node node, Map<String, List<XmlComment>> locationMap, List<String> nodeLocation) {
+        NodeList nodeList = node.getChildNodes();
+
+        String zeroLocationIndex = String.join(".", nodeLocation) + ".0";
+        List<Node> zeroLocationCommentNodes = getCommentsForLocation(document, locationMap, zeroLocationIndex);
+        for (Node commentNode : zeroLocationCommentNodes) {
+            node.appendChild(commentNode);
+        }
+
+        int elementCount = 0;
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                elementCount++;
+                List<String> nodeLocationCopy = new ArrayList<>(nodeLocation);
+                nodeLocationCopy.add(String.valueOf(elementCount));
+                String locationIndex = String.join(".", nodeLocationCopy);
+                List<Node> commentNodes = getCommentsForLocation(document, locationMap, locationIndex);
+                for (Node commentNode : commentNodes) {
+                    Node nextSibling = childNode.getNextSibling();
+                    if (nextSibling == null) node.appendChild(commentNode);
+                    else node.insertBefore(commentNode, nextSibling);
+                }
+                if (childNode.hasChildNodes()) {
+                    setXmlComments(document, childNode, locationMap, nodeLocationCopy);
+                }
+            }
+        }
+    }
+
+    private static List<Node> getCommentsForLocation(Document document, Map<String, List<XmlComment>> locationMap, String locationIndex) {
+        List<XmlComment> xmlComments = locationMap.get(locationIndex);
+        List<Node> nodes = new ArrayList<>();
+        if (xmlComments == null) return nodes;
+        for (XmlComment xmlComment : xmlComments) {
+            Node commentNode;
+            if (xmlComment.getTarget() == null) {
+                commentNode = document.createComment(xmlComment.getData());
+            } else {
+                commentNode = document.createProcessingInstruction(xmlComment.getTarget(), xmlComment.getData());
+            }
+            nodes.add(commentNode);
+        }
+
+        return nodes;
     }
 }
