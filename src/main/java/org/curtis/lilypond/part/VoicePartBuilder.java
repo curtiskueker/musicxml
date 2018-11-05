@@ -10,12 +10,15 @@ import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.FullNote;
+import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.SlurType;
+import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
@@ -25,6 +28,7 @@ import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.RepeatBlock;
 import org.curtis.musicxml.score.RepeatBlockType;
+import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class VoicePartBuilder extends FilteredPartBuilder {
     private Part part;
@@ -51,6 +56,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private WavyLine stopWavyLine = null;
     private boolean hasStopWavyLine = false;
     private Map<String, Set<Integer>> activeSlurs = new HashMap<>();
+    private Map<String, List<Note>> tiedFromNotes = new HashMap<>();
+    private Map<String, List<Note>> tiedToNotes = new HashMap<>();
 
     public VoicePartBuilder(Part part) {
         this.part = part;
@@ -77,6 +84,9 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     String voice = note.getEditorialVoice().getVoice();
                     if (StringUtil.isNotEmpty(voice)) measureBuilder.getVoices().add(voice);
 
+                    List<Note> tiedFromNoteList = tiedFromNotes.computeIfAbsent(voice, noteVoice -> new ArrayList<>());
+                    List<Note> tiedToNoteList = tiedToNotes.computeIfAbsent(voice, noteVoice -> new ArrayList<>());
+
                     // notation/ornament adjustments
                     boolean addNewNotations = hasStopWavyLine;
 
@@ -85,6 +95,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     Ornaments trillMarkOrnaments = null;
                     WavyLine startWavyLine = null;
                     List<Ornament> wavyLineOrnamentList = null;
+                    boolean startTieAdded = false;
                     for (Notations notations : note.getNotationsList()) {
                         for (Notation notation : notations.getNotations()) {
                             if (notation instanceof Ornaments) {
@@ -134,9 +145,29 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                         activeVoiceSlurs.remove(slurNumber);
                                         break;
                                 }
+                            } else if (notation instanceof Tied) {
+                                Tied tied = (Tied)notation;
+                                Connection tiedType = tied.getType();
+                                if (tiedType == Connection.START && tiedFromNoteList.isEmpty()) {
+                                    tiedFromNoteList.add(note);
+                                    startTieAdded = true;
+                                }
                             }
                         }
                     }
+
+                    if (!startTieAdded) {
+                        if (fullNote.isChord() && !tiedToNoteList.isEmpty()) {
+                            tiedToNoteList.add(note);
+                        } else if (!fullNote.isChord() && !tiedToNoteList.isEmpty()) {
+                            processTies(tiedFromNoteList, tiedToNoteList, note);
+                        } else if (fullNote.isChord() && !tiedFromNoteList.isEmpty()) {
+                            tiedFromNoteList.add(note);
+                        } else if (!fullNote.isChord() && !tiedFromNoteList.isEmpty()) {
+                            tiedToNoteList.add(note);
+                        }
+                    }
+
                     if (trillMark != null && trillMarkOrnaments != null && startWavyLine != null) trillMarkOrnaments.setPrintObject(false);
                     if (hasStopWavyLine && wavyLineOrnamentList != null) wavyLineOrnamentList.remove(stopWavyLine);
                     if (addNewNotations) {
@@ -333,6 +364,34 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private boolean isEndingRepeatBlock(MeasureBuilder measureBuilder) {
         RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
         return repeatBlock !=  null && repeatBlock.getRepeatBlockType() == RepeatBlockType.ENDING;
+    }
+
+    private void processTies(List<Note> tiedFromNotes, List<Note> tiedToNotes, Note currentNote) {
+        boolean match = false;
+        for (Note fromNote :  tiedFromNotes) {
+            FullNoteType fromFullNoteType = fromNote.getFullNote().getFullNoteType();
+            if (!(fromFullNoteType instanceof Pitch)) continue;
+            Pitch fromPitch = (Pitch)fromFullNoteType;
+            for (Note toNote : tiedToNotes) {
+                FullNoteType toFullNoteType = toNote.getFullNote().getFullNoteType();
+                if (!(toFullNoteType instanceof Pitch)) continue;
+                Pitch toPitch = (Pitch)toFullNoteType;
+                if (fromPitch.getStep() == toPitch.getStep() && MathUtil.equalTo(fromPitch.getAlter(), toPitch.getAlter()) && fromPitch.getOctave().equals(toPitch.getOctave())) {
+                    match = true;
+                    break;
+                }
+            }
+            if (match) break;
+        }
+        if (!match) tiedFromNotes.stream().flatMap(fromNote -> fromNote.getTieds().stream()).forEach(tied -> tied.setUnterminated(true));
+        tiedFromNotes.clear();
+        if (!tiedToNotes.stream().flatMap(toNote -> toNote.getTieds().stream()).filter(tied -> tied.getType() == Connection.CONTINUE || tied.getType() == Connection.START).collect(Collectors.toList()).isEmpty()) {
+            tiedFromNotes.addAll(tiedToNotes);
+            tiedToNotes.clear();
+            tiedToNotes.add(currentNote);
+        } else {
+            tiedToNotes.clear();
+        }
     }
 
     private void processMeasures() throws BuildException {

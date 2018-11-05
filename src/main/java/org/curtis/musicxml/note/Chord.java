@@ -10,6 +10,7 @@ public class Chord extends MusicData {
     private List<Note> notes = new ArrayList<>();
     private List<Direction> directions = new ArrayList<>();
     private String voice;
+    private List<Notations> notationsList = new ArrayList<>();
 
     public Chord() {
 
@@ -37,5 +38,13 @@ public class Chord extends MusicData {
 
     public void setVoice(String voice) {
         this.voice = voice;
+    }
+
+    public List<Notations> getNotationsList() {
+        return notationsList;
+    }
+
+    public void setNotationsList(List<Notations> notationsList) {
+        this.notationsList = notationsList;
     }
 }

@@ -46,6 +46,7 @@ import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -92,7 +93,7 @@ public class NoteBuilder extends MusicDataBuilder {
         noteTypeBuild();
         noteDurationBuild();
         beamBuild();
-        notationsBuild();
+        notationsBuild(note.getNotationsList());
         finishGraceBuild();
         directionBuild();
         postDirectionBuild();
@@ -295,8 +296,10 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private StringBuilder notationsBuild() throws BuildException {
-        for(Notations notations : note.getNotationsList()) {
+    private StringBuilder notationsBuild(List<Notations> notationsList) throws BuildException {
+        Set<String> nonDuplicatedNotations = new HashSet<>(Arrays.asList("Tied"));
+        Set<String> executedNotations = new HashSet<>();
+        for(Notations notations : notationsList) {
             if (!TypeUtil.getBooleanDefaultYes(notations.getPrintObject())) continue;
 
             for(Notation notation : notations.getNotations()) {
@@ -314,8 +317,11 @@ public class NoteBuilder extends MusicDataBuilder {
                     articulations.setArticulationList(articulationListCopy);
                 }
 
+                String notationsClass = notation.getClass().getSimpleName();
+                if (nonDuplicatedNotations.contains(notationsClass) && executedNotations.contains(notationsClass)) continue;
                 MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
                 append(musicDataBuilder.build().toString());
+                executedNotations.add(notationsClass);
             }
         }
 
@@ -437,7 +443,12 @@ public class NoteBuilder extends MusicDataBuilder {
         for(Note note : notes) {
             NoteBuilder noteBuilder = new NoteBuilder(note);
             noteBuilders.add(noteBuilder);
+
             directions.addAll(note.getDirections());
+
+            List<Notations> notationsList = note.getNotationsList();
+            chord.getNotationsList().addAll(notationsList);
+            notationsList.clear();
         }
         directions.addAll(chord.getDirections());
 
@@ -479,10 +490,7 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         }
 
-        for(NoteBuilder noteBuilder : noteBuilders) {
-            noteBuilder.clear();
-            append(noteBuilder.notationsBuild().toString());
-        }
+        notationsBuild(chord.getNotationsList());
 
         if (!hasMultipleDirections()) {
             for(Direction direction : chord.getDirections()) {

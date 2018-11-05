@@ -14,6 +14,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("tied")
@@ -43,6 +44,9 @@ public class Tied extends Notation {
     private Bezier bezier;
     @Column
     private String color;
+    // used by lilypond
+    @Transient
+    private boolean unterminated = false;
 
     public Tied() {
 
@@ -118,5 +122,13 @@ public class Tied extends Notation {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isUnterminated() {
+        return unterminated;
+    }
+
+    public void setUnterminated(boolean unterminated) {
+        this.unterminated = unterminated;
     }
 }

@@ -21,11 +21,12 @@ import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.technical.Technical;
 
 public class NotationBuilder extends MusicDataBuilder {
-    public StringBuilder buildTied(Tied tied) {
+    public StringBuilder buildTied(Tied tied) throws BuildException {
         Connection tieType = tied.getType();
         switch (tieType) {
             case START:
             case CONTINUE:
+                if (tied.isUnterminated()) throw new BuildException("Unterminated tie");
                 append(PlacementBuildUtil.getPlacement(tied.getPlacement()));
                 append("~");
                 break;

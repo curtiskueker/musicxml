@@ -9,6 +9,7 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
+import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
@@ -277,6 +278,14 @@ public class Note extends MusicData {
                 .flatMap(notations -> notations.getNotations().stream())
                 .filter(notation -> notation instanceof Slur)
                 .map(notation -> (Slur)notation)
+                .collect(Collectors.toList());
+    }
+
+    public List<Tied> getTieds() {
+        return notationsList.stream()
+                .flatMap(notations -> notations.getNotations().stream())
+                .filter(notation -> notation instanceof Tied)
+                .map(notation -> (Tied)notation)
                 .collect(Collectors.toList());
     }
 

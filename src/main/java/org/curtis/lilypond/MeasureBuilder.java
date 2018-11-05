@@ -337,7 +337,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // Main data builder processing loops
         // general list first, then each build each voice
         if (MathUtil.largerThan(measureDuration, wholeMeasureDuration)) {
-            displayMeasureMessage(measure, "Voice duration " + measureDuration + " exceeds expected measure duration " + wholeMeasureDuration + ".  Using whole measure spacer.");
+            displayMeasureMessage(measure, "Voice duration " + measureDuration.intValue() + " exceeds expected measure duration " + wholeMeasureDuration.intValue() + ".  Using whole measure spacer.");
             appendWholeMeasureSpacerRepresentation();
         } else {
             if (hasNoteDataBuilder) {
@@ -352,7 +352,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     try {
                         append(TimeSignatureUtil.getSpacerRepresentation(measureDuration));
                     } catch (TimeSignatureException e) {
-                        displayMeasureMessage(measure, "Unable to resolve spacer representation, duration " + measureDuration + ".  Using whole measure spacer.");
+                        displayMeasureMessage(measure, "Unable to resolve spacer representation, duration " + measureDuration.intValue() + ".  Using whole measure spacer.");
                         appendWholeMeasureSpacerRepresentation();
                     }
                 }
@@ -388,7 +388,7 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     private void addSpacerForDurationDifference(BigDecimal duration) {
-        displayMeasureMessage(measure, "Voice duration difference in measure: " + duration + ".  Adding spacer note.  Check voice and staff values in notes.");
+        displayMeasureMessage(measure, "Voice duration difference in measure: " + duration.intValue() + ".  Adding spacer note.");
         addSpacerDataBuilder(duration);
         voiceDuration = MathUtil.add(voiceDuration, duration);
     }
