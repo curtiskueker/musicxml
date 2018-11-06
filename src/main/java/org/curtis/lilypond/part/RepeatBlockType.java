@@ -1,4 +1,4 @@
-package org.curtis.musicxml.score;
+package org.curtis.lilypond.part;
 
 public enum RepeatBlockType {
     MAIN,

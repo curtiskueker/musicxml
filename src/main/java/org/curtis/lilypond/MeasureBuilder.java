@@ -30,7 +30,7 @@ import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
-import org.curtis.musicxml.score.RepeatBlock;
+import org.curtis.lilypond.part.RepeatBlock;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
@@ -39,8 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
@@ -65,7 +63,6 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean isFirstMeasure = false;
     private boolean isLastMeasure = false;
     private RepeatBlock repeatBlock;
-    private SortedSet<String> voices = new TreeSet<>();
     private Map<Note, Connection> tupletTypes = new HashMap<>();
 
     public MeasureBuilder(Measure measure) {
@@ -110,14 +107,6 @@ public class MeasureBuilder extends AbstractBuilder {
 
     public void setRepeatBlock(RepeatBlock repeatBlock) {
         this.repeatBlock = repeatBlock;
-    }
-
-    public SortedSet<String> getVoices() {
-        return voices;
-    }
-
-    public void setVoices(SortedSet<String> voices) {
-        this.voices = voices;
     }
 
     public void setTupletType(Note note, Connection connection) {

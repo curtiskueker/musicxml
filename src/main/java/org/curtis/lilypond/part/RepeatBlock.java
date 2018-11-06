@@ -1,4 +1,4 @@
-package org.curtis.musicxml.score;
+package org.curtis.lilypond.part;
 
 import org.curtis.musicxml.common.Connection;
 

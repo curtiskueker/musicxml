@@ -26,8 +26,6 @@ import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
-import org.curtis.musicxml.score.RepeatBlock;
-import org.curtis.musicxml.score.RepeatBlockType;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
@@ -44,8 +42,8 @@ import java.util.stream.Collectors;
 public class VoicePartBuilder extends FilteredPartBuilder {
     private Part part;
     private SortedSet<String> currentVoices = new TreeSet<>();
-    private List<MeasureBuilder> measureBuilderList = new ArrayList<>();
-    private List<MeasureBuilder> currentMeasureBuilderList = new ArrayList<>();
+    private List<MeasureBlock> measureBlocks = new ArrayList<>();
+    private MeasureBlock currentMeasureBlock = new MeasureBlock();
     private MeasureBuilder currentRepeatStartBlockMeasureBuilder;
     private MeasureBuilder currentRepeatEndBlockMeasureBuilder;
     private Integer currentEndingCount = 0;
@@ -75,6 +73,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             boolean hasEnding = false;
             // default repeat block measure, in case opening repeat not notated
             if (currentRepeatStartBlockMeasureBuilder == null) currentRepeatStartBlockMeasureBuilder = measureBuilder;
+            SortedSet<String> measureVoices = new TreeSet<>();
 
             for(MusicData musicData : measure.getMusicDataList()) {
                 if(musicData instanceof Note) {
@@ -82,7 +81,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     FullNote fullNote = note.getFullNote();
 
                     String voice = note.getEditorialVoice().getVoice();
-                    if (StringUtil.isNotEmpty(voice)) measureBuilder.getVoices().add(voice);
+                    if (StringUtil.isNotEmpty(voice)) measureVoices.add(voice);
 
                     List<Note> tiedFromNoteList = tiedFromNotes.computeIfAbsent(voice, noteVoice -> new ArrayList<>());
                     List<Note> tiedToNoteList = tiedToNotes.computeIfAbsent(voice, noteVoice -> new ArrayList<>());
@@ -307,33 +306,32 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 }
             }
 
-            measureBuilderList.add(measureBuilder);
+            if (isVoicesChange(measureVoices) || isStartRepeatBlock(measureBuilder)) {
+                currentVoices = measureVoices;
+                newMeasureBlock();
+            }
+            currentMeasureBlock.getMeasureBuilders().add(measureBuilder);
+            if (isEndRepeatBlock(measureBuilder)) {
+                newMeasureBlock();
+            }
+
             previousMeasureBuilder = measureBuilder;
         }
 
+        newMeasureBlock();
+
         if (previousMeasureBuilder != null) previousMeasureBuilder.isLastMeasure();
 
-        if (measureBuilderList.isEmpty()) throw new BuildException("VoicePartBuilder: empty MeasureBuilder list");
+        if (measureBlocks.isEmpty()) throw new BuildException("Unable to process measure for Part");
 
         // Process the measures
-        for(MeasureBuilder measureBuilder : measureBuilderList) {
+        for(MeasureBlock measureBlock : measureBlocks) {
             try {
-                if (isVoicesChange(measureBuilder) || isStartRepeatBlock(measureBuilder)) {
-                    processMeasures();
-                }
-
-                currentMeasureBuilderList.add(measureBuilder);
-                currentVoices = measureBuilder.getVoices();
-
-                if (isEndRepeatBlock(measureBuilder)) {
-                    processMeasures();
-                }
+                processMeasures(measureBlock);
             } catch (BuildException e) {
                 System.err.println(e.getMessage());
             }
         }
-
-        processMeasures();
 
         PartBuilder.CURRENT_ATTRIBUTES = null;
 
@@ -342,8 +340,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         return stringBuilder;
     }
 
-    private boolean isVoicesChange(MeasureBuilder measureBuilder) {
-        return currentVoices.size() > 0 && !measureBuilder.getVoices().equals(currentVoices);
+    private boolean isVoicesChange(SortedSet<String> measureVoices) {
+        return measureVoices.size() > 0 && !measureVoices.equals(currentVoices);
     }
 
     private boolean isStartRepeatBlock(MeasureBuilder measureBuilder) {
@@ -394,10 +392,14 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         }
     }
 
-    private void processMeasures() throws BuildException {
-        if (currentMeasureBuilderList.isEmpty()) return;
+    private void newMeasureBlock() {
+        if (!currentMeasureBlock.getMeasureBuilders().isEmpty()) measureBlocks.add(currentMeasureBlock);
+        currentMeasureBlock = new MeasureBlock();
+        currentMeasureBlock.setVoices(currentVoices);
+    }
 
-        SortedSet<String> measureVoices = currentMeasureBuilderList.get(0).getVoices();
+    private void processMeasures(MeasureBlock measureBlock) throws BuildException {
+        SortedSet<String> measureVoices = measureBlock.getVoices();
         String NO_VOICE = "NO VOICE";
         if (measureVoices.isEmpty()) measureVoices.add(NO_VOICE);
 
@@ -405,12 +407,13 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         String defaultVoice = measureVoices.first();
 
         Attributes currentAttributes = AttributesUtil.attributesCopy(PartBuilder.CURRENT_ATTRIBUTES);
+        List<MeasureBuilder> measureBuilders = measureBlock.getMeasureBuilders();
         for (String voice : measureVoices) {
             // Reset attributes state at the beginning of each voice
             AttributesUtil.setCurrentAttributes(currentAttributes);
 
             // Begin repeat endings
-            MeasureBuilder firstMeasureBuilder = currentMeasureBuilderList.get(0);
+            MeasureBuilder firstMeasureBuilder = measureBuilders.get(0);
             if (voice.equals(measureVoices.first())) {
                 if (isMainRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
                     append("\\repeat volta #");
@@ -430,7 +433,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 appendLine("{");
             }
 
-            for (MeasureBuilder measureBuilder : currentMeasureBuilderList) {
+            for (MeasureBuilder measureBuilder : measureBlock.getMeasureBuilders()) {
                 measureBuilder.setVoice(voice);
                 measureBuilder.setDefaultVoice(defaultVoice);
                 append(measureBuilder.build().toString());
@@ -450,7 +453,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             }
 
             // End repeat endings
-            MeasureBuilder lastMeasure = currentMeasureBuilderList.get(currentMeasureBuilderList.size() - 1);
+            MeasureBuilder lastMeasure = measureBuilders.get(measureBuilders.size() - 1);
             if (voice.equals(measureVoices.last())) {
                 if (isEndRepeatBlock(lastMeasure)) {
                     appendLine();
@@ -463,7 +466,5 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 }
             }
         }
-
-        currentMeasureBuilderList.clear();
     }
 }
