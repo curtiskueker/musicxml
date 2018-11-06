@@ -327,7 +327,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         // Process the measures
         for(MeasureBlock measureBlock : measureBlocks) {
             try {
-                processMeasures(measureBlock);
+                processMeasureBlock(measureBlock);
             } catch (BuildException e) {
                 System.err.println(e.getMessage());
             }
@@ -398,7 +398,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         currentMeasureBlock.setVoices(currentVoices);
     }
 
-    private void processMeasures(MeasureBlock measureBlock) throws BuildException {
+    private void processMeasureBlock(MeasureBlock measureBlock) throws BuildException {
         SortedSet<String> measureVoices = measureBlock.getVoices();
         String NO_VOICE = "NO VOICE";
         if (measureVoices.isEmpty()) measureVoices.add(NO_VOICE);
