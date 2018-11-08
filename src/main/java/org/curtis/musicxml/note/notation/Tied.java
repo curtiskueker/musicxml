@@ -47,6 +47,9 @@ public class Tied extends Notation {
     // used by lilypond
     @Transient
     private boolean unterminated = false;
+    // used by lilypond
+    @Transient
+    private boolean isRepeatTie = false;
 
     public Tied() {
 
@@ -130,5 +133,13 @@ public class Tied extends Notation {
 
     public void setUnterminated(boolean unterminated) {
         this.unterminated = unterminated;
+    }
+
+    public boolean isRepeatTie() {
+        return isRepeatTie;
+    }
+
+    public void setRepeatTie(boolean repeatTie) {
+        isRepeatTie = repeatTie;
     }
 }

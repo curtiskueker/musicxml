@@ -56,6 +56,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private Map<String, Set<Integer>> activeSlurs = new HashMap<>();
     private Map<String, List<Note>> tiedFromNotes = new HashMap<>();
     private Map<String, List<Note>> tiedToNotes = new HashMap<>();
+    private List<Note> repeatBlockTiedNotes = new ArrayList<>();
 
     public VoicePartBuilder(Part part) {
         this.part = part;
@@ -306,23 +307,13 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 }
             }
 
-            if (isVoicesChange(measureVoices) || isStartRepeatBlock(measureBuilder)) {
-                currentVoices = measureVoices;
-                newMeasureBlock();
-            }
-            currentMeasureBlock.getMeasureBuilders().add(measureBuilder);
-            if (isEndRepeatBlock(measureBuilder)) {
-                newMeasureBlock();
-            }
-
+            checkMeasureBlock(measureBuilder, measureVoices);
             previousMeasureBuilder = measureBuilder;
         }
 
-        newMeasureBlock();
-
+        if (!currentMeasureBlock.getMeasureBuilders().isEmpty()) measureBlocks.add(currentMeasureBlock);
         if (previousMeasureBuilder != null) previousMeasureBuilder.isLastMeasure();
-
-        if (measureBlocks.isEmpty()) throw new BuildException("Unable to process measure for Part");
+        if (measureBlocks.isEmpty()) throw new BuildException("Unable to process measure for part " + part.getPartId());
 
         // Process the measures
         for(MeasureBlock measureBlock : measureBlocks) {
@@ -341,7 +332,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     }
 
     private boolean isVoicesChange(SortedSet<String> measureVoices) {
-        return measureVoices.size() > 0 && !measureVoices.equals(currentVoices);
+        return measureVoices.size() > 0 && measureVoices.size() != currentVoices.size();
     }
 
     private boolean isStartRepeatBlock(MeasureBuilder measureBuilder) {
@@ -364,31 +355,62 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         return repeatBlock !=  null && repeatBlock.getRepeatBlockType() == RepeatBlockType.ENDING;
     }
 
-    private void processTies(List<Note> tiedFromNotes, List<Note> tiedToNotes, Note currentNote) {
-        boolean match = false;
-        for (Note fromNote :  tiedFromNotes) {
+    private void processTies(List<Note> tiedFromNoteList, List<Note> tiedToNoteList, Note currentNote) {
+        if (!hasNoteMatch(tiedFromNoteList, tiedToNoteList)) tiedFromNoteList.stream().flatMap(fromNote -> fromNote.getTieds().stream()).forEach(tied -> tied.setUnterminated(true));
+        tiedFromNoteList.clear();
+        if (!tiedToNoteList.stream().flatMap(toNote -> toNote.getTieds().stream()).filter(tied -> tied.getType() == Connection.CONTINUE || tied.getType() == Connection.START).collect(Collectors.toList()).isEmpty()) {
+            tiedFromNoteList.addAll(tiedToNoteList);
+            tiedToNoteList.clear();
+            tiedToNoteList.add(currentNote);
+        } else {
+            tiedToNoteList.clear();
+        }
+    }
+
+    private boolean hasNoteMatch(List<Note> fromNoteList, List<Note> toNoteList) {
+        for (Note fromNote :  fromNoteList) {
             FullNoteType fromFullNoteType = fromNote.getFullNote().getFullNoteType();
             if (!(fromFullNoteType instanceof Pitch)) continue;
             Pitch fromPitch = (Pitch)fromFullNoteType;
-            for (Note toNote : tiedToNotes) {
+            for (Note toNote : toNoteList) {
                 FullNoteType toFullNoteType = toNote.getFullNote().getFullNoteType();
                 if (!(toFullNoteType instanceof Pitch)) continue;
                 Pitch toPitch = (Pitch)toFullNoteType;
-                if (fromPitch.getStep() == toPitch.getStep() && MathUtil.equalTo(fromPitch.getAlter(), toPitch.getAlter()) && fromPitch.getOctave().equals(toPitch.getOctave())) {
-                    match = true;
-                    break;
-                }
+                if (fromPitch.getStep() == toPitch.getStep() && MathUtil.equalTo(fromPitch.getAlter(), toPitch.getAlter()) && fromPitch.getOctave().equals(toPitch.getOctave())) return true;
             }
-            if (match) break;
         }
-        if (!match) tiedFromNotes.stream().flatMap(fromNote -> fromNote.getTieds().stream()).forEach(tied -> tied.setUnterminated(true));
-        tiedFromNotes.clear();
-        if (!tiedToNotes.stream().flatMap(toNote -> toNote.getTieds().stream()).filter(tied -> tied.getType() == Connection.CONTINUE || tied.getType() == Connection.START).collect(Collectors.toList()).isEmpty()) {
-            tiedFromNotes.addAll(tiedToNotes);
-            tiedToNotes.clear();
-            tiedToNotes.add(currentNote);
-        } else {
-            tiedToNotes.clear();
+
+        return false;
+    }
+
+    private void checkMeasureBlock(MeasureBuilder measureBuilder, SortedSet<String> measureVoices) {
+        List<Note> openTies = tiedFromNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
+        List<Note> closedTies = tiedToNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
+        if (isStartRepeatBlock(measureBuilder)) {
+            if (isEndingRepeatBlock(measureBuilder) && measureBuilder.getRepeatBlock().getEndingNumber() > 1) {
+                for (Tied closedTie : closedTies.stream().flatMap(toNote -> toNote.getTieds().stream()).collect(Collectors.toList())) closedTie.setRepeatTie(true);
+            }
+            newMeasureBlock();
+        }
+        else if (isVoicesChange(measureVoices)) {
+            if (!openTies.isEmpty()) {
+                if (measureVoices.size() > currentVoices.size()) {
+                    currentMeasureBlock.setVoices(measureVoices);
+                    currentVoices = measureVoices;
+                }
+            } else {
+                currentVoices = measureVoices;
+                newMeasureBlock();
+            }
+        }
+        currentMeasureBlock.getMeasureBuilders().add(measureBuilder);
+        if (isEndRepeatBlock(measureBuilder)) {
+            if (isMainRepeatBlock(measureBuilder)) repeatBlockTiedNotes.addAll(openTies);
+            else if (isEndingRepeatBlock(measureBuilder)) {
+                RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
+                if (repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) repeatBlockTiedNotes.clear();
+            }
+            newMeasureBlock();
         }
     }
 

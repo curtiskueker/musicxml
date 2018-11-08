@@ -22,6 +22,10 @@ import org.curtis.musicxml.note.notation.technical.Technical;
 
 public class NotationBuilder extends MusicDataBuilder {
     public StringBuilder buildTied(Tied tied) throws BuildException {
+        if (tied.isRepeatTie()) {
+                append("\\repeatTie ");
+                return stringBuilder;
+        }
         Connection tieType = tied.getType();
         switch (tieType) {
             case START:
