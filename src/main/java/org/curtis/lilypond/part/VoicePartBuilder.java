@@ -54,6 +54,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private WavyLine stopWavyLine = null;
     private boolean hasStopWavyLine = false;
     private Map<String, Set<Integer>> activeSlurs = new HashMap<>();
+    private boolean hasOpenSlur = false;
     private Map<String, List<Note>> tiedFromNotes = new HashMap<>();
     private Map<String, List<Note>> tiedToNotes = new HashMap<>();
     private List<Note> repeatBlockTiedNotes = new ArrayList<>();
@@ -390,14 +391,17 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private void checkMeasureBlock(MeasureBuilder measureBuilder, SortedSet<String> measureVoices) {
         List<Note> openTies = tiedFromNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
         List<Note> closedTies = tiedToNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
+        boolean hasActiveSlur = !activeSlurs.values().stream().flatMap(activeSlur -> activeSlur.stream()).collect(Collectors.toSet()).isEmpty();
         if (isStartRepeatBlock(measureBuilder) || measureBuilder.isHasStartRepeat()) {
             if (isEndingRepeatBlock(measureBuilder) && measureBuilder.getRepeatBlock().getEndingNumber() > 1) {
                 for (Tied closedTie : closedTies.stream().flatMap(toNote -> toNote.getTieds().stream()).collect(Collectors.toList())) closedTie.setRepeatTie(true);
             }
             newMeasureBlock();
-        }
-        else if (isVoicesChange(measureVoices)) {
-            if (!openTies.isEmpty()) {
+        } else if (hasActiveSlur && !hasOpenSlur) {
+            newMeasureBlock();
+            hasOpenSlur = true;
+        } else if (isVoicesChange(measureVoices)) {
+            if (!openTies.isEmpty() || hasOpenSlur) {
                 if (measureVoices.size() > currentVoices.size()) {
                     currentMeasureBlock.setVoices(measureVoices);
                     currentVoices = measureVoices;
@@ -407,7 +411,9 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 newMeasureBlock();
             }
         }
+
         currentMeasureBlock.getMeasureBuilders().add(measureBuilder);
+
         if (isEndRepeatBlock(measureBuilder) || measureBuilder.isHasEndRepeat()) {
             if (isMainRepeatBlock(measureBuilder)) repeatBlockTiedNotes.addAll(openTies);
             else if (isEndingRepeatBlock(measureBuilder)) {
@@ -415,6 +421,9 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 if (repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) repeatBlockTiedNotes.clear();
             }
             newMeasureBlock();
+        } else if (!hasActiveSlur && hasOpenSlur) {
+            newMeasureBlock();
+            hasOpenSlur = false;
         }
     }
 
