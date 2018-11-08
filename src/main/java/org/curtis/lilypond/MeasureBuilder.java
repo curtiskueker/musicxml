@@ -64,6 +64,8 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean isLastMeasure = false;
     private RepeatBlock repeatBlock;
     private Map<Note, Connection> tupletTypes = new HashMap<>();
+    private boolean hasStartRepeat = false;
+    private boolean hasEndRepeat = false;
 
     public MeasureBuilder(Measure measure) {
         this.measure = measure;
@@ -115,6 +117,22 @@ public class MeasureBuilder extends AbstractBuilder {
 
     public Connection getTupletType(Note note) {
         return tupletTypes.get(note);
+    }
+
+    public boolean isHasStartRepeat() {
+        return hasStartRepeat;
+    }
+
+    public void setHasStartRepeat(boolean hasStartRepeat) {
+        this.hasStartRepeat = hasStartRepeat;
+    }
+
+    public boolean isHasEndRepeat() {
+        return hasEndRepeat;
+    }
+
+    public void setHasEndRepeat(boolean hasEndRepeat) {
+        this.hasEndRepeat = hasEndRepeat;
     }
 
     public StringBuilder build() throws BuildException {

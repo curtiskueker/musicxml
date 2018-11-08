@@ -279,6 +279,10 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         switch (repeat.getDirection()) {
                             case FORWARD:
                                 currentRepeatStartBlockMeasureBuilder = measureBuilder;
+                                measureBuilder.setHasStartRepeat(true);
+                                break;
+                            case BACKWARD:
+                                measureBuilder.setHasEndRepeat(true);
                                 break;
                         }
                     }
@@ -386,7 +390,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private void checkMeasureBlock(MeasureBuilder measureBuilder, SortedSet<String> measureVoices) {
         List<Note> openTies = tiedFromNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
         List<Note> closedTies = tiedToNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
-        if (isStartRepeatBlock(measureBuilder)) {
+        if (isStartRepeatBlock(measureBuilder) || measureBuilder.isHasStartRepeat()) {
             if (isEndingRepeatBlock(measureBuilder) && measureBuilder.getRepeatBlock().getEndingNumber() > 1) {
                 for (Tied closedTie : closedTies.stream().flatMap(toNote -> toNote.getTieds().stream()).collect(Collectors.toList())) closedTie.setRepeatTie(true);
             }
@@ -404,7 +408,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             }
         }
         currentMeasureBlock.getMeasureBuilders().add(measureBuilder);
-        if (isEndRepeatBlock(measureBuilder)) {
+        if (isEndRepeatBlock(measureBuilder) || measureBuilder.isHasEndRepeat()) {
             if (isMainRepeatBlock(measureBuilder)) repeatBlockTiedNotes.addAll(openTies);
             else if (isEndingRepeatBlock(measureBuilder)) {
                 RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
