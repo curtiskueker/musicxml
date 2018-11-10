@@ -46,8 +46,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private MeasureBlock currentMeasureBlock = new MeasureBlock();
     private MeasureBuilder currentRepeatStartBlockMeasureBuilder;
     private MeasureBuilder currentRepeatEndBlockMeasureBuilder;
-    private Integer currentEndingCount = 0;
-    private List<RepeatBlock> currentRepeatBlocks = new ArrayList<>();
+    private Integer currentEndingCount = 1;
+    private List<RepeatBlock> currentEndingBlocks = new ArrayList<>();
     private MeasureBuilder previousMeasureBuilder = null;
     private Note previousNote;
     private Map<String, Boolean> tupletsOn = new HashMap<>();
@@ -219,16 +219,20 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     Barline barline = (Barline)musicData;
                     Ending ending = barline.getEnding();
                     if(ending != null) {
-                        hasEnding = true;
                         switch (ending.getType()) {
                             case START:
+                                if (currentEndingBlockStarted()) {
+                                    RepeatBlock invalidStartEnding = new RepeatBlock();
+                                    invalidStartEnding.setRepeatBlockType(RepeatBlockType.INVALID_START_ENDING);
+                                    measureBuilder.setRepeatBlock(invalidStartEnding);
+                                    break;
+                                }
+
                                 RepeatBlock startRepeatBlock = currentRepeatStartBlockMeasureBuilder.getRepeatBlock();
                                 if (startRepeatBlock == null) {
                                     startRepeatBlock = new RepeatBlock();
                                 }
                                 startRepeatBlock.setRepeatBlockType(RepeatBlockType.MAIN);
-                                currentEndingCount++;
-                                startRepeatBlock.setEndingCount(currentEndingCount);
                                 currentRepeatStartBlockMeasureBuilder.setRepeatBlock(startRepeatBlock);
 
                                 if(currentRepeatStartBlockMeasureBuilder.getMeasure().getNumber().equals(previousMeasureBuilder.getMeasure().getNumber())) {
@@ -243,9 +247,6 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                         endRepeatBlock.setEndingCount(currentEndingCount);
                                         previousMeasureBuilder.setRepeatBlock(endRepeatBlock);
                                         currentRepeatEndBlockMeasureBuilder = previousMeasureBuilder;
-                                    } else {
-                                        RepeatBlock currentRepeatEndBlock = currentRepeatEndBlockMeasureBuilder.getRepeatBlock();
-                                        currentRepeatEndBlock.setEndingCount(currentEndingCount);
                                     }
                                 }
 
@@ -254,25 +255,41 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 currentRepeatBlock.setConnectionType(Connection.START);
                                 currentRepeatBlock.setEndingNumber(currentEndingCount);
                                 measureBuilder.setRepeatBlock(currentRepeatBlock);
-                                currentRepeatBlocks.add(currentRepeatBlock);
+                                currentEndingBlocks.add(currentRepeatBlock);
+                                hasEnding = true;
                                 break;
                             case STOP:
+                                if (!currentEndingBlockStarted()) {
+                                    RepeatBlock invalidStopEnding = new RepeatBlock();
+                                    invalidStopEnding.setRepeatBlockType(RepeatBlockType.INVALID_STOP_ENDING);
+                                    measureBuilder.setRepeatBlock(invalidStopEnding);
+                                    break;
+                                }
                             case DISCONTINUE:
+                                if (!currentEndingBlockStarted()) {
+                                    RepeatBlock invalidContinueEnding = new RepeatBlock();
+                                    invalidContinueEnding.setRepeatBlockType(RepeatBlockType.INVALID_CONTINUE_ENDING);
+                                    measureBuilder.setRepeatBlock(invalidContinueEnding);
+                                    break;
+                                }
                                 currentRepeatBlock = measureBuilder.getRepeatBlock();
-                                if (currentRepeatBlock == null) {
+                                if (currentRepeatBlock == null || currentRepeatBlock.getRepeatBlockType() != RepeatBlockType.ENDING) {
                                     currentRepeatBlock = new RepeatBlock();
                                     currentRepeatBlock.setRepeatBlockType(RepeatBlockType.ENDING);
                                     currentRepeatBlock.setConnectionType(Connection.STOP);
                                     currentRepeatBlock.setEndingNumber(currentEndingCount);
                                     measureBuilder.setRepeatBlock(currentRepeatBlock);
-                                    currentRepeatBlocks.add(currentRepeatBlock);
+                                    currentEndingBlocks.add(currentRepeatBlock);
                                 } else {
                                     currentRepeatBlock.setConnectionType(Connection.SINGLE);
                                 }
+                                currentEndingBlocks.forEach(repeatBlock -> repeatBlock.setEndingCount(currentEndingCount));
+                                currentRepeatStartBlockMeasureBuilder.getRepeatBlock().setEndingCount(currentEndingCount);
+                                currentRepeatEndBlockMeasureBuilder.getRepeatBlock().setEndingCount(currentEndingCount);
+                                hasEnding = true;
+                                currentEndingCount++;
                                 break;
                         }
-
-                        currentRepeatBlocks.forEach(repeatBlock -> repeatBlock.setEndingCount(currentEndingCount));
                     }
 
                     Repeat repeat = barline.getRepeat();
@@ -301,15 +318,11 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 previousNote.getFullNote().setChordType(Connection.STOP);
             }
 
-            if (previousMeasureBuilder != null && !hasEnding) {
-                RepeatBlock previousRepeatBlock = previousMeasureBuilder.getRepeatBlock();
-                if(previousRepeatBlock != null && previousRepeatBlock.getRepeatBlockType() == RepeatBlockType.ENDING &&
-                        (previousRepeatBlock.getConnectionType() == Connection.STOP || previousRepeatBlock.getConnectionType() == Connection.SINGLE)) {
-                    currentRepeatStartBlockMeasureBuilder = measureBuilder;
-                    currentRepeatEndBlockMeasureBuilder = null;
-                    currentEndingCount = 0;
-                    currentRepeatBlocks.clear();
-                }
+            if (previousMeasureBuilder != null && !hasEnding && isEndingRepeatBlock(previousMeasureBuilder) && isEndRepeatBlock(previousMeasureBuilder)) {
+                currentRepeatStartBlockMeasureBuilder = measureBuilder;
+                currentRepeatEndBlockMeasureBuilder = null;
+                currentEndingCount = 1;
+                currentEndingBlocks.clear();
             }
 
             checkMeasureBlock(measureBuilder, measureVoices);
@@ -317,7 +330,13 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         }
 
         if (!currentMeasureBlock.getMeasureBuilders().isEmpty()) measureBlocks.add(currentMeasureBlock);
-        if (previousMeasureBuilder != null) previousMeasureBuilder.isLastMeasure();
+        if (previousMeasureBuilder != null) {
+            previousMeasureBuilder.isLastMeasure();
+            if (currentEndingBlockStarted()) {
+                RepeatBlock currentRepeatBlock = getCurrentEndingBlock();
+                currentRepeatBlock.setRepeatBlockType(RepeatBlockType.RUNAWAY_ENDING);
+            }
+        }
         if (measureBlocks.isEmpty()) throw new BuildException("Unable to process measure for part " + part.getPartId());
 
         // Process the measures
@@ -347,7 +366,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
     private boolean isEndRepeatBlock(MeasureBuilder measureBuilder) {
         RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
-        return repeatBlock != null && (repeatBlock.getConnectionType() == Connection.STOP || repeatBlock.getConnectionType() == Connection.SINGLE);
+        return repeatBlock != null && (repeatBlock.getConnectionType() == Connection.STOP || repeatBlock.getConnectionType() == Connection.DISCONTINUE || repeatBlock.getConnectionType() == Connection.SINGLE);
     }
 
     private boolean isMainRepeatBlock(MeasureBuilder measureBuilder) {
@@ -358,6 +377,15 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private boolean isEndingRepeatBlock(MeasureBuilder measureBuilder) {
         RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
         return repeatBlock !=  null && repeatBlock.getRepeatBlockType() == RepeatBlockType.ENDING;
+    }
+
+    private RepeatBlock getCurrentEndingBlock() {
+        return currentEndingBlocks.isEmpty() ? null : currentEndingBlocks.get(currentEndingBlocks.size() - 1);
+    }
+
+    private boolean currentEndingBlockStarted() {
+        RepeatBlock currentEndingBlock = getCurrentEndingBlock();
+        return currentEndingBlock != null && currentEndingBlock.getConnectionType() == Connection.START;
     }
 
     private void processTies(List<Note> tiedFromNoteList, List<Note> tiedToNoteList, Note currentNote) {
@@ -472,6 +500,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 measureBuilder.setVoice(voice);
                 measureBuilder.setDefaultVoice(defaultVoice);
                 append(measureBuilder.build().toString());
+
+                checkForInvalidEnding(measureBuilder);
             }
 
             if (hasMultipleVoices) {
@@ -500,6 +530,16 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     }
                 }
             }
+        }
+    }
+
+    private void checkForInvalidEnding(MeasureBuilder measureBuilder) {
+        RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
+        if (repeatBlock != null) {
+            if (repeatBlock.getRepeatBlockType() == RepeatBlockType.INVALID_START_ENDING) displayMeasureMessage(measureBuilder.getMeasure(), "Invalid start ending.  Skipping.");
+            if (repeatBlock.getRepeatBlockType() == RepeatBlockType.INVALID_CONTINUE_ENDING) displayMeasureMessage(measureBuilder.getMeasure(), "Invalid continue ending.  Skipping.");
+            if (repeatBlock.getRepeatBlockType() == RepeatBlockType.INVALID_STOP_ENDING) displayMeasureMessage(measureBuilder.getMeasure(), "Invalid stop ending.  Skipping.");
+            if (repeatBlock.getRepeatBlockType() == RepeatBlockType.RUNAWAY_ENDING) displayMeasureMessage(measureBuilder.getMeasure(), "Runaway ending.  Skipping.");
         }
     }
 }
