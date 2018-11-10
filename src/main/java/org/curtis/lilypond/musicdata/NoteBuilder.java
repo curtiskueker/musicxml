@@ -47,11 +47,9 @@ import org.curtis.util.MathUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class NoteBuilder extends MusicDataBuilder {
@@ -354,6 +352,12 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private StringBuilder preDirectionBuild() {
         if (hasMultipleDirections()) {
+            if (!MathUtil.isPositive(note.getDuration())) {
+                System.err.println("Warning: multiple directions on zero-duration note.  Skipping directions.");
+                directions.clear();
+                return stringBuilder;
+            }
+
             append(" << ");
         }
 
@@ -376,10 +380,6 @@ public class NoteBuilder extends MusicDataBuilder {
         // get the iterator to the list
         int spacerCount = Integer.highestOneBit(directionTypeCount - 1) << 1;
         BigDecimal spacerDuration = MathUtil.divide(note.getDuration(), MathUtil.newBigDecimal(spacerCount));
-        if (!MathUtil.isPositive(spacerDuration)) {
-            System.err.println("Warning: multiple dynamics directions on zero-duration note.  Skipping.");
-            return stringBuilder;
-        }
 
         Iterator<Direction> directionIterator = directions.iterator();
         Direction direction = directionIterator.next();
@@ -608,21 +608,17 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private boolean hasMultipleDirections() {
-        Map<String, Integer> directionTypeCounts = new HashMap<>();
+        Set<String> multipleDirectionTypesPresent = new HashSet<>();
         for (Direction direction : directions) {
             for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
                 for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
                     String name = directionType.getClass().getSimpleName();
-                    Integer directionTypeCount = directionTypeCounts.computeIfAbsent(name, count -> 0);
-                    directionTypeCount++;
-                    directionTypeCounts.put(name, directionTypeCount);
+                    if (DirectionType.MULTIPLE_DIRECTION_TYPES.contains(name)) {
+                        if (multipleDirectionTypesPresent.contains(name)) return true;
+                        multipleDirectionTypesPresent.add(name);
+                    }
                 }
             }
-        }
-
-        for (String multipleDirectionType : DirectionType.MULTIPLE_DIRECTION_TYPES) {
-            Integer directionTypeCount = directionTypeCounts.get(multipleDirectionType);
-            if (directionTypeCount != null && directionTypeCount > 1) return true;
         }
 
         return false;
