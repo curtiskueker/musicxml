@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -12,6 +12,6 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "part_item")
 @DiscriminatorColumn(name = "part_item_type")
-public abstract class PartItem extends DatabaseItem {
+public abstract class PartItem extends OrderedItem {
 
 }

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "measure")
-public class Measure extends DatabaseItem {
+public class Measure extends OrderedItem {
     @Column
     private String number;
     @Column

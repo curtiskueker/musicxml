@@ -8,6 +8,7 @@ import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
+import org.curtis.musicxml.score.PartItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.StringUtil;
@@ -32,15 +33,33 @@ public class MusicXml2Db {
                 Score score = scoreHandler.getScore();
                 score.setFilename(inputFile.getName());
 
+                Integer partItemOrdering = 1;
+                for (PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
+                    partItem.setOrdering(partItemOrdering);
+                    partItemOrdering++;
+                }
+
+                Integer partOrdering = 1;
+                for (Part part : score.getParts()) {
+                    part.setOrdering(partOrdering);
+                    partOrdering++;
+                    Integer measureOrdering = 1;
+                    for (Measure measure : part.getMeasures()) {
+                        measure.setOrdering(measureOrdering);
+                        measureOrdering++;
+                    }
+                }
+
                 dbTransaction.create(score);
 
-                Integer ordering = 1;
+                // MusicData created separately
                 for (Part part : score.getParts()) {
                     for (Measure measure : part.getMeasures()) {
+                        Integer musicDataOrdering = 1;
                         for (MusicData musicData : measure.getMusicDataList()) {
                             musicData.setMeasure(measure);
-                            musicData.setOrdering(ordering);
-                            ordering++;
+                            musicData.setOrdering(musicDataOrdering);
+                            musicDataOrdering++;
                             dbTransaction.create(musicData);
                         }
                     }

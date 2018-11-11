@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,22 +8,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "music_data")
-public class MeasureItem extends DatabaseItem {
-    @Column
-    private Integer ordering;
+public class MeasureItem extends OrderedItem {
     @Column(name = "music_data_type")
     private String musicDataType;
 
     public MeasureItem() {
 
-    }
-
-    public Integer getOrdering() {
-        return ordering;
-    }
-
-    public void setOrdering(Integer ordering) {
-        this.ordering = ordering;
     }
 
     public String getMusicDataType() {
