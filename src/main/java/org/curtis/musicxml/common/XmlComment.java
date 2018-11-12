@@ -14,7 +14,9 @@ public class XmlComment extends DatabaseItem {
     @Column
     private String data;
     @Column
-    private String location;
+    private String parent;
+    @Column(name = "next_sibling")
+    private String nextSibling;
 
     public XmlComment() {
 
@@ -36,11 +38,19 @@ public class XmlComment extends DatabaseItem {
         this.data = data;
     }
 
-    public String getLocation() {
-        return location;
+    public String getParent() {
+        return parent;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public String getNextSibling() {
+        return nextSibling;
+    }
+
+    public void setNextSibling(String nextSibling) {
+        this.nextSibling = nextSibling;
     }
 }
