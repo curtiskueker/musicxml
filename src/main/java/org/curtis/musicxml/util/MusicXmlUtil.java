@@ -200,12 +200,12 @@ public class MusicXmlUtil {
                 Integer nodeCount = nodeNameMap.computeIfAbsent(nodeName, name -> 0);
                 nodeCount++;
                 nodeNameMap.put(nodeName, nodeCount);
-                String nodePath = "/" + nodeName + "[" + nodeCount + "]";
+                String nodePath = nodeName + "[" + nodeCount + "]";
                 if (!currentComments.isEmpty()) {
                     for (XmlComment xmlComment : currentComments) xmlComment.setNextSibling(nodePath);
                     currentComments.clear();
                 }
-                if (childNode.hasChildNodes()) xmlComments.addAll(getXmlComments(childNode, path + nodePath));
+                if (childNode.hasChildNodes()) xmlComments.addAll(getXmlComments(childNode, path + "/" + nodePath));
             }
             if (childNode.getNodeType() == Node.COMMENT_NODE || childNode.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
                 XmlComment xmlComment = new XmlComment();
@@ -229,18 +229,28 @@ public class MusicXmlUtil {
     private static void setXmlComments(Document document, List<XmlComment> xmlComments) {
         if (document == null || xmlComments == null || xmlComments.isEmpty()) return;
 
-        XPathFactory xPathFactory = XPathFactory.newInstance();
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        Map<String, Node> nodeMap = new HashMap<>();
         for (XmlComment xmlComment : xmlComments) {
-            XPath xPath = xPathFactory.newXPath();
             try {
                 Node commentNode;
                 if (xmlComment.getTarget() == null) commentNode = document.createComment(xmlComment.getData());
                 else commentNode = document.createProcessingInstruction(xmlComment.getTarget(), xmlComment.getData());
 
-                Node parentNode = (Node)xPath.compile(xmlComment.getParent()).evaluate(document, XPathConstants.NODE);
+                String parentLocation = xmlComment.getParent();
+                Node parentNode = nodeMap.get(parentLocation);
+                if (parentNode == null) {
+                    parentNode = (Node)xPath.evaluate(parentLocation, document, XPathConstants.NODE);
+                    nodeMap.put(parentLocation, parentNode);
+                }
                 String nextSibling = xmlComment.getNextSibling();
                 if (StringUtil.isNotEmpty(nextSibling)) {
-                    Node siblingNode = (Node)xPath.compile(xmlComment.getParent() + nextSibling).evaluate(document, XPathConstants.NODE);
+                    String siblingLocation = parentLocation + "/" + nextSibling;
+                    Node siblingNode = nodeMap.get(siblingLocation);
+                    if (siblingNode == null) {
+                        siblingNode = (Node)xPath.evaluate(nextSibling, parentNode, XPathConstants.NODE);
+                        nodeMap.put(siblingLocation, siblingNode);
+                    }
                     parentNode.insertBefore(commentNode, siblingNode);
                 } else parentNode.appendChild(commentNode);
             } catch (XPathExpressionException e) {

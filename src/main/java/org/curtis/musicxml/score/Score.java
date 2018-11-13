@@ -32,7 +32,7 @@ public class Score extends DatabaseItem {
     private String version;
     @Column
     private String filename;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "score_id", nullable = false)
     private List<XmlComment> xmlComments = new ArrayList<>();
