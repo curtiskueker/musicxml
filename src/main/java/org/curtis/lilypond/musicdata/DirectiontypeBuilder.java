@@ -141,7 +141,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildOtherDirection(OtherDirection otherDirection) {
-        System.err.println("Warning: OrnamentBuilder.buildOtherDirection not implemented");
+        System.err.println("Warning: other-direction element handling not implemented");
 
         if (!TypeUtil.getBooleanDefaultYes(otherDirection.getPrintObject())) return stringBuilder;
 
