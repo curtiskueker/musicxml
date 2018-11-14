@@ -1,6 +1,7 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.exception.DurationException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.musicdata.DirectionBuilder;
 import org.curtis.lilypond.musicdata.MusicDataBuilder;
@@ -336,7 +337,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
                 append("\\partial ");
                 appendLine(wholeMeasureRepresentation);
-            } catch (TimeSignatureException e) {
+            } catch (DurationException e) {
                 displayMeasureMessage(measure, "Expected measure duration doesn't match notated duration.  Skipping partial measure notation.");
             }
         }
@@ -350,6 +351,8 @@ public class MeasureBuilder extends AbstractBuilder {
             if (hasNoteDataBuilder) {
                 for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
                     append(musicDataBuilder.build().toString());
+                    BigDecimal unhandledDuration = musicDataBuilder.getUnhandledDuration();
+                    if (MathUtil.isPositive(unhandledDuration)) displayMeasureMessage(measure, "Unhandled duration: " + unhandledDuration);
                 }
             } else {
                 if (MathUtil.equalTo(wholeMeasureDuration, measureDuration)) {
@@ -358,7 +361,7 @@ public class MeasureBuilder extends AbstractBuilder {
                 } else {
                     try {
                         append(TimeSignatureUtil.getSpacerRepresentation(measureDuration));
-                    } catch (TimeSignatureException e) {
+                    } catch (DurationException e) {
                         displayMeasureMessage(measure, "Unable to resolve spacer representation, duration " + measureDuration.intValue() + ".  Using whole measure spacer.");
                         appendWholeMeasureSpacerRepresentation();
                     }

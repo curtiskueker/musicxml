@@ -1,7 +1,7 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.lilypond.exception.TimeSignatureException;
+import org.curtis.lilypond.exception.DurationException;
 import org.curtis.lilypond.util.NoteUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.direction.harmony.Harmony;
@@ -33,7 +33,7 @@ public class HarmonyBuilder extends MusicDataBuilder {
 
             try {
                 append(TimeSignatureUtil.getRepresentationValue(harmony.getTotalBeats()));
-            } catch (TimeSignatureException e) {
+            } catch (DurationException e) {
                 throw new BuildException(e.getMessage());
             }
 

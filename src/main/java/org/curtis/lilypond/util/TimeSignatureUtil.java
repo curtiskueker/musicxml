@@ -1,5 +1,6 @@
 package org.curtis.lilypond.util;
 
+import org.curtis.lilypond.exception.DurationException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.musicxml.attributes.time.Time;
@@ -9,6 +10,7 @@ import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TimeSignatureUtil {
@@ -30,14 +32,14 @@ public class TimeSignatureUtil {
         return "s1*" + String.valueOf(timeSignature.getBeats()) + "/" + String.valueOf(timeSignature.getBeatType());
     }
 
-    public static String getWholeMeasureRepresentation(BigDecimal numerator, BigDecimal denominator) throws TimeSignatureException {
+    public static String getWholeMeasureRepresentation(BigDecimal numerator, BigDecimal denominator) throws DurationException {
         BigDecimal totalBeats = getTotalBeats(numerator, denominator);
 
         return getRepresentationValue(totalBeats);
     }
 
-    public static String getRepresentationValue(BigDecimal totalBeats) throws TimeSignatureException {
-        if (!MathUtil.isPositive(totalBeats)) throw new TimeSignatureException("Representation value is non-positive value");
+    public static String getRepresentationValue(BigDecimal totalBeats) throws DurationException {
+        if (!MathUtil.isPositive(totalBeats)) throw new DurationException("Representation value is non-positive value");
 
         BigDecimal totalBeatsCopy = MathUtil.newBigDecimal(totalBeats);
         int dividerCount = 0;
@@ -48,7 +50,7 @@ public class TimeSignatureUtil {
             }
         }
 
-        if (dividerCount > 3) throw new TimeSignatureException("Note beat total of " + totalBeats + " exceeds maxixmum value allowed.  Skipping note.");
+        if (dividerCount > 3) throw new DurationException("Note beat total of " + totalBeats + " exceeds maxixmum value allowed.  Skipping note.");
 
         BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeatsCopy);
 
@@ -71,7 +73,7 @@ public class TimeSignatureUtil {
 
         // If representation isn't a multiple of 2, or loop count greater than two, throw an exception
         if(!((noteRepresentation & -noteRepresentation) == noteRepresentation) || multiplierCount > 2) {
-            throw new TimeSignatureException("Duration value not processed.  Total beats: " + totalBeats + ".");
+            throw new DurationException("Duration value not processed.  Total beats: " + totalBeats + ".");
         }
 
 
@@ -87,10 +89,39 @@ public class TimeSignatureUtil {
         return !MathUtil.smallerThan(beats, MathUtil.newBigDecimal(8));
     }
 
-    public static String getDurationRepresentationValue(BigDecimal duration) throws TimeSignatureException {
+    public static String getDurationRepresentationValue(BigDecimal duration) throws DurationException {
         BigDecimal totalBeats = MathUtil.divide(duration, PartBuilder.CURRENT_ATTRIBUTES.getDivisions());
 
         return getRepresentationValue(totalBeats);
+    }
+
+    public static List<String> getDurationRepresentationValues(BigDecimal duration) throws DurationException {
+        BigDecimal durationCopy = MathUtil.newBigDecimal(duration);
+        List<String> representationValues = new ArrayList<>();
+
+        BigDecimal divisions = PartBuilder.CURRENT_ATTRIBUTES.getDivisions();
+        BigDecimal minimumDivisions = MathUtil.divide(divisions, MathUtil.newBigDecimal(4));
+
+        while (!MathUtil.smallerThan(durationCopy, minimumDivisions)) {
+            if (MathUtil.smallerThan(durationCopy, divisions)) {
+                divisions = MathUtil.divide(divisions, MathUtil.newBigDecimal(2));
+            }
+            if (!MathUtil.smallerThan(durationCopy, divisions)) {
+                try {
+                    representationValues.add(getDurationRepresentationValue(divisions));
+                    durationCopy = MathUtil.subtract(durationCopy, divisions);
+                } catch (DurationException e) {
+                    // skip
+                }
+            }
+        }
+
+        if (MathUtil.isPositive(durationCopy)) {
+            DurationException durationException = new DurationException("Unhandled duration value: " + duration);
+            durationException.setUnhandledDuration(duration);
+        }
+
+        return representationValues;
     }
 
     private static boolean rounds(BigDecimal value) {
@@ -98,7 +129,7 @@ public class TimeSignatureUtil {
         return MathUtil.isNegative(MathUtil.subtract(MathUtil.subtract(value, comparisonValue).abs(), MathUtil.newBigDecimal(.1)));
     }
 
-    public static String getSpacerRepresentation(BigDecimal duration) throws TimeSignatureException {
+    public static String getSpacerRepresentation(BigDecimal duration) throws DurationException {
         return "s" + getDurationRepresentationValue(duration);
     }
 

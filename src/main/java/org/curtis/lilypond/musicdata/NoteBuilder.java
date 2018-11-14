@@ -1,6 +1,7 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.exception.DurationException;
 import org.curtis.lilypond.exception.TimeSignatureException;
 import org.curtis.lilypond.part.PartBuilder;
 import org.curtis.lilypond.util.NoteUtil;
@@ -255,6 +256,9 @@ public class NoteBuilder extends MusicDataBuilder {
             }
         } catch (TimeSignatureException e) {
             throw new BuildException(e.getMessage() + "  Skipping note.");
+        } catch (DurationException e) {
+            e.setUnhandledDuration(duration);
+            throw e;
         }
 
         return stringBuilder;
@@ -413,7 +417,7 @@ public class NoteBuilder extends MusicDataBuilder {
                 append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
                 append(new MusicDataBuilder(directionType).build().toString());
                 append(" ");
-            } catch (TimeSignatureException e) {
+            } catch (DurationException e) {
                 throw new BuildException(e.getMessage());
             }
         }
@@ -600,8 +604,12 @@ public class NoteBuilder extends MusicDataBuilder {
         try {
             append(" ");
             append(TimeSignatureUtil.getSpacerRepresentation(duration));
-        } catch (TimeSignatureException e) {
-            throw new BuildException(e.getMessage());
+        } catch (DurationException e) {
+            List<String> spacerRepresentations = TimeSignatureUtil.getDurationRepresentationValues(duration);
+            for (String spacerRepresentation : spacerRepresentations) {
+                append(" s");
+                append(spacerRepresentation);
+            }
         }
 
         return stringBuilder;

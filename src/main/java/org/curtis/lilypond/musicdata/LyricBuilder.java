@@ -1,7 +1,7 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.lilypond.exception.TimeSignatureException;
+import org.curtis.lilypond.exception.DurationException;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.TimeModification;
@@ -32,7 +32,7 @@ public class LyricBuilder extends MusicDataBuilder {
         String totalBeatRepresentation;
         try {
             totalBeatRepresentation = TimeSignatureUtil.getRepresentationValue(totalBeats);
-        } catch (TimeSignatureException e) {
+        } catch (DurationException e) {
             throw new BuildException(e.getMessage());
         }
 

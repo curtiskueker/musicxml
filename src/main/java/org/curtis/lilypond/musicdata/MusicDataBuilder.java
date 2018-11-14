@@ -3,10 +3,13 @@ package org.curtis.lilypond.musicdata;
 import org.curtis.lilypond.AbstractBuilder;
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.lilypond.exception.DurationException;
 import org.curtis.lilypond.part.PartBuilder;
+import org.curtis.util.MathUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +18,7 @@ import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
 public class MusicDataBuilder extends AbstractBuilder {
     private Object musicData;
+    private BigDecimal unhandledDuration = MathUtil.ZERO;
 
     public MusicDataBuilder(Object musicData) {
         this.musicData = musicData;
@@ -26,6 +30,14 @@ public class MusicDataBuilder extends AbstractBuilder {
 
     public Object getMusicData() {
         return musicData;
+    }
+
+    public BigDecimal getUnhandledDuration() {
+        return unhandledDuration;
+    }
+
+    public void setUnhandledDuration(BigDecimal unhandledDuration) {
+        this.unhandledDuration = unhandledDuration;
     }
 
     public StringBuilder build() throws BuildException {
@@ -53,6 +65,7 @@ public class MusicDataBuilder extends AbstractBuilder {
             if (e.getCause() instanceof BuildException) {
                 // Note exception but continue anyway
                 System.err.println(PartBuilder.CURRENT_PART_ID + ", Measure " + MeasureBuilder.CURRENT_MEASURE_NUMBER + ": " + e.getCause().getMessage());
+                setUnhandledDuration(((BuildException)e.getCause()).getUnhandledDuration());
             } else {
                 displayException(e);
                 if(DEBUG) e.printStackTrace();
