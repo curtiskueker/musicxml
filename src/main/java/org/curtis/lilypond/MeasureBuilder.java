@@ -61,6 +61,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private BigDecimal measureDuration = MathUtil.ZERO;
     private BigDecimal voiceDuration = MathUtil.ZERO;
     private BigDecimal unhandledMeasureDuration = MathUtil.ZERO;
+    private Map<String, BigDecimal> voiceDurations = new HashMap<>();
     public static String CURRENT_MEASURE_NUMBER;
     private boolean isFirstMeasure = false;
     private boolean isLastMeasure = false;
@@ -153,20 +154,24 @@ public class MeasureBuilder extends AbstractBuilder {
 
             if(musicData instanceof Note) {
                 currentNote = (Note)musicData;
+                BigDecimal currentNoteDuration = currentNote.getDuration();
                 FullNote fullNote = currentNote.getFullNote();
                 String currentNoteVoice = currentNote.getEditorialVoice().getVoice();
                 if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
                 Connection chordType = fullNote.getChordType();
                 if (chordType == null || chordType == Connection.START) {
-                    measureDuration = MathUtil.add(measureDuration, currentNote.getDuration());
-                    if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNote.getDuration());
+                    measureDuration = MathUtil.add(measureDuration, currentNoteDuration);
+                    if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNoteDuration);
                 }
 
-                if (!isCurrentVoice()) continue;
+                if (!isCurrentVoice()) {
+                    voiceDurations.merge(currentVoice, currentNoteDuration, MathUtil::add);
+                    continue;
+                }
 
                 if (!TypeUtil.getBooleanDefaultYes(currentNote.getPrintout().getPrintObject()) || currentNote.getCue()) {
-                    if (chordType == null || chordType == Connection.START) addSpacerDataBuilder(currentNote.getDuration());
+                    if (chordType == null || chordType == Connection.START) addSpacerDataBuilder(currentNoteDuration);
                     continue;
                 }
 
@@ -314,6 +319,10 @@ public class MeasureBuilder extends AbstractBuilder {
                     addSpacerForDurationDifference(wholeMeasureDurationDifference);
                 }
             }
+            if (isFirstMeasure || isLastMeasure){
+                BigDecimal maxVoiceDurationDifference = getMaxMeasureVoiceDurationDifference();
+                if (MathUtil.isPositive(maxVoiceDurationDifference)) addSpacerForDurationDifference(maxVoiceDurationDifference);
+            }
         }
 
         // clear any directions at the end of the measure
@@ -415,6 +424,13 @@ public class MeasureBuilder extends AbstractBuilder {
             BigDecimal durationDifference = MathUtil.subtract(measureDuration, voiceDuration);
             addSpacerForDurationDifference(durationDifference);
         }
+    }
+
+    private BigDecimal getMaxMeasureVoiceDurationDifference() {
+        if (voiceDurations.isEmpty()) return MathUtil.ZERO;
+
+        BigDecimal maxVoiceDuration = voiceDurations.entrySet().stream().max(Map.Entry.comparingByValue()).get().getValue();
+        return MathUtil.subtract(maxVoiceDuration, voiceDuration);
     }
 
     private void addSpacerForDurationDifference(BigDecimal duration) {
