@@ -120,8 +120,4 @@ public class MathUtil {
     public static boolean isNegative(BigDecimal a) {
         return a != null && a.signum() < 0;
     }
-
-    public static boolean isZero(BigDecimal a) {
-        return a != null && equalTo(a, BigDecimal.ZERO);
-    }
 }
