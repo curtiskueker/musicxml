@@ -126,7 +126,7 @@ public class TimeSignatureUtil {
 
     private static boolean rounds(BigDecimal value) {
         BigDecimal comparisonValue = new BigDecimal(value.toString()).setScale(0, RoundingMode.HALF_UP);
-        return MathUtil.isNegative(MathUtil.subtract(MathUtil.subtract(value, comparisonValue).abs(), MathUtil.newBigDecimal(.1)));
+        return MathUtil.isNegative(MathUtil.subtract(MathUtil.subtract(value, comparisonValue).abs(), MathUtil.newBigDecimal(.01)));
     }
 
     public static String getSpacerRepresentation(BigDecimal duration) throws DurationException {
@@ -152,6 +152,8 @@ public class TimeSignatureUtil {
     }
 
     public static TimeSignatureType getCurrentTimeSignature() {
+        if (PartBuilder.CURRENT_ATTRIBUTES == null) return null;
+
         List<Time> timeList = PartBuilder.CURRENT_ATTRIBUTES.getTimeList();
         for(Time time : timeList) {
             if (time instanceof TimeSignature) {

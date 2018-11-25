@@ -103,7 +103,7 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder noteTypeBuild() throws BuildException {
-        if (note.getCue() || !TypeUtil.getBooleanDefaultYes(note.getPrintout().getPrintObject())) {
+        if (note.isNotPrinted()) {
             append(" s");
             return stringBuilder;
         }
@@ -442,6 +442,17 @@ public class NoteBuilder extends MusicDataBuilder {
 
     public StringBuilder buildChord(Chord chord) throws BuildException {
         List<Note> notes = chord.getNotes();
+
+        Note nonPrintedNote = notes.stream().filter(Note::isNotPrinted).findFirst().orElse(null);
+        if (nonPrintedNote != null) {
+            NoteBuilder nonPrintedNoteBuilder = new NoteBuilder(nonPrintedNote);
+            nonPrintedNoteBuilder.noteTypeBuild();
+            nonPrintedNoteBuilder.noteDurationBuild();
+            append(nonPrintedNoteBuilder.stringBuilder.toString());
+
+            return stringBuilder;
+        }
+
         List<NoteBuilder> noteBuilders = new ArrayList<>();
 
         for(Note note : notes) {

@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.Position;
@@ -343,6 +344,10 @@ public class Note extends MusicData {
 
     public void setPrintout(Printout printout) {
         this.printout = printout;
+    }
+
+    public boolean isNotPrinted() {
+        return !TypeUtil.getBooleanDefaultYes(getPrintout().getPrintObject()) || getCue();
     }
 
     public BigDecimal getDynamics() {

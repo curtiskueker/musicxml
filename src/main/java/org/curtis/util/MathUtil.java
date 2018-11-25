@@ -5,8 +5,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class MathUtil {
-    public static int SCALE = 4;
-    public static RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
+    private static int SCALE = 4;
+    private static RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
     public static BigDecimal ZERO = newBigDecimal(0);
 
     private MathUtil() {
@@ -83,6 +83,13 @@ public class MathUtil {
 
     public static BigDecimal truncate(BigDecimal a) {
         return newBigDecimal(a.intValue());
+    }
+
+    public static BigDecimal min(BigDecimal a, BigDecimal b) {
+        if (a == null) a = BigDecimal.ZERO;
+        if (b == null) b = BigDecimal.ZERO;
+
+        return smallerThan(a, b) ? a : b;
     }
 
     public static boolean largerThan(BigDecimal a, BigDecimal b) {

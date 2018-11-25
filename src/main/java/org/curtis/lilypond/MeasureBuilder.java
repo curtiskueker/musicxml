@@ -58,6 +58,7 @@ public class MeasureBuilder extends AbstractBuilder {
     private String currentVoice;
     private String voice;
     private String defaultVoice;
+    private BigDecimal wholeMeasureDuration = MathUtil.ZERO;
     private BigDecimal measureDuration = MathUtil.ZERO;
     private BigDecimal voiceDuration = MathUtil.ZERO;
     private BigDecimal unhandledMeasureDuration = MathUtil.ZERO;
@@ -146,6 +147,9 @@ public class MeasureBuilder extends AbstractBuilder {
         displayMeasure();
         if (DEBUG) System.err.println("Measure " + measure.getNumber());
 
+        setWholeMeasureDuration();
+        boolean hasValidVoiceDuration = true;
+
         // create data builder list for processing
         for(MusicData musicData : measure.getMusicDataList()) {
             MusicDataBuilder musicDataBuilder = null;
@@ -160,18 +164,14 @@ public class MeasureBuilder extends AbstractBuilder {
                 if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
                 Connection chordType = fullNote.getChordType();
-                if (chordType == null || chordType == Connection.START) {
+                if (!isChordNote(currentNote)) {
                     measureDuration = MathUtil.add(measureDuration, currentNoteDuration);
                     if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNoteDuration);
+                    if (MathUtil.largerThan(voiceDuration, wholeMeasureDuration)) hasValidVoiceDuration = false;
                 }
 
                 if (!isCurrentVoice()) {
-                    voiceDurations.merge(currentVoice, currentNoteDuration, MathUtil::add);
-                    continue;
-                }
-
-                if (!TypeUtil.getBooleanDefaultYes(currentNote.getPrintout().getPrintObject()) || currentNote.getCue()) {
-                    if (chordType == null || chordType == Connection.START) addSpacerDataBuilder(currentNoteDuration);
+                    if (!isChordNote(currentNote)) voiceDurations.merge(currentVoice, currentNoteDuration, MathUtil::add);
                     continue;
                 }
 
@@ -266,6 +266,7 @@ public class MeasureBuilder extends AbstractBuilder {
             } else if (musicData instanceof Attributes) {
                 Attributes attributes = (Attributes)musicData;
                 AttributesUtil.setCurrentAttributes(attributes);
+                setWholeMeasureDuration();
                 musicDataBuilder = addToDataBuilders(attributes);
             } else if (musicData instanceof Backup) {
                 Backup backup = (Backup)musicData;
@@ -300,14 +301,6 @@ public class MeasureBuilder extends AbstractBuilder {
         // Check whether expected duration equals total duration
         // First or last measure can be partial, otherwise it's an exception
         // Calculate expected divisions in the measure
-        TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
-        BigDecimal wholeMeasureDuration;
-        try {
-            wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
-        } catch (TimeSignatureException e) {
-            throw new BuildException(e.getMessage());
-        }
-
         if(!MathUtil.equalTo(wholeMeasureDuration, voiceDuration)) {
             if (isFirstMeasure) {
                 measure.setImplicit(true);
@@ -339,6 +332,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // OUTPUT
         //
         // Partial measure
+        TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
         if(TypeUtil.getBoolean(measure.getImplicit())) {
             try {
                 BigDecimal numerator = MathUtil.multiply(MathUtil.divide(measureDuration, wholeMeasureDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
@@ -354,8 +348,9 @@ public class MeasureBuilder extends AbstractBuilder {
 
         // Main data builder processing loops
         // general list first, then each build each voice
-        if (MathUtil.largerThan(measureDuration, wholeMeasureDuration)) {
-            displayMeasureMessage(measure, "Voice duration " + measureDuration.intValue() + " exceeds expected measure duration " + wholeMeasureDuration.intValue() + ".  Using whole measure spacer.");
+        if (!hasValidVoiceDuration) {
+            if (MathUtil.largerThan(voiceDuration, wholeMeasureDuration)) displayMeasureMessage(measure, "Voice duration " + voiceDuration.intValue() + " exceeds expected measure duration " + wholeMeasureDuration.intValue());
+            else displayMeasureMessage(measure, "Voice duration extends beyond end of measure");
             appendWholeMeasureSpacerRepresentation();
         } else {
             if (hasNoteDataBuilder) {
@@ -419,8 +414,18 @@ public class MeasureBuilder extends AbstractBuilder {
         return musicDataBuilder;
     }
 
+    private void setWholeMeasureDuration() {
+        if (TimeSignatureUtil.getCurrentTimeSignature() == null) return;
+
+        try {
+            wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
+        } catch (TimeSignatureException e) {
+            // ignore
+        }
+    }
+
     private void checkVoiceDuration() {
-        if (MathUtil.isPositive(voiceDuration) && MathUtil.smallerThan(voiceDuration, measureDuration)) {
+        if (MathUtil.isPositive(voiceDuration) && MathUtil.smallerThan(voiceDuration, MathUtil.min(measureDuration, wholeMeasureDuration))) {
             BigDecimal durationDifference = MathUtil.subtract(measureDuration, voiceDuration);
             addSpacerForDurationDifference(durationDifference);
         }
@@ -430,6 +435,7 @@ public class MeasureBuilder extends AbstractBuilder {
         if (voiceDurations.isEmpty()) return MathUtil.ZERO;
 
         BigDecimal maxVoiceDuration = voiceDurations.entrySet().stream().max(Map.Entry.comparingByValue()).get().getValue();
+        if (MathUtil.largerThan(maxVoiceDuration, measureDuration)) return measureDuration;
         return MathUtil.subtract(maxVoiceDuration, voiceDuration);
     }
 
@@ -476,6 +482,12 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean isCurrentVoice() {
         // voice matches or, when not found, voice = default voice
         return voice.equals(currentVoice) || (StringUtil.isEmpty(currentVoice) && voice.equals(defaultVoice));
+    }
+
+    private boolean isChordNote(Note note) {
+        Connection chordType = note.getFullNote().getChordType();
+
+        return chordType != null && chordType != Connection.START;
     }
 
     private void transferDirections() {
