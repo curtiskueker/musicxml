@@ -71,8 +71,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
             switch (tremoloType) {
                 case SINGLE:
                     append(":");
-                    Integer tremoloValue = MathUtil.multiply(MathUtil.exp(MathUtil.newBigDecimal(2), tremoloMarks), MathUtil.newBigDecimal(4)).intValue();
-                    append(String.valueOf(tremoloValue));
+                    append(MathUtil.truncate(MathUtil.multiply(MathUtil.exp(MathUtil.newBigDecimal(2), tremoloMarks), MathUtil.newBigDecimal(4))));
                     break;
             }
         }

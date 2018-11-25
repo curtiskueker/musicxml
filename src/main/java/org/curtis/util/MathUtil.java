@@ -81,8 +81,8 @@ public class MathUtil {
         return round(newValue);
     }
 
-    public static BigDecimal truncate(BigDecimal a) {
-        return newBigDecimal(a.intValue());
+    public static Integer truncate(BigDecimal a) {
+        return a.intValue();
     }
 
     public static BigDecimal min(BigDecimal a, BigDecimal b) {

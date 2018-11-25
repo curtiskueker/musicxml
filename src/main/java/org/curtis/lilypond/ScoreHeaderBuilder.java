@@ -156,7 +156,7 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
                                     BigDecimal fontSizeValue = fontSize.getFontSize();
                                     if(fontSizeValue != null) {
                                         append("\\abs-fontsize #");
-                                        append(String.valueOf(fontSizeValue.intValue()));
+                                        append(MathUtil.truncate(fontSizeValue));
                                         append(" ");
                                     }
                                 }

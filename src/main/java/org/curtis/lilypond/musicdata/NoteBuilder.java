@@ -163,7 +163,7 @@ public class NoteBuilder extends MusicDataBuilder {
         Tremolo tremolo = note.getTremolo();
         if (tremolo != null && tremolo.getType() == Connection.START) {
             append("\\repeat tremolo ");
-            append(String.valueOf(MathUtil.divide(note.getDuration(), MathUtil.divide(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks()))).intValue()));
+            append(MathUtil.truncate(MathUtil.divide(note.getDuration(), MathUtil.divide(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks())))));
             append(" { ");
         }
 
@@ -246,7 +246,7 @@ public class NoteBuilder extends MusicDataBuilder {
         Tremolo tremolo = note.getTremolo();
         try {
             if (tremolo != null && (tremolo.getType() == Connection.START || tremolo.getType() == Connection.STOP)) {
-                append(String.valueOf(MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks() + 2).intValue()));
+                append(MathUtil.truncate(MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks() + 2)));
             } else if (fullNoteType instanceof Rest && TypeUtil.getBoolean(((Rest)fullNoteType).getMeasure())) {
                 append(TimeSignatureUtil.getWholeMeasureRestRepresentation());
             } else if (noteType != null) {

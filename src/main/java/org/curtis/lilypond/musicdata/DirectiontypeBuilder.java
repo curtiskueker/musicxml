@@ -181,7 +181,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
                 BigDecimal fontSize = font.getFontSize().getFontSize();
                 if (MathUtil.isPositive(fontSize)) {
                     append("\\abs-fontsize #");
-                    append(String.valueOf(fontSize.intValue()));
+                    append(MathUtil.truncate(fontSize));
                     append(" ");
                 }
             }

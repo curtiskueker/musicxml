@@ -1,6 +1,7 @@
 package org.curtis.musicxml.builder.util;
 
 import org.curtis.musicxml.note.NoteTypeValue;
+import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -40,7 +41,7 @@ public class BuilderUtil {
         if (bigDecimalValue == null) return "";
 
         String value = String.valueOf(bigDecimalValue.stripTrailingZeros());
-        return value.contains("E") ? Integer.toString(bigDecimalValue.intValue()) : value;
+        return value.contains("E") ? Integer.toString(MathUtil.truncate(bigDecimalValue)) : value;
     }
 
     public static String yesOrNo(Boolean booleanValue) {

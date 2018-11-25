@@ -91,10 +91,6 @@ public class MeasureBuilder extends AbstractBuilder {
         this.voice = voice;
     }
 
-    public String getDefaultVoice() {
-        return defaultVoice;
-    }
-
     public void setDefaultVoice(String defaultVoice) {
         this.defaultVoice = defaultVoice;
     }
@@ -349,7 +345,7 @@ public class MeasureBuilder extends AbstractBuilder {
         // Main data builder processing loops
         // general list first, then each build each voice
         if (!hasValidVoiceDuration) {
-            if (MathUtil.largerThan(voiceDuration, wholeMeasureDuration)) displayMeasureMessage(measure, "Voice duration " + voiceDuration.intValue() + " exceeds expected measure duration " + wholeMeasureDuration.intValue());
+            if (MathUtil.largerThan(voiceDuration, wholeMeasureDuration)) displayMeasureMessage(measure, "Voice duration " + MathUtil.truncate(voiceDuration) + " exceeds expected measure duration " + MathUtil.truncate(wholeMeasureDuration));
             else displayMeasureMessage(measure, "Voice duration extends beyond end of measure");
             appendWholeMeasureSpacerRepresentation();
         } else {
@@ -358,7 +354,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     append(musicDataBuilder.build().toString());
                     BigDecimal unhandledDuration = musicDataBuilder.getUnhandledDuration();
                     if (MathUtil.isPositive(unhandledDuration)) {
-                        displayMeasureMessage(measure, "Unhandled duration: " + unhandledDuration.intValue());
+                        displayMeasureMessage(measure, "Unhandled duration: " + MathUtil.truncate(unhandledDuration));
                         unhandledMeasureDuration = MathUtil.add(unhandledMeasureDuration, unhandledDuration);
                     }
                 }
@@ -370,7 +366,7 @@ public class MeasureBuilder extends AbstractBuilder {
                     try {
                         append(TimeSignatureUtil.getSpacerRepresentation(measureDuration));
                     } catch (DurationException e) {
-                        displayMeasureMessage(measure, "Unable to resolve spacer representation, duration " + measureDuration.intValue() + ".  Using whole measure spacer.");
+                        displayMeasureMessage(measure, "Unable to resolve spacer representation, duration " + MathUtil.truncate(measureDuration) + ".  Using whole measure spacer.");
                         appendWholeMeasureSpacerRepresentation();
                     }
                 }
@@ -378,7 +374,7 @@ public class MeasureBuilder extends AbstractBuilder {
         }
 
         if (MathUtil.isPositive(unhandledMeasureDuration)) {
-            displayMeasureMessage(measure, "Total duration unhandled in measure: " + unhandledMeasureDuration.intValue() + ".  Appending spacer.");
+            displayMeasureMessage(measure, "Total duration unhandled in measure: " + MathUtil.truncate(unhandledMeasureDuration) + ".  Appending spacer.");
             MusicDataBuilder spacerDataBuilder = getSpacerDataBuilder(unhandledMeasureDuration);
             try {
                 String unhandledData = spacerDataBuilder.build().toString();
@@ -440,7 +436,7 @@ public class MeasureBuilder extends AbstractBuilder {
     }
 
     private void addSpacerForDurationDifference(BigDecimal duration) {
-        displayMeasureMessage(measure, "Duration total for measure is short by " + duration.intValue() + ".  Adding spacer.");
+        displayMeasureMessage(measure, "Duration total for measure is short by " + MathUtil.truncate(duration) + ".  Adding spacer.");
         addSpacerDataBuilder(duration);
         voiceDuration = MathUtil.add(voiceDuration, duration);
     }

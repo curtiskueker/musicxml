@@ -25,6 +25,10 @@ public abstract class AbstractBuilder {
         stringBuilder.append(string);
     }
 
+    protected void append(Integer value) {
+        append(String.valueOf(value));
+    }
+
     protected void clear() {
         stringBuilder = new StringBuilder();
     }
