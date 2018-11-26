@@ -78,7 +78,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             SortedSet<String> measureVoices = new TreeSet<>();
 
             for(MusicData musicData : measure.getMusicDataList()) {
-                if(musicData instanceof Note) {
+                if (musicData instanceof Note) {
                     Note note = (Note) musicData;
                     FullNote fullNote = note.getFullNote();
 
@@ -183,42 +183,44 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
                     // chord type
                     if (previousNote != null) {
-                        if(fullNote.isChord() && !previousNote.getFullNote().isChord()) {
+                        if (fullNote.isChord() && !previousNote.getFullNote().isChord()) {
                             previousNote.getFullNote().setChord(true);
                             previousNote.getFullNote().setChordType(Connection.START);
-                        } else if(fullNote.isChord() && previousNote.getFullNote().isChord()) {
+                        } else if (fullNote.isChord() && previousNote.getFullNote().isChord()) {
                             previousNote.getFullNote().setChordType(Connection.CONTINUE);
-                        } else if(!fullNote.isChord() && previousNote.getFullNote().isChord()) {
+                        } else if (!fullNote.isChord() && previousNote.getFullNote().isChord()) {
                             previousNote.getFullNote().setChordType(Connection.STOP);
                         }
                     }
                     // tuplet type
                     Tuplet tuplet = note.getTuplet();
-                    if(tuplet != null) {
+                    if (tuplet != null) {
                         Connection tupletType = tuplet.getType();
                         switch (tupletType) {
                             case START:
+                                if (tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Previous tuplet not stopped.  Output may be unpredictible");
                                 measureBuilder.setTupletType(note, Connection.START);
                                 tupletsOn.put(voice, true);
                                 break;
                             case STOP:
+                                if (!tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Tuplet not started.  Output may be unpredictible");
                                 measureBuilder.setTupletType(note, Connection.STOP);
                                 tupletsOn.put(voice, false);
                                 break;
                         }
-                    } else if(note.getFullNote().isChord() && previousNote.getFullNote().isChord() && measureBuilder.getTupletType(previousNote) == Connection.STOP) {
+                    } else if (note.getFullNote().isChord() && previousNote.getFullNote().isChord() && measureBuilder.getTupletType(previousNote) == Connection.STOP) {
                         // adjust end tuplet on chords
                         measureBuilder.setTupletType(previousNote, Connection.CONTINUE);
                         measureBuilder.setTupletType(note, Connection.STOP);
-                    } else if(tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) {
+                    } else if (tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) {
                         measureBuilder.setTupletType(note, Connection.CONTINUE);
                     }
 
                     previousNote = note;
-                } else if(musicData instanceof Barline) {
+                } else if (musicData instanceof Barline) {
                     Barline barline = (Barline)musicData;
                     Ending ending = barline.getEnding();
-                    if(ending != null) {
+                    if (ending != null) {
                         switch (ending.getType()) {
                             case START:
                                 if (currentEndingBlockStarted()) {
@@ -235,12 +237,12 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 startRepeatBlock.setRepeatBlockType(RepeatBlockType.MAIN);
                                 currentRepeatStartBlockMeasureBuilder.setRepeatBlock(startRepeatBlock);
 
-                                if(currentRepeatStartBlockMeasureBuilder.getMeasure().getNumber().equals(previousMeasureBuilder.getMeasure().getNumber())) {
+                                if (currentRepeatStartBlockMeasureBuilder.getMeasure().getNumber().equals(previousMeasureBuilder.getMeasure().getNumber())) {
                                     startRepeatBlock.setConnectionType(Connection.SINGLE);
                                 } else{
                                     startRepeatBlock.setConnectionType(Connection.START);
 
-                                    if(currentRepeatEndBlockMeasureBuilder == null) {
+                                    if (currentRepeatEndBlockMeasureBuilder == null) {
                                         RepeatBlock endRepeatBlock = new RepeatBlock();
                                         endRepeatBlock.setConnectionType(Connection.STOP);
                                         endRepeatBlock.setRepeatBlockType(RepeatBlockType.MAIN);
@@ -314,7 +316,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             }
 
             // close last chord note at end of measure
-            if(previousNote != null && previousNote.getFullNote().isChord()) {
+            if (previousNote != null && previousNote.getFullNote().isChord()) {
                 previousNote.getFullNote().setChordType(Connection.STOP);
             }
 
@@ -482,7 +484,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     append("\\repeat volta #");
                     append(String.valueOf(firstMeasureBuilder.getRepeatBlock().getEndingCount()));
                     appendLine(" {");
-                } else if(isEndingRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
+                } else if (isEndingRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
                     if (firstMeasureBuilder.getRepeatBlock().getEndingNumber().equals(1)) {
                         appendLine("\\alternative {");
                     }
