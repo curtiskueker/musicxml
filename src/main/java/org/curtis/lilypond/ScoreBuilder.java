@@ -11,6 +11,7 @@ import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.note.Backup;
+import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MeasureItem;
@@ -220,6 +221,8 @@ public class ScoreBuilder extends AbstractBuilder {
                     currentStaff = staff;
                 } else if(musicData instanceof Backup) {
                     currentBackup = musicData;
+                } else if(musicData instanceof Forward) {
+                    staffMeasures[currentStaff - 1].getMusicDataList().add(musicData);
                 } else {
                     if (musicData instanceof Attributes) {
                         Attributes attributes = (Attributes)musicData;
