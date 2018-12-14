@@ -70,7 +70,7 @@ public class LyricBuilder extends MusicDataBuilder {
                 }
             }
         } else if (lyricItem instanceof Extend) {
-            append("\"\"");
+            append("\" \"");
             append(totalBeatRepresentation);
         }
 
