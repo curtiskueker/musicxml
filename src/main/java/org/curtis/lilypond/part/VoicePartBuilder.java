@@ -57,6 +57,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private boolean hasOpenSlur = false;
     private Map<String, List<Note>> tiedFromNotes = new HashMap<>();
     private Map<String, List<Note>> tiedToNotes = new HashMap<>();
+    private List<Note> closedTiedNotes = new ArrayList<>();
     private List<Note> repeatBlockTiedNotes = new ArrayList<>();
 
     public VoicePartBuilder(Part part) {
@@ -160,12 +161,14 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     if (!startTieAdded) {
                         if (fullNote.isChord() && !tiedToNoteList.isEmpty()) {
                             tiedToNoteList.add(note);
+                            closedTiedNotes.add(note);
                         } else if (!fullNote.isChord() && !tiedToNoteList.isEmpty()) {
                             processTies(tiedFromNoteList, tiedToNoteList, note);
                         } else if (fullNote.isChord() && !tiedFromNoteList.isEmpty()) {
                             tiedFromNoteList.add(note);
                         } else if (!fullNote.isChord() && !tiedFromNoteList.isEmpty()) {
                             tiedToNoteList.add(note);
+                            closedTiedNotes.add(note);
                         }
                     }
 
@@ -328,6 +331,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             }
 
             checkMeasureBlock(measureBuilder, measureVoices);
+            closedTiedNotes.clear();
             previousMeasureBuilder = measureBuilder;
         }
 
@@ -420,18 +424,17 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
     private void checkMeasureBlock(MeasureBuilder measureBuilder, SortedSet<String> measureVoices) {
         List<Note> openTies = tiedFromNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
-        List<Note> closedTies = tiedToNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
         boolean hasActiveSlur = !activeSlurs.values().stream().flatMap(activeSlur -> activeSlur.stream()).collect(Collectors.toSet()).isEmpty();
         if (isStartRepeatBlock(measureBuilder) || measureBuilder.isHasStartRepeat()) {
             if (isEndingRepeatBlock(measureBuilder) && measureBuilder.getRepeatBlock().getEndingNumber() > 1) {
-                for (Tied closedTie : closedTies.stream().flatMap(toNote -> toNote.getTieds().stream()).collect(Collectors.toList())) closedTie.setRepeatTie(true);
+                for (Tied closedTie : closedTiedNotes.stream().flatMap(toNote -> toNote.getTieds().stream()).collect(Collectors.toList())) closedTie.setRepeatTie(true);
             }
             newMeasureBlock();
         } else if (hasActiveSlur && !hasOpenSlur) {
             newMeasureBlock();
             hasOpenSlur = true;
         } else if (isVoicesChange(measureVoices)) {
-            if (!openTies.isEmpty() || hasOpenSlur) {
+            if (!openTies.isEmpty() || !closedTiedNotes.isEmpty() || hasOpenSlur) {
                 if (measureVoices.size() > currentVoices.size()) {
                     currentMeasureBlock.setVoices(measureVoices);
                     currentVoices = measureVoices;
