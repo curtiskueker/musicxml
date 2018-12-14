@@ -5,5 +5,6 @@ public enum BeamType {
     CONTINUE,
     END,
     FORWARD_HOOK,
-    BACKWARD_HOOK
+    BACKWARD_HOOK,
+    NON_BEAMED
 }

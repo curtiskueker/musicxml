@@ -348,6 +348,9 @@ public class NoteBuilder extends MusicDataBuilder {
                         append("]");
                     }
                     break;
+                case NON_BEAMED:
+                    System.err.println("Warning: non-beamed note encountered during beam.  Skipping beam.");
+                    break;
             }
         }
 

@@ -9,6 +9,8 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.Beam;
+import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
@@ -59,6 +61,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private Map<String, List<Note>> tiedToNotes = new HashMap<>();
     private List<Note> closedTiedNotes = new ArrayList<>();
     private List<Note> repeatBlockTiedNotes = new ArrayList<>();
+    private Map<Integer, Beam> openBeams = new HashMap<>();
 
     public VoicePartBuilder(Part part) {
         this.part = part;
@@ -79,6 +82,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             SortedSet<String> measureVoices = new TreeSet<>();
 
             for(MusicData musicData : measure.getMusicDataList()) {
+                adjustCurrentDuration(musicData);
+
                 if (musicData instanceof Note) {
                     Note note = (Note) musicData;
                     FullNote fullNote = note.getFullNote();
@@ -217,6 +222,22 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         measureBuilder.setTupletType(note, Connection.STOP);
                     } else if (tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) {
                         measureBuilder.setTupletType(note, Connection.CONTINUE);
+                    }
+
+                    for (Beam beam : note.getBeams()) {
+                        Integer beamNumber = beam.getNumber();
+                        switch (beam.getType()) {
+                            case BEGIN:
+                                openBeams.put(beamNumber, beam);
+                                break;
+                            case END:
+                                openBeams.remove(beamNumber);
+                                break;
+                        }
+                    }
+                    if (isNonBeamedNote(note)) {
+                        for (Beam beam : openBeams.values()) beam.setType(BeamType.NON_BEAMED);
+                        openBeams.clear();
                     }
 
                     previousNote = note;
@@ -420,6 +441,10 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         }
 
         return false;
+    }
+
+    private boolean isNonBeamedNote(Note note) {
+        return !MathUtil.smallerThan(note.getDuration(), currentDivisions);
     }
 
     private void checkMeasureBlock(MeasureBuilder measureBuilder, SortedSet<String> measureVoices) {
