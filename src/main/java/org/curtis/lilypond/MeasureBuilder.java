@@ -443,6 +443,7 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private void addSpacerDataBuilder(BigDecimal duration) {
         musicDataBuilders.add(getSpacerDataBuilder(duration));
+        hasNoteDataBuilder = true;
     }
 
     private MusicDataBuilder getSpacerDataBuilder(BigDecimal duration) {
