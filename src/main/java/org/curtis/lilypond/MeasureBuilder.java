@@ -47,7 +47,6 @@ import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 public class MeasureBuilder extends AbstractBuilder {
     private Measure measure;
     private List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
-    private boolean hasNoteDataBuilder = false;
     private Note previousNote;
     private Note currentNote;
     private List<Direction> currentDirections = new ArrayList<>();
@@ -349,7 +348,7 @@ public class MeasureBuilder extends AbstractBuilder {
             else displayMeasureMessage(measure, "Voice duration extends beyond end of measure");
             appendWholeMeasureSpacerRepresentation();
         } else {
-            if (hasNoteDataBuilder) {
+            if (hasNoteDataBuilder()) {
                 for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
                     append(musicDataBuilder.build().toString());
                     BigDecimal unhandledDuration = musicDataBuilder.getUnhandledDuration();
@@ -403,11 +402,13 @@ public class MeasureBuilder extends AbstractBuilder {
 
             musicDataBuilder = new MusicDataBuilder(musicData);
             musicDataBuilders.add(musicDataBuilder);
-
-            if (musicData instanceof Note || musicData instanceof Chord || musicData instanceof TupletNotes) hasNoteDataBuilder = true;
         }
 
         return musicDataBuilder;
+    }
+
+    private boolean hasNoteDataBuilder() {
+        return musicDataBuilders.stream().map(MusicDataBuilder::getMusicData).anyMatch(musicData -> musicData instanceof Note || musicData instanceof Chord || musicData instanceof TupletNotes);
     }
 
     private void setWholeMeasureDuration() {
@@ -443,7 +444,6 @@ public class MeasureBuilder extends AbstractBuilder {
 
     private void addSpacerDataBuilder(BigDecimal duration) {
         musicDataBuilders.add(getSpacerDataBuilder(duration));
-        hasNoteDataBuilder = true;
     }
 
     private MusicDataBuilder getSpacerDataBuilder(BigDecimal duration) {
