@@ -16,6 +16,7 @@ import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.EditorialVoiceDirection;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.OctaveShift;
@@ -236,8 +237,10 @@ public class MeasureBuilder extends AbstractBuilder {
 
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
-                if (isCurrentVoice()) {
-                    Direction direction = (Direction)musicData;
+                Direction direction = (Direction)musicData;
+                EditorialVoiceDirection editorialVoiceDirection = direction.getEditorialVoiceDirection();
+                if (StringUtil.isEmpty(editorialVoiceDirection.getVoice())) editorialVoiceDirection.setVoice(defaultVoice);
+                if (isCurrentVoice(editorialVoiceDirection.getVoice())) {
                     DirectionBuilder.setDirectionDefaults(direction);
                     if (deferredDirection(direction)) {
                         currentDirections.add(direction);
@@ -479,6 +482,11 @@ public class MeasureBuilder extends AbstractBuilder {
     private boolean isCurrentVoice() {
         // voice matches or, when not found, voice = default voice
         return voice.equals(currentVoice) || (StringUtil.isEmpty(currentVoice) && voice.equals(defaultVoice));
+    }
+
+    private boolean isCurrentVoice(String musicDataVoice) {
+        // voice matches or, when not found, voice = default voice
+        return musicDataVoice.equals(currentVoice) || (StringUtil.isEmpty(currentVoice) && musicDataVoice.equals(defaultVoice));
     }
 
     private boolean isChordNote(Note note) {

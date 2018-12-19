@@ -9,6 +9,11 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
+import org.curtis.musicxml.direction.directiontype.Wedge;
+import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.FullNote;
@@ -62,6 +67,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private List<Note> closedTiedNotes = new ArrayList<>();
     private List<Note> repeatBlockTiedNotes = new ArrayList<>();
     private Map<Integer, Beam> openBeams = new HashMap<>();
+    private boolean openWedge = false;
+    private boolean hasActiveWedge = false;
 
     public VoicePartBuilder(Part part) {
         this.part = part;
@@ -80,6 +87,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             // default repeat block measure, in case opening repeat not notated
             if (currentRepeatStartBlockMeasureBuilder == null) currentRepeatStartBlockMeasureBuilder = measureBuilder;
             SortedSet<String> measureVoices = new TreeSet<>();
+            hasActiveWedge = openWedge;
 
             for(MusicData musicData : measure.getMusicDataList()) {
                 adjustCurrentDuration(musicData);
@@ -336,6 +344,34 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         measureBuilder.isFirstMeasure();
                         if (previousMeasureBuilder != null) previousMeasureBuilder.isLastMeasure();
                     }
+                } else if (musicData instanceof Direction) {
+                    Direction direction = (Direction)musicData;
+                    for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
+                        for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
+                            if (directionType instanceof Wedge) {
+                                Wedge wedge = (Wedge) directionType;
+                                switch (wedge.getType()) {
+                                    case CRESCENDO:
+                                    case DIMINUENDO:
+                                        if (openWedge) {
+                                            displayMeasureMessage(measure, "Open wedge with another wedge already open");
+                                            wedge.setType(WedgeType.INVALID);
+                                            openWedge = false;
+                                        } else {
+                                            openWedge = true;
+                                        }
+                                        break;
+                                    case STOP:
+                                        if (openWedge) openWedge = false;
+                                        else {
+                                            displayMeasureMessage(measure, "Stop wedge without open wedge");
+                                            wedge.setType(WedgeType.INVALID);
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -459,7 +495,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             newMeasureBlock();
             hasOpenSlur = true;
         } else if (isVoicesChange(measureVoices)) {
-            if (!openTies.isEmpty() || !closedTiedNotes.isEmpty() || hasOpenSlur) {
+            if (!openTies.isEmpty() || !closedTiedNotes.isEmpty() || hasOpenSlur || hasActiveWedge) {
                 if (measureVoices.size() > currentVoices.size()) {
                     currentMeasureBlock.setVoices(measureVoices);
                     currentVoices = measureVoices;

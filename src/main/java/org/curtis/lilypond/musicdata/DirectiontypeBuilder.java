@@ -67,6 +67,9 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
             case STOP:
                 append("\\!");
                 break;
+            case INVALID:
+                System.err.println("Wedge not handled");
+                break;
         }
 
         return stringBuilder;

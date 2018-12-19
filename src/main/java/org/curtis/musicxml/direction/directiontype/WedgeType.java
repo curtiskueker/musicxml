@@ -4,5 +4,6 @@ public enum WedgeType {
     CRESCENDO,
     DIMINUENDO,
     STOP,
-    CONTINUE
+    CONTINUE,
+    INVALID
 }
