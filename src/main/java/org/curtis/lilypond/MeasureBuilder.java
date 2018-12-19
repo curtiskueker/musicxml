@@ -299,7 +299,9 @@ public class MeasureBuilder extends AbstractBuilder {
         // Check whether expected duration equals total duration
         // First or last measure can be partial, otherwise it's an exception
         // Calculate expected divisions in the measure
-        if(!MathUtil.equalTo(wholeMeasureDuration, voiceDuration)) {
+        if(MathUtil.equalTo(wholeMeasureDuration, voiceDuration)) {
+            measure.setImplicit(false);
+        } else  {
             if (isFirstMeasure) {
                 measure.setImplicit(true);
             } else if (!isLastMeasure){
