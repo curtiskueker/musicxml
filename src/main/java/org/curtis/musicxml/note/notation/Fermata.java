@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("fermata")
@@ -28,6 +29,8 @@ public class Fermata extends Notation {
     @ManyToOne
     @JoinColumn(name = "barline_id")
     private Barline barline;
+    @Transient
+    private boolean isMarkup = false;
 
     public Fermata() {
 
@@ -63,5 +66,13 @@ public class Fermata extends Notation {
 
     public void setBarline(Barline barline) {
         this.barline = barline;
+    }
+
+    public boolean isMarkup() {
+        return isMarkup;
+    }
+
+    public void setMarkup(boolean markup) {
+        isMarkup = markup;
     }
 }

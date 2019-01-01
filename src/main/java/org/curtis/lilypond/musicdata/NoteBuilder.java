@@ -34,6 +34,7 @@ import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.note.Unpitched;
 import org.curtis.musicxml.note.notation.Articulations;
+import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Slur;
@@ -318,6 +319,22 @@ public class NoteBuilder extends MusicDataBuilder {
                         }
                     }
                     articulations.setArticulationList(articulationListCopy);
+                } else if (notation instanceof Fermata) {
+                    if (note != null) {
+                        FullNote fullNote = note.getFullNote();
+                        if (fullNote != null) {
+                            FullNoteType fullNoteType = fullNote.getFullNoteType();
+                            if (fullNoteType != null) {
+                                if (fullNoteType instanceof Rest) {
+                                    Rest rest = (Rest)fullNoteType;
+                                    if (TypeUtil.getBoolean(rest.getMeasure())) {
+                                        Fermata fermata = (Fermata)notation;
+                                        fermata.setMarkup(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 String notationsClass = notation.getClass().getSimpleName();

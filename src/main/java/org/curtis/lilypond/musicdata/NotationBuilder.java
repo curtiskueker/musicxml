@@ -101,6 +101,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     public StringBuilder buildFermata(Fermata fermata) {
         append("\\fermata");
+        if (fermata.isMarkup()) append("Markup");
 
         return stringBuilder;
     }
