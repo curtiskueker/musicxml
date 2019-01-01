@@ -44,6 +44,7 @@ import org.curtis.musicxml.note.notation.articulation.BreathMark;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
+import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -417,9 +418,12 @@ public class NoteBuilder extends MusicDataBuilder {
                     }
                 }
                 directionType = directionTypeIterator.next();
-                append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
-                append(new MusicDataBuilder(directionType).build().toString());
-                append(" ");
+                String directionTypeBuild = new MusicDataBuilder(directionType).build().toString();
+                if (StringUtil.isNotEmpty(directionTypeBuild)) {
+                    append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
+                    append(directionTypeBuild);
+                    append(" ");
+                }
             } catch (DurationException e) {
                 throw new BuildException(e.getMessage());
             }
