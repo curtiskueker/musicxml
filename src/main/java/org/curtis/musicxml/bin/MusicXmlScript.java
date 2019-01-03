@@ -28,6 +28,8 @@ public abstract class MusicXmlScript {
                 MusicXmlUtil.DEBUG = true;
             } else if (arg.startsWith("FILENAME=")) {
                 FILENAME = arg.replace("FILENAME=", "");
+            } else if (arg.equals("SKIP_COMMENTS")) {
+                MusicXmlUtil.SKIP_COMMENTS = true;
             }
         }
 

@@ -10,10 +10,12 @@ CLASSPATH=${JAR_DIR}/${JAR_FILE}
 SCORE_ID=''
 OUTPUT_FILE=''
 FILENAME=''
+SKIP_COMMENTS=''
 DEBUG=''
 
-while getopts 'df:i:o:' flag; do
+while getopts 'cdf:i:o:' flag; do
   case "${flag}" in
+    c) SKIP_COMMENTS="SKIP_COMMENTS" ;;
     d) DEBUG="DEBUG" ;;
     f) FILENAME="${OPTARG}" ;;
     i) SCORE_ID="${OPTARG}" ;;
@@ -21,4 +23,4 @@ while getopts 'df:i:o:' flag; do
   esac
 done
 
-java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.Db2MusicXml FILENAME=$FILENAME SCORE_ID=$SCORE_ID OUTPUT_FILE=$OUTPUT_FILE $DEBUG
+java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.Db2MusicXml FILENAME=$FILENAME SCORE_ID=$SCORE_ID OUTPUT_FILE=$OUTPUT_FILE $SKIP_COMMENTS $DEBUG

@@ -58,6 +58,7 @@ import java.util.Map;
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
     public static Boolean DEBUG = false;
+    public static Boolean SKIP_COMMENTS = false;
 
     private MusicXmlUtil() {
 
@@ -69,7 +70,7 @@ public class MusicXmlUtil {
 
         ScoreHandler scoreHandler = new ScoreHandler();
         scoreHandler.handle(xmlDocument.getDocumentElement());
-        scoreHandler.getScore().setXmlComments(getXmlComments(xmlDocument));
+        if (!SKIP_COMMENTS) scoreHandler.getScore().setXmlComments(getXmlComments(xmlDocument));
 
         return scoreHandler;
     }
@@ -102,7 +103,7 @@ public class MusicXmlUtil {
 
         try {
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes("utf-8"))));
-            setXmlComments(document, score.getXmlComments());
+            if (!SKIP_COMMENTS) setXmlComments(document, score.getXmlComments());
             results = getFormattedXml(document);
         } catch (Exception e) {
             // skip, use results above
