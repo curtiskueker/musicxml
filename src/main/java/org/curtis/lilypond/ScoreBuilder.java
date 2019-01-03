@@ -105,13 +105,7 @@ public class ScoreBuilder extends AbstractBuilder {
         Integer staves = 1;
         boolean hasHarmony = false;
         for (Measure measure : measures) {
-            for(MeasureItem measureItem : measure.getMeasureItems()) {
-                MusicData musicData;
-                try {
-                    musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
-                } catch (MusicXmlException e) {
-                    throw new BuildException(e);
-                }
+            for(MusicData musicData : getMusicDataList(measure)) {
                 if(musicData instanceof Attributes) {
                     Attributes attributes = (Attributes)musicData;
                     Integer attributesStaves = attributes.getStaves();
@@ -121,7 +115,6 @@ public class ScoreBuilder extends AbstractBuilder {
                 } else if (musicData instanceof Harmony) {
                     hasHarmony = true;
                 }
-                measure.getMusicDataList().add(musicData);
             }
         }
 
@@ -134,6 +127,22 @@ public class ScoreBuilder extends AbstractBuilder {
         } else {
             buildSingleStaffPart(scorePart, partToProcess);
         }
+    }
+
+    private List<MusicData> getMusicDataList(Measure measure) {
+        List<MeasureItem> measureItems = measure.getMeasureItems();
+        if (!measureItems.isEmpty()) {
+            for (MeasureItem measureItem : measureItems) {
+                try {
+                    MusicData musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
+                    measure.getMusicDataList().add(musicData);
+                } catch (MusicXmlException e) {
+                    displayMeasureMessage(measure, "MusicData not found for item for " + measureItem.getMusicDataType());
+                }
+            }
+        }
+
+        return measure.getMusicDataList();
     }
 
     private void buildSingleStaffPart(ScorePart scorePart, Part part) throws BuildException {
