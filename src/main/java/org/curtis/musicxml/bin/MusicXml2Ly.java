@@ -15,7 +15,7 @@ public class MusicXml2Ly extends MusicXmlScript {
             // output file
             if (!OUTPUT_FILE.endsWith(".ly")) OUTPUT_FILE += ".ly";
 
-            File xmlFile = new File(FILENAME);
+            File xmlFile = new File(INPUT_FILE);
             MusicXmlUtil.SKIP_COMMENTS = true;
             ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(xmlFile);
             outputScore(scoreHandler.getScore());

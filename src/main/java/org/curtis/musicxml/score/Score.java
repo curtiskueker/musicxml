@@ -14,24 +14,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "score")
+@Table(name = "score", uniqueConstraints = @UniqueConstraint(columnNames = "score_name"))
 public class Score extends DatabaseItem {
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "score_header_id")
     private ScoreHeader scoreHeader = new ScoreHeader();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "score_id", nullable = false)
     @OrderBy("ordering")
     private List<Part> parts = new ArrayList<>();
     @Column
     private String version;
-    @Column
-    private String filename;
+    @Column(name = "score_name")
+    private String scoreName;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "score_id", nullable = false)
@@ -65,12 +66,12 @@ public class Score extends DatabaseItem {
         this.version = version;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getScoreName() {
+        return scoreName;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setScoreName(String scoreName) {
+        this.scoreName = scoreName;
     }
 
     public List<XmlComment> getXmlComments() {

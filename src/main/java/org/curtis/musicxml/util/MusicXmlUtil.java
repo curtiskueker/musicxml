@@ -59,6 +59,8 @@ public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
     public static Boolean DEBUG = false;
     public static Boolean SKIP_COMMENTS = false;
+    public static String GENERATE_SCHEMA_FILE;
+    public static boolean CREATE_DB_SCHEMA = false;
 
     private MusicXmlUtil() {
 

@@ -16,22 +16,19 @@ import org.curtis.xml.XmlException;
 
 import java.io.File;
 
-import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
-
-public class MusicXml2Db {
-    public static String GENERATE_SCHEMA_FILE = null;
-    public static String INPUT_FILENAME =  null;
-    public static boolean CREATE_DB_SCHEMA = false;
-
+public class MusicXml2Db extends MusicXmlScript {
     private void execute() throws MusicXmlException {
         try {
             DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
 
-            if (StringUtil.isNotEmpty(INPUT_FILENAME)) {
-                File inputFile = new File(INPUT_FILENAME);
+            if (StringUtil.isNotEmpty(INPUT_FILE)) {
+                String scoreName = StringUtil.isEmpty(SCORE_NAME) ? INPUT_FILE : SCORE_NAME;
+                if (dbTransaction.find(Score.class, "scoreName", scoreName) != null) throw new MusicXmlException("Score name " + scoreName + " already exists");
+
+                File inputFile = new File(INPUT_FILE);
                 ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(inputFile);
                 Score score = scoreHandler.getScore();
-                score.setFilename(inputFile.getName());
+                score.setScoreName(scoreName);
 
                 Integer partItemOrdering = 1;
                 for (PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
@@ -74,22 +71,16 @@ public class MusicXml2Db {
     }
 
     public static void main(String[] args) {
-        for (String arg : args) {
-            if (arg.startsWith("INPUT_FILE=")) {
-                INPUT_FILENAME = arg.replace("INPUT_FILE=", "");
-            } else if (arg.startsWith("SCHEMA_FILE=")) {
-                GENERATE_SCHEMA_FILE = arg.replace("SCHEMA_FILE=", "");
-            } else if (arg.equals("CREATE_SCHEMA")) {
-                CREATE_DB_SCHEMA = true;
-            } else if (arg.equals("DEBUG")) {
-                DEBUG = true;
-            }
-        }
-        MusicXml2Db musicXmlDb = new MusicXml2Db();
         try {
+            OUTPUT_FILE = "NONE";
+            setArgs(args);
+
+            MusicXml2Db musicXmlDb = new MusicXml2Db();
             musicXmlDb.execute();
         } catch (MusicXmlException e) {
             System.err.println("Fatal exception: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             System.exit(0);
         }

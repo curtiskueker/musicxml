@@ -11,12 +11,12 @@ INPUT=''
 OUTPUT=''
 DEBUG=''
 
-while getopts 'df:o:' flag; do
+while getopts 'di:o:' flag; do
   case "${flag}" in
     d) DEBUG="DEBUG" ;;
-    f) INPUT="${OPTARG}" ;;
+    i) INPUT="${OPTARG}" ;;
     o) OUTPUT="${OPTARG}" ;;
   esac
 done
 
-java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.MusicXml2Ly FILENAME=$INPUT OUTPUT_FILE=$OUTPUT $DEBUG
+java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.MusicXml2Ly INPUT_FILE=$INPUT OUTPUT_FILE=$OUTPUT $DEBUG
