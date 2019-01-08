@@ -44,10 +44,29 @@ public class MusicXmlTasks {
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getSource() == taskList) {
                     String selectedValue = (String) taskList.getSelectedValue();
-                    taskName.setText(selectedValue);
+                    handleSelection(selectedValue);
                 }
             }
         });
+    }
+
+    private void handleSelection(String selectedValue) {
+        taskName.setText(selectedValue);
+
+        switch (selectedValue) {
+            case "Set Database Properties":
+                break;
+            case "MusicXml File to Database Record":
+                break;
+            case "Database Record to MusicXml File":
+                break;
+            case "Database Record to Lilypond File":
+                break;
+            case "MusicXml File to Lilypond File":
+                break;
+            default:
+                break;
+        }
     }
 
     public static void main(String[] args) {
