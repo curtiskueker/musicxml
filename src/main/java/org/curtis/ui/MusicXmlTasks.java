@@ -4,7 +4,10 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
 
 public class MusicXmlTasks {
     private JPanel taskForm;
@@ -27,9 +30,22 @@ public class MusicXmlTasks {
     private JPanel row8Right;
     private JLabel headerLabel;
     private JLabel taskLabel;
+    private JList taskList;
+    private JLabel taskName;
 
     public MusicXmlTasks() {
 
+        taskList.addComponentListener(new ComponentAdapter() {
+        });
+        taskList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getSource() == taskList) {
+                    String selectedValue = (String)taskList.getSelectedValue();
+                    taskName.setText(selectedValue);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -74,17 +90,34 @@ public class MusicXmlTasks {
         taskLabel.setBackground(new Color(-1));
         taskLabel.setFont(new Font(taskLabel.getFont().getName(), Font.BOLD, 16));
         taskLabel.setText("Task:");
-        row1Left.add(taskLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        row1Left.add(taskLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row1Right = new JPanel();
         row1Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row1Right.setBackground(new Color(-1513240));
+        row1Right.setBackground(new Color(-1));
         taskForm.add(row1Right, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        taskList = new JList();
+        final DefaultListModel defaultListModel1 = new DefaultListModel();
+        defaultListModel1.addElement("");
+        defaultListModel1.addElement("Set Database Properties");
+        defaultListModel1.addElement("MusicXml File to Database Record");
+        defaultListModel1.addElement("Database Record to MusicXml File");
+        defaultListModel1.addElement("Database Record to Lilypond File");
+        defaultListModel1.addElement("MusicXml File to Lilypond File");
+        taskList.setModel(defaultListModel1);
+        taskList.setSelectionMode(0);
+        row1Right.add(taskList, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         row2Left = new JPanel();
         row2Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        row2Left.setBackground(new Color(-1));
         taskForm.add(row2Left, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         row2Right = new JPanel();
         row2Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        row2Right.setBackground(new Color(-1));
         taskForm.add(row2Right, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        taskName = new JLabel();
+        taskName.setFont(new Font(taskName.getFont().getName(), Font.BOLD, 16));
+        taskName.setText("");
+        row2Right.add(taskName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row3Left = new JPanel();
         row3Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         taskForm.add(row3Left, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
