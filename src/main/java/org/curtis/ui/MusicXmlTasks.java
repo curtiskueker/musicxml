@@ -25,6 +25,7 @@ public class MusicXmlTasks {
     private JPanel row7Right;
     private JPanel row8Left;
     private JPanel row8Right;
+    private JLabel headerLabel;
 
     public MusicXmlTasks() {
 
@@ -58,7 +59,12 @@ public class MusicXmlTasks {
         taskForm.setBackground(new Color(-1));
         header = new JPanel();
         header.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        header.setBackground(new Color(-1));
         taskForm.add(header, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        headerLabel = new JLabel();
+        headerLabel.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 20));
+        headerLabel.setText("MusicXml Tasks");
+        header.add(headerLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row1Left = new JPanel();
         row1Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         taskForm.add(row1Left, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
