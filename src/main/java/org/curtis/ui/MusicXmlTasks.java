@@ -236,6 +236,7 @@ public class MusicXmlTasks {
         row6Right.removeAll();
         row7Right.removeAll();
         row8Right.removeAll();
+        row9Right.removeAll();
 
         switch (selectedValue) {
             case "Set Database Properties":
@@ -317,10 +318,15 @@ public class MusicXmlTasks {
             case FILE:
                 break;
             case CHECKBOX:
+                JCheckBox jCheckBox = new JCheckBox();
+                jCheckBox.setBackground(new Color(-1));
+                jPanel.add(jCheckBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 break;
             case BUTTON:
-                break;
-            case NONE:
+                JButton jButton = new JButton();
+                jButton.setBackground(new Color(-1));
+                jButton.setText("Submit");
+                jPanel.add(jButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 break;
         }
     }
