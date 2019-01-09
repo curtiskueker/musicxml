@@ -316,6 +316,7 @@ public class MusicXmlTasks {
                 jPanel.add(new JPasswordField(), new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, -1), new Dimension(150, -1), new Dimension(150, -1), 0, false));
                 break;
             case FILE:
+                jPanel.add(new JTextField(), new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(3450, -1), 0, false));
                 break;
             case CHECKBOX:
                 JCheckBox jCheckBox = new JCheckBox();
