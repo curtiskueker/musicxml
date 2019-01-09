@@ -37,8 +37,6 @@ public class MusicXmlTasks {
     private JPanel row9Right;
     private JLabel formElement1Text;
 
-    private JTextField formElement1Input;
-
     public MusicXmlTasks() {
 
         taskList.addComponentListener(new ComponentAdapter() {
@@ -60,7 +58,6 @@ public class MusicXmlTasks {
         String element1Text = "";
 
         row3Right.removeAll();
-        formElement1Input = null;
         int formElement1InputSize = 0;
 
         switch (selectedValue) {
@@ -89,9 +86,11 @@ public class MusicXmlTasks {
         formElement1Text.setText(element1Text);
 
         if (StringUtil.isNotEmpty(element1Text)) {
-            formElement1Input = new JTextField();
+            JTextField formElement1Input = new JTextField();
             row3Right.add(formElement1Input, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(formElement1InputSize, -1), new Dimension(formElement1InputSize, -1), new Dimension(formElement1InputSize, -1), 0, false));
         }
+
+        taskForm.revalidate();
     }
 
     public static void main(String[] args) {
