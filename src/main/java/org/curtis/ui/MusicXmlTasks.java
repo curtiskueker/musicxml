@@ -36,6 +36,11 @@ public class MusicXmlTasks {
     private JPanel row9Left;
     private JPanel row9Right;
     private JLabel formElement1Text;
+    private JLabel formElement2Text;
+    private JLabel formElement3Text;
+    private JLabel formElement4Text;
+    private JLabel formElement5Text;
+    private JLabel formElement6Text;
 
     public MusicXmlTasks() {
 
@@ -56,6 +61,11 @@ public class MusicXmlTasks {
         taskName.setText(selectedValue);
 
         String element1Text = "";
+        String element2Text = "";
+        String element3Text = "";
+        String element4Text = "";
+        String element5Text = "";
+        String element6Text = "";
 
         row3Right.removeAll();
         int formElement1InputSize = 0;
@@ -63,27 +73,42 @@ public class MusicXmlTasks {
         switch (selectedValue) {
             case "Set Database Properties":
                 element1Text = "Username: ";
+                element2Text = "Password: ";
+                element3Text = "Database Name: ";
+                element4Text = "Server: ";
+                element5Text = "Create User: ";
+                element6Text = "Create Database: ";
                 formElement1InputSize = 150;
                 break;
             case "MusicXml File to Database Record":
-                element1Text = "Score name: ";
+                element1Text = "Score Name: ";
+                element2Text = "Input File: ";
                 formElement1InputSize = 300;
                 break;
             case "Database Record to MusicXml File":
-                element1Text = "Score name: ";
+                element1Text = "Score Name: ";
+                element2Text = "Output File: ";
+                element3Text = "Skip Comments: ";
                 formElement1InputSize = 300;
                 break;
             case "Database Record to Lilypond File":
-                element1Text = "Score name: ";
+                element1Text = "Score Name: ";
+                element2Text = "Output File: ";
                 formElement1InputSize = 300;
                 break;
             case "MusicXml File to Lilypond File":
-                element1Text = "Input file: ";
+                element1Text = "Input F0ile: ";
+                element2Text = "Output File: ";
                 formElement1InputSize = 450;
                 break;
         }
 
         formElement1Text.setText(element1Text);
+        formElement2Text.setText(element2Text);
+        formElement3Text.setText(element3Text);
+        formElement4Text.setText(element4Text);
+        formElement5Text.setText(element5Text);
+        formElement6Text.setText(element6Text);
 
         if (StringUtil.isNotEmpty(element1Text)) {
             JTextField formElement1Input = new JTextField();
@@ -143,7 +168,6 @@ public class MusicXmlTasks {
         taskForm.add(row1Right, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         taskList = new JList();
         final DefaultListModel defaultListModel1 = new DefaultListModel();
-        defaultListModel1.addElement("");
         defaultListModel1.addElement("Set Database Properties");
         defaultListModel1.addElement("MusicXml File to Database Record");
         defaultListModel1.addElement("Database Record to MusicXml File");
@@ -180,6 +204,10 @@ public class MusicXmlTasks {
         row4Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row4Left.setBackground(new Color(-1));
         taskForm.add(row4Left, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        formElement2Text = new JLabel();
+        formElement2Text.setBackground(new Color(-1));
+        formElement2Text.setText("");
+        row4Left.add(formElement2Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row4Right = new JPanel();
         row4Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row4Right.setBackground(new Color(-1));
@@ -188,6 +216,10 @@ public class MusicXmlTasks {
         row5Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row5Left.setBackground(new Color(-1));
         taskForm.add(row5Left, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        formElement3Text = new JLabel();
+        formElement3Text.setBackground(new Color(-1));
+        formElement3Text.setText("");
+        row5Left.add(formElement3Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row5Right = new JPanel();
         row5Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row5Right.setBackground(new Color(-1));
@@ -196,6 +228,10 @@ public class MusicXmlTasks {
         row6Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row6Left.setBackground(new Color(-1));
         taskForm.add(row6Left, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        formElement4Text = new JLabel();
+        formElement4Text.setBackground(new Color(-1));
+        formElement4Text.setText("");
+        row6Left.add(formElement4Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row6Right = new JPanel();
         row6Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row6Right.setBackground(new Color(-1));
@@ -204,6 +240,10 @@ public class MusicXmlTasks {
         row7Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row7Left.setBackground(new Color(-1));
         taskForm.add(row7Left, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        formElement5Text = new JLabel();
+        formElement5Text.setBackground(new Color(-1));
+        formElement5Text.setText("");
+        row7Left.add(formElement5Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row7Right = new JPanel();
         row7Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row7Right.setBackground(new Color(-1));
@@ -212,6 +252,10 @@ public class MusicXmlTasks {
         row8Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row8Left.setBackground(new Color(-1));
         taskForm.add(row8Left, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        formElement6Text = new JLabel();
+        formElement6Text.setBackground(new Color(-1));
+        formElement6Text.setText("");
+        row8Left.add(formElement6Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row8Right = new JPanel();
         row8Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row8Right.setBackground(new Color(-1));
