@@ -2,7 +2,6 @@ package org.curtis.ui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import org.curtis.util.StringUtil;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
