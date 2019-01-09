@@ -36,6 +36,8 @@ public class MusicXmlTasks {
     private JPanel row9Right;
     private JLabel formElement1Text;
 
+    private JTextField formElement1Input;
+
     public MusicXmlTasks() {
 
         taskList.addComponentListener(new ComponentAdapter() {
@@ -53,29 +55,42 @@ public class MusicXmlTasks {
 
     private void handleSelection(String selectedValue) {
         taskName.setText(selectedValue);
+
         String element1Text = "";
+
+        row3Right.removeAll();
+        formElement1Input = null;
+        int formElement1InputSize = 0;
 
         switch (selectedValue) {
             case "Set Database Properties":
                 element1Text = "Username: ";
+                formElement1InputSize = 150;
                 break;
             case "MusicXml File to Database Record":
                 element1Text = "Score name: ";
+                formElement1InputSize = 300;
                 break;
             case "Database Record to MusicXml File":
                 element1Text = "Score name: ";
+                formElement1InputSize = 300;
                 break;
             case "Database Record to Lilypond File":
                 element1Text = "Score name: ";
+                formElement1InputSize = 300;
                 break;
             case "MusicXml File to Lilypond File":
                 element1Text = "Input file: ";
-                break;
-            default:
+                formElement1InputSize = 450;
                 break;
         }
 
         formElement1Text.setText(element1Text);
+
+        if (formElement1Input != null) {
+            formElement1Input = new JTextField();
+            row3Right.add(formElement1Input, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(formElement1InputSize, -1), new Dimension(formElement1InputSize, -1), new Dimension(formElement1InputSize, -1), 0, false));
+        }
     }
 
     public static void main(String[] args) {
@@ -159,6 +174,7 @@ public class MusicXmlTasks {
         row3Left.add(formElement1Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row3Right = new JPanel();
         row3Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        row3Right.setBackground(new Color(-1));
         taskForm.add(row3Right, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         row4Left = new JPanel();
         row4Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
