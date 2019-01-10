@@ -2,11 +2,20 @@ package org.curtis.ui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.curtis.ui.task.DatabasePropertiesTask;
+import org.curtis.ui.task.Db2LyTask;
+import org.curtis.ui.task.Db2MusicXmlTask;
+import org.curtis.ui.task.MusicXml2DbTask;
+import org.curtis.ui.task.MusicXml2LyTask;
+import org.curtis.ui.task.MusicXmlTask;
+import org.curtis.ui.task.exception.TaskException;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +51,7 @@ public class MusicXmlTasks {
     private JLabel formElement5Text;
     private JLabel formElement6Text;
 
+    private String selectedValue;
     private Map<String, Component> componentMap = new HashMap<>();
 
     {
@@ -206,14 +216,14 @@ public class MusicXmlTasks {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getSource() == taskList) {
-                    String selectedValue = (String) taskList.getSelectedValue();
-                    handleSelection(selectedValue);
+                    selectedValue = (String) taskList.getSelectedValue();
+                    handleSelection();
                 }
             }
         });
     }
 
-    private void handleSelection(String selectedValue) {
+    private void handleSelection() {
         taskName.setText(selectedValue);
 
         String element1Text = "";
@@ -367,11 +377,47 @@ public class MusicXmlTasks {
                 jButton.setBackground(new Color(-1));
                 jButton.setText("Submit");
                 jPanel.add(jButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+
+                jButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        handleForm();
+                    }
+                });
+
                 component = jButton;
                 break;
         }
 
         if (component != null) componentMap.put(elementName, component);
+    }
+
+    private void handleForm() {
+        MusicXmlTask musicXmlTask = null;
+
+        switch (selectedValue) {
+            case "Set Database Properties":
+                musicXmlTask = new DatabasePropertiesTask(componentMap);
+                break;
+            case "MusicXml File to Database Record":
+                musicXmlTask = new MusicXml2DbTask(componentMap);
+                break;
+            case "Database Record to MusicXml File":
+                musicXmlTask = new Db2MusicXmlTask(componentMap);
+                break;
+            case "Database Record to Lilypond File":
+                musicXmlTask = new Db2LyTask(componentMap);
+                break;
+            case "MusicXml File to Lilypond File":
+                musicXmlTask = new MusicXml2LyTask(componentMap);
+                break;
+        }
+
+        try {
+            if (musicXmlTask != null) musicXmlTask.execute();
+        } catch (TaskException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
