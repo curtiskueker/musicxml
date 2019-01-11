@@ -231,6 +231,7 @@ public class MusicXmlTasks {
 
     private void handleSelection() {
         taskName.setText(selectedValue);
+        AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
 
         String element1Text = "";
         String element2Text = "";
@@ -271,8 +272,6 @@ public class MusicXmlTasks {
 
         switch (selectedValue) {
             case "Set Database Properties":
-                AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
-
                 element1Text = "Username: ";
                 element1Type = InputType.INPUT_SMALL;
                 element1Name = "username";
