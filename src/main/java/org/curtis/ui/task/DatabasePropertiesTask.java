@@ -1,6 +1,7 @@
 package org.curtis.ui.task;
 
 import org.curtis.exception.FileException;
+import org.curtis.ui.MusicXmlTasks;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
@@ -24,11 +25,6 @@ public class DatabasePropertiesTask extends MusicXmlTask {
     public void execute() throws TaskException {
         initialize();
 
-        String homeDirectory = System.getProperty("user.home");
-        if (StringUtil.isEmpty(homeDirectory)) throw new TaskException("User home directory not found");
-
-        String propertiesFilename = homeDirectory + "/.musicxml/musicxml.properties";
-
         // write properties to file
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getPropertyString("username", username));
@@ -37,13 +33,13 @@ public class DatabasePropertiesTask extends MusicXmlTask {
         stringBuilder.append(getPropertyString("server", server));
 
         try {
-            FileUtil.stringToFile(stringBuilder.toString(), propertiesFilename);
+            FileUtil.stringToFile(stringBuilder.toString(), MusicXmlTasks.PROPERTIES_FILENAME + ".properties");
         } catch (FileException e) {
             throw new TaskException(e);
         }
     }
 
-    private void initialize() {
+    private void initialize() throws TaskException {
         JTextField usernameField = (JTextField)componentMap.get("username");
         username = usernameField.getText();
         JTextField passwordField = (JTextField)componentMap.get("password");
@@ -62,7 +58,7 @@ public class DatabasePropertiesTask extends MusicXmlTask {
         if (StringUtil.isEmpty(propertyValue)) return "";
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("database.musicxml.");
+        stringBuilder.append("musicxml.database.");
         stringBuilder.append(propertyName);
         stringBuilder.append("=");
         stringBuilder.append(propertyValue);

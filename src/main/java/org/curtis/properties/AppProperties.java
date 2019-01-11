@@ -2,7 +2,12 @@ package org.curtis.properties;
 
 import org.curtis.util.StringUtil;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -29,6 +34,19 @@ public class AppProperties {
         } catch (MissingResourceException e) {
             throw new PropertyFileNotFoundException("addPropertiesFile(): File " + filename + " not found");
         }
+    }
+
+    public static void addPropertiesBundle(String directory, String bundleName) throws PropertyFileNotFoundException {
+        try {
+            File file = new File(directory);
+            URL[] urls = {file.toURI().toURL()};
+            ClassLoader loader = new URLClassLoader(urls);
+            ResourceBundle bundle = ResourceBundle.getBundle(bundleName, Locale.getDefault(), loader);
+            bundles.put(bundleName, bundle);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void setPrefix(String prefix) {
@@ -76,6 +94,16 @@ public class AppProperties {
             propertyValue = getString(propertyName);
         } catch (PropertyException e) {
             throw new RequiredPropertyNotFoundException(e);
+        }
+        return propertyValue;
+    }
+
+    public static String getOptionalProperty(String propertyName) {
+        String propertyValue;
+        try {
+            propertyValue = getString(propertyName);
+        } catch (PropertyException e) {
+            propertyValue = "";
         }
         return propertyValue;
     }
