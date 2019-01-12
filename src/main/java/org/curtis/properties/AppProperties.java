@@ -43,10 +43,9 @@ public class AppProperties {
             ClassLoader loader = new URLClassLoader(urls);
             ResourceBundle bundle = ResourceBundle.getBundle(bundleName, Locale.getDefault(), loader);
             bundles.put(bundleName, bundle);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new PropertyFileNotFoundException(e);
         }
-
     }
 
     public static void setPrefix(String prefix) {

@@ -15,7 +15,6 @@ public class DatabasePropertiesTask extends MusicXmlTask {
     private String password;
     private String databaseName;
     private String server;
-    private boolean createUser;
     private boolean createDatabase;
 
     public DatabasePropertiesTask(Map<String, Component> componentMap) {
@@ -48,8 +47,6 @@ public class DatabasePropertiesTask extends MusicXmlTask {
         databaseName = databaseNameField.getText();
         JTextField serverField = (JTextField)componentMap.get("server");
         server = serverField.getText();
-        JCheckBox createUserField = (JCheckBox)componentMap.get("createUser");
-        createUser = createUserField.isSelected();
         JCheckBox createDatabaseField = (JCheckBox)componentMap.get("createDatabase");
         createDatabase = createDatabaseField.isSelected();
     }

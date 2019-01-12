@@ -3,6 +3,7 @@ package org.curtis.ui;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.ui.task.DatabasePropertiesTask;
 import org.curtis.ui.task.Db2LyTask;
 import org.curtis.ui.task.Db2MusicXmlTask;
@@ -44,8 +45,6 @@ public class MusicXmlTasks {
     private JLabel taskLabel;
     private JList taskList;
     private JLabel taskName;
-    private JPanel row9Left;
-    private JPanel row9Right;
     private JLabel formElement1Text;
     private JLabel formElement2Text;
     private JLabel formElement3Text;
@@ -76,7 +75,7 @@ public class MusicXmlTasks {
      */
     private void $$$setupUI$$$() {
         taskForm = new JPanel();
-        taskForm.setLayout(new GridLayoutManager(10, 2, new Insets(0, 0, 0, 0), -1, -1));
+        taskForm.setLayout(new GridLayoutManager(9, 2, new Insets(0, 0, 0, 0), -1, -1));
         taskForm.setBackground(new Color(-1));
         header = new JPanel();
         header.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -194,14 +193,6 @@ public class MusicXmlTasks {
         row8Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row8Right.setBackground(new Color(-1));
         taskForm.add(row8Right, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row9Left = new JPanel();
-        row9Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row9Left.setBackground(new Color(-1));
-        taskForm.add(row9Left, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row9Right = new JPanel();
-        row9Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row9Right.setBackground(new Color(-1));
-        taskForm.add(row9Right, new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
 
     /**
@@ -231,35 +222,35 @@ public class MusicXmlTasks {
 
     private void handleSelection() {
         taskName.setText(selectedValue);
-        AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
+        try {
+            AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
+        } catch (PropertyFileNotFoundException e) {
+            //
+        }
 
         String element1Text = "";
         String element2Text = "";
         String element3Text = "";
         String element4Text = "";
         String element5Text = "";
-        String element6Text = "";
         InputType element1Type = InputType.NONE;
         InputType element2Type = InputType.NONE;
         InputType element3Type = InputType.NONE;
         InputType element4Type = InputType.NONE;
         InputType element5Type = InputType.NONE;
         InputType element6Type = InputType.NONE;
-        InputType element7Type = InputType.NONE;
         String element1Name = "";
         String element2Name = "";
         String element3Name = "";
         String element4Name = "";
         String element5Name = "";
         String element6Name = "";
-        String element7Name = "";
         String element1Value = "";
         String element2Value = "";
         String element3Value = "";
         String element4Value = "";
         String element5Value = "";
         String element6Value = "";
-        String element7Value = "";
 
         row3Right.removeAll();
         row4Right.removeAll();
@@ -267,7 +258,6 @@ public class MusicXmlTasks {
         row6Right.removeAll();
         row7Right.removeAll();
         row8Right.removeAll();
-        row9Right.removeAll();
         componentMap.clear();
 
         switch (selectedValue) {
@@ -289,14 +279,11 @@ public class MusicXmlTasks {
                 element4Name = "server";
                 element4Value = AppProperties.getOptionalProperty("musicxml.database.server");
                 if (StringUtil.isEmpty(element4Value)) element4Value = "localhost";
-                element5Text = "Create User: ";
+                element5Text = "Create Database Tables: ";
                 element5Type = InputType.CHECKBOX;
-                element5Name = "createUser";
-                element6Text = "Create Database: ";
-                element6Type = InputType.CHECKBOX;
-                element6Name = "createDatabase";
-                element7Type = InputType.BUTTON;
-                element7Name = "submit";
+                element5Name = "createDatabase";
+                element6Type = InputType.BUTTON;
+                element6Name = "submit";
                 break;
             case "MusicXml File to Database Record":
                 element1Text = "Score Name: ";
@@ -348,7 +335,6 @@ public class MusicXmlTasks {
         formElement3Text.setText(element3Text);
         formElement4Text.setText(element4Text);
         formElement5Text.setText(element5Text);
-        formElement6Text.setText(element6Text);
 
         addFormElement(row3Right, element1Type, element1Name, element1Value);
         addFormElement(row4Right, element2Type, element2Name, element2Value);
@@ -356,7 +342,6 @@ public class MusicXmlTasks {
         addFormElement(row6Right, element4Type, element4Name, element4Value);
         addFormElement(row7Right, element5Type, element5Name, element5Value);
         addFormElement(row8Right, element6Type, element6Name, element6Value);
-        addFormElement(row9Right, element7Type, element7Name, element7Value);
 
         taskForm.revalidate();
     }
