@@ -4,7 +4,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
-import org.curtis.ui.task.DatabasePropertiesTask;
+import org.curtis.ui.task.DbPropertiesTask;
 import org.curtis.ui.task.Db2LyTask;
 import org.curtis.ui.task.Db2MusicXmlTask;
 import org.curtis.ui.task.MusicXml2DbTask;
@@ -404,7 +404,7 @@ public class MusicXmlTasks {
 
         switch (selectedValue) {
             case "Set Database Properties":
-                musicXmlTask = new DatabasePropertiesTask(componentMap);
+                musicXmlTask = new DbPropertiesTask(componentMap);
                 break;
             case "MusicXml File to Database Record":
                 musicXmlTask = new MusicXml2DbTask(componentMap);

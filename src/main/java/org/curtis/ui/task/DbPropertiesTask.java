@@ -1,6 +1,11 @@
 package org.curtis.ui.task;
 
 import org.curtis.exception.FileException;
+import org.curtis.musicxml.bin.MusicXml2Db;
+import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.ui.MusicXmlTasks;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.FileUtil;
@@ -10,14 +15,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
-public class DatabasePropertiesTask extends MusicXmlTask {
+import static org.curtis.ui.MusicXmlTasks.PROPERTIES_BUNDLE;
+import static org.curtis.ui.MusicXmlTasks.PROPERTIES_DIRECTORY;
+
+public class DbPropertiesTask extends MusicXmlTask {
     private String username;
     private String password;
     private String databaseName;
     private String server;
     private boolean createDatabase;
 
-    public DatabasePropertiesTask(Map<String, Component> componentMap) {
+    public DbPropertiesTask(Map<String, Component> componentMap) {
         super(componentMap);
     }
 
@@ -35,6 +43,21 @@ public class DatabasePropertiesTask extends MusicXmlTask {
             FileUtil.stringToFile(stringBuilder.toString(), MusicXmlTasks.PROPERTIES_FILENAME + ".properties");
         } catch (FileException e) {
             throw new TaskException(e);
+        }
+        try {
+            AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
+        } catch (PropertyFileNotFoundException e) {
+            //
+        }
+
+        if (createDatabase) {
+            MusicXml2Db musicXml2Db = new MusicXml2Db();
+            MusicXmlUtil.CREATE_DB_SCHEMA = true;
+            try {
+                musicXml2Db.execute();
+            } catch (MusicXmlException e) {
+                throw new TaskException(e);
+            }
         }
     }
 

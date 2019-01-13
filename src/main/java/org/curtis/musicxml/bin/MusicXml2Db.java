@@ -17,7 +17,7 @@ import org.curtis.xml.XmlException;
 import java.io.File;
 
 public class MusicXml2Db extends MusicXmlScript {
-    private void execute() throws MusicXmlException {
+    public void execute() throws MusicXmlException {
         try {
             DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
 
