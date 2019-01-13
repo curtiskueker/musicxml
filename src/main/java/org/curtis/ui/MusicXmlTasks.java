@@ -16,6 +16,8 @@ import org.curtis.util.StringUtil;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -203,7 +205,7 @@ public class MusicXmlTasks {
     }
 
     private enum InputType {
-        INPUT_SMALL, INPUT_LARGE, PASSWORD, FILE, CHECKBOX, BUTTON, NONE
+        INPUT_SMALL, INPUT_LARGE, PASSWORD, INPUT_FILE, OUTPUT_FILE, CHECKBOX, BUTTON, NONE
     }
 
     ;
@@ -290,8 +292,9 @@ public class MusicXmlTasks {
                 element1Type = InputType.INPUT_LARGE;
                 element1Name = "scoreName";
                 element2Text = "Input File: ";
-                element2Type = InputType.FILE;
+                element2Type = InputType.INPUT_FILE;
                 element2Name = "inputFile";
+                element2Value = "xml";
                 element3Type = InputType.BUTTON;
                 element3Name = "submit";
                 break;
@@ -300,7 +303,7 @@ public class MusicXmlTasks {
                 element1Type = InputType.INPUT_LARGE;
                 element1Name = "scoreName";
                 element2Text = "Output File: ";
-                element2Type = InputType.FILE;
+                element2Type = InputType.OUTPUT_FILE;
                 element2Name = "outputFile";
                 element3Text = "Skip Comments: ";
                 element3Type = InputType.CHECKBOX;
@@ -313,17 +316,18 @@ public class MusicXmlTasks {
                 element1Type = InputType.INPUT_LARGE;
                 element1Name = "scoreName";
                 element2Text = "Output File: ";
-                element2Type = InputType.FILE;
+                element2Type = InputType.OUTPUT_FILE;
                 element2Name = "outputFile";
                 element3Type = InputType.BUTTON;
                 element3Name = "submit";
                 break;
             case "MusicXml File to Lilypond File":
                 element1Text = "Input File: ";
-                element1Type = InputType.FILE;
+                element1Type = InputType.INPUT_FILE;
                 element1Name = "inputFile";
+                element1Value = "xml";
                 element2Text = "Output File: ";
-                element2Type = InputType.FILE;
+                element2Type = InputType.OUTPUT_FILE;
                 element2Name = "outputFile";
                 element3Type = InputType.BUTTON;
                 element3Name = "submit";
@@ -368,10 +372,21 @@ public class MusicXmlTasks {
                 jPanel.add(jPasswordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, -1), new Dimension(150, -1), new Dimension(150, -1), 0, false));
                 component = jPasswordField;
                 break;
-            case FILE:
-                JTextField fileField = new JTextField();
-                jPanel.add(fileField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(3450, -1), 0, false));
-                component = fileField;
+            case INPUT_FILE:
+                JFileChooser inputFileChooser = new JFileChooser();
+                UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+                inputFileChooser.setControlButtonsAreShown(false);
+                inputFileChooser.setAcceptAllFileFilterUsed(false);
+                FileFilter inputFileFilter = new FileNameExtensionFilter(elementValue,elementValue);
+                inputFileChooser.addChoosableFileFilter(inputFileFilter);
+                jPanel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(3450, -1), 0, false));
+                component = inputFileChooser;
+                break;
+            case OUTPUT_FILE:
+                JTextField outputFileChooser = new JTextField();
+                outputFileChooser.setText(elementValue);
+                jPanel.add(outputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(450, -1), 0, false));
+                component = outputFileChooser;
                 break;
             case CHECKBOX:
                 JCheckBox jCheckBox = new JCheckBox();

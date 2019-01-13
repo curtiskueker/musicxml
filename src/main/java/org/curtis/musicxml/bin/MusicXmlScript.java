@@ -10,13 +10,11 @@ import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
-import java.io.File;
-
 public abstract class MusicXmlScript {
-    protected static Integer SCORE_ID;
-    protected static String OUTPUT_FILE;
-    protected static String INPUT_FILE;
-    protected static String SCORE_NAME;
+    public static Integer SCORE_ID;
+    public static String OUTPUT_FILE;
+    public static String INPUT_FILE;
+    public static String SCORE_NAME;
 
     protected static void setArgs(String[] args) throws MusicXmlException {
         for (String arg : args) {
