@@ -14,8 +14,6 @@ import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -45,7 +43,7 @@ public class MusicXmlTasks {
     private JPanel row8Right;
     private JLabel headerLabel;
     private JLabel taskLabel;
-    private JList taskList;
+    private JComboBox taskSelection;
     private JLabel taskName;
     private JLabel formElement1Text;
     private JLabel formElement2Text;
@@ -101,16 +99,17 @@ public class MusicXmlTasks {
         row1Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row1Right.setBackground(new Color(-1));
         taskForm.add(row1Right, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        taskList = new JList();
-        final DefaultListModel defaultListModel1 = new DefaultListModel();
-        defaultListModel1.addElement("Set Database Properties");
-        defaultListModel1.addElement("MusicXml File to Database Record");
-        defaultListModel1.addElement("Database Record to MusicXml File");
-        defaultListModel1.addElement("Database Record to Lilypond File");
-        defaultListModel1.addElement("MusicXml File to Lilypond File");
-        taskList.setModel(defaultListModel1);
-        taskList.setSelectionMode(0);
-        row1Right.add(taskList, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        taskSelection = new JComboBox();
+        taskSelection.setBackground(new Color(-1));
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("");
+        defaultComboBoxModel1.addElement("Set Database Properties");
+        defaultComboBoxModel1.addElement("MusicXml File to Database Record");
+        defaultComboBoxModel1.addElement("Database Record to MusicXml File");
+        defaultComboBoxModel1.addElement("Database Record to Lilypond File");
+        defaultComboBoxModel1.addElement("MusicXml File to Lilypond File");
+        taskSelection.setModel(defaultComboBoxModel1);
+        row1Right.add(taskSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row2Left = new JPanel();
         row2Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row2Left.setBackground(new Color(-1));
@@ -211,11 +210,11 @@ public class MusicXmlTasks {
     ;
 
     public MusicXmlTasks() {
-        taskList.addListSelectionListener(new ListSelectionListener() {
+        taskSelection.addActionListener(new ActionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (e.getSource() == taskList) {
-                    selectedValue = (String) taskList.getSelectedValue();
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == taskSelection) {
+                    selectedValue = (String) taskSelection.getSelectedItem();
                     handleSelection();
                 }
             }
@@ -377,7 +376,7 @@ public class MusicXmlTasks {
                 UIManager.put("FileChooser.readOnly", Boolean.TRUE);
                 inputFileChooser.setControlButtonsAreShown(false);
                 inputFileChooser.setAcceptAllFileFilterUsed(false);
-                FileFilter inputFileFilter = new FileNameExtensionFilter(elementValue,elementValue);
+                FileFilter inputFileFilter = new FileNameExtensionFilter(elementValue, elementValue);
                 inputFileChooser.addChoosableFileFilter(inputFileFilter);
                 jPanel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(3450, -1), 0, false));
                 component = inputFileChooser;
