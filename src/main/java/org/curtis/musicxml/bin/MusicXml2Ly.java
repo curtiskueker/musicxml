@@ -10,7 +10,7 @@ import java.io.File;
 public class MusicXml2Ly extends MusicXmlScript {
     public static String LILYPOND_VERSION = "2.18.2";
 
-    private void execute() throws MusicXmlException {
+    public void execute() throws MusicXmlException {
         try {
             // output file
             if (!OUTPUT_FILE.endsWith(".ly")) OUTPUT_FILE += ".ly";

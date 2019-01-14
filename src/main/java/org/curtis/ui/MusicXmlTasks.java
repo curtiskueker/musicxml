@@ -305,7 +305,7 @@ public class MusicXmlTasks {
                 element2Text = "Output Directory: ";
                 element2Type = InputType.OUTPUT_DIRECTORY;
                 element2Name = "outputDirectory";
-                element3Text = "Output File (.xml): ";
+                element3Text = "Output Filename (.xml): ";
                 element3Type = InputType.INPUT_SMALL;
                 element3Name = "outputFile";
                 element4Text = "Skip Comments: ";
@@ -321,7 +321,7 @@ public class MusicXmlTasks {
                 element2Text = "Output Directory: ";
                 element2Type = InputType.OUTPUT_DIRECTORY;
                 element2Name = "outputDirectory";
-                element3Text = "Output File (.ly): ";
+                element3Text = "Output Filename (.ly): ";
                 element3Type = InputType.INPUT_SMALL;
                 element3Name = "outputFile";
                 element4Type = InputType.BUTTON;
@@ -335,7 +335,7 @@ public class MusicXmlTasks {
                 element2Text = "Output Directory: ";
                 element2Type = InputType.OUTPUT_DIRECTORY;
                 element2Name = "outputDirectory";
-                element3Text = "Output File (.ly): ";
+                element3Text = "Output Filename (.ly): ";
                 element3Type = InputType.INPUT_SMALL;
                 element3Name = "outputFile";
                 element4Type = InputType.BUTTON;
@@ -464,7 +464,7 @@ public class MusicXmlTasks {
         JFrame frame = new JFrame("MusicXmlTasks");
         frame.setContentPane(new MusicXmlTasks().taskForm);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 700);
+        frame.setSize(700, 1000);
         frame.setVisible(true);
     }
 
