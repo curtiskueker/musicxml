@@ -20,6 +20,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +54,7 @@ public class MusicXmlTasks {
     private JLabel formElement4Text;
     private JLabel formElement5Text;
     private JLabel formElement6Text;
+    private JCheckBox showPassword;
 
     private String selectedValue;
     private Map<String, Component> componentMap = new HashMap<>();
@@ -207,8 +210,6 @@ public class MusicXmlTasks {
     private enum InputType {
         INPUT_SMALL, INPUT_LARGE, PASSWORD, INPUT_FILE, OUTPUT_DIRECTORY, SCORE_NAME_SELECTION, CHECKBOX, BUTTON, NONE
     }
-
-    ;
 
     public MusicXmlTasks() {
         taskSelection.addActionListener(new ActionListener() {
@@ -376,10 +377,23 @@ public class MusicXmlTasks {
                 component = largeTextField;
                 break;
             case PASSWORD:
-                JPasswordField jPasswordField = new JPasswordField();
-                jPasswordField.setText(elementValue);
-                jPanel.add(jPasswordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, -1), new Dimension(150, -1), new Dimension(150, -1), 0, false));
-                component = jPasswordField;
+                JPasswordField passwordField = new JPasswordField();
+                passwordField.setText(elementValue);
+                jPanel.add(passwordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(150, -1), new Dimension(150, -1), new Dimension(150, -1), 0, false));
+
+                showPassword = new JCheckBox();
+                showPassword.setBackground(new Color(-1));
+                showPassword.setText("Show: ");
+                showPassword.setHorizontalTextPosition(SwingConstants.LEFT);
+                showPassword.addItemListener(new ItemListener() {
+                    public void itemStateChanged(ItemEvent e) {
+                        if (showPassword.isSelected()) passwordField.setEchoChar((char)0);
+                        else passwordField.setEchoChar('*');
+                    }
+                });
+                jPanel.add(showPassword, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+
+                component = passwordField;
                 break;
             case INPUT_FILE:
                 JFileChooser inputFileChooser = new JFileChooser();
@@ -407,25 +421,25 @@ public class MusicXmlTasks {
                 component = selection;
                 break;
             case CHECKBOX:
-                JCheckBox jCheckBox = new JCheckBox();
-                jCheckBox.setBackground(new Color(-1));
-                jPanel.add(jCheckBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-                component = jCheckBox;
+                JCheckBox checkBox = new JCheckBox();
+                checkBox.setBackground(new Color(-1));
+                jPanel.add(checkBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                component = checkBox;
                 break;
             case BUTTON:
-                JButton jButton = new JButton();
-                jButton.setBackground(new Color(-1));
-                jButton.setText("Submit");
-                jPanel.add(jButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                JButton button = new JButton();
+                button.setBackground(new Color(-1));
+                button.setText("Submit");
+                jPanel.add(button, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
-                jButton.addActionListener(new ActionListener() {
+                button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         handleForm();
                     }
                 });
 
-                component = jButton;
+                component = button;
                 break;
         }
 
