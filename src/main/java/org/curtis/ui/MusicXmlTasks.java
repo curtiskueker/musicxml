@@ -17,11 +17,13 @@ import org.curtis.util.StringUtil;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -232,11 +234,16 @@ public class MusicXmlTasks {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == taskSelection) {
-                    selectedValue = (String) taskSelection.getSelectedItem();
-                    handleSelection();
+                    String selection = (String) taskSelection.getSelectedItem();
+                    if (!selection.equals(selectedValue)) {
+                        selectedValue = selection;
+                        handleSelection();
+                    }
                 }
             }
         });
+
+        setupStatusArea();
     }
 
     private void handleSelection() {
@@ -373,6 +380,8 @@ public class MusicXmlTasks {
         addFormElement(row7Right, element5Type, element5Name, element5Value);
         addFormElement(row8Right, element6Type, element6Name, element6Value);
 
+        clearStatusArea();
+
         taskForm.revalidate();
     }
 
@@ -451,6 +460,7 @@ public class MusicXmlTasks {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        clearStatusArea();
                         handleForm();
                     }
                 });
@@ -487,6 +497,20 @@ public class MusicXmlTasks {
             if (musicXmlTask != null) musicXmlTask.execute();
         } catch (TaskException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setupStatusArea() {
+        PrintStream statusPrintStream = new PrintStream(new StatusOutput(statusTextArea));
+        System.setErr(statusPrintStream);
+    }
+
+    private void clearStatusArea() {
+        try {
+            statusTextArea.getDocument().remove(0, statusTextArea.getDocument().getLength());
+            statusTextArea.update(statusTextArea.getGraphics());
+        } catch (BadLocationException e) {
+            //
         }
     }
 
