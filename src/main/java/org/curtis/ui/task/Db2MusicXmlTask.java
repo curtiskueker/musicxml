@@ -34,13 +34,11 @@ public class Db2MusicXmlTask extends MusicXmlTask {
         } catch (MusicXmlException e) {
             throw new TaskException(e);
         }
-
     }
 
     private void initialize() throws TaskException {
         JComboBox scoreNameSelection = (JComboBox) componentMap.get("scoreName");
         scoreName = (String)scoreNameSelection.getSelectedItem();
-        System.err.println("Score name: " + scoreName);
         JFileChooser outputFileChooser = (JFileChooser) componentMap.get("outputDirectory");
         File outputDirectory = outputFileChooser.getSelectedFile();
         if (outputDirectory != null) outputDirectoryName = outputDirectory.getAbsolutePath();
