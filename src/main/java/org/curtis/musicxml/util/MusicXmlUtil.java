@@ -51,6 +51,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -183,7 +184,20 @@ public class MusicXmlUtil {
         } catch (DBException e) {
             throw new MusicXmlException(e);
         }
+    }
 
+    public static List<String> getScoreNames() {
+        List<String> scoreNames = new ArrayList<>();
+
+        try {
+            List<Score> scores = getDbTransaction().findAll(Score.class);
+            for (Score score : scores) scoreNames.add(score.getScoreName());
+            Collections.sort(scoreNames);
+        } catch (DBException e) {
+            //
+        }
+
+        return scoreNames;
     }
 
     private static List<XmlComment> getXmlComments(Node node) {

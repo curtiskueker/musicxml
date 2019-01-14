@@ -2,6 +2,7 @@ package org.curtis.ui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.ui.task.DbPropertiesTask;
@@ -204,7 +205,7 @@ public class MusicXmlTasks {
     }
 
     private enum InputType {
-        INPUT_SMALL, INPUT_LARGE, PASSWORD, INPUT_FILE, OUTPUT_FILE, CHECKBOX, BUTTON, NONE
+        INPUT_SMALL, INPUT_LARGE, PASSWORD, INPUT_FILE, OUTPUT_DIRECTORY, SCORE_NAME_SELECTION, CHECKBOX, BUTTON, NONE
     }
 
     ;
@@ -299,37 +300,46 @@ public class MusicXmlTasks {
                 break;
             case "Database Record to MusicXml File":
                 element1Text = "Score Name: ";
-                element1Type = InputType.INPUT_LARGE;
+                element1Type = InputType.SCORE_NAME_SELECTION;
                 element1Name = "scoreName";
-                element2Text = "Output File: ";
-                element2Type = InputType.OUTPUT_FILE;
-                element2Name = "outputFile";
-                element3Text = "Skip Comments: ";
-                element3Type = InputType.CHECKBOX;
-                element3Name = "skipComments";
-                element4Type = InputType.BUTTON;
-                element4Name = "submit";
+                element2Text = "Output Directory: ";
+                element2Type = InputType.OUTPUT_DIRECTORY;
+                element2Name = "outputDirectory";
+                element3Text = "Output File (.xml): ";
+                element3Type = InputType.INPUT_SMALL;
+                element3Name = "outputFile";
+                element4Text = "Skip Comments: ";
+                element4Type = InputType.CHECKBOX;
+                element4Name = "skipComments";
+                element5Type = InputType.BUTTON;
+                element5Name = "submit";
                 break;
             case "Database Record to Lilypond File":
                 element1Text = "Score Name: ";
-                element1Type = InputType.INPUT_LARGE;
+                element1Type = InputType.SCORE_NAME_SELECTION;
                 element1Name = "scoreName";
-                element2Text = "Output File: ";
-                element2Type = InputType.OUTPUT_FILE;
-                element2Name = "outputFile";
-                element3Type = InputType.BUTTON;
-                element3Name = "submit";
+                element2Text = "Output Directory: ";
+                element2Type = InputType.OUTPUT_DIRECTORY;
+                element2Name = "outputDirectory";
+                element3Text = "Output File (.ly): ";
+                element3Type = InputType.INPUT_SMALL;
+                element3Name = "outputFile";
+                element4Type = InputType.BUTTON;
+                element4Name = "submit";
                 break;
             case "MusicXml File to Lilypond File":
                 element1Text = "Input File: ";
                 element1Type = InputType.INPUT_FILE;
                 element1Name = "inputFile";
                 element1Value = "xml";
-                element2Text = "Output File: ";
-                element2Type = InputType.OUTPUT_FILE;
-                element2Name = "outputFile";
-                element3Type = InputType.BUTTON;
-                element3Name = "submit";
+                element2Text = "Output Directory: ";
+                element2Type = InputType.OUTPUT_DIRECTORY;
+                element2Name = "outputDirectory";
+                element3Text = "Output File (.ly): ";
+                element3Type = InputType.INPUT_SMALL;
+                element3Name = "outputFile";
+                element4Type = InputType.BUTTON;
+                element4Name = "submit";
                 break;
         }
 
@@ -381,11 +391,20 @@ public class MusicXmlTasks {
                 jPanel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(3450, -1), 0, false));
                 component = inputFileChooser;
                 break;
-            case OUTPUT_FILE:
-                JTextField outputFileChooser = new JTextField();
-                outputFileChooser.setText(elementValue);
-                jPanel.add(outputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(450, -1), 0, false));
+            case OUTPUT_DIRECTORY:
+                JFileChooser outputFileChooser = new JFileChooser();
+                UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+                outputFileChooser.setControlButtonsAreShown(false);
+                outputFileChooser.setAcceptAllFileFilterUsed(false);
+                outputFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                jPanel.add(outputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(450, -1), new Dimension(450, -1), new Dimension(3450, -1), 0, false));
                 component = outputFileChooser;
+                break;
+            case SCORE_NAME_SELECTION:
+                JComboBox selection = new JComboBox(MusicXmlUtil.getScoreNames().toArray());
+                selection.setBackground(new Color(-1));
+                jPanel.add(selection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                component = selection;
                 break;
             case CHECKBOX:
                 JCheckBox jCheckBox = new JCheckBox();

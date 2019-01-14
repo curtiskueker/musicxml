@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class MusicXml2DbTask extends MusicXmlTask {
     private String scoreName;
-    private String inputFileName;
+    private String inputFileName = "";
 
     public MusicXml2DbTask(Map<String, Component> componentMap) {
         super(componentMap);

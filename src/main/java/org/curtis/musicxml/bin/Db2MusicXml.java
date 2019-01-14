@@ -4,7 +4,7 @@ import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
 
 public class Db2MusicXml extends MusicXmlScript {
-    private void execute() throws MusicXmlException {
+    public void execute() throws MusicXmlException {
         outputResults(MusicXmlUtil.getXmlResults(getScoreFromDb()));
     }
 

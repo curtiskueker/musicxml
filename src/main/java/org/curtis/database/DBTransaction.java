@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBTransaction {
@@ -65,6 +66,18 @@ public class DBTransaction {
 
         if (results == null || results.isEmpty()) return null;
         return results.get(0);
+    }
+
+    public <T extends DatabaseItem> List<T> findAll(Class<T> classType) throws DBException {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classType);
+        Root<T> root = criteriaQuery.from(classType);
+        criteriaQuery.select(root);
+
+        List<T> results = em.createQuery(criteriaQuery).getResultList();
+
+        if (results == null || results.isEmpty()) return new ArrayList<T>();
+        return results;
     }
 
     // Private helper method that checks that the database is in a valid
