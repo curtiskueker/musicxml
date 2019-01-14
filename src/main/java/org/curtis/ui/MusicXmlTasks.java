@@ -461,7 +461,12 @@ public class MusicXmlTasks {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         clearStatusArea();
-                        handleForm();
+
+                        Runnable formRunnable = () -> {
+                            handleForm();
+                        };
+                        Thread formThread = new Thread(formRunnable);
+                        formThread.start();
                     }
                 });
 
@@ -495,6 +500,7 @@ public class MusicXmlTasks {
 
         try {
             if (musicXmlTask != null) musicXmlTask.execute();
+            System.err.println("Task finished");
         } catch (TaskException e) {
             e.printStackTrace();
         }
