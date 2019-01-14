@@ -54,6 +54,9 @@ public class MusicXmlTasks {
     private JLabel formElement4Text;
     private JLabel formElement5Text;
     private JLabel formElement6Text;
+    private JPanel statusPanel;
+    private JScrollPane statusScrollPane;
+    private JTextArea statusTextArea;
     private JCheckBox showPassword;
 
     private String selectedValue;
@@ -79,7 +82,7 @@ public class MusicXmlTasks {
      */
     private void $$$setupUI$$$() {
         taskForm = new JPanel();
-        taskForm.setLayout(new GridLayoutManager(9, 2, new Insets(0, 0, 0, 0), -1, -1));
+        taskForm.setLayout(new GridLayoutManager(10, 2, new Insets(0, 0, 0, 0), -1, -1));
         taskForm.setBackground(new Color(-1));
         header = new JPanel();
         header.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -198,6 +201,19 @@ public class MusicXmlTasks {
         row8Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row8Right.setBackground(new Color(-1));
         taskForm.add(row8Right, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        statusPanel = new JPanel();
+        statusPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        statusPanel.setBackground(new Color(-1));
+        taskForm.add(statusPanel, new GridConstraints(9, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        statusScrollPane = new JScrollPane();
+        statusScrollPane.setBackground(new Color(-1));
+        statusScrollPane.setVerticalScrollBarPolicy(22);
+        statusPanel.add(statusScrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        statusTextArea = new JTextArea();
+        statusTextArea.setEditable(false);
+        statusTextArea.setRows(8);
+        statusTextArea.setText("");
+        statusScrollPane.setViewportView(statusTextArea);
     }
 
     /**
@@ -387,7 +403,7 @@ public class MusicXmlTasks {
                 showPassword.setHorizontalTextPosition(SwingConstants.LEFT);
                 showPassword.addItemListener(new ItemListener() {
                     public void itemStateChanged(ItemEvent e) {
-                        if (showPassword.isSelected()) passwordField.setEchoChar((char)0);
+                        if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
                         else passwordField.setEchoChar('*');
                     }
                 });
