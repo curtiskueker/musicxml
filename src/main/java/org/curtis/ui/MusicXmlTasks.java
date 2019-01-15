@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +47,10 @@ public class MusicXmlTasks {
     private JPanel row7Right;
     private JPanel row8Left;
     private JPanel row8Right;
+    private JPanel row9Left;
+    private JPanel row9Right;
+    private JPanel row10Left;
+    private JPanel row10Right;
     private JLabel headerLabel;
     private JLabel taskLabel;
     private JComboBox taskSelection;
@@ -56,6 +61,8 @@ public class MusicXmlTasks {
     private JLabel formElement4Text;
     private JLabel formElement5Text;
     private JLabel formElement6Text;
+    private JLabel formElement7Text;
+    private JLabel formElement8Text;
     private JPanel statusPanel;
     private JScrollPane statusScrollPane;
     private JTextArea statusTextArea;
@@ -88,7 +95,7 @@ public class MusicXmlTasks {
      */
     private void $$$setupUI$$$() {
         taskForm = new JPanel();
-        taskForm.setLayout(new GridLayoutManager(10, 2, new Insets(0, 0, 0, 0), -1, -1));
+        taskForm.setLayout(new GridLayoutManager(12, 2, new Insets(0, 0, 0, 0), -1, -1));
         taskForm.setBackground(new Color(-1));
         header = new JPanel();
         header.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -210,7 +217,7 @@ public class MusicXmlTasks {
         statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         statusPanel.setBackground(new Color(-1));
-        taskForm.add(statusPanel, new GridConstraints(9, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        taskForm.add(statusPanel, new GridConstraints(11, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         statusScrollPane = new JScrollPane();
         statusScrollPane.setBackground(new Color(-1));
         statusScrollPane.setVerticalScrollBarPolicy(22);
@@ -220,6 +227,30 @@ public class MusicXmlTasks {
         statusTextArea.setRows(8);
         statusTextArea.setText("");
         statusScrollPane.setViewportView(statusTextArea);
+        row9Left = new JPanel();
+        row9Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        row9Left.setBackground(new Color(-1));
+        taskForm.add(row9Left, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        formElement7Text = new JLabel();
+        formElement7Text.setBackground(new Color(-1));
+        formElement7Text.setText("");
+        row9Left.add(formElement7Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        row9Right = new JPanel();
+        row9Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        row9Right.setBackground(new Color(-1));
+        taskForm.add(row9Right, new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        row10Left = new JPanel();
+        row10Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        row10Left.setBackground(new Color(-1));
+        taskForm.add(row10Left, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        formElement8Text = new JLabel();
+        formElement8Text.setBackground(new Color(-1));
+        formElement8Text.setText("");
+        row10Left.add(formElement8Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        row10Right = new JPanel();
+        row10Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        row10Right.setBackground(new Color(-1));
+        taskForm.add(row10Right, new GridConstraints(10, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
 
     /**
@@ -263,24 +294,40 @@ public class MusicXmlTasks {
         String element3Text = "";
         String element4Text = "";
         String element5Text = "";
+        String element6Text = "";
+        String element7Text = "";
         InputType element1Type = InputType.NONE;
         InputType element2Type = InputType.NONE;
         InputType element3Type = InputType.NONE;
         InputType element4Type = InputType.NONE;
         InputType element5Type = InputType.NONE;
         InputType element6Type = InputType.NONE;
+        InputType element7Type = InputType.NONE;
+        InputType element8Type = InputType.NONE;
         String element1Name = "";
         String element2Name = "";
         String element3Name = "";
         String element4Name = "";
         String element5Name = "";
         String element6Name = "";
+        String element7Name = "";
+        String element8Name = "";
         String element1Value = "";
         String element2Value = "";
         String element3Value = "";
         String element4Value = "";
         String element5Value = "";
         String element6Value = "";
+        String element7Value = "";
+        String element8Value = "";
+        String selectedFilename1 = "";
+        String selectedFilename2 = "";
+        String selectedFilename3 = "";
+        String selectedFilename4 = "";
+        String selectedFilename5 = "";
+        String selectedFilename6 = "";
+        String selectedFilename7 = "";
+        String selectedFilename8 = "";
 
         row3Right.removeAll();
         row4Right.removeAll();
@@ -288,6 +335,8 @@ public class MusicXmlTasks {
         row6Right.removeAll();
         row7Right.removeAll();
         row8Right.removeAll();
+        row9Right.removeAll();
+        row10Right.removeAll();
         componentMap.clear();
 
         switch (selectedValue) {
@@ -312,8 +361,16 @@ public class MusicXmlTasks {
                 element5Text = "Create Database Tables: ";
                 element5Type = InputType.CHECKBOX;
                 element5Name = "createDatabase";
-                element6Type = InputType.BUTTON;
-                element6Name = "submit";
+                element6Text = "Lilypond location: ";
+                element6Type = InputType.INPUT_FILE;
+                element6Name = "lilypondLocation";
+                selectedFilename6 = AppProperties.getOptionalProperty("location.lilypond");
+                element7Text = "PDF Reader location: ";
+                element7Type = InputType.INPUT_FILE;
+                element7Name = "pdfReaderLocation";
+                selectedFilename7 = AppProperties.getOptionalProperty("location.pdfreader");
+                element8Type = InputType.BUTTON;
+                element8Name = "submit";
                 break;
             case "MusicXml File to Database Record":
                 element1Text = "Score Name: ";
@@ -376,20 +433,24 @@ public class MusicXmlTasks {
         formElement3Text.setText(element3Text);
         formElement4Text.setText(element4Text);
         formElement5Text.setText(element5Text);
+        formElement6Text.setText(element6Text);
+        formElement7Text.setText(element7Text);
 
-        addFormElement(row3Right, element1Type, element1Name, element1Value);
-        addFormElement(row4Right, element2Type, element2Name, element2Value);
-        addFormElement(row5Right, element3Type, element3Name, element3Value);
-        addFormElement(row6Right, element4Type, element4Name, element4Value);
-        addFormElement(row7Right, element5Type, element5Name, element5Value);
-        addFormElement(row8Right, element6Type, element6Name, element6Value);
+        addFormElement(row3Right, element1Type, element1Name, element1Value, selectedFilename1);
+        addFormElement(row4Right, element2Type, element2Name, element2Value, selectedFilename2);
+        addFormElement(row5Right, element3Type, element3Name, element3Value, selectedFilename3);
+        addFormElement(row6Right, element4Type, element4Name, element4Value, selectedFilename4);
+        addFormElement(row7Right, element5Type, element5Name, element5Value, selectedFilename5);
+        addFormElement(row8Right, element6Type, element6Name, element6Value, selectedFilename6);
+        addFormElement(row9Right, element7Type, element7Name, element7Value, selectedFilename7);
+        addFormElement(row10Right, element8Type, element8Name, element8Value, selectedFilename8);
 
         clearStatusArea();
 
         taskForm.revalidate();
     }
 
-    private void addFormElement(JPanel jPanel, InputType inputType, String elementName, String elementValue) {
+    private void addFormElement(JPanel jPanel, InputType inputType, String elementName, String elementValue, String selectedFilename) {
         Component component = null;
 
         switch (inputType) {
@@ -429,8 +490,11 @@ public class MusicXmlTasks {
                 UIManager.put("FileChooser.readOnly", Boolean.TRUE);
                 inputFileChooser.setControlButtonsAreShown(false);
                 inputFileChooser.setAcceptAllFileFilterUsed(false);
-                FileFilter inputFileFilter = new FileNameExtensionFilter(elementValue, elementValue);
-                inputFileChooser.addChoosableFileFilter(inputFileFilter);
+                if (StringUtil.isNotEmpty(elementValue)) {
+                    FileFilter inputFileFilter = new FileNameExtensionFilter(elementValue, elementValue);
+                    inputFileChooser.addChoosableFileFilter(inputFileFilter);
+                }
+                if (StringUtil.isNotEmpty(selectedFilename)) inputFileChooser.setSelectedFile(new File(selectedFilename));
                 jPanel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
                 component = inputFileChooser;
                 break;
