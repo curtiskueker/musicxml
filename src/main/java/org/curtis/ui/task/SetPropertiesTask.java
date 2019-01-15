@@ -18,14 +18,14 @@ import java.util.Map;
 import static org.curtis.ui.MusicXmlTasks.PROPERTIES_BUNDLE;
 import static org.curtis.ui.MusicXmlTasks.PROPERTIES_DIRECTORY;
 
-public class DbPropertiesTask extends MusicXmlTask {
+public class SetPropertiesTask extends MusicXmlTask {
     private String username;
     private String password;
     private String databaseName;
     private String server;
     private boolean createDatabase;
 
-    public DbPropertiesTask(Map<String, Component> componentMap) {
+    public SetPropertiesTask(Map<String, Component> componentMap) {
         super(componentMap);
     }
 

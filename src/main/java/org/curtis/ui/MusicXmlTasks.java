@@ -5,7 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
-import org.curtis.ui.task.DbPropertiesTask;
+import org.curtis.ui.task.SetPropertiesTask;
 import org.curtis.ui.task.Db2LyTask;
 import org.curtis.ui.task.Db2MusicXmlTask;
 import org.curtis.ui.task.MusicXml2DbTask;
@@ -116,7 +116,7 @@ public class MusicXmlTasks {
         taskSelection.setBackground(new Color(-1));
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("");
-        defaultComboBoxModel1.addElement("Set Database Properties");
+        defaultComboBoxModel1.addElement("Set Properties");
         defaultComboBoxModel1.addElement("MusicXml File to Database Record");
         defaultComboBoxModel1.addElement("Database Record to MusicXml File");
         defaultComboBoxModel1.addElement("Database Record to Lilypond File");
@@ -291,7 +291,7 @@ public class MusicXmlTasks {
         componentMap.clear();
 
         switch (selectedValue) {
-            case "Set Database Properties":
+            case "Set Properties":
                 element1Text = "Username: ";
                 element1Type = InputType.INPUT_SMALL;
                 element1Name = "username";
@@ -485,8 +485,8 @@ public class MusicXmlTasks {
         MusicXmlTask musicXmlTask = null;
 
         switch (selectedValue) {
-            case "Set Database Properties":
-                musicXmlTask = new DbPropertiesTask(componentMap);
+            case "Set Properties":
+                musicXmlTask = new SetPropertiesTask(componentMap);
                 break;
             case "MusicXml File to Database Record":
                 musicXmlTask = new MusicXml2DbTask(componentMap);
