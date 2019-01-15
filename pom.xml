@@ -82,7 +82,7 @@
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>musicxml/original/**</exclude>
-                    <exclude>scripts/database/**</exclude>
+                    <exclude>scripts/**</exclude>
                 </excludes>
             </resource>
         </resources>
