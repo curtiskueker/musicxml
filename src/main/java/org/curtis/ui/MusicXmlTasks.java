@@ -33,8 +33,6 @@ public class MusicXmlTasks {
     private JPanel header;
     private JPanel row1Left;
     private JPanel row1Right;
-    private JPanel row2Left;
-    private JPanel row2Right;
     private JPanel row3Left;
     private JPanel row3Right;
     private JPanel row4Left;
@@ -54,7 +52,6 @@ public class MusicXmlTasks {
     private JLabel headerLabel;
     private JLabel taskLabel;
     private JComboBox taskSelection;
-    private JLabel taskName;
     private JLabel formElement1Text;
     private JLabel formElement2Text;
     private JLabel formElement3Text;
@@ -66,6 +63,13 @@ public class MusicXmlTasks {
     private JPanel statusPanel;
     private JScrollPane statusScrollPane;
     private JTextArea statusTextArea;
+    private JPanel convertLabelPanel;
+    private JLabel convertLabel;
+    private JPanel convertPanel;
+    private JPanel convertFromPanel;
+    private JPanel convertArrowPanel;
+    private JPanel convertToPanel;
+    private JLabel convertArrowLabel;
     private JCheckBox showPassword;
 
     private String selectedValue;
@@ -124,24 +128,9 @@ public class MusicXmlTasks {
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("");
         defaultComboBoxModel1.addElement("Set Properties");
-        defaultComboBoxModel1.addElement("MusicXml File to Database Record");
-        defaultComboBoxModel1.addElement("Database Record to MusicXml File");
-        defaultComboBoxModel1.addElement("Database Record to Lilypond File");
-        defaultComboBoxModel1.addElement("MusicXml File to Lilypond File");
+        defaultComboBoxModel1.addElement("Run Task");
         taskSelection.setModel(defaultComboBoxModel1);
         row1Right.add(taskSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row2Left = new JPanel();
-        row2Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row2Left.setBackground(new Color(-1));
-        taskForm.add(row2Left, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row2Right = new JPanel();
-        row2Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row2Right.setBackground(new Color(-1));
-        taskForm.add(row2Right, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        taskName = new JLabel();
-        taskName.setFont(new Font(taskName.getFont().getName(), Font.BOLD, 16));
-        taskName.setText("");
-        row2Right.add(taskName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         row3Left = new JPanel();
         row3Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row3Left.setBackground(new Color(-1));
@@ -251,6 +240,34 @@ public class MusicXmlTasks {
         row10Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row10Right.setBackground(new Color(-1));
         taskForm.add(row10Right, new GridConstraints(10, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        convertLabelPanel = new JPanel();
+        convertLabelPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        convertLabelPanel.setBackground(new Color(-1));
+        taskForm.add(convertLabelPanel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        convertLabel = new JLabel();
+        convertLabel.setBackground(new Color(-1));
+        convertLabel.setText("");
+        convertLabelPanel.add(convertLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        convertPanel = new JPanel();
+        convertPanel.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        convertPanel.setBackground(new Color(-1));
+        taskForm.add(convertPanel, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        convertFromPanel = new JPanel();
+        convertFromPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        convertFromPanel.setBackground(new Color(-1));
+        convertPanel.add(convertFromPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        convertArrowPanel = new JPanel();
+        convertArrowPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        convertArrowPanel.setBackground(new Color(-1));
+        convertPanel.add(convertArrowPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        convertArrowLabel = new JLabel();
+        convertArrowLabel.setBackground(new Color(-1));
+        convertArrowLabel.setText("");
+        convertArrowPanel.add(convertArrowLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        convertToPanel = new JPanel();
+        convertToPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        convertToPanel.setBackground(new Color(-1));
+        convertPanel.add(convertToPanel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
 
     /**
@@ -282,7 +299,6 @@ public class MusicXmlTasks {
     }
 
     private void handleSelection() {
-        taskName.setText(selectedValue);
         try {
             AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
         } catch (PropertyFileNotFoundException e) {
@@ -338,6 +354,36 @@ public class MusicXmlTasks {
         row9Right.removeAll();
         row10Right.removeAll();
         componentMap.clear();
+
+        if (selectedValue.equals("Run Task")) {
+            convertLabel.setText("Convert: ");
+            convertArrowLabel.setText(" -> ");
+            JComboBox fromSelection = new JComboBox();
+            fromSelection.setBackground(new Color(-1));
+            final DefaultComboBoxModel fromModel = new DefaultComboBoxModel();
+            fromModel.addElement("");
+            fromModel.addElement("MusicXml File");
+            fromModel.addElement("Database Record");
+            fromModel.addElement("Lilypond File");
+            fromSelection.setModel(fromModel);
+            convertFromPanel.add(fromSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            JComboBox toSelection = new JComboBox();
+            toSelection.setBackground(new Color(-1));
+            final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
+            toModel.addElement("");
+            toModel.addElement("MusicXml File");
+            toModel.addElement("Database Record");
+            toModel.addElement("Lilypond File");
+            toModel.addElement("PDF File");
+            toSelection.setModel(toModel);
+            convertToPanel.add(toSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        }
+        else {
+            convertLabel.setText("");
+            convertArrowLabel.setText("");
+            convertFromPanel.removeAll();
+            convertToPanel.removeAll();
+        }
 
         switch (selectedValue) {
             case "Set Properties":
@@ -494,7 +540,8 @@ public class MusicXmlTasks {
                     FileFilter inputFileFilter = new FileNameExtensionFilter(elementValue, elementValue);
                     inputFileChooser.addChoosableFileFilter(inputFileFilter);
                 }
-                if (StringUtil.isNotEmpty(selectedFilename)) inputFileChooser.setSelectedFile(new File(selectedFilename));
+                if (StringUtil.isNotEmpty(selectedFilename))
+                    inputFileChooser.setSelectedFile(new File(selectedFilename));
                 jPanel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
                 component = inputFileChooser;
                 break;
