@@ -71,10 +71,10 @@ public class MusicXmlTasks {
     private JPanel convertToPanel;
     private JLabel convertArrowLabel;
     private JCheckBox showPassword;
-    private JComboBox fromSelection = null;
-    private JComboBox toSelection = null;
     private String fromSelectedValue = "";
     private String toSelectedValue = "";
+    private JComboBox fromFormat;
+    private JComboBox toFormat;
 
     private String selectedValue;
     private Map<String, Component> componentMap = new HashMap<>();
@@ -298,6 +298,7 @@ public class MusicXmlTasks {
         });
 
         setupStatusArea();
+        setupFormatSelections();
     }
 
     private void handleSelection() {
@@ -364,53 +365,18 @@ public class MusicXmlTasks {
         if (selectedValue.equals("Run Task")) {
             convertLabel.setText("Convert: ");
             convertArrowLabel.setText(" -> ");
-            fromSelection = new JComboBox();
-            fromSelection.setBackground(new Color(-1));
-            final DefaultComboBoxModel fromModel = new DefaultComboBoxModel();
-            fromModel.addElement("");
-            fromModel.addElement("MusicXml File");
-            fromModel.addElement("Database Record");
-            fromModel.addElement("Lilypond File");
-            fromSelection.setModel(fromModel);
+
+            JComboBox fromSelection = fromFormat;
             fromSelection.setSelectedItem(fromSelectedValue);
             convertFromPanel.add(fromSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-            fromSelection.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selection = (String) fromSelection.getSelectedItem();
-                    if (!selection.equals(fromSelectedValue)) {
-                        fromSelectedValue = selection;
-                        handleSelection();
-                    }
-                }
-            });
-            toSelection = new JComboBox();
-            toSelection.setBackground(new Color(-1));
-            final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
-            toModel.addElement("");
-            toModel.addElement("MusicXml File");
-            toModel.addElement("Database Record");
-            toModel.addElement("Lilypond File");
-            toModel.addElement("PDF File");
-            toSelection.setModel(toModel);
+
+            JComboBox toSelection = toFormat;
             toSelection.setSelectedItem(toSelectedValue);
             convertToPanel.add(toSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-            toSelection.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selection = (String) toSelection.getSelectedItem();
-                    if (!selection.equals(toSelectedValue)) {
-                        toSelectedValue = selection;
-                        handleSelection();
-                    }
-                }
-            });
         }
         else {
             convertLabel.setText("");
             convertArrowLabel.setText("");
-            fromSelection = null;
-            toSelection = null;
         }
 
         switch (selectedValue) {
@@ -686,6 +652,63 @@ public class MusicXmlTasks {
         } catch (BadLocationException e) {
             //
         }
+    }
+
+    private void setupFormatSelections() {
+        fromFormat = new JComboBox();
+        fromFormat.setBackground(new Color(-1));
+        final DefaultComboBoxModel fromModel = new DefaultComboBoxModel();
+        fromModel.addElement("");
+        fromModel.addElement("MusicXml File");
+        fromModel.addElement("Database Record");
+        fromModel.addElement("Lilypond File");
+        fromFormat.setModel(fromModel);
+        fromFormat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selection = (String) fromFormat.getSelectedItem();
+                if (!selection.equals(fromSelectedValue)) {
+                    fromSelectedValue = selection;
+
+                    DefaultComboBoxModel toModel = (DefaultComboBoxModel)toFormat.getModel();
+                    toModel.removeAllElements();
+                    toModel.addElement("");
+                    switch (fromSelectedValue) {
+                        case "MusicXml File":
+                            toModel.addElement("Database Record");
+                            toModel.addElement("Lilypond File");
+                            toModel.addElement("PDF File");
+                            break;
+                        case "Database Record":
+                            toModel.addElement("MusicXml File");
+                            toModel.addElement("Lilypond File");
+                            toModel.addElement("PDF File");
+                            break;
+                        case "Lilypond File":
+                            toModel.addElement("PDF File");
+                            break;
+                    }
+
+                    handleSelection();
+                }
+            }
+        });
+
+        toFormat = new JComboBox();
+        toFormat.setBackground(new Color(-1));
+        final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
+        toModel.addElement("");
+        toFormat.setModel(toModel);
+        toFormat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selection = (String) toFormat.getSelectedItem();
+                if (selection != null && !selection.equals(toSelectedValue)) {
+                    toSelectedValue = selection;
+                    handleSelection();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
