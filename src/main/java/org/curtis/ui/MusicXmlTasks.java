@@ -71,6 +71,10 @@ public class MusicXmlTasks {
     private JPanel convertToPanel;
     private JLabel convertArrowLabel;
     private JCheckBox showPassword;
+    private JComboBox fromSelection = null;
+    private JComboBox toSelection = null;
+    private String fromSelectedValue = "";
+    private String toSelectedValue = "";
 
     private String selectedValue;
     private Map<String, Component> componentMap = new HashMap<>();
@@ -285,12 +289,10 @@ public class MusicXmlTasks {
         taskSelection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == taskSelection) {
-                    String selection = (String) taskSelection.getSelectedItem();
-                    if (!selection.equals(selectedValue)) {
-                        selectedValue = selection;
-                        handleSelection();
-                    }
+                String selection = (String) taskSelection.getSelectedItem();
+                if (!selection.equals(selectedValue)) {
+                    selectedValue = selection;
+                    handleSelection();
                 }
             }
         });
@@ -353,12 +355,16 @@ public class MusicXmlTasks {
         row8Right.removeAll();
         row9Right.removeAll();
         row10Right.removeAll();
+
+        convertFromPanel.removeAll();
+        convertToPanel.removeAll();
+
         componentMap.clear();
 
         if (selectedValue.equals("Run Task")) {
             convertLabel.setText("Convert: ");
             convertArrowLabel.setText(" -> ");
-            JComboBox fromSelection = new JComboBox();
+            fromSelection = new JComboBox();
             fromSelection.setBackground(new Color(-1));
             final DefaultComboBoxModel fromModel = new DefaultComboBoxModel();
             fromModel.addElement("");
@@ -366,8 +372,19 @@ public class MusicXmlTasks {
             fromModel.addElement("Database Record");
             fromModel.addElement("Lilypond File");
             fromSelection.setModel(fromModel);
+            fromSelection.setSelectedItem(fromSelectedValue);
             convertFromPanel.add(fromSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-            JComboBox toSelection = new JComboBox();
+            fromSelection.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String selection = (String) fromSelection.getSelectedItem();
+                    if (!selection.equals(fromSelectedValue)) {
+                        fromSelectedValue = selection;
+                        handleSelection();
+                    }
+                }
+            });
+            toSelection = new JComboBox();
             toSelection.setBackground(new Color(-1));
             final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
             toModel.addElement("");
@@ -376,13 +393,24 @@ public class MusicXmlTasks {
             toModel.addElement("Lilypond File");
             toModel.addElement("PDF File");
             toSelection.setModel(toModel);
+            toSelection.setSelectedItem(toSelectedValue);
             convertToPanel.add(toSelection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            toSelection.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String selection = (String) toSelection.getSelectedItem();
+                    if (!selection.equals(toSelectedValue)) {
+                        toSelectedValue = selection;
+                        handleSelection();
+                    }
+                }
+            });
         }
         else {
             convertLabel.setText("");
             convertArrowLabel.setText("");
-            convertFromPanel.removeAll();
-            convertToPanel.removeAll();
+            fromSelection = null;
+            toSelection = null;
         }
 
         switch (selectedValue) {
@@ -418,59 +446,71 @@ public class MusicXmlTasks {
                 element8Type = InputType.BUTTON;
                 element8Name = "submit";
                 break;
-            case "MusicXml File to Database Record":
-                element1Text = "Score Name: ";
-                element1Type = InputType.INPUT_LARGE;
-                element1Name = "scoreName";
-                element2Text = "Input File: ";
-                element2Type = InputType.INPUT_FILE;
-                element2Name = "inputFile";
-                element2Value = "xml";
-                element3Type = InputType.BUTTON;
-                element3Name = "submit";
-                break;
-            case "Database Record to MusicXml File":
-                element1Text = "Score Name: ";
-                element1Type = InputType.SCORE_NAME_SELECTION;
-                element1Name = "scoreName";
-                element2Text = "Output Directory: ";
-                element2Type = InputType.OUTPUT_DIRECTORY;
-                element2Name = "outputDirectory";
-                element3Text = "Output Filename (.xml): ";
-                element3Type = InputType.INPUT_SMALL;
-                element3Name = "outputFile";
-                element4Text = "Skip Comments: ";
-                element4Type = InputType.CHECKBOX;
-                element4Name = "skipComments";
-                element5Type = InputType.BUTTON;
-                element5Name = "submit";
-                break;
-            case "Database Record to Lilypond File":
-                element1Text = "Score Name: ";
-                element1Type = InputType.SCORE_NAME_SELECTION;
-                element1Name = "scoreName";
-                element2Text = "Output Directory: ";
-                element2Type = InputType.OUTPUT_DIRECTORY;
-                element2Name = "outputDirectory";
-                element3Text = "Output Filename (.ly): ";
-                element3Type = InputType.INPUT_SMALL;
-                element3Name = "outputFile";
-                element4Type = InputType.BUTTON;
-                element4Name = "submit";
-                break;
-            case "MusicXml File to Lilypond File":
-                element1Text = "Input File: ";
-                element1Type = InputType.INPUT_FILE;
-                element1Name = "inputFile";
-                element1Value = "xml";
-                element2Text = "Output Directory: ";
-                element2Type = InputType.OUTPUT_DIRECTORY;
-                element2Name = "outputDirectory";
-                element3Text = "Output Filename (.ly): ";
-                element3Type = InputType.INPUT_SMALL;
-                element3Name = "outputFile";
-                element4Type = InputType.BUTTON;
-                element4Name = "submit";
+            case "Run Task":
+                switch (fromSelectedValue) {
+                    case "MusicXml File":
+                        switch (toSelectedValue) {
+                            case "Database Record":
+                                element1Text = "Score Name: ";
+                                element1Type = InputType.INPUT_LARGE;
+                                element1Name = "scoreName";
+                                element2Text = "Input File: ";
+                                element2Type = InputType.INPUT_FILE;
+                                element2Name = "inputFile";
+                                element2Value = "xml";
+                                element3Type = InputType.BUTTON;
+                                element3Name = "submit";
+                                break;
+                            case "Lilypond File":
+                                element1Text = "Input File: ";
+                                element1Type = InputType.INPUT_FILE;
+                                element1Name = "inputFile";
+                                element1Value = "xml";
+                                element2Text = "Output Directory: ";
+                                element2Type = InputType.OUTPUT_DIRECTORY;
+                                element2Name = "outputDirectory";
+                                element3Text = "Output Filename (.ly): ";
+                                element3Type = InputType.INPUT_SMALL;
+                                element3Name = "outputFile";
+                                element4Type = InputType.BUTTON;
+                                element4Name = "submit";
+                                break;
+                        }
+                        break;
+                    case "Database Record":
+                        switch (toSelectedValue) {
+                            case "MusicXml File":
+                                element1Text = "Score Name: ";
+                                element1Type = InputType.SCORE_NAME_SELECTION;
+                                element1Name = "scoreName";
+                                element2Text = "Output Directory: ";
+                                element2Type = InputType.OUTPUT_DIRECTORY;
+                                element2Name = "outputDirectory";
+                                element3Text = "Output Filename (.xml): ";
+                                element3Type = InputType.INPUT_SMALL;
+                                element3Name = "outputFile";
+                                element4Text = "Skip Comments: ";
+                                element4Type = InputType.CHECKBOX;
+                                element4Name = "skipComments";
+                                element5Type = InputType.BUTTON;
+                                element5Name = "submit";
+                                break;
+                            case "Lilypond File":
+                                element1Text = "Score Name: ";
+                                element1Type = InputType.SCORE_NAME_SELECTION;
+                                element1Name = "scoreName";
+                                element2Text = "Output Directory: ";
+                                element2Type = InputType.OUTPUT_DIRECTORY;
+                                element2Name = "outputDirectory";
+                                element3Text = "Output Filename (.ly): ";
+                                element3Type = InputType.INPUT_SMALL;
+                                element3Name = "outputFile";
+                                element4Type = InputType.BUTTON;
+                                element4Name = "submit";
+                                break;
+                        }
+                        break;
+                }
                 break;
         }
 
@@ -599,19 +639,32 @@ public class MusicXmlTasks {
             case "Set Properties":
                 musicXmlTask = new SetPropertiesTask(componentMap);
                 break;
-            case "MusicXml File to Database Record":
-                musicXmlTask = new MusicXml2DbTask(componentMap);
-                break;
-            case "Database Record to MusicXml File":
-                musicXmlTask = new Db2MusicXmlTask(componentMap);
-                break;
-            case "Database Record to Lilypond File":
-                musicXmlTask = new Db2LyTask(componentMap);
-                break;
-            case "MusicXml File to Lilypond File":
-                musicXmlTask = new MusicXml2LyTask(componentMap);
+            case "Run Task":
+                switch (fromSelectedValue) {
+                    case "MusicXml File":
+                        switch (toSelectedValue) {
+                            case "Database Record":
+                                musicXmlTask = new MusicXml2DbTask(componentMap);
+                                break;
+                            case "Lilypond File":
+                                musicXmlTask = new MusicXml2LyTask(componentMap);
+                                break;
+                        }
+                        break;
+                    case "Database Record":
+                        switch (toSelectedValue) {
+                            case "MusicXml File":
+                                musicXmlTask = new Db2MusicXmlTask(componentMap);
+                                break;
+                            case "Lilypond File":
+                                musicXmlTask = new Db2LyTask(componentMap);
+                                break;
+                        }
+                        break;
+                }
                 break;
         }
+
 
         try {
             if (musicXmlTask != null) musicXmlTask.execute();
