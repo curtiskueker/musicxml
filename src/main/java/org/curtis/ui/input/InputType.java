@@ -1,6 +1,7 @@
 package org.curtis.ui.input;
 
 public enum InputType {
+    LABEL,
     INPUT_SMALL,
     INPUT_LARGE,
     PASSWORD,

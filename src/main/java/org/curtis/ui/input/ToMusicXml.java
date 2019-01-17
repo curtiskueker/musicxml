@@ -6,7 +6,7 @@ public class ToMusicXml extends ToInput {
     }
 
     private void setup() {
-        setTitle("MusicXml File Output");
+        setTitle("MusicXml File Output: ");
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Output Directory: ");

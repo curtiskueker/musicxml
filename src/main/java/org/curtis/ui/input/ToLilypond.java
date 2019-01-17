@@ -6,7 +6,7 @@ public class ToLilypond extends ToInput {
     }
 
     private void setup() {
-        setTitle("Lilypond File Output");
+        setTitle("Lilypond File Output: ");
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Output Directory: ");

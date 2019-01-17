@@ -6,7 +6,7 @@ public class ToDatabase extends ToInput {
     }
 
     private void setup() {
-        setTitle("Write To Database");
+        setTitle("Write To Database: ");
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Score Name: ");

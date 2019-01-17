@@ -5,6 +5,7 @@ public class InputRow {
     private InputType inputType = InputType.NONE;
     private String name = "";
     private String value = "";
+    private String selectedFilename = "";
 
     public InputRow() {
 
@@ -40,5 +41,13 @@ public class InputRow {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getSelectedFilename() {
+        return selectedFilename;
+    }
+
+    public void setSelectedFilename(String selectedFilename) {
+        this.selectedFilename = selectedFilename;
     }
 }

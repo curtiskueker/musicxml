@@ -6,7 +6,7 @@ public class FromMusicXml extends FromInput {
     }
 
     private void setup() {
-        setTitle("MusicXml File Input");
+        setTitle("MusicXml File Input: ");
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Input File: ");

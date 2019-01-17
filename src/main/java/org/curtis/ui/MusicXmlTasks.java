@@ -5,7 +5,18 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
+import org.curtis.ui.input.DataInput;
+import org.curtis.ui.input.FromDatabase;
+import org.curtis.ui.input.FromInput;
+import org.curtis.ui.input.FromMusicXml;
+import org.curtis.ui.input.InputRow;
 import org.curtis.ui.input.InputType;
+import org.curtis.ui.input.PropertiesInput;
+import org.curtis.ui.input.PropertiesOutput;
+import org.curtis.ui.input.ToDatabase;
+import org.curtis.ui.input.ToInput;
+import org.curtis.ui.input.ToLilypond;
+import org.curtis.ui.input.ToMusicXml;
 import org.curtis.ui.task.SetPropertiesTask;
 import org.curtis.ui.task.Db2LyTask;
 import org.curtis.ui.task.Db2MusicXmlTask;
@@ -26,7 +37,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MusicXmlTasks {
@@ -79,6 +92,11 @@ public class MusicXmlTasks {
 
     private String selectedValue;
     private Map<String, Component> componentMap = new HashMap<>();
+
+    private List<JLabel> formElementTextLabels = new ArrayList<>();
+    private List<JPanel> rightPanels = new ArrayList<>();
+    private static final int NUMBER_OF_ROWS = 8;
+    private int rowIndex = 0;
 
     public static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
     public static String PROPERTIES_BUNDLE = "musicxml";
@@ -296,63 +314,17 @@ public class MusicXmlTasks {
 
         setupStatusArea();
         setupFormatSelections();
+        setupFormElements();
     }
 
     private void handleSelection() {
+        resetFormElements();
+
         try {
             AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
         } catch (PropertyFileNotFoundException e) {
             //
         }
-
-        String element1Text = "";
-        String element2Text = "";
-        String element3Text = "";
-        String element4Text = "";
-        String element5Text = "";
-        String element6Text = "";
-        String element7Text = "";
-        InputType element1Type = InputType.NONE;
-        InputType element2Type = InputType.NONE;
-        InputType element3Type = InputType.NONE;
-        InputType element4Type = InputType.NONE;
-        InputType element5Type = InputType.NONE;
-        InputType element6Type = InputType.NONE;
-        InputType element7Type = InputType.NONE;
-        InputType element8Type = InputType.NONE;
-        String element1Name = "";
-        String element2Name = "";
-        String element3Name = "";
-        String element4Name = "";
-        String element5Name = "";
-        String element6Name = "";
-        String element7Name = "";
-        String element8Name = "";
-        String element1Value = "";
-        String element2Value = "";
-        String element3Value = "";
-        String element4Value = "";
-        String element5Value = "";
-        String element6Value = "";
-        String element7Value = "";
-        String element8Value = "";
-        String selectedFilename1 = "";
-        String selectedFilename2 = "";
-        String selectedFilename3 = "";
-        String selectedFilename4 = "";
-        String selectedFilename5 = "";
-        String selectedFilename6 = "";
-        String selectedFilename7 = "";
-        String selectedFilename8 = "";
-
-        row3Right.removeAll();
-        row4Right.removeAll();
-        row5Right.removeAll();
-        row6Right.removeAll();
-        row7Right.removeAll();
-        row8Right.removeAll();
-        row9Right.removeAll();
-        row10Right.removeAll();
 
         convertFromPanel.removeAll();
         convertToPanel.removeAll();
@@ -376,133 +348,76 @@ public class MusicXmlTasks {
             convertArrowLabel.setText("");
         }
 
+        rowIndex = 0;
+        FromInput fromInput = null;
+        ToInput toInput = null;
         switch (selectedValue) {
             case "Set Properties":
-                element1Text = "Username: ";
-                element1Type = InputType.INPUT_SMALL;
-                element1Name = "username";
-                element1Value = AppProperties.getOptionalProperty("musicxml.database.username");
-                element2Text = "Password: ";
-                element2Type = InputType.PASSWORD;
-                element2Name = "password";
-                element2Value = AppProperties.getOptionalProperty("musicxml.database.password");
-                element3Text = "Database Name: ";
-                element3Type = InputType.INPUT_SMALL;
-                element3Name = "databaseName";
-                element3Value = AppProperties.getOptionalProperty("musicxml.database.name");
-                element4Text = "Server: ";
-                element4Type = InputType.INPUT_SMALL;
-                element4Name = "server";
-                element4Value = AppProperties.getOptionalProperty("musicxml.database.server");
-                if (StringUtil.isEmpty(element4Value)) element4Value = "localhost";
-                element5Text = "Create Database Tables: ";
-                element5Type = InputType.CHECKBOX;
-                element5Name = "createDatabase";
-                element6Text = "Lilypond location: ";
-                element6Type = InputType.INPUT_FILE;
-                element6Name = "lilypondLocation";
-                selectedFilename6 = AppProperties.getOptionalProperty("location.lilypond");
-                element7Text = "PDF Reader location: ";
-                element7Type = InputType.INPUT_FILE;
-                element7Name = "pdfReaderLocation";
-                selectedFilename7 = AppProperties.getOptionalProperty("location.pdfreader");
-                element8Type = InputType.BUTTON;
-                element8Name = "submit";
+                fromInput = new PropertiesInput();
+                toInput = new PropertiesOutput();
                 break;
             case "Run Task":
                 switch (fromSelectedValue) {
                     case "MusicXml File":
-                        switch (toSelectedValue) {
-                            case "Database Record":
-                                element1Text = "Score Name: ";
-                                element1Type = InputType.INPUT_LARGE;
-                                element1Name = "scoreName";
-                                element2Text = "Input File: ";
-                                element2Type = InputType.INPUT_FILE;
-                                element2Name = "inputFile";
-                                element2Value = "xml";
-                                element3Type = InputType.BUTTON;
-                                element3Name = "submit";
-                                break;
-                            case "Lilypond File":
-                                element1Text = "Input File: ";
-                                element1Type = InputType.INPUT_FILE;
-                                element1Name = "inputFile";
-                                element1Value = "xml";
-                                element2Text = "Output Directory: ";
-                                element2Type = InputType.OUTPUT_DIRECTORY;
-                                element2Name = "outputDirectory";
-                                element3Text = "Output Filename (.ly): ";
-                                element3Type = InputType.INPUT_SMALL;
-                                element3Name = "outputFile";
-                                element4Type = InputType.BUTTON;
-                                element4Name = "submit";
-                                break;
-                        }
+                        fromInput = new FromMusicXml();
                         break;
                     case "Database Record":
-                        switch (toSelectedValue) {
-                            case "MusicXml File":
-                                element1Text = "Score Name: ";
-                                element1Type = InputType.SCORE_NAME_SELECTION;
-                                element1Name = "scoreName";
-                                element2Text = "Output Directory: ";
-                                element2Type = InputType.OUTPUT_DIRECTORY;
-                                element2Name = "outputDirectory";
-                                element3Text = "Output Filename (.xml): ";
-                                element3Type = InputType.INPUT_SMALL;
-                                element3Name = "outputFile";
-                                element4Text = "Skip Comments: ";
-                                element4Type = InputType.CHECKBOX;
-                                element4Name = "skipComments";
-                                element5Type = InputType.BUTTON;
-                                element5Name = "submit";
-                                break;
-                            case "Lilypond File":
-                                element1Text = "Score Name: ";
-                                element1Type = InputType.SCORE_NAME_SELECTION;
-                                element1Name = "scoreName";
-                                element2Text = "Output Directory: ";
-                                element2Type = InputType.OUTPUT_DIRECTORY;
-                                element2Name = "outputDirectory";
-                                element3Text = "Output Filename (.ly): ";
-                                element3Type = InputType.INPUT_SMALL;
-                                element3Name = "outputFile";
-                                element4Type = InputType.BUTTON;
-                                element4Name = "submit";
-                                break;
-                        }
+                        fromInput = new FromDatabase();
+                        break;
+                    case "Lilypond File":
+                        break;
+                }
+                switch (toSelectedValue) {
+                    case "MusicXml File":
+                        toInput = new ToMusicXml();
+                        break;
+                    case "Database Record":
+                        toInput = new ToDatabase();
+                        break;
+                    case "Lilypond File":
+                        toInput = new ToLilypond();
+                        break;
+                    case "PDF File":
                         break;
                 }
                 break;
         }
 
-        formElement1Text.setText(element1Text);
-        formElement2Text.setText(element2Text);
-        formElement3Text.setText(element3Text);
-        formElement4Text.setText(element4Text);
-        formElement5Text.setText(element5Text);
-        formElement6Text.setText(element6Text);
-        formElement7Text.setText(element7Text);
-
-        addFormElement(row3Right, element1Type, element1Name, element1Value, selectedFilename1);
-        addFormElement(row4Right, element2Type, element2Name, element2Value, selectedFilename2);
-        addFormElement(row5Right, element3Type, element3Name, element3Value, selectedFilename3);
-        addFormElement(row6Right, element4Type, element4Name, element4Value, selectedFilename4);
-        addFormElement(row7Right, element5Type, element5Name, element5Value, selectedFilename5);
-        addFormElement(row8Right, element6Type, element6Name, element6Value, selectedFilename6);
-        addFormElement(row9Right, element7Type, element7Name, element7Value, selectedFilename7);
-        addFormElement(row10Right, element8Type, element8Name, element8Value, selectedFilename8);
+        if (fromInput != null && toInput != null) {
+            displayDataInput(fromInput);
+            displayDataInput(toInput);
+        }
 
         clearStatusArea();
 
         taskForm.revalidate();
     }
 
+    private void displayDataInput(DataInput dataInput) {
+        if (rowIndex >= NUMBER_OF_ROWS) return;
+
+        String title = dataInput.getTitle();
+        if (StringUtil.isNotEmpty(title)) {
+            addFormElement(rightPanels.get(rowIndex), InputType.LABEL, "", title, "");
+            rowIndex++;
+        }
+
+        for (InputRow inputRow : dataInput.getInputRows()) {
+            formElementTextLabels.get(rowIndex).setText(inputRow.getText());
+            addFormElement(rightPanels.get(rowIndex), inputRow.getInputType(), inputRow.getName(), inputRow.getValue(), inputRow.getSelectedFilename());
+            rowIndex++;
+        }
+    }
+
     private void addFormElement(JPanel jPanel, InputType inputType, String elementName, String elementValue, String selectedFilename) {
         Component component = null;
 
         switch (inputType) {
+            case LABEL:
+                JLabel label = new JLabel();
+                label.setText(elementValue);
+                jPanel.add(label, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                break;
             case INPUT_SMALL:
                 JTextField smallTextField = new JTextField();
                 smallTextField.setText(elementValue);
@@ -706,6 +621,32 @@ public class MusicXmlTasks {
                 }
             }
         });
+    }
+
+    private void setupFormElements() {
+        formElementTextLabels.add(formElement1Text);
+        formElementTextLabels.add(formElement2Text);
+        formElementTextLabels.add(formElement3Text);
+        formElementTextLabels.add(formElement4Text);
+        formElementTextLabels.add(formElement5Text);
+        formElementTextLabels.add(formElement6Text);
+        formElementTextLabels.add(formElement7Text);
+        formElementTextLabels.add(formElement8Text);
+        rightPanels.add(row3Right);
+        rightPanels.add(row4Right);
+        rightPanels.add(row5Right);
+        rightPanels.add(row6Right);
+        rightPanels.add(row7Right);
+        rightPanels.add(row8Right);
+        rightPanels.add(row9Right);
+        rightPanels.add(row10Right);
+    }
+
+    private void resetFormElements() {
+        for (int index = 0; index < NUMBER_OF_ROWS; index++) {
+            formElementTextLabels.get(index).setText("");
+            rightPanels.get(index).removeAll();
+        }
     }
 
     public static void main(String[] args) {

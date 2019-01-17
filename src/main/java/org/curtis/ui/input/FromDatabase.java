@@ -6,7 +6,7 @@ public class FromDatabase extends FromInput {
     }
 
     private void setup() {
-        setTitle("Read From Database");
+        setTitle("Read From Database: ");
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Score Name: ");
