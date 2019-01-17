@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
+import org.curtis.ui.input.InputType;
 import org.curtis.ui.task.SetPropertiesTask;
 import org.curtis.ui.task.Db2LyTask;
 import org.curtis.ui.task.Db2MusicXmlTask;
@@ -279,10 +280,6 @@ public class MusicXmlTasks {
      */
     public JComponent $$$getRootComponent$$$() {
         return taskForm;
-    }
-
-    private enum InputType {
-        INPUT_SMALL, INPUT_LARGE, PASSWORD, INPUT_FILE, OUTPUT_DIRECTORY, SCORE_NAME_SELECTION, CHECKBOX, BUTTON, NONE
     }
 
     public MusicXmlTasks() {
