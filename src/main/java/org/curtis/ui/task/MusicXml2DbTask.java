@@ -1,7 +1,6 @@
 package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.MusicXml2Db;
-import org.curtis.musicxml.bin.MusicXmlScript;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
@@ -21,10 +20,9 @@ public class MusicXml2DbTask extends MusicXmlTask {
     public void execute() throws TaskException {
         initialize();
 
-        MusicXmlScript.SCORE_NAME = scoreName;
-        MusicXmlScript.INPUT_FILE = inputFileName;
-
         MusicXml2Db musicXml2Db = new MusicXml2Db();
+        musicXml2Db.SCORE_NAME = scoreName;
+        musicXml2Db.INPUT_FILE = inputFileName;
 
         try {
             musicXml2Db.execute();

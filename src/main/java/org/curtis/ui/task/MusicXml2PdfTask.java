@@ -1,6 +1,7 @@
 package org.curtis.ui.task;
 
-import org.curtis.musicxml.bin.MusicXmlScript;
+import org.curtis.musicxml.bin.MusicXml2Pdf;
+import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
 import javax.swing.*;
@@ -20,8 +21,15 @@ public class MusicXml2PdfTask extends MusicXmlTask {
     public void execute() throws TaskException {
         initialize();
 
-        MusicXmlScript.INPUT_FILE = inputFileName;
-        MusicXmlScript.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        MusicXml2Pdf musicXml2Pdf = new MusicXml2Pdf();
+        musicXml2Pdf.INPUT_FILE = inputFileName;
+        musicXml2Pdf.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+
+        try {
+            musicXml2Pdf.execute();
+        } catch (MusicXmlException e) {
+            throw new TaskException(e);
+        }
     }
 
     private void initialize() throws TaskException {

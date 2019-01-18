@@ -1,7 +1,6 @@
 package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.MusicXml2Ly;
-import org.curtis.musicxml.bin.MusicXmlScript;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
@@ -22,10 +21,9 @@ public class MusicXml2LyTask extends MusicXmlTask {
     public void execute() throws TaskException {
         initialize();
 
-        MusicXmlScript.INPUT_FILE = inputFileName;
-        MusicXmlScript.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
-
         MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
+        musicXml2Ly.INPUT_FILE = inputFileName;
+        musicXml2Ly.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
 
         try {
             musicXml2Ly.execute();

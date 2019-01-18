@@ -1,6 +1,7 @@
 package org.curtis.ui.task;
 
-import org.curtis.musicxml.bin.MusicXmlScript;
+import org.curtis.musicxml.bin.Ly2Pdf;
+import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
 import javax.swing.*;
@@ -20,8 +21,15 @@ public class Ly2PdfTask extends MusicXmlTask {
     public void execute() throws TaskException {
         initialize();
 
-        MusicXmlScript.INPUT_FILE = inputFileName;
-        MusicXmlScript.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        Ly2Pdf ly2Pdf = new Ly2Pdf();
+        ly2Pdf.INPUT_FILE = inputFileName;
+        ly2Pdf.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+
+        try {
+            ly2Pdf.execute();
+        } catch (MusicXmlException e) {
+            throw new TaskException(e);
+        }
     }
 
     private void initialize() throws TaskException {

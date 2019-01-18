@@ -11,12 +11,14 @@ import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
 public abstract class MusicXmlScript {
-    public static Integer SCORE_ID;
-    public static String OUTPUT_FILE;
-    public static String INPUT_FILE;
-    public static String SCORE_NAME;
+    public Integer SCORE_ID;
+    public String OUTPUT_FILE;
+    public String INPUT_FILE;
+    public String SCORE_NAME;
 
-    protected static void setArgs(String[] args) throws MusicXmlException {
+    public abstract void execute() throws MusicXmlException;
+
+    protected void setArgs(String[] args) throws MusicXmlException {
         for (String arg : args) {
             if (arg.startsWith("SCORE_ID=")) {
                 String scoreId = arg.replace("SCORE_ID=", "");

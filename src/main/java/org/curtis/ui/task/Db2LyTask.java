@@ -1,7 +1,6 @@
 package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.Db2Ly;
-import org.curtis.musicxml.bin.MusicXmlScript;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
@@ -22,9 +21,9 @@ public class Db2LyTask extends MusicXmlTask {
     public void execute() throws TaskException {
         initialize();
 
-        MusicXmlScript.SCORE_NAME = scoreName;
-        MusicXmlScript.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
         Db2Ly db2Ly = new Db2Ly();
+        db2Ly.SCORE_NAME = scoreName;
+        db2Ly.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
 
         try {
             db2Ly.execute();

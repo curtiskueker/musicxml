@@ -2,7 +2,6 @@ package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.util.ScoreDefaults;
-import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FormattedText;
@@ -28,6 +27,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ScoreHeaderBuilder extends AbstractBuilder {
+    public static String LILYPOND_VERSION = "2.18.2";
+
     private ScoreHeader scoreHeader;
 
     public ScoreHeaderBuilder(ScoreHeader scoreHeader) {
@@ -44,7 +45,7 @@ public class ScoreHeaderBuilder extends AbstractBuilder {
 
     public StringBuilder build() throws BuildException {
         append("\\version \"");
-        append(MusicXml2Ly.LILYPOND_VERSION);
+        append(LILYPOND_VERSION);
         appendLine("\"");
         appendLine();
 

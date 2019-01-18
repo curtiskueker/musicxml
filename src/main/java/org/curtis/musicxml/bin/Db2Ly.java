@@ -11,9 +11,8 @@ public class Db2Ly extends MusicXmlScript {
 
     public static void main(String[] args) {
         try {
-            setArgs(args);
-
             Db2Ly db2Ly = new Db2Ly();
+            db2Ly.setArgs(args);
             db2Ly.execute();
         } catch (MusicXmlException e) {
             System.err.println("Fatal exception: " + e.getMessage());

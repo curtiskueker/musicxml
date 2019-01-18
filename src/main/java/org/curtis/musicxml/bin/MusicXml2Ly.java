@@ -8,8 +8,6 @@ import org.curtis.xml.XmlException;
 import java.io.File;
 
 public class MusicXml2Ly extends MusicXmlScript {
-    public static String LILYPOND_VERSION = "2.18.2";
-
     public void execute() throws MusicXmlException {
         try {
             // output file
@@ -26,9 +24,8 @@ public class MusicXml2Ly extends MusicXmlScript {
 
     public static void main(String args[]) {
         try {
-            setArgs(args);
-
             MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
+            musicXml2Ly.setArgs(args);
             musicXml2Ly.execute();
         } catch (MusicXmlException e) {
             System.err.println("Fatal exception: " + e.getMessage());
