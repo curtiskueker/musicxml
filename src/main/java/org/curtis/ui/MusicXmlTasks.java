@@ -8,6 +8,7 @@ import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.ui.input.DataInput;
 import org.curtis.ui.input.FromDatabase;
 import org.curtis.ui.input.FromInput;
+import org.curtis.ui.input.FromLilypond;
 import org.curtis.ui.input.FromMusicXml;
 import org.curtis.ui.input.InputRow;
 import org.curtis.ui.input.InputType;
@@ -17,6 +18,7 @@ import org.curtis.ui.input.ToDatabase;
 import org.curtis.ui.input.ToInput;
 import org.curtis.ui.input.ToLilypond;
 import org.curtis.ui.input.ToMusicXml;
+import org.curtis.ui.input.ToPdf;
 import org.curtis.ui.task.SetPropertiesTask;
 import org.curtis.ui.task.Db2LyTask;
 import org.curtis.ui.task.Db2MusicXmlTask;
@@ -365,6 +367,7 @@ public class MusicXmlTasks {
                         fromInput = new FromDatabase();
                         break;
                     case "Lilypond File":
+                        fromInput = new FromLilypond();
                         break;
                 }
                 switch (toSelectedValue) {
@@ -378,6 +381,11 @@ public class MusicXmlTasks {
                         toInput = new ToLilypond();
                         break;
                     case "PDF File":
+                        if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond"))) {
+                            addFormRow(InputType.BOLD_LABEL, "", "Set Lilypond Location in Set Properties to create PDF file", "");
+                        } else {
+                            toInput = new ToPdf();
+                        }
                         break;
                 }
                 break;
@@ -386,6 +394,7 @@ public class MusicXmlTasks {
         if (fromInput != null && toInput != null) {
             displayDataInput(fromInput);
             displayDataInput(toInput);
+            addFormRow(InputType.BUTTON, "submit", "", "");
         }
 
         clearStatusArea();
@@ -394,19 +403,22 @@ public class MusicXmlTasks {
     }
 
     private void displayDataInput(DataInput dataInput) {
-        if (rowIndex >= NUMBER_OF_ROWS) return;
-
         String title = dataInput.getTitle();
         if (StringUtil.isNotEmpty(title)) {
-            addFormElement(rightPanels.get(rowIndex), InputType.LABEL, "", title, "");
-            rowIndex++;
+            addFormRow(InputType.BOLD_LABEL, "", title, "");
         }
 
         for (InputRow inputRow : dataInput.getInputRows()) {
-            formElementTextLabels.get(rowIndex).setText(inputRow.getText());
-            addFormElement(rightPanels.get(rowIndex), inputRow.getInputType(), inputRow.getName(), inputRow.getValue(), inputRow.getSelectedFilename());
-            rowIndex++;
+            if (rowIndex < NUMBER_OF_ROWS) formElementTextLabels.get(rowIndex).setText(inputRow.getText());
+            addFormRow(inputRow.getInputType(), inputRow.getName(), inputRow.getValue(), inputRow.getSelectedFilename());
         }
+    }
+
+    private void addFormRow(InputType inputType, String elementName, String elementValue, String selectedFilename) {
+        if (rowIndex >= NUMBER_OF_ROWS) return;
+
+        addFormElement(rightPanels.get(rowIndex), inputType, elementName, elementValue, selectedFilename);
+        rowIndex++;
     }
 
     private void addFormElement(JPanel jPanel, InputType inputType, String elementName, String elementValue, String selectedFilename) {
@@ -417,6 +429,12 @@ public class MusicXmlTasks {
                 JLabel label = new JLabel();
                 label.setText(elementValue);
                 jPanel.add(label, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                break;
+            case BOLD_LABEL:
+                JLabel boldLabel = new JLabel();
+                boldLabel.setFont(new Font(taskLabel.getFont().getName(), Font.BOLD, 16));
+                boldLabel.setText(elementValue);
+                jPanel.add(boldLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 break;
             case INPUT_SMALL:
                 JTextField smallTextField = new JTextField();
