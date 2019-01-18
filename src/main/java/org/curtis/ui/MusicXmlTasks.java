@@ -19,6 +19,9 @@ import org.curtis.ui.input.ToInput;
 import org.curtis.ui.input.ToLilypond;
 import org.curtis.ui.input.ToMusicXml;
 import org.curtis.ui.input.ToPdf;
+import org.curtis.ui.task.Db2PdfTask;
+import org.curtis.ui.task.Ly2PdfTask;
+import org.curtis.ui.task.MusicXml2PdfTask;
 import org.curtis.ui.task.SetPropertiesTask;
 import org.curtis.ui.task.Db2LyTask;
 import org.curtis.ui.task.Db2MusicXmlTask;
@@ -545,6 +548,9 @@ public class MusicXmlTasks {
                             case "Lilypond File":
                                 musicXmlTask = new MusicXml2LyTask(componentMap);
                                 break;
+                            case "PDF File":
+                                musicXmlTask = new MusicXml2PdfTask(componentMap);
+                                break;
                         }
                         break;
                     case "Database Record":
@@ -554,6 +560,16 @@ public class MusicXmlTasks {
                                 break;
                             case "Lilypond File":
                                 musicXmlTask = new Db2LyTask(componentMap);
+                                break;
+                            case "PDF File":
+                                musicXmlTask = new Db2PdfTask(componentMap);
+                                break;
+                        }
+                        break;
+                    case "Lilypond File":
+                        switch (toSelectedValue) {
+                            case "PDF File":
+                                musicXmlTask = new Ly2PdfTask(componentMap);
                                 break;
                         }
                         break;
