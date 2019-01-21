@@ -15,7 +15,7 @@ public class ToPdf extends ToInput {
         getInputRows().add(inputRow1);
 
         InputRow inputRow2 = new InputRow();
-        inputRow2.setText("Output Filename (.pdf): ");
+        inputRow2.setText("Output Filename: ");
         inputRow2.setInputType(InputType.INPUT_SMALL);
         inputRow2.setName("outputFile");
         getInputRows().add(inputRow2);
