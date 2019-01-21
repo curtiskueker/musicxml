@@ -58,6 +58,7 @@ public abstract class MusicXmlScript {
     }
 
     protected Score getScoreFromDb() throws MusicXmlException {
+        System.err.println("Converting dataase record to Score");
         try {
             Score score = null;
             if (SCORE_ID != null) {
