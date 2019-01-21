@@ -7,7 +7,7 @@ public class Db2Ly extends MusicXmlScript {
         if (!OUTPUT_FILE.endsWith(".ly")) OUTPUT_FILE += ".ly";
 
         SKIP_COMMENTS = true;
-        outputScore(getScoreFromDb());
+        outputLilypondResultsToFile(getScoreFromDb());
     }
 
     public static void main(String[] args) {

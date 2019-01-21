@@ -119,10 +119,14 @@ public abstract class MusicXmlScript {
         return BuilderUtil.getDocumentDeclaration() + results;
     }
 
-    protected void outputScore(Score score) throws MusicXmlException {
+    protected String getLilypondFromScore(Score score) throws BuildException {
+        ScoreBuilder scoreBuilder = new ScoreBuilder(score);
+        return scoreBuilder.build().toString();
+    }
+
+    protected void outputLilypondResultsToFile(Score score) throws MusicXmlException {
         try {
-            ScoreBuilder scoreBuilder = new ScoreBuilder(score);
-            outputResultsToFile(scoreBuilder.build().toString());
+            outputResultsToFile(getLilypondFromScore(score));
         } catch (BuildException e) {
             throw new MusicXmlException(e);
         }

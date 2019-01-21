@@ -15,7 +15,7 @@ public class MusicXml2Ly extends MusicXmlScript {
             File xmlFile = new File(INPUT_FILE);
             SKIP_COMMENTS = true;
             ScoreHandler scoreHandler = handleXmlScoreFile(xmlFile);
-            outputScore(scoreHandler.getScore());
+            outputLilypondResultsToFile(scoreHandler.getScore());
         } catch (XmlException e) {
             throw new MusicXmlException(e.getMessage());
         }
