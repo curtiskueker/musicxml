@@ -5,8 +5,6 @@ import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.builder.ScoreBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.common.XmlComment;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Grouping;
@@ -14,7 +12,6 @@ import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.exception.MusicXmlException;
-import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.note.Backup;
@@ -27,17 +24,13 @@ import org.curtis.musicxml.score.Score;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.util.StringUtil;
-import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
-import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
-import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -47,8 +40,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,23 +50,11 @@ import java.util.Map;
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
     public static Boolean DEBUG = false;
-    public static Boolean SKIP_COMMENTS = false;
     public static String GENERATE_SCHEMA_FILE;
     public static boolean CREATE_DB_SCHEMA = false;
 
     private MusicXmlUtil() {
 
-    }
-
-    public static ScoreHandler handleXmlScoreFile(File xmlFile) throws XmlException {
-        Document xmlDocument = XmlUtil.fileToDocument(xmlFile);
-        SchemaValidator.getInstance().validate(xmlDocument);
-
-        ScoreHandler scoreHandler = new ScoreHandler();
-        scoreHandler.handle(xmlDocument.getDocumentElement());
-        if (!SKIP_COMMENTS) scoreHandler.getScore().setXmlComments(getXmlComments(xmlDocument));
-
-        return scoreHandler;
     }
 
     public static DBTransaction getDbTransaction() throws DBException {
@@ -94,28 +73,7 @@ public class MusicXmlUtil {
         return sessionFactory.getTransaction();
     }
 
-    public static String getXmlResults(Score score) {
-        ScoreBuilder scoreBuilder = new ScoreBuilder(score);
-        String results = scoreBuilder.build().toString();
-
-        try {
-            SchemaValidator.getInstance().validate(results);
-        } catch (XmlException e) {
-            System.err.println(e.getMessage());
-        }
-
-        try {
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes("utf-8"))));
-            if (!SKIP_COMMENTS) setXmlComments(document, score.getXmlComments());
-            results = getFormattedXml(document);
-        } catch (Exception e) {
-            // skip, use results above
-        }
-
-        return BuilderUtil.getDocumentDeclaration() + results;
-    }
-
-    private static String getFormattedXml(Document document) throws XmlException {
+    public static String getFormattedXml(Document document) throws XmlException {
         try {
             document.normalize();
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -200,7 +158,7 @@ public class MusicXmlUtil {
         return scoreNames;
     }
 
-    private static List<XmlComment> getXmlComments(Node node) {
+    public static List<XmlComment> getXmlComments(Node node) {
         return getXmlComments(node, "");
     }
 
@@ -243,7 +201,7 @@ public class MusicXmlUtil {
         return xmlComments;
     }
 
-    private static void setXmlComments(Document document, List<XmlComment> xmlComments) {
+    public static void setXmlComments(Document document, List<XmlComment> xmlComments) {
         if (document == null || xmlComments == null || xmlComments.isEmpty()) return;
 
         XPath xPath = XPathFactory.newInstance().newXPath();

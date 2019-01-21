@@ -2,7 +2,6 @@ package org.curtis.musicxml.bin;
 
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.xml.XmlException;
 
 import java.io.File;
@@ -14,8 +13,8 @@ public class MusicXml2Ly extends MusicXmlScript {
             if (!OUTPUT_FILE.endsWith(".ly")) OUTPUT_FILE += ".ly";
 
             File xmlFile = new File(INPUT_FILE);
-            MusicXmlUtil.SKIP_COMMENTS = true;
-            ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(xmlFile);
+            SKIP_COMMENTS = true;
+            ScoreHandler scoreHandler = handleXmlScoreFile(xmlFile);
             outputScore(scoreHandler.getScore());
         } catch (XmlException e) {
             throw new MusicXmlException(e.getMessage());

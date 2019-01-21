@@ -2,7 +2,6 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.Db2MusicXml;
 import org.curtis.musicxml.exception.MusicXmlException;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.task.exception.TaskException;
 
 import javax.swing.*;
@@ -23,10 +22,10 @@ public class Db2MusicXmlTask extends MusicXmlTask {
     public void execute() throws TaskException {
         initialize();
 
-        MusicXmlUtil.SKIP_COMMENTS = skipComments;
         Db2MusicXml db2MusicXml = new Db2MusicXml();
         db2MusicXml.SCORE_NAME = scoreName;
         db2MusicXml.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        db2MusicXml.SKIP_COMMENTS = skipComments;
 
         try {
             db2MusicXml.execute();

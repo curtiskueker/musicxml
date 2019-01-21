@@ -3,7 +3,6 @@ package org.curtis.musicxml.bin;
 import org.curtis.lilypond.ScoreBuilder;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.score.Score;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 
 import java.io.BufferedWriter;
@@ -19,7 +18,7 @@ public class Db2Pdf extends MusicXmlScript {
 
     public void execute() throws MusicXmlException {
         try {
-            MusicXmlUtil.SKIP_COMMENTS = true;
+            SKIP_COMMENTS = true;
             Score score = getScoreFromDb();
             ScoreBuilder scoreBuilder = new ScoreBuilder(score);
 

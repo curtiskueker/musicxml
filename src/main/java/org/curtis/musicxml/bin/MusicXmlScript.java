@@ -4,17 +4,29 @@ import org.curtis.database.DBException;
 import org.curtis.exception.FileException;
 import org.curtis.lilypond.ScoreBuilder;
 import org.curtis.lilypond.exception.BuildException;
+import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
+import org.curtis.xml.SchemaValidator;
+import org.curtis.xml.XmlException;
+import org.curtis.xml.XmlUtil;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 
 public abstract class MusicXmlScript {
     public Integer SCORE_ID;
     public String OUTPUT_FILE;
     public String INPUT_FILE;
     public String SCORE_NAME;
+    public Boolean SKIP_COMMENTS = false;
 
     public abstract void execute() throws MusicXmlException;
 
@@ -32,7 +44,7 @@ public abstract class MusicXmlScript {
             } else if (arg.startsWith("SCORENAME=")) {
                 SCORE_NAME = arg.replace("SCORENAME=", "");
             } else if (arg.equals("SKIP_COMMENTS")) {
-                MusicXmlUtil.SKIP_COMMENTS = true;
+                SKIP_COMMENTS = true;
             } else if (arg.startsWith("SCHEMA_FILE=")) {
                 MusicXmlUtil.GENERATE_SCHEMA_FILE = arg.replace("SCHEMA_FILE=", "");
             } else if (arg.equals("CREATE_SCHEMA")) {
@@ -62,6 +74,40 @@ public abstract class MusicXmlScript {
             e.printStackTrace();
             throw new MusicXmlException(e);
         }
+    }
+
+    protected ScoreHandler handleXmlScoreFile(File xmlFile) throws XmlException {
+        System.err.println("Converting XML file to Score...");
+        Document xmlDocument = XmlUtil.fileToDocument(xmlFile);
+        SchemaValidator.getInstance().validate(xmlDocument);
+
+        ScoreHandler scoreHandler = new ScoreHandler();
+        scoreHandler.handle(xmlDocument.getDocumentElement());
+        if (!SKIP_COMMENTS) scoreHandler.getScore().setXmlComments(MusicXmlUtil.getXmlComments(xmlDocument));
+
+        return scoreHandler;
+    }
+
+    protected String getXmlResults(Score score) {
+        System.err.println("Converting Score to XML...");
+        org.curtis.musicxml.builder.ScoreBuilder scoreBuilder = new org.curtis.musicxml.builder.ScoreBuilder(score);
+        String results = scoreBuilder.build().toString();
+
+        try {
+            SchemaValidator.getInstance().validate(results);
+        } catch (XmlException e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes("utf-8"))));
+            if (!SKIP_COMMENTS) MusicXmlUtil.setXmlComments(document, score.getXmlComments());
+            results = MusicXmlUtil.getFormattedXml(document);
+        } catch (Exception e) {
+            // skip, use results above
+        }
+
+        return BuilderUtil.getDocumentDeclaration() + results;
     }
 
     protected void outputScore(Score score) throws MusicXmlException {

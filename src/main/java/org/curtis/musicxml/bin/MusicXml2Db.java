@@ -26,7 +26,7 @@ public class MusicXml2Db extends MusicXmlScript {
                 if (dbTransaction.find(Score.class, "scoreName", scoreName) != null) throw new MusicXmlException("Score name " + scoreName + " already exists");
 
                 File inputFile = new File(INPUT_FILE);
-                ScoreHandler scoreHandler = MusicXmlUtil.handleXmlScoreFile(inputFile);
+                ScoreHandler scoreHandler = handleXmlScoreFile(inputFile);
                 Score score = scoreHandler.getScore();
                 score.setScoreName(scoreName);
 

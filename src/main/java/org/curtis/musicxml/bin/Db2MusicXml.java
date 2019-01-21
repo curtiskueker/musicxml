@@ -1,11 +1,10 @@
 package org.curtis.musicxml.bin;
 
 import org.curtis.musicxml.exception.MusicXmlException;
-import org.curtis.musicxml.util.MusicXmlUtil;
 
 public class Db2MusicXml extends MusicXmlScript {
     public void execute() throws MusicXmlException {
-        outputResults(MusicXmlUtil.getXmlResults(getScoreFromDb()));
+        outputResults(getXmlResults(getScoreFromDb()));
     }
 
     public static void main(String[] args) {
