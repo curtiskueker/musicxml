@@ -30,6 +30,7 @@ public class MusicXml2Db extends MusicXmlScript {
                 Score score = scoreHandler.getScore();
                 score.setScoreName(scoreName);
 
+                System.err.println("Creating database record...");
                 Integer partItemOrdering = 1;
                 for (PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
                     partItem.setOrdering(partItemOrdering);
