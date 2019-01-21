@@ -122,13 +122,13 @@ public abstract class MusicXmlScript {
     protected void outputScore(Score score) throws MusicXmlException {
         try {
             ScoreBuilder scoreBuilder = new ScoreBuilder(score);
-            outputResults(scoreBuilder.build().toString());
+            outputResultsToFile(scoreBuilder.build().toString());
         } catch (BuildException e) {
             throw new MusicXmlException(e);
         }
     }
 
-    protected void outputResults(String results) throws MusicXmlException {
+    protected void outputResultsToFile(String results) throws MusicXmlException {
         try {
             FileUtil.stringToFile(results, OUTPUT_FILE);
         } catch (FileException e) {
