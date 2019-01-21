@@ -9,6 +9,8 @@ import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertyException;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.SchemaValidator;
@@ -18,8 +20,14 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MusicXmlScript {
     public Integer SCORE_ID;
@@ -125,6 +133,74 @@ public abstract class MusicXmlScript {
             FileUtil.stringToFile(results, OUTPUT_FILE);
         } catch (FileException e) {
             throw new MusicXmlException(e);
+        }
+    }
+
+    protected void convertLilypondToPdf() throws MusicXmlException {
+        convertLilypondToPdf(null);
+    }
+
+    protected void convertLilypondToPdf(String lilypondNotation) throws MusicXmlException {
+        System.err.println("Converting Lilipond notation to PDF File...");
+        String lilypondLocation;
+        try {
+            lilypondLocation = AppProperties.getString("location.lilypond");
+        } catch (PropertyException e) {
+            throw new MusicXmlException("Lilypond Location not set");
+        }
+
+        List<String> lilypondCommands = new ArrayList<>();
+        lilypondCommands.add(lilypondLocation);
+        lilypondCommands.add("-fpdf");
+        lilypondCommands.add("-o" + OUTPUT_FILE);
+        if (StringUtil.isNotEmpty(lilypondNotation)) {
+            lilypondCommands.add("-");
+        } else if (StringUtil.isNotEmpty(INPUT_FILE)) {
+            lilypondCommands.add(INPUT_FILE);
+        } else {
+            throw new MusicXmlException("Input File location or Lilypond notation source not set");
+        }
+
+        try {
+            Process lilypondProcess = new ProcessBuilder(lilypondCommands).start();
+            if (StringUtil.isNotEmpty(lilypondNotation)) {
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(lilypondProcess.getOutputStream()));
+                writer.write(lilypondNotation);
+                writer.flush();
+                writer.close();
+            }
+            InputStream lilypondProcessErrorStream = lilypondProcess.getErrorStream();
+            int c;
+            while ((c = lilypondProcessErrorStream.read()) != -1) {
+                System.err.print((char)c);
+            }
+
+            lilypondProcess.waitFor();
+            int exitValue = lilypondProcess.exitValue();
+            if (exitValue != 0) {
+                System.err.println("Unable to convert Lilypond file to PDF file");
+                return;
+            }
+        } catch (IOException e) {
+            throw new MusicXmlException(e);
+        } catch (InterruptedException e) {
+            return;
+        }
+
+        String pdfReaderLocation = AppProperties.getOptionalProperty("location.pdfreader");
+        if (StringUtil.isEmpty(pdfReaderLocation)) {
+            System.err.println("Set PDF Reader Location in Set Properties to open PDF file on completion");
+        } else {
+            try {
+                Process pdfReaderProcess = new ProcessBuilder(pdfReaderLocation, OUTPUT_FILE + ".pdf").start();
+                InputStream pdfReaderProcessErrorStream = pdfReaderProcess.getErrorStream();
+                int c;
+                while ((c = pdfReaderProcessErrorStream.read()) != -1) {
+                    System.err.print((char)c);
+                }
+            } catch (IOException e) {
+                throw new MusicXmlException(e);
+            }
         }
     }
 }
