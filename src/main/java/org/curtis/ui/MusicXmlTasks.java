@@ -66,8 +66,6 @@ public class MusicXmlTasks {
     private JPanel row8Right;
     private JPanel row9Left;
     private JPanel row9Right;
-    private JPanel row10Left;
-    private JPanel row10Right;
     private JLabel headerLabel;
     private JLabel taskLabel;
     private JComboBox taskSelection;
@@ -78,7 +76,6 @@ public class MusicXmlTasks {
     private JLabel formElement5Text;
     private JLabel formElement6Text;
     private JLabel formElement7Text;
-    private JLabel formElement8Text;
     private JPanel statusPanel;
     private JScrollPane statusScrollPane;
     private JTextArea statusTextArea;
@@ -100,7 +97,7 @@ public class MusicXmlTasks {
 
     private List<JLabel> formElementTextLabels = new ArrayList<>();
     private List<JPanel> rightPanels = new ArrayList<>();
-    private static final int NUMBER_OF_ROWS = 8;
+    private static final int NUMBER_OF_ROWS = 7;
     private int rowIndex = 0;
 
     public static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
@@ -229,41 +226,53 @@ public class MusicXmlTasks {
         rowIndex++;
     }
 
-    private void addFormElement(JPanel jPanel, InputType inputType, String elementName, String elementValue, String selectedFilename) {
+    private void addFormElement(JPanel panel, InputType inputType, String elementName, String elementValue, String selectedFilename) {
         Component component = null;
 
         switch (inputType) {
             case LABEL:
                 JLabel label = new JLabel();
                 label.setText(elementValue);
-                jPanel.add(label, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                panel.add(label, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 break;
             case BOLD_LABEL:
                 JLabel boldLabel = new JLabel();
                 boldLabel.setFont(new Font(taskLabel.getFont().getName(), Font.BOLD, 16));
                 boldLabel.setText(elementValue);
-                jPanel.add(boldLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                panel.add(boldLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 break;
             case INPUT_SMALL:
                 JTextField smallTextField = new JTextField();
                 smallTextField.setText(elementValue);
-                jPanel.add(smallTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), 0, false));
+                panel.add(smallTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), 0, false));
                 component = smallTextField;
                 break;
             case INPUT_LARGE:
                 JTextField largeTextField = new JTextField();
                 largeTextField.setText(elementValue);
-                jPanel.add(largeTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(LARGE_INPUT_SIZE, -1), new Dimension(LARGE_INPUT_SIZE, -1), new Dimension(LARGE_INPUT_SIZE, -1), 0, false));
+                panel.add(largeTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(LARGE_INPUT_SIZE, -1), new Dimension(LARGE_INPUT_SIZE, -1), new Dimension(LARGE_INPUT_SIZE, -1), 0, false));
                 component = largeTextField;
                 break;
             case PASSWORD:
+                panel.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+
+                JPanel leftPanel = new JPanel();
+                leftPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+                leftPanel.setBackground(new Color(-1));
+                panel.add(leftPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+
+                JPanel rightPanel = new JPanel();
+                rightPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+                rightPanel.setBackground(new Color(-1));
+                panel.add(rightPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+
                 JPasswordField passwordField = new JPasswordField();
                 passwordField.setText(elementValue);
-                jPanel.add(passwordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), 0, false));
+                leftPanel.add(passwordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), 0, false));
 
                 showPassword = new JCheckBox();
                 showPassword.setBackground(new Color(-1));
-                showPassword.setText("Show: ");
+                showPassword.setText("Show Password: ");
                 showPassword.setHorizontalTextPosition(SwingConstants.LEFT);
                 showPassword.addItemListener(new ItemListener() {
                     public void itemStateChanged(ItemEvent e) {
@@ -271,7 +280,7 @@ public class MusicXmlTasks {
                         else passwordField.setEchoChar('*');
                     }
                 });
-                jPanel.add(showPassword, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                rightPanel.add(showPassword, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
                 component = passwordField;
                 break;
@@ -286,7 +295,7 @@ public class MusicXmlTasks {
                 }
                 if (StringUtil.isNotEmpty(selectedFilename))
                     inputFileChooser.setSelectedFile(new File(selectedFilename));
-                jPanel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
+                panel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
                 component = inputFileChooser;
                 break;
             case OUTPUT_DIRECTORY:
@@ -295,26 +304,26 @@ public class MusicXmlTasks {
                 outputFileChooser.setControlButtonsAreShown(false);
                 outputFileChooser.setAcceptAllFileFilterUsed(false);
                 outputFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                jPanel.add(outputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
+                panel.add(outputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
                 component = outputFileChooser;
                 break;
             case SCORE_NAME_SELECTION:
                 JComboBox selection = new JComboBox(MusicXmlUtil.getScoreNames().toArray());
                 selection.setBackground(new Color(-1));
-                jPanel.add(selection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                panel.add(selection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 component = selection;
                 break;
             case CHECKBOX:
                 JCheckBox checkBox = new JCheckBox();
                 checkBox.setBackground(new Color(-1));
-                jPanel.add(checkBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                panel.add(checkBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 component = checkBox;
                 break;
             case BUTTON:
                 JButton button = new JButton();
                 button.setBackground(new Color(-1));
                 button.setText("Submit");
-                jPanel.add(button, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                panel.add(button, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
                 button.addActionListener(new ActionListener() {
                     @Override
@@ -470,7 +479,6 @@ public class MusicXmlTasks {
         formElementTextLabels.add(formElement5Text);
         formElementTextLabels.add(formElement6Text);
         formElementTextLabels.add(formElement7Text);
-        formElementTextLabels.add(formElement8Text);
         rightPanels.add(row3Right);
         rightPanels.add(row4Right);
         rightPanels.add(row5Right);
@@ -478,13 +486,14 @@ public class MusicXmlTasks {
         rightPanels.add(row7Right);
         rightPanels.add(row8Right);
         rightPanels.add(row9Right);
-        rightPanels.add(row10Right);
     }
 
     private void resetFormElements() {
         for (int index = 0; index < NUMBER_OF_ROWS; index++) {
             formElementTextLabels.get(index).setText("");
-            rightPanels.get(index).removeAll();
+            JPanel panel = rightPanels.get(index);
+            panel.removeAll();
+            panel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         }
     }
 
@@ -512,7 +521,7 @@ public class MusicXmlTasks {
      */
     private void $$$setupUI$$$() {
         taskForm = new JPanel();
-        taskForm.setLayout(new GridLayoutManager(12, 2, new Insets(0, 0, 0, 0), -1, -1));
+        taskForm.setLayout(new GridLayoutManager(11, 2, new Insets(0, 0, 0, 0), -1, -1));
         taskForm.setBackground(new Color(-1));
         header = new JPanel();
         header.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -620,7 +629,7 @@ public class MusicXmlTasks {
         statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         statusPanel.setBackground(new Color(-1));
-        taskForm.add(statusPanel, new GridConstraints(11, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        taskForm.add(statusPanel, new GridConstraints(10, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         statusScrollPane = new JScrollPane();
         statusScrollPane.setBackground(new Color(-1));
         statusScrollPane.setVerticalScrollBarPolicy(22);
@@ -642,18 +651,6 @@ public class MusicXmlTasks {
         row9Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         row9Right.setBackground(new Color(-1));
         taskForm.add(row9Right, new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row10Left = new JPanel();
-        row10Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row10Left.setBackground(new Color(-1));
-        taskForm.add(row10Left, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement8Text = new JLabel();
-        formElement8Text.setBackground(new Color(-1));
-        formElement8Text.setText("");
-        row10Left.add(formElement8Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row10Right = new JPanel();
-        row10Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row10Right.setBackground(new Color(-1));
-        taskForm.add(row10Right, new GridConstraints(10, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         convertLabelPanel = new JPanel();
         convertLabelPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         convertLabelPanel.setBackground(new Color(-1));

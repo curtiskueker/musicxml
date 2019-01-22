@@ -40,23 +40,17 @@ public class PropertiesInput extends FromInput {
         getInputRows().add(inputRow4);
 
         InputRow inputRow5 = new InputRow();
-        inputRow5.setText("Create Database Tables: ");
-        inputRow5.setInputType(InputType.CHECKBOX);
-        inputRow5.setName("createDatabase");
+        inputRow5.setText("Lilypond Location: ");
+        inputRow5.setInputType(InputType.INPUT_FILE);
+        inputRow5.setName("lilypondLocation");
+        inputRow5.setSelectedFilename(AppProperties.getOptionalProperty("location.lilypond"));
         getInputRows().add(inputRow5);
 
         InputRow inputRow6 = new InputRow();
-        inputRow6.setText("Lilypond Location: ");
+        inputRow6.setText("PDF Reader Location: ");
         inputRow6.setInputType(InputType.INPUT_FILE);
-        inputRow6.setName("lilypondLocation");
-        inputRow6.setSelectedFilename(AppProperties.getOptionalProperty("location.lilypond"));
+        inputRow6.setName("pdfReaderLocation");
+        inputRow6.setSelectedFilename(AppProperties.getOptionalProperty("location.pdfreader"));
         getInputRows().add(inputRow6);
-
-        InputRow inputRow7 = new InputRow();
-        inputRow7.setText("PDF Reader Location: ");
-        inputRow7.setInputType(InputType.INPUT_FILE);
-        inputRow7.setName("pdfReaderLocation");
-        inputRow7.setSelectedFilename(AppProperties.getOptionalProperty("location.pdfreader"));
-        getInputRows().add(inputRow7);
     }
 }

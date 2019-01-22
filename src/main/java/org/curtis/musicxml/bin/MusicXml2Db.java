@@ -21,45 +21,43 @@ public class MusicXml2Db extends MusicXmlScript {
         try {
             DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
 
-            if (StringUtil.isNotEmpty(getInputFile())) {
-                String scoreName = StringUtil.isEmpty(getScoreName()) ? getInputFile() : getScoreName();
-                if (dbTransaction.find(Score.class, "scoreName", scoreName) != null) throw new MusicXmlException("Score name " + scoreName + " already exists");
+            String scoreName = StringUtil.isEmpty(getScoreName()) ? getInputFile() : getScoreName();
+            if (dbTransaction.find(Score.class, "scoreName", scoreName) != null) throw new MusicXmlException("Score name " + scoreName + " already exists");
 
-                File inputFile = new File(getInputFile());
-                ScoreHandler scoreHandler = handleXmlScoreFile(inputFile);
-                Score score = scoreHandler.getScore();
-                score.setScoreName(scoreName);
+            File inputFile = new File(getInputFile());
+            ScoreHandler scoreHandler = handleXmlScoreFile(inputFile);
+            Score score = scoreHandler.getScore();
+            score.setScoreName(scoreName);
 
-                System.err.println("Creating database record...");
-                Integer partItemOrdering = 1;
-                for (PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
-                    partItem.setOrdering(partItemOrdering);
-                    partItemOrdering++;
+            System.err.println("Creating database record...");
+            Integer partItemOrdering = 1;
+            for (PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
+                partItem.setOrdering(partItemOrdering);
+                partItemOrdering++;
+            }
+
+            Integer partOrdering = 1;
+            for (Part part : score.getParts()) {
+                part.setOrdering(partOrdering);
+                partOrdering++;
+                Integer measureOrdering = 1;
+                for (Measure measure : part.getMeasures()) {
+                    measure.setOrdering(measureOrdering);
+                    measureOrdering++;
                 }
+            }
 
-                Integer partOrdering = 1;
-                for (Part part : score.getParts()) {
-                    part.setOrdering(partOrdering);
-                    partOrdering++;
-                    Integer measureOrdering = 1;
-                    for (Measure measure : part.getMeasures()) {
-                        measure.setOrdering(measureOrdering);
-                        measureOrdering++;
-                    }
-                }
+            dbTransaction.create(score);
 
-                dbTransaction.create(score);
-
-                // MusicData created separately
-                for (Part part : score.getParts()) {
-                    for (Measure measure : part.getMeasures()) {
-                        Integer musicDataOrdering = 1;
-                        for (MusicData musicData : measure.getMusicDataList()) {
-                            musicData.setMeasure(measure);
-                            musicData.setOrdering(musicDataOrdering);
-                            musicDataOrdering++;
-                            dbTransaction.create(musicData);
-                        }
+            // MusicData created separately
+            for (Part part : score.getParts()) {
+                for (Measure measure : part.getMeasures()) {
+                    Integer musicDataOrdering = 1;
+                    for (MusicData musicData : measure.getMusicDataList()) {
+                        musicData.setMeasure(measure);
+                        musicData.setOrdering(musicDataOrdering);
+                        musicDataOrdering++;
+                        dbTransaction.create(musicData);
                     }
                 }
             }
