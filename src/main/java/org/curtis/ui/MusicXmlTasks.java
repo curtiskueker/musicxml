@@ -6,6 +6,8 @@ import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.ui.input.DataInput;
+import org.curtis.ui.input.DatabaseInput;
+import org.curtis.ui.input.DatabaseOutput;
 import org.curtis.ui.input.FromDatabase;
 import org.curtis.ui.input.FromInput;
 import org.curtis.ui.input.FromLilypond;
@@ -162,6 +164,10 @@ public class MusicXmlTasks {
             case "Set Properties":
                 fromInput = new PropertiesInput();
                 toInput = new PropertiesOutput();
+                break;
+            case "Database Tasks":
+                fromInput = new DatabaseInput();
+                toInput = new DatabaseOutput();
                 break;
             case "Conversion Tasks":
                 switch (fromSelectedValue) {
