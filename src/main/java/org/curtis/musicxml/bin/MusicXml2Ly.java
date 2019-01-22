@@ -10,10 +10,10 @@ public class MusicXml2Ly extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         try {
             // output file
-            if (!OUTPUT_FILE.endsWith(".ly")) OUTPUT_FILE += ".ly";
+            if (!getOutputFile().endsWith(".ly")) setOutputFile(getOutputFile() + ".ly");
 
-            File xmlFile = new File(INPUT_FILE);
-            SKIP_COMMENTS = true;
+            File xmlFile = new File(getInputFile());
+            setSkipComments(true);
             ScoreHandler scoreHandler = handleXmlScoreFile(xmlFile);
             outputLilypondResultsToFile(scoreHandler.getScore());
         } catch (XmlException e) {

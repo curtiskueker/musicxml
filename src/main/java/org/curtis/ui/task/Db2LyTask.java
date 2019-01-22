@@ -22,8 +22,8 @@ public class Db2LyTask extends MusicXmlTask {
         initialize();
 
         Db2Ly db2Ly = new Db2Ly();
-        db2Ly.SCORE_NAME = scoreName;
-        db2Ly.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        db2Ly.setScoreName(scoreName);
+        db2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
 
         try {
             db2Ly.execute();

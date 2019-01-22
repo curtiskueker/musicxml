@@ -11,8 +11,8 @@ public class MusicXml2Pdf extends MusicXmlScript {
 
     public void execute() throws MusicXmlException {
         try {
-            SKIP_COMMENTS = true;
-            convertLilypondToPdf(getLilypondFromScore(handleXmlScoreFile(new File(INPUT_FILE)).getScore()));
+            setSkipComments(true);
+            convertLilypondToPdf(getLilypondFromScore(handleXmlScoreFile(new File(getInputFile())).getScore()));
         } catch (Exception e) {
             throw new MusicXmlException(e);
         }

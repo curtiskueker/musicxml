@@ -21,11 +21,11 @@ public class MusicXml2Db extends MusicXmlScript {
         try {
             DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
 
-            if (StringUtil.isNotEmpty(INPUT_FILE)) {
-                String scoreName = StringUtil.isEmpty(SCORE_NAME) ? INPUT_FILE : SCORE_NAME;
+            if (StringUtil.isNotEmpty(getInputFile())) {
+                String scoreName = StringUtil.isEmpty(getScoreName()) ? getInputFile() : getScoreName();
                 if (dbTransaction.find(Score.class, "scoreName", scoreName) != null) throw new MusicXmlException("Score name " + scoreName + " already exists");
 
-                File inputFile = new File(INPUT_FILE);
+                File inputFile = new File(getInputFile());
                 ScoreHandler scoreHandler = handleXmlScoreFile(inputFile);
                 Score score = scoreHandler.getScore();
                 score.setScoreName(scoreName);
@@ -75,7 +75,7 @@ public class MusicXml2Db extends MusicXmlScript {
         try {
             MusicXml2Db musicXmlDb = new MusicXml2Db();
             musicXmlDb.setArgs(args);
-            musicXmlDb.OUTPUT_FILE = "NONE";
+            musicXmlDb.setOutputFile("NONE");
             musicXmlDb.execute();
         } catch (MusicXmlException e) {
             System.err.println("Fatal exception: " + e.getMessage());

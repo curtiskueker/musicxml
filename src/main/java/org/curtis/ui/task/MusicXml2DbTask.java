@@ -21,8 +21,8 @@ public class MusicXml2DbTask extends MusicXmlTask {
         initialize();
 
         MusicXml2Db musicXml2Db = new MusicXml2Db();
-        musicXml2Db.SCORE_NAME = scoreName;
-        musicXml2Db.INPUT_FILE = inputFileName;
+        musicXml2Db.setScoreName(scoreName);
+        musicXml2Db.setInputFile(inputFileName);
 
         try {
             musicXml2Db.execute();

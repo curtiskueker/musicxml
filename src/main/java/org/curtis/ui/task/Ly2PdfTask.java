@@ -22,8 +22,8 @@ public class Ly2PdfTask extends MusicXmlTask {
         initialize();
 
         Ly2Pdf ly2Pdf = new Ly2Pdf();
-        ly2Pdf.INPUT_FILE = inputFileName;
-        ly2Pdf.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        ly2Pdf.setInputFile(inputFileName);
+        ly2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
 
         try {
             ly2Pdf.execute();

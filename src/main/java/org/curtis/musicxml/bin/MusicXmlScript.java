@@ -30,11 +30,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MusicXmlScript {
-    public Integer SCORE_ID;
-    public String OUTPUT_FILE;
-    public String INPUT_FILE;
-    public String SCORE_NAME;
-    public Boolean SKIP_COMMENTS = false;
+    private Integer scoreId;
+    private String outputFile;
+    private String inputFile;
+    private String scoreName;
+    private Boolean skipComments = false;
+
+    public Integer getScoreId() {
+        return scoreId;
+    }
+
+    public void setScoreId(Integer scoreId) {
+        this.scoreId = scoreId;
+    }
+
+    public String getOutputFile() {
+        return outputFile;
+    }
+
+    public void setOutputFile(String outputFile) {
+        this.outputFile = outputFile;
+    }
+
+    public String getInputFile() {
+        return inputFile;
+    }
+
+    public void setInputFile(String inputFile) {
+        this.inputFile = inputFile;
+    }
+
+    public String getScoreName() {
+        return scoreName;
+    }
+
+    public void setScoreName(String scoreName) {
+        this.scoreName = scoreName;
+    }
+
+    public Boolean getSkipComments() {
+        return skipComments;
+    }
+
+    public void setSkipComments(Boolean skipComments) {
+        this.skipComments = skipComments;
+    }
 
     public abstract void execute() throws MusicXmlException;
 
@@ -42,17 +82,17 @@ public abstract class MusicXmlScript {
         for (String arg : args) {
             if (arg.startsWith("SCORE_ID=")) {
                 String scoreId = arg.replace("SCORE_ID=", "");
-                if (StringUtil.isNotEmpty(scoreId)) SCORE_ID = Integer.parseInt(scoreId);
+                if (StringUtil.isNotEmpty(scoreId)) setScoreId(Integer.parseInt(scoreId));
             } else if (arg.startsWith("OUTPUT_FILE=")) {
-                OUTPUT_FILE = arg.replace("OUTPUT_FILE=", "");
+                setOutputFile(arg.replace("OUTPUT_FILE=", ""));
             } else if (arg.startsWith("INPUT_FILE=")) {
-                INPUT_FILE = arg.replace("INPUT_FILE=", "");
+                setInputFile(arg.replace("INPUT_FILE=", ""));
             } else if (arg.equals("DEBUG")) {
                 MusicXmlUtil.DEBUG = true;
             } else if (arg.startsWith("SCORENAME=")) {
-                SCORE_NAME = arg.replace("SCORENAME=", "");
+                setScoreName(arg.replace("SCORENAME=", ""));
             } else if (arg.equals("SKIP_COMMENTS")) {
-                SKIP_COMMENTS = true;
+                setSkipComments(true);
             } else if (arg.startsWith("SCHEMA_FILE=")) {
                 MusicXmlUtil.GENERATE_SCHEMA_FILE = arg.replace("SCHEMA_FILE=", "");
             } else if (arg.equals("CREATE_SCHEMA")) {
@@ -60,7 +100,7 @@ public abstract class MusicXmlScript {
             }
         }
 
-        if (StringUtil.isEmpty(OUTPUT_FILE)) {
+        if (StringUtil.isEmpty(getOutputFile())) {
             throw new MusicXmlException("Output file not indicated");
         }
     }
@@ -69,10 +109,10 @@ public abstract class MusicXmlScript {
         System.err.println("Converting dataase record to Score");
         try {
             Score score = null;
-            if (SCORE_ID != null) {
-                score = MusicXmlUtil.getDbTransaction().getObjectById(Score.class, SCORE_ID);
-            } else if (StringUtil.isNotEmpty(SCORE_NAME)) {
-                score = MusicXmlUtil.getDbTransaction().find(Score.class, "scoreName", SCORE_NAME);
+            if (getScoreId() != null) {
+                score = MusicXmlUtil.getDbTransaction().getObjectById(Score.class, getScoreId());
+            } else if (StringUtil.isNotEmpty(getScoreName())) {
+                score = MusicXmlUtil.getDbTransaction().find(Score.class, "scoreName", getScoreName());
             }
             if (score == null) {
                 throw new MusicXmlException("Score not found");
@@ -92,7 +132,7 @@ public abstract class MusicXmlScript {
 
         ScoreHandler scoreHandler = new ScoreHandler();
         scoreHandler.handle(xmlDocument.getDocumentElement());
-        if (!SKIP_COMMENTS) scoreHandler.getScore().setXmlComments(MusicXmlUtil.getXmlComments(xmlDocument));
+        if (!getSkipComments()) scoreHandler.getScore().setXmlComments(MusicXmlUtil.getXmlComments(xmlDocument));
 
         return scoreHandler;
     }
@@ -110,7 +150,7 @@ public abstract class MusicXmlScript {
 
         try {
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes("utf-8"))));
-            if (!SKIP_COMMENTS) MusicXmlUtil.setXmlComments(document, score.getXmlComments());
+            if (!getSkipComments()) MusicXmlUtil.setXmlComments(document, score.getXmlComments());
             results = MusicXmlUtil.getFormattedXml(document);
         } catch (Exception e) {
             // skip, use results above
@@ -134,7 +174,7 @@ public abstract class MusicXmlScript {
 
     protected void outputResultsToFile(String results) throws MusicXmlException {
         try {
-            FileUtil.stringToFile(results, OUTPUT_FILE);
+            FileUtil.stringToFile(results, getOutputFile());
         } catch (FileException e) {
             throw new MusicXmlException(e);
         }
@@ -156,11 +196,11 @@ public abstract class MusicXmlScript {
         List<String> lilypondCommands = new ArrayList<>();
         lilypondCommands.add(lilypondLocation);
         lilypondCommands.add("-fpdf");
-        lilypondCommands.add("-o" + OUTPUT_FILE);
+        lilypondCommands.add("-o" + getOutputFile());
         if (StringUtil.isNotEmpty(lilypondNotation)) {
             lilypondCommands.add("-");
-        } else if (StringUtil.isNotEmpty(INPUT_FILE)) {
-            lilypondCommands.add(INPUT_FILE);
+        } else if (StringUtil.isNotEmpty(getInputFile())) {
+            lilypondCommands.add(getInputFile());
         } else {
             throw new MusicXmlException("Input File location or Lilypond notation source not set");
         }
@@ -196,7 +236,7 @@ public abstract class MusicXmlScript {
             System.err.println("Set PDF Reader Location in Set Properties to open PDF file on completion");
         } else {
             try {
-                Process pdfReaderProcess = new ProcessBuilder(pdfReaderLocation, OUTPUT_FILE + ".pdf").start();
+                Process pdfReaderProcess = new ProcessBuilder(pdfReaderLocation, getOutputFile() + ".pdf").start();
                 InputStream pdfReaderProcessErrorStream = pdfReaderProcess.getErrorStream();
                 int c;
                 while ((c = pdfReaderProcessErrorStream.read()) != -1) {

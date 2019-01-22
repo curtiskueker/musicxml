@@ -22,8 +22,8 @@ public class MusicXml2PdfTask extends MusicXmlTask {
         initialize();
 
         MusicXml2Pdf musicXml2Pdf = new MusicXml2Pdf();
-        musicXml2Pdf.INPUT_FILE = inputFileName;
-        musicXml2Pdf.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        musicXml2Pdf.setInputFile(inputFileName);
+        musicXml2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
 
         try {
             musicXml2Pdf.execute();

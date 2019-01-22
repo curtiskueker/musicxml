@@ -22,8 +22,8 @@ public class Db2PdfTask extends MusicXmlTask {
         initialize();
 
         Db2Pdf db2Pdf = new Db2Pdf();
-        db2Pdf.SCORE_NAME = scoreName;
-        db2Pdf.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        db2Pdf.setScoreName(scoreName);
+        db2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
 
         try {
             db2Pdf.execute();

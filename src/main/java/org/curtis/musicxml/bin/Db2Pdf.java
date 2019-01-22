@@ -10,7 +10,7 @@ public class Db2Pdf extends MusicXmlScript {
 
     public void execute() throws MusicXmlException {
         try {
-            SKIP_COMMENTS = true;
+            setSkipComments(true);
             convertLilypondToPdf(getLilypondFromScore(getScoreFromDb()));
         } catch (BuildException e) {
             throw new MusicXmlException(e);

@@ -23,9 +23,9 @@ public class Db2MusicXmlTask extends MusicXmlTask {
         initialize();
 
         Db2MusicXml db2MusicXml = new Db2MusicXml();
-        db2MusicXml.SCORE_NAME = scoreName;
-        db2MusicXml.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
-        db2MusicXml.SKIP_COMMENTS = skipComments;
+        db2MusicXml.setScoreName(scoreName);
+        db2MusicXml.setOutputFile(outputDirectoryName + "/" + outputFile);
+        db2MusicXml.setSkipComments(skipComments);
 
         try {
             db2MusicXml.execute();

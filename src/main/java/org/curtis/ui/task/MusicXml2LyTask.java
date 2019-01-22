@@ -22,8 +22,8 @@ public class MusicXml2LyTask extends MusicXmlTask {
         initialize();
 
         MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
-        musicXml2Ly.INPUT_FILE = inputFileName;
-        musicXml2Ly.OUTPUT_FILE = outputDirectoryName + "/" + outputFile;
+        musicXml2Ly.setInputFile(inputFileName);
+        musicXml2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
 
         try {
             musicXml2Ly.execute();
