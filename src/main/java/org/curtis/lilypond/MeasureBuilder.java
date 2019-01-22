@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public class MeasureBuilder extends AbstractBuilder {
+public class MeasureBuilder extends BaseBuilder {
     private Measure measure;
     private List<MusicDataBuilder> musicDataBuilders = new ArrayList<>();
     private Note previousNote;

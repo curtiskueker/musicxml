@@ -20,7 +20,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class NotationHandler extends AbstractHandler {
+public class NotationHandler extends BaseHandler {
     private List<Notations> notationsList;
 
     public NotationHandler(List<Notations> notationsList) {

@@ -30,7 +30,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class ArticulationHandler extends AbstractHandler {
+public class ArticulationHandler extends BaseHandler {
     private Articulations articulations;
 
     public ArticulationHandler() {

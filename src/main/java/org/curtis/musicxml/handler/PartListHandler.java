@@ -24,7 +24,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class PartListHandler extends AbstractHandler {
+public class PartListHandler extends BaseHandler {
     private PartList partList;
 
     public PartListHandler(PartList partList) {

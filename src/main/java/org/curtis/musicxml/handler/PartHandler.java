@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public class PartHandler extends AbstractHandler {
+public class PartHandler extends BaseHandler {
     private List<Part> parts;
 
     public PartHandler(List<Part> parts) {

@@ -7,7 +7,7 @@ import org.curtis.util.StringUtil;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public abstract class AbstractBuilder {
+public abstract class BaseBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();
 
     public abstract StringBuilder build() throws BuildException;

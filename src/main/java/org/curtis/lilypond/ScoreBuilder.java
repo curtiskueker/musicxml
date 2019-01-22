@@ -26,7 +26,7 @@ import org.curtis.musicxml.util.MusicXmlUtil;
 
 import java.util.List;
 
-public class ScoreBuilder extends AbstractBuilder {
+public class ScoreBuilder extends BaseBuilder {
     private Score score;
 
     public ScoreBuilder(Score score) {

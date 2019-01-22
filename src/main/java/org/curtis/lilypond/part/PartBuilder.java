@@ -1,6 +1,6 @@
 package org.curtis.lilypond.part;
 
-import org.curtis.lilypond.AbstractBuilder;
+import org.curtis.lilypond.BaseBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.note.Note;
@@ -20,7 +20,7 @@ import java.util.List;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public class PartBuilder extends AbstractBuilder {
+public class PartBuilder extends BaseBuilder {
     private Part part;
 
     public static Attributes CURRENT_ATTRIBUTES;

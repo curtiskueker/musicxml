@@ -38,7 +38,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class TechnicalHandler extends AbstractHandler {
+public class TechnicalHandler extends BaseHandler {
     private Technicals technicals;
 
     public TechnicalHandler() {

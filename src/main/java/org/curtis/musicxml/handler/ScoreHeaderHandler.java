@@ -34,7 +34,7 @@ import org.w3c.dom.Element;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreHeaderHandler extends AbstractHandler {
+public class ScoreHeaderHandler extends BaseHandler {
     private ScoreHeader scoreHeader;
 
     public ScoreHeaderHandler(ScoreHeader scoreHeader) {

@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class ScoreHandler extends AbstractHandler {
+public class ScoreHandler extends BaseHandler {
     private Score score;
 
     public ScoreHandler() {

@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public class MeasureHandler extends AbstractHandler {
+public class MeasureHandler extends BaseHandler {
     private List<Measure> measures;
 
     public MeasureHandler(List<Measure> measures) {

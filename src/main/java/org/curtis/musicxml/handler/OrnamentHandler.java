@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class OrnamentHandler extends AbstractHandler {
+public class OrnamentHandler extends BaseHandler {
     private Ornaments ornaments;
 
     public OrnamentHandler() {

@@ -19,7 +19,7 @@ import org.w3c.dom.Element;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LyricHandler extends AbstractHandler {
+public class LyricHandler extends BaseHandler {
     private List<Lyric> lyrics;
 
     public LyricHandler(List<Lyric> lyrics) {
