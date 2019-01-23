@@ -21,6 +21,7 @@ import org.curtis.ui.input.ToInput;
 import org.curtis.ui.input.ToLilypond;
 import org.curtis.ui.input.ToMusicXml;
 import org.curtis.ui.input.ToPdf;
+import org.curtis.ui.task.DatabaseTask;
 import org.curtis.ui.task.Db2PdfTask;
 import org.curtis.ui.task.Ly2PdfTask;
 import org.curtis.ui.task.MusicXml2PdfTask;
@@ -357,6 +358,9 @@ public class MusicXmlTasks {
         switch (selectedValue) {
             case "Set Properties":
                 musicXmlTask = new SetPropertiesTask(componentMap);
+                break;
+            case "Database Tasks":
+                musicXmlTask = new DatabaseTask(componentMap);
                 break;
             case "Conversion Tasks":
                 switch (fromSelectedValue) {
