@@ -53,6 +53,10 @@ public class MusicXmlUtil {
     public static String GENERATE_SCHEMA_FILE;
     public static boolean CREATE_DB_SCHEMA = false;
 
+    public static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
+    public static String PROPERTIES_BUNDLE = "musicxml";
+    public static String PROPERTIES_FILENAME = PROPERTIES_DIRECTORY + "/" + PROPERTIES_BUNDLE;
+
     private MusicXmlUtil() {
 
     }
@@ -66,11 +70,22 @@ public class MusicXmlUtil {
                 // optional properties file
             }
             AppProperties.addPropertiesFile("properties/database");
+            AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
 
             sessionFactory = DBSessionFactory.getInstance();
         }
 
         return sessionFactory.getTransaction();
+    }
+
+    public static DBTransaction getNewDbTransaction() throws DBException {
+        clearDbTransaction();
+
+        return getDbTransaction();
+    }
+
+    private static void clearDbTransaction() {
+        sessionFactory = null;
     }
 
     public static String getFormattedXml(Document document) throws XmlException {

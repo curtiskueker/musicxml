@@ -2,7 +2,7 @@ package org.curtis.musicxml.bin;
 
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
-import org.curtis.ui.MusicXmlTasks;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
@@ -29,7 +29,7 @@ public class SetProperties extends MusicXmlScript {
         stringBuilder.append(getPropertyString("location.pdfreader", pdfReaderLocation));
 
         try {
-            FileUtil.stringToFile(stringBuilder.toString(), MusicXmlTasks.PROPERTIES_FILENAME + ".properties");
+            FileUtil.stringToFile(stringBuilder.toString(), MusicXmlUtil.PROPERTIES_FILENAME + ".properties");
         } catch (FileException e) {
             throw new MusicXmlException(e);
         }

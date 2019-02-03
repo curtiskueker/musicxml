@@ -104,27 +104,10 @@ public class DBSessionFactory {
         }
     }
 
-    /**
-     * Commits the current transaction.
-     *
-     * @throws DBException when an exception is encountered.
-     */
-    public void commitTransaction() throws DBException {
-        DBTransaction dbTransaction = getTransaction();
-
-        if (dbTransaction != null && dbTransaction.isActive()) {
-            dbTransaction.commit();
-        }
-    }
-
     private DBTransaction createTransaction() throws DBException {
         DBTransaction dbTransaction = new DBTransaction(getEntityManager());
         dbTransaction.begin();
         return dbTransaction;
-    }
-
-    public EntityManagerFactory getEntityManagerFactory() {
-        return emf;
     }
 
     public EntityManager getEntityManager() throws DBException {

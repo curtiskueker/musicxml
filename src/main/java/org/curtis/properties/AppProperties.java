@@ -3,7 +3,6 @@ package org.curtis.properties;
 import org.curtis.util.StringUtil;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
@@ -36,7 +35,7 @@ public class AppProperties {
         }
     }
 
-    public static void addPropertiesBundle(String directory, String bundleName) throws PropertyFileNotFoundException {
+    public static void addPropertiesBundle(String directory, String bundleName) {
         try {
             File file = new File(directory);
             URL[] urls = {file.toURI().toURL()};
@@ -44,7 +43,7 @@ public class AppProperties {
             ResourceBundle bundle = ResourceBundle.getBundle(bundleName, Locale.getDefault(), loader);
             bundles.put(bundleName, bundle);
         } catch (Exception e) {
-            throw new PropertyFileNotFoundException(e);
+            System.err.println(e.getMessage());
         }
     }
 

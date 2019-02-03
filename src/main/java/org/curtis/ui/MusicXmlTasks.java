@@ -4,7 +4,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
-import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.ui.input.DataInput;
 import org.curtis.ui.input.DatabaseInput;
 import org.curtis.ui.input.DatabaseOutput;
@@ -103,10 +102,6 @@ public class MusicXmlTasks {
     private static final int NUMBER_OF_ROWS = 7;
     private int rowIndex = 0;
 
-    public static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
-    public static String PROPERTIES_BUNDLE = "musicxml";
-    public static String PROPERTIES_FILENAME = PROPERTIES_DIRECTORY + "/" + PROPERTIES_BUNDLE;
-
     private static final int SMALL_INPUT_SIZE = 150;
     private static final int LARGE_INPUT_SIZE = 300;
     private static final int CHOOSER_SIZE = 450;
@@ -130,12 +125,6 @@ public class MusicXmlTasks {
 
     private void handleSelection() {
         resetFormElements();
-
-        try {
-            AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
-        } catch (PropertyFileNotFoundException e) {
-            //
-        }
 
         convertFromPanel.removeAll();
         convertToPanel.removeAll();
