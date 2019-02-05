@@ -14,6 +14,10 @@ import java.util.ResourceBundle;
 public class AppProperties {
     private static Map<String, ResourceBundle> bundles = new HashMap<>();
     private static String prefix = null;
+    private static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
+    private static String PROPERTIES_BUNDLE = "musicxml";
+    public static String PROPERTIES_FILENAME = PROPERTIES_DIRECTORY + "/" + PROPERTIES_BUNDLE;
+
 
     public static void addPropertiesFile(String filename) throws PropertyFileNotFoundException {
         if (filename == null) {
@@ -35,13 +39,13 @@ public class AppProperties {
         }
     }
 
-    public static void addPropertiesBundle(String directory, String bundleName) {
+    public static void addLocalPropertiesBundle() {
         try {
-            File file = new File(directory);
+            File file = new File(PROPERTIES_DIRECTORY);
             URL[] urls = {file.toURI().toURL()};
             ClassLoader loader = new URLClassLoader(urls);
-            ResourceBundle bundle = ResourceBundle.getBundle(bundleName, Locale.getDefault(), loader);
-            bundles.put(bundleName, bundle);
+            ResourceBundle bundle = ResourceBundle.getBundle(PROPERTIES_BUNDLE, Locale.getDefault(), loader);
+            bundles.put(PROPERTIES_BUNDLE, bundle);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

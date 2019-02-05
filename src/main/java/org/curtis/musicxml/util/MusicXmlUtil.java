@@ -53,10 +53,6 @@ public class MusicXmlUtil {
     public static String GENERATE_SCHEMA_FILE;
     public static boolean CREATE_DB_SCHEMA = false;
 
-    public static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
-    public static String PROPERTIES_BUNDLE = "musicxml";
-    public static String PROPERTIES_FILENAME = PROPERTIES_DIRECTORY + "/" + PROPERTIES_BUNDLE;
-
     private MusicXmlUtil() {
 
     }
@@ -64,13 +60,8 @@ public class MusicXmlUtil {
     public static DBTransaction getDbTransaction() throws DBException {
         if (sessionFactory == null) {
             AppProperties.setPrefix("musicxml");
-            try {
-                AppProperties.addPropertiesFile("musicxml");
-            } catch (PropertyFileNotFoundException e) {
-                // optional properties file
-            }
             AppProperties.addPropertiesFile("properties/database");
-            AppProperties.addPropertiesBundle(PROPERTIES_DIRECTORY, PROPERTIES_BUNDLE);
+            AppProperties.addLocalPropertiesBundle();
 
             sessionFactory = DBSessionFactory.getInstance();
         }
@@ -79,13 +70,14 @@ public class MusicXmlUtil {
     }
 
     public static DBTransaction getNewDbTransaction() throws DBException {
-        clearDbTransaction();
+        clearDb();
 
         return getDbTransaction();
     }
 
-    private static void clearDbTransaction() {
+    public static void clearDb() throws DBException {
         sessionFactory = null;
+        DBSessionFactory.clearSessionFactory();
     }
 
     public static String getFormattedXml(Document document) throws XmlException {

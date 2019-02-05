@@ -9,6 +9,8 @@ public class PropertiesInput extends FromInput {
     }
 
     private void setup() {
+        AppProperties.addLocalPropertiesBundle();
+
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Username: ");
         inputRow1.setInputType(InputType.INPUT_SMALL);

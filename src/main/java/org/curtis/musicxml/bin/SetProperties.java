@@ -1,8 +1,10 @@
 package org.curtis.musicxml.bin;
 
+import org.curtis.database.DBException;
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.properties.AppProperties;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
@@ -29,8 +31,15 @@ public class SetProperties extends MusicXmlScript {
         stringBuilder.append(getPropertyString("location.pdfreader", pdfReaderLocation));
 
         try {
-            FileUtil.stringToFile(stringBuilder.toString(), MusicXmlUtil.PROPERTIES_FILENAME + ".properties");
+            FileUtil.stringToFile(stringBuilder.toString(), AppProperties.PROPERTIES_FILENAME + ".properties");
         } catch (FileException e) {
+            throw new MusicXmlException(e);
+        }
+
+        try {
+            MusicXmlUtil.clearDb();
+            AppProperties.addLocalPropertiesBundle();
+        } catch (DBException e) {
             throw new MusicXmlException(e);
         }
     }

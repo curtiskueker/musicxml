@@ -1,12 +1,12 @@
 package org.curtis.database;
 
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
-import org.curtis.util.StringUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class DBSessionFactory {
@@ -24,11 +24,22 @@ public class DBSessionFactory {
     // Holds the JpaTransaction for the thread
     private static final ThreadLocal<DBTransaction> transaction = new ThreadLocal<>();
 
+    private static final Map<Object, Object> createDbProperties;
+    private static final Map<Object, Object> generateSchemaProperties;
+    static {
+        createDbProperties = new HashMap<>();
+        createDbProperties.put("hibernate.hbm2ddl.auto", "update");
+
+        generateSchemaProperties = new HashMap<>();
+        generateSchemaProperties.put("javax.persistence.schema-generation.scripts.action", "create");
+        generateSchemaProperties.put("hibernate.hbm2ddl.delimiter", ";");
+    }
+
+    private Properties additionalProperties = new Properties();
+
     private DBSessionFactory() throws DBException {
         databaseName = AppProperties.getRequiredProperty("database.name");
         persistenceUnitName = AppProperties.getRequiredProperty("database.persistenceunit.name");
-
-        instantiateSessionFactory();
     }
 
     private void instantiateSessionFactory() throws DBException {
@@ -49,13 +60,7 @@ public class DBSessionFactory {
             jpaProperties.put("hibernate.show_sql", AppProperties.getBoolean("database.hibernate.show_sql"));
             jpaProperties.put("hibernate.format_sql", AppProperties.getBoolean("database.hibernate.format_sql"));
 
-            if (StringUtil.isNotEmpty(MusicXmlUtil.GENERATE_SCHEMA_FILE)) {
-                jpaProperties.put("javax.persistence.schema-generation.scripts.create-target", MusicXmlUtil.GENERATE_SCHEMA_FILE);
-                jpaProperties.put("javax.persistence.schema-generation.scripts.action", "create");
-                jpaProperties.put("hibernate.hbm2ddl.delimiter", ";");
-            } else if (MusicXmlUtil.CREATE_DB_SCHEMA){
-                jpaProperties.put("hibernate.hbm2ddl.auto", "update");
-            }
+            jpaProperties.putAll(additionalProperties);
 
             emf = Persistence.createEntityManagerFactory(persistenceUnitName, jpaProperties);
         } catch (Exception e) {
@@ -65,16 +70,50 @@ public class DBSessionFactory {
     }
 
     public static synchronized DBSessionFactory getInstance() throws DBException {
-        if (sessionFactory == null) {
-            setupSessionFactory();
-        }
+        if (sessionFactory == null) setupSessionFactory();
 
         return sessionFactory;
     }
 
     private static void setupSessionFactory() throws DBException {
         try {
-            sessionFactory = new DBSessionFactory();
+            DBSessionFactory dbSessionFactory = new DBSessionFactory();
+            dbSessionFactory.instantiateSessionFactory();
+            sessionFactory = dbSessionFactory;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DBException(e);
+        }
+    }
+
+    private Properties getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    public static void clearSessionFactory() throws DBException {
+        if (sessionFactory == null) return;
+
+        sessionFactory.closeTransaction();
+        sessionFactory = null;
+    }
+
+    public static void createDb() throws DBException {
+        try {
+            DBSessionFactory dbSessionFactory = new DBSessionFactory();
+            dbSessionFactory.getAdditionalProperties().putAll(createDbProperties);
+            dbSessionFactory.instantiateSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DBException(e);
+        }
+    }
+
+    public static void generateDbSchema(String fileLocation) throws DBException {
+        try {
+            DBSessionFactory dbSessionFactory = new DBSessionFactory();
+            dbSessionFactory.getAdditionalProperties().put("javax.persistence.schema-generation.scripts.create-target", fileLocation);
+            dbSessionFactory.getAdditionalProperties().putAll(generateSchemaProperties);
+            dbSessionFactory.instantiateSessionFactory();
         } catch (Exception e) {
             e.printStackTrace();
             throw new DBException(e);
