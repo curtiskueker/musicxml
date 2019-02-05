@@ -19,10 +19,10 @@ public class DBSessionFactory {
 
     private EntityManagerFactory emf;
 
-    private static final ThreadLocal<EntityManager> entityManager = new ThreadLocal<>();
+    private EntityManager entityManager = null;
 
     // Holds the JpaTransaction for the thread
-    private static final ThreadLocal<DBTransaction> transaction = new ThreadLocal<>();
+    private DBTransaction transaction = null;
 
     private static final Map<Object, Object> createDbProperties;
     private static final Map<Object, Object> generateSchemaProperties;
@@ -121,41 +121,35 @@ public class DBSessionFactory {
     }
 
     public synchronized DBTransaction getTransaction() throws DBException {
-        DBTransaction dbTransaction = transaction.get();
-
-        if (dbTransaction == null) {
-            dbTransaction = createTransaction();
-            transaction.set(dbTransaction);
+        if (transaction == null) {
+            transaction = createTransaction();
         }
-        return dbTransaction;
+
+        return transaction;
     }
 
     public synchronized void closeTransaction() throws DBException {
-        EntityManager em = entityManager.get();
-        if(em != null) {
-            em.close();
-            entityManager.set(null);
+        if(entityManager != null) {
+            entityManager.close();
+            entityManager = null;
         }
 
-        DBTransaction dbTransaction = transaction.get();
-        if(dbTransaction != null) {
-            transaction.set(null);
-        }
+        transaction = null;
     }
 
     private DBTransaction createTransaction() throws DBException {
         DBTransaction dbTransaction = new DBTransaction(getEntityManager());
         dbTransaction.begin();
+
         return dbTransaction;
     }
 
-    public EntityManager getEntityManager() throws DBException {
-        EntityManager em = entityManager.get();
-        if (em == null) {
-            em = createEntityManager();
-            entityManager.set(em);
+    private EntityManager getEntityManager() throws DBException {
+        if (entityManager == null) {
+            entityManager = createEntityManager();
         }
-        return em;
+
+        return entityManager;
     }
 
     private EntityManager createEntityManager() throws DBException {
