@@ -7,8 +7,6 @@ import org.curtis.musicxml.util.MusicXmlUtil;
 
 public class DatabaseExec extends MusicXmlScript {
     private boolean testDatabase;
-    private boolean createDatabase;
-    private boolean generateSchema;
 
     public DatabaseExec() {
 
@@ -16,14 +14,14 @@ public class DatabaseExec extends MusicXmlScript {
 
     public void execute() throws MusicXmlException {
         try {
-            if (createDatabase) {
+            if (isCreateDatabase()) {
                 DBSessionFactory.createDb();
             }
             if (testDatabase) {
                 MusicXmlUtil.getNewDbTransaction();
                 System.err.println("Successful database connection test");
             }
-            if (generateSchema) {
+            if (isGenerateSchema()) {
                 DBSessionFactory.generateDbSchema(getOutputFile());
             }
         } catch (DBException e) {
@@ -33,13 +31,5 @@ public class DatabaseExec extends MusicXmlScript {
 
     public void setTestDatabase(boolean testDatabase) {
         this.testDatabase = testDatabase;
-    }
-
-    public void setCreateDatabase(boolean createDatabase) {
-        this.createDatabase = createDatabase;
-    }
-
-    public void setGenerateSchema(boolean generateSchema) {
-        this.generateSchema = generateSchema;
     }
 }
