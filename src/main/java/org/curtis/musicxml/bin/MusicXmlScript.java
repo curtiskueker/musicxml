@@ -35,8 +35,6 @@ public abstract class MusicXmlScript {
     private String inputFile;
     private String scoreName;
     private Boolean skipComments = false;
-    private boolean createDatabase;
-    private boolean generateSchema;
 
     public Integer getScoreId() {
         return scoreId;
@@ -78,22 +76,6 @@ public abstract class MusicXmlScript {
         this.skipComments = skipComments;
     }
 
-    public boolean isCreateDatabase() {
-        return createDatabase;
-    }
-
-    public void setCreateDatabase(boolean createDatabase) {
-        this.createDatabase = createDatabase;
-    }
-
-    public boolean isGenerateSchema() {
-        return generateSchema;
-    }
-
-    public void setGenerateSchema(boolean generateSchema) {
-        this.generateSchema = generateSchema;
-    }
-
     public abstract void execute() throws MusicXmlException;
 
     protected void setArgs(String[] args) throws MusicXmlException {
@@ -111,11 +93,6 @@ public abstract class MusicXmlScript {
                 setScoreName(arg.replace("SCORENAME=", ""));
             } else if (arg.equals("SKIP_COMMENTS")) {
                 setSkipComments(true);
-            } else if (arg.startsWith("SCHEMA_FILE=")) {
-                setGenerateSchema(true);
-                setOutputFile(arg.replace("SCHEMA_FILE=", ""));
-            } else if (arg.equals("CREATE_SCHEMA")) {
-                setGenerateSchema(true);
             }
         }
 
