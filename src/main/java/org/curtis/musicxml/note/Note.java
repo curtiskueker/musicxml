@@ -68,7 +68,7 @@ public class Note extends MusicData {
     @JoinColumn(name = "time_modification_id")
     private TimeModification timeModification;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sted_id")
+    @JoinColumn(name = "stem_id")
     private Stem stem;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "notehead_id")

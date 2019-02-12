@@ -18,7 +18,6 @@ public class DatabaseExec extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         try {
             if (isCreateDatabase()) {
-                MusicXmlUtil.getNewDbTransaction();
                 DBSessionFactory.createDb();
                 System.err.println("Database created");
             }
@@ -29,7 +28,7 @@ public class DatabaseExec extends MusicXmlScript {
             if (isGenerateSchema()) {
                 MusicXmlUtil.getNewDbTransaction();
                 DBSessionFactory.generateDbSchema(getOutputFile());
-                System.err.println("Database schemal file output: " + getOutputFile());
+                System.err.println("Database schema file output: " + getOutputFile());
             }
         } catch (DBException e) {
             throw new MusicXmlException(e);
