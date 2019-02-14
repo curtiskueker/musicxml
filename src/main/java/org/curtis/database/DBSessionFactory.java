@@ -1,6 +1,7 @@
 package org.curtis.database;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.util.FileUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -111,9 +112,11 @@ public class DBSessionFactory {
     public static void generateDbSchema(String fileLocation) throws DBException {
         try {
             DBSessionFactory dbSessionFactory = new DBSessionFactory();
-            dbSessionFactory.getAdditionalProperties().put("javax.persistence.schema-generation.scripts.create-target", fileLocation);
+            String tempSchemaFile = "/tmp/" + FileUtil.getTempFilename("sql");
+            dbSessionFactory.getAdditionalProperties().put("javax.persistence.schema-generation.scripts.create-target", tempSchemaFile);
             dbSessionFactory.getAdditionalProperties().putAll(generateSchemaProperties);
             dbSessionFactory.instantiateSessionFactory();
+            FileUtil.moveFile(tempSchemaFile, fileLocation);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DBException(e);

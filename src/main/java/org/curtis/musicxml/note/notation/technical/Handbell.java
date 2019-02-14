@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("handbell")
 public class Handbell extends Technical {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "handbell_type")
     private HandbellType handbellType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

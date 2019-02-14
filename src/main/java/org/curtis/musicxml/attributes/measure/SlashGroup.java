@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "slash_group")
 public class SlashGroup extends DatabaseItem {
     @Enumerated(EnumType.STRING)
+    @Column(name = "slash_type")
     private NoteTypeValue slashType;
     @Column(name = "slash_dots")
     private Integer slashDots = 0;

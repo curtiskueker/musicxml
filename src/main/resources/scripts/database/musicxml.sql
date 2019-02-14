@@ -883,7 +883,7 @@
         print_object bit,
         value varchar(255),
         line_type varchar(255),
-        connectionType varchar(255),
+        connection_type varchar(255),
         orientation varchar(255),
         fermata_shape varchar(255),
         direction varchar(255),
@@ -1217,7 +1217,7 @@
     create table slash_group (
        id integer not null auto_increment,
         slash_dots integer,
-        slashType varchar(255),
+        slash_type varchar(255),
         primary key (id)
     ) engine=MyISAM;
 
@@ -1312,7 +1312,7 @@
         hole_type varchar(255),
         bend_alter decimal(12,4),
         bend_type varchar(255),
-        handbellType varchar(255),
+        handbell_type varchar(255),
         harmonic_pitch varchar(255),
         harmonic_type varchar(255),
         print_object bit,

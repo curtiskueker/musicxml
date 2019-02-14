@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 @DiscriminatorValue("slur")
 public class Slur extends Notation {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "connection_type")
     private Connection connectionType;
     @Column
     private Integer number;
