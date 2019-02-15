@@ -10,7 +10,8 @@ public class ToDatabase extends ToInput {
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Score Name: ");
-        inputRow1.setInputType(InputType.INPUT_LARGE);
+        inputRow1.setInputType(InputType.INPUT);
+        inputRow1.setInputSize(InputRow.LARGE_INPUT_SIZE);
         inputRow1.setName("scoreName");
         getInputRows().add(inputRow1);
     }

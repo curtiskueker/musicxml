@@ -16,7 +16,8 @@ public class ToPdf extends ToInput {
 
         InputRow inputRow2 = new InputRow();
         inputRow2.setText("Output Filename: ");
-        inputRow2.setInputType(InputType.INPUT_SMALL);
+        inputRow2.setInputType(InputType.INPUT);
+        inputRow2.setInputSize(InputRow.SMALL_INPUT_SIZE);
         inputRow2.setName("outputFile");
         getInputRows().add(inputRow2);
     }

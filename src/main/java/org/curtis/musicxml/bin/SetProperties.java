@@ -13,6 +13,7 @@ public class SetProperties extends MusicXmlScript {
     private String password;
     private String databaseName;
     private String server;
+    private String databaseType;
     private String lilypondLocation;
     private String pdfReaderLocation;
 
@@ -27,6 +28,7 @@ public class SetProperties extends MusicXmlScript {
         stringBuilder.append(getPropertyString("musicxml.database.password", password));
         stringBuilder.append(getPropertyString("musicxml.database.name", databaseName));
         stringBuilder.append(getPropertyString("musicxml.database.server", server));
+        stringBuilder.append(getPropertyString("musicxml.database.type", databaseType));
         stringBuilder.append(getPropertyString("location.lilypond", lilypondLocation));
         stringBuilder.append(getPropertyString("location.pdfreader", pdfReaderLocation));
 
@@ -71,6 +73,10 @@ public class SetProperties extends MusicXmlScript {
 
     public void setServer(String server) {
         this.server = server;
+    }
+
+    public void setDatabaseType(String databaseType) {
+        this.databaseType = databaseType;
     }
 
     public void setLilypondLocation(String lilypondLocation) {

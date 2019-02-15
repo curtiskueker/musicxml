@@ -2,7 +2,6 @@ package org.curtis.ui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.input.DataInput;
 import org.curtis.ui.input.DatabaseInput;
@@ -101,8 +100,6 @@ public class MusicXmlTasks {
     private static final int NUMBER_OF_ROWS = 8;
     private int rowIndex = 0;
 
-    private static final int SMALL_INPUT_SIZE = 150;
-    private static final int LARGE_INPUT_SIZE = 300;
     private static final int CHOOSER_SIZE = 450;
 
     public MusicXmlTasks() {
@@ -173,7 +170,11 @@ public class MusicXmlTasks {
                         break;
                     case "PDF File":
                         if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond"))) {
-                            addFormRow(InputType.BOLD_LABEL, "", "Set Lilypond Location in Set Properties to create PDF file", "");
+                            InputRow lilypondTextInputRow = new InputRow();
+                            lilypondTextInputRow.setInputType(InputType.LABEL);
+                            lilypondTextInputRow.setBoldText(true);
+                            lilypondTextInputRow.setValue("Set Lilypond Location in Set Properties to create PDF file");
+                            addFormRow(lilypondTextInputRow);
                         } else {
                             toInput = new ToPdf();
                         }
@@ -185,7 +186,10 @@ public class MusicXmlTasks {
         if (fromInput != null && toInput != null) {
             displayDataInput(fromInput);
             displayDataInput(toInput);
-            addFormRow(InputType.BUTTON, "submit", "", "");
+            InputRow buttonInputRow = new InputRow();
+            buttonInputRow.setInputType(InputType.BUTTON);
+            buttonInputRow.setName("Submit");
+            addFormRow(buttonInputRow);
         }
 
         clearStatusArea();
@@ -196,48 +200,41 @@ public class MusicXmlTasks {
     private void displayDataInput(DataInput dataInput) {
         String title = dataInput.getTitle();
         if (StringUtil.isNotEmpty(title)) {
-            addFormRow(InputType.BOLD_LABEL, "", title, "");
+            InputRow titleInputRow = new InputRow();
+            titleInputRow.setInputType(InputType.LABEL);
+            titleInputRow.setBoldText(true);
+            titleInputRow.setValue(title);
+            addFormRow(titleInputRow);
         }
 
         for (InputRow inputRow : dataInput.getInputRows()) {
             if (rowIndex < NUMBER_OF_ROWS) formElementTextLabels.get(rowIndex).setText(inputRow.getText());
-            addFormRow(inputRow.getInputType(), inputRow.getName(), inputRow.getValue(), inputRow.getSelectedFilename());
+            addFormRow(inputRow);
         }
     }
 
-    private void addFormRow(InputType inputType, String elementName, String elementValue, String selectedFilename) {
+    private void addFormRow(InputRow inputRow) {
         if (rowIndex >= NUMBER_OF_ROWS) return;
 
-        addFormElement(rightPanels.get(rowIndex), inputType, elementName, elementValue, selectedFilename);
+        addFormElement(rightPanels.get(rowIndex), inputRow);
         rowIndex++;
     }
 
-    private void addFormElement(JPanel panel, InputType inputType, String elementName, String elementValue, String selectedFilename) {
+    private void addFormElement(JPanel panel, InputRow inputRow) {
         Component component = null;
 
-        switch (inputType) {
+        switch (inputRow.getInputType()) {
             case LABEL:
                 JLabel label = new JLabel();
-                label.setText(elementValue);
+                if (inputRow.isBoldText()) label.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 16));
+                label.setText(inputRow.getValue());
                 panel.add(label, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 break;
-            case BOLD_LABEL:
-                JLabel boldLabel = new JLabel();
-                boldLabel.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 16));
-                boldLabel.setText(elementValue);
-                panel.add(boldLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-                break;
-            case INPUT_SMALL:
+            case INPUT:
                 JTextField smallTextField = new JTextField();
-                smallTextField.setText(elementValue);
-                panel.add(smallTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), 0, false));
+                smallTextField.setText(inputRow.getValue());
+                panel.add(smallTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(inputRow.getInputSize(), -1), new Dimension(inputRow.getInputSize(), -1), new Dimension(inputRow.getInputSize(), -1), 0, false));
                 component = smallTextField;
-                break;
-            case INPUT_LARGE:
-                JTextField largeTextField = new JTextField();
-                largeTextField.setText(elementValue);
-                panel.add(largeTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(LARGE_INPUT_SIZE, -1), new Dimension(LARGE_INPUT_SIZE, -1), new Dimension(LARGE_INPUT_SIZE, -1), 0, false));
-                component = largeTextField;
                 break;
             case PASSWORD:
                 panel.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -253,8 +250,8 @@ public class MusicXmlTasks {
                 panel.add(rightPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
 
                 JPasswordField passwordField = new JPasswordField();
-                passwordField.setText(elementValue);
-                leftPanel.add(passwordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), new Dimension(SMALL_INPUT_SIZE, -1), 0, false));
+                passwordField.setText(inputRow.getValue());
+                leftPanel.add(passwordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(inputRow.getInputSize(), -1), new Dimension(inputRow.getInputSize(), -1), new Dimension(inputRow.getInputSize(), -1), 0, false));
 
                 showPassword = new JCheckBox();
                 showPassword.setBackground(new Color(-1));
@@ -275,12 +272,12 @@ public class MusicXmlTasks {
                 UIManager.put("FileChooser.readOnly", Boolean.TRUE);
                 inputFileChooser.setControlButtonsAreShown(false);
                 inputFileChooser.setAcceptAllFileFilterUsed(false);
-                if (StringUtil.isNotEmpty(elementValue)) {
-                    FileFilter inputFileFilter = new FileNameExtensionFilter(elementValue, elementValue);
+                if (StringUtil.isNotEmpty(inputRow.getValue())) {
+                    FileFilter inputFileFilter = new FileNameExtensionFilter(inputRow.getValue(), inputRow.getValue());
                     inputFileChooser.addChoosableFileFilter(inputFileFilter);
                 }
-                if (StringUtil.isNotEmpty(selectedFilename))
-                    inputFileChooser.setSelectedFile(new File(selectedFilename));
+                if (StringUtil.isNotEmpty(inputRow.getSelectedFilename()))
+                    inputFileChooser.setSelectedFile(new File(inputRow.getSelectedFilename()));
                 panel.add(inputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
                 component = inputFileChooser;
                 break;
@@ -293,8 +290,8 @@ public class MusicXmlTasks {
                 panel.add(outputFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), new Dimension(CHOOSER_SIZE, -1), 0, false));
                 component = outputFileChooser;
                 break;
-            case SCORE_NAME_SELECTION:
-                JComboBox selection = new JComboBox(MusicXmlUtil.getScoreNames().toArray());
+            case SELECTION:
+                JComboBox selection = new JComboBox(inputRow.getSelectionList());
                 selection.setBackground(new Color(-1));
                 panel.add(selection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 component = selection;
@@ -308,7 +305,7 @@ public class MusicXmlTasks {
             case BUTTON:
                 JButton button = new JButton();
                 button.setBackground(new Color(-1));
-                button.setText("Submit");
+                button.setText(inputRow.getName());
                 panel.add(button, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
                 button.addActionListener(new ActionListener() {
@@ -328,7 +325,7 @@ public class MusicXmlTasks {
                 break;
         }
 
-        if (component != null) componentMap.put(elementName, component);
+        if (component != null && StringUtil.isNotEmpty(inputRow.getName())) componentMap.put(inputRow.getName(), component);
     }
 
     private void handleForm() {

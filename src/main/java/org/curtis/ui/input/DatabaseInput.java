@@ -32,7 +32,8 @@ public class DatabaseInput extends FromInput {
 
         InputRow inputRow5 = new InputRow();
         inputRow5.setText("Schema Filename (.sql): ");
-        inputRow5.setInputType(InputType.INPUT_SMALL);
+        inputRow5.setInputType(InputType.INPUT);
+        inputRow5.setInputSize(InputRow.SMALL_INPUT_SIZE);
         inputRow5.setName("schemaFile");
         getInputRows().add(inputRow5);
     }

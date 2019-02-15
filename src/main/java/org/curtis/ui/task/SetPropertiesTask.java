@@ -14,6 +14,7 @@ public class SetPropertiesTask extends MusicXmlTask {
     private String password;
     private String databaseName;
     private String server;
+    private String databaseType;
     private String lilypondLocation;
     private String pdfReaderLocation;
 
@@ -29,6 +30,7 @@ public class SetPropertiesTask extends MusicXmlTask {
         setProperties.setPassword(password);
         setProperties.setDatabaseName(databaseName);
         setProperties.setServer(server);
+        setProperties.setDatabaseType(databaseType);
         setProperties.setLilypondLocation(lilypondLocation);
         setProperties.setPdfReaderLocation(pdfReaderLocation);
 
@@ -48,6 +50,8 @@ public class SetPropertiesTask extends MusicXmlTask {
         databaseName = databaseNameField.getText();
         JTextField serverField = (JTextField)componentMap.get("server");
         server = serverField.getText();
+        JComboBox databaseTypeSelection = (JComboBox) componentMap.get("databaseType");
+        databaseType = (String)databaseTypeSelection.getSelectedItem();
         JFileChooser lilypondChooser = (JFileChooser) componentMap.get("lilypondLocation");
         File lilypondFile = lilypondChooser.getSelectedFile();
         if (lilypondFile != null) lilypondLocation = lilypondFile.getAbsolutePath();
