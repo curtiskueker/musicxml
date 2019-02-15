@@ -11,18 +11,20 @@ USERNAME=''
 PASSWORD=''
 DATABASE=''
 SERVER=''
+DATABASE_TYPE=''
 LILYPOND=''
 PDF_READER=''
 
-while getopts 'd:l:p:r:s:u:' flag; do
+while getopts 'd:l:p:r:s:t:u:' flag; do
   case "${flag}" in
     d) DATABASE="${OPTARG}" ;;
     l) LILYPOND="${OPTARG}" ;;
     p) PASSWORD="${OPTARG}" ;;
     r) PDF_READER="${OPTARG}" ;;
     s) SERVER="${OPTARG}" ;;
+    t) DATABASE_TYPE="${OPTARG}" ;;
     u) USERNAME="${OPTARG}" ;;
   esac
 done
 
-java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.SetProperties USERNAME=$USERNAME PASSWORD=$PASSWORD DATABASE=$DATABASE SERVER=$SERVER LILYPOND=$LILYPOND PDF_READER=$PDF_READER
+java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.SetProperties USERNAME=$USERNAME PASSWORD=$PASSWORD DATABASE=$DATABASE SERVER=$SERVER DATABASE_TYPE=$DATABASE_TYPE LILYPOND=$LILYPOND PDF_READER=$PDF_READER
