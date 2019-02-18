@@ -1,7 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.attributes.Image;
-import org.curtis.musicxml.direction.Offset;
+import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.SoundMidi;
 import org.curtis.musicxml.direction.directiontype.Accord;
@@ -373,10 +373,10 @@ public class DirectionFactory {
         return noteMetronome;
     }
 
-    public static Offset newOffset(Element element) {
+    public static DirectionOffset newOffset(Element element) {
         if (element == null) return null;
 
-        Offset offset = new Offset();
+        DirectionOffset offset = new DirectionOffset();
         offset.setDivisions(MathUtil.newBigDecimal(XmlUtil.getElementText(element)));
         offset.setSound(TypeUtil.getYesNo(element.getAttribute("sound")));
 

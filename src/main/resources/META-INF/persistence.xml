@@ -65,7 +65,7 @@
         <class>org.curtis.musicxml.direction.EditorialVoiceDirection</class>
         <class>org.curtis.musicxml.direction.Feature</class>
         <class>org.curtis.musicxml.direction.Grouping</class>
-        <class>org.curtis.musicxml.direction.Offset</class>
+        <class>org.curtis.musicxml.direction.DirectionOffset</class>
         <class>org.curtis.musicxml.direction.Print</class>
         <class>org.curtis.musicxml.direction.Sound</class>
         <class>org.curtis.musicxml.direction.SoundMidi</class>

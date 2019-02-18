@@ -9,6 +9,7 @@ public class InputRow {
     private boolean isBoldText = false;
     private int inputSize = SMALL_INPUT_SIZE;
     private Object[] selectionList = {};
+    private Object selectedItem;
 
     public static final int SMALL_INPUT_SIZE = 150;
     public static final int LARGE_INPUT_SIZE = 300;
@@ -79,5 +80,13 @@ public class InputRow {
 
     public void setSelectionList(Object[] selectionList) {
         this.selectionList = selectionList;
+    }
+
+    public Object getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(Object selectedItem) {
+        this.selectedItem = selectedItem;
     }
 }

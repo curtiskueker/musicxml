@@ -2,6 +2,7 @@ package org.curtis.database;
 
 import org.curtis.properties.AppProperties;
 import org.curtis.util.FileUtil;
+import org.curtis.util.StringUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,8 +14,8 @@ import java.util.Properties;
 public class DBSessionFactory {
     private static DBSessionFactory sessionFactory;
 
-    // The actual database name
     private String databaseName;
+    private String databaseType;
 
     private String persistenceUnitName;
 
@@ -22,12 +23,22 @@ public class DBSessionFactory {
 
     private EntityManager entityManager = null;
 
-    // Holds the JpaTransaction for the thread
     private DBTransaction transaction = null;
 
     private static final Map<Object, Object> createDbProperties;
     private static final Map<Object, Object> generateSchemaProperties;
+
+    private static final Map<Object, Object> mySqlProperties;
+    private static final Map<Object, Object> postgresProperties;
     static {
+        mySqlProperties = new HashMap<>();
+        mySqlProperties.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+        mySqlProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+
+        postgresProperties = new HashMap<>();
+        postgresProperties.put("hibernate.connection.driver_class", "org.postgresql.Driver");
+        postgresProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+
         createDbProperties = new HashMap<>();
         createDbProperties.put("hibernate.hbm2ddl.auto", "update");
 
@@ -36,28 +47,43 @@ public class DBSessionFactory {
         generateSchemaProperties.put("hibernate.hbm2ddl.delimiter", ";");
     }
 
+    private Properties databaseProperties = new Properties();
     private Properties additionalProperties = new Properties();
 
     private DBSessionFactory() throws DBException {
         databaseName = AppProperties.getRequiredProperty("database.name");
+        databaseType = AppProperties.getRequiredProperty("database.type");
         persistenceUnitName = AppProperties.getRequiredProperty("database.persistenceunit.name");
     }
 
     private void instantiateSessionFactory() throws DBException {
         try {
+            if (StringUtil.isEmpty(databaseType)) throw new DBException("Error: Database type undefined");
+
             String name = AppProperties.getString("database.username");
             String password = AppProperties.getString("database.password");
             String dbServer = AppProperties.getString("database.server");
 
-            String url = "jdbc:mysql://" + dbServer + "/" + databaseName;
-
             Properties jpaProperties = new Properties();
+
+            switch (databaseType) {
+                case "mysql":
+                    databaseProperties.putAll(mySqlProperties);
+                    break;
+                case "postgresql":
+                    databaseProperties.putAll(postgresProperties);
+                    break;
+                default:
+                    throw new DBException("Error: Unknown database type: " + databaseType);
+            }
+            jpaProperties.putAll(databaseProperties);
+
+            String url = "jdbc:" + databaseType + "://" + dbServer + "/" + databaseName;
+
             jpaProperties.put("hibernate.connection.url", url);
             jpaProperties.put("hibernate.connection.username", name);
             jpaProperties.put("hibernate.connection.password", password);
 
-            jpaProperties.put("hibernate.connection.driver_class", AppProperties.getString("database.hibernate.driver_class"));
-            jpaProperties.put("hibernate.dialect", AppProperties.getString("database.hibernate.dialect"));
             jpaProperties.put("hibernate.show_sql", AppProperties.getBoolean("database.hibernate.show_sql"));
             jpaProperties.put("hibernate.format_sql", AppProperties.getBoolean("database.hibernate.format_sql"));
 
@@ -132,12 +158,13 @@ public class DBSessionFactory {
     }
 
     public synchronized void closeTransaction() throws DBException {
+        if (transaction.isActive()) transaction.commit();
+        transaction = null;
+
         if(entityManager != null) {
             entityManager.close();
             entityManager = null;
         }
-
-        transaction = null;
     }
 
     private DBTransaction createTransaction() throws DBException {

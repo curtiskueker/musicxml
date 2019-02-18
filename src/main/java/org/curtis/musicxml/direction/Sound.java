@@ -25,7 +25,7 @@ public class Sound extends MusicData {
     private List<SoundMidi> soundMidis = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
-    private Offset offset;
+    private DirectionOffset offset;
     @Column(precision = 12, scale = 4)
     private BigDecimal tempo;
     @Column(precision = 12, scale = 4)
@@ -73,11 +73,11 @@ public class Sound extends MusicData {
         this.soundMidis = soundMidis;
     }
 
-    public Offset getOffset() {
+    public DirectionOffset getOffset() {
         return offset;
     }
 
-    public void setOffset(Offset offset) {
+    public void setOffset(DirectionOffset offset) {
         this.offset = offset;
     }
 

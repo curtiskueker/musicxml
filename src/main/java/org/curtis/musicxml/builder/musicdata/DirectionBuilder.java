@@ -2,7 +2,7 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.EditorialVoiceDirection;
-import org.curtis.musicxml.direction.Offset;
+import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 
@@ -45,7 +45,7 @@ public class DirectionBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    public static String buildOffset(Offset offset) {
+    public static String buildOffset(DirectionOffset offset) {
         if (offset == null) return "";
 
         DirectionBuilder directionBuilder = new DirectionBuilder();

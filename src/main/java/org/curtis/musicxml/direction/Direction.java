@@ -28,7 +28,7 @@ public class Direction extends MusicData {
     private List<DirectionTypeList> directionTypeLists = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
-    private Offset offset;
+    private DirectionOffset offset;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_voice_direction_id")
     private EditorialVoiceDirection editorialVoiceDirection;
@@ -55,11 +55,11 @@ public class Direction extends MusicData {
         this.directionTypeLists = directionTypeLists;
     }
 
-    public Offset getOffset() {
+    public DirectionOffset getOffset() {
         return offset;
     }
 
-    public void setOffset(Offset offset) {
+    public void setOffset(DirectionOffset offset) {
         this.offset = offset;
     }
 

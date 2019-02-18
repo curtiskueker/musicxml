@@ -137,7 +137,7 @@ public class ScoreBuilder extends BaseBuilder {
                     MusicData musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
                     measure.getMusicDataList().add(musicData);
                 } catch (MusicXmlException e) {
-                    displayMeasureMessage(measure, "MusicData not found for item for " + measureItem.getMusicDataType());
+                    displayMeasureMessage(measure, "MusicData not found for " + measureItem.getMusicDataType());
                 }
             }
         }

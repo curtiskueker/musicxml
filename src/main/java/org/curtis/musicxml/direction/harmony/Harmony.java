@@ -3,7 +3,7 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.direction.Offset;
+import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -35,7 +35,7 @@ public class Harmony extends MusicData {
     private Frame frame;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offset_id")
-    private Offset offset;
+    private DirectionOffset offset;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
@@ -78,11 +78,11 @@ public class Harmony extends MusicData {
         this.frame = frame;
     }
 
-    public Offset getOffset() {
+    public DirectionOffset getOffset() {
         return offset;
     }
 
-    public void setOffset(Offset offset) {
+    public void setOffset(DirectionOffset offset) {
         this.offset = offset;
     }
 

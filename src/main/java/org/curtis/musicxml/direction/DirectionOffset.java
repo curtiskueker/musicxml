@@ -8,14 +8,14 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "offset")
-public class Offset extends DatabaseItem {
+@Table(name = "direction_offset")
+public class DirectionOffset extends DatabaseItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal divisions;
     @Column
     private Boolean sound;
 
-    public Offset() {
+    public DirectionOffset() {
 
     }
 

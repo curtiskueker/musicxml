@@ -292,6 +292,7 @@ public class MusicXmlTasks {
                 break;
             case SELECTION:
                 JComboBox selection = new JComboBox(inputRow.getSelectionList());
+                selection.setSelectedItem(inputRow.getSelectedItem());
                 selection.setBackground(new Color(-1));
                 panel.add(selection, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
                 component = selection;
@@ -389,6 +390,7 @@ public class MusicXmlTasks {
     private void setupStatusArea() {
         PrintStream statusPrintStream = new PrintStream(new StatusOutput(statusTextArea));
         System.setErr(statusPrintStream);
+        System.setOut(statusPrintStream);
     }
 
     private void clearStatusArea() {
