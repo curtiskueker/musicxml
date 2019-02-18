@@ -19,7 +19,6 @@ import org.curtis.musicxml.note.notation.articulation.Stress;
 import org.curtis.musicxml.note.notation.articulation.StrongAccent;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.articulation.Unstress;
-import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,31 +54,31 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildAccent(Accent accent) {
-        buildPlacement("accent", accent.getPlacement());
+        buildPlacement("accent", accent.getPrintPlacement());
     }
 
     private void buildStrongAccent(StrongAccent strongAccent) {
-        buildPlacementWithAttribute("strong-accent", strongAccent.getPlacement(), "type", BuilderUtil.enumValue(strongAccent.getType()));
+        buildPlacementWithAttribute("strong-accent", strongAccent.getPrintPlacement(), "type", BuilderUtil.enumValue(strongAccent.getType()));
     }
 
     private void buildStaccato(Staccato staccato) {
-        buildPlacement("staccato", staccato.getPlacement());
+        buildPlacement("staccato", staccato.getPrintPlacement());
     }
 
     private void buildTenuto(Tenuto tenuto) {
-        buildPlacement("tenuto", tenuto.getPlacement());
+        buildPlacement("tenuto", tenuto.getPrintPlacement());
     }
 
     private void buildDetachedLegato(DetachedLegato detachedLegato) {
-        buildPlacement("detached-legato", detachedLegato.getPlacement());
+        buildPlacement("detached-legato", detachedLegato.getPrintPlacement());
     }
 
     private void buildStaccatissimo(Staccatissimo staccatissimo) {
-        buildPlacement("staccatissimo", staccatissimo.getPlacement());
+        buildPlacement("staccatissimo", staccatissimo.getPrintPlacement());
     }
 
     private void buildSpiccato(Spiccato spiccato) {
-        buildPlacement("spiccato", spiccato.getPlacement());
+        buildPlacement("spiccato", spiccato.getPrintPlacement());
     }
 
     private void buildScoop(Scoop scoop) {
@@ -106,15 +105,15 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildCaesura(Caesura caesura) {
-        buildPlacement("caesura", caesura.getPlacement());
+        buildPlacement("caesura", caesura.getPrintPlacement());
     }
 
     private void buildStress(Stress stress) {
-        buildPlacement("stress", stress.getPlacement());
+        buildPlacement("stress", stress.getPrintPlacement());
     }
 
     private void buildUnstress(Unstress unstress) {
-        buildPlacement("unstress", unstress.getPlacement());
+        buildPlacement("unstress", unstress.getPrintPlacement());
     }
 
     private void buildOtherArticulation(OtherArticulation otherArticulation) {

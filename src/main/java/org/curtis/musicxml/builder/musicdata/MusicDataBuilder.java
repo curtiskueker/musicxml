@@ -26,7 +26,7 @@ import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Line;
-import org.curtis.musicxml.note.Placement;
+import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.lyric.Extend;
@@ -64,11 +64,11 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         buildElementWithAttributes("extend", attributes);
     }
 
-    protected void buildPlacement(String elementName, Placement placement) {
+    protected void buildPlacement(String elementName, PrintPlacement placement) {
         buildPlacementWithAttribute(elementName, placement, "", "");
     }
 
-    protected void buildPlacementWithAttribute(String elementName, Placement placement, String attributeName, String attributeValue) {
+    protected void buildPlacementWithAttribute(String elementName, PrintPlacement placement, String attributeName, String attributeValue) {
         if (placement == null) {
             if (StringUtil.isEmpty(attributeValue)) buildElement(elementName);
             else buildElementWithAttribute(elementName, attributeName, attributeValue);

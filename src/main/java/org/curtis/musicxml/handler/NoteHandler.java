@@ -113,7 +113,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "dot":
                     Dot dot = new Dot();
-                    dot.setPlacement(PlacementFactory.newPlacement(noteSubelement));
+                    dot.setPrintPlacement(PlacementFactory.newPlacement(noteSubelement));
                     note.getDots().add(dot);
                     break;
                 case "accidental":

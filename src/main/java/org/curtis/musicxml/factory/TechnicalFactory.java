@@ -115,7 +115,7 @@ public class TechnicalFactory {
     }
 
     private static void populateHeelToe(HeelToe heelToe, Element element) {
-        heelToe.setPlacement(PlacementFactory.newPlacement(element));
+        heelToe.setPrintPlacement(PlacementFactory.newPlacement(element));
         heelToe.setSubstitution(TypeUtil.getYesNo(element.getAttribute("substitution")));
     }
 }

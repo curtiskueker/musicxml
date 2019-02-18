@@ -14,8 +14,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "placement")
-public class Placement extends DatabaseItem {
+@Table(name = "print_placement")
+public class PrintPlacement extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
@@ -23,7 +23,7 @@ public class Placement extends DatabaseItem {
     @Column
     private Location placement;
 
-    public Placement() {
+    public PrintPlacement() {
 
     }
 

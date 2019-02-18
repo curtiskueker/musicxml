@@ -74,11 +74,11 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildUpBow(UpBow upBow) {
-        buildPlacement("up-bow", upBow.getPlacement());
+        buildPlacement("up-bow", upBow.getPrintPlacement());
     }
 
     private void buildDownBow(DownBow downBow) {
-        buildPlacement("down-bow", downBow.getPlacement());
+        buildPlacement("down-bow", downBow.getPrintPlacement());
     }
 
     private void buildHarmonic(Harmonic harmonic) {
@@ -116,11 +116,11 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildOpenString(OpenString openString) {
-        buildPlacement("down-bow", openString.getPlacement());
+        buildPlacement("down-bow", openString.getPrintPlacement());
     }
 
     private void buildThumbPosition(ThumbPosition thumbPosition) {
-        buildPlacement("thumb-position", thumbPosition.getPlacement());
+        buildPlacement("thumb-position", thumbPosition.getPrintPlacement());
     }
 
     private void buildPluck(Pluck pluck) {
@@ -128,19 +128,19 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildDoubleTongue(DoubleTongue doubleTongue) {
-        buildPlacement("double-tongue", doubleTongue.getPlacement());
+        buildPlacement("double-tongue", doubleTongue.getPrintPlacement());
     }
 
     private void buildTripleTongue(TripleTongue tripleTongue) {
-        buildPlacement("triple-tongue", tripleTongue.getPlacement());
+        buildPlacement("triple-tongue", tripleTongue.getPrintPlacement());
     }
 
     private void buildStopped(Stopped stopped) {
-        buildPlacement("stopped", stopped.getPlacement());
+        buildPlacement("stopped", stopped.getPrintPlacement());
     }
 
     private void buildSnapPizzicato(SnapPizzicato snapPizzicato) {
-        buildPlacement("snap-pizzicato", snapPizzicato.getPlacement());
+        buildPlacement("snap-pizzicato", snapPizzicato.getPrintPlacement());
     }
 
     private void buildHammerOnPullOf(HammerOnPullOff hammerOnPullOff) {
@@ -181,11 +181,11 @@ public class TechnicalBuilder extends MusicDataBuilder {
 
     private void buildHeelToe(HeelToe heelToe) {
         String elementName = heelToe instanceof Heel ? "heel" : "toe";
-        buildPlacementWithAttribute(elementName, heelToe.getPlacement(), "substitution", BuilderUtil.yesOrNo(heelToe.getSubstitution()));
+        buildPlacementWithAttribute(elementName, heelToe.getPrintPlacement(), "substitution", BuilderUtil.yesOrNo(heelToe.getSubstitution()));
     }
 
     private void buildFingernails(Fingernails fingernails) {
-        buildPlacement("fingernails", fingernails.getPlacement());
+        buildPlacement("fingernails", fingernails.getPrintPlacement());
     }
 
     private void buildHole(Hole hole) {

@@ -60,7 +60,7 @@ public class OrnamentHandler extends BaseHandler {
                     break;
                 case "schleifer":
                     Schleifer schleifer = new Schleifer();
-                    schleifer.setPlacement(PlacementFactory.newPlacement(ornamentElement));
+                    schleifer.setPrintPlacement(PlacementFactory.newPlacement(ornamentElement));
                     ornament = schleifer;
                     break;
                 case "tremolo":

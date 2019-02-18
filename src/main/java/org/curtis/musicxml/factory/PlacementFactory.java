@@ -5,7 +5,7 @@ import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
-import org.curtis.musicxml.note.Placement;
+import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.util.MathUtil;
 import org.curtis.xml.XmlUtil;
@@ -18,7 +18,7 @@ public class PlacementFactory {
 
     }
 
-    public static Placement newPlacement(Element element) {
+    public static PrintPlacement newPlacement(Element element) {
         if (element == null) return null;
 
         PrintStyle printStyle = FormattingFactory.newPrintStyle(element);
@@ -26,7 +26,7 @@ public class PlacementFactory {
 
         if (printStyle == null && placementLocation == null) return null;
 
-        Placement placement = new Placement();
+        PrintPlacement placement = new PrintPlacement();
         placement.setPrintStyle(printStyle);
         placement.setPlacement(placementLocation);
 

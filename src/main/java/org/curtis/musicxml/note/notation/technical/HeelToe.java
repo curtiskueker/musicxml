@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.note.Placement;
+import org.curtis.musicxml.note.PrintPlacement;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,17 +11,17 @@ import javax.persistence.OneToOne;
 @MappedSuperclass
 public abstract class HeelToe extends Technical {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "placement_id")
-    private Placement placement;
+    @JoinColumn(name = "print_placement_id")
+    private PrintPlacement printPlacement;
     @Column
     private Boolean substitution;
 
-    public Placement getPlacement() {
-        return placement;
+    public PrintPlacement getPrintPlacement() {
+        return printPlacement;
     }
 
-    public void setPlacement(Placement placement) {
-        this.placement = placement;
+    public void setPrintPlacement(PrintPlacement printPlacement) {
+        this.printPlacement = printPlacement;
     }
 
     public Boolean getSubstitution() {

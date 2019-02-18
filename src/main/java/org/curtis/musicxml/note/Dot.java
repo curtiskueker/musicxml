@@ -12,18 +12,18 @@ import javax.persistence.Table;
 @Table(name = "dot")
 public class Dot extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "placement_id")
-    private Placement placement;
+    @JoinColumn(name = "print_placement_id")
+    private PrintPlacement printPlacement;
 
     public Dot() {
 
     }
 
-    public Placement getPlacement() {
-        return placement;
+    public PrintPlacement getPrintPlacement() {
+        return printPlacement;
     }
 
-    public void setPlacement(Placement placement) {
-        this.placement = placement;
+    public void setPrintPlacement(PrintPlacement printPlacement) {
+        this.printPlacement = printPlacement;
     }
 }

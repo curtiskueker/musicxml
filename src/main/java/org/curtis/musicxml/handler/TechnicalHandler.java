@@ -62,12 +62,12 @@ public class TechnicalHandler extends BaseHandler {
             switch (technicalElementName) {
                 case "up-bow":
                     UpBow upBow = new UpBow();
-                    upBow.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    upBow.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = upBow;
                     break;
                 case "down-bow":
                     DownBow downBow = new DownBow();
-                    downBow.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    downBow.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = downBow;
                     break;
                 case "harmonic":
@@ -100,12 +100,12 @@ public class TechnicalHandler extends BaseHandler {
                     break;
                 case "open-string":
                     OpenString openString = new OpenString();
-                    openString.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    openString.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = openString;
                     break;
                 case "thumb-position":
                     ThumbPosition thumbPosition = new ThumbPosition();
-                    thumbPosition.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    thumbPosition.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = thumbPosition;
                     break;
                 case "fingering":
@@ -118,22 +118,22 @@ public class TechnicalHandler extends BaseHandler {
                     break;
                 case "double-tongue":
                     DoubleTongue doubleTongue = new DoubleTongue();
-                    doubleTongue.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    doubleTongue.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = doubleTongue;
                     break;
                 case "triple-tongue":
                     TripleTongue tripleTongue = new TripleTongue();
-                    tripleTongue.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    tripleTongue.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = tripleTongue;
                     break;
                 case "stopped":
                     Stopped stopped = new Stopped();
-                    stopped.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    stopped.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = stopped;
                     break;
                 case "snap-pizzicato":
                     SnapPizzicato snapPizzicato = new SnapPizzicato();
-                    snapPizzicato.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    snapPizzicato.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = snapPizzicato;
                     break;
                 case "fret":
@@ -181,7 +181,7 @@ public class TechnicalHandler extends BaseHandler {
                     break;
                 case "fingernails":
                     Fingernails fingernails = new Fingernails();
-                    fingernails.setPlacement(PlacementFactory.newPlacement(technicalElement));
+                    fingernails.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = fingernails;
                     break;
                 case "hole":

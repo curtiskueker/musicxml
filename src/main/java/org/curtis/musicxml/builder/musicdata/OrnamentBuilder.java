@@ -93,7 +93,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     private void buildSchleifer(Schleifer schleifer) {
-        buildPlacement("schleifer", schleifer.getPlacement());
+        buildPlacement("schleifer", schleifer.getPrintPlacement());
     }
 
     private void buildTremolo(Tremolo tremolo) {

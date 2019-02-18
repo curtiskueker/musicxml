@@ -4,7 +4,7 @@ import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
-import org.curtis.musicxml.note.Placement;
+import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
@@ -53,45 +53,45 @@ public class ArticulationHandler extends BaseHandler {
             switch (articulationsSubelement.getTagName()) {
                 case "accent":
                     Accent accent = new Accent();
-                    Placement accentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    accent.setPlacement(accentPlacement);
+                    PrintPlacement accentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    accent.setPrintPlacement(accentPlacement);
                     articulation = accent;
                     break;
                 case "strong-accent":
                     StrongAccent strongAccent = new StrongAccent();
-                    Placement strongAccentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    strongAccent.setPlacement(strongAccentPlacement);
+                    PrintPlacement strongAccentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    strongAccent.setPrintPlacement(strongAccentPlacement);
                     strongAccent.setType(PlacementUtil.getLocation(articulationsSubelement.getAttribute("type")));
                     articulation = strongAccent;
                     break;
                 case "staccato":
                     Staccato staccato = new Staccato();
-                    Placement staccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    staccato.setPlacement(staccatoPlacement);
+                    PrintPlacement staccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    staccato.setPrintPlacement(staccatoPlacement);
                     articulation = staccato;
                     break;
                 case "tenuto":
                     Tenuto tenuto = new Tenuto();
-                    Placement tenutoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    tenuto.setPlacement(tenutoPlacement);
+                    PrintPlacement tenutoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    tenuto.setPrintPlacement(tenutoPlacement);
                     articulation = tenuto;
                     break;
                 case "detached-legato":
                     DetachedLegato detachedLegato = new DetachedLegato();
-                    Placement detachedLegatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    detachedLegato.setPlacement(detachedLegatoPlacement);
+                    PrintPlacement detachedLegatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    detachedLegato.setPrintPlacement(detachedLegatoPlacement);
                     articulation = detachedLegato;
                     break;
                 case "staccatissimo":
                     Staccatissimo staccatissimo = new Staccatissimo();
-                    Placement staccatissimoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    staccatissimo.setPlacement(staccatissimoPlacement);
+                    PrintPlacement staccatissimoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    staccatissimo.setPrintPlacement(staccatissimoPlacement);
                     articulation = staccatissimo;
                     break;
                 case "spiccato":
                     Spiccato spiccato = new Spiccato();
-                    Placement spiccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    spiccato.setPlacement(spiccatoPlacement);
+                    PrintPlacement spiccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    spiccato.setPrintPlacement(spiccatoPlacement);
                     articulation = spiccato;
                     break;
                 case "scoop":
@@ -133,20 +133,20 @@ public class ArticulationHandler extends BaseHandler {
                     break;
                 case "caesura":
                     Caesura caesura = new Caesura();
-                    Placement caesuraPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    caesura.setPlacement(caesuraPlacement);
+                    PrintPlacement caesuraPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    caesura.setPrintPlacement(caesuraPlacement);
                     articulation = caesura;
                     break;
                 case "stress":
                     Stress stress = new Stress();
-                    Placement stressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    stress.setPlacement(stressPlacement);
+                    PrintPlacement stressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    stress.setPrintPlacement(stressPlacement);
                     articulation = stress;
                     break;
                 case "unstress":
                     Unstress unstress = new Unstress();
-                    Placement unstressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    unstress.setPlacement(unstressPlacement);
+                    PrintPlacement unstressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
+                    unstress.setPrintPlacement(unstressPlacement);
                     articulation = unstress;
                     break;
                 case "other-articulation":

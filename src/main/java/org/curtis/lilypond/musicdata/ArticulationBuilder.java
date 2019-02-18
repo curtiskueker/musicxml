@@ -2,7 +2,7 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.note.Placement;
+import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
 import org.curtis.musicxml.note.notation.articulation.DetachedLegato;
@@ -17,41 +17,41 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildAccent(Accent accent) {
-        buildPlacement(accent.getPlacement());
+        buildPlacement(accent.getPrintPlacement());
         append("\\accent");
 
         return stringBuilder;
     }
 
     public StringBuilder buildStrongAccent(StrongAccent strongAccent) {
-        buildPlacement(strongAccent.getPlacement());
+        buildPlacement(strongAccent.getPrintPlacement());
         append("\\marcato");
 
         return stringBuilder;
     }
     public StringBuilder buildStaccato(Staccato staccato) {
-        buildPlacement(staccato.getPlacement());
+        buildPlacement(staccato.getPrintPlacement());
         append("\\staccato");
 
         return stringBuilder;
     }
 
     public StringBuilder buildTenuto(Tenuto tenuto) {
-        buildPlacement(tenuto.getPlacement());
+        buildPlacement(tenuto.getPrintPlacement());
         append("\\tenuto");
 
         return stringBuilder;
     }
 
     public StringBuilder buildDetachedLegato(DetachedLegato detachedLegato) {
-        buildPlacement(detachedLegato.getPlacement());
+        buildPlacement(detachedLegato.getPrintPlacement());
         append("\\portato");
 
         return stringBuilder;
     }
 
     public StringBuilder buildStaccatissimo(Staccatissimo staccatissimo) {
-        buildPlacement(staccatissimo.getPlacement());
+        buildPlacement(staccatissimo.getPrintPlacement());
         append("\\staccatissimo");
 
         return stringBuilder;
@@ -63,7 +63,7 @@ public class ArticulationBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private void buildPlacement(Placement placement) {
+    private void buildPlacement(PrintPlacement placement) {
         if (placement == null) return;
         buildPlacement(placement.getPlacement());
     }
