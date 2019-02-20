@@ -383,7 +383,7 @@ public class MusicXmlTasks {
             if (musicXmlTask != null) musicXmlTask.execute();
             System.err.println("Task finished");
         } catch (TaskException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 

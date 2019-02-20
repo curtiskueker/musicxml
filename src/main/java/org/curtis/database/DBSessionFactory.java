@@ -91,7 +91,6 @@ public class DBSessionFactory {
 
             emf = Persistence.createEntityManagerFactory(persistenceUnitName, jpaProperties);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DBException(e);
         }
     }
@@ -108,7 +107,6 @@ public class DBSessionFactory {
             dbSessionFactory.instantiateSessionFactory();
             sessionFactory = dbSessionFactory;
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DBException(e);
         }
     }

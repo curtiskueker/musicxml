@@ -10,6 +10,7 @@ public class DatabaseExec extends MusicXmlScript {
     private boolean testDatabase;
     private boolean createDatabase;
     private boolean generateSchema;
+    private String errorMessage;
 
     public DatabaseExec() {
 
@@ -18,20 +19,24 @@ public class DatabaseExec extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         try {
             if (isCreateDatabase()) {
+                errorMessage = "Unable to create database tables";
+                System.err.println("Creating database tables ...");
                 DBSessionFactory.createDb();
-                System.err.println("Database created");
+                System.err.println("Database tables created");
             }
             if (isTestDatabase()) {
+                errorMessage = "Database connection test failed";
                 MusicXmlUtil.getNewDbTransaction();
                 System.err.println("Successful database connection test");
             }
             if (isGenerateSchema()) {
+                errorMessage = "Database schema file not generated: " + getOutputFile();
                 MusicXmlUtil.getNewDbTransaction();
                 DBSessionFactory.generateDbSchema(getOutputFile());
                 System.err.println("Database schema file output: " + getOutputFile());
             }
         } catch (DBException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(errorMessage);
         }
     }
 
