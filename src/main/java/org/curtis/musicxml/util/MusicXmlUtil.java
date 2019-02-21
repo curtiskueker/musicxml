@@ -22,7 +22,6 @@ import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Score;
 import org.curtis.properties.AppProperties;
-import org.curtis.properties.PropertyFileNotFoundException;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
 import org.w3c.dom.Comment;
@@ -220,8 +219,12 @@ public class MusicXmlUtil {
                 String parentLocation = xmlComment.getParent();
                 Node parentNode = nodeMap.get(parentLocation);
                 if (parentNode == null) {
-                    parentNode = (Node)xPath.evaluate(parentLocation, document, XPathConstants.NODE);
-                    nodeMap.put(parentLocation, parentNode);
+                    if (StringUtil.isEmpty(parentLocation)) {
+                        parentNode = (Node)xPath.evaluate("/", document, XPathConstants.NODE);
+                    } else {
+                        parentNode = (Node)xPath.evaluate(parentLocation, document, XPathConstants.NODE);
+                        nodeMap.put(parentLocation, parentNode);
+                    }
                 }
                 String nextSibling = xmlComment.getNextSibling();
                 if (StringUtil.isNotEmpty(nextSibling)) {
