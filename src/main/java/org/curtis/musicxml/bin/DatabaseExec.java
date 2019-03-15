@@ -36,6 +36,8 @@ public class DatabaseExec extends MusicXmlScript {
                 System.err.println("Database schema file output: " + getOutputFile());
             }
         } catch (DBException e) {
+            // TODO: remove print stack trace
+            e.printStackTrace();
             throw new MusicXmlException(errorMessage);
         }
     }

@@ -30,6 +30,8 @@ public class DBSessionFactory {
 
     private static final Map<Object, Object> mySqlProperties;
     private static final Map<Object, Object> postgresProperties;
+    private static final Map<Object, Object> oracleProperties;
+
     static {
         mySqlProperties = new HashMap<>();
         mySqlProperties.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
@@ -38,6 +40,10 @@ public class DBSessionFactory {
         postgresProperties = new HashMap<>();
         postgresProperties.put("hibernate.connection.driver_class", "org.postgresql.Driver");
         postgresProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+
+        oracleProperties = new HashMap<>();
+        oracleProperties.put("hibernate.connection.driver_class", "oracle.jdbc.OracleDriver");
+        oracleProperties.put("hibernate.dialect", "org.hibernate.dialect.OracleDialect");
 
         createDbProperties = new HashMap<>();
         createDbProperties.put("hibernate.hbm2ddl.auto", "update");
@@ -73,12 +79,16 @@ public class DBSessionFactory {
                 case "postgresql":
                     databaseProperties.putAll(postgresProperties);
                     break;
+                case "oracle":
+                    databaseProperties.putAll(oracleProperties);
+                    break;
                 default:
                     throw new DBException("Error: Unknown database type: " + databaseType);
             }
             jpaProperties.putAll(databaseProperties);
 
-            String url = "jdbc:" + databaseType + "://" + dbServer + "/" + databaseName;
+            String protocolConnector = databaseType.equals("oracle") ? ":thin:@" : "://";
+            String url = "jdbc:" + databaseType + protocolConnector + dbServer + "/" + databaseName;
 
             jpaProperties.put("hibernate.connection.url", url);
             jpaProperties.put("hibernate.connection.username", name);
