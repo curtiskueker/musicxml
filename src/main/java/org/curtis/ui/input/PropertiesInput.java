@@ -48,9 +48,7 @@ public class PropertiesInput extends FromInput {
         InputRow inputRow5 = new InputRow();
         inputRow5.setText("Database Type: ");
         inputRow5.setInputType(InputType.SELECTION);
-        // TODO: include oracle database type
-        //String[] databaseTypes = {"mysql", "postgresql", "oracle"};
-        String[] databaseTypes = {"mysql", "postgresql"};
+        String[] databaseTypes = {"mysql", "postgresql", "oracle"};
         inputRow5.setSelectionList(databaseTypes);
         inputRow5.setSelectedItem(AppProperties.getOptionalProperty("musicxml.database.type"));
         inputRow5.setName("databaseType");
