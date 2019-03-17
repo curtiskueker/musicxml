@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 @DiscriminatorValue("effect")
 public class Effect extends Percussion {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private EffectType type;
 
     public Effect() {

@@ -27,7 +27,7 @@ public class Grouping extends MusicData {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Column
+    @Column(name = "grouping_number")
     private String number = "1";
     @Column(name = "number_of")
     private String numberOf;

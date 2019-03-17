@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 @DiscriminatorValue("metal")
 public class Metal extends Percussion {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private MetalType type;
 
     public Metal() {

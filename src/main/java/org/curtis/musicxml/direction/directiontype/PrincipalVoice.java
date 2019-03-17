@@ -18,7 +18,7 @@ public class PrincipalVoice extends DirectionType {
     @Column(name = "principal_voice")
     private String principalVoice;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private Connection type;
     @Enumerated(EnumType.STRING)
     @Column

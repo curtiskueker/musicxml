@@ -15,7 +15,7 @@ public class TraditionalKey extends Key {
     private Cancel cancel;
     @Column
     private Integer fifths;
-    @Column
+    @Column(name = "key_mode")
     private String mode;
 
     public TraditionalKey() {

@@ -2,6 +2,7 @@ package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ public abstract class HorizontalTurn extends Ornament {
     @JoinColumn(name = "trill_sound_id")
     private TrillSound trillSound;
     @Column
+    @Type(type="yes_no")
     private Boolean slash;
 
     public PrintStyle getPrintStyle() {

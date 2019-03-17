@@ -13,10 +13,10 @@ import javax.persistence.Table;
 @Table(name = "note_type")
 public class NoteType extends DatabaseItem {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "note_type_size")
     private NoteTypeValue value;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "symbol_size")
     private SymbolSize size;
 
     public NoteType() {

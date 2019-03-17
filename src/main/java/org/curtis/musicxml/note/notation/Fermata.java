@@ -21,7 +21,7 @@ public class Fermata extends Notation {
     @Column(name = "fermata_shape")
     private FermataShape fermataShape;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "type_value")
     private FermataType type;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

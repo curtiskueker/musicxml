@@ -17,9 +17,9 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("wavy line")
 public class WavyLine extends Ornament {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "connection_type")
     private Connection type;
-    @Column
+    @Column(name = "wavy_line_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")

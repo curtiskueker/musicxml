@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
 public class Image extends DirectionType {
     @Column
     private String source;
-    @Column
+    @Column(name = "direction_type")
     private String type;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")

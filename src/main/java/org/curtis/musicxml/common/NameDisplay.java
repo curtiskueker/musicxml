@@ -3,6 +3,7 @@ package org.curtis.musicxml.common;
 import org.curtis.database.DatabaseItem;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ public class NameDisplay extends DatabaseItem {
     @JoinColumn(name = "name_display_id")
     private List<Text> textList = new ArrayList<>();
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
 
     public NameDisplay() {

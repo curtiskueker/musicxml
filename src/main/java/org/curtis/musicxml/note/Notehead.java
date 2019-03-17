@@ -2,6 +2,7 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +20,10 @@ public class Notehead extends DatabaseItem {
     @Column
     private NoteheadType type;
     @Column
+    @Type(type="yes_no")
     private Boolean filled;
     @Column
+    @Type(type="yes_no")
     private Boolean parentheses;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")

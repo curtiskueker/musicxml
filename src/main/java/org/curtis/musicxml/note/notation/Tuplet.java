@@ -4,6 +4,7 @@ import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.note.LineShape;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,11 +25,12 @@ public class Tuplet extends Notation {
     @JoinColumn(name = "tuplet_normal_id")
     private TupletPortion tupletNormal;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "type_value")
     private Connection type;
-    @Column
+    @Column(name = "notation_number")
     private Integer number;
     @Column
+    @Type(type="yes_no")
     private Boolean bracket;
     @Enumerated(EnumType.STRING)
     @Column(name = "show_number")

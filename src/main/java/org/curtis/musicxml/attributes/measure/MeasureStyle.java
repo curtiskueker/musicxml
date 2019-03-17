@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "measure_style")
 @DiscriminatorColumn(name = "measure_style_type")
 public abstract class MeasureStyle extends DatabaseItem {
-    @Column
+    @Column(name = "measure_style_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "font_id")

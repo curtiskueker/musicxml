@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 @DiscriminatorValue("membrane")
 public class Membrane extends Percussion {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private MembraneType type;
 
     public Membrane() {

@@ -3,6 +3,7 @@ package org.curtis.musicxml.score;
 import org.curtis.database.OrderedItem;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,11 +21,13 @@ import java.util.List;
 @Entity
 @Table(name = "measure")
 public class Measure extends OrderedItem {
-    @Column
+    @Column(name = "measure_number")
     private String number;
     @Column
+    @Type(type="yes_no")
     private Boolean implicit;
     @Column(name = "non_controlling")
+    @Type(type="yes_no")
     private Boolean nonControlling;
     @Column(precision = 12, scale = 4)
     private BigDecimal width;

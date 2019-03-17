@@ -3,6 +3,7 @@ package org.curtis.musicxml.attributes;
 import org.curtis.database.DatabaseItem;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,14 +33,16 @@ public class StaffDetails extends DatabaseItem {
     private Integer capo;
     @Column(name = "staff_size", precision = 12, scale = 4)
     private BigDecimal staffSize;
-    @Column
+    @Column(name = "staff_details_number")
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column(name = "show_frets")
     private ShowFrets showFrets;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
     @Column(name = "print_spacing")
+    @Type(type="yes_no")
     private Boolean printSpacing;
 
     public StaffDetails() {

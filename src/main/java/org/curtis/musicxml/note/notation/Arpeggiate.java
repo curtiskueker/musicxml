@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 @Entity
 @DiscriminatorValue("arpeggiate")
 public class Arpeggiate extends Notation {
-    @Column
+    @Column(name = "notation_number")
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column

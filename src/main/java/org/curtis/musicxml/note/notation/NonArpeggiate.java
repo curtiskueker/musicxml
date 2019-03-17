@@ -16,9 +16,9 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("non arpeggiate")
 public class NonArpeggiate extends Notation {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "type_value")
     private Location type;
-    @Column
+    @Column(name = "notation_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")

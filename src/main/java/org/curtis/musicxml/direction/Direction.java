@@ -5,6 +5,7 @@ import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,6 +42,7 @@ public class Direction extends MusicData {
     @Column
     private Location placement;
     @Column
+    @Type(type="yes_no")
     private Boolean directive;
 
     public Direction() {

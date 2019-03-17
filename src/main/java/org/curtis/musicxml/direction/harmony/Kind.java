@@ -3,6 +3,7 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,14 +21,18 @@ public class Kind extends DatabaseItem {
     @Column(name = "kind_value")
     private KindValue kindValue;
     @Column(name = "use_symbols")
+    @Type(type="yes_no")
     private Boolean useSymbols;
     @Column
     private String text;
     @Column(name = "stack_degrees")
+    @Type(type="yes_no")
     private Boolean stackDegrees;
     @Column(name = "parentheses_degrees")
+    @Type(type="yes_no")
     private Boolean parenthesesDegrees;
     @Column(name = "bracket_degrees")
+    @Type(type="yes_no")
     private Boolean bracketDegrees;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

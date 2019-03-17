@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,8 +41,10 @@ public class Print extends MusicData {
     @Column(name = "staff_spacing", precision = 12, scale = 4)
     private BigDecimal staffSpacing;
     @Column(name = "new_system")
+    @Type(type="yes_no")
     private Boolean newSystem = false;
     @Column(name = "new_page")
+    @Type(type="yes_no")
     private Boolean newPage = false;
     @Column(name = "blank_page")
     private Integer blankPage;

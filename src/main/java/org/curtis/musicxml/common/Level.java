@@ -1,6 +1,7 @@
 package org.curtis.musicxml.common;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,11 +11,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "level")
+@Table(name = "editorial_level")
 public class Level extends DatabaseItem {
     @Column
     private String value;
     @Column
+    @Type(type="yes_no")
     private Boolean reference;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "level_display_id")

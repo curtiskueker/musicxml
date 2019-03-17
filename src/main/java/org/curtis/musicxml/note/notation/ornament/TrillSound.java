@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ public class TrillSound extends DatabaseItem {
     @Column(name = "two_note_turn")
     private TwoNoteTurn twoNoteTurn;
     @Column
+    @Type(type="yes_no")
     private Boolean accelerate;
     @Column(precision = 12, scale = 4)
     private BigDecimal beats;

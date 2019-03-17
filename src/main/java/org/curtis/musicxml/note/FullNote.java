@@ -2,6 +2,7 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.persistence.Transient;
 @Table(name = "full_note")
 public class FullNote extends DatabaseItem {
     @Column
+    @Type(type="yes_no")
     private Boolean chord = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "full_note_type_id")

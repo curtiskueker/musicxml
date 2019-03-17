@@ -19,9 +19,9 @@ import java.math.BigDecimal;
 @DiscriminatorValue("bracket")
 public class Bracket extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private Connection type;
-    @Column
+    @Column(name = "direction_type_number")
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column(name = "line_end")

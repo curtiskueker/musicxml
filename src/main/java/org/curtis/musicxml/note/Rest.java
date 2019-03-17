@@ -1,5 +1,7 @@
 package org.curtis.musicxml.note;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ public class Rest extends FullNoteType {
     @Column(name = "display_octave")
     private Integer displayOctave;
     @Column
+    @Type(type="yes_no")
     private Boolean measure;
 
     public Rest() {

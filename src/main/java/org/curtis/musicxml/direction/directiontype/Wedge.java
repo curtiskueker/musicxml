@@ -3,6 +3,7 @@ package org.curtis.musicxml.direction.directiontype;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.note.LineType;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,13 +19,14 @@ import java.math.BigDecimal;
 @DiscriminatorValue("wedge")
 public class Wedge extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private WedgeType type;
-    @Column
+    @Column(name = "direction_type_number")
     private Integer number;
     @Column(precision = 12, scale = 4)
     private BigDecimal spread;
     @Column
+    @Type(type="yes_no")
     private Boolean niente;
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")

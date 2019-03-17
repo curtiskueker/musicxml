@@ -3,6 +3,7 @@ package org.curtis.musicxml.barline;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,12 +20,13 @@ import java.math.BigDecimal;
 public class Ending extends DatabaseItem {
     @Column
     private String value;
-    @Column
+    @Column(name = "ending_number")
     private String number;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "ending_type")
     private Connection type;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

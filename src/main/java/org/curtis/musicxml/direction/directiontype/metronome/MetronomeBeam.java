@@ -15,7 +15,7 @@ public class MetronomeBeam extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "beam_type")
     private BeamType beamType;
-    @Column
+    @Column(name = "metronome_beam_number")
     private Integer number = 1;
 
     public MetronomeBeam() {

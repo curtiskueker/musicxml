@@ -1,6 +1,7 @@
 package org.curtis.musicxml.attributes.measure;
 
 import org.curtis.musicxml.common.Connection;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ public class BeatRepeat extends MeasureStyle {
     @Column
     private Integer slashes;
     @Column(name = "use_dots")
+    @Type(type="yes_no")
     private Boolean useDots;
 
     public BeatRepeat() {

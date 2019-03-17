@@ -2,6 +2,7 @@ package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,11 +17,13 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("pedal")
 public class Pedal extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private Connection type;
     @Column
+    @Type(type="yes_no")
     private Boolean line;
     @Column
+    @Type(type="yes_no")
     private Boolean sign;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")

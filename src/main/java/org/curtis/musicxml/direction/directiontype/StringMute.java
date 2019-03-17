@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("string mute")
 public class StringMute extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private StringMuteDirection type;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")

@@ -3,6 +3,7 @@ package org.curtis.musicxml.score;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ public class PartName extends DatabaseItem {
     @JoinColumn(name = "part_name_print_style_id")
     private PrintStyle partNamePrintStyle;
     @Column(name = "part_name_print_object")
+    @Type(type="yes_no")
     private Boolean partNamePrintObject;
     @Enumerated(EnumType.STRING)
     @Column(name = "part_name_justify")

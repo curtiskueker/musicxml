@@ -3,6 +3,7 @@ package org.curtis.musicxml.score;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.NameDisplay;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,14 +36,15 @@ public class PartGroup extends PartItem {
     @JoinColumn(name = "group_barline_id")
     private GroupBarline groupBarline;
     @Column(name = "group_time")
+    @Type(type="yes_no")
     private Boolean groupTime = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "part_group_type")
     private Connection type;
-    @Column
+    @Column(name = "part_group_number")
     private String number = "1";
 
     public PartGroup() {

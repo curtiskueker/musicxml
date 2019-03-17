@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 @DiscriminatorValue("stick location")
 public class StickLocation extends Percussion {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private StickLocationType type;
 
     public StickLocation() {

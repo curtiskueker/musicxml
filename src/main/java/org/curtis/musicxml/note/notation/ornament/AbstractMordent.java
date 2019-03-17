@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.common.Location;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -10,6 +11,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbstractMordent extends PlacedTrillSound {
     @Column(name = "long_mordent")
+    @Type(type="yes_no")
     private Boolean longMordent;
     @Enumerated(EnumType.STRING)
     @Column

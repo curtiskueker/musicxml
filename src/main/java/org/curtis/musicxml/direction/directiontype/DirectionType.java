@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "direction_type")
-@DiscriminatorColumn(name = "direction_type")
+@DiscriminatorColumn(name = "direction_type_type")
 public abstract class DirectionType extends DatabaseItem {
     public static List<String> MULTIPLE_DIRECTION_TYPES = Arrays.asList("Dynamics", "Wedge");
     @ManyToOne

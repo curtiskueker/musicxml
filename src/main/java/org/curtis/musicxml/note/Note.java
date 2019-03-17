@@ -17,6 +17,7 @@ import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,6 +40,7 @@ public class Note extends MusicData {
     @JoinColumn(name = "grace_id")
     private Grace grace;
     @Column
+    @Type(type="yes_no")
     private Boolean cue = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "full_note_id")
@@ -115,6 +117,7 @@ public class Note extends MusicData {
     @Column(name = "time_only")
     private String timeOnly;
     @Column
+    @Type(type="yes_no")
     private Boolean pizzicato;
     @Transient
     // used by lilypond

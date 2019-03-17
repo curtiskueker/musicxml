@@ -2,6 +2,7 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,8 +19,10 @@ public class Fingering extends Technical {
     @Column
     private String value;
     @Column
+    @Type(type="yes_no")
     private Boolean substitution;
     @Column
+    @Type(type="yes_no")
     private Boolean alternate;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

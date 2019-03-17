@@ -3,6 +3,7 @@ package org.curtis.musicxml.note;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,8 +21,10 @@ public class Accidental extends DatabaseItem {
     @Column(name = "accidental_type")
     private AccidentalType accidentalType;
     @Column
+    @Type(type = "true_false")
     private Boolean cautionary;
     @Column
+    @Type(type = "true_false")
     private Boolean editorial;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "level_display_id")

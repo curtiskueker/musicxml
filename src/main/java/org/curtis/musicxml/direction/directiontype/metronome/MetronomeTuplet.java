@@ -4,6 +4,7 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.ShowTuplet;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,9 +22,10 @@ public class MetronomeTuplet extends DatabaseItem {
     @JoinColumn(name = "time_modification_id")
     private TimeModification timeModification;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "metronome_tuplet_type")
     private Connection type;
     @Column
+    @Type(type="yes_no")
     private Boolean bracket;
     @Enumerated(EnumType.STRING)
     @Column(name = "show_number")

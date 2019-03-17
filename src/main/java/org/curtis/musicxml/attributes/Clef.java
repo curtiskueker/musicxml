@@ -3,6 +3,7 @@ package org.curtis.musicxml.attributes;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.SymbolSize;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,19 +24,22 @@ public class Clef extends DatabaseItem {
     private Integer line;
     @Column(name = "clef_octave_change")
     private Integer clefOctaveChange;
-    @Column
+    @Column(name = "clef_number")
     private Integer number;
     @Column
+    @Type(type="yes_no")
     private Boolean additional;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "symbol_size")
     private SymbolSize size;
     @Column(name = "after_barline")
+    @Type(type="yes_no")
     private Boolean afterBarline;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
 
     public Clef() {

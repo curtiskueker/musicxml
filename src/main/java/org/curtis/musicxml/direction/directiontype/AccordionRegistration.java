@@ -1,6 +1,7 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,10 +14,12 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("accordion registration")
 public class AccordionRegistration extends DirectionType {
     @Column(name = "accordion_high")
+    @Type(type="yes_no")
     private Boolean accordionHigh = false;
     @Column(name = "accordion_middle")
     private Integer accordionMiddle;
     @Column(name = "accordion_low")
+    @Type(type="yes_no")
     private Boolean accordionLow;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")

@@ -6,6 +6,7 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.Tuplet;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,13 +26,15 @@ public class Lyric extends DatabaseItem {
     @JoinColumn(name = "lyric_item_id")
     private LyricItem lyricItem;
     @Column(name = "end_line")
+    @Type(type="yes_no")
     private Boolean endLine = false;
     @Column(name = "end_paragraph")
+    @Type(type="yes_no")
     private Boolean endParagraph = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
-    @Column
+    @Column(name = "lyric_number")
     private String number;
     @Column
     private String name;
@@ -47,6 +50,7 @@ public class Lyric extends DatabaseItem {
     @Column
     private String color;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
     @Transient
     // used by lilypond

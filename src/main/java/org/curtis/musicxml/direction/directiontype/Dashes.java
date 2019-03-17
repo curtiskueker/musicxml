@@ -17,9 +17,9 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("dashes")
 public class Dashes extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private Connection type;
-    @Column
+    @Column(name = "direction_type_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dashed_formatting_id")

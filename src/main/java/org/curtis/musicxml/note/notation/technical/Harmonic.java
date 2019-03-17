@@ -2,6 +2,7 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ public class Harmonic extends Technical {
     @Column(name = "harmonic_pitch")
     private HarmonicPitch harmonicPitch;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

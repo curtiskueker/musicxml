@@ -3,6 +3,7 @@ package org.curtis.musicxml.note.notation;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,11 +20,12 @@ public class OtherNotation extends Notation {
     @Column
     private String value;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "type_value")
     private Connection type;
-    @Column
+    @Column(name = "notation_number")
     private Integer number = 1;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "lyric_language")
 public class LyricLanguage extends DatabaseItem {
-    @Column
+    @Column(name = "lyric_language_number")
     private String number;
     @Column
     private String name;

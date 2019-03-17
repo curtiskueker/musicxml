@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.note.notation.Notation;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,6 +29,7 @@ public class Notations extends DatabaseItem {
     @JoinColumn(name = "notations_id")
     private List<Notation> notations = new ArrayList<>();
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
 
     public Notations() {

@@ -16,11 +16,11 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("octave shift")
 public class OctaveShift extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "direction_type")
     private OctaveShiftType type;
-    @Column
+    @Column(name = "direction_type_number")
     private Integer number;
-    @Column
+    @Column(name = "direction_type_size")
     private Integer size = 8;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dashed_formatting_id")

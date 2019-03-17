@@ -7,6 +7,7 @@ import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,8 +46,10 @@ public class Harmony extends MusicData {
     @Column
     private HarmonyType type;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
     @Column(name = "print_frame")
+    @Type(type="yes_no")
     private Boolean printFrame;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

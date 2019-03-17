@@ -1,6 +1,7 @@
 package org.curtis.musicxml.common;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +13,13 @@ import javax.persistence.Table;
 @Table(name = "level_display")
 public class LevelDisplay extends DatabaseItem {
     @Column
+    @Type(type="yes_no")
     private Boolean parentheses;
     @Column
+    @Type(type="yes_no")
     private Boolean bracket;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "symbol_size")
     private SymbolSize size;
 
     public LevelDisplay() {

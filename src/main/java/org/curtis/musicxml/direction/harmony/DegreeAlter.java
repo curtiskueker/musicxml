@@ -2,6 +2,7 @@ package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ public class DegreeAlter extends DatabaseItem {
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Column(name = "plus_minus")
+    @Type(type="yes_no")
     private Boolean plusMinus;
 
     public DegreeAlter() {

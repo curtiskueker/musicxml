@@ -2,6 +2,7 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ public class Grace extends DatabaseItem {
     @Column(name = "make_time", precision = 12, scale = 4)
     private BigDecimal makeTime;
     @Column
+    @Type(type="yes_no")
     private Boolean slash;
     @Transient
     // used by lilypond

@@ -20,9 +20,9 @@ import javax.persistence.Transient;
 @DiscriminatorValue("tied")
 public class Tied extends Notation {
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "type_value")
     private Connection type;
-    @Column
+    @Column(name = "notation_number")
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")

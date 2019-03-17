@@ -1,6 +1,7 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ public class DirectionOffset extends DatabaseItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal divisions;
     @Column
+    @Type(type="yes_no")
     private Boolean sound;
 
     public DirectionOffset() {

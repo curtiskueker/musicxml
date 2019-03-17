@@ -2,6 +2,7 @@ package org.curtis.musicxml.attributes.time;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyleAlign;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "time")
 @DiscriminatorColumn(name = "time_type")
 public abstract class Time extends DatabaseItem {
-    @Column
+    @Column(name = "time_number")
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column
@@ -32,6 +33,7 @@ public abstract class Time extends DatabaseItem {
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
 
     public Integer getNumber() {

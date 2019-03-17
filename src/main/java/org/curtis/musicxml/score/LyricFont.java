@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "lyric_font")
 public class LyricFont extends DatabaseItem {
-    @Column
+    @Column(name = "lyric_font_number")
     private String number;
     @Column
     private String name;

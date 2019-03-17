@@ -3,6 +3,7 @@ package org.curtis.musicxml.direction.directiontype.metronome;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +22,7 @@ public abstract class Metronome extends DirectionType {
     @Column
     private Location justify;
     @Column
+    @Type(type="yes_no")
     private Boolean parentheses;
 
     public PrintStyleAlign getPrintStyleAlign() {

@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "bend_sound")
 public class BendSound extends DatabaseItem {
     @Column
+    @Type(type="yes_no")
     private Boolean accelerate;
     @Column(precision = 12, scale = 4)
     private BigDecimal beats;

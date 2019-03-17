@@ -4,6 +4,7 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.PrintStyle;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,12 +29,13 @@ public abstract class Key extends DatabaseItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "key_id", nullable = false)
     private List<KeyOctave> keyOctaves = new ArrayList<>();
-    @Column
+    @Column(name = "key_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
 
     public List<KeyOctave> getKeyOctaves() {

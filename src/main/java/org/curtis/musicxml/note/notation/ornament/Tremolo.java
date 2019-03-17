@@ -19,7 +19,7 @@ public class Tremolo extends Ornament {
     @Column(name = "tremolo_marks")
     private Integer tremoloMarks;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "connection_type")
     private Connection type = Connection.SINGLE;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

@@ -17,9 +17,9 @@ public abstract class HammerOnPullOff extends Technical {
     @Column
     private String value;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "notation_type")
     private Connection type;
-    @Column
+    @Column(name = "notation_number")
     private Integer number = 1;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

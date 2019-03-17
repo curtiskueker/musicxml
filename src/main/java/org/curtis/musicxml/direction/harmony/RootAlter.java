@@ -3,6 +3,7 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ public class RootAlter extends DatabaseItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal semitones;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")

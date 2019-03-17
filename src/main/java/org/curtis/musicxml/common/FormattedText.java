@@ -7,13 +7,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "formatted_text")
 public class FormattedText extends DatabaseItem {
-    @Column(columnDefinition = "text")
+    @Lob
     private String value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_formatting_id")

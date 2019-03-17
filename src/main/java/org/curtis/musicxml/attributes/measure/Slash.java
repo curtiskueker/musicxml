@@ -1,6 +1,7 @@
 package org.curtis.musicxml.attributes.measure;
 
 import org.curtis.musicxml.common.Connection;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,8 +22,10 @@ public class Slash extends MeasureStyle {
     @Column
     private Connection type;
     @Column(name = "use_dots")
+    @Type(type="yes_no")
     private Boolean useDots;
     @Column(name = "use_stems")
+    @Type(type="yes_no")
     private Boolean useStems;
 
     public Slash() {

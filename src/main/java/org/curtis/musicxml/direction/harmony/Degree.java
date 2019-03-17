@@ -1,6 +1,7 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ public class Degree extends DatabaseItem {
     @JoinColumn(name = "degree_type_id")
     private DegreeType degreeType;
     @Column(name = "print_object")
+    @Type(type="yes_no")
     private Boolean printObject;
 
     public Degree() {

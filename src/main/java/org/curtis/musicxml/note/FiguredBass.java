@@ -6,6 +6,7 @@ import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,6 +39,7 @@ public class FiguredBass extends MusicData {
     @JoinColumn(name = "printout_id")
     private Printout printout;
     @Column
+    @Type(type="yes_no")
     private Boolean parentheses;
 
     public FiguredBass() {

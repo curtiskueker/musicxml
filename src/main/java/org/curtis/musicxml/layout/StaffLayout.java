@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class StaffLayout extends DatabaseItem {
     @Column(name = "staff_distance", precision = 12, scale = 4)
     private BigDecimal staffDistance;
-    @Column
+    @Column(name = "staff_layout_number")
     private Integer number;
 
     public StaffLayout() {

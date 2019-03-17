@@ -3,6 +3,7 @@ package org.curtis.musicxml.direction;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,6 +32,7 @@ public class Sound extends MusicData {
     @Column(precision = 12, scale = 4)
     private BigDecimal dynamics;
     @Column
+    @Type(type="yes_no")
     private Boolean dacapo;
     @Column
     private String segno;
@@ -43,12 +45,14 @@ public class Sound extends MusicData {
     @Column(precision = 12, scale = 4)
     private BigDecimal divisions;
     @Column(name = "forward_repeat")
+    @Type(type="yes_no")
     private Boolean forwardRepeat;
     @Column
     private String fine;
     @Column(name = "time_only")
     private String timeOnly;
     @Column
+    @Type(type="yes_no")
     private Boolean pizzicato;
     @Column(precision = 12, scale = 4)
     private BigDecimal pan;

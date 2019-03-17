@@ -1,6 +1,7 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,9 @@ public class Transpose extends DatabaseItem {
     @Column(name = "octave_change")
     private Integer octaveChange;
     @Column
+    @Type(type="yes_no")
     private Boolean doubled = false;
-    @Column
+    @Column(name = "transpose_number")
     private Integer number;
 
     public Transpose() {

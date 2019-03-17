@@ -1,6 +1,7 @@
 package org.curtis.musicxml.attributes.key;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +12,10 @@ import javax.persistence.Table;
 public class KeyOctave extends DatabaseItem {
     @Column
     private Integer octave;
-    @Column
+    @Column(name = "key_octave_number")
     private Integer number;
     @Column
+    @Type(type="yes_no")
     private Boolean cancel;
 
     public KeyOctave() {

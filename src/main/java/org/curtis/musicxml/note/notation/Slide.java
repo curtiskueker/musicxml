@@ -21,9 +21,9 @@ public class Slide extends Notation {
     @Column
     private String value;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "type_value")
     private Connection type;
-    @Column
+    @Column(name = "notation_number")
     private Integer number = 1;
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")
