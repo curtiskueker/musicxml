@@ -1,1143 +1,1143 @@
-create sequence hibernate_sequence start 1 increment 1;
+create sequence hibernate_sequence start with 1 increment by 1;
 
     create table accidental (
-       id int4 not null,
-        accidental_type varchar(255),
+       id number(10,0) not null,
+        accidental_type varchar2(255),
         cautionary char(1),
         editorial char(1),
-        level_display_id int4,
-        print_style_id int4,
+        level_display_id number(10,0),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table accord (
-       id int4 not null,
-        string int4,
-        tuning_id int4,
-        scordatura_id int4 not null,
+       id number(10,0) not null,
+        string number(10,0),
+        tuning_id number(10,0),
+        scordatura_id number(10,0) not null,
         primary key (id)
     );
 
     create table appearance (
-       id int4 not null,
+       id number(10,0) not null,
         primary key (id)
     );
 
     create table articulation (
-       articulation_type varchar(31) not null,
-        id int4 not null,
-        breath_mark_value varchar(255),
-        placement varchar(255),
-        type varchar(255),
-        print_style_id int4,
-        print_placement_id int4,
-        line_id int4,
-        placement_text_id int4,
-        articulations_id int4 not null,
+       articulation_type varchar2(31) not null,
+        id number(10,0) not null,
+        breath_mark_value varchar2(255),
+        placement varchar2(255),
+        type varchar2(255),
+        print_style_id number(10,0),
+        print_placement_id number(10,0),
+        line_id number(10,0),
+        placement_text_id number(10,0),
+        articulations_id number(10,0) not null,
         primary key (id)
     );
 
     create table bar_style_color (
-       id int4 not null,
-        bar_style varchar(255),
-        color varchar(255),
+       id number(10,0) not null,
+        bar_style varchar2(255),
+        color varchar2(255),
         primary key (id)
     );
 
     create table barline_repeat (
-       id int4 not null,
-        direction varchar(255),
-        times int4,
-        winged varchar(255),
+       id number(10,0) not null,
+        direction varchar2(255),
+        times number(10,0),
+        winged varchar2(255),
         primary key (id)
     );
 
     create table barre (
-       id int4 not null,
-        color varchar(255),
-        type varchar(255),
+       id number(10,0) not null,
+        color varchar2(255),
+        type varchar2(255),
         primary key (id)
     );
 
     create table bass (
-       id int4 not null,
-        bass_alter_id int4,
-        bass_step_id int4,
+       id number(10,0) not null,
+        bass_alter_id number(10,0),
+        bass_step_id number(10,0),
         primary key (id)
     );
 
     create table bass_alter (
-       id int4 not null,
-        location varchar(255),
+       id number(10,0) not null,
+        location varchar2(255),
         print_object char(1),
-        semitones numeric(12, 4),
-        print_style_id int4,
+        semitones number(12,4),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table bass_step (
-       id int4 not null,
-        step varchar(255),
-        text varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        step varchar2(255),
+        text varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table beam (
-       id int4 not null,
-        color varchar(255),
-        fan varchar(255),
-        beam_number int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        fan varchar2(255),
+        beam_number number(10,0),
         repeater char(1),
-        type varchar(255),
-        note_id int4 not null,
+        type varchar2(255),
+        note_id number(10,0) not null,
         primary key (id)
     );
 
     create table beat_unit (
-       id int4 not null,
-        beat_unit varchar(255),
-        beat_unit_dots int4,
+       id number(10,0) not null,
+        beat_unit varchar2(255),
+        beat_unit_dots number(10,0),
         primary key (id)
     );
 
     create table bend_sound (
-       id int4 not null,
+       id number(10,0) not null,
         accelerate char(1),
-        beats numeric(12, 4),
-        first_beat numeric(12, 4),
-        last_beat numeric(12, 4),
+        beats number(12,4),
+        first_beat number(12,4),
+        last_beat number(12,4),
         primary key (id)
     );
 
     create table bezier (
-       id int4 not null,
-        bezier_offset numeric(12, 4),
-        bezier_offset2 numeric(12, 4),
-        bezier_x numeric(12, 4),
-        bezier_x2 numeric(12, 4),
-        bezier_y numeric(12, 4),
-        bezier_y2 numeric(12, 4),
+       id number(10,0) not null,
+        bezier_offset number(12,4),
+        bezier_offset2 number(12,4),
+        bezier_x number(12,4),
+        bezier_x2 number(12,4),
+        bezier_y number(12,4),
+        bezier_y2 number(12,4),
         primary key (id)
     );
 
     create table cancel (
-       id int4 not null,
-        fifths int4,
-        location varchar(255),
+       id number(10,0) not null,
+        fifths number(10,0),
+        location varchar2(255),
         primary key (id)
     );
 
     create table clef (
-       id int4 not null,
+       id number(10,0) not null,
         additional char(1),
         after_barline char(1),
-        clef_octave_change int4,
-        line int4,
-        clef_number int4,
+        clef_octave_change number(10,0),
+        line number(10,0),
+        clef_number number(10,0),
         print_object char(1),
-        sign varchar(255),
-        symbol_size varchar(255),
-        print_style_id int4,
-        attributes_id int4 not null,
+        sign varchar2(255),
+        symbol_size varchar2(255),
+        print_style_id number(10,0),
+        attributes_id number(10,0) not null,
         primary key (id)
     );
 
     create table credit (
-       id int4 not null,
-        page int4,
-        score_header_id int4 not null,
+       id number(10,0) not null,
+        page number(10,0),
+        score_header_id number(10,0) not null,
         primary key (id)
     );
 
     create table credit_display (
-       credit_display_type varchar(31) not null,
-        id int4 not null,
-        formatted_text_id int4,
-        image_id int4,
-        credit_id int4 not null,
+       credit_display_type varchar2(31) not null,
+        id number(10,0) not null,
+        formatted_text_id number(10,0),
+        image_id number(10,0),
+        credit_id number(10,0) not null,
         primary key (id)
     );
 
     create table credit_type (
-       id int4 not null,
-        type varchar(255),
-        credit_id int4 not null,
+       id number(10,0) not null,
+        type varchar2(255),
+        credit_id number(10,0) not null,
         primary key (id)
     );
 
     create table dashed_formatting (
-       id int4 not null,
-        dash_length numeric(12, 4),
-        space_length numeric(12, 4),
+       id number(10,0) not null,
+        dash_length number(12,4),
+        space_length number(12,4),
         primary key (id)
     );
 
     create table defaults (
-       id int4 not null,
-        appearance_id int4,
-        layout_id int4,
-        music_font_id int4,
-        defaults_id int4,
-        word_font_id int4,
+       id number(10,0) not null,
+        appearance_id number(10,0),
+        layout_id number(10,0),
+        music_font_id number(10,0),
+        defaults_id number(10,0),
+        word_font_id number(10,0),
         primary key (id)
     );
 
     create table degree (
-       id int4 not null,
+       id number(10,0) not null,
         print_object char(1),
-        degree_alter_id int4,
-        degree_type_id int4,
-        degree_value_id int4,
-        harmony_chord_id int4 not null,
+        degree_alter_id number(10,0),
+        degree_type_id number(10,0),
+        degree_value_id number(10,0),
+        harmony_chord_id number(10,0) not null,
         primary key (id)
     );
 
     create table degree_alter (
-       id int4 not null,
+       id number(10,0) not null,
         plus_minus char(1),
-        semitones numeric(12, 4),
-        print_style_id int4,
+        semitones number(12,4),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table degree_type (
-       id int4 not null,
-        text varchar(255),
-        value varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        text varchar2(255),
+        value varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table degree_value (
-       id int4 not null,
-        symbol varchar(255),
-        text varchar(255),
-        value int4,
-        print_style_id int4,
+       id number(10,0) not null,
+        symbol varchar2(255),
+        text varchar2(255),
+        value number(10,0),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table direction_offset (
-       id int4 not null,
-        divisions numeric(12, 4),
+       id number(10,0) not null,
+        divisions number(12,4),
         sound char(1),
         primary key (id)
     );
 
     create table direction_type (
-       direction_type_type varchar(31) not null,
-        id int4 not null,
-        enclosure varchar(255),
-        direction_type varchar(255),
+       direction_type_type varchar2(31) not null,
+        id number(10,0) not null,
+        enclosure varchar2(255),
+        direction_type varchar2(255),
         accordion_high char(1),
         accordion_low char(1),
-        accordion_middle int4,
-        color varchar(255),
-        line_type varchar(255),
+        accordion_middle number(10,0),
+        color varchar2(255),
+        line_type varchar2(255),
         niente char(1),
-        direction_type_number int4,
-        spread numeric(12, 4),
-        value varchar(255),
+        direction_type_number number(10,0),
+        spread number(12,4),
+        value varchar2(255),
         line char(1),
         sign char(1),
-        halign varchar(255),
-        source varchar(255),
-        valign_image varchar(255),
-        beater_value varchar(255),
-        tip varchar(255),
-        justify varchar(255),
+        halign varchar2(255),
+        source varchar2(255),
+        valign_image varchar2(255),
+        beater_value varchar2(255),
+        tip varchar2(255),
+        justify varchar2(255),
         parentheses char(1),
-        metronome_relation varchar(255),
-        principal_voice varchar(255),
-        symbol varchar(255),
-        placement varchar(255),
+        metronome_relation varchar2(255),
+        principal_voice varchar2(255),
+        symbol varchar2(255),
+        placement varchar2(255),
         print_object char(1),
-        stick_material varchar(255),
-        stick_type varchar(255),
-        end_length numeric(12, 4),
-        line_end varchar(255),
-        direction_type_size int4,
-        direction_type_list_id int4,
-        print_style_align_id int4,
-        fomatted_text_id int4,
-        dashed_formatting_id int4,
-        position_id int4,
-        text_decoration_id int4,
-        print_style_id int4,
-        beat_unit_1_id int4,
-        beat_unit_2_id int4,
-        per_minute_id int4,
+        stick_material varchar2(255),
+        stick_type varchar2(255),
+        end_length number(12,4),
+        line_end varchar2(255),
+        direction_type_size number(10,0),
+        direction_type_list_id number(10,0),
+        print_style_align_id number(10,0),
+        fomatted_text_id number(10,0),
+        dashed_formatting_id number(10,0),
+        position_id number(10,0),
+        text_decoration_id number(10,0),
+        print_style_id number(10,0),
+        beat_unit_1_id number(10,0),
+        beat_unit_2_id number(10,0),
+        per_minute_id number(10,0),
         primary key (id)
     );
 
     create table direction_type_list (
-       id int4 not null,
-        direction_id int4,
+       id number(10,0) not null,
+        direction_id number(10,0),
         primary key (id)
     );
 
     create table directive (
-       id int4 not null,
-        lang varchar(255),
-        value varchar(255),
-        print_style_id int4,
-        attributes_id int4 not null,
+       id number(10,0) not null,
+        lang varchar2(255),
+        value varchar2(255),
+        print_style_id number(10,0),
+        attributes_id number(10,0) not null,
         primary key (id)
     );
 
     create table distance (
-       id int4 not null,
-        type varchar(255),
-        value numeric(12, 4),
-        appearance_id int4 not null,
+       id number(10,0) not null,
+        type varchar2(255),
+        value number(12,4),
+        appearance_id number(10,0) not null,
         primary key (id)
     );
 
     create table dot (
-       id int4 not null,
-        print_placement_id int4,
-        note_id int4 not null,
+       id number(10,0) not null,
+        print_placement_id number(10,0),
+        note_id number(10,0) not null,
         primary key (id)
     );
 
     create table dynamics_marking (
-       id int4 not null,
-        dynamics_type varchar(255),
-        dynamics_id int4 not null,
+       id number(10,0) not null,
+        dynamics_type varchar2(255),
+        dynamics_id number(10,0) not null,
         primary key (id)
     );
 
     create table editorial (
-       id int4 not null,
-        footnote_id int4,
-        level_id int4,
+       id number(10,0) not null,
+        footnote_id number(10,0),
+        level_id number(10,0),
         primary key (id)
     );
 
     create table editorial_level (
-       id int4 not null,
+       id number(10,0) not null,
         reference char(1),
-        value varchar(255),
-        level_display_id int4,
+        value varchar2(255),
+        level_display_id number(10,0),
         primary key (id)
     );
 
     create table editorial_voice (
-       id int4 not null,
-        voice varchar(255),
-        footnote_id int4,
-        level_id int4,
+       id number(10,0) not null,
+        voice varchar2(255),
+        footnote_id number(10,0),
+        level_id number(10,0),
         primary key (id)
     );
 
     create table editorial_voice_direction (
-       id int4 not null,
-        voice varchar(255),
-        footnote_id int4,
-        level_id int4,
+       id number(10,0) not null,
+        voice varchar2(255),
+        footnote_id number(10,0),
+        level_id number(10,0),
         primary key (id)
     );
 
     create table element_position (
-       id int4 not null,
-        element varchar(255),
-        position int4,
+       id number(10,0) not null,
+        element varchar2(255),
+        position number(10,0),
         primary key (id)
     );
 
     create table encoding (
-       encoding_type varchar(31) not null,
-        id int4 not null,
-        attribute varchar(255),
-        element varchar(255),
+       encoding_type varchar2(31) not null,
+        id number(10,0) not null,
+        attribute varchar2(255),
+        element varchar2(255),
         supports_type char(1),
-        value varchar(255),
-        software varchar(255),
-        encoding_date timestamp,
-        encoding_description varchar(255),
-        encoder_id int4,
-        identification_id int4 not null,
+        value varchar2(255),
+        software varchar2(255),
+        encoding_date date,
+        encoding_description varchar2(255),
+        encoder_id number(10,0),
+        identification_id number(10,0) not null,
         primary key (id)
     );
 
     create table ending (
-       id int4 not null,
-        end_length numeric(12, 4),
-        ending_number varchar(255),
+       id number(10,0) not null,
+        end_length number(12,4),
+        ending_number varchar2(255),
         print_object char(1),
-        text_x numeric(12, 4),
-        text_y numeric(12, 4),
-        ending_type varchar(255),
-        value varchar(255),
-        print_style_id int4,
+        text_x number(12,4),
+        text_y number(12,4),
+        ending_type varchar2(255),
+        value varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table feature (
-       id int4 not null,
-        type varchar(255),
-        value varchar(255),
-        grouping_id int4 not null,
+       id number(10,0) not null,
+        type varchar2(255),
+        value varchar2(255),
+        grouping_id number(10,0) not null,
         primary key (id)
     );
 
     create table figure (
-       id int4 not null,
-        extend_id int4,
-        figure_number_id int4,
-        prefix_id int4,
-        suffix_id int4,
-        figured_bass_id int4 not null,
+       id number(10,0) not null,
+        extend_id number(10,0),
+        figure_number_id number(10,0),
+        prefix_id number(10,0),
+        suffix_id number(10,0),
+        figured_bass_id number(10,0) not null,
         primary key (id)
     );
 
     create table first_fret (
-       id int4 not null,
-        location varchar(255),
-        text varchar(255),
-        value int4,
+       id number(10,0) not null,
+        location varchar2(255),
+        text varchar2(255),
+        value number(10,0),
         primary key (id)
     );
 
     create table font (
-       id int4 not null,
-        font_family varchar(255),
-        font_style varchar(255),
-        font_weight varchar(255),
-        font_size_id int4,
+       id number(10,0) not null,
+        font_family varchar2(255),
+        font_style varchar2(255),
+        font_weight varchar2(255),
+        font_size_id number(10,0),
         primary key (id)
     );
 
     create table font_size (
-       id int4 not null,
-        css_font_size varchar(255),
-        font_size numeric(12, 4),
+       id number(10,0) not null,
+        css_font_size varchar2(255),
+        font_size number(12,4),
         primary key (id)
     );
 
     create table formatted_text (
-       id int4 not null,
-        value text,
-        text_formatting_id int4,
+       id number(10,0) not null,
+        value clob,
+        text_formatting_id number(10,0),
         primary key (id)
     );
 
     create table frame (
-       id int4 not null,
-        color varchar(255),
-        frame_frets int4,
-        frame_strings int4,
-        halign varchar(255),
-        height numeric(12, 4),
-        unplayed varchar(255),
-        valign_image varchar(255),
-        width numeric(12, 4),
-        first_fret_id int4,
-        position_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        frame_frets number(10,0),
+        frame_strings number(10,0),
+        halign varchar2(255),
+        height number(12,4),
+        unplayed varchar2(255),
+        valign_image varchar2(255),
+        width number(12,4),
+        first_fret_id number(10,0),
+        position_id number(10,0),
         primary key (id)
     );
 
     create table frame_note (
-       id int4 not null,
-        barre_id int4,
-        fingering_id int4,
-        fret_id int4,
-        string_id int4,
-        frame_id int4 not null,
+       id number(10,0) not null,
+        barre_id number(10,0),
+        fingering_id number(10,0),
+        fret_id number(10,0),
+        string_id number(10,0),
+        frame_id number(10,0) not null,
         primary key (id)
     );
 
     create table full_note (
-       id int4 not null,
+       id number(10,0) not null,
         chord char(1),
-        full_note_type_id int4,
+        full_note_type_id number(10,0),
         primary key (id)
     );
 
     create table full_note_type (
-       full_note_type_name varchar(31) not null,
-        id int4 not null,
-        pitch_alter numeric(12, 4),
-        octave int4,
-        step varchar(255),
-        display_octave int4,
-        display_step varchar(255),
+       full_note_type_name varchar2(31) not null,
+        id number(10,0) not null,
+        pitch_alter number(12,4),
+        octave number(10,0),
+        step varchar2(255),
+        display_octave number(10,0),
+        display_step varchar2(255),
         measure char(1),
         primary key (id)
     );
 
     create table grace (
-       id int4 not null,
-        make_time numeric(12, 4),
+       id number(10,0) not null,
+        make_time number(12,4),
         slash char(1),
-        steal_time_following numeric(12, 4),
-        steal_time_previous numeric(12, 4),
+        steal_time_following number(12,4),
+        steal_time_previous number(12,4),
         primary key (id)
     );
 
     create table group_barline (
-       id int4 not null,
-        color varchar(255),
-        group_barline_type varchar(255),
+       id number(10,0) not null,
+        color varchar2(255),
+        group_barline_type varchar2(255),
         primary key (id)
     );
 
     create table group_name (
-       id int4 not null,
-        group_name varchar(255),
-        justify varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        group_name varchar2(255),
+        justify varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table group_symbol (
-       id int4 not null,
-        color varchar(255),
-        group_symbol_type varchar(255),
-        position_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        group_symbol_type varchar2(255),
+        position_id number(10,0),
         primary key (id)
     );
 
     create table harmony_chord (
-       harmony_chord_type varchar(31) not null,
-        id int4 not null,
-        bass_id int4,
-        inversion_id int4,
-        kind_id int4,
-        root_alter_id int4,
-        root_step_id int4,
-        function_id int4,
-        harmony_id int4 not null,
+       harmony_chord_type varchar2(31) not null,
+        id number(10,0) not null,
+        bass_id number(10,0),
+        inversion_id number(10,0),
+        kind_id number(10,0),
+        root_alter_id number(10,0),
+        root_step_id number(10,0),
+        function_id number(10,0),
+        harmony_id number(10,0) not null,
         primary key (id)
     );
 
     create table identification (
-       id int4 not null,
-        source varchar(255),
-        miscellaneous_id int4,
+       id number(10,0) not null,
+        source varchar2(255),
+        miscellaneous_id number(10,0),
         primary key (id)
     );
 
     create table instrument_type (
-       instrument_type varchar(31) not null,
-        id int4 not null,
-        value int4,
+       instrument_type varchar2(31) not null,
+        id number(10,0) not null,
+        value number(10,0),
         primary key (id)
     );
 
     create table interchangeable (
-       id int4 not null,
-        time_separator varchar(255),
-        symbol varchar(255),
-        time_relation varchar(255),
-        time_signature_id int4,
+       id number(10,0) not null,
+        time_separator varchar2(255),
+        symbol varchar2(255),
+        time_relation varchar2(255),
+        time_signature_id number(10,0),
         primary key (id)
     );
 
     create table inversion (
-       id int4 not null,
-        value int4,
-        print_style_id int4,
+       id number(10,0) not null,
+        value number(10,0),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table key_octave (
-       id int4 not null,
+       id number(10,0) not null,
         cancel char(1),
-        key_octave_number int4,
-        octave int4,
-        key_id int4 not null,
+        key_octave_number number(10,0),
+        octave number(10,0),
+        key_id number(10,0) not null,
         primary key (id)
     );
 
     create table key_signature (
-       key_type varchar(31) not null,
-        id int4 not null,
-        key_number int4,
+       key_type varchar2(31) not null,
+        id number(10,0) not null,
+        key_number number(10,0),
         print_object char(1),
-        fifths int4,
-        key_mode varchar(255),
-        print_style_id int4,
-        cancel_id int4,
-        attributes_id int4 not null,
+        fifths number(10,0),
+        key_mode varchar2(255),
+        print_style_id number(10,0),
+        cancel_id number(10,0),
+        attributes_id number(10,0) not null,
         primary key (id)
     );
 
     create table kind (
-       id int4 not null,
+       id number(10,0) not null,
         bracket_degrees char(1),
-        halign varchar(255),
-        kind_value varchar(255),
+        halign varchar2(255),
+        kind_value varchar2(255),
         parentheses_degrees char(1),
         stack_degrees char(1),
-        text varchar(255),
+        text varchar2(255),
         use_symbols char(1),
-        valign varchar(255),
-        print_style_id int4,
+        valign varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table layout (
-       id int4 not null,
-        page_layout_id int4,
-        systemm_layout_id int4,
+       id number(10,0) not null,
+        page_layout_id number(10,0),
+        systemm_layout_id number(10,0),
         primary key (id)
     );
 
     create table level_display (
-       id int4 not null,
+       id number(10,0) not null,
         bracket char(1),
         parentheses char(1),
-        symbol_size varchar(255),
+        symbol_size varchar2(255),
         primary key (id)
     );
 
     create table line (
-       id int4 not null,
-        line_shape varchar(255),
-        line_type varchar(255),
-        placement varchar(255),
-        dashed_formatting_id int4,
-        print_style_id int4,
+       id number(10,0) not null,
+        line_shape varchar2(255),
+        line_type varchar2(255),
+        placement varchar2(255),
+        dashed_formatting_id number(10,0),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table line_width (
-       id int4 not null,
-        line_width_type varchar(255),
-        value numeric(12, 4),
-        appearance_id int4 not null,
+       id number(10,0) not null,
+        line_width_type varchar2(255),
+        value number(12,4),
+        appearance_id number(10,0) not null,
         primary key (id)
     );
 
     create table link_attributes (
-       id int4 not null,
-        actuate varchar(255),
-        href varchar(255),
-        link_role varchar(255),
-        link_show varchar(255),
-        title varchar(255),
-        type varchar(255),
+       id number(10,0) not null,
+        actuate varchar2(255),
+        href varchar2(255),
+        link_role varchar2(255),
+        link_show varchar2(255),
+        title varchar2(255),
+        type varchar2(255),
         primary key (id)
     );
 
     create table lyric (
-       id int4 not null,
-        color varchar(255),
+       id number(10,0) not null,
+        color varchar2(255),
         end_line char(1),
         end_paragraph char(1),
-        justify varchar(255),
-        name varchar(255),
-        lyric_number varchar(255),
-        placement varchar(255),
+        justify varchar2(255),
+        name varchar2(255),
+        lyric_number varchar2(255),
+        placement varchar2(255),
         print_object char(1),
-        editorial_id int4,
-        lyric_item_id int4,
-        position_id int4,
-        note_id int4 not null,
+        editorial_id number(10,0),
+        lyric_item_id number(10,0),
+        position_id number(10,0),
+        note_id number(10,0) not null,
         primary key (id)
     );
 
     create table lyric_font (
-       id int4 not null,
-        name varchar(255),
-        lyric_font_number varchar(255),
-        font_id int4,
-        defaults_id int4 not null,
+       id number(10,0) not null,
+        name varchar2(255),
+        lyric_font_number varchar2(255),
+        font_id number(10,0),
+        defaults_id number(10,0) not null,
         primary key (id)
     );
 
     create table lyric_item (
-       lyric_item_type varchar(31) not null,
-        id int4 not null,
-        type varchar(255),
-        print_style_id int4,
-        extend_id int4,
+       lyric_item_type varchar2(31) not null,
+        id number(10,0) not null,
+        type varchar2(255),
+        print_style_id number(10,0),
+        extend_id number(10,0),
         primary key (id)
     );
 
     create table lyric_language (
-       id int4 not null,
-        lang varchar(255),
-        name varchar(255),
-        lyric_language_number varchar(255),
-        defaults_id int4 not null,
+       id number(10,0) not null,
+        lang varchar2(255),
+        name varchar2(255),
+        lyric_language_number varchar2(255),
+        defaults_id number(10,0) not null,
         primary key (id)
     );
 
     create table lyric_syllable (
-       id int4 not null,
-        syllabic varchar(255),
-        lyric_elision_id int4,
-        text_data_id int4,
-        lyric_text_id int4 not null,
+       id number(10,0) not null,
+        syllabic varchar2(255),
+        lyric_elision_id number(10,0),
+        text_data_id number(10,0),
+        lyric_text_id number(10,0) not null,
         primary key (id)
     );
 
     create table margins (
-       id int4 not null,
-        bottom_margin numeric(12, 4),
-        left_margin numeric(12, 4),
-        right_margin numeric(12, 4),
-        top_margin numeric(12, 4),
+       id number(10,0) not null,
+        bottom_margin number(12,4),
+        left_margin number(12,4),
+        right_margin number(12,4),
+        top_margin number(12,4),
         primary key (id)
     );
 
     create table measure (
-       id int4 not null,
-        ordering int4,
+       id number(10,0) not null,
+        ordering number(10,0),
         implicit char(1),
         non_controlling char(1),
-        measure_number varchar(255),
-        width numeric(12, 4),
-        part_id int4 not null,
+        measure_number varchar2(255),
+        width number(12,4),
+        part_id number(10,0) not null,
         primary key (id)
     );
 
     create table measure_layout (
-       id int4 not null,
-        measure_distance numeric(12, 4),
+       id number(10,0) not null,
+        measure_distance number(12,4),
         primary key (id)
     );
 
     create table measure_style (
-       measure_style_type varchar(31) not null,
-        id int4 not null,
-        color varchar(255),
-        measure_style_number int4,
+       measure_style_type varchar2(31) not null,
+        id number(10,0) not null,
+        color varchar2(255),
+        measure_style_number number(10,0),
         use_symbols char(1),
-        value int4,
-        type varchar(255),
+        value number(10,0),
+        type varchar2(255),
         use_dots char(1),
         use_stems char(1),
-        slashes int4,
-        font_id int4,
-        slash_group_id int4,
-        attributes_id int4 not null,
+        slashes number(10,0),
+        font_id number(10,0),
+        slash_group_id number(10,0),
+        attributes_id number(10,0) not null,
         primary key (id)
     );
 
     create table metronome_beam (
-       id int4 not null,
-        beam_type varchar(255),
-        metronome_beam_number int4,
-        metronome_note_id int4 not null,
+       id number(10,0) not null,
+        beam_type varchar2(255),
+        metronome_beam_number number(10,0),
+        metronome_note_id number(10,0) not null,
         primary key (id)
     );
 
     create table metronome_note (
-       id int4 not null,
-        metronome_dots int4,
-        metronome_type varchar(255),
-        metronome_tuplet_id int4,
-        note_metronome_2_id int4 not null,
-        note_metronome_1_id int4 not null,
+       id number(10,0) not null,
+        metronome_dots number(10,0),
+        metronome_type varchar2(255),
+        metronome_tuplet_id number(10,0),
+        note_metronome_2_id number(10,0) not null,
+        note_metronome_1_id number(10,0) not null,
         primary key (id)
     );
 
     create table metronome_tuplet (
-       id int4 not null,
+       id number(10,0) not null,
         bracket char(1),
-        show_number varchar(255),
-        metronome_tuplet_type varchar(255),
-        time_modification_id int4,
+        show_number varchar2(255),
+        metronome_tuplet_type varchar2(255),
+        time_modification_id number(10,0),
         primary key (id)
     );
 
     create table midi_device (
-       id int4 not null,
-        midi_device_id varchar(255),
-        port int4,
-        value varchar(255),
+       id number(10,0) not null,
+        midi_device_id varchar2(255),
+        port number(10,0),
+        value varchar2(255),
         primary key (id)
     );
 
     create table midi_instrument (
-       id int4 not null,
-        elevation numeric(12, 4),
-        midi_bank int4,
-        midi_channel int4,
-        midi_instrumentj_id varchar(255),
-        midi_name varchar(255),
-        midi_program int4,
-        midi_unpitched int4,
-        pan numeric(12, 4),
-        volume numeric(12, 4),
+       id number(10,0) not null,
+        elevation number(12,4),
+        midi_bank number(10,0),
+        midi_channel number(10,0),
+        midi_instrumentj_id varchar2(255),
+        midi_name varchar2(255),
+        midi_program number(10,0),
+        midi_unpitched number(10,0),
+        pan number(12,4),
+        volume number(12,4),
         primary key (id)
     );
 
     create table miscellaneous (
-       id int4 not null,
+       id number(10,0) not null,
         primary key (id)
     );
 
     create table miscellaneous_field (
-       id int4 not null,
-        name varchar(255),
-        value varchar(255),
-        miscellaneous_id int4 not null,
+       id number(10,0) not null,
+        name varchar2(255),
+        value varchar2(255),
+        miscellaneous_id number(10,0) not null,
         primary key (id)
     );
 
     create table music_data (
-       music_data_type varchar(31) not null,
-        id int4 not null,
-        ordering int4,
-        duration numeric(12, 4),
-        coda varchar(255),
+       music_data_type varchar2(31) not null,
+        id number(10,0) not null,
+        ordering number(10,0),
+        duration number(12,4),
+        coda varchar2(255),
         dacapo char(1),
-        dalsegno varchar(255),
-        damper_pedal varchar(255),
-        divisions numeric(12, 4),
-        dynamics numeric(12, 4),
-        elevation numeric(12, 4),
-        fine varchar(255),
+        dalsegno varchar2(255),
+        damper_pedal varchar2(255),
+        divisions number(12,4),
+        dynamics number(12,4),
+        elevation number(12,4),
+        fine varchar2(255),
         forward_repeat char(1),
-        pan numeric(12, 4),
+        pan number(12,4),
         pizzicato char(1),
-        segno varchar(255),
-        soft_pedal varchar(255),
-        sostenuto_pedal varchar(255),
-        tempo numeric(12, 4),
-        time_only varchar(255),
-        tocoda varchar(255),
+        segno varchar2(255),
+        soft_pedal varchar2(255),
+        sostenuto_pedal varchar2(255),
+        tempo number(12,4),
+        time_only varchar2(255),
+        tocoda varchar2(255),
         parentheses char(1),
-        instruments int4,
-        staves int4,
-        placement varchar(255),
+        instruments number(10,0),
+        staves number(10,0),
+        placement varchar2(255),
         print_frame char(1),
         print_object char(1),
-        staff int4,
-        type varchar(255),
-        location varchar(255),
-        blank_page int4,
-        measure_numbering_value varchar(255),
+        staff number(10,0),
+        type varchar2(255),
+        location varchar2(255),
+        blank_page number(10,0),
+        measure_numbering_value varchar2(255),
         new_page char(1),
         new_system char(1),
-        page_number varchar(255),
-        staff_spacing numeric(12, 4),
-        grouping_number varchar(255),
-        number_of varchar(255),
-        bookmark_id varchar(255),
-        name varchar(255),
-        attack_length numeric(12, 4),
-        color varchar(255),
+        page_number varchar2(255),
+        staff_spacing number(12,4),
+        grouping_number varchar2(255),
+        number_of varchar2(255),
+        bookmark_id varchar2(255),
+        name varchar2(255),
+        attack_length number(12,4),
+        color varchar2(255),
         cue char(1),
-        end_dynamics numeric(12, 4),
-        instrument varchar(255),
-        release_length numeric(12, 4),
+        end_dynamics number(12,4),
+        instrument varchar2(255),
+        release_length number(12,4),
         directive char(1),
-        measure_id int4,
-        editorial_id int4,
-        offset_id int4,
-        print_style_id int4,
-        printout_id int4,
-        part_symbol_id int4,
-        frame_id int4,
-        bar_style_id int4,
-        coda_print_id int4,
-        ending_id int4,
-        repeat_id int4,
-        segno_print_id int4,
-        wavy_line_id int4,
-        layout_id int4,
-        measure_layout_id int4,
-        part_abbreviation_display_id int4,
-        part_name_display_id int4,
-        print_style_align_id int4,
-        credit_display_id int4,
-        element_position_id int4,
-        editorial_voice_id int4,
-        link_attributes_id int4,
-        position_id int4,
-        accidental_id int4,
-        font_id int4,
-        full_note_id int4,
-        grace_id int4,
-        notehead_id int4,
-        notehead_text_id int4,
-        play_id int4,
-        stem_id int4,
-        time_modification_id int4,
-        type_id int4,
-        editorial_voice_direction_id int4,
-        sound_id int4,
+        measure_id number(10,0),
+        editorial_id number(10,0),
+        offset_id number(10,0),
+        print_style_id number(10,0),
+        printout_id number(10,0),
+        part_symbol_id number(10,0),
+        frame_id number(10,0),
+        bar_style_id number(10,0),
+        coda_print_id number(10,0),
+        ending_id number(10,0),
+        repeat_id number(10,0),
+        segno_print_id number(10,0),
+        wavy_line_id number(10,0),
+        layout_id number(10,0),
+        measure_layout_id number(10,0),
+        part_abbreviation_display_id number(10,0),
+        part_name_display_id number(10,0),
+        print_style_align_id number(10,0),
+        credit_display_id number(10,0),
+        element_position_id number(10,0),
+        editorial_voice_id number(10,0),
+        link_attributes_id number(10,0),
+        position_id number(10,0),
+        accidental_id number(10,0),
+        font_id number(10,0),
+        full_note_id number(10,0),
+        grace_id number(10,0),
+        notehead_id number(10,0),
+        notehead_text_id number(10,0),
+        play_id number(10,0),
+        stem_id number(10,0),
+        time_modification_id number(10,0),
+        type_id number(10,0),
+        editorial_voice_direction_id number(10,0),
+        sound_id number(10,0),
         primary key (id)
     );
 
     create table name_display (
-       id int4 not null,
+       id number(10,0) not null,
         print_object char(1),
         primary key (id)
     );
 
     create table non_traditional_key_type (
-       id int4 not null,
-        key_accidental varchar(255),
-        key_alter numeric(12, 4),
-        key_step varchar(255),
-        non_traditional_key_id int4 not null,
+       id number(10,0) not null,
+        key_accidental varchar2(255),
+        key_alter number(12,4),
+        key_step varchar2(255),
+        non_traditional_key_id number(10,0) not null,
         primary key (id)
     );
 
     create table notation (
-       notation_type varchar(31) not null,
-        id int4 not null,
-        color varchar(255),
-        notation_number int4,
-        placement varchar(255),
-        type_value varchar(255),
+       notation_type varchar2(31) not null,
+        id number(10,0) not null,
+        color varchar2(255),
+        notation_number number(10,0),
+        placement varchar2(255),
+        type_value varchar2(255),
         print_object char(1),
-        value varchar(255),
-        line_type varchar(255),
-        connection_type varchar(255),
-        orientation varchar(255),
-        fermata_shape varchar(255),
-        direction varchar(255),
+        value varchar2(255),
+        line_type varchar2(255),
+        connection_type varchar2(255),
+        orientation varchar2(255),
+        fermata_shape varchar2(255),
+        direction varchar2(255),
         bracket char(1),
-        line_shape varchar(255),
-        show_number varchar(255),
-        show_type varchar(255),
-        accidental_type varchar(255),
-        notations_id int4,
-        position_id int4,
-        print_style_id int4,
-        dashed_formatting_id int4,
-        bezier_id int4,
-        bend_sound_id int4,
-        barline_id int4,
-        tuplet_actual_id int4,
-        tuplet_normal_id int4,
-        dynamics_id int4,
+        line_shape varchar2(255),
+        show_number varchar2(255),
+        show_type varchar2(255),
+        accidental_type varchar2(255),
+        notations_id number(10,0),
+        position_id number(10,0),
+        print_style_id number(10,0),
+        dashed_formatting_id number(10,0),
+        bezier_id number(10,0),
+        bend_sound_id number(10,0),
+        barline_id number(10,0),
+        tuplet_actual_id number(10,0),
+        tuplet_normal_id number(10,0),
+        dynamics_id number(10,0),
         primary key (id)
     );
 
     create table notations (
-       id int4 not null,
+       id number(10,0) not null,
         print_object char(1),
-        editorial_id int4,
-        note_id int4 not null,
+        editorial_id number(10,0),
+        note_id number(10,0) not null,
         primary key (id)
     );
 
     create table note_size (
-       id int4 not null,
-        type varchar(255),
-        value numeric(12, 4),
-        appearance_id int4 not null,
+       id number(10,0) not null,
+        type varchar2(255),
+        value number(12,4),
+        appearance_id number(10,0) not null,
         primary key (id)
     );
 
     create table note_type (
-       id int4 not null,
-        symbol_size varchar(255),
-        note_type_size varchar(255),
+       id number(10,0) not null,
+        symbol_size varchar2(255),
+        note_type_size varchar2(255),
         primary key (id)
     );
 
     create table notehead (
-       id int4 not null,
-        color varchar(255),
+       id number(10,0) not null,
+        color varchar2(255),
         filled char(1),
         parentheses char(1),
-        type varchar(255),
-        font_id int4,
+        type varchar2(255),
+        font_id number(10,0),
         primary key (id)
     );
 
     create table notehead_text (
-       id int4 not null,
+       id number(10,0) not null,
         primary key (id)
     );
 
     create table ornament (
-       ornament_type varchar(31) not null,
-        id int4 not null,
-        placement varchar(255),
+       ornament_type varchar2(31) not null,
+        id number(10,0) not null,
+        placement varchar2(255),
         slash char(1),
-        color varchar(255),
-        wavy_line_number int4,
-        connection_type varchar(255),
-        tremolo_marks int4,
-        approach varchar(255),
-        departure varchar(255),
+        color varchar2(255),
+        wavy_line_number number(10,0),
+        connection_type varchar2(255),
+        tremolo_marks number(10,0),
+        approach varchar2(255),
+        departure varchar2(255),
         long_mordent char(1),
-        ornaments_id int4,
-        placement_text_id int4,
-        print_style_id int4,
-        trill_sound_id int4,
-        position_id int4,
-        print_placement_id int4,
+        ornaments_id number(10,0),
+        placement_text_id number(10,0),
+        print_style_id number(10,0),
+        trill_sound_id number(10,0),
+        position_id number(10,0),
+        print_placement_id number(10,0),
         primary key (id)
     );
 
     create table ornament_accidental (
-       id int4 not null,
-        accidental_mark_id int4,
-        ornaments_id int4 not null,
+       id number(10,0) not null,
+        accidental_mark_id number(10,0),
+        ornaments_id number(10,0) not null,
         primary key (id)
     );
 
     create table other_appearance (
-       id int4 not null,
-        type varchar(255),
-        value varchar(255),
-        appearance_id int4 not null,
+       id number(10,0) not null,
+        type varchar2(255),
+        value varchar2(255),
+        appearance_id number(10,0) not null,
         primary key (id)
     );
 
     create table page_layout (
-       id int4 not null,
-        page_height numeric(12, 4),
-        page_width numeric(12, 4),
+       id number(10,0) not null,
+        page_height number(12,4),
+        page_width number(12,4),
         primary key (id)
     );
 
     create table page_margins (
-       id int4 not null,
-        margin_type_key varchar(255),
-        type varchar(255),
-        margins_id int4,
-        page_layout_id int4 not null,
+       id number(10,0) not null,
+        margin_type_key varchar2(255),
+        type varchar2(255),
+        margins_id number(10,0),
+        page_layout_id number(10,0) not null,
         primary key (id)
     );
 
     create table part (
-       id int4 not null,
-        ordering int4,
-        part_id varchar(255),
-        score_id int4 not null,
+       id number(10,0) not null,
+        ordering number(10,0),
+        part_id varchar2(255),
+        score_id number(10,0) not null,
         primary key (id)
     );
 
     create table part_item (
-       part_item_type varchar(31) not null,
-        id int4 not null,
-        ordering int4,
+       part_item_type varchar2(31) not null,
+        id number(10,0) not null,
+        ordering number(10,0),
         group_time char(1),
-        part_group_number varchar(255),
-        part_group_type varchar(255),
-        score_part_id varchar(255),
-        editorial_id int4,
-        group_abbreviation_id int4,
-        group_abbreviation_display_id int4,
-        group_barline_id int4,
-        group_name_id int4,
-        group_name_display_id int4,
-        group_symbol_id int4,
-        identification_id int4,
-        part_abbreviation_id int4,
-        part_abbreviation_display_id int4,
-        part_name_id int4,
-        part_name_display_id int4,
-        part_list_id int4 not null,
+        part_group_number varchar2(255),
+        part_group_type varchar2(255),
+        score_part_id varchar2(255),
+        editorial_id number(10,0),
+        group_abbreviation_id number(10,0),
+        group_abbreviation_display_id number(10,0),
+        group_barline_id number(10,0),
+        group_name_id number(10,0),
+        group_name_display_id number(10,0),
+        group_symbol_id number(10,0),
+        identification_id number(10,0),
+        part_abbreviation_id number(10,0),
+        part_abbreviation_display_id number(10,0),
+        part_name_id number(10,0),
+        part_name_display_id number(10,0),
+        part_list_id number(10,0) not null,
         primary key (id)
     );
 
     create table part_list (
-       id int4 not null,
+       id number(10,0) not null,
         primary key (id)
     );
 
     create table part_name (
-       id int4 not null,
-        part_name varchar(255),
-        part_name_justify varchar(255),
+       id number(10,0) not null,
+        part_name varchar2(255),
+        part_name_justify varchar2(255),
         part_name_print_object char(1),
-        part_name_print_style_id int4,
+        part_name_print_style_id number(10,0),
         primary key (id)
     );
 
     create table part_symbol (
-       id int4 not null,
-        bottom_staff int4,
-        color varchar(255),
-        group_symbol_type varchar(255),
-        top_staff int4,
-        position_id int4,
+       id number(10,0) not null,
+        bottom_staff number(10,0),
+        color varchar2(255),
+        group_symbol_type varchar2(255),
+        top_staff number(10,0),
+        position_id number(10,0),
         primary key (id)
     );
 
     create table pedal_tuning (
-       id int4 not null,
-        pedal_alter numeric(12, 4),
-        pedal_step varchar(255),
-        harp_pedals_id int4 not null,
+       id number(10,0) not null,
+        pedal_alter number(12,4),
+        pedal_step varchar2(255),
+        harp_pedals_id number(10,0) not null,
         primary key (id)
     );
 
     create table per_minute (
-       id int4 not null,
-        per_minute varchar(255),
-        font_id int4,
+       id number(10,0) not null,
+        per_minute varchar2(255),
+        font_id number(10,0),
         primary key (id)
     );
 
     create table placement_text (
-       id int4 not null,
-        placement varchar(255),
-        value varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        placement varchar2(255),
+        value varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table play (
-       id int4 not null,
-        play_id varchar(255),
+       id number(10,0) not null,
+        play_id varchar2(255),
         primary key (id)
     );
 
     create table play_type (
-       play_type_type varchar(31) not null,
-        id int4 not null,
-        value varchar(255),
-        type varchar(255),
-        play_id int4,
+       play_type_type varchar2(31) not null,
+        id number(10,0) not null,
+        value varchar2(255),
+        type varchar2(255),
+        play_id number(10,0),
         primary key (id)
     );
 
     create table position (
-       id int4 not null,
-        default_x numeric(12, 4),
-        default_y numeric(12, 4),
-        relative_x numeric(12, 4),
-        relative_y numeric(12, 4),
+       id number(10,0) not null,
+        default_x number(12,4),
+        default_y number(12,4),
+        relative_x number(12,4),
+        relative_y number(12,4),
         primary key (id)
     );
 
     create table print_object_style_align (
-       id int4 not null,
+       id number(10,0) not null,
         print_object char(1),
-        print_style_align_id int4,
+        print_style_align_id number(10,0),
         primary key (id)
     );
 
     create table print_placement (
-       id int4 not null,
-        placement varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        placement varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table print_style (
-       id int4 not null,
-        color varchar(255),
-        font_id int4,
-        position_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        font_id number(10,0),
+        position_id number(10,0),
         primary key (id)
     );
 
     create table print_style_align (
-       id int4 not null,
-        halign varchar(255),
-        valign varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        halign varchar2(255),
+        valign varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table printout (
-       id int4 not null,
+       id number(10,0) not null,
         print_dot char(1),
         print_lyric char(1),
         print_object char(1),
@@ -1146,380 +1146,380 @@ create sequence hibernate_sequence start 1 increment 1;
     );
 
     create table root_alter (
-       id int4 not null,
-        location varchar(255),
+       id number(10,0) not null,
+        location varchar2(255),
         print_object char(1),
-        semitones numeric(12, 4),
-        print_style_id int4,
+        semitones number(12,4),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table root_step (
-       id int4 not null,
-        step varchar(255),
-        text varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        step varchar2(255),
+        text varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table scaling (
-       id int4 not null,
-        millimeters numeric(12, 4),
-        tenths numeric(12, 4),
+       id number(10,0) not null,
+        millimeters number(12,4),
+        tenths number(12,4),
         primary key (id)
     );
 
     create table score (
-       id int4 not null,
-        score_name varchar(255),
-        version varchar(255),
-        score_header_id int4,
+       id number(10,0) not null,
+        score_name varchar2(255),
+        version varchar2(255),
+        score_header_id number(10,0),
         primary key (id)
     );
 
     create table score_header (
-       id int4 not null,
-        movement_number varchar(255),
-        movement_title varchar(255),
-        defaults_id int4,
-        identification_id int4,
-        part_list_id int4,
-        work_id int4,
+       id number(10,0) not null,
+        movement_number varchar2(255),
+        movement_title varchar2(255),
+        defaults_id number(10,0),
+        identification_id number(10,0),
+        part_list_id number(10,0),
+        work_id number(10,0),
         primary key (id)
     );
 
     create table score_instrument (
-       id int4 not null,
-        instrument_abbreviation varchar(255),
-        instrument_name varchar(255),
-        instrument_sound varchar(255),
-        score_instrument_id varchar(255),
-        instrument_type_id int4,
-        virtual_instrument_id int4,
-        score_part_id int4 not null,
+       id number(10,0) not null,
+        instrument_abbreviation varchar2(255),
+        instrument_name varchar2(255),
+        instrument_sound varchar2(255),
+        score_instrument_id varchar2(255),
+        instrument_type_id number(10,0),
+        virtual_instrument_id number(10,0),
+        score_part_id number(10,0) not null,
         primary key (id)
     );
 
     create table score_midi (
-       id int4 not null,
-        midi_device_id int4,
-        midi_instrument_id int4,
-        score_part_id int4 not null,
+       id number(10,0) not null,
+        midi_device_id number(10,0),
+        midi_instrument_id number(10,0),
+        score_part_id number(10,0) not null,
         primary key (id)
     );
 
     create table score_part_group (
-       id int4 not null,
-        group_name varchar(255),
-        score_part_id int4 not null,
+       id number(10,0) not null,
+        group_name varchar2(255),
+        score_part_id number(10,0) not null,
         primary key (id)
     );
 
     create table slash_group (
-       id int4 not null,
-        slash_dots int4,
-        slash_type varchar(255),
+       id number(10,0) not null,
+        slash_dots number(10,0),
+        slash_type varchar2(255),
         primary key (id)
     );
 
     create table sound_midi (
-       id int4 not null,
-        midi_device_id int4,
-        midi_instrument_id int4,
-        play_id int4,
-        sound_id int4 not null,
+       id number(10,0) not null,
+        midi_device_id number(10,0),
+        midi_instrument_id number(10,0),
+        play_id number(10,0),
+        sound_id number(10,0) not null,
         primary key (id)
     );
 
     create table staff_details (
-       id int4 not null,
-        capo int4,
-        staff_details_number int4,
+       id number(10,0) not null,
+        capo number(10,0),
+        staff_details_number number(10,0),
         print_object char(1),
         print_spacing char(1),
-        show_frets varchar(255),
-        staff_lines int4,
-        staff_size numeric(12, 4),
-        staff_type varchar(255),
-        attributes_id int4 not null,
+        show_frets varchar2(255),
+        staff_lines number(10,0),
+        staff_size number(12,4),
+        staff_type varchar2(255),
+        attributes_id number(10,0) not null,
         primary key (id)
     );
 
     create table staff_layout (
-       id int4 not null,
-        staff_layout_number int4,
-        staff_distance numeric(12, 4),
-        layout_id int4 not null,
+       id number(10,0) not null,
+        staff_layout_number number(10,0),
+        staff_distance number(12,4),
+        layout_id number(10,0) not null,
         primary key (id)
     );
 
     create table staff_tuning (
-       id int4 not null,
-        line int4,
-        tuning_id int4,
-        staff_details_id int4 not null,
+       id number(10,0) not null,
+        line number(10,0),
+        tuning_id number(10,0),
+        staff_details_id number(10,0) not null,
         primary key (id)
     );
 
     create table stem (
-       id int4 not null,
-        color varchar(255),
-        type varchar(255),
-        position_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        type varchar2(255),
+        position_id number(10,0),
         primary key (id)
     );
 
     create table style_text (
-       id int4 not null,
-        value varchar(255),
-        print_style_id int4,
+       id number(10,0) not null,
+        value varchar2(255),
+        print_style_id number(10,0),
         primary key (id)
     );
 
     create table system_dividers (
-       id int4 not null,
-        left_divider_id int4,
-        right_divider_id int4,
+       id number(10,0) not null,
+        left_divider_id number(10,0),
+        right_divider_id number(10,0),
         primary key (id)
     );
 
     create table system_layout (
-       id int4 not null,
-        left_margin numeric(12, 4),
-        right_margin numeric(12, 4),
-        system_distance numeric(12, 4),
-        top_system_distance numeric(12, 4),
-        system_dividers_id int4,
+       id number(10,0) not null,
+        left_margin number(12,4),
+        right_margin number(12,4),
+        system_distance number(12,4),
+        top_system_distance number(12,4),
+        system_dividers_id number(10,0),
         primary key (id)
     );
 
     create table technical (
-       technical_type varchar(31) not null,
-        id int4 not null,
-        placement varchar(255),
-        string_number int4,
+       technical_type varchar2(31) not null,
+        id number(10,0) not null,
+        placement varchar2(255),
+        string_number number(10,0),
         alternate char(1),
         substitution char(1),
-        value varchar(255),
-        notation_number int4,
-        notation_type varchar(255),
-        color varchar(255),
-        arrow_direction varchar(255),
-        arrow_style varchar(255),
-        circular_arrow varchar(255),
-        hole_closed_location varchar(255),
-        hole_close_type varchar(255),
-        hole_shape varchar(255),
-        hole_type varchar(255),
-        bend_alter numeric(12, 4),
-        bend_type varchar(255),
-        handbell_type varchar(255),
-        harmonic_pitch varchar(255),
-        harmonic_type varchar(255),
+        value varchar2(255),
+        notation_number number(10,0),
+        notation_type varchar2(255),
+        color varchar2(255),
+        arrow_direction varchar2(255),
+        arrow_style varchar2(255),
+        circular_arrow varchar2(255),
+        hole_closed_location varchar2(255),
+        hole_close_type varchar2(255),
+        hole_shape varchar2(255),
+        hole_type varchar2(255),
+        bend_alter number(12,4),
+        bend_type varchar2(255),
+        handbell_type varchar2(255),
+        harmonic_pitch varchar2(255),
+        harmonic_type varchar2(255),
         print_object char(1),
-        technicals_id int4,
-        print_style_id int4,
-        print_placement_id int4,
-        font_id int4,
-        placement_text_id int4,
-        bend_sound_id int4,
-        with_bar_id int4,
+        technicals_id number(10,0),
+        print_style_id number(10,0),
+        print_placement_id number(10,0),
+        font_id number(10,0),
+        placement_text_id number(10,0),
+        bend_sound_id number(10,0),
+        with_bar_id number(10,0),
         primary key (id)
     );
 
     create table text_data (
-       id int4 not null,
-        color varchar(255),
-        lang varchar(255),
-        letter_spacing varchar(255),
-        text_direction varchar(255),
-        text_rotation numeric(12, 4),
-        value varchar(255),
-        font_id int4,
-        text_decoration_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        lang varchar2(255),
+        letter_spacing varchar2(255),
+        text_direction varchar2(255),
+        text_rotation number(12,4),
+        value varchar2(255),
+        font_id number(10,0),
+        text_decoration_id number(10,0),
         primary key (id)
     );
 
     create table text_decoration (
-       id int4 not null,
-        line_through int4,
-        overline int4,
-        underline int4,
+       id number(10,0) not null,
+        line_through number(10,0),
+        overline number(10,0),
+        underline number(10,0),
         primary key (id)
     );
 
     create table text_display (
-       text_type varchar(31) not null,
-        id int4 not null,
-        accidental_type varchar(255),
-        name_display_id int4,
-        notehead_text_id int4,
-        text_formatting_id int4,
-        display_text_id int4,
+       text_type varchar2(31) not null,
+        id number(10,0) not null,
+        accidental_type varchar2(255),
+        name_display_id number(10,0),
+        notehead_text_id number(10,0),
+        text_formatting_id number(10,0),
+        display_text_id number(10,0),
         primary key (id)
     );
 
     create table text_font_color (
-       id int4 not null,
-        color varchar(255),
-        lang varchar(255),
-        letter_spacing varchar(255),
-        text_direction varchar(255),
-        text_rotation numeric(12, 4),
-        value varchar(255),
-        font_id int4,
-        text_decoration_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        lang varchar2(255),
+        letter_spacing varchar2(255),
+        text_direction varchar2(255),
+        text_rotation number(12,4),
+        value varchar2(255),
+        font_id number(10,0),
+        text_decoration_id number(10,0),
         primary key (id)
     );
 
     create table text_formatting (
-       id int4 not null,
-        enclosure varchar(255),
-        justify varchar(255),
-        lang varchar(255),
-        letter_spacing varchar(255),
-        line_height varchar(255),
-        space varchar(255),
-        text_direction varchar(255),
-        text_rotation numeric(12, 4),
-        print_style_align_id int4,
-        text_decoration_id int4,
+       id number(10,0) not null,
+        enclosure varchar2(255),
+        justify varchar2(255),
+        lang varchar2(255),
+        letter_spacing varchar2(255),
+        line_height varchar2(255),
+        space varchar2(255),
+        text_direction varchar2(255),
+        text_rotation number(12,4),
+        print_style_align_id number(10,0),
+        text_decoration_id number(10,0),
         primary key (id)
     );
 
     create table tie (
-       id int4 not null,
-        time_only varchar(255),
-        type varchar(255),
-        note_id int4 not null,
+       id number(10,0) not null,
+        time_only varchar2(255),
+        type varchar2(255),
+        note_id number(10,0) not null,
         primary key (id)
     );
 
     create table time (
-       time_type varchar(31) not null,
-        id int4 not null,
-        time_number int4,
+       time_type varchar2(31) not null,
+        id number(10,0) not null,
+        time_number number(10,0),
         print_object char(1),
-        time_separator varchar(255),
-        symbol varchar(255),
-        value varchar(255),
-        print_style_align_id int4,
-        interchangeable_id int4,
-        attributes_id int4 not null,
+        time_separator varchar2(255),
+        symbol varchar2(255),
+        value varchar2(255),
+        print_style_align_id number(10,0),
+        interchangeable_id number(10,0),
+        attributes_id number(10,0) not null,
         primary key (id)
     );
 
     create table time_modification (
-       id int4 not null,
-        actual_notes int4,
-        normal_dots int4,
-        normal_notes int4,
-        normal_type varchar(255),
+       id number(10,0) not null,
+        actual_notes number(10,0),
+        normal_dots number(10,0),
+        normal_notes number(10,0),
+        normal_type varchar2(255),
         primary key (id)
     );
 
     create table time_signature_type (
-       id int4 not null,
-        beat_type varchar(255),
-        beats varchar(255),
-        time_signature_id int4 not null,
+       id number(10,0) not null,
+        beat_type varchar2(255),
+        beats varchar2(255),
+        time_signature_id number(10,0) not null,
         primary key (id)
     );
 
     create table transpose (
-       id int4 not null,
-        chromatic numeric(12, 4),
-        diatonic int4,
+       id number(10,0) not null,
+        chromatic number(12,4),
+        diatonic number(10,0),
         doubled char(1),
-        transpose_number int4,
-        octave_change int4,
-        attributes_id int4 not null,
+        transpose_number number(10,0),
+        octave_change number(10,0),
+        attributes_id number(10,0) not null,
         primary key (id)
     );
 
     create table trill_sound (
-       id int4 not null,
+       id number(10,0) not null,
         accelerate char(1),
-        beats numeric(12, 4),
-        last_beat numeric(12, 4),
-        second_beat numeric(12, 4),
-        start_note varchar(255),
-        trill_step varchar(255),
-        two_note_turn varchar(255),
+        beats number(12,4),
+        last_beat number(12,4),
+        second_beat number(12,4),
+        start_note varchar2(255),
+        trill_step varchar2(255),
+        two_note_turn varchar2(255),
         primary key (id)
     );
 
     create table tuning (
-       id int4 not null,
-        tuning_alter numeric(12, 4),
-        tuning_octave int4,
-        tuning_step varchar(255),
+       id number(10,0) not null,
+        tuning_alter number(12,4),
+        tuning_octave number(10,0),
+        tuning_step varchar2(255),
         primary key (id)
     );
 
     create table tuplet_dot (
-       id int4 not null,
-        color varchar(255),
-        font_id int4,
-        tuplet_portion_id int4 not null,
+       id number(10,0) not null,
+        color varchar2(255),
+        font_id number(10,0),
+        tuplet_portion_id number(10,0) not null,
         primary key (id)
     );
 
     create table tuplet_number (
-       id int4 not null,
-        color varchar(255),
-        value int4,
-        font_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        value number(10,0),
+        font_id number(10,0),
         primary key (id)
     );
 
     create table tuplet_portion (
-       id int4 not null,
-        tuplet_number_id int4,
-        tuplet_type_id int4,
+       id number(10,0) not null,
+        tuplet_number_id number(10,0),
+        tuplet_type_id number(10,0),
         primary key (id)
     );
 
     create table tuplet_type (
-       id int4 not null,
-        color varchar(255),
-        note_type_value varchar(255),
-        font_id int4,
+       id number(10,0) not null,
+        color varchar2(255),
+        note_type_value varchar2(255),
+        font_id number(10,0),
         primary key (id)
     );
 
     create table typed_text (
-       id int4 not null,
-        type varchar(255),
-        value varchar(255),
-        creator_id int4,
-        relation_id int4,
-        rights_id int4,
+       id number(10,0) not null,
+        type varchar2(255),
+        value varchar2(255),
+        creator_id number(10,0),
+        relation_id number(10,0),
+        rights_id number(10,0),
         primary key (id)
     );
 
     create table virtual_instrument (
-       id int4 not null,
-        virtual_library varchar(255),
-        virtual_name varchar(255),
+       id number(10,0) not null,
+        virtual_library varchar2(255),
+        virtual_name varchar2(255),
         primary key (id)
     );
 
     create table work (
-       id int4 not null,
-        work_number varchar(255),
-        work_title varchar(255),
-        opus_id int4,
+       id number(10,0) not null,
+        work_number varchar2(255),
+        work_title varchar2(255),
+        opus_id number(10,0),
         primary key (id)
     );
 
     create table xml_comment (
-       id int4 not null,
-        data varchar(255),
-        next_sibling varchar(255),
-        parent varchar(255),
-        target varchar(255),
-        score_id int4 not null,
+       id number(10,0) not null,
+        data varchar2(255),
+        next_sibling varchar2(255),
+        parent varchar2(255),
+        target varchar2(255),
+        score_id number(10,0) not null,
         primary key (id)
     );
 
