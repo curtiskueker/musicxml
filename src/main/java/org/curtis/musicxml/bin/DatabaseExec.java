@@ -19,24 +19,32 @@ public class DatabaseExec extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         try {
             if (isCreateDatabase()) {
-                errorMessage = "Unable to create database tables";
                 System.err.println("Creating database tables ...");
+                errorMessage = "Unable to create database tables";
+            }
+            if (isTestDatabase()) {
+                System.err.println("Testing database connection ...");
+                errorMessage = "Database connection test failed";
+            }
+            if (isGenerateSchema()) {
+                System.err.println("Generating database schema file ...");
+                errorMessage = "Database schema file not generated: " + getOutputFile();
+            }
+
+            MusicXmlUtil.getNewDbTransaction();
+
+            if (isCreateDatabase()) {
                 DBSessionFactory.createDb();
                 System.err.println("Database tables created");
             }
             if (isTestDatabase()) {
-                errorMessage = "Database connection test failed";
-                MusicXmlUtil.getNewDbTransaction();
                 System.err.println("Successful database connection test");
             }
             if (isGenerateSchema()) {
-                errorMessage = "Database schema file not generated: " + getOutputFile();
-                MusicXmlUtil.getNewDbTransaction();
                 DBSessionFactory.generateDbSchema(getOutputFile());
                 System.err.println("Database schema file output: " + getOutputFile());
             }
         } catch (DBException e) {
-            // TODO: remove print stack trace
             e.printStackTrace();
             throw new MusicXmlException(errorMessage);
         }
