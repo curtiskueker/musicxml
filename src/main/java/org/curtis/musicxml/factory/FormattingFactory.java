@@ -43,9 +43,14 @@ public class FormattingFactory {
             return null;
         }
 
+        String value = XmlUtil.getElementText(formattedTextElement);
+        TextFormatting textFormatting = newTextFormatting(formattedTextElement);
+
+        if (StringUtil.isEmpty(value) && textFormatting == null) return null;
+
         FormattedText formattedText = new FormattedText();
-        formattedText.setValue(XmlUtil.getElementText(formattedTextElement));
-        formattedText.setTextFormatting(newTextFormatting(formattedTextElement));
+        formattedText.setValue(value);
+        formattedText.setTextFormatting(textFormatting);
 
         return formattedText;
     }
@@ -258,9 +263,16 @@ public class FormattingFactory {
     }
 
     public static DashedFormatting newDashedFormatting(Element dashedFormattingElement) {
+        if (dashedFormattingElement == null) return null;
+
+        BigDecimal dashLength = MathUtil.newBigDecimal(dashedFormattingElement.getAttribute("dash-length"));
+        BigDecimal spaceLength = MathUtil.newBigDecimal(dashedFormattingElement.getAttribute("space-length"));
+
+        if (dashLength == null && spaceLength == null) return null;
+
         DashedFormatting dashedFormatting = new DashedFormatting();
-        dashedFormatting.setDashLength(MathUtil.newBigDecimal(dashedFormattingElement.getAttribute("dash-length")));
-        dashedFormatting.setSpaceLength(MathUtil.newBigDecimal(dashedFormattingElement.getAttribute("space-length")));
+        dashedFormatting.setDashLength(dashLength);
+        dashedFormatting.setSpaceLength(spaceLength);
 
         return dashedFormatting;
     }
@@ -272,11 +284,20 @@ public class FormattingFactory {
     }
 
     public static Printout newPrintout(Element element) {
+        if (element == null) return null;
+
+        Boolean printObject = getPrintObject(element);
+        Boolean printDot = TypeUtil.getYesNo(element.getAttribute("print-dot"));
+        Boolean printSpacing = TypeUtil.getYesNo(element.getAttribute("print-spacing"));
+        Boolean printLyric = TypeUtil.getYesNo(element.getAttribute("print-lyric"));
+
+        if (printObject == null && printDot == null && printSpacing == null && printLyric == null) return null;
+
         Printout printout = new Printout();
-        printout.setPrintObject(getPrintObject(element));
-        printout.setPrintDot(TypeUtil.getYesNo(element.getAttribute("print-dot")));
-        printout.setPrintSpacing(TypeUtil.getYesNo(element.getAttribute("print-spacing")));
-        printout.setPrintLyric(TypeUtil.getYesNo(element.getAttribute("print-lyric")));
+        printout.setPrintObject(printObject);
+        printout.setPrintDot(printDot);
+        printout.setPrintSpacing(printSpacing);
+        printout.setPrintLyric(printLyric);
 
         return printout;
     }
@@ -312,9 +333,14 @@ public class FormattingFactory {
     public static Editorial newEditorial(Element element) {
         if (element == null) return null;
 
+        FormattedText footnote = newFormattedText(XmlUtil.getChildElement(element, "footnote"));
+        Level level = newLevel(XmlUtil.getChildElement(element, "level"));
+
+        if (footnote == null && level == null) return null;
+
         Editorial editorial = new Editorial();
-        editorial.setFootnote(newFormattedText(XmlUtil.getChildElement(element, "footnote")));
-        editorial.setLevel(newLevel(XmlUtil.getChildElement(element, "level")));
+        editorial.setFootnote(footnote);
+        editorial.setLevel(level);
 
         return editorial;
     }
@@ -322,10 +348,16 @@ public class FormattingFactory {
     public static EditorialVoice newEditorialVoice(Element element) {
         if (element == null) return null;
 
+        FormattedText footnote = newFormattedText(XmlUtil.getChildElement(element, "footnote"));
+        Level level = newLevel(XmlUtil.getChildElement(element, "level"));
+        String voice = XmlUtil.getChildElementText(element, "voice");
+
+        if (footnote == null && level == null && StringUtil.isEmpty(voice)) return null;
+
         EditorialVoice editorialVoice = new EditorialVoice();
-        editorialVoice.setFootnote(newFormattedText(XmlUtil.getChildElement(element, "footnote")));
-        editorialVoice.setLevel(newLevel(XmlUtil.getChildElement(element, "level")));
-        editorialVoice.setVoice(XmlUtil.getChildElementText(element, "voice"));
+        editorialVoice.setFootnote(footnote);
+        editorialVoice.setLevel(level);
+        editorialVoice.setVoice(voice);
 
         return editorialVoice;
     }
@@ -344,10 +376,16 @@ public class FormattingFactory {
     public static LevelDisplay newLevelDisplay(Element element) {
         if (element == null) return null;
 
+        Boolean parentheses = TypeUtil.getYesNo(element.getAttribute("parentheses"));
+        Boolean bracket = TypeUtil.getYesNo(element.getAttribute("bracket"));
+        SymbolSize symbolSize = newSymbolSize(element);
+
+        if (parentheses == null && bracket == null && symbolSize == null) return null;
+
         LevelDisplay levelDisplay = new LevelDisplay();
-        levelDisplay.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
-        levelDisplay.setBracket(TypeUtil.getYesNo(element.getAttribute("bracket")));
-        levelDisplay.setSize(FormattingFactory.newSymbolSize(element));
+        levelDisplay.setParentheses(parentheses);
+        levelDisplay.setBracket(bracket);
+        levelDisplay.setSize(symbolSize);
 
         return levelDisplay;
     }
