@@ -350,7 +350,7 @@ public class Note extends MusicData {
     }
 
     public boolean isNotPrinted() {
-        return !TypeUtil.getBooleanDefaultYes(getPrintout().getPrintObject()) || getCue();
+        return (getPrintout() != null && !TypeUtil.getBooleanDefaultYes(getPrintout().getPrintObject())) || TypeUtil.getBoolean(getCue());
     }
 
     public BigDecimal getDynamics() {
