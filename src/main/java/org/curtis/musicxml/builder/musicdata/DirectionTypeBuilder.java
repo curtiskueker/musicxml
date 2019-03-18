@@ -87,7 +87,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildRehearsal(Rehearsal rehearsal) {
-        buildFormattedText("rehearsal", rehearsal.getFormattedText());
+        if (rehearsal.getFormattedText() != null) buildFormattedText("rehearsal", rehearsal.getFormattedText());
     }
 
     private void buildSegno(Segno segno) {
@@ -95,7 +95,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildWords(Words words) {
-        buildFormattedText("words", words.getFormattedText());
+        if (words.getFormattedText() != null) buildFormattedText("words", words.getFormattedText());
     }
 
     private void buildCoda(Coda coda) {

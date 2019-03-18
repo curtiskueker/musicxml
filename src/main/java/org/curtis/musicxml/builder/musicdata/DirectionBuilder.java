@@ -6,6 +6,8 @@ import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 
+import java.util.List;
+
 public class DirectionBuilder extends MusicDataBuilder {
     private Direction direction;
 
@@ -22,14 +24,30 @@ public class DirectionBuilder extends MusicDataBuilder {
         buildAttribute("placement", direction.getPlacement());
         buildAttribute("directive", direction.getDirective());
         buildCloseElement();
+
+        // direction must have direction-type content
+        boolean hasDirectionTypeContent = false;
         for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
-            buildStartElement("direction-type");
-            for (DirectionType directionType : directionTypeList.getDirectionTypes()) {
+            List<DirectionType> directionTypes = directionTypeList.getDirectionTypes();
+            if (directionTypes.isEmpty()) continue;
+
+            StringBuilder directionTypeStringBuilder = new StringBuilder();
+            for (DirectionType directionType : directionTypes) {
                 DirectionTypeBuilder directionTypeBuilder = new DirectionTypeBuilder(directionType);
-                append(directionTypeBuilder.build().toString());
+                directionTypeStringBuilder.append(directionTypeBuilder.build().toString());
             }
-            buildEndElement("direction-type");
+            if (directionTypeStringBuilder.length() > 0) {
+                hasDirectionTypeContent = true;
+                buildStartElement("direction-type");
+                append(directionTypeStringBuilder.toString());
+                buildEndElement("direction-type");
+            }
         }
+        if (!hasDirectionTypeContent) {
+            stringBuilder = new StringBuilder();
+            return stringBuilder;
+        }
+
         append(buildOffset(direction.getOffset()));
         EditorialVoiceDirection editorialVoiceDirection = direction.getEditorialVoiceDirection();
         if (editorialVoiceDirection != null) {

@@ -1,6 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.attributes.Image;
+import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.SoundMidi;
@@ -82,7 +83,9 @@ public class DirectionFactory {
         switch (directionTypeElementName) {
             case "rehearsal":
                 Rehearsal rehearsal = new Rehearsal();
-                rehearsal.setFormattedText(FormattingFactory.newFormattedText(element));
+                FormattedText rehearsalFormattedText = FormattingFactory.newFormattedText(element);
+                if (rehearsalFormattedText == null) return null;
+                rehearsal.setFormattedText(rehearsalFormattedText);
                 return rehearsal;
             case "segno":
                 Segno segno = new Segno();
@@ -90,7 +93,9 @@ public class DirectionFactory {
                 return segno;
             case "words":
                 Words words = new Words();
-                words.setFormattedText(FormattingFactory.newFormattedText(element));
+                FormattedText wordsFormattedText = FormattingFactory.newFormattedText(element);
+                if (wordsFormattedText == null) return null;
+                words.setFormattedText(wordsFormattedText);
                 return words;
             case "coda":
                 Coda coda = new Coda();

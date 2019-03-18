@@ -194,6 +194,8 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
     private void buildCredit(Credit credit) {
         if (credit == null) return;
 
+        if (credit.getCreditDisplays().isEmpty()) return;
+
         buildOpenElement("credit");
         buildAttribute("page", credit.getPage());
         buildCloseElement();

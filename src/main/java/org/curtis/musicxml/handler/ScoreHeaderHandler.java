@@ -204,11 +204,11 @@ public class ScoreHeaderHandler extends BaseHandler {
                                     creditWords.getBookmarks().add(creditWordsBookmark);
                                 }
                                 currentBookmarks.clear();
-                                credit.getCreditDisplays().add(creditWords);
+                                if (creditWords.getCreditWords() != null) credit.getCreditDisplays().add(creditWords);
                                 break;
                         }
                     }
-                    credits.add(credit);
+                    if (!credit.getCreditDisplays().isEmpty()) credits.add(credit);
                     break;
                 case "part-list":
                     PartList partList = scoreHeader.getPartList();
