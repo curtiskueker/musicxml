@@ -259,7 +259,7 @@
         direction_type_size integer,
         direction_type_list_id integer,
         print_style_align_id integer,
-        fomatted_text_id integer,
+        formatted_text_id integer,
         dashed_formatting_id integer,
         position_id integer,
         text_decoration_id integer,
@@ -1701,8 +1701,8 @@
        references print_style_align (id);
 
     alter table direction_type 
-       add constraint FKq9gsdvosrioo2w6yl0374wsps 
-       foreign key (fomatted_text_id) 
+       add constraint FK1hh0df63x5pucje0dcc3baxmk 
+       foreign key (formatted_text_id) 
        references formatted_text (id);
 
     alter table direction_type 

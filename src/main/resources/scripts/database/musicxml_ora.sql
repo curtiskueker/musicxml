@@ -260,7 +260,7 @@ create sequence hibernate_sequence start with 1 increment by 1;
         direction_type_size number(10,0),
         direction_type_list_id number(10,0),
         print_style_align_id number(10,0),
-        fomatted_text_id number(10,0),
+        formatted_text_id number(10,0),
         dashed_formatting_id number(10,0),
         position_id number(10,0),
         text_decoration_id number(10,0),
@@ -1702,8 +1702,8 @@ create sequence hibernate_sequence start with 1 increment by 1;
        references print_style_align;
 
     alter table direction_type 
-       add constraint FKq9gsdvosrioo2w6yl0374wsps 
-       foreign key (fomatted_text_id) 
+       add constraint FK1hh0df63x5pucje0dcc3baxmk 
+       foreign key (formatted_text_id) 
        references formatted_text;
 
     alter table direction_type 

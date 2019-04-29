@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("rehearsal")
 public class Rehearsal extends DirectionType {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fomatted_text_id")
+    @JoinColumn(name = "formatted_text_id")
     private FormattedText formattedText;
 
     public Rehearsal() {
