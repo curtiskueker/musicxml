@@ -56,28 +56,36 @@ public class DBTransaction {
     }
 
     public <T extends DatabaseItem> T find(Class<T> classType, String field, Object value) throws DBException {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classType);
-        Root<T> root = criteriaQuery.from(classType);
-        criteriaQuery.select(root);
-        criteriaQuery.where(criteriaBuilder.equal(root.get(field), value));
+        try {
+            CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classType);
+            Root<T> root = criteriaQuery.from(classType);
+            criteriaQuery.select(root);
+            criteriaQuery.where(criteriaBuilder.equal(root.get(field), value));
 
-        List<T> results = em.createQuery(criteriaQuery).getResultList();
+            List<T> results = em.createQuery(criteriaQuery).getResultList();
 
-        if (results == null || results.isEmpty()) return null;
-        return results.get(0);
+            if (results == null || results.isEmpty()) return null;
+            return results.get(0);
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
     }
 
     public <T extends DatabaseItem> List<T> findAll(Class<T> classType) throws DBException {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classType);
-        Root<T> root = criteriaQuery.from(classType);
-        criteriaQuery.select(root);
+        try {
+            CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classType);
+            Root<T> root = criteriaQuery.from(classType);
+            criteriaQuery.select(root);
 
-        List<T> results = em.createQuery(criteriaQuery).getResultList();
+            List<T> results = em.createQuery(criteriaQuery).getResultList();
 
-        if (results == null || results.isEmpty()) return new ArrayList<T>();
-        return results;
+            if (results == null || results.isEmpty()) return new ArrayList<T>();
+            return results;
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
     }
 
     // Private helper method that checks that the database is in a valid

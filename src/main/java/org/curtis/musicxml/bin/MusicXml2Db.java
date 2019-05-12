@@ -61,11 +61,15 @@ public class MusicXml2Db extends MusicXmlScript {
                     }
                 }
             }
-
-            DBSessionFactory.getInstance().closeTransaction();
         } catch (DBException | XmlException e) {
             e.printStackTrace();
             throw new MusicXmlException(e);
+        } finally {
+            try {
+                DBSessionFactory.getInstance().closeTransaction();
+            } catch (DBException e) {
+                e.printStackTrace();
+            }
         }
     }
 
