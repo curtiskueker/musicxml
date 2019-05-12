@@ -4,7 +4,6 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.curtis.database.DatabaseItem;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
