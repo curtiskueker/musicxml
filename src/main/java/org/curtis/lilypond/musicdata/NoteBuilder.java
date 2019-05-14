@@ -162,6 +162,12 @@ public class NoteBuilder extends MusicDataBuilder {
     private StringBuilder preNoteBuild() throws BuildException {
         append(" ");
 
+        if (note.isChangeStaff()) {
+            append("\\change Staff = \"");
+            append(note.getStaff());
+            append("\" ");
+        }
+
         Tremolo tremolo = note.getTremolo();
         if (tremolo != null && tremolo.getType() == Connection.START) {
             append("\\repeat tremolo ");

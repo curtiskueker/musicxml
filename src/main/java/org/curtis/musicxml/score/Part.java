@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class Part extends OrderedItem {
     @JoinColumn(name = "part_id", nullable = false)
     @OrderBy("ordering")
     private List<Measure> measures = new ArrayList<>();
+    @Transient
+    // used by lilypond
+    private Integer staffNumber = 1;
 
     public Part() {
 
@@ -44,5 +48,13 @@ public class Part extends OrderedItem {
 
     public void setMeasures(List<Measure> measures) {
         this.measures = measures;
+    }
+
+    public Integer getStaffNumber() {
+        return staffNumber;
+    }
+
+    public void setStaffNumber(Integer staffNumber) {
+        this.staffNumber = staffNumber;
     }
 }

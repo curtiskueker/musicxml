@@ -24,10 +24,13 @@ import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.util.MusicXmlUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ScoreBuilder extends BaseBuilder {
     private Score score;
+    private Map<String, Integer> primaryVoiceStaves = new HashMap<>();
 
     public ScoreBuilder(Score score) {
         this.score = score;
@@ -101,12 +104,13 @@ public class ScoreBuilder extends BaseBuilder {
         // pre-processing loop
         //
         // test for multi-staff part: default to 1 staff
+        // assumes that the number of staves in a part doesn't change
         // test for existence of harmony data: construct harmony part
         Integer staves = 1;
         boolean hasHarmony = false;
         for (Measure measure : measures) {
             for(MusicData musicData : getMusicDataList(measure)) {
-                if(musicData instanceof Attributes) {
+                if(musicData instanceof Attributes && staves == 1) {
                     Attributes attributes = (Attributes)musicData;
                     Integer attributesStaves = attributes.getStaves();
                     if (attributesStaves != null && attributesStaves > 1) {
@@ -114,6 +118,11 @@ public class ScoreBuilder extends BaseBuilder {
                     }
                 } else if (musicData instanceof Harmony) {
                     hasHarmony = true;
+                } else if (musicData instanceof Note && staves > 1) {
+                    Note note = (Note)musicData;
+                    String partVoice = partId + "/" + note.getEditorialVoice().getVoice();
+                    Integer primaryVoiceStaff = primaryVoiceStaves.get(partVoice);
+                    if (primaryVoiceStaff == null) primaryVoiceStaves.put(partVoice, note.getStaff());
                 }
             }
         }
@@ -174,6 +183,7 @@ public class ScoreBuilder extends BaseBuilder {
     private void buildGrandStaffPart(ScorePart scorePart, Part part, Integer staves) throws BuildException {
         appendLine("\\new GrandStaff <<");
 
+        String partId = scorePart.getScorePartId();
         PartName partName = scorePart.getPartName();
         if (TypeUtil.getBooleanDefaultYes(partName.getPartNamePrintObject())) {
             append("\\set GrandStaff.instrumentName = #\"");
@@ -191,10 +201,14 @@ public class ScoreBuilder extends BaseBuilder {
         // separate the parts by staves
         Part[] staffParts = new Part[staves];
         for(int index = 0; index < staves; index++) {
-            staffParts[index] = new Part();
-            staffParts[index].setPartId(scorePart.getScorePartId() + ", staff " + String.valueOf(index + 1));
+            Part staffPart = new Part();
+            Integer staffNumber = index + 1;
+            staffPart.setPartId(partId + ", staff " + String.valueOf(staffNumber));
+            staffPart.setStaffNumber(staffNumber);
+            staffParts[index] = staffPart;
         }
 
+        Map<String, Integer> currentNoteVoiceStaves = new HashMap<>();
         for(Measure measure : part.getMeasures()) {
             Measure[] staffMeasures = new Measure[staves];
             for(int index = 0; index < staves; index++) {
@@ -218,16 +232,21 @@ public class ScoreBuilder extends BaseBuilder {
                     currentStaff = staff;
                 } else if(musicData instanceof Note) {
                     Note note = (Note)musicData;
-                    Integer staff = note.getStaff();
-                    if(staff == null || staff < 1 || staff > staves) {
+                    String voice = note.getEditorialVoice().getVoice();
+                    Integer noteStaff = note.getStaff();
+                    if(noteStaff == null || noteStaff < 1 || noteStaff > staves) {
                         throw new BuildException("Invalid staff number in note");
                     }
-                    if(staff.equals(currentStaff) && currentBackup != null) {
-                        staffMeasures[staff - 1].getMusicDataList().add(currentBackup);
+                    Integer voiceStaff = primaryVoiceStaves.get(partId + "/" + voice);
+                    if(voiceStaff.equals(currentStaff) && currentBackup != null) {
+                        staffMeasures[voiceStaff - 1].getMusicDataList().add(currentBackup);
                     }
-                    staffMeasures[staff - 1].getMusicDataList().add(musicData);
+                    Integer currentNoteStaff = currentNoteVoiceStaves.get(voice);
+                    if (currentNoteStaff != null && !noteStaff.equals(currentNoteStaff)) note.setChangeStaff();
+                    staffMeasures[voiceStaff - 1].getMusicDataList().add(musicData);
                     currentBackup = null;
-                    currentStaff = staff;
+                    currentStaff = voiceStaff;
+                    currentNoteVoiceStaves.put(voice, noteStaff);
                 } else if(musicData instanceof Backup) {
                     currentBackup = musicData;
                 } else if(musicData instanceof Forward) {
@@ -273,7 +292,9 @@ public class ScoreBuilder extends BaseBuilder {
                 throw new BuildException(staffPart.getPartId() + " has no measures");
             }
 
-            append("\\new Staff ");
+            append("\\new Staff = \"");
+            append(staffPart.getStaffNumber());
+            append("\" ");
             PartBuilder partBuilder = new PartBuilder(staffPart);
             append(partBuilder.build().toString());
         }

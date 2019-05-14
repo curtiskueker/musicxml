@@ -122,6 +122,9 @@ public class Note extends MusicData {
     @Transient
     // used by lilypond
     private List<Direction> directions = new ArrayList<>();
+    @Transient
+    // used by lilypond
+    private boolean changeStaff = false;
 
     public Note() {
 
@@ -407,5 +410,13 @@ public class Note extends MusicData {
 
     public void setDirections(List<Direction> directions) {
         this.directions = directions;
+    }
+
+    public boolean isChangeStaff() {
+        return changeStaff;
+    }
+
+    public void setChangeStaff() {
+        this.changeStaff = true;
     }
 }
