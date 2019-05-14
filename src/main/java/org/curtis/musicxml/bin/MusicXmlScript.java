@@ -182,7 +182,7 @@ public abstract class MusicXmlScript {
     }
 
     protected void convertLilypondToPdf(String lilypondNotation) throws MusicXmlException {
-        System.err.println("Converting Lilipond notation to PDF File...");
+        System.err.println("Converting Lilypond notation to PDF File...");
         String lilypondLocation;
         try {
             lilypondLocation = AppProperties.getString("location.lilypond");

@@ -169,6 +169,7 @@ public class MusicXmlTasks {
                         toInput = new ToLilypond();
                         break;
                     case "PDF File":
+                        AppProperties.addLocalPropertiesBundle();
                         if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond"))) {
                             InputRow lilypondTextInputRow = new InputRow();
                             lilypondTextInputRow.setInputType(InputType.LABEL);
