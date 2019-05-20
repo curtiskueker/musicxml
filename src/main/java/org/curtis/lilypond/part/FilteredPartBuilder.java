@@ -1,6 +1,6 @@
 package org.curtis.lilypond.part;
 
-import org.curtis.lilypond.BaseBuilder;
+import org.curtis.lilypond.LilypondBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.note.Backup;
@@ -11,7 +11,7 @@ import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
 
-public abstract class FilteredPartBuilder extends BaseBuilder {
+public abstract class FilteredPartBuilder extends LilypondBuilder {
     protected BigDecimal currentDivisions = MathUtil.ZERO;
     protected BigDecimal currentDuration = MathUtil.ZERO;
 

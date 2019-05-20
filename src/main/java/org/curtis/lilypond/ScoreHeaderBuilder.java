@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ScoreHeaderBuilder extends BaseBuilder {
+public class ScoreHeaderBuilder extends LilypondBuilder {
     public static String LILYPOND_VERSION = "2.18.2";
 
     private ScoreHeader scoreHeader;

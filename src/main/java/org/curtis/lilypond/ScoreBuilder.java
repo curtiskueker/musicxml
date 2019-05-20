@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScoreBuilder extends BaseBuilder {
+public class ScoreBuilder extends LilypondBuilder {
     private Score score;
     private Map<String, Integer> primaryVoiceStaves = new HashMap<>();
 

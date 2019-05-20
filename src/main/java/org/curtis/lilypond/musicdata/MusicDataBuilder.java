@@ -1,6 +1,6 @@
 package org.curtis.lilypond.musicdata;
 
-import org.curtis.lilypond.BaseBuilder;
+import org.curtis.lilypond.LilypondBuilder;
 import org.curtis.lilypond.MeasureBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.part.PartBuilder;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public class MusicDataBuilder extends BaseBuilder {
+public class MusicDataBuilder extends LilypondBuilder {
     private Object musicData;
     private BigDecimal unhandledDuration = MathUtil.ZERO;
 
