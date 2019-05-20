@@ -77,7 +77,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     public StringBuilder build() throws BuildException {
         NoteBuilder.CURRENT_BEAMS.clear();
 
-        appendLine("{");
+        appendStartSection("{");
 
         // Pre-processing specific to VoicePartBuilder measure handling
         for(Measure measure : part.getMeasures()) {
@@ -413,7 +413,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
         PartBuilder.CURRENT_ATTRIBUTES = null;
 
-        appendLine("}");
+        appendEndSection("}");
 
         return stringBuilder;
     }
@@ -547,19 +547,19 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                 if (isMainRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
                     append("\\repeat volta #");
                     append(String.valueOf(firstMeasureBuilder.getRepeatBlock().getEndingCount()));
-                    appendLine(" {");
+                    appendStartSection(" {");
                 } else if (isEndingRepeatBlock(firstMeasureBuilder) && isStartRepeatBlock(firstMeasureBuilder)) {
                     if (firstMeasureBuilder.getRepeatBlock().getEndingNumber().equals(1)) {
-                        appendLine("\\alternative {");
+                        appendStartSection("\\alternative {");
                     }
-                    appendLine("{");
+                    appendStartSection("{");
                 }
             }
 
             if (hasMultipleVoices && voice.equals(measureVoices.first())) {
                 appendLine();
-                appendLine("<<");
-                appendLine("{");
+                appendStartSection("<<");
+                appendStartSection("{");
             }
 
             for (MeasureBuilder measureBuilder : measureBlock.getMeasureBuilders()) {
@@ -573,13 +573,13 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             if (hasMultipleVoices) {
                 if (voice.equals(measureVoices.last())) {
                     appendLine();
-                    appendLine("}");
-                    appendLine(">>");
+                    appendEndSection("}");
+                    appendEndSection(">>");
                 } else {
                     appendLine();
-                    appendLine("}");
+                    appendEndSection("}");
                     appendLine("\\\\");
-                    appendLine("{");
+                    appendStartSection("{");
                 }
             }
 
@@ -588,11 +588,11 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             if (voice.equals(measureVoices.last())) {
                 if (isEndRepeatBlock(lastMeasure)) {
                     appendLine();
-                    appendLine("}");
+                    appendEndSection("}");
 
                     RepeatBlock repeatBlock = lastMeasure.getRepeatBlock();
                     if (repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) {
-                        appendLine("}");
+                        appendEndSection("}");
                     }
                 }
             }

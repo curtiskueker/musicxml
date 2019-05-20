@@ -46,8 +46,8 @@ public class ScoreBuilder extends LilypondBuilder {
         append(scoreHeaderBuilder.build().toString());
 
         // begin score
-        appendLine("\\score {");
-        appendLine("<<");
+        appendStartSection("\\score {");
+        appendStartSection("<<");
 
         List<PartItem> partItems = score.getScoreHeader().getPartList().getPartItems();
         if(partItems.isEmpty()) {
@@ -57,7 +57,7 @@ public class ScoreBuilder extends LilypondBuilder {
         boolean scorePartFirst = partItems.get(0) instanceof ScorePart;
 
         if(scorePartFirst) {
-            appendLine("<<");
+            appendStartSection("<<");
         }
 
         for (PartItem partItem : partItems) {
@@ -65,25 +65,25 @@ public class ScoreBuilder extends LilypondBuilder {
                 PartGroup partGroup = (PartGroup)partItem;
                 Connection partGroupType = partGroup.getType();
                 if (partGroupType == Connection.START) {
-                    appendLine("\\new StaffGroup <<");
+                    appendStartSection("\\new StaffGroup <<");
                 } else if (partGroupType == Connection.STOP) {
-                    appendLine(">>");
+                    appendEndSection(">>");
                 }
             } else if(partItem instanceof ScorePart) {
                 ScorePart scorePart = (ScorePart)partItem;
-                appendLine("<<");
+                appendStartSection("<<");
                 buildPart(scorePart);
-                appendLine(">>");
+                appendEndSection(">>");
             }
         }
 
         if(scorePartFirst) {
-            appendLine(">>");
+            appendEndSection(">>");
         }
 
         // end score
-        appendLine(">>");
-        appendLine("}");
+        appendEndSection(">>");
+        appendEndSection("}");
 
         return stringBuilder;
     }
@@ -155,10 +155,10 @@ public class ScoreBuilder extends LilypondBuilder {
     }
 
     private void buildSingleStaffPart(ScorePart scorePart, Part part) throws BuildException {
-        appendLine("\\new Staff");
+        appendStartSection("\\new Staff");
 
         // staff identifiers
-        appendLine("\\with {");
+        appendStartSection("\\with {");
 
         PartName partName = scorePart.getPartName();
         if (TypeUtil.getBooleanDefaultYes(partName.getPartNamePrintObject())) {
@@ -174,14 +174,16 @@ public class ScoreBuilder extends LilypondBuilder {
             appendLine("\"");
         }
 
-        appendLine("}");
+        appendEndSection("}");
 
         PartBuilder partBuilder = new PartBuilder(part);
         append(partBuilder.build().toString());
+
+        appendEndSection();
     }
 
     private void buildGrandStaffPart(ScorePart scorePart, Part part, Integer staves) throws BuildException {
-        appendLine("\\new GrandStaff <<");
+        appendStartSection("\\new GrandStaff <<");
 
         String partId = scorePart.getScorePartId();
         PartName partName = scorePart.getPartName();
@@ -300,7 +302,7 @@ public class ScoreBuilder extends LilypondBuilder {
         }
 
 
-        appendLine(">>");
+        appendEndSection(">>");
     }
 
     private void buildHarmonyPart(Part part) throws BuildException {

@@ -52,7 +52,7 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
         ScoreDefaults.getInstance().setScoreDefaults(scoreHeader.getDefaults());
 
         if(ScoreDefaults.getInstance().hasScaling()) {
-            appendLine("\\paper {");
+            appendStartSection("\\paper {");
 
             PageLayout pageLayout = scoreHeader.getDefaults().getLayout().getPageLayout();
             BigDecimal pageHeight = pageLayout.getPageHeight();
@@ -89,10 +89,10 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
                 appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getRightMargin()).toString());
             }
 
-            appendLine("}");
+            appendEndSection("}");
         }
 
-        appendLine("\\header {");
+        appendStartSection("\\header {");
 
         if(StringUtil.isNotEmpty(scoreHeader.getMovementTitle())) {
             append("title = \"");
@@ -119,9 +119,9 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
                 .collect(Collectors.toList()).forEach(credit -> creditDisplays.addAll(credit.getCreditDisplays()));
 
         if(!creditDisplays.isEmpty()) {
-            appendLine("title =");
-            appendLine("  \\markup {");
-            appendLine("    \\column {");
+            append("title = ");
+            appendStartSection("\\markup {");
+            appendStartSection("\\column {");
 
             for (CreditDisplay creditDisplay : creditDisplays) {
                 if (creditDisplay instanceof CreditWords) {
@@ -171,11 +171,11 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
                 }
             }
 
-            appendLine("            }");
-            appendLine("           }");
+            appendEndSection("}");
+            appendEndSection("}");
         }
 
-        appendLine("}");
+        appendEndSection("}");
 
         return stringBuilder;
     }

@@ -19,7 +19,9 @@ public class LyricPartBuilder extends FilteredPartBuilder {
     private Part part;
     private int currentLyricCount = 1;
     private List<List<Lyric>> lyricLists;
+    private int bufferSize = 0;
     private static int lyricsCounter = 1;
+    private static final int maxBufferSize = 80;
 
     public LyricPartBuilder(Part part) {
         this.part = part;
@@ -36,7 +38,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
         append("\\new Lyrics = \"Lyrics");
         append(String.valueOf(lyricsCounter));
         append("\" ");
-        appendLine("\\lyricmode {");
+        appendStartSection("\\lyricmode {");
 
         lyricsCounter++;
 
@@ -55,8 +57,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                         if (lyricLists.size() == 1) {
                             Lyric emptyLyric = newEmptyLyric();
                             setLyricValues(emptyLyric, note);
-                            MusicDataBuilder musicDataBuilder = new MusicDataBuilder(emptyLyric);
-                            append(musicDataBuilder.build().toString());
+                            appendLyric(emptyLyric);
                         } else if (lyricLists.size() > 1) {
                             for(List<Lyric> lyricList : lyricLists) {
                                 Lyric emptyLyric = newEmptyLyric();
@@ -102,8 +103,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                         if (lyricCount == 1) {
                             Lyric lyric = lyrics.get(0);
                             setLyricValues(lyric, note);
-                            MusicDataBuilder musicDataBuilder = new MusicDataBuilder(lyric);
-                            append(musicDataBuilder.build().toString());
+                            appendLyric(lyric);
                         } else if (lyricCount > 1) {
                             // get the lyric for each number in turn
                             // add an empty lyric, if not found
@@ -133,13 +133,14 @@ public class LyricPartBuilder extends FilteredPartBuilder {
         }
 
         appendLine();
-        appendLine("}");
+        appendEndSection("}");
 
         return stringBuilder;
     }
 
     private void buildLyricLists() throws BuildException {
-        appendLine("<<");
+        resetBuffer();
+        appendStartSection("<<");
 
         for(int i = 0; i < currentLyricCount; i++) {
             if(i > 0) {
@@ -153,7 +154,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                 lyricsCounter++;
             }
 
-            appendLine("{");
+            appendStartSection("{");
 
             if (i > 0) {
                 append("\\set associatedVoice = \"");
@@ -162,15 +163,26 @@ public class LyricPartBuilder extends FilteredPartBuilder {
             }
 
             List<Lyric> lyrics = lyricLists.get(i);
-            for(Lyric lyric : lyrics) {
-                MusicDataBuilder musicDataBuilder = new MusicDataBuilder(lyric);
-                append(musicDataBuilder.build().toString());
-            }
+            for(Lyric lyric : lyrics) appendLyric(lyric);
 
-            appendLine("}");
+            appendEndSection("}");
         }
 
-        appendLine(">>");
+        appendEndSection(">>");
+        resetBuffer();
+    }
+
+    private void appendLyric(Lyric lyric) throws BuildException {
+        MusicDataBuilder musicDataBuilder = new MusicDataBuilder(lyric);
+        String lyricValue = musicDataBuilder.build().toString();
+        bufferSize += lyricValue.length();
+        if (bufferSize >= maxBufferSize) resetBuffer();
+        append(lyricValue);
+    }
+
+    private void resetBuffer() {
+        appendLine();
+        bufferSize = 0;
     }
 
     private Lyric newEmptyLyric() {

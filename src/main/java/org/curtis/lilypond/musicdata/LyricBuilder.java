@@ -44,7 +44,7 @@ public class LyricBuilder extends MusicDataBuilder {
             append(String.valueOf(timeModification.getActualNotes()));
             append("/");
             append(String.valueOf(timeModification.getNormalNotes()));
-            appendLine(" {");
+            append(" { ");
         }
 
         LyricItem lyricItem = lyric.getLyricItem();
@@ -75,11 +75,10 @@ public class LyricBuilder extends MusicDataBuilder {
         }
 
         if (tupletConnection == Connection.STOP) {
-            appendLine();
-            append("}");
+            append(" } ");
         }
 
-        appendLine();
+        append(" ");
 
         return stringBuilder;
     }
