@@ -169,7 +169,7 @@ public abstract class MusicXmlScript {
     }
 
     protected void outputResultsToFile(String results) throws MusicXmlException {
-        System.err.println("Creating XML File...");
+        System.err.println("Creating Output File...");
         try {
             FileUtil.stringToFile(results, getOutputFile());
         } catch (FileException e) {
