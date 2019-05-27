@@ -27,9 +27,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ScoreHeaderBuilder extends LilypondBuilder {
-    public static String LILYPOND_VERSION = "2.18.2";
+    private static final String LILYPOND_VERSION = "2.18.2";
 
     private ScoreHeader scoreHeader;
+
+    private String poet;
+    private String composer;
+    private String arranger;
+    private String copyright;
 
     public ScoreHeaderBuilder(ScoreHeader scoreHeader) {
         this.scoreHeader = scoreHeader;
@@ -48,6 +53,24 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
         append(LILYPOND_VERSION);
         appendLine("\"");
         appendLine();
+
+        // assign values
+        Identification identification = scoreHeader.getIdentification();
+        if (identification != null) {
+            for (TypedText creator : identification.getCreators()) {
+                switch (creator.getType()) {
+                    case "lyricist":
+                        poet = creator.getValue();
+                        break;
+                    case "composer":
+                        composer = creator.getValue();
+                        break;
+                    case "arranger":
+                        arranger = creator.getValue();
+                        break;
+                }
+            }
+        }
 
         ScoreDefaults.getInstance().setScoreDefaults(scoreHeader.getDefaults());
 
@@ -94,24 +117,10 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
 
         appendStartSection("\\header {");
 
-        if(StringUtil.isNotEmpty(scoreHeader.getMovementTitle())) {
-            append("title = \"");
-            append(scoreHeader.getMovementTitle());
-            append("\"");
-            appendLine();
-        }
-
-        Identification identification = scoreHeader.getIdentification();
-        if (identification != null) {
-            for (TypedText typedText : identification.getCreators()) {
-                if(typedText.getType().equals("composer")) {
-                    append("composer = \"");
-                    append(typedText.getValue());
-                    append("\"");
-                    appendLine();
-                }
-            }
-        }
+        appendKeyValue("title", scoreHeader.getMovementTitle());
+        appendKeyValue("poet", poet);
+        appendKeyValue("composer", composer);
+        appendKeyValue("arranger", arranger);
 
         List<CreditDisplay> creditDisplays = new ArrayList<>();
         scoreHeader.getCredits().stream()
@@ -178,5 +187,15 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
         appendEndSection("}");
 
         return stringBuilder;
+    }
+
+    private void appendKeyValue(String key, String value) {
+        if (StringUtil.isEmpty(value)) return;
+
+        append(key);
+        append(" = \"");
+        append(value);
+        append("\"");
+        appendLine();
     }
 }
