@@ -34,7 +34,7 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
     private String poet;
     private String composer;
     private String arranger;
-    private String copyright;
+    private String copyright = "";
 
     public ScoreHeaderBuilder(ScoreHeader scoreHeader) {
         this.scoreHeader = scoreHeader;
@@ -69,6 +69,12 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
                         arranger = creator.getValue();
                         break;
                 }
+            }
+            for (TypedText rights : identification.getRightsList()) {
+                if (StringUtil.isNotEmpty(copyright)) copyright += "\n";
+                String rightsType = rights.getType();
+                if (StringUtil.isNotEmpty(rightsType)) copyright += rightsType + ": ";
+                copyright += rights.getValue();
             }
         }
 
@@ -121,6 +127,7 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
         appendKeyValue("poet", poet);
         appendKeyValue("composer", composer);
         appendKeyValue("arranger", arranger);
+        appendKeyValue("copyright", copyright);
 
         List<CreditDisplay> creditDisplays = new ArrayList<>();
         scoreHeader.getCredits().stream()
