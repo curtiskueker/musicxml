@@ -5,6 +5,7 @@ import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Scaling;
+import org.curtis.util.MathUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,5 +105,18 @@ public class Defaults extends DatabaseItem {
 
     public void setLyricLanguages(List<LyricLanguage> lyricLanguages) {
         this.lyricLanguages = lyricLanguages;
+    }
+
+    private BigDecimal getScalingValue() {
+        if(scaling == null) return MathUtil.ZERO;
+
+        return MathUtil.divide(getScaling().getMillimeters(), getScaling().getTenths());
+    }
+
+    public BigDecimal getMillimeters(BigDecimal scaledValue) {
+        if(scaledValue == null) return MathUtil.ZERO;
+        if(!MathUtil.isPositive(getScalingValue())) return MathUtil.ZERO;
+
+        return MathUtil.multiply(getScalingValue(), scaledValue);
     }
 }

@@ -2,6 +2,8 @@ package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
 
+import java.math.BigDecimal;
+
 public abstract class LilypondBuilder extends BaseBuilder {
     protected StringBuilder stringBuilder = new StringBuilder();
     private static final String TAB = "    ";
@@ -18,6 +20,12 @@ public abstract class LilypondBuilder extends BaseBuilder {
 
     protected void appendLine() {
         appendLine("");
+    }
+
+    protected void appendLine(BigDecimal value) {
+        if (value == null) return;
+
+        appendLine(value.toString());
     }
 
     protected void appendStartSection(String string) {

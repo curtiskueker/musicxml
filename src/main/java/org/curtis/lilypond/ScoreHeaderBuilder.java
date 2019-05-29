@@ -1,7 +1,6 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.lilypond.util.ScoreDefaults;
 import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FormattedText;
@@ -12,10 +11,12 @@ import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.layout.MarginType;
+import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.score.CreditDisplay;
 import org.curtis.musicxml.score.CreditWords;
+import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -78,9 +79,8 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
             }
         }
 
-        ScoreDefaults.getInstance().setScoreDefaults(scoreHeader.getDefaults());
-
-        if(ScoreDefaults.getInstance().hasScaling()) {
+        Defaults defaults = scoreHeader.getDefaults();
+        if(defaults != null && defaults.getScaling() != null) {
             appendStartSection("\\paper {");
 
             PageLayout pageLayout = scoreHeader.getDefaults().getLayout().getPageLayout();
@@ -88,34 +88,36 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
             BigDecimal pageWidth = pageLayout.getPageWidth();
             if(MathUtil.isPositive(pageHeight)) {
                 append("paper-height = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(pageHeight).toString());
+                appendLine(defaults.getMillimeters(pageHeight));
             }
             if(MathUtil.isPositive(pageWidth)) {
                 append("paper-width = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(pageWidth).toString());
+                appendLine(defaults.getMillimeters(pageWidth));
             }
 
             Map<MarginType, PageMargins> pageMarginsMap = pageLayout.getPageMargins();
             PageMargins alternatePageMargins = pageMarginsMap.get(MarginType.ODD);
             PageMargins fixedPageMargins = pageMarginsMap.get(MarginType.BOTH);
             if(alternatePageMargins != null) {
+                Margins alternateMargins = alternatePageMargins.getMargins();
                 append("top-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getTopMargin()).toString());
+                appendLine(defaults.getMillimeters(alternateMargins.getTopMargin()));
                 append("bottom-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getBottomMargin()).toString());
+                appendLine(defaults.getMillimeters(alternateMargins.getBottomMargin()));
                 append("inner-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getLeftMargin()).toString());
+                appendLine(defaults.getMillimeters(alternateMargins.getLeftMargin()));
                 append("outer-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(alternatePageMargins.getMargins().getRightMargin()).toString());
+                appendLine(defaults.getMillimeters(alternateMargins.getRightMargin()));
             } else if(fixedPageMargins != null) {
+                Margins fixedMargins = fixedPageMargins.getMargins();
                 append("top-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getTopMargin()).toString());
+                appendLine(defaults.getMillimeters(fixedMargins.getTopMargin()));
                 append("bottom-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getBottomMargin()).toString());
+                appendLine(defaults.getMillimeters(fixedMargins.getBottomMargin()));
                 append("left-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getLeftMargin()).toString());
+                appendLine(defaults.getMillimeters(fixedMargins.getLeftMargin()));
                 append("right-margin = ");
-                appendLine(ScoreDefaults.getInstance().getMillimeters(fixedPageMargins.getMargins().getRightMargin()).toString());
+                appendLine(defaults.getMillimeters(fixedMargins.getRightMargin()));
             }
 
             appendEndSection("}");
