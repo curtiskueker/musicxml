@@ -20,5 +20,11 @@ public class ToLilypond extends ToInput {
         inputRow2.setInputSize(InputRow.SMALL_INPUT_SIZE);
         inputRow2.setName("outputFile");
         getInputRows().add(inputRow2);
+
+        InputRow inputRow3 = new InputRow();
+        inputRow3.setText("Include Page and Line Breaks: ");
+        inputRow3.setInputType(InputType.CHECKBOX);
+        inputRow3.setName("includeBreaks");
+        getInputRows().add(inputRow3);
     }
 }

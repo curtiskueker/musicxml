@@ -49,6 +49,7 @@ import java.util.Map;
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
     public static Boolean DEBUG = false;
+    public static Boolean INCLUDE_BREAKS = false;
 
     private MusicXmlUtil() {
 

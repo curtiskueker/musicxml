@@ -2,6 +2,7 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.Db2Ly;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.task.exception.TaskException;
 
 import javax.swing.*;
@@ -40,5 +41,7 @@ public class Db2LyTask extends MusicXmlTask {
         if (outputDirectory != null) outputDirectoryName = outputDirectory.getAbsolutePath();
         JTextField outputFilefield = (JTextField) componentMap.get("outputFile");
         outputFile = outputFilefield.getText();
+        JCheckBox includeBreaksField = (JCheckBox)componentMap.get("includeBreaks");
+        MusicXmlUtil.INCLUDE_BREAKS = includeBreaksField.isSelected();
     }
 }

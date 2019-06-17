@@ -11,7 +11,7 @@ import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.Words;
 
-import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
+import static org.curtis.musicxml.util.MusicXmlUtil.INCLUDE_BREAKS;
 
 public class DirectionBuilder extends MusicDataBuilder {
     public DirectionBuilder() {
@@ -34,7 +34,7 @@ public class DirectionBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildPrint(Print print) {
-        if (DEBUG) return stringBuilder;
+        if (!INCLUDE_BREAKS) return stringBuilder;
 
         if(TypeUtil.getBoolean(print.getNewSystem())) {
             appendLine("\\break");
