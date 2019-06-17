@@ -159,16 +159,16 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildBeatMetronome(BeatMetronome beatMetronome) {
-        BeatUnit beatUnit1 = beatMetronome.getBeatUnit1();
-        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit1.getBeatUnit()));
-        for (int beatUnitDots = 1; beatUnitDots <= beatUnit1.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
+        buildBeatUnitWithDots(beatMetronome.getBeatUnit1());
         PerMinute perMinute = beatMetronome.getPerMinute();
         if (perMinute != null) buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
         BeatUnit beatUnit2 = beatMetronome.getBeatUnit2();
-        if (beatUnit2 != null) {
-            buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit2.getBeatUnit()));
-            for (int beatUnitDots = 1; beatUnitDots <= beatUnit2.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
-        }
+        if (beatUnit2 != null) buildBeatUnitWithDots(beatUnit2);
+    }
+
+    private void buildBeatUnitWithDots(BeatUnit beatUnit) {
+        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit.getBeatUnit()));
+        for (int beatUnitDots = 1; beatUnitDots <= beatUnit.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
     }
 
     private void buildNoteMetronome(NoteMetronome noteMetronome) {
