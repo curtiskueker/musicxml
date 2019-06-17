@@ -9,14 +9,16 @@ CLASSPATH=${JAR_DIR}/${JAR_FILE}
 
 INPUT=''
 OUTPUT=''
+INCLUDE_BREAKS=''
 DEBUG=''
 
-while getopts 'di:o:' flag; do
+while getopts 'bdi:o:' flag; do
   case "${flag}" in
+    b) INCLUDE_BREAKS="INCLUDE_BREAKS" ;;
     d) DEBUG="DEBUG" ;;
     i) INPUT="${OPTARG}" ;;
     o) OUTPUT="${OPTARG}" ;;
   esac
 done
 
-java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.MusicXml2Ly INPUT_FILE=$INPUT OUTPUT_FILE=$OUTPUT $DEBUG
+java -classpath ${CLASSPATH} -Dnet.sf.ehcache.enableShutdownHook=true org.curtis.musicxml.bin.MusicXml2Ly INPUT_FILE=$INPUT OUTPUT_FILE=$OUTPUT $INCLUDE_BREAKS $DEBUG

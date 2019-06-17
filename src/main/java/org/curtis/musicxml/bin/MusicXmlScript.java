@@ -89,6 +89,8 @@ public abstract class MusicXmlScript {
                 setInputFile(arg.replace("INPUT_FILE=", ""));
             } else if (arg.equals("DEBUG")) {
                 MusicXmlUtil.DEBUG = true;
+            } else if (arg.equals("INCLUDE_BREAKS")) {
+                MusicXmlUtil.INCLUDE_BREAKS = true;
             } else if (arg.startsWith("SCORENAME=")) {
                 setScoreName(arg.replace("SCORENAME=", ""));
             } else if (arg.equals("SKIP_COMMENTS")) {
