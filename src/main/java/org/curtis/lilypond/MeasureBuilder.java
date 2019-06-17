@@ -226,13 +226,7 @@ public class MeasureBuilder extends LilypondBuilder {
                         }
                     }
                 } else {
-                    if(previousNote != null && previousNote.isGraceNote()) {
-                        if(previousNote.getGrace().getGraceType() == Connection.START) {
-                            previousNote.getGrace().setGraceType(Connection.SINGLE);
-                        } else {
-                            previousNote.getGrace().setGraceType(Connection.STOP);
-                        }
-                    }
+                    closeGraceNote();
                 }
 
                 previousNote = currentNote;
@@ -288,13 +282,7 @@ public class MeasureBuilder extends LilypondBuilder {
         }
 
         // end grace notes at end of measure
-        if(previousNote != null && previousNote.isGraceNote()) {
-            if(previousNote.getGrace().getGraceType() == Connection.START) {
-                previousNote.getGrace().setGraceType(Connection.SINGLE);
-            } else {
-                previousNote.getGrace().setGraceType(Connection.STOP);
-            }
-        }
+        closeGraceNote();
 
         // Check whether expected duration equals total duration
         // First or last measure can be partial, otherwise it's an exception
@@ -398,6 +386,16 @@ public class MeasureBuilder extends LilypondBuilder {
         appendLine();
 
         return stringBuilder;
+    }
+
+    private void closeGraceNote() {
+        if(previousNote != null && previousNote.isGraceNote()) {
+            if(previousNote.getGrace().getGraceType() == Connection.START) {
+                previousNote.getGrace().setGraceType(Connection.SINGLE);
+            } else {
+                previousNote.getGrace().setGraceType(Connection.STOP);
+            }
+        }
     }
 
     private MusicDataBuilder addToDataBuilders(MusicData musicData) {
