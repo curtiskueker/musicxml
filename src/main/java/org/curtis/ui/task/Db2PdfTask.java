@@ -4,9 +4,7 @@ import org.curtis.musicxml.bin.Db2Pdf;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.Map;
 
 public class Db2PdfTask extends MusicXmlTask {
@@ -33,12 +31,8 @@ public class Db2PdfTask extends MusicXmlTask {
     }
 
     private void initialize() throws TaskException {
-        JComboBox scoreNameSelection = (JComboBox) componentMap.get("scoreName");
-        scoreName = (String)scoreNameSelection.getSelectedItem();
-        JFileChooser outputFileChooser = (JFileChooser) componentMap.get("outputDirectory");
-        File outputDirectory = outputFileChooser.getSelectedFile();
-        if (outputDirectory != null) outputDirectoryName = outputDirectory.getAbsolutePath();
-        JTextField outputFilefield = (JTextField) componentMap.get("outputFile");
-        outputFile = outputFilefield.getText();
+        scoreName = getSelection(componentMap.get("scoreName"));
+        outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
+        outputFile = getText(componentMap.get("outputFile"));
     }
 }

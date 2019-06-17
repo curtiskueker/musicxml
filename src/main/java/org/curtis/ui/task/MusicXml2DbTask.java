@@ -4,9 +4,7 @@ import org.curtis.musicxml.bin.MusicXml2Db;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.Map;
 
 public class MusicXml2DbTask extends MusicXmlTask {
@@ -32,10 +30,7 @@ public class MusicXml2DbTask extends MusicXmlTask {
     }
 
     private void initialize() throws TaskException {
-        JTextField scoreNameField = (JTextField) componentMap.get("scoreName");
-        scoreName = scoreNameField.getText();
-        JFileChooser inputFileChooser = (JFileChooser) componentMap.get("inputFile");
-        File inputFile = inputFileChooser.getSelectedFile();
-        if (inputFile != null) inputFileName = inputFile.getAbsolutePath();
-        }
+        scoreName = getText(componentMap.get("scoreName"));
+        inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
+    }
 }

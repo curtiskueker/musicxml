@@ -4,9 +4,7 @@ import org.curtis.musicxml.bin.DatabaseExec;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.Map;
 
 public class DatabaseTask extends MusicXmlTask {
@@ -37,16 +35,10 @@ public class DatabaseTask extends MusicXmlTask {
     }
 
     private void initialize() throws TaskException {
-        JCheckBox testDatabaseField = (JCheckBox)componentMap.get("testDatabase");
-        testDatabase = testDatabaseField.isSelected();
-        JCheckBox createDatabaseField = (JCheckBox)componentMap.get("createDatabase");
-        createDatabase = createDatabaseField.isSelected();
-        JCheckBox generateSchemaField = (JCheckBox)componentMap.get("generateSchema");
-        generateSchema = generateSchemaField.isSelected();
-        JFileChooser schemaFileChooser = (JFileChooser) componentMap.get("schemaDirectory");
-        File schemaDirectory = schemaFileChooser.getSelectedFile();
-        if (schemaDirectory != null) schemaLocationDirectoryName = schemaDirectory.getAbsolutePath();
-        JTextField schemaFilefield = (JTextField) componentMap.get("schemaFile");
-        schemaLocationFile = schemaFilefield.getText();
+        testDatabase = isSelected(componentMap.get("testDatabase"));
+        createDatabase = isSelected(componentMap.get("createDatabase"));
+        generateSchema = isSelected(componentMap.get("generateSchema"));
+        schemaLocationDirectoryName = getDirectoryLocation(componentMap.get("schemaDirectory"));
+        schemaLocationFile = getText(componentMap.get("schemaFile"));
     }
 }

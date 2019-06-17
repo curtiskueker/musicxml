@@ -4,9 +4,7 @@ import org.curtis.musicxml.bin.SetProperties;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.Map;
 
 public class SetPropertiesTask extends MusicXmlTask {
@@ -42,21 +40,12 @@ public class SetPropertiesTask extends MusicXmlTask {
     }
 
     private void initialize() throws TaskException {
-        JTextField usernameField = (JTextField)componentMap.get("username");
-        username = usernameField.getText();
-        JTextField passwordField = (JTextField)componentMap.get("password");
-        password = passwordField.getText();
-        JTextField databaseNameField = (JTextField)componentMap.get("databaseName");
-        databaseName = databaseNameField.getText();
-        JTextField serverField = (JTextField)componentMap.get("server");
-        server = serverField.getText();
-        JComboBox databaseTypeSelection = (JComboBox) componentMap.get("databaseType");
-        databaseType = (String)databaseTypeSelection.getSelectedItem();
-        JFileChooser lilypondChooser = (JFileChooser) componentMap.get("lilypondLocation");
-        File lilypondFile = lilypondChooser.getSelectedFile();
-        if (lilypondFile != null) lilypondLocation = lilypondFile.getAbsolutePath();
-        JFileChooser pdfReaderChooser = (JFileChooser) componentMap.get("pdfReaderLocation");
-        File pdfReaderFile = pdfReaderChooser.getSelectedFile();
-        if (pdfReaderFile != null) pdfReaderLocation = pdfReaderFile.getAbsolutePath();
+        username = getText(componentMap.get("username"));
+        password = getText(componentMap.get("password"));
+        databaseName = getText(componentMap.get("databaseName"));
+        server = getText(componentMap.get("server"));
+        databaseType = getSelection(componentMap.get("databaseType"));
+        lilypondLocation = getDirectoryLocation(componentMap.get("lilypondLocation"));
+        pdfReaderLocation = getDirectoryLocation(componentMap.get("pdfReaderLocation"));
     }
 }
