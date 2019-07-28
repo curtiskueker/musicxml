@@ -3,7 +3,6 @@ package org.curtis.musicxml.score;
 import org.curtis.database.OrderedItem;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;

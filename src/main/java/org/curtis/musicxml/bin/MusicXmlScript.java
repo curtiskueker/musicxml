@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,7 +148,7 @@ public abstract class MusicXmlScript {
         }
 
         try {
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes("utf-8"))));
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes(StandardCharsets.UTF_8))));
             if (!getSkipComments()) MusicXmlUtil.setXmlComments(document, score.getXmlComments());
             results = MusicXmlUtil.getFormattedXml(document);
         } catch (Exception e) {

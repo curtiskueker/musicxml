@@ -59,7 +59,7 @@ public class MusicDataBuilder extends LilypondBuilder {
         try {
             Class builderClass = Class.forName(builderClassName);
             Method builderMethod = builderClass.getMethod(builderMethodName, musicData.getClass());
-            append(builderMethod.invoke(builderClass.newInstance(), musicData).toString());
+            append(builderMethod.invoke(builderClass.getDeclaredConstructor().newInstance(), musicData).toString());
         } catch (InvocationTargetException e) {
             if (e.getCause() instanceof BuildException) {
                 // Note exception but continue anyway

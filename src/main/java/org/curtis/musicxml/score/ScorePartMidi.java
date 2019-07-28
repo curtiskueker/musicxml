@@ -5,7 +5,6 @@ import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;

@@ -81,7 +81,7 @@ public class DBTransaction {
 
             List<T> results = em.createQuery(criteriaQuery).getResultList();
 
-            if (results == null || results.isEmpty()) return new ArrayList<T>();
+            if (results == null || results.isEmpty()) return new ArrayList<>();
             return results;
         } catch (Exception e) {
             throw new DBException(e);

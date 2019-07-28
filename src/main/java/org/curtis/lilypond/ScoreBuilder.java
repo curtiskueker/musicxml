@@ -205,7 +205,7 @@ public class ScoreBuilder extends LilypondBuilder {
         for(int index = 0; index < staves; index++) {
             Part staffPart = new Part();
             Integer staffNumber = index + 1;
-            staffPart.setPartId(partId + ", staff " + String.valueOf(staffNumber));
+            staffPart.setPartId(partId + ", staff " + staffNumber);
             staffPart.setStaffNumber(staffNumber);
             staffParts[index] = staffPart;
         }

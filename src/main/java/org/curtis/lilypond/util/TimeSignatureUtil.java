@@ -23,13 +23,13 @@ public class TimeSignatureUtil {
     public static String getWholeMeasureRestRepresentation() throws TimeSignatureException {
         TimeSignatureType timeSignature = getCurrentTimeSignature();
         if(timeSignature == null) return "";
-        return "1*" + String.valueOf(timeSignature.getBeats()) + "/" + String.valueOf(timeSignature.getBeatType());
+        return "1*" + timeSignature.getBeats() + "/" + timeSignature.getBeatType();
     }
 
     public static String getWholeMeasureSpacerRepresentation() throws TimeSignatureException {
         TimeSignatureType timeSignature = getCurrentTimeSignature();
         if(timeSignature == null) return "";
-        return "s1*" + String.valueOf(timeSignature.getBeats()) + "/" + String.valueOf(timeSignature.getBeatType());
+        return "s1*" + timeSignature.getBeats() + "/" + timeSignature.getBeatType();
     }
 
     public static String getWholeMeasureRepresentation(BigDecimal numerator, BigDecimal denominator) throws DurationException {
