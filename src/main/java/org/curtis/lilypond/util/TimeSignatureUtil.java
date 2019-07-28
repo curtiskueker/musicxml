@@ -20,13 +20,13 @@ public class TimeSignatureUtil {
 
     }
 
-    public static String getWholeMeasureRestRepresentation() throws TimeSignatureException {
+    public static String getWholeMeasureRestRepresentation() {
         TimeSignatureType timeSignature = getCurrentTimeSignature();
         if(timeSignature == null) return "";
         return "1*" + timeSignature.getBeats() + "/" + timeSignature.getBeatType();
     }
 
-    public static String getWholeMeasureSpacerRepresentation() throws TimeSignatureException {
+    public static String getWholeMeasureSpacerRepresentation() {
         TimeSignatureType timeSignature = getCurrentTimeSignature();
         if(timeSignature == null) return "";
         return "s1*" + timeSignature.getBeats() + "/" + timeSignature.getBeatType();
@@ -95,7 +95,7 @@ public class TimeSignatureUtil {
         return getRepresentationValue(totalBeats);
     }
 
-    public static List<String> getDurationRepresentationValues(BigDecimal duration) throws DurationException {
+    public static List<String> getDurationRepresentationValues(BigDecimal duration) {
         BigDecimal durationCopy = MathUtil.newBigDecimal(duration);
         List<String> representationValues = new ArrayList<>();
 

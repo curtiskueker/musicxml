@@ -454,7 +454,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private void processTies(List<Note> tiedFromNoteList, List<Note> tiedToNoteList, Note currentNote) {
         if (!hasNoteMatch(tiedFromNoteList, tiedToNoteList)) tiedFromNoteList.stream().flatMap(fromNote -> fromNote.getTieds().stream()).forEach(tied -> tied.setUnterminated(true));
         tiedFromNoteList.clear();
-        if (!tiedToNoteList.stream().flatMap(toNote -> toNote.getTieds().stream()).filter(tied -> tied.getType() == Connection.CONTINUE || tied.getType() == Connection.START).collect(Collectors.toList()).isEmpty()) {
+        if (tiedToNoteList.stream().flatMap(toNote -> toNote.getTieds().stream()).anyMatch(tied -> tied.getType() == Connection.CONTINUE || tied.getType() == Connection.START)) {
             tiedFromNoteList.addAll(tiedToNoteList);
             tiedToNoteList.clear();
             tiedToNoteList.add(currentNote);

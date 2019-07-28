@@ -39,7 +39,7 @@ public class SetPropertiesTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() throws TaskException {
+    private void initialize() {
         username = getText(componentMap.get("username"));
         password = getText(componentMap.get("password"));
         databaseName = getText(componentMap.get("databaseName"));

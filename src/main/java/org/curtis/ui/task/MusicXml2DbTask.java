@@ -29,7 +29,7 @@ public class MusicXml2DbTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() throws TaskException {
+    private void initialize() {
         scoreName = getText(componentMap.get("scoreName"));
         inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
     }

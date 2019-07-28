@@ -56,7 +56,7 @@ public class DBSessionFactory {
     private Properties databaseProperties = new Properties();
     private Properties additionalProperties = new Properties();
 
-    private DBSessionFactory() throws DBException {
+    private DBSessionFactory() {
         databaseName = AppProperties.getRequiredProperty("database.name");
         databaseType = AppProperties.getRequiredProperty("database.type");
         persistenceUnitName = AppProperties.getRequiredProperty("database.persistenceunit.name");
