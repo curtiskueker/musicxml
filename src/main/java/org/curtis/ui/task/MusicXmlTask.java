@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.Map;
 
 public abstract class MusicXmlTask {
-    {
+    static {
         MusicXmlUtil.DEBUG = true;
     }
 
