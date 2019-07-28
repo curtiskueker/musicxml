@@ -51,10 +51,9 @@ public class DirectionBuilder extends MusicDataBuilder {
     }
 
     public static void setDirectionDefaults(Direction direction) {
-        DirectionType words = direction.getDirectionTypeLists().stream().flatMap(typeList -> typeList.getDirectionTypes().stream())
+        direction.getDirectionTypeLists().stream().flatMap(typeList -> typeList.getDirectionTypes().stream())
                 .filter(directionType -> directionType instanceof Words && !TypeUtil.getBoolean(direction.getDirective()) && direction.getPlacement() == null)
-                .findAny().orElse(null);
+                .findAny().ifPresent(words -> direction.setPlacement(Location.ABOVE));
 
-        if (words != null) direction.setPlacement(Location.ABOVE);
     }
 }
