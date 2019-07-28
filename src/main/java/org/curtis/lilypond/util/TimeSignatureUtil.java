@@ -77,12 +77,12 @@ public class TimeSignatureUtil {
         }
 
 
-        String representationString = dividerCount > 0 ? LONG_NOTES[dividerCount - 1] : String.valueOf(noteRepresentation);
+        StringBuilder representationString = new StringBuilder(dividerCount > 0 ? LONG_NOTES[dividerCount - 1] : String.valueOf(noteRepresentation));
         for(int i = 1; i <= multiplierCount; i++) {
-            representationString += ".";
+            representationString.append(".");
         }
 
-        return representationString;
+        return representationString.toString();
     }
 
     private static boolean exceedsWholeNoteRepresentationValue(BigDecimal beats) {
@@ -142,7 +142,7 @@ public class TimeSignatureUtil {
         return getTotalBeats(numerator, denominator);
     }
 
-    public static BigDecimal getTotalBeats(BigDecimal numerator, BigDecimal denominator) {
+    private static BigDecimal getTotalBeats(BigDecimal numerator, BigDecimal denominator) {
         // Calculates number of quarter note beats in a measure
         return MathUtil.divide(MathUtil.multiply(MathUtil.newBigDecimal(4), numerator), denominator);
     }
