@@ -172,9 +172,9 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildNoteMetronome(NoteMetronome noteMetronome) {
-        noteMetronome.getMetronomeNotes1().forEach(metronomeNote -> buildMetronomeNote(metronomeNote));
+        noteMetronome.getMetronomeNotes1().forEach(this::buildMetronomeNote);
         buildElementWithValue("metronome-relation", noteMetronome.getMetronomeRelation());
-        noteMetronome.getMetronomeNotes2().forEach(metronomeNote -> buildMetronomeNote(metronomeNote));
+        noteMetronome.getMetronomeNotes2().forEach(this::buildMetronomeNote);
     }
 
     private void buildMetronomeNote(MetronomeNote metronomeNote) {

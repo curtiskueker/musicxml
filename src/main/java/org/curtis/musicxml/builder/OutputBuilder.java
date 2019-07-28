@@ -58,7 +58,7 @@ public abstract class OutputBuilder {
     protected void buildAttributes(Map<String, String> attributes) {
         if (attributes == null || attributes.isEmpty()) return;
 
-        attributes.forEach((k, v) -> buildAttribute(k, v));
+        attributes.forEach(this::buildAttribute);
     }
 
     protected void buildElement(String elementName) {

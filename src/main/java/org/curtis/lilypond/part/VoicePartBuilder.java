@@ -37,6 +37,7 @@ import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -484,8 +485,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     }
 
     private void checkMeasureBlock(MeasureBuilder measureBuilder, SortedSet<String> measureVoices) {
-        List<Note> openTies = tiedFromNotes.values().stream().flatMap(ties -> ties.stream()).collect(Collectors.toList());
-        boolean hasActiveSlur = !activeSlurs.values().stream().flatMap(activeSlur -> activeSlur.stream()).collect(Collectors.toSet()).isEmpty();
+        List<Note> openTies = tiedFromNotes.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        boolean hasActiveSlur = !activeSlurs.values().stream().flatMap(Collection::stream).collect(Collectors.toSet()).isEmpty();
         if (isStartRepeatBlock(measureBuilder) || measureBuilder.isHasStartRepeat()) {
             if (isEndingRepeatBlock(measureBuilder) && measureBuilder.getRepeatBlock().getEndingNumber() > 1) {
                 for (Tied closedTie : closedTiedNotes.stream().flatMap(toNote -> toNote.getTieds().stream()).collect(Collectors.toList())) closedTie.setRepeatTie(true);

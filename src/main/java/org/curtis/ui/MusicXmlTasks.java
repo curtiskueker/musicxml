@@ -39,8 +39,6 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -258,11 +256,9 @@ public class MusicXmlTasks {
                 showPassword.setBackground(new Color(-1));
                 showPassword.setText("Show Password: ");
                 showPassword.setHorizontalTextPosition(SwingConstants.LEFT);
-                showPassword.addItemListener(new ItemListener() {
-                    public void itemStateChanged(ItemEvent e) {
-                        if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
-                        else passwordField.setEchoChar('*');
-                    }
+                showPassword.addItemListener(e -> {
+                    if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
+                    else passwordField.setEchoChar('*');
                 });
                 rightPanel.add(showPassword, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
@@ -310,17 +306,12 @@ public class MusicXmlTasks {
                 button.setText(inputRow.getName());
                 panel.add(button, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        clearStatusArea();
+                button.addActionListener(e -> {
+                    clearStatusArea();
 
-                        Runnable formRunnable = () -> {
-                            handleForm();
-                        };
-                        Thread formThread = new Thread(formRunnable);
-                        formThread.start();
-                    }
+                    Runnable formRunnable = this::handleForm;
+                    Thread formThread = new Thread(formRunnable);
+                    formThread.start();
                 });
 
                 component = button;
@@ -412,34 +403,31 @@ public class MusicXmlTasks {
         fromModel.addElement("Database Record");
         fromModel.addElement("Lilypond File");
         fromFormat.setModel(fromModel);
-        fromFormat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selection = (String) fromFormat.getSelectedItem();
-                if (!selection.equals(fromSelectedValue)) {
-                    fromSelectedValue = selection;
+        fromFormat.addActionListener(e -> {
+            String selection = (String) fromFormat.getSelectedItem();
+            if (!selection.equals(fromSelectedValue)) {
+                fromSelectedValue = selection;
 
-                    DefaultComboBoxModel toModel = (DefaultComboBoxModel) toFormat.getModel();
-                    toModel.removeAllElements();
-                    toModel.addElement("");
-                    switch (fromSelectedValue) {
-                        case "MusicXml File":
-                            toModel.addElement("Database Record");
-                            toModel.addElement("Lilypond File");
-                            toModel.addElement("PDF File");
-                            break;
-                        case "Database Record":
-                            toModel.addElement("MusicXml File");
-                            toModel.addElement("Lilypond File");
-                            toModel.addElement("PDF File");
-                            break;
-                        case "Lilypond File":
-                            toModel.addElement("PDF File");
-                            break;
-                    }
-
-                    handleSelection();
+                DefaultComboBoxModel toModel = (DefaultComboBoxModel) toFormat.getModel();
+                toModel.removeAllElements();
+                toModel.addElement("");
+                switch (fromSelectedValue) {
+                    case "MusicXml File":
+                        toModel.addElement("Database Record");
+                        toModel.addElement("Lilypond File");
+                        toModel.addElement("PDF File");
+                        break;
+                    case "Database Record":
+                        toModel.addElement("MusicXml File");
+                        toModel.addElement("Lilypond File");
+                        toModel.addElement("PDF File");
+                        break;
+                    case "Lilypond File":
+                        toModel.addElement("PDF File");
+                        break;
                 }
+
+                handleSelection();
             }
         });
 
@@ -448,14 +436,11 @@ public class MusicXmlTasks {
         final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
         toModel.addElement("");
         toFormat.setModel(toModel);
-        toFormat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selection = (String) toFormat.getSelectedItem();
-                if (selection != null && !selection.equals(toSelectedValue)) {
-                    toSelectedValue = selection;
-                    handleSelection();
-                }
+        toFormat.addActionListener(e -> {
+            String selection = (String) toFormat.getSelectedItem();
+            if (selection != null && !selection.equals(toSelectedValue)) {
+                toSelectedValue = selection;
+                handleSelection();
             }
         });
     }
@@ -503,17 +488,14 @@ public class MusicXmlTasks {
     private void addMenuItem(JMenu menu, String text) {
         JMenuItem menuItem = new JMenuItem(text);
         menu.add(menuItem);
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JMenuItem actionMenuItem = (JMenuItem) e.getSource();
-                String selection = actionMenuItem.getText();
-                if (!selection.equals(selectedValue)) {
-                    if (selection.equals("Exit")) System.exit(0);
-                    else {
-                        selectedValue = selection;
-                        handleSelection();
-                    }
+        menuItem.addActionListener(e -> {
+            JMenuItem actionMenuItem = (JMenuItem) e.getSource();
+            String selection = actionMenuItem.getText();
+            if (!selection.equals(selectedValue)) {
+                if (selection.equals("Exit")) System.exit(0);
+                else {
+                    selectedValue = selection;
+                    handleSelection();
                 }
             }
         });

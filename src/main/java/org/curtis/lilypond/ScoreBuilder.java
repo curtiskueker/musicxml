@@ -121,8 +121,7 @@ public class ScoreBuilder extends LilypondBuilder {
                 } else if (musicData instanceof Note && staves > 1) {
                     Note note = (Note)musicData;
                     String partVoice = partId + "/" + note.getEditorialVoice().getVoice();
-                    Integer primaryVoiceStaff = primaryVoiceStaves.get(partVoice);
-                    if (primaryVoiceStaff == null) primaryVoiceStaves.put(partVoice, note.getStaff());
+                    primaryVoiceStaves.computeIfAbsent(partVoice, k -> note.getStaff());
                 }
             }
         }
