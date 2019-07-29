@@ -9,6 +9,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
+import java.util.Objects;
 
 public class SchemaValidator {
     private static SchemaValidator instance;
@@ -29,7 +30,7 @@ public class SchemaValidator {
             String schemaLocation = "musicxml/xsd/score.xsd";
 
             SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-            Schema schema = schemaFactory.newSchema(getClass().getClassLoader().getResource(schemaLocation));
+            Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(schemaLocation)));
             Source xmlFile = new StreamSource(new ByteArrayInputStream(documentEleent.getBytes()));
             Validator validator = schema.newValidator();
             validator.validate(xmlFile);

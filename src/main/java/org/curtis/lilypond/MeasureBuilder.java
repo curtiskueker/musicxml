@@ -321,7 +321,7 @@ public class MeasureBuilder extends LilypondBuilder {
         //
         // Partial measure
         TimeSignatureType currentTimeSignature = TimeSignatureUtil.getCurrentTimeSignature();
-        if(TypeUtil.getBoolean(measure.getImplicit())) {
+        if(currentTimeSignature != null && TypeUtil.getBoolean(measure.getImplicit())) {
             try {
                 BigDecimal numerator = MathUtil.multiply(MathUtil.divide(measureDuration, wholeMeasureDuration), MathUtil.newBigDecimal(currentTimeSignature.getBeats()));
                 BigDecimal denominator = MathUtil.newBigDecimal(currentTimeSignature.getBeatType());
@@ -556,7 +556,7 @@ public class MeasureBuilder extends LilypondBuilder {
         try {
             for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
                 Object musicData = musicDataBuilder.getMusicData();
-                if (musicData != null && musicData instanceof Attributes) append(musicDataBuilder.build().toString());
+                if (musicData instanceof Attributes) append(musicDataBuilder.build().toString());
             }
             append(TimeSignatureUtil.getWholeMeasureSpacerRepresentation());
         } catch (Exception e) {

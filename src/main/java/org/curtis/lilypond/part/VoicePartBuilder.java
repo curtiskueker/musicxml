@@ -398,7 +398,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             previousMeasureBuilder.isLastMeasure();
             if (currentEndingBlockStarted()) {
                 RepeatBlock currentRepeatBlock = getCurrentEndingBlock();
-                currentRepeatBlock.setRepeatBlockType(RepeatBlockType.RUNAWAY_ENDING);
+                if (currentRepeatBlock != null) currentRepeatBlock.setRepeatBlockType(RepeatBlockType.RUNAWAY_ENDING);
             }
         }
         if (measureBlocks.isEmpty()) throw new BuildException("Unable to process measure for part " + part.getPartId());

@@ -130,7 +130,7 @@ public class NoteBuilder extends MusicDataBuilder {
             Boolean measure = TypeUtil.getBoolean(rest.getMeasure());
             NoteType noteType = note.getType();
             BigDecimal duration = note.getDuration();
-            BigDecimal wholeMeasureDuration = null;
+            BigDecimal wholeMeasureDuration;
             try {
                 wholeMeasureDuration = TimeSignatureUtil.getWholeMeasureDuration();
             } catch (TimeSignatureException e) {

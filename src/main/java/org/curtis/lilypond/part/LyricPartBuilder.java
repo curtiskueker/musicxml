@@ -86,7 +86,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                             } else if (lyricCount > currentLyricCount) {
                                 // if we're expanding the list
                                 // add a new lyric list and stock it with empty lyrics
-                                for (int listIndex = lyricCount; listIndex < currentLyricCount; listIndex++) {
+                                for (int listIndex = currentLyricCount; listIndex < lyricCount; listIndex++) {
                                     List<Lyric> lyricListToAdd = new ArrayList<>();
                                     for (Lyric lyric : lyricLists.get(0)) {
                                         Lyric lyricToAdd = newEmptyLyric();
@@ -111,7 +111,7 @@ public class LyricPartBuilder extends FilteredPartBuilder {
                                 Lyric lyricToAdd = null;
                                 for (Lyric lyric : lyrics) {
                                     Integer lyricNumber = StringUtil.getInteger(lyric.getNumber());
-                                    if (lyricIndex == lyricNumber) {
+                                    if (lyricNumber != null && lyricIndex == lyricNumber) {
                                         lyricToAdd = lyric;
                                         break;
                                     }
