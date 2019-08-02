@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
@@ -432,9 +433,9 @@ public class MeasureBuilder extends LilypondBuilder {
     }
 
     private BigDecimal getMaxMeasureVoiceDurationDifference() {
-        if (voiceDurations.isEmpty()) return MathUtil.ZERO;
+        Optional<Map.Entry<String, BigDecimal>> durationEntries = voiceDurations.entrySet().stream().max(Map.Entry.comparingByValue());
+        BigDecimal maxVoiceDuration = durationEntries.isPresent() ? durationEntries.get().getValue() : MathUtil.ZERO;
 
-        BigDecimal maxVoiceDuration = voiceDurations.entrySet().stream().max(Map.Entry.comparingByValue()).get().getValue();
         if (MathUtil.largerThan(maxVoiceDuration, measureDuration)) return measureDuration;
         return MathUtil.subtract(maxVoiceDuration, voiceDuration);
     }
