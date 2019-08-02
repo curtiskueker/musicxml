@@ -66,7 +66,6 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private Map<String, List<Note>> tiedFromNotes = new HashMap<>();
     private Map<String, List<Note>> tiedToNotes = new HashMap<>();
     private List<Note> closedTiedNotes = new ArrayList<>();
-    private List<Note> repeatBlockTiedNotes = new ArrayList<>();
     private Map<Integer, Beam> openBeams = new HashMap<>();
     private boolean openWedge = false;
     private boolean hasActiveWedge = false;
@@ -510,11 +509,6 @@ public class VoicePartBuilder extends FilteredPartBuilder {
         currentMeasureBlock.getMeasureBuilders().add(measureBuilder);
 
         if (isEndRepeatBlock(measureBuilder) || measureBuilder.isHasEndRepeat()) {
-            if (isMainRepeatBlock(measureBuilder)) repeatBlockTiedNotes.addAll(openTies);
-            else if (isEndingRepeatBlock(measureBuilder)) {
-                RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
-                if (repeatBlock.getEndingNumber().equals(repeatBlock.getEndingCount())) repeatBlockTiedNotes.clear();
-            }
             newMeasureBlock();
         } else if (!hasActiveSlur && hasOpenSlur) {
             newMeasureBlock();
