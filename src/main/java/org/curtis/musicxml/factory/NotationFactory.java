@@ -207,8 +207,8 @@ public class NotationFactory {
         List<DynamicsMarking> dynamicsMarkings = dynamics.getMarkings();
         for(Element dynamicsElement : dynamicsElements) {
             DynamicsMarking dynamicsMarking = new DynamicsMarking();
-            String dynamecsElementName = dynamicsElement.getTagName();
-            switch (dynamecsElementName) {
+            String dynamicsElementName = dynamicsElement.getTagName();
+            switch (dynamicsElementName) {
                 case "p":
                     dynamicsMarking.setDynamicsType(DynamicsType.P);
                     break;

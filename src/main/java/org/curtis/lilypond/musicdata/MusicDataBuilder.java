@@ -42,10 +42,10 @@ public class MusicDataBuilder extends LilypondBuilder {
     public StringBuilder build() throws BuildException {
         if (musicData == null) return stringBuilder;
 
-        String musidDataClassName = musicData.getClass().getName();
-        musidDataClassName = musidDataClassName.replace("org.curtis.musicxml.", "");
+        String musicDataClassName = musicData.getClass().getName();
+        musicDataClassName = musicDataClassName.replace("org.curtis.musicxml.", "");
 
-        List<String> classNameParts = new ArrayList<>(Arrays.asList(musidDataClassName.split("\\.")));
+        List<String> classNameParts = new ArrayList<>(Arrays.asList(musicDataClassName.split("\\.")));
 
         String objectClassName = classNameParts.remove(classNameParts.size() - 1);
         String builderRootClassName = classNameParts.remove(classNameParts.size() - 1);

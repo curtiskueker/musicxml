@@ -653,7 +653,7 @@ public class DirectionFactory {
                         beater.setBeaterValue(BeaterValue.BOW);
                         break;
                     case "chime hammer":
-                        beater.setBeaterValue(BeaterValue.CHIME_HAMNER);
+                        beater.setBeaterValue(BeaterValue.CHIME_HAMMER);
                         break;
                     case "coin":
                         beater.setBeaterValue(BeaterValue.COIN);

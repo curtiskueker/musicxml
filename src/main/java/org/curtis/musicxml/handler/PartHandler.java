@@ -24,9 +24,9 @@ public class PartHandler extends BaseHandler {
 
         List<Measure> measures = part.getMeasures();
         List<Element> measureElements = XmlUtil.getChildElements(element, "measure");
-        for(Element measureElenent : measureElements) {
+        for(Element measureElement : measureElements) {
             MeasureHandler measureHandler = new MeasureHandler(measures);
-            measureHandler.handle(measureElenent);
+            measureHandler.handle(measureElement);
         }
 
         parts.add(part);

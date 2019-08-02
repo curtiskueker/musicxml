@@ -131,9 +131,9 @@ public class NoteFactory {
             case "flat-up":
                 return AccidentalType.FLAT_UP;
             case "triple-sharp":
-                return AccidentalType.THIPLE_SHARP;
+                return AccidentalType.TRIPLE_SHARP;
             case "triple-flat":
-                return AccidentalType.THIPLE_FLAT;
+                return AccidentalType.TRIPLE_FLAT;
             case "slash-quarter-sharp":
                 return AccidentalType.SLASH_QUARTER_SHARP;
             case "slash-sharp":

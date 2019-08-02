@@ -215,12 +215,12 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         Connection tupletType = tuplet.getType();
                         switch (tupletType) {
                             case START:
-                                if (tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Previous tuplet not stopped.  Output may be unpredictible");
+                                if (tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Previous tuplet not stopped.  Output may be unpredictable");
                                 measureBuilder.setTupletType(note, Connection.START);
                                 tupletsOn.put(voice, true);
                                 break;
                             case STOP:
-                                if (!tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Tuplet not started.  Output may be unpredictible");
+                                if (!tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Tuplet not started.  Output may be unpredictable");
                                 measureBuilder.setTupletType(note, Connection.STOP);
                                 tupletsOn.put(voice, false);
                                 break;

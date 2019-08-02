@@ -1,6 +1,6 @@
 package org.curtis.musicxml.common.play;
 
-public enum SemiPitchcedType {
+public enum SemiPitchedType {
     HIGH,
     MEDIUM_HIGH,
     MEDIUM,

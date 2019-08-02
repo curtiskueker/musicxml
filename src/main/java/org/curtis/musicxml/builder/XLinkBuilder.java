@@ -38,7 +38,7 @@ public class XLinkBuilder extends OutputBuilder {
         String actuate = BuilderUtil.enumValue(linkAttributes.getActuate());
         actuate = actuate.replace("on-request", "onRequest");
         actuate = actuate.replace("on-load", "onLoad");
-        xLinkBuilder.buildAttribute("xlinf:actuate", actuate);
+        xLinkBuilder.buildAttribute("xlink:actuate", actuate);
 
         return xLinkBuilder.stringBuilder.toString();
     }

@@ -219,7 +219,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
                 buildElementWithValue("mute", mute.getMuteType());
             } else if (playType instanceof SemiPitched) {
                 SemiPitched semiPitched = (SemiPitched)playType;
-                buildElementWithValue("semi-pitched", semiPitched.getSemiPitchcedType());
+                buildElementWithValue("semi-pitched", semiPitched.getSemiPitchedType());
             } else if (playType instanceof OtherPlay) {
                 OtherPlay otherPlay = (OtherPlay)playType;
                 buildElementWithValueAndAttribute("other-play", otherPlay.getValue(), "type", BuilderUtil.requiredValue(otherPlay.getType()));

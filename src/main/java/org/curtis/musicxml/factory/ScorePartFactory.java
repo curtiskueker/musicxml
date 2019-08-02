@@ -10,7 +10,7 @@ import org.curtis.musicxml.common.play.MuteType;
 import org.curtis.musicxml.common.play.OtherPlay;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.common.play.PlayType;
-import org.curtis.musicxml.common.play.SemiPitchcedType;
+import org.curtis.musicxml.common.play.SemiPitchedType;
 import org.curtis.musicxml.common.play.SemiPitched;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.score.GroupName;
@@ -163,22 +163,22 @@ public class ScorePartFactory {
                     SemiPitched semiPitched = new SemiPitched();
                     switch (XmlUtil.getElementText(playSubelement)) {
                         case "high":
-                            semiPitched.setSemiPitchcedType(SemiPitchcedType.HIGH);
+                            semiPitched.setSemiPitchedType(SemiPitchedType.HIGH);
                             break;
                         case "medium-high":
-                            semiPitched.setSemiPitchcedType(SemiPitchcedType.MEDIUM_HIGH);
+                            semiPitched.setSemiPitchedType(SemiPitchedType.MEDIUM_HIGH);
                             break;
                         case "medium":
-                            semiPitched.setSemiPitchcedType(SemiPitchcedType.MEDIUM);
+                            semiPitched.setSemiPitchedType(SemiPitchedType.MEDIUM);
                             break;
                         case "medium-low":
-                            semiPitched.setSemiPitchcedType(SemiPitchcedType.MEDIUM_LOW);
+                            semiPitched.setSemiPitchedType(SemiPitchedType.MEDIUM_LOW);
                             break;
                         case "low":
-                            semiPitched.setSemiPitchcedType(SemiPitchcedType.LOW);
+                            semiPitched.setSemiPitchedType(SemiPitchedType.LOW);
                             break;
                         case "very-low":
-                            semiPitched.setSemiPitchcedType(SemiPitchcedType.VERY_LOW);
+                            semiPitched.setSemiPitchedType(SemiPitchedType.VERY_LOW);
                             break;
                     }
                     playType = semiPitched;

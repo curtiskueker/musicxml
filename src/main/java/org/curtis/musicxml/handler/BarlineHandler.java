@@ -123,7 +123,7 @@ public class BarlineHandler extends MusicDataHandler {
                             case "none":
                                 repeat.setWinged(Winged.NONE);
                                 break;
-                            case "straignt":
+                            case "straight":
                                 repeat.setWinged(Winged.STRAIGHT);
                                 break;
                             case "curved":

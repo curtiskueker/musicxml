@@ -108,7 +108,7 @@ public class HarmonyHandler extends MusicDataHandler {
                             kind.setKindValue(KindValue.DIMINISHED_SEVENTH);
                             break;
                         case "augmented-seventh":
-                            kind.setKindValue(KindValue.AUGUMENTED_SEVENTH);
+                            kind.setKindValue(KindValue.AUGMENTED_SEVENTH);
                             break;
                         case "half-diminished":
                             kind.setKindValue(KindValue.HALF_DIMINISHED);
@@ -236,7 +236,7 @@ public class HarmonyHandler extends MusicDataHandler {
                             case "augmented":
                                 degreeValue.setSymbol(DegreeSymbol.AUGMENTED);
                                 break;
-                            case "dimished":
+                            case "diminished":
                                 degreeValue.setSymbol(DegreeSymbol.DIMINISHED);
                                 break;
                             case "half-diminished":

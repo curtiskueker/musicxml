@@ -2,7 +2,7 @@ package org.curtis.musicxml.direction.directiontype.percussion;
 
 public enum BeaterValue {
     BOW,
-    CHIME_HAMNER,
+    CHIME_HAMMER,
     COIN,
     FINGER,
     FINGERNAIL,

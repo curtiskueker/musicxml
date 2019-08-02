@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("open strirng")
+@DiscriminatorValue("open string")
 public class OpenString extends Technical {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_placement_id")

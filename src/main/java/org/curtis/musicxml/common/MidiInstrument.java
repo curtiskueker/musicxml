@@ -26,7 +26,7 @@ public class MidiInstrument extends DatabaseItem {
     private BigDecimal pan;
     @Column(precision = 12, scale = 4)
     private BigDecimal elevation;
-    @Column(name = "midi_instrumentj_id")
+    @Column(name = "midi_instrument_id")
     private String midiInstrumentId;
 
     public MidiInstrument() {

@@ -74,7 +74,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         else if (directionType instanceof HarpPedals) buildHarpPedals((HarpPedals) directionType);
         else if (directionType instanceof Damp) buildDamp((Damp) directionType);
         else if (directionType instanceof DampAll) buildDampAll((DampAll) directionType);
-        else if (directionType instanceof Eyeglasses) buildEyglasses((Eyeglasses) directionType);
+        else if (directionType instanceof Eyeglasses) buildEyeglasses((Eyeglasses) directionType);
         else if (directionType instanceof StringMute) buildStringMute((StringMute) directionType);
         else if (directionType instanceof Scordatura) buildScordatura((Scordatura) directionType);
         else if (directionType instanceof Image) buildImage((Image) directionType);
@@ -226,7 +226,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         buildElementWithOptionalAttributes("damp-all", FormattingBuilder.buildPrintStyleAlign(dampAll.getPrintStyleAlign()));
     }
 
-    private void buildEyglasses(Eyeglasses eyeglasses) {
+    private void buildEyeglasses(Eyeglasses eyeglasses) {
         buildElementWithOptionalAttributes("eyeglasses", FormattingBuilder.buildPrintStyleAlign(eyeglasses.getPrintStyleAlign()));
     }
 

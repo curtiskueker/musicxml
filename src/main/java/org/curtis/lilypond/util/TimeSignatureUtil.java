@@ -50,7 +50,7 @@ public class TimeSignatureUtil {
             }
         }
 
-        if (dividerCount > 3) throw new DurationException("Note beat total of " + totalBeats + " exceeds maxixmum value allowed.  Skipping note.");
+        if (dividerCount > 3) throw new DurationException("Note beat total of " + totalBeats + " exceeds maximum value allowed.  Skipping note.");
 
         BigDecimal representationValue = MathUtil.divide(MathUtil.newBigDecimal(4), totalBeatsCopy);
 

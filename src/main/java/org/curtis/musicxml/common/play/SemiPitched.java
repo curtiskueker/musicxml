@@ -11,17 +11,17 @@ import javax.persistence.Enumerated;
 public class SemiPitched extends PlayType {
     @Enumerated(EnumType.STRING)
     @Column(name = "value")
-    private SemiPitchcedType semiPitchcedType;
+    private SemiPitchedType semiPitchcedType;
 
     public SemiPitched() {
 
     }
 
-    public SemiPitchcedType getSemiPitchcedType() {
+    public SemiPitchedType getSemiPitchedType() {
         return semiPitchcedType;
     }
 
-    public void setSemiPitchcedType(SemiPitchcedType semiPitchcedType) {
+    public void setSemiPitchedType(SemiPitchedType semiPitchcedType) {
         this.semiPitchcedType = semiPitchcedType;
     }
 }

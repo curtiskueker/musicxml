@@ -25,13 +25,13 @@ public class SchemaValidator {
         return instance;
     }
 
-    public void validate(String documentEleent) throws XmlException {
+    public void validate(String documentElement) throws XmlException {
         try {
             String schemaLocation = "musicxml/xsd/score.xsd";
 
             SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
             Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(schemaLocation)));
-            Source xmlFile = new StreamSource(new ByteArrayInputStream(documentEleent.getBytes()));
+            Source xmlFile = new StreamSource(new ByteArrayInputStream(documentElement.getBytes()));
             Validator validator = schema.newValidator();
             validator.validate(xmlFile);
         } catch (Exception e) {
