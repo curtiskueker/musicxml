@@ -16,9 +16,7 @@ public class Ly2PdfTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         Ly2Pdf ly2Pdf = new Ly2Pdf();
         ly2Pdf.setInputFile(inputFileName);
         ly2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
@@ -30,7 +28,7 @@ public class Ly2PdfTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
         outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
         outputFile = getText(componentMap.get("outputFile"));

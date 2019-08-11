@@ -18,9 +18,7 @@ public class DatabaseTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         DatabaseExec databaseExec = new DatabaseExec();
         databaseExec.setTestDatabase(testDatabase);
         databaseExec.setCreateDatabase(createDatabase);
@@ -34,7 +32,7 @@ public class DatabaseTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         testDatabase = isSelected(componentMap.get("testDatabase"));
         createDatabase = isSelected(componentMap.get("createDatabase"));
         generateSchema = isSelected(componentMap.get("generateSchema"));

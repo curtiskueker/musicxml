@@ -19,7 +19,13 @@ public abstract class MusicXmlTask {
         this.componentMap = componentMap;
     }
 
-    public abstract void execute() throws TaskException;
+    public void execute() throws TaskException {
+        initialize();
+        executeTask();
+    }
+
+    public abstract void initialize();
+    public abstract void executeTask() throws TaskException;
 
     protected String getText(Component component) {
         if (component == null) return null;

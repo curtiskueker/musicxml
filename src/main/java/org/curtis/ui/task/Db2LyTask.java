@@ -17,9 +17,7 @@ public class Db2LyTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         Db2Ly db2Ly = new Db2Ly();
         db2Ly.setScoreName(scoreName);
         db2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
@@ -31,7 +29,7 @@ public class Db2LyTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         scoreName = getSelection(componentMap.get("scoreName"));
         outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
         outputFile = getText(componentMap.get("outputFile"));

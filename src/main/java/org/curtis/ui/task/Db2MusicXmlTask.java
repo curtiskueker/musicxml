@@ -17,9 +17,7 @@ public class Db2MusicXmlTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         Db2MusicXml db2MusicXml = new Db2MusicXml();
         db2MusicXml.setScoreName(scoreName);
         db2MusicXml.setOutputFile(outputDirectoryName + "/" + outputFile);
@@ -32,7 +30,7 @@ public class Db2MusicXmlTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         scoreName = getSelection(componentMap.get("scoreName"));
         outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
         outputFile = getText(componentMap.get("outputFile"));

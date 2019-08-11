@@ -16,9 +16,7 @@ public class Db2PdfTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         Db2Pdf db2Pdf = new Db2Pdf();
         db2Pdf.setScoreName(scoreName);
         db2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
@@ -30,7 +28,7 @@ public class Db2PdfTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         scoreName = getSelection(componentMap.get("scoreName"));
         outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
         outputFile = getText(componentMap.get("outputFile"));

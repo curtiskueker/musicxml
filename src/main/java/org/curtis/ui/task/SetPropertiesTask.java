@@ -20,9 +20,7 @@ public class SetPropertiesTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         SetProperties setProperties = new SetProperties();
         setProperties.setUsername(username);
         setProperties.setPassword(password);
@@ -39,7 +37,7 @@ public class SetPropertiesTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         username = getText(componentMap.get("username"));
         password = getText(componentMap.get("password"));
         databaseName = getText(componentMap.get("databaseName"));

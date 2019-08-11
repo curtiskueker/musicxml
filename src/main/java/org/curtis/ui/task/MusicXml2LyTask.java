@@ -17,9 +17,7 @@ public class MusicXml2LyTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
         musicXml2Ly.setInputFile(inputFileName);
         musicXml2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
@@ -31,7 +29,7 @@ public class MusicXml2LyTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
         outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
         outputFile = getText(componentMap.get("outputFile"));

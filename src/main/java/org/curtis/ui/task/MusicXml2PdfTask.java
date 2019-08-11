@@ -16,9 +16,7 @@ public class MusicXml2PdfTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         MusicXml2Pdf musicXml2Pdf = new MusicXml2Pdf();
         musicXml2Pdf.setInputFile(inputFileName);
         musicXml2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
@@ -30,7 +28,7 @@ public class MusicXml2PdfTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
         outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
         outputFile = getText(componentMap.get("outputFile"));

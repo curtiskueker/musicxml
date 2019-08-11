@@ -15,9 +15,7 @@ public class MusicXml2DbTask extends MusicXmlTask {
         super(componentMap);
     }
 
-    public void execute() throws TaskException {
-        initialize();
-
+    public void executeTask() throws TaskException {
         MusicXml2Db musicXml2Db = new MusicXml2Db();
         musicXml2Db.setScoreName(scoreName);
         musicXml2Db.setInputFile(inputFileName);
@@ -29,7 +27,7 @@ public class MusicXml2DbTask extends MusicXmlTask {
         }
     }
 
-    private void initialize() {
+    public void initialize() {
         scoreName = getText(componentMap.get("scoreName"));
         inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
     }
