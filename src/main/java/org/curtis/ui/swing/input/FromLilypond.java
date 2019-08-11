@@ -1,18 +1,18 @@
-package org.curtis.ui.input;
+package org.curtis.ui.swing.input;
 
-public class FromMusicXml extends FromInput {
-    public FromMusicXml() {
+public class FromLilypond extends FromInput {
+    public FromLilypond() {
         setup();
     }
 
     private void setup() {
-        setTitle("MusicXml File Input: ");
+        setTitle("Lilypond File Input: ");
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Input File: ");
         inputRow1.setInputType(InputType.INPUT_FILE);
         inputRow1.setName("inputFile");
-        inputRow1.setValue("xml");
+        inputRow1.setValue("ly");
         getInputRows().add(inputRow1);
     }
 }

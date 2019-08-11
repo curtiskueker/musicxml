@@ -1,4 +1,4 @@
-package org.curtis.ui.input;
+package org.curtis.ui.swing.input;
 
 public class InputRow {
     private String text = "";

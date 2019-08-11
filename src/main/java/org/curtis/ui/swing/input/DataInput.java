@@ -1,4 +1,4 @@
-package org.curtis.ui.input;
+package org.curtis.ui.swing.input;
 
 import java.util.ArrayList;
 import java.util.List;

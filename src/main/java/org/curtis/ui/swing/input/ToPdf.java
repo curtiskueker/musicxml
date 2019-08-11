@@ -1,12 +1,12 @@
-package org.curtis.ui.input;
+package org.curtis.ui.swing.input;
 
-public class ToMusicXml extends ToInput {
-    public ToMusicXml() {
+public class ToPdf extends ToInput {
+    public ToPdf() {
         setup();
     }
 
     private void setup() {
-        setTitle("MusicXml File Output: ");
+        setTitle("PDF File Output: ");
 
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Output Directory: ");
@@ -15,16 +15,10 @@ public class ToMusicXml extends ToInput {
         getInputRows().add(inputRow1);
 
         InputRow inputRow2 = new InputRow();
-        inputRow2.setText("Output Filename (.xml): ");
+        inputRow2.setText("Output Filename: ");
         inputRow2.setInputType(InputType.INPUT);
         inputRow2.setInputSize(InputRow.SMALL_INPUT_SIZE);
         inputRow2.setName("outputFile");
         getInputRows().add(inputRow2);
-
-        InputRow inputRow3 = new InputRow();
-        inputRow3.setText("Skip Comments: ");
-        inputRow3.setInputType(InputType.CHECKBOX);
-        inputRow3.setName("skipComments");
-        getInputRows().add(inputRow3);
     }
 }

@@ -1,4 +1,4 @@
-package org.curtis.ui;
+package org.curtis.ui.swing;
 
 import javax.swing.*;
 import java.io.IOException;
