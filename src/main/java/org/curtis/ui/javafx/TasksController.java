@@ -4,10 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.curtis.ui.javafx.output.StatusOutput;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import java.util.List;
 public class TasksController {
     private Scene scene;
     private Stage stage;
+    private StatusOutput statusOutput;
     private static final List<String> fromBoxes = new ArrayList<>(Arrays.asList("musicXmlFromBox", "dbFromBox", "lyFromBox"));
     private static final List<String> toBoxes = new ArrayList<>(Arrays.asList("musicXmlToBox", "dbToBox", "lyToBox", "pdfToBox"));
 
@@ -36,15 +37,26 @@ public class TasksController {
         this.stage = stage;
     }
 
+    public StatusOutput getStatusOutput() {
+        return statusOutput;
+    }
+
+    public void setStatusOutput(StatusOutput statusOutput) {
+        this.statusOutput = statusOutput;
+    }
+
+    public Node getNode(String nodeName) {
+        return getScene().lookup("#" + nodeName);
+    }
+
     @FXML
     private void saveSettings() {
-        appendText("Database settings saved");
+        buttonPressed("Database settings saved");
     }
 
     @FXML
     private void showPassword() {
-        if (checkboxOn("showPassword")) appendText("Show password selected");
-        else appendText("Show password deselected");
+
     }
 
     @FXML
@@ -130,12 +142,12 @@ public class TasksController {
 
     @FXML
     private void executeConvert() {
-        appendText("Convert action executed");
+        buttonPressed("Convert action executed");
     }
 
     @FXML
     private void executeTables() {
-        appendText("Database action executed");
+        buttonPressed("Database action executed");
     }
 
     @FXML
@@ -150,7 +162,7 @@ public class TasksController {
 
     @FXML
     private void executeLyPdf() {
-        appendText("Lilypond/PDF action executed");
+        buttonPressed("Lilypond/PDF action executed");
     }
 
     @FXML
@@ -160,7 +172,7 @@ public class TasksController {
 
     @FXML
     private void executeValidate() {
-        appendText("Validate action executed");
+        buttonPressed("Validate action executed");
     }
 
     private void setFileLocationInTextField(String textFieldName) {
@@ -178,10 +190,6 @@ public class TasksController {
         return checkBox.isSelected();
     }
 
-    private Node getNode(String nodeName) {
-        return getScene().lookup("#" + nodeName);
-    }
-
     private void showFromBox(String boxName) {
         showBox(fromBoxes, boxName);
     }
@@ -194,9 +202,11 @@ public class TasksController {
         for (String box : boxes) getNode(box).setVisible(box.equals(boxName));
     }
 
-    private void appendText(String text) {
-        TextArea statusTextArea = (TextArea)getNode("statusTextArea");
-        statusTextArea.appendText(text);
-        statusTextArea.appendText("\n");
+    private void buttonPressed(String text) {
+        getStatusOutput().clear();
+
+        // Run task in thread
+
+        System.err.println(text);
     }
 }
