@@ -321,46 +321,47 @@ public class MusicXmlTasks {
 
     private void handleForm() {
         MusicXmlTask musicXmlTask = null;
+        SwingTaskInitializer swingTaskInitializer = new SwingTaskInitializer(componentMap);
 
         switch (selectedValue) {
             case "Set Properties":
-                musicXmlTask = new SetPropertiesTask(componentMap);
+                musicXmlTask = new SetPropertiesTask(swingTaskInitializer);
                 break;
             case "Database Tasks":
-                musicXmlTask = new DatabaseTask(componentMap);
+                musicXmlTask = new DatabaseTask(swingTaskInitializer);
                 break;
             case "Conversion Tasks":
                 switch (fromSelectedValue) {
                     case "MusicXml File":
                         switch (toSelectedValue) {
                             case "Database Record":
-                                musicXmlTask = new MusicXml2DbTask(componentMap);
+                                musicXmlTask = new MusicXml2DbTask(swingTaskInitializer);
                                 break;
                             case "Lilypond File":
-                                musicXmlTask = new MusicXml2LyTask(componentMap);
+                                musicXmlTask = new MusicXml2LyTask(swingTaskInitializer);
                                 break;
                             case "PDF File":
-                                musicXmlTask = new MusicXml2PdfTask(componentMap);
+                                musicXmlTask = new MusicXml2PdfTask(swingTaskInitializer);
                                 break;
                         }
                         break;
                     case "Database Record":
                         switch (toSelectedValue) {
                             case "MusicXml File":
-                                musicXmlTask = new Db2MusicXmlTask(componentMap);
+                                musicXmlTask = new Db2MusicXmlTask(swingTaskInitializer);
                                 break;
                             case "Lilypond File":
-                                musicXmlTask = new Db2LyTask(componentMap);
+                                musicXmlTask = new Db2LyTask(swingTaskInitializer);
                                 break;
                             case "PDF File":
-                                musicXmlTask = new Db2PdfTask(componentMap);
+                                musicXmlTask = new Db2PdfTask(swingTaskInitializer);
                                 break;
                         }
                         break;
                     case "Lilypond File":
                         switch (toSelectedValue) {
                             case "PDF File":
-                                musicXmlTask = new Ly2PdfTask(componentMap);
+                                musicXmlTask = new Ly2PdfTask(swingTaskInitializer);
                                 break;
                         }
                         break;
@@ -378,7 +379,7 @@ public class MusicXmlTasks {
     }
 
     private void setupStatusArea() {
-        PrintStream statusPrintStream = new PrintStream(new StatusOutput(statusTextArea));
+        PrintStream statusPrintStream = new PrintStream(new SwingStatusOutput(statusTextArea));
         System.setErr(statusPrintStream);
         System.setOut(statusPrintStream);
     }

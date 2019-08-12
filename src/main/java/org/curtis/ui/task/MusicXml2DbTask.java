@@ -4,15 +4,12 @@ import org.curtis.musicxml.bin.MusicXml2Db;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import java.awt.*;
-import java.util.Map;
-
 public class MusicXml2DbTask extends MusicXmlTask {
     private String scoreName;
     private String inputFileName = "";
 
-    public MusicXml2DbTask(Map<String, Component> componentMap) {
-        super(componentMap);
+    public MusicXml2DbTask(TaskInitializer taskInitializer) {
+        super(taskInitializer);
     }
 
     public void executeTask() throws TaskException {
@@ -28,7 +25,7 @@ public class MusicXml2DbTask extends MusicXmlTask {
     }
 
     public void initialize() {
-        scoreName = getText(componentMap.get("scoreName"));
-        inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
+        scoreName = taskInitializer.getText("scoreName");
+        inputFileName = taskInitializer.getDirectoryLocation("inputFile");
     }
 }

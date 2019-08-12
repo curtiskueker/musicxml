@@ -4,9 +4,6 @@ import org.curtis.musicxml.bin.SetProperties;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import java.awt.*;
-import java.util.Map;
-
 public class SetPropertiesTask extends MusicXmlTask {
     private String username;
     private String password;
@@ -16,8 +13,8 @@ public class SetPropertiesTask extends MusicXmlTask {
     private String lilypondLocation;
     private String pdfReaderLocation;
 
-    public SetPropertiesTask(Map<String, Component> componentMap) {
-        super(componentMap);
+    public SetPropertiesTask(TaskInitializer taskInitializer) {
+        super(taskInitializer);
     }
 
     public void executeTask() throws TaskException {
@@ -38,12 +35,12 @@ public class SetPropertiesTask extends MusicXmlTask {
     }
 
     public void initialize() {
-        username = getText(componentMap.get("username"));
-        password = getText(componentMap.get("password"));
-        databaseName = getText(componentMap.get("databaseName"));
-        server = getText(componentMap.get("server"));
-        databaseType = getSelection(componentMap.get("databaseType"));
-        lilypondLocation = getDirectoryLocation(componentMap.get("lilypondLocation"));
-        pdfReaderLocation = getDirectoryLocation(componentMap.get("pdfReaderLocation"));
+        username = taskInitializer.getText("username");
+        password = taskInitializer.getText("password");
+        databaseName = taskInitializer.getText("databaseName");
+        server = taskInitializer.getText("server");
+        databaseType = taskInitializer.getSelection("databaseType");
+        lilypondLocation = taskInitializer.getDirectoryLocation("lilypondLocation");
+        pdfReaderLocation = taskInitializer.getDirectoryLocation("pdfReaderLocation");
     }
 }

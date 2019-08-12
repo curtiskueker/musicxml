@@ -4,16 +4,13 @@ import org.curtis.musicxml.bin.Ly2Pdf;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import java.awt.*;
-import java.util.Map;
-
 public class Ly2PdfTask extends MusicXmlTask {
     private String inputFileName = "";
     private String outputDirectoryName = "";
     private String outputFile;
 
-    public Ly2PdfTask(Map<String, Component> componentMap) {
-        super(componentMap);
+    public Ly2PdfTask(TaskInitializer taskInitializer) {
+        super(taskInitializer);
     }
 
     public void executeTask() throws TaskException {
@@ -29,8 +26,8 @@ public class Ly2PdfTask extends MusicXmlTask {
     }
 
     public void initialize() {
-        inputFileName = getDirectoryLocation(componentMap.get("inputFile"));
-        outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
-        outputFile = getText(componentMap.get("outputFile"));
+        inputFileName = taskInitializer.getDirectoryLocation("inputFile");
+        outputDirectoryName = taskInitializer.getDirectoryLocation("outputDirectory");
+        outputFile = taskInitializer.getText("outputFile");
     }
 }

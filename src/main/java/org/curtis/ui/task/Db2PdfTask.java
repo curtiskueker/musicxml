@@ -4,16 +4,13 @@ import org.curtis.musicxml.bin.Db2Pdf;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import java.awt.*;
-import java.util.Map;
-
 public class Db2PdfTask extends MusicXmlTask {
     private String scoreName;
     private String outputDirectoryName = "";
     private String outputFile;
 
-    public Db2PdfTask(Map<String, Component> componentMap) {
-        super(componentMap);
+    public Db2PdfTask(TaskInitializer taskInitializer) {
+        super(taskInitializer);
     }
 
     public void executeTask() throws TaskException {
@@ -29,8 +26,8 @@ public class Db2PdfTask extends MusicXmlTask {
     }
 
     public void initialize() {
-        scoreName = getSelection(componentMap.get("scoreName"));
-        outputDirectoryName = getDirectoryLocation(componentMap.get("outputDirectory"));
-        outputFile = getText(componentMap.get("outputFile"));
+        scoreName = taskInitializer.getSelection("scoreName");
+        outputDirectoryName = taskInitializer.getDirectoryLocation("outputDirectory");
+        outputFile = taskInitializer.getText("outputFile");
     }
 }

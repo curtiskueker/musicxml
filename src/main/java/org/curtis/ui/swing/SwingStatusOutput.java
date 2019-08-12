@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class StatusOutput extends OutputStream {
+public class SwingStatusOutput extends OutputStream {
     private JTextArea textArea;
 
-    public StatusOutput(JTextArea textArea) {
+    public SwingStatusOutput(JTextArea textArea) {
         this.textArea = textArea;
     }
 

@@ -4,9 +4,6 @@ import org.curtis.musicxml.bin.DatabaseExec;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
 
-import java.awt.*;
-import java.util.Map;
-
 public class DatabaseTask extends MusicXmlTask {
     private boolean testDatabase;
     private boolean createDatabase;
@@ -14,8 +11,8 @@ public class DatabaseTask extends MusicXmlTask {
     private String schemaLocationDirectoryName = "";
     private String schemaLocationFile;
 
-    public DatabaseTask(Map<String, Component> componentMap) {
-        super(componentMap);
+    public DatabaseTask(TaskInitializer taskInitializer) {
+        super(taskInitializer);
     }
 
     public void executeTask() throws TaskException {
@@ -33,10 +30,10 @@ public class DatabaseTask extends MusicXmlTask {
     }
 
     public void initialize() {
-        testDatabase = isSelected(componentMap.get("testDatabase"));
-        createDatabase = isSelected(componentMap.get("createDatabase"));
-        generateSchema = isSelected(componentMap.get("generateSchema"));
-        schemaLocationDirectoryName = getDirectoryLocation(componentMap.get("schemaDirectory"));
-        schemaLocationFile = getText(componentMap.get("schemaFile"));
+        testDatabase = taskInitializer.isSelected("testDatabase");
+        createDatabase = taskInitializer.isSelected("createDatabase");
+        generateSchema = taskInitializer.isSelected("generateSchema");
+        schemaLocationDirectoryName = taskInitializer.getDirectoryLocation("schemaDirectory");
+        schemaLocationFile = taskInitializer.getText("schemaFile");
     }
 }
