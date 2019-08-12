@@ -2,10 +2,12 @@ package org.curtis.ui.javafx;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,8 +15,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TasksController {
+    private Scene scene;
+    private Stage stage;
     private static final List<String> fromBoxes = new ArrayList<>(Arrays.asList("musicXmlFromBox", "dbFromBox", "lyFromBox"));
     private static final List<String> toBoxes = new ArrayList<>(Arrays.asList("musicXmlToBox", "dbToBox", "lyToBox", "pdfToBox"));
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     private void saveSettings() {
@@ -41,7 +61,7 @@ public class TasksController {
         FileChooser schemaLocationFileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("SQL Files (*.sql)", "*.sql");
         schemaLocationFileChooser.getExtensionFilters().add(extFilter);
-        File file = schemaLocationFileChooser.showSaveDialog(TasksApplication.stage);
+        File file = schemaLocationFileChooser.showSaveDialog(getStage());
         if(file != null){
             TextField schemaFileLocation = (TextField)getNode("schemaFileLocation");
             schemaFileLocation.setText(file.getAbsolutePath());
@@ -145,7 +165,7 @@ public class TasksController {
 
     private void setFileLocationInTextField(String textFieldName) {
         FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(TasksApplication.stage);
+        File file = fileChooser.showOpenDialog(getStage());
         if (file == null) return;
 
         TextField textField = (TextField)getNode(textFieldName);
@@ -159,7 +179,7 @@ public class TasksController {
     }
 
     private Node getNode(String nodeName) {
-        return TasksApplication.scene.lookup("#" + nodeName);
+        return getScene().lookup("#" + nodeName);
     }
 
     private void showFromBox(String boxName) {
