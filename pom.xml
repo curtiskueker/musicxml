@@ -90,7 +90,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.curtis.ui.swing.MusicXmlTasks</mainClass>
+                            <mainClass>org.curtis.ui.javafx.MusicXmlTasks</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
