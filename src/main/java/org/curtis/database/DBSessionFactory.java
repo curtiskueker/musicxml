@@ -64,7 +64,6 @@ public class DBSessionFactory {
 
     private void instantiateSessionFactory() throws DBException {
         try {
-            System.err.println("INSTANTIATE SESSION FACTORY");
             if (StringUtil.isEmpty(databaseType)) throw new DBException("Error: Database type undefined");
 
             String name = AppProperties.getString("database.username");
@@ -100,9 +99,7 @@ public class DBSessionFactory {
 
             jpaProperties.putAll(additionalProperties);
 
-            System.err.println("CREATING ENTITY MANAGER FACTORY");
             emf = Persistence.createEntityManagerFactory(persistenceUnitName, jpaProperties);
-            System.err.println("INSTANTIATE SESSION FACTORY");
         } catch (Exception e) {
             throw new DBException(e);
         }

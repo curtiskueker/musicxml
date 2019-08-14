@@ -45,5 +45,7 @@ public class TaskExecutor {
         } catch (TaskException e) {
             System.err.println(e.getMessage());
         }
+
+        tasksController.getStatusOutput().flushOutput();
     }
 }

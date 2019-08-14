@@ -57,6 +57,10 @@ public class TasksController {
         return (TextField)getNode(nodeName);
     }
 
+    public StatusOutput getStatusOutput() {
+        return statusOutput;
+    }
+
     @FXML
     private void buttonPressed(ActionEvent actionEvent) {
         statusOutput.clear();
@@ -67,10 +71,7 @@ public class TasksController {
         TaskExecutor taskExecutor = new TaskExecutor(button.getId(), this);
         Runnable taskRunnable = taskExecutor::execute;
         Thread formThread = new Thread(taskRunnable);
-        System.err.println("START EXECUTE");
         formThread.start();
-        //taskExecutor.execute();
-        System.err.println("END EXECUTE");
     }
 
     @FXML

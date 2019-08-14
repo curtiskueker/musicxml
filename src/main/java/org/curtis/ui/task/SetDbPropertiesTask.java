@@ -32,12 +32,8 @@ public class SetDbPropertiesTask extends MusicXmlTask {
         databaseExec.setTestDatabase(testDatabase);
 
         try {
-            System.err.println("SET PROPERTIES START");
             setProperties.execute();
-            System.err.println("SET PROPERTIES END");
-            System.err.println("TEST DATABASE START");
             if (testDatabase) databaseExec.execute();
-            System.err.println("TEST DATABASE END");
         } catch (MusicXmlException e) {
             throw new TaskException(e);
         }
