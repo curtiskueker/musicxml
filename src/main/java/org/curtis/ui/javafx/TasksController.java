@@ -187,11 +187,6 @@ public class TasksController {
     }
 
     @FXML
-    private void executeTables() {
-        buttonSelected("Database action executed");
-    }
-
-    @FXML
     private void setLilypondLocation() {
         setFileLocationInTextField("lilypondLocation");
     }

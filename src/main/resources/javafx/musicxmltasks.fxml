@@ -382,7 +382,7 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab fx:id="tablesTab" text="DB Tables">
+                <Tab fx:id="tablesTab" onSelectionChanged="#tabSelected" text="DB Tables">
                     <content>
                         <VBox fx:id="tablesBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
@@ -424,7 +424,7 @@
                                         </Label>
                                         <CheckBox fx:id="createTables" mnemonicParsing="false" GridPane.columnIndex="1" />
                                         <CheckBox fx:id="generateSchema" mnemonicParsing="false" onAction="#showSchemaFileLocation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Button fx:id="executeTables" mnemonicParsing="false" onAction="#executeTables" text="OK" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                                        <Button fx:id="executeTables" mnemonicParsing="false" onAction="#buttonPressed" text="OK" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                                         <Hyperlink fx:id="chooseSchemaLocationLink" onAction="#chooseSchemaLocation" text="Choose schema location" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                             <GridPane.margin>
                                                 <Insets right="10.0" />
