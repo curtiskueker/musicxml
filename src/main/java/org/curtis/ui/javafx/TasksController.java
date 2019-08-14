@@ -202,11 +202,6 @@ public class TasksController {
     }
 
     @FXML
-    private void executeLyPdf() {
-        buttonSelected("Lilypond/PDF action executed");
-    }
-
-    @FXML
     private void setValidateLocation() {
         setFileLocationInTextField("validateLocation");
     }
