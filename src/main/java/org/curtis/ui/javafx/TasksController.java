@@ -1,62 +1,102 @@
 package org.curtis.ui.javafx;
 
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.curtis.ui.javafx.output.StatusOutput;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TasksController {
-    private Scene scene;
-    private Stage stage;
     private StatusOutput statusOutput;
     private static final List<String> fromBoxes = new ArrayList<>(Arrays.asList("musicXmlFromBox", "dbFromBox", "lyFromBox"));
     private static final List<String> toBoxes = new ArrayList<>(Arrays.asList("musicXmlToBox", "dbToBox", "lyToBox", "pdfToBox"));
 
-    public Scene getScene() {
-        return scene;
+    @FXML
+    private VBox taskBox;
+
+    @FXML
+    private TextArea statusTextArea;
+
+    @FXML
+    public void initialize() {
+        // Setup status output box
+        statusOutput = new StatusOutput(statusTextArea);
+        PrintStream statusPrintStream = new PrintStream(statusOutput);
+        System.setErr(statusPrintStream);
+        System.setOut(statusPrintStream);
     }
 
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    public Scene getScene() {
+        return taskBox.getScene();
     }
 
     public Stage getStage() {
-        return stage;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public StatusOutput getStatusOutput() {
-        return statusOutput;
-    }
-
-    public void setStatusOutput(StatusOutput statusOutput) {
-        this.statusOutput = statusOutput;
+        return (Stage)getScene().getWindow();
     }
 
     public Node getNode(String nodeName) {
         return getScene().lookup("#" + nodeName);
     }
 
+    public TextField getTextField(String nodeName) {
+        return (TextField)getNode(nodeName);
+    }
+
     @FXML
-    private void saveSettings() {
-        buttonPressed("Database settings saved");
+    private void buttonPressed(ActionEvent actionEvent) {
+        statusOutput.clear();
+
+        Button button = (Button)actionEvent.getSource();
+
+        // Run task in thread
+        TaskExecutor taskExecutor = new TaskExecutor(button.getId(), this);
+        Runnable taskRunnable = taskExecutor::execute;
+        Thread formThread = new Thread(taskRunnable);
+        System.err.println("START EXECUTE");
+        formThread.start();
+        //taskExecutor.execute();
+        System.err.println("END EXECUTE");
+    }
+
+    @FXML
+    private void tabSelected(Event actionEvent) {
+        Tab tab = (Tab)actionEvent.getSource();
+        if (!tab.isSelected()) return;
+
+        TaskExecutor taskExecutor = new TaskExecutor(tab.getId(), this);
+        taskExecutor.initializeForm();
     }
 
     @FXML
     private void showPassword() {
+        String passwordNodeName = "dbPassword";
+        String passwordShowNodeName = "dbPasswordShow";
+        boolean showPassword = checkboxOn("showPassword");
+        if (showPassword) togglePassword(passwordNodeName, passwordShowNodeName);
+        else togglePassword(passwordShowNodeName, passwordNodeName);
+    }
 
+    private void togglePassword(String fromNodeName, String toNodeName) {
+        TextInputControl fromTextInput = (TextInputControl)getNode(fromNodeName);
+        TextInputControl toTextInput = (TextInputControl)getNode(toNodeName);
+        toTextInput.setText(fromTextInput.getText());
+        fromTextInput.setVisible(false);
+        toTextInput.setVisible(true);
     }
 
     @FXML
@@ -75,7 +115,7 @@ public class TasksController {
         schemaLocationFileChooser.getExtensionFilters().add(extFilter);
         File file = schemaLocationFileChooser.showSaveDialog(getStage());
         if(file != null){
-            TextField schemaFileLocation = (TextField)getNode("schemaFileLocation");
+            TextField schemaFileLocation = getTextField("schemaFileLocation");
             schemaFileLocation.setText(file.getAbsolutePath());
         }
     }
@@ -142,12 +182,12 @@ public class TasksController {
 
     @FXML
     private void executeConvert() {
-        buttonPressed("Convert action executed");
+        buttonSelected("Convert action executed");
     }
 
     @FXML
     private void executeTables() {
-        buttonPressed("Database action executed");
+        buttonSelected("Database action executed");
     }
 
     @FXML
@@ -162,7 +202,7 @@ public class TasksController {
 
     @FXML
     private void executeLyPdf() {
-        buttonPressed("Lilypond/PDF action executed");
+        buttonSelected("Lilypond/PDF action executed");
     }
 
     @FXML
@@ -172,7 +212,7 @@ public class TasksController {
 
     @FXML
     private void executeValidate() {
-        buttonPressed("Validate action executed");
+        buttonSelected("Validate action executed");
     }
 
     private void setFileLocationInTextField(String textFieldName) {
@@ -180,11 +220,11 @@ public class TasksController {
         File file = fileChooser.showOpenDialog(getStage());
         if (file == null) return;
 
-        TextField textField = (TextField)getNode(textFieldName);
+        TextField textField = getTextField(textFieldName);
         textField.setText(file.getAbsolutePath());
     }
 
-    private boolean checkboxOn(String controlName) {
+    public boolean checkboxOn(String controlName) {
         CheckBox checkBox = (CheckBox)getNode(controlName);
 
         return checkBox.isSelected();
@@ -202,11 +242,8 @@ public class TasksController {
         for (String box : boxes) getNode(box).setVisible(box.equals(boxName));
     }
 
-    private void buttonPressed(String text) {
-        getStatusOutput().clear();
-
-        // Run task in thread
-
+    private void buttonSelected(String text) {
+        statusOutput.clear();
         System.err.println(text);
     }
 }

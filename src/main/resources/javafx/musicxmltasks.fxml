@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -282,7 +283,7 @@
                             </children>
                         </VBox>
                     </content></Tab>
-                <Tab fx:id="settingsTab" text="DB Settings">
+                <Tab fx:id="settingsTab" onSelectionChanged="#tabSelected" text="DB Settings">
                     <content>
                         <VBox fx:id="settingsBox">
                             <children>
@@ -361,7 +362,12 @@
                                         <TextField fx:id="dbUsername" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
                                         <TextField fx:id="dbName" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <TextField fx:id="dbServer" maxWidth="175.0" prefWidth="175.0" text="localhost" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                        <PasswordField fx:id="dbPassword" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <StackPane fx:id="passwordPane" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                              <PasswordField fx:id="dbPassword" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" StackPane.alignment="CENTER_LEFT" />
+                                    <TextField fx:id="dbPasswordShow" maxWidth="175.0" prefWidth="175.0" visible="false" StackPane.alignment="CENTER_LEFT" />
+                                 </children>
+                              </StackPane>
                                         <CheckBox fx:id="showPassword" mnemonicParsing="false" onAction="#showPassword" text="Show password" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                             <font>
                                                 <Font size="12.0" />
@@ -369,7 +375,7 @@
                                         </CheckBox>
                                         <CheckBox fx:id="testDbConnection" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
                                         <ComboBox fx:id="dbType" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
-                                        <Button fx:id="saveSettingsButton" mnemonicParsing="false" onAction="#saveSettings" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+                                        <Button fx:id="saveSettingsButton" mnemonicParsing="false" onAction="#buttonPressed" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="TOP" />
                                     </children>
                                 </GridPane>
                             </children>

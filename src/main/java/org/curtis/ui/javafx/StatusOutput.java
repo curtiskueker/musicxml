@@ -1,4 +1,4 @@
-package org.curtis.ui.javafx.output;
+package org.curtis.ui.javafx;
 
 import javafx.scene.control.TextArea;
 

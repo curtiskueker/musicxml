@@ -1,6 +1,7 @@
 package org.curtis.ui.swing.input;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.task.SetPropertiesTask;
 import org.curtis.util.StringUtil;
 
 public class PropertiesInput extends FromInput {
@@ -48,8 +49,7 @@ public class PropertiesInput extends FromInput {
         InputRow inputRow5 = new InputRow();
         inputRow5.setText("Database Type: ");
         inputRow5.setInputType(InputType.SELECTION);
-        String[] databaseTypes = {"mysql", "postgresql", "oracle"};
-        inputRow5.setSelectionList(databaseTypes);
+        inputRow5.setSelectionList(SetPropertiesTask.DATABASE_TYPES);
         inputRow5.setSelectedItem(AppProperties.getOptionalProperty("musicxml.database.type"));
         inputRow5.setName("databaseType");
         getInputRows().add(inputRow5);
