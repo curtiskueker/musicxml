@@ -10,7 +10,7 @@
     <children>
         <TabPane fx:id="taskTabs" prefHeight="700.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab fx:id="convertTab" text="Convert Files">
+                <Tab fx:id="convertTab" onSelectionChanged="#tabSelected" text="Convert Files">
                     <content>
                         <VBox fx:id="convertBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
@@ -26,7 +26,7 @@
                                     <children>
                                         <Pane fx:id="convertFromListPane" maxWidth="275.0" prefWidth="275.0">
                                             <children>
-                                                <ComboBox fx:id="convertFromList" layoutX="50.0" layoutY="13.0" maxWidth="200.0" prefWidth="200.0" />
+                                                <ComboBox fx:id="convertFromList" layoutX="50.0" layoutY="13.0" maxWidth="200.0" onMouseEntered="#setConvertFromList" prefWidth="200.0" />
                                             </children>
                                         </Pane>
                                         <Label fx:id="convertArrow" alignment="CENTER" maxWidth="50.0" prefWidth="50.0" text="-&gt;">

@@ -1,5 +1,6 @@
 package org.curtis.ui.javafx;
 
+import org.curtis.ui.javafx.form.ConvertFormHandler;
 import org.curtis.ui.javafx.form.DbSettingsFormHandler;
 import org.curtis.ui.javafx.form.EmptyFormHandler;
 import org.curtis.ui.javafx.form.FormHandler;
@@ -37,6 +38,9 @@ public class TaskExecutor {
             case "tablesTab":
             case "validateTab":
                 formHandler = new EmptyFormHandler(tasksController);
+                break;
+            case "convertTab":
+                formHandler = new ConvertFormHandler(tasksController);
                 break;
         }
 

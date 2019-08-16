@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.curtis.ui.javafx.form.ConvertFormHandler;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -23,6 +25,8 @@ import java.util.List;
 
 public class TasksController {
     private StatusOutput statusOutput;
+    private ConvertFormHandler convertFormHandler = new ConvertFormHandler(this);
+
     private static final List<String> fromBoxes = new ArrayList<>(Arrays.asList("musicXmlFromBox", "dbFromBox", "lyFromBox"));
     private static final List<String> toBoxes = new ArrayList<>(Arrays.asList("musicXmlToBox", "dbToBox", "lyToBox", "pdfToBox"));
 
@@ -42,6 +46,8 @@ public class TasksController {
     }
 
     public Scene getScene() {
+        if (taskBox == null) return null;
+
         return taskBox.getScene();
     }
 
@@ -76,6 +82,8 @@ public class TasksController {
 
     @FXML
     private void tabSelected(Event actionEvent) {
+        if (getScene() == null) return;
+
         Tab tab = (Tab)actionEvent.getSource();
         if (!tab.isSelected()) return;
 
@@ -119,6 +127,14 @@ public class TasksController {
             TextField schemaFileLocation = getTextField("schemaFileLocation");
             schemaFileLocation.setText(file.getAbsolutePath());
         }
+    }
+
+    @FXML
+    private void setConvertFromList() {
+        ComboBox convertFromList = (ComboBox)getNode("convertFromList");
+        if (convertFromList.getItems().size() > 0) return;
+
+        convertFormHandler.initializeForm();
     }
 
     @FXML
