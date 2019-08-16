@@ -8,10 +8,12 @@ import org.curtis.ui.javafx.initialize.DbTablesInitializer;
 import org.curtis.ui.javafx.initialize.JavafxTaskInitializer;
 import org.curtis.ui.javafx.initialize.LyPdfSettingsInitializer;
 import org.curtis.ui.javafx.initialize.SaveDbSettingsInitializer;
+import org.curtis.ui.javafx.initialize.ValidateXmlInitializer;
 import org.curtis.ui.task.DatabaseTask;
 import org.curtis.ui.task.MusicXmlTask;
 import org.curtis.ui.task.SetDbPropertiesTask;
 import org.curtis.ui.task.SetLyPdfPropertiesTask;
+import org.curtis.ui.task.ValidateXmlTask;
 import org.curtis.ui.task.exception.TaskException;
 
 public class TaskExecutor {
@@ -33,6 +35,7 @@ public class TaskExecutor {
                 formHandler = new LyPdfSettingsFormHandler(tasksController);
                 break;
             case "tablesTab":
+            case "validateTab":
                 formHandler = new EmptyFormHandler(tasksController);
                 break;
         }
@@ -55,6 +58,10 @@ public class TaskExecutor {
             case "executeTables":
                 taskInitializer = new DbTablesInitializer(tasksController);
                 musicXmlTask = new DatabaseTask(taskInitializer);
+                break;
+            case "executeValidate":
+                taskInitializer = new ValidateXmlInitializer(tasksController);
+                musicXmlTask = new ValidateXmlTask(taskInitializer);
                 break;
         }
 

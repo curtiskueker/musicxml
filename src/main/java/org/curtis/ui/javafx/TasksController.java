@@ -201,11 +201,6 @@ public class TasksController {
         setFileLocationInTextField("validateLocation");
     }
 
-    @FXML
-    private void executeValidate() {
-        buttonSelected("Validate action executed");
-    }
-
     private void setFileLocationInTextField(String textFieldName) {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(getStage());
