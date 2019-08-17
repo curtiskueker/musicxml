@@ -35,8 +35,8 @@ public class TasksController {
         // Setup status output box
         statusOutput = new StatusOutput(statusTextArea);
         PrintStream statusPrintStream = new PrintStream(statusOutput);
-        System.setErr(statusPrintStream);
-        System.setOut(statusPrintStream);
+        //System.setErr(statusPrintStream);
+        //System.setOut(statusPrintStream);
     }
 
     public Scene getScene() {
@@ -83,6 +83,18 @@ public class TasksController {
 
         TaskExecutor taskExecutor = new TaskExecutor(tab.getId(), this);
         taskExecutor.initializeForm();
+    }
+
+    @FXML
+    private void fromListSelected(ActionEvent actionEvent) {
+        ComboBox comboBox = (ComboBox)actionEvent.getSource();
+        convertFormHandler.fromListSelected((String)comboBox.getValue());
+    }
+
+    @FXML
+    private void toListSelected(ActionEvent actionEvent) {
+        ComboBox comboBox = (ComboBox)actionEvent.getSource();
+        convertFormHandler.toListSelected((String)comboBox.getValue());
     }
 
     @FXML

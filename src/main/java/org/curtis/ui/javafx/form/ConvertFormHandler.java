@@ -4,31 +4,37 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import org.curtis.ui.javafx.TasksController;
+import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ConvertFormHandler extends FormHandler {
+    private static final Pair<String, String> EMPTY_SELECTION = new Pair<>("", "");
+    private static final Pair<String, String> MUSICXML_FROM_SELECTION = new Pair<>("MusicXml File", "musicXmlFromBox");
+    private static final Pair<String, String> DB_FROM_SELECTION = new Pair<>("Database Record", "dbFromBox");
+    private static final Pair<String, String> LY_FROM_SELECTION = new Pair<>("Lilypond File", "lyFromBox");
+    private static final Pair<String, String> MUSICXML_TO_SELECTION = new Pair<>("MusicXml File", "musicXmlToBox");
+    private static final Pair<String, String> DB_TO_SELECTION = new Pair<>("Database Record", "dbToBox");
+    private static final Pair<String, String> LY_TO_SELECTION = new Pair<>("Lilypond File", "lyToBox");
+    private static final Pair<String, String> PDF_TO_SELECTION = new Pair<>("PDF File", "pdfToBox");
     private static final List<Pair<String, String>> FROM_SELECTIONS = new ArrayList<>(
-            Arrays.asList(
-                    new Pair<>("", ""),
-                    new Pair<>("MusicXml File", "musicXmlFromBox"),
-                    new Pair<>("Database Record", "dbFromBox"),
-                    new Pair<>("Lilypond File", "lyFromBox")
-            )
+            Arrays.asList(EMPTY_SELECTION, MUSICXML_FROM_SELECTION, DB_FROM_SELECTION, LY_FROM_SELECTION)
     );
     private static final List<Pair<String, String>> TO_SELECTIONS = new ArrayList<>(
-            Arrays.asList(
-                    new Pair<>("", ""),
-                    new Pair<>("MusicXml File", "musicXmlToBox"),
-                    new Pair<>("Database Record", "dbToBox"),
-                    new Pair<>("Lilypond File", "lyToBox"),
-                    new Pair<>("PDF File", "pdfToBox")
-            )
+            Arrays.asList(EMPTY_SELECTION, MUSICXML_TO_SELECTION, DB_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION)
+    );
+    private static final Map<Pair<String, String>, List<Pair<String, String>>> SELECTION_MAP = Map.ofEntries(
+            Map.entry(EMPTY_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION))),
+            Map.entry(MUSICXML_FROM_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION, DB_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION))),
+            Map.entry(DB_FROM_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION, MUSICXML_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION))),
+            Map.entry(LY_FROM_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION, PDF_TO_SELECTION)))
     );
 
     public ConvertFormHandler(TasksController tasksController) {
@@ -48,16 +54,45 @@ public class ConvertFormHandler extends FormHandler {
         showButton(false);
     }
 
+    public void fromListSelected(String selectionName) {
+        // set to select list based on from selection
+        Pair<String, String> fromSelection = getSelectedPair(selectionName, FROM_SELECTIONS);
+        ComboBox convertToList = (ComboBox)tasksController.getNode("convertToList");
+
+        List<Pair<String, String>> toPairs = SELECTION_MAP.get(fromSelection);
+        ObservableList<String> convertToTypes = FXCollections.observableArrayList(toPairs.stream().map(Pair::getKey).collect(Collectors.toList()));
+        convertToList.setItems(convertToTypes);
+
+        showFromBox(fromSelection.getValue());
+    }
+
+    public void toListSelected(String selectionName) {
+        Pair<String, String> toSelection = getSelectedPair(selectionName, TO_SELECTIONS);
+        if (toSelection == null) showToBox("");
+        else showToBox(toSelection.getValue());
+    }
+
+    private Pair<String, String> getSelectedPair(String selectionName, List<Pair<String, String>> selectionList) {
+        return selectionList.stream().filter(pair -> pair.getKey().equals(selectionName)).findFirst().orElse(null);
+    }
+
     private void showFromBox(String boxName) {
         showBox(FROM_SELECTIONS, boxName);
     }
 
     private void showToBox(String boxName) {
         showBox(TO_SELECTIONS, boxName);
+        Button executeConvert = (Button)tasksController.getNode("executeConvert");
+        executeConvert.setVisible(StringUtil.isNotEmpty(boxName));
     }
 
     private void showBox(List<Pair<String, String>> boxes, String boxName) {
-        for (Pair<String, String> box : boxes) tasksController.getNode(box.getValue()).setVisible(box.getKey().equals(boxName));
+        for (Pair<String, String> box : boxes) {
+            if (StringUtil.isEmpty(box.getValue())) continue;
+            VBox vBox = (VBox)tasksController.getNode(box.getValue());
+            if (vBox == null) continue;
+            vBox.setVisible(box.getValue().equals(boxName));
+        }
     }
 
     private void showButton(boolean show) {
