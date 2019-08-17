@@ -19,16 +19,10 @@ import org.curtis.ui.javafx.form.ConvertFormHandler;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TasksController {
     private StatusOutput statusOutput;
     private ConvertFormHandler convertFormHandler = new ConvertFormHandler(this);
-
-    private static final List<String> fromBoxes = new ArrayList<>(Arrays.asList("musicXmlFromBox", "dbFromBox", "lyFromBox"));
-    private static final List<String> toBoxes = new ArrayList<>(Arrays.asList("musicXmlToBox", "dbToBox", "lyToBox", "pdfToBox"));
 
     @FXML
     private VBox taskBox;
@@ -138,41 +132,6 @@ public class TasksController {
     }
 
     @FXML
-    private void showMusicXmlFrom() {
-        showFromBox("musicXmlFromBox");
-    }
-
-    @FXML
-    private void showDbFrom() {
-        showFromBox("dbFromBox");
-    }
-
-    @FXML
-    private void showLyFrom() {
-        showFromBox("lyFromBox");
-    }
-
-    @FXML
-    private void showMusicXmlTo() {
-        showToBox("musicXmlToBox");
-    }
-
-    @FXML
-    private void showDbTo() {
-        showToBox("dbToBox");
-    }
-
-    @FXML
-    private void showLyTo() {
-        showToBox("lyToBox");
-    }
-
-    @FXML
-    private void showPdfTo() {
-        showToBox("pdfToBox");
-    }
-
-    @FXML
     private void chooseMusicXmlFromFile() {
         setFileLocationInTextField("musicXmlFromFile");
     }
@@ -230,18 +189,6 @@ public class TasksController {
         CheckBox checkBox = (CheckBox)getNode(controlName);
 
         return checkBox.isSelected();
-    }
-
-    private void showFromBox(String boxName) {
-        showBox(fromBoxes, boxName);
-    }
-
-    private void showToBox(String boxName) {
-        showBox(toBoxes, boxName);
-    }
-
-    private void showBox(List<String> boxes, String boxName) {
-        for (String box : boxes) getNode(box).setVisible(box.equals(boxName));
     }
 
     private void buttonSelected(String text) {
