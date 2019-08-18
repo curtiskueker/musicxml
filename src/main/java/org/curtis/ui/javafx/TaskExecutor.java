@@ -5,12 +5,20 @@ import org.curtis.ui.javafx.form.DbSettingsFormHandler;
 import org.curtis.ui.javafx.form.EmptyFormHandler;
 import org.curtis.ui.javafx.form.FormHandler;
 import org.curtis.ui.javafx.form.LyPdfSettingsFormHandler;
+import org.curtis.ui.javafx.initialize.ConvertInitializer;
 import org.curtis.ui.javafx.initialize.DbTablesInitializer;
 import org.curtis.ui.javafx.initialize.JavafxTaskInitializer;
 import org.curtis.ui.javafx.initialize.LyPdfSettingsInitializer;
 import org.curtis.ui.javafx.initialize.SaveDbSettingsInitializer;
 import org.curtis.ui.javafx.initialize.ValidateXmlInitializer;
 import org.curtis.ui.task.DatabaseTask;
+import org.curtis.ui.task.Db2LyTask;
+import org.curtis.ui.task.Db2MusicXmlTask;
+import org.curtis.ui.task.Db2PdfTask;
+import org.curtis.ui.task.Ly2PdfTask;
+import org.curtis.ui.task.MusicXml2DbTask;
+import org.curtis.ui.task.MusicXml2LyTask;
+import org.curtis.ui.task.MusicXml2PdfTask;
 import org.curtis.ui.task.MusicXmlTask;
 import org.curtis.ui.task.SetDbPropertiesTask;
 import org.curtis.ui.task.SetLyPdfPropertiesTask;
@@ -66,6 +74,44 @@ public class TaskExecutor {
             case "executeValidate":
                 taskInitializer = new ValidateXmlInitializer(tasksController);
                 musicXmlTask = new ValidateXmlTask(taskInitializer);
+                break;
+            case "executeConvert":
+                taskInitializer = new ConvertInitializer(tasksController);
+                switch (tasksController.getFromSelection()) {
+                    case "MusicXml File":
+                        switch (tasksController.getToSelection()) {
+                            case "Database Record":
+                                musicXmlTask = new MusicXml2DbTask(taskInitializer);
+                                break;
+                            case "Lilypond File":
+                                musicXmlTask = new MusicXml2LyTask(taskInitializer);
+                                break;
+                            case "PDF File":
+                                musicXmlTask = new MusicXml2PdfTask(taskInitializer);
+                                break;
+                        }
+                        break;
+                    case "Database Record":
+                        switch (tasksController.getToSelection()) {
+                            case "MusicXml File":
+                                musicXmlTask = new Db2MusicXmlTask(taskInitializer);
+                                break;
+                            case "Lilypond File":
+                                musicXmlTask = new Db2LyTask(taskInitializer);
+                                break;
+                            case "PDF File":
+                                musicXmlTask = new Db2PdfTask(taskInitializer);
+                                break;
+                        }
+                        break;
+                    case "Lilypond File":
+                        switch (tasksController.getToSelection()) {
+                            case "PDF File":
+                                musicXmlTask = new Ly2PdfTask(taskInitializer);
+                                break;
+                        }
+                        break;
+                }
                 break;
         }
 

@@ -226,7 +226,7 @@
                                                                 <Insets top="10.0" />
                                                             </VBox.margin>
                                                         </Hyperlink>
-                                                        <TextField fx:id="lyToFile1" maxWidth="250.0" prefWidth="250.0">
+                                                        <TextField fx:id="pdfToFile" maxWidth="250.0" prefWidth="250.0">
                                                             <VBox.margin>
                                                                 <Insets left="10.0" top="10.0" />
                                                             </VBox.margin>
@@ -239,7 +239,7 @@
                                 </SplitPane>
                                 <Pane fx:id="executeConvertPane" prefHeight="150.0" prefWidth="200.0">
                                     <children>
-                                        <Button fx:id="executeConvert" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#executeConvert" text="Convert" visible="false" />
+                                        <Button fx:id="executeConvert" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonPressed" text="Convert" visible="false" />
                                     </children>
                                 </Pane>
                             </children>

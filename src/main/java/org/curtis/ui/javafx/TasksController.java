@@ -169,11 +169,6 @@ public class TasksController {
     }
 
     @FXML
-    private void executeConvert() {
-        buttonSelected("Convert action executed");
-    }
-
-    @FXML
     private void setLilypondLocation() {
         setFileLocationInTextField("lilypondLocation");
     }
@@ -186,6 +181,16 @@ public class TasksController {
     @FXML
     private void setValidateLocation() {
         setFileLocationInTextField("validateLocation");
+    }
+
+    public String getFromSelection() {
+        ComboBox fromList = (ComboBox)getNode("convertFromList");
+        return  (String)fromList.getValue();
+    }
+
+    public String getToSelection() {
+        ComboBox toList = (ComboBox)getNode("convertToList");
+        return  (String)toList.getValue();
     }
 
     private void setFileLocationInTextField(String textFieldName) {
@@ -201,10 +206,5 @@ public class TasksController {
         CheckBox checkBox = (CheckBox)getNode(controlName);
 
         return checkBox.isSelected();
-    }
-
-    private void buttonSelected(String text) {
-        statusOutput.clear();
-        System.err.println(text);
     }
 }
