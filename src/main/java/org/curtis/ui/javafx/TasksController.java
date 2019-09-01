@@ -1,5 +1,7 @@
 package org.curtis.ui.javafx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.javafx.form.ConvertFormHandler;
 
 import java.io.File;
@@ -35,6 +38,7 @@ public class TasksController {
         // Setup status output box
         statusOutput = new StatusOutput(statusTextArea);
         PrintStream statusPrintStream = new PrintStream(statusOutput);
+        // TODO: reset these when finished
         //System.setErr(statusPrintStream);
         //System.setOut(statusPrintStream);
     }
@@ -125,62 +129,64 @@ public class TasksController {
 
     @FXML
     private void chooseSchemaLocation() {
-        FileChooser schemaLocationFileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("SQL Files (*.sql)", "*.sql");
-        schemaLocationFileChooser.getExtensionFilters().add(extFilter);
-        File file = schemaLocationFileChooser.showSaveDialog(getStage());
-        if(file != null){
-            TextField schemaFileLocation = getTextField("schemaFileLocation");
-            schemaFileLocation.setText(file.getAbsolutePath());
-        }
+        setChooseFileLocationInTextField("schemaFileLocation", "SQL Files (*.sql)", "*.sql");
     }
 
     @FXML
     private void setConvertFromList() {
         ComboBox convertFromList = (ComboBox)getNode("convertFromList");
-        if (convertFromList.getItems().size() > 0) return;
+        if (!convertFromList.getItems().isEmpty()) return;
 
         convertFormHandler.initializeForm();
     }
 
     @FXML
+    private void setScoreNameFrom() {
+        ComboBox<String> scoreNameFrom = (ComboBox)getNode("scoreNameFrom");
+        if (!scoreNameFrom.getItems().isEmpty()) return;
+
+        ObservableList<String> scoreNames = FXCollections.observableArrayList(MusicXmlUtil.getScoreNames());
+        scoreNameFrom.setItems(scoreNames);
+    }
+
+    @FXML
     private void chooseMusicXmlFromFile() {
-        setFileLocationInTextField("musicXmlFromFile");
+        setOpenFileLocationInTextField("musicXmlFromFile");
     }
 
     @FXML
     private void chooseLyFromFile() {
-        setFileLocationInTextField("lyFromFile");
+        setOpenFileLocationInTextField("lyFromFile");
     }
 
     @FXML
     private void chooseMusicXmlToFile() {
-        setFileLocationInTextField("musicXmlToFile");
+        setChooseFileLocationInTextField("musicXmlToFile", "XML Files (*.xml)", "*.xml");
     }
 
     @FXML
     private void chooseLyToFile() {
-        setFileLocationInTextField("lyToFile");
+        setChooseFileLocationInTextField("lyToFile", "Lilypond Files (*.ly)", "*.ly");
     }
 
     @FXML
     private void choosePdfToFile() {
-        setFileLocationInTextField("pdfToFile");
+        setChooseFileLocationInTextField("pdfToFile", "No extension", "");
     }
 
     @FXML
     private void setLilypondLocation() {
-        setFileLocationInTextField("lilypondLocation");
+        setOpenFileLocationInTextField("lilypondLocation");
     }
 
     @FXML
     private void setPdfLocation() {
-        setFileLocationInTextField("pdfLocation");
+        setOpenFileLocationInTextField("pdfLocation");
     }
 
     @FXML
     private void setValidateLocation() {
-        setFileLocationInTextField("validateLocation");
+        setOpenFileLocationInTextField("validateLocation");
     }
 
     public String getFromSelection() {
@@ -193,13 +199,24 @@ public class TasksController {
         return  (String)toList.getValue();
     }
 
-    private void setFileLocationInTextField(String textFieldName) {
+    private void setOpenFileLocationInTextField(String textFieldName) {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(getStage());
         if (file == null) return;
 
         TextField textField = getTextField(textFieldName);
         textField.setText(file.getAbsolutePath());
+    }
+
+    private void setChooseFileLocationInTextField(String textFieldName, String extensionLabel, String extensionFilter) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(extensionLabel, extensionFilter);
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(getStage());
+        if(file != null){
+            TextField schemaFileLocation = getTextField(textFieldName);
+            schemaFileLocation.setText(file.getAbsolutePath());
+        }
     }
 
     public boolean checkboxOn(String controlName) {

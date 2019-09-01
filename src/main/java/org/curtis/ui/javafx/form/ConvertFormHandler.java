@@ -42,7 +42,7 @@ public class ConvertFormHandler extends FormHandler {
     }
 
     public void initializeForm() {
-        ComboBox convertFromList = (ComboBox)tasksController.getNode("convertFromList");
+        ComboBox<String> convertFromList = (ComboBox)tasksController.getNode("convertFromList");
         ObservableList<String> convertFromTypes = FXCollections.observableArrayList(FROM_SELECTIONS.stream().map(Pair::getKey).collect(Collectors.toList()));
         convertFromList.setItems(convertFromTypes);
 
@@ -57,7 +57,7 @@ public class ConvertFormHandler extends FormHandler {
     public void fromListSelected(String selectionName) {
         // set to select list based on from selection
         Pair<String, String> fromSelection = getSelectedPair(selectionName, FROM_SELECTIONS);
-        ComboBox convertToList = (ComboBox)tasksController.getNode("convertToList");
+        ComboBox<String> convertToList = (ComboBox)tasksController.getNode("convertToList");
 
         List<Pair<String, String>> toPairs = SELECTION_MAP.get(fromSelection);
         ObservableList<String> convertToTypes = FXCollections.observableArrayList(toPairs.stream().map(Pair::getKey).collect(Collectors.toList()));
