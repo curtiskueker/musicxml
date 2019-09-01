@@ -38,9 +38,8 @@ public class TasksController {
         // Setup status output box
         statusOutput = new StatusOutput(statusTextArea);
         PrintStream statusPrintStream = new PrintStream(statusOutput);
-        // TODO: reset these when finished
-        //System.setErr(statusPrintStream);
-        //System.setOut(statusPrintStream);
+        System.setErr(statusPrintStream);
+        System.setOut(statusPrintStream);
     }
 
     public Scene getScene() {

@@ -4,6 +4,7 @@ import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.task.exception.TaskException;
+import org.curtis.util.StringUtil;
 
 public class MusicXml2LyTask extends MusicXmlTask {
     private String inputFileName = "";
@@ -17,7 +18,8 @@ public class MusicXml2LyTask extends MusicXmlTask {
     public void executeTask() throws TaskException {
         MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
         musicXml2Ly.setInputFile(inputFileName);
-        musicXml2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
+        if (StringUtil.isNotEmpty(outputDirectoryName)) musicXml2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
+        else if (StringUtil.isNotEmpty(outputFile)) musicXml2Ly.setOutputFile(outputFile);
 
         try {
             musicXml2Ly.execute();

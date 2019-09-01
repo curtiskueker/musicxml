@@ -4,6 +4,7 @@ import org.curtis.musicxml.bin.Db2Ly;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.task.exception.TaskException;
+import org.curtis.util.StringUtil;
 
 public class Db2LyTask extends MusicXmlTask {
     private String scoreName;
@@ -17,7 +18,8 @@ public class Db2LyTask extends MusicXmlTask {
     public void executeTask() throws TaskException {
         Db2Ly db2Ly = new Db2Ly();
         db2Ly.setScoreName(scoreName);
-        db2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
+        if (StringUtil.isNotEmpty(outputDirectoryName)) db2Ly.setOutputFile(outputDirectoryName + "/" + outputFile);
+        else if (StringUtil.isNotEmpty(outputFile)) db2Ly.setOutputFile(outputFile);
 
         try {
             db2Ly.execute();
