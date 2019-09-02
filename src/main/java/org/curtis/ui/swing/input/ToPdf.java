@@ -27,7 +27,7 @@ public class ToPdf extends ToInput {
         if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.pdfreader"))) {
             InputRow inputRow3 = new InputRow();
             inputRow3.setInputType(InputType.LABEL);
-            inputRow3.setValue("Set PDF Reader Location in Set Properties to open PDF file");
+            inputRow3.setValue("Set PDF Reader Location in Set Properties to open PDF file on completion");
             getInputRows().add(inputRow3);
         } else {
             InputRow inputRow3 = new InputRow();
