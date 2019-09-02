@@ -8,6 +8,7 @@ public class Ly2PdfTask extends MusicXmlTask {
     private String inputFileName = "";
     private String outputDirectoryName = "";
     private String outputFile;
+    private Boolean openPdf;
 
     public Ly2PdfTask(TaskInitializer taskInitializer) {
         super(taskInitializer);
@@ -17,6 +18,7 @@ public class Ly2PdfTask extends MusicXmlTask {
         Ly2Pdf ly2Pdf = new Ly2Pdf();
         ly2Pdf.setInputFile(inputFileName);
         ly2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
+        ly2Pdf.setOpenPdf(openPdf);
 
         try {
             ly2Pdf.execute();
@@ -29,5 +31,6 @@ public class Ly2PdfTask extends MusicXmlTask {
         inputFileName = taskInitializer.getDirectoryLocation("inputFile");
         outputDirectoryName = taskInitializer.getDirectoryLocation("outputDirectory");
         outputFile = taskInitializer.getText("outputFile");
+        openPdf = taskInitializer.isSelected("openPdf");
     }
 }

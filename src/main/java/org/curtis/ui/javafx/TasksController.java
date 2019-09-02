@@ -19,6 +19,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.javafx.form.ConvertFormHandler;
+import org.curtis.util.StringUtil;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -209,8 +210,10 @@ public class TasksController {
 
     private void setChooseFileLocationInTextField(String textFieldName, String extensionLabel, String extensionFilter) {
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(extensionLabel, extensionFilter);
-        fileChooser.getExtensionFilters().add(extFilter);
+        if (StringUtil.isNotEmpty(extensionFilter)) {
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(extensionLabel, extensionFilter);
+            fileChooser.getExtensionFilters().add(extFilter);
+        }
         File file = fileChooser.showSaveDialog(getStage());
         if(file != null){
             TextField schemaFileLocation = getTextField(textFieldName);

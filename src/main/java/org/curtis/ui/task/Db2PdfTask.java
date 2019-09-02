@@ -8,6 +8,7 @@ public class Db2PdfTask extends MusicXmlTask {
     private String scoreName;
     private String outputDirectoryName = "";
     private String outputFile;
+    private Boolean openPdf;
 
     public Db2PdfTask(TaskInitializer taskInitializer) {
         super(taskInitializer);
@@ -17,6 +18,7 @@ public class Db2PdfTask extends MusicXmlTask {
         Db2Pdf db2Pdf = new Db2Pdf();
         db2Pdf.setScoreName(scoreName);
         db2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
+        db2Pdf.setOpenPdf(openPdf);
 
         try {
             db2Pdf.execute();
@@ -29,5 +31,6 @@ public class Db2PdfTask extends MusicXmlTask {
         scoreName = taskInitializer.getSelection("scoreName");
         outputDirectoryName = taskInitializer.getDirectoryLocation("outputDirectory");
         outputFile = taskInitializer.getText("outputFile");
+        openPdf = taskInitializer.isSelected("openPdf");
     }
 }

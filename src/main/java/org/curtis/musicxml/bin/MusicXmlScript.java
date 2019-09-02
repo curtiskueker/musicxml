@@ -36,6 +36,7 @@ public abstract class MusicXmlScript {
     private String inputFile;
     private String scoreName;
     private Boolean skipComments = false;
+    private Boolean openPdf = false;
 
     public Integer getScoreId() {
         return scoreId;
@@ -77,6 +78,14 @@ public abstract class MusicXmlScript {
         this.skipComments = skipComments;
     }
 
+    public Boolean getOpenPdf() {
+        return openPdf;
+    }
+
+    public void setOpenPdf(Boolean openPdf) {
+        this.openPdf = openPdf;
+    }
+
     public abstract void execute() throws MusicXmlException;
 
     protected void setArgs(String[] args) throws MusicXmlException {
@@ -105,7 +114,7 @@ public abstract class MusicXmlScript {
     }
 
     protected Score getScoreFromDb() throws MusicXmlException {
-        System.err.println("Converting database record to Score");
+        System.err.println("Converting database record to Score...");
         try {
             Score score = null;
             if (getScoreId() != null) {
@@ -231,19 +240,21 @@ public abstract class MusicXmlScript {
             return;
         }
 
-        String pdfReaderLocation = AppProperties.getOptionalProperty("location.pdfreader");
-        if (StringUtil.isEmpty(pdfReaderLocation)) {
-            System.err.println("Set PDF Reader Location in Set Properties to open PDF file on completion");
-        } else {
-            try {
-                Process pdfReaderProcess = new ProcessBuilder(pdfReaderLocation, getOutputFile() + ".pdf").start();
-                InputStream pdfReaderProcessErrorStream = pdfReaderProcess.getErrorStream();
-                int c;
-                while ((c = pdfReaderProcessErrorStream.read()) != -1) {
-                    System.err.print((char)c);
+        if (openPdf) {
+            String pdfReaderLocation = AppProperties.getOptionalProperty("location.pdfreader");
+            if (StringUtil.isEmpty(pdfReaderLocation)) {
+                System.err.println("Set PDF Reader Location in Set Properties to open PDF file on completion");
+            } else {
+                try {
+                    Process pdfReaderProcess = new ProcessBuilder(pdfReaderLocation, getOutputFile() + ".pdf").start();
+                    InputStream pdfReaderProcessErrorStream = pdfReaderProcess.getErrorStream();
+                    int c;
+                    while ((c = pdfReaderProcessErrorStream.read()) != -1) {
+                        System.err.print((char)c);
+                    }
+                } catch (IOException e) {
+                    throw new MusicXmlException(e);
                 }
-            } catch (IOException e) {
-                throw new MusicXmlException(e);
             }
         }
     }
