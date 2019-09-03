@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.properties.AppProperties;
 import org.curtis.ui.javafx.form.ConvertFormHandler;
 import org.curtis.util.StringUtil;
 
@@ -225,5 +226,19 @@ public class TasksController {
         CheckBox checkBox = (CheckBox)getNode(controlName);
 
         return checkBox.isSelected();
+    }
+
+    public void handlePdfReaderDisplay() {
+        if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.pdfreader"))) {
+            getNode("openPdf").setVisible(false);
+            getNode("openPdfLabel1").setVisible(true);
+            getNode("openPdfLabel2").setVisible(true);
+            getNode("openPdfLabel3").setVisible(true);
+        } else {
+            getNode("openPdf").setVisible(true);
+            getNode("openPdfLabel1").setVisible(false);
+            getNode("openPdfLabel2").setVisible(false);
+            getNode("openPdfLabel3").setVisible(false);
+        }
     }
 }

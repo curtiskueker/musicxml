@@ -1,5 +1,6 @@
 package org.curtis.ui.javafx;
 
+import org.curtis.properties.AppProperties;
 import org.curtis.ui.javafx.form.ConvertFormHandler;
 import org.curtis.ui.javafx.form.DbSettingsFormHandler;
 import org.curtis.ui.javafx.form.EmptyFormHandler;
@@ -117,7 +118,11 @@ public class TaskExecutor {
 
         try {
             if (taskInitializer != null) taskInitializer.initializeNodeMap();
-            if (musicXmlTask != null) musicXmlTask.execute();
+            if (musicXmlTask != null) {
+                musicXmlTask.execute();
+                AppProperties.addLocalPropertiesBundle();
+                tasksController.handlePdfReaderDisplay();
+            }
             System.err.println("Task finished");
         } catch (TaskException e) {
             System.err.println(e.getMessage());

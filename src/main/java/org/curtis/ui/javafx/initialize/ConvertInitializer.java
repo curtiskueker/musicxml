@@ -36,6 +36,7 @@ public class ConvertInitializer extends JavafxTaskInitializer {
                 break;
             case "PDF File":
                 nodeMap.put("outputFile", tasksController.getNode("pdfToFile"));
+                nodeMap.put("openPdf", tasksController.getNode("openPdf"));
                 break;
         }
     }

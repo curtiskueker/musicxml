@@ -3,6 +3,7 @@ package org.curtis.ui.task;
 import org.curtis.musicxml.bin.Ly2Pdf;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
+import org.curtis.util.StringUtil;
 
 public class Ly2PdfTask extends MusicXmlTask {
     private String inputFileName = "";
@@ -17,7 +18,8 @@ public class Ly2PdfTask extends MusicXmlTask {
     public void executeTask() throws TaskException {
         Ly2Pdf ly2Pdf = new Ly2Pdf();
         ly2Pdf.setInputFile(inputFileName);
-        ly2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
+        if (StringUtil.isNotEmpty(outputDirectoryName)) ly2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
+        else if (StringUtil.isNotEmpty(outputFile)) ly2Pdf.setOutputFile(outputFile);
         ly2Pdf.setOpenPdf(openPdf);
 
         try {

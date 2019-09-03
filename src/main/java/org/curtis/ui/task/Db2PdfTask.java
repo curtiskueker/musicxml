@@ -3,6 +3,7 @@ package org.curtis.ui.task;
 import org.curtis.musicxml.bin.Db2Pdf;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.ui.task.exception.TaskException;
+import org.curtis.util.StringUtil;
 
 public class Db2PdfTask extends MusicXmlTask {
     private String scoreName;
@@ -17,7 +18,8 @@ public class Db2PdfTask extends MusicXmlTask {
     public void executeTask() throws TaskException {
         Db2Pdf db2Pdf = new Db2Pdf();
         db2Pdf.setScoreName(scoreName);
-        db2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
+        if (StringUtil.isNotEmpty(outputDirectoryName)) db2Pdf.setOutputFile(outputDirectoryName + "/" + outputFile);
+        else if (StringUtil.isNotEmpty(outputFile)) db2Pdf.setOutputFile(outputFile);
         db2Pdf.setOpenPdf(openPdf);
 
         try {

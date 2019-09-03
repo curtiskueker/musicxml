@@ -231,8 +231,65 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </VBox.margin>
                                                         </TextField>
+                                          <CheckBox fx:id="openPdf" mnemonicParsing="false" text="Open PDF file on completion" visible="false">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </CheckBox>
+                                          <Label fx:id="openPdfLabel1" text="To open PDF file on completion," visible="false">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="openPdfLabel2" text="set PDF Reader location under" visible="false">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="openPdfLabel3" text="the Lilypond/PDF Settings tab." visible="false">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
                                                     </children>
                                                 </VBox>
+                                    <VBox fx:id="pdfToOffBox" prefHeight="200.0" prefWidth="100.0" visible="false">
+                                       <children>
+                                          <Label fx:id="pdfToOffLabel1" text="To convert to a PDF File,">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label fx:id="pdfToOffLabel2" text="set Lilypond location under">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="pdfToOffLabel3" text="the Lilypond/PDF Settings tab.">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                             </children>
                                         </StackPane>
                                     </items>
@@ -454,7 +511,7 @@
                                 </Label>
                                 <GridPane fx:id="lyPdfPane" prefHeight="596.0" prefWidth="600.0">
                                     <children>
-                                        <Hyperlink fx:id="setLilypondLocationLink" onAction="#setLilypondLocation" text="Choose Lilypond script location" GridPane.halignment="RIGHT">
+                                        <Hyperlink fx:id="setLilypondLocationLink" onAction="#setLilypondLocation" text="Choose Lilypond location" GridPane.halignment="RIGHT">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>

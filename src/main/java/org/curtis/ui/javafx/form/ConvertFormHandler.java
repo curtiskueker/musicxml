@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
+import org.curtis.properties.AppProperties;
 import org.curtis.ui.javafx.TasksController;
 import org.curtis.util.StringUtil;
 
@@ -24,11 +25,12 @@ public class ConvertFormHandler extends FormHandler {
     private static final Pair<String, String> DB_TO_SELECTION = new Pair<>("Database Record", "dbToBox");
     private static final Pair<String, String> LY_TO_SELECTION = new Pair<>("Lilypond File", "lyToBox");
     private static final Pair<String, String> PDF_TO_SELECTION = new Pair<>("PDF File", "pdfToBox");
+    private static final Pair<String, String> PDF_TO_OFF_SELECTION = new Pair<>("PDF File Off", "pdfToOffBox");
     private static final List<Pair<String, String>> FROM_SELECTIONS = new ArrayList<>(
             Arrays.asList(EMPTY_SELECTION, MUSICXML_FROM_SELECTION, DB_FROM_SELECTION, LY_FROM_SELECTION)
     );
     private static final List<Pair<String, String>> TO_SELECTIONS = new ArrayList<>(
-            Arrays.asList(EMPTY_SELECTION, MUSICXML_TO_SELECTION, DB_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION)
+            Arrays.asList(EMPTY_SELECTION, MUSICXML_TO_SELECTION, DB_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION, PDF_TO_OFF_SELECTION)
     );
     private static final Map<Pair<String, String>, List<Pair<String, String>>> SELECTION_MAP = Map.ofEntries(
             Map.entry(EMPTY_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION))),
@@ -36,12 +38,15 @@ public class ConvertFormHandler extends FormHandler {
             Map.entry(DB_FROM_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION, MUSICXML_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION))),
             Map.entry(LY_FROM_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION, PDF_TO_SELECTION)))
     );
+    private static Boolean FORM_INITIALIZED = false;
 
     public ConvertFormHandler(TasksController tasksController) {
         super(tasksController);
     }
 
     public void initializeForm() {
+        if (FORM_INITIALIZED) return;
+
         ComboBox<String> convertFromList = (ComboBox)tasksController.getNode("convertFromList");
         ObservableList<String> convertFromTypes = FXCollections.observableArrayList(FROM_SELECTIONS.stream().map(Pair::getKey).collect(Collectors.toList()));
         convertFromList.setItems(convertFromTypes);
@@ -52,11 +57,15 @@ public class ConvertFormHandler extends FormHandler {
         showFromBox("");
         showToBox("");
         showButton(false);
+
+        FORM_INITIALIZED = true;
     }
 
     public void fromListSelected(String selectionName) {
         // set to select list based on from selection
         Pair<String, String> fromSelection = getSelectedPair(selectionName, FROM_SELECTIONS);
+        //if (fromSelection == null) return;
+
         ComboBox<String> convertToList = (ComboBox)tasksController.getNode("convertToList");
 
         List<Pair<String, String>> toPairs = SELECTION_MAP.get(fromSelection);
@@ -69,7 +78,14 @@ public class ConvertFormHandler extends FormHandler {
     public void toListSelected(String selectionName) {
         Pair<String, String> toSelection = getSelectedPair(selectionName, TO_SELECTIONS);
         if (toSelection == null) showToBox("");
-        else showToBox(toSelection.getValue());
+        else {
+            if (toSelection == PDF_TO_SELECTION) {
+                AppProperties.addLocalPropertiesBundle();
+                if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond"))) toSelection = PDF_TO_OFF_SELECTION;
+                else tasksController.handlePdfReaderDisplay();
+            }
+            showToBox(toSelection.getValue());
+        }
     }
 
     private Pair<String, String> getSelectedPair(String selectionName, List<Pair<String, String>> selectionList) {
@@ -83,7 +99,7 @@ public class ConvertFormHandler extends FormHandler {
     private void showToBox(String boxName) {
         showBox(TO_SELECTIONS, boxName);
         Button executeConvert = (Button)tasksController.getNode("executeConvert");
-        executeConvert.setVisible(StringUtil.isNotEmpty(boxName));
+        executeConvert.setVisible(StringUtil.isNotEmpty(boxName) && !boxName.equals("pdfToOffBox"));
     }
 
     private void showBox(List<Pair<String, String>> boxes, String boxName) {
