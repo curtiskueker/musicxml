@@ -60,7 +60,7 @@
                                                                 <Font name="System Bold" size="14.0" />
                                                             </font>
                                                         </Label>
-                                                        <Hyperlink fx:id="musicXmlFromFileLink" onAction="#chooseMusicXmlFromFile" text="Choose File">
+                                                        <Hyperlink fx:id="musicXmlFromFileLink" onAction="#chooseMusicXmlFromFile" text="Choose MusicXML File">
                                                             <VBox.margin>
                                                                 <Insets top="10.0" />
                                                             </VBox.margin>
@@ -107,7 +107,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Hyperlink fx:id="lyFromFileLink" onAction="#chooseLyFromFile" text="Choose File">
+                                                        <Hyperlink fx:id="lyFromFileLink" onAction="#chooseLyFromFile" text="Choose Lilypond File">
                                                             <padding>
                                                                 <Insets left="10.0" />
                                                             </padding>
@@ -136,7 +136,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Hyperlink fx:id="musicXmlToFileLink" onAction="#chooseMusicXmlToFile" text="Choose File">
+                                                        <Hyperlink fx:id="musicXmlToFileLink" onAction="#chooseMusicXmlToFile" text="Choose MusicXML Output Filename (.xml)">
                                                             <padding>
                                                                 <Insets left="10.0" />
                                                             </padding>
@@ -188,7 +188,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Hyperlink fx:id="lyToFileLink" onAction="#chooseLyToFile" text="Choose File">
+                                                        <Hyperlink fx:id="lyToFileLink" onAction="#chooseLyToFile" text="Choose Lilypond Output Filename (.ly)">
                                                             <padding>
                                                                 <Insets left="10.0" />
                                                             </padding>
@@ -218,7 +218,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Hyperlink fx:id="pdfToFileLink" onAction="#choosePdfToFile" text="Choose File">
+                                                        <Hyperlink fx:id="pdfToFileLink" onAction="#choosePdfToFile" text="Choose PDF Output Filename">
                                                             <padding>
                                                                 <Insets left="10.0" />
                                                             </padding>
