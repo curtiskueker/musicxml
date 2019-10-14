@@ -1,7 +1,5 @@
 package org.curtis.ui.javafx;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -17,7 +15,6 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.javafx.form.ConvertFormHandler;
 import org.curtis.util.StringUtil;
@@ -139,15 +136,6 @@ public class TasksController {
         if (!convertFromList.getItems().isEmpty()) return;
 
         convertFormHandler.initializeForm();
-    }
-
-    @FXML
-    private void setScoreNameFrom() {
-        ComboBox<String> scoreNameFrom = (ComboBox)getNode("scoreNameFrom");
-        if (!scoreNameFrom.getItems().isEmpty()) return;
-
-        ObservableList<String> scoreNames = FXCollections.observableArrayList(MusicXmlUtil.getScoreNames());
-        scoreNameFrom.setItems(scoreNames);
     }
 
     @FXML

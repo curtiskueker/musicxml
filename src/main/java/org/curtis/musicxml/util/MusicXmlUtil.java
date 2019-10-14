@@ -21,6 +21,7 @@ import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Score;
+import org.curtis.musicxml.score.ScoreName;
 import org.curtis.properties.AppProperties;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
@@ -153,9 +154,9 @@ public class MusicXmlUtil {
         List<String> scoreNames = new ArrayList<>();
 
         try {
-            List<Score> scores = getDbTransaction().findAll(Score.class);
-            for (Score score : scores) scoreNames.add(score.getScoreName());
-            Collections.sort(scoreNames);
+            List<ScoreName> scores = getDbTransaction().findAll(ScoreName.class);
+            for (ScoreName score : scores) scoreNames.add(score.getScoreName());
+            Collections.sort(scoreNames, String.CASE_INSENSITIVE_ORDER);
         } catch (DBException e) {
             //
         }

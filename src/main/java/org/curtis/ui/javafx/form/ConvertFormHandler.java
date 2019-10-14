@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
+import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.javafx.TasksController;
 import org.curtis.util.StringUtil;
@@ -17,13 +18,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ConvertFormHandler extends FormHandler {
+    private static final String MUSICXML_FILE = "MusicXml File";
+    private static final String DATABASE_RECORD = "Database Record";
+    private static final String LILYPOND_FILE = "Lilypond File";
     private static final Pair<String, String> EMPTY_SELECTION = new Pair<>("", "");
-    private static final Pair<String, String> MUSICXML_FROM_SELECTION = new Pair<>("MusicXml File", "musicXmlFromBox");
-    private static final Pair<String, String> DB_FROM_SELECTION = new Pair<>("Database Record", "dbFromBox");
-    private static final Pair<String, String> LY_FROM_SELECTION = new Pair<>("Lilypond File", "lyFromBox");
-    private static final Pair<String, String> MUSICXML_TO_SELECTION = new Pair<>("MusicXml File", "musicXmlToBox");
-    private static final Pair<String, String> DB_TO_SELECTION = new Pair<>("Database Record", "dbToBox");
-    private static final Pair<String, String> LY_TO_SELECTION = new Pair<>("Lilypond File", "lyToBox");
+    private static final Pair<String, String> MUSICXML_FROM_SELECTION = new Pair<>(MUSICXML_FILE, "musicXmlFromBox");
+    private static final Pair<String, String> DB_FROM_SELECTION = new Pair<>(DATABASE_RECORD, "dbFromBox");
+    private static final Pair<String, String> LY_FROM_SELECTION = new Pair<>(LILYPOND_FILE, "lyFromBox");
+    private static final Pair<String, String> MUSICXML_TO_SELECTION = new Pair<>(MUSICXML_FILE, "musicXmlToBox");
+    private static final Pair<String, String> DB_TO_SELECTION = new Pair<>(DATABASE_RECORD, "dbToBox");
+    private static final Pair<String, String> LY_TO_SELECTION = new Pair<>(LILYPOND_FILE, "lyToBox");
     private static final Pair<String, String> PDF_TO_SELECTION = new Pair<>("PDF File", "pdfToBox");
     private static final Pair<String, String> PDF_TO_OFF_SELECTION = new Pair<>("PDF File Off", "pdfToOffBox");
     private static final List<Pair<String, String>> FROM_SELECTIONS = new ArrayList<>(
@@ -64,7 +68,6 @@ public class ConvertFormHandler extends FormHandler {
     public void fromListSelected(String selectionName) {
         // set to select list based on from selection
         Pair<String, String> fromSelection = getSelectedPair(selectionName, FROM_SELECTIONS);
-        //if (fromSelection == null) return;
 
         ComboBox<String> convertToList = (ComboBox)tasksController.getNode("convertToList");
 
@@ -73,6 +76,9 @@ public class ConvertFormHandler extends FormHandler {
         convertToList.setItems(convertToTypes);
 
         showFromBox(fromSelection.getValue());
+
+        if (selectionName.equals(DATABASE_RECORD)) setScoreNameFrom();
+        else clearScoreNameFrom();
     }
 
     public void toListSelected(String selectionName) {
@@ -90,6 +96,19 @@ public class ConvertFormHandler extends FormHandler {
 
     private Pair<String, String> getSelectedPair(String selectionName, List<Pair<String, String>> selectionList) {
         return selectionList.stream().filter(pair -> pair.getKey().equals(selectionName)).findFirst().orElse(null);
+    }
+
+    private void setScoreNameFrom() {
+        ComboBox<String> scoreNameFrom = (ComboBox)tasksController.getNode("scoreNameFrom");
+        if (!scoreNameFrom.getItems().isEmpty()) return;
+
+        ObservableList<String> scoreNames = FXCollections.observableArrayList(MusicXmlUtil.getScoreNames());
+        scoreNameFrom.setItems(scoreNames);
+    }
+
+    private void clearScoreNameFrom() {
+        ComboBox<String> scoreNameFrom = (ComboBox)tasksController.getNode("scoreNameFrom");
+        scoreNameFrom.getItems().clear();
     }
 
     private void showFromBox(String boxName) {

@@ -90,7 +90,7 @@
                                                                 <Insets left="10.0" top="12.0" />
                                                             </padding>
                                                         </Label>
-                                          <ComboBox fx:id="scoreNameFrom" onMouseEntered="#setScoreNameFrom" prefWidth="250.0">
+                                          <ComboBox fx:id="scoreNameFrom" prefWidth="250.0">
                                              <VBox.margin>
                                                 <Insets left="10.0" top="10.0" />
                                              </VBox.margin>
