@@ -20,7 +20,6 @@ import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
-import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScoreName;
 import org.curtis.properties.AppProperties;
 import org.curtis.util.StringUtil;
@@ -68,10 +67,10 @@ public class MusicXmlUtil {
         return sessionFactory.getTransaction();
     }
 
-    public static DBTransaction getNewDbTransaction() throws DBException {
+    public static void getNewDbTransaction() throws DBException {
         clearDb();
 
-        return getDbTransaction();
+        getDbTransaction();
     }
 
     public static void clearDb() throws DBException {
@@ -210,6 +209,7 @@ public class MusicXmlUtil {
     public static void setXmlComments(Document document, List<XmlComment> xmlComments) {
         if (document == null || xmlComments == null || xmlComments.isEmpty()) return;
 
+        System.err.println("Inserting comments...");
         XPath xPath = XPathFactory.newInstance().newXPath();
         Map<String, Node> nodeMap = new HashMap<>();
         for (XmlComment xmlComment : xmlComments) {

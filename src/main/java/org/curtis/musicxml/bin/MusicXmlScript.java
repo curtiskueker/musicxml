@@ -151,12 +151,14 @@ public abstract class MusicXmlScript {
         String results = scoreBuilder.build().toString();
 
         try {
+            System.err.println("Validating results...");
             SchemaValidator.getInstance().validate(results);
         } catch (XmlException e) {
             System.err.println(e.getMessage());
         }
 
         try {
+            System.err.println("Formatting results...");
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes(StandardCharsets.UTF_8))));
             if (!getSkipComments()) MusicXmlUtil.setXmlComments(document, score.getXmlComments());
             results = MusicXmlUtil.getFormattedXml(document);

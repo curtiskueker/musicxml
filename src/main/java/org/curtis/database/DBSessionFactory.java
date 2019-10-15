@@ -66,6 +66,7 @@ public class DBSessionFactory {
         try {
             if (StringUtil.isEmpty(databaseType)) throw new DBException("Error: Database type undefined");
 
+            System.err.println("Initializing database connection...");
             String name = AppProperties.getString("database.username");
             String password = AppProperties.getString("database.password");
             String dbServer = AppProperties.getString("database.server");
@@ -100,6 +101,7 @@ public class DBSessionFactory {
             jpaProperties.putAll(additionalProperties);
 
             emf = Persistence.createEntityManagerFactory(persistenceUnitName, jpaProperties);
+            System.err.println("Database initialized.");
         } catch (Exception e) {
             throw new DBException(e);
         }
