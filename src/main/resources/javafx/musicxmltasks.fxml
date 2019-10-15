@@ -166,7 +166,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Label fx:id="scoreNameToLabel" text="Score Name:">
+                                                        <Label fx:id="scoreNameToLabel" text="Score Name (default is filename):">
                                                             <padding>
                                                                 <Insets left="10.0" top="12.0" />
                                                             </padding>
