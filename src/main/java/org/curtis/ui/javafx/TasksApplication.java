@@ -11,10 +11,12 @@ import java.util.Objects;
 public class TasksApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("javafx/musicxmltasks.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("javafx/musicxmltasks.fxml")));
+        Parent root = loader.load();
         primaryStage.setTitle("MusicXml Tasks");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setOnHidden(e -> {((TasksController)loader.getController()).cleanup();});
         primaryStage.show();
     }
 

@@ -25,6 +25,8 @@ import java.io.PrintStream;
 public class TasksController {
     private StatusOutput statusOutput;
     private ConvertFormHandler convertFormHandler = new ConvertFormHandler(this);
+    private Thread outputThread;
+    private boolean outputTest = false;
 
     @FXML
     private VBox taskBox;
@@ -37,8 +39,18 @@ public class TasksController {
         // Setup status output box
         statusOutput = new StatusOutput(statusTextArea);
         PrintStream statusPrintStream = new PrintStream(statusOutput);
-        System.setErr(statusPrintStream);
-        System.setOut(statusPrintStream);
+        if (!outputTest) {
+            System.setErr(statusPrintStream);
+            System.setOut(statusPrintStream);
+        }
+
+        Runnable outputRunnable = statusOutput::handle;
+        outputThread = new Thread(outputRunnable);
+        outputThread.start();
+    }
+
+    public void cleanup() {
+        if (outputThread != null) outputThread.interrupt();
     }
 
     public Scene getScene() {
@@ -57,10 +69,6 @@ public class TasksController {
 
     public TextField getTextField(String nodeName) {
         return (TextField)getNode(nodeName);
-    }
-
-    public StatusOutput getStatusOutput() {
-        return statusOutput;
     }
 
     @FXML

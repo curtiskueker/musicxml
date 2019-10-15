@@ -8,8 +8,7 @@ import java.io.OutputStream;
 public class StatusOutput extends OutputStream {
     private TextArea textArea;
     private StringBuilder buffer = new StringBuilder();
-    private int writeCount = 0;
-    private static final int WRITE_LIMIT = 1000;
+    private static final long SLEEP_MILLIS = 100;
 
     public StatusOutput(TextArea textArea) {
         this.textArea = textArea;
@@ -17,13 +16,8 @@ public class StatusOutput extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        writeCount++;
         char input = (char)b;
-        if (writeCount >= WRITE_LIMIT) {
-            flushOutput();
-        } else {
-            buffer.append(input);
-        }
+        buffer.append(input);
     }
 
     public void clear() {
@@ -31,15 +25,27 @@ public class StatusOutput extends OutputStream {
         textArea.clear();
     }
 
-    public void flushOutput() {
+    public void handle() {
+        boolean execute = true;
+        while (execute) {
+            try {
+                flushOutput();
+                Thread.sleep(SLEEP_MILLIS);
+            } catch (InterruptedException e) {
+                execute = false;
+            }
+        }
+    }
+
+    private void flushOutput() {
+        if (buffer.length() == 0) return;
+
         textArea.appendText(buffer.toString());
         clearBuffer();
         textArea.positionCaret(textArea.getLength());
-        writeCount = 0;
     }
 
     private void clearBuffer() {
         buffer = new StringBuilder();
-        writeCount = 0;
     }
 }
