@@ -24,7 +24,7 @@ public class MusicXml2LyTask extends MusicXmlTask {
         try {
             musicXml2Ly.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 

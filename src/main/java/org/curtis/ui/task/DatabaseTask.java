@@ -28,7 +28,7 @@ public class DatabaseTask extends MusicXmlTask {
         try {
             databaseExec.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 

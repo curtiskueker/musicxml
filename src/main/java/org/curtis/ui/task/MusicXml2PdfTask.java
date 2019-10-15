@@ -25,7 +25,7 @@ public class MusicXml2PdfTask extends MusicXmlTask {
         try {
             musicXml2Pdf.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 

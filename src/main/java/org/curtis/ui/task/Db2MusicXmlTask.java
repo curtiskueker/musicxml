@@ -25,7 +25,7 @@ public class Db2MusicXmlTask extends MusicXmlTask {
         try {
             db2MusicXml.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 

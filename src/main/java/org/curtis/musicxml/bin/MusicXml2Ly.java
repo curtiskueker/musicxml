@@ -1,7 +1,10 @@
 package org.curtis.musicxml.bin;
 
+import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
+import org.curtis.util.FileUtil;
+import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
 
 import java.io.File;
@@ -9,14 +12,13 @@ import java.io.File;
 public class MusicXml2Ly extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         try {
-            // output file
+            if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Empty output filename");
             if (!getOutputFile().endsWith(".ly")) setOutputFile(getOutputFile() + ".ly");
-
-            File xmlFile = new File(getInputFile());
+            File xmlFile = FileUtil.newFile(getInputFile());
             setSkipComments(true);
             ScoreHandler scoreHandler = handleXmlScoreFile(xmlFile);
             outputLilypondResultsToFile(scoreHandler.getScore());
-        } catch (XmlException e) {
+        } catch (XmlException | FileException e) {
             throw new MusicXmlException(e.getMessage());
         }
     }

@@ -20,7 +20,7 @@ public class MusicXml2DbTask extends MusicXmlTask {
         try {
             musicXml2Db.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 

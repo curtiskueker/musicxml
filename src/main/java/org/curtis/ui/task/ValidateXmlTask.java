@@ -18,7 +18,7 @@ public class ValidateXmlTask extends MusicXmlTask {
         try {
             validateXml.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 

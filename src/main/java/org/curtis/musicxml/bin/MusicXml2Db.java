@@ -3,6 +3,7 @@ package org.curtis.musicxml.bin;
 import org.curtis.database.DBException;
 import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
+import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Measure;
@@ -11,6 +12,7 @@ import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
 
@@ -18,13 +20,19 @@ import java.io.File;
 
 public class MusicXml2Db extends MusicXmlScript {
     public void execute() throws MusicXmlException {
+        File inputFile = null;
+        try {
+            inputFile = FileUtil.newFile(getInputFile());
+        } catch (FileException e) {
+            throw new MusicXmlException(e.getMessage());
+        }
+
         try {
             DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
 
-            String scoreName = StringUtil.isEmpty(getScoreName()) ? getInputFile() : getScoreName();
+            String scoreName = StringUtil.isEmpty(getScoreName()) ? getInputFile().substring(getInputFile().lastIndexOf("/") + 1, getInputFile().lastIndexOf(".")) : getScoreName();
             if (dbTransaction.find(Score.class, "scoreName", scoreName) != null) throw new MusicXmlException("Score name " + scoreName + " already exists");
 
-            File inputFile = new File(getInputFile());
             ScoreHandler scoreHandler = handleXmlScoreFile(inputFile);
             Score score = scoreHandler.getScore();
             score.setScoreName(scoreName);
@@ -61,9 +69,11 @@ public class MusicXml2Db extends MusicXmlScript {
                     }
                 }
             }
-        } catch (DBException | XmlException e) {
+        } catch (DBException e) {
             e.printStackTrace();
             throw new MusicXmlException(e);
+        } catch (XmlException e) {
+            throw new MusicXmlException(e.getMessage());
         } finally {
             try {
                 DBSessionFactory.getInstance().closeTransaction();

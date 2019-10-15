@@ -35,7 +35,7 @@ public class SetProperties extends MusicXmlScript {
         try {
             FileUtil.stringToFile(stringBuilder.toString(), AppProperties.PROPERTIES_FILENAME + ".properties");
         } catch (FileException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
 
         try {

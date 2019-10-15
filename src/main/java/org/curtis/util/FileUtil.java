@@ -17,8 +17,17 @@ public class FileUtil {
 
     }
 
+    public static File newFile(String filename) throws FileException {
+        if (StringUtil.isEmpty(filename)) throw new FileException("Filename is empty");
+
+        File file = new File(filename);
+        if (!file.exists()) throw new FileException("File does not exist: " + filename);
+
+        return file;
+    }
+
     public static void stringToFile(String input, String filename) throws FileException {
-        if (input == null) throw new FileException("File input is null");
+        if (input == null) throw new FileException("File input is empty");
 
         File file = new File(filename);
         FileWriter fileWriter = null;
@@ -50,11 +59,9 @@ public class FileUtil {
     }
 
     public static void moveFile(String source, String destination) throws FileException {
-        File fromFile = new File(source);
-        if (!fromFile.exists()) throw new FileException("Source file not found.");
+        File fromFile = newFile(source);
         File toFile = new File(destination);
         copyFile(fromFile, toFile);
-        if (!toFile.exists()) throw new FileException("Destination file not found.");
         if (!fromFile.delete()) throw new FileException("Temp file not deleted.");
     }
 

@@ -15,7 +15,7 @@ public class Db2Pdf extends MusicXmlScript {
             MusicXmlUtil.INCLUDE_BREAKS = true;
             convertLilypondToPdf(getLilypondFromScore(getScoreFromDb()));
         } catch (BuildException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
     }
 }

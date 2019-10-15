@@ -178,7 +178,7 @@ public abstract class MusicXmlScript {
         try {
             outputResultsToFile(getLilypondFromScore(score));
         } catch (BuildException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
     }
 
@@ -187,7 +187,7 @@ public abstract class MusicXmlScript {
         try {
             FileUtil.stringToFile(results, getOutputFile());
         } catch (FileException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
     }
 
@@ -196,6 +196,7 @@ public abstract class MusicXmlScript {
     }
 
     protected void convertLilypondToPdf(String lilypondNotation) throws MusicXmlException {
+        if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Empty output filename.");
         System.err.println("Converting Lilypond notation to PDF File...");
         String lilypondLocation;
         try {

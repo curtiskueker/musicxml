@@ -25,7 +25,7 @@ public class Ly2PdfTask extends MusicXmlTask {
         try {
             ly2Pdf.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 

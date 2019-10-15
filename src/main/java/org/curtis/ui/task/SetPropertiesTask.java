@@ -32,7 +32,7 @@ public class SetPropertiesTask extends MusicXmlTask {
         try {
             setProperties.execute();
         } catch (MusicXmlException e) {
-            throw new TaskException(e);
+            throw new TaskException(e.getMessage());
         }
     }
 
