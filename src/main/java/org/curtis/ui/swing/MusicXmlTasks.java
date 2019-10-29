@@ -94,6 +94,7 @@ public class MusicXmlTasks {
     private List<JLabel> formElementTextLabels = new ArrayList<>();
     private List<JPanel> rightPanels = new ArrayList<>();
     private static final int NUMBER_OF_ROWS = 8;
+    private static final Color BACKGROUND_COLOR = Color.WHITE;
     private int rowIndex = 0;
 
     private static final int CHOOSER_SIZE = 450;
@@ -222,10 +223,8 @@ public class MusicXmlTasks {
 
         switch (inputRow.getInputType()) {
             case LABEL:
-                JLabel label = new JLabel();
-                if (inputRow.isBoldText()) label.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 16));
-                label.setText(inputRow.getValue());
-                panel.add(label, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+                JLabel label = addNewLabel(panel, inputRow.getValue());
+                if (inputRow.isBoldText()) setLabelBoldFont(label, 16);
                 break;
             case INPUT:
                 JTextField smallTextField = new JTextField();
@@ -236,16 +235,8 @@ public class MusicXmlTasks {
             case PASSWORD:
                 panel.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
 
-                JPanel leftPanel = new JPanel();
-                leftPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-                leftPanel.setBackground(new Color(-1));
-                panel.add(leftPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-
-                JPanel rightPanel = new JPanel();
-                rightPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-                rightPanel.setBackground(new Color(-1));
-                panel.add(rightPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-
+                JPanel leftPanel = addNewPanel(panel, 0, 0);
+                JPanel rightPanel = addNewPanel(panel, 0, 1);
                 JPasswordField passwordField = new JPasswordField();
                 passwordField.setText(inputRow.getValue());
                 leftPanel.add(passwordField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(inputRow.getInputSize(), -1), new Dimension(inputRow.getInputSize(), -1), new Dimension(inputRow.getInputSize(), -1), 0, false));
@@ -515,153 +506,98 @@ public class MusicXmlTasks {
     }
 
     private void setupUI() {
-        taskForm = new JPanel();
-        taskForm.setLayout(new GridLayoutManager(11, 2, new Insets(0, 0, 0, 0), -1, -1));
-        taskForm.setBackground(new Color(-1));
-        header = new JPanel();
-        header.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        header.setBackground(new Color(-1));
-        taskForm.add(header, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        headerLabel = new JLabel();
-        headerLabel.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 20));
-        headerLabel.setText("MusicXml Tasks");
-        header.add(headerLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row3Left = new JPanel();
-        row3Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row3Left.setBackground(new Color(-1));
-        taskForm.add(row3Left, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement1Text = new JLabel();
-        formElement1Text.setBackground(new Color(-1));
-        formElement1Text.setText("");
-        row3Left.add(formElement1Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row3Right = new JPanel();
-        row3Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row3Right.setBackground(new Color(-1));
-        taskForm.add(row3Right, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row4Left = new JPanel();
-        row4Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row4Left.setBackground(new Color(-1));
-        taskForm.add(row4Left, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement2Text = new JLabel();
-        formElement2Text.setBackground(new Color(-1));
-        formElement2Text.setText("");
-        row4Left.add(formElement2Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row4Right = new JPanel();
-        row4Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row4Right.setBackground(new Color(-1));
-        taskForm.add(row4Right, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row5Left = new JPanel();
-        row5Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row5Left.setBackground(new Color(-1));
-        taskForm.add(row5Left, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement3Text = new JLabel();
-        formElement3Text.setBackground(new Color(-1));
-        formElement3Text.setText("");
-        row5Left.add(formElement3Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row5Right = new JPanel();
-        row5Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row5Right.setBackground(new Color(-1));
-        taskForm.add(row5Right, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row6Left = new JPanel();
-        row6Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row6Left.setBackground(new Color(-1));
-        taskForm.add(row6Left, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement4Text = new JLabel();
-        formElement4Text.setBackground(new Color(-1));
-        formElement4Text.setText("");
-        row6Left.add(formElement4Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row6Right = new JPanel();
-        row6Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row6Right.setBackground(new Color(-1));
-        taskForm.add(row6Right, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row7Left = new JPanel();
-        row7Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row7Left.setBackground(new Color(-1));
-        taskForm.add(row7Left, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement5Text = new JLabel();
-        formElement5Text.setBackground(new Color(-1));
-        formElement5Text.setText("");
-        row7Left.add(formElement5Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row7Right = new JPanel();
-        row7Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row7Right.setBackground(new Color(-1));
-        taskForm.add(row7Right, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row8Left = new JPanel();
-        row8Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row8Left.setBackground(new Color(-1));
-        taskForm.add(row8Left, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement6Text = new JLabel();
-        formElement6Text.setBackground(new Color(-1));
-        formElement6Text.setText("");
-        row8Left.add(formElement6Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row8Right = new JPanel();
-        row8Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row8Right.setBackground(new Color(-1));
-        taskForm.add(row8Right, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        statusPanel = new JPanel();
-        statusPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        statusPanel.setBackground(new Color(-1));
-        taskForm.add(statusPanel, new GridConstraints(10, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        statusScrollPane = new JScrollPane();
-        statusScrollPane.setBackground(new Color(-1));
+        taskForm = addNewPanel();
+        header = addNewPanel(taskForm, 0, 0, 2);
+        headerLabel = addNewLabel(header, "MusicXml Tasks");
+        setLabelBoldFont(headerLabel, 20);
+        convertLabelPanel = addNewPanel(taskForm, 1, 0);
+        convertLabel = addNewLabel(convertLabelPanel);
+        convertPanel = addNewPanel(taskForm, 1, 1);
+        convertFromPanel = addNewPanel(convertPanel, 0, 0);
+        convertArrowPanel = addNewPanel(convertPanel, 0, 1);
+        convertArrowLabel = addNewLabel(convertArrowPanel);
+        convertToPanel = addNewPanel(convertPanel, 0, 2);
+        row3Left = addNewPanel(taskForm, 2, 0);
+        formElement1Text = addNewLabel(row3Left);
+        row3Right = addNewPanel(taskForm, 2, 1);
+        row4Left = addNewPanel(taskForm, 3, 0);
+        formElement2Text = addNewLabel(row4Left);
+        row4Right = addNewPanel(taskForm, 3, 1);
+        row5Left = addNewPanel(taskForm, 4, 0);
+        formElement3Text = addNewLabel(row5Left);
+        row5Right = addNewPanel(taskForm, 4, 1);
+        row6Left = addNewPanel(taskForm, 5, 0);
+        formElement4Text = addNewLabel(row6Left);
+        row6Right = addNewPanel(taskForm, 5, 1);
+        row7Left = addNewPanel(taskForm, 6, 0);
+        formElement5Text = addNewLabel(row7Left);
+        row7Right = addNewPanel(taskForm, 6, 1);
+        row8Left = addNewPanel(taskForm, 7, 0);
+        formElement6Text = addNewLabel(row8Left);
+        row8Right = addNewPanel(taskForm, 7, 1);
+        row9Left = addNewPanel(taskForm, 8, 0);
+        formElement7Text = addNewLabel(row9Left);
+        row9Right = addNewPanel(taskForm, 8, 1);
+        row10Left = addNewPanel(taskForm, 9, 0);
+        formElement8Text = addNewLabel(row10Left);
+        row10Right = addNewPanel(taskForm, 9, 1);
+        statusPanel = addNewPanel(taskForm, 10, 0);
+        statusScrollPane = addNewScrollPane(statusPanel);
         statusScrollPane.setVerticalScrollBarPolicy(22);
-        statusPanel.add(statusScrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         statusTextArea = new JTextArea();
+        statusTextArea.setBackground(getBackgroundColor());
         statusTextArea.setEditable(false);
         statusTextArea.setRows(8);
         statusTextArea.setText("");
         statusScrollPane.setViewportView(statusTextArea);
-        row9Left = new JPanel();
-        row9Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row9Left.setBackground(new Color(-1));
-        taskForm.add(row9Left, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement7Text = new JLabel();
-        formElement7Text.setBackground(new Color(-1));
-        formElement7Text.setText("");
-        row9Left.add(formElement7Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row9Right = new JPanel();
-        row9Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row9Right.setBackground(new Color(-1));
-        taskForm.add(row9Right, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        convertLabelPanel = new JPanel();
-        convertLabelPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        convertLabelPanel.setBackground(new Color(-1));
-        taskForm.add(convertLabelPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        convertLabel = new JLabel();
-        convertLabel.setBackground(new Color(-1));
-        convertLabel.setText("");
-        convertLabelPanel.add(convertLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        convertPanel = new JPanel();
-        convertPanel.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        convertPanel.setBackground(new Color(-1));
-        taskForm.add(convertPanel, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        convertFromPanel = new JPanel();
-        convertFromPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        convertFromPanel.setBackground(new Color(-1));
-        convertPanel.add(convertFromPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        convertArrowPanel = new JPanel();
-        convertArrowPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        convertArrowPanel.setBackground(new Color(-1));
-        convertPanel.add(convertArrowPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        convertArrowLabel = new JLabel();
-        convertArrowLabel.setBackground(new Color(-1));
-        convertArrowLabel.setText("");
-        convertArrowPanel.add(convertArrowLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        convertToPanel = new JPanel();
-        convertToPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        convertToPanel.setBackground(new Color(-1));
-        convertPanel.add(convertToPanel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        row10Left = new JPanel();
-        row10Left.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row10Left.setBackground(new Color(-1));
-        taskForm.add(row10Left, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        formElement8Text = new JLabel();
-        formElement8Text.setBackground(new Color(-1));
-        formElement8Text.setText("");
-        row10Left.add(formElement8Text, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        row10Right = new JPanel();
-        row10Right.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        row10Right.setBackground(new Color(-1));
-        taskForm.add(row10Right, new GridConstraints(9, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+    }
+
+    private JPanel addNewPanel() {
+        return addNewPanel(null, 0, 0);
+    }
+
+    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber) {
+        return addNewPanel(parentComponent, rowNumber, columnNumber, 1);
+    }
+
+    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber, int gridWidth) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(getBackgroundColor());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = columnNumber;
+        constraints.gridy = rowNumber;
+        constraints.gridwidth = gridWidth;
+        if (parentComponent != null) parentComponent.add(panel, constraints);
+
+        return panel;
+    }
+
+    private JLabel addNewLabel(JComponent parentComponent) {
+        return addNewLabel(parentComponent, "");
+    }
+
+    private JLabel addNewLabel(JComponent parentComponent, String text) {
+        JLabel label = new JLabel();
+        label.setBackground(getBackgroundColor());
+        label.setText(text);
+        parentComponent.add(label);
+
+        return label;
+    }
+
+    private void setLabelBoldFont(JLabel label, int size) {
+        label.setFont(new Font(label.getFont().getName(), Font.BOLD, size));
+    }
+
+    private JScrollPane addNewScrollPane(JComponent parentComponent) {
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBackground(getBackgroundColor());
+        parentComponent.add(scrollPane);
+
+        return scrollPane;
+    }
+    private Color getBackgroundColor() {
+        return BACKGROUND_COLOR;
     }
 }
