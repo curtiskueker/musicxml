@@ -102,6 +102,9 @@ public class MusicXmlTasks {
     private static double VERTICAL_CELL_WEIGHT = .08;
     private static double VERTICAL_STATUS_WEIGHT = .20;
 
+    private enum HALIGN {LEFT, CENTER, RIGHT, NONE;}
+    private static Map<HALIGN, Integer> ALIGNMENT_MAP = new HashMap<>();
+
     public MusicXmlTasks() {
         setupStatusArea();
         setupFormatSelections();
@@ -240,8 +243,8 @@ public class MusicXmlTasks {
                 GridBagConstraints constraints = layout.getConstraints(panel);
                 constraints.gridwidth = 2;
 
-                JPanel leftPanel = addNewPanel(panel, 0, 0, .60, VERTICAL_CELL_WEIGHT);
-                JPanel rightPanel = addNewPanel(panel, 0, 1, .40, VERTICAL_CELL_WEIGHT);
+                JPanel leftPanel = addNewPanel(panel, 0, 0, .60, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
+                JPanel rightPanel = addNewPanel(panel, 0, 1, .40, VERTICAL_CELL_WEIGHT, HALIGN.CENTER);
                 JPasswordField passwordField = new JPasswordField();
                 passwordField.setText(inputRow.getValue());
                 leftPanel.add(passwordField, getConstraints());
@@ -497,17 +500,17 @@ public class MusicXmlTasks {
         });
     }
 
-    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber, double weightx, double weighty) {
-        return addNewPanel(parentComponent, rowNumber, columnNumber, 1, 1, weightx, weighty);
+    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber, double weightx, double weighty, HALIGN halign) {
+        return addNewPanel(parentComponent, rowNumber, columnNumber, 1, 1, weightx, weighty, halign);
     }
 
-    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty) {
+    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty, HALIGN halign) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBackground(getBackgroundColor());
         //TODO: remove
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
-        if (parentComponent != null) parentComponent.add(panel, getConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
+        if (parentComponent != null) parentComponent.add(panel, getConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty, halign));
 
         return panel;
     }
@@ -538,10 +541,10 @@ public class MusicXmlTasks {
     }
 
     private GridBagConstraints getConstraints() {
-        return getConstraints(0, 0, 1, 1, 1, 1);
+        return getConstraints(0, 0, 1, 1, 1, 1, HALIGN.NONE);
     }
 
-    private GridBagConstraints getConstraints(int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty) {
+    private GridBagConstraints getConstraints(int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty, HALIGN halign) {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = columnNumber;
         constraints.gridy = rowNumber;
@@ -549,11 +552,8 @@ public class MusicXmlTasks {
         constraints.gridwidth = gridWidth;
         constraints.weightx = weightx;
         constraints.weighty = weighty;
-        //TODO: remove
-        //constraints.fill = GridBagConstraints.BOTH;
-        //constraints.fill = GridBagConstraints.HORIZONTAL;
-        //constraints.anchor = GridBagConstraints.EAST;
-        //constraints.anchor = GridBagConstraints.WEST;
+
+        if (halign != HALIGN.NONE) constraints.anchor = ALIGNMENT_MAP.get(halign);
 
         return constraints;
     }
@@ -573,46 +573,50 @@ public class MusicXmlTasks {
     }
 
     {
+        ALIGNMENT_MAP.put(HALIGN.LEFT, GridBagConstraints.LINE_START);
+        ALIGNMENT_MAP.put(HALIGN.CENTER, GridBagConstraints.CENTER);
+        ALIGNMENT_MAP.put(HALIGN.RIGHT, GridBagConstraints.LINE_END);
+
         setupUI();
     }
 
     private void setupUI() {
-        taskForm = addNewPanel(null, 0, 0, 11, 2, 1, 1);
-        header = addNewPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        taskForm = addNewPanel(null, 0, 0, 11, 2, 1, 1, HALIGN.NONE);
+        header = addNewPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.CENTER);
         headerLabel = addNewLabel(header, "MusicXml Tasks");
         setLabelBoldFont(headerLabel, 20);
-        convertLabelPanel = addNewPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        convertLabelPanel = addNewPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         convertLabel = addNewLabel(convertLabelPanel);
-        convertPanel = addNewPanel(taskForm, 1, 1, 1, 3, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        convertFromPanel = addNewPanel(convertPanel, 0, 0, .40, VERTICAL_CELL_WEIGHT);
-        convertArrowPanel = addNewPanel(convertPanel, 0, 1, .20, VERTICAL_CELL_WEIGHT);
+        convertPanel = addNewPanel(taskForm, 1, 1, 1, 3, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        convertFromPanel = addNewPanel(convertPanel, 0, 0, .40, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
+        convertArrowPanel = addNewPanel(convertPanel, 0, 1, .20, VERTICAL_CELL_WEIGHT, HALIGN.CENTER);
         convertArrowLabel = addNewLabel(convertArrowPanel);
-        convertToPanel = addNewPanel(convertPanel, 0, 2, .40, VERTICAL_CELL_WEIGHT);
-        row3Left = addNewPanel(taskForm, 2, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        convertToPanel = addNewPanel(convertPanel, 0, 2, .40, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row3Left = addNewPanel(taskForm, 2, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement1Text = addNewLabel(row3Left);
-        row3Right = addNewPanel(taskForm, 2, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row4Left = addNewPanel(taskForm, 3, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row3Right = addNewPanel(taskForm, 2, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row4Left = addNewPanel(taskForm, 3, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement2Text = addNewLabel(row4Left);
-        row4Right = addNewPanel(taskForm, 3, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row5Left = addNewPanel(taskForm, 4, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row4Right = addNewPanel(taskForm, 3, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row5Left = addNewPanel(taskForm, 4, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement3Text = addNewLabel(row5Left);
-        row5Right = addNewPanel(taskForm, 4, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row6Left = addNewPanel(taskForm, 5, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row5Right = addNewPanel(taskForm, 4, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row6Left = addNewPanel(taskForm, 5, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement4Text = addNewLabel(row6Left);
-        row6Right = addNewPanel(taskForm, 5, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row7Left = addNewPanel(taskForm, 6, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row6Right = addNewPanel(taskForm, 5, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row7Left = addNewPanel(taskForm, 6, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement5Text = addNewLabel(row7Left);
-        row7Right = addNewPanel(taskForm, 6, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row8Left = addNewPanel(taskForm, 7, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row7Right = addNewPanel(taskForm, 6, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row8Left = addNewPanel(taskForm, 7, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement6Text = addNewLabel(row8Left);
-        row8Right = addNewPanel(taskForm, 7, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row9Left = addNewPanel(taskForm, 8, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row8Right = addNewPanel(taskForm, 7, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row9Left = addNewPanel(taskForm, 8, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement7Text = addNewLabel(row9Left);
-        row9Right = addNewPanel(taskForm, 8, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row10Left = addNewPanel(taskForm, 9, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row9Right = addNewPanel(taskForm, 8, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        row10Left = addNewPanel(taskForm, 9, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.RIGHT);
         formElement8Text = addNewLabel(row10Left);
-        row10Right = addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        statusPanel = addNewPanel(taskForm, 10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
+        row10Right = addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT, HALIGN.LEFT);
+        statusPanel = addNewPanel(taskForm, 10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT, HALIGN.NONE);
         statusScrollPane = addNewScrollPane(statusPanel);
         statusScrollPane.setVerticalScrollBarPolicy(22);
         statusTextArea = new JTextArea();
