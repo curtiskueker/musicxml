@@ -546,7 +546,7 @@ public class MusicXmlTasks {
         constraints.weighty = weighty;
         //TODO: remove
         //constraints.fill = GridBagConstraints.BOTH;
-        constraints.anchor = GridBagConstraints.EAST;
+        //constraints.anchor = GridBagConstraints.EAST;
 
         return constraints;
     }
