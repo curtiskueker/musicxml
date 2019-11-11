@@ -97,6 +97,11 @@ public class MusicXmlTasks {
 
     private static final int CHOOSER_SIZE = 450;
 
+    private static double HORIZONTAL_SMALL_WEIGHT = .40;
+    private static double HORIZONTAL_LARGE_WEIGHT = .60;
+    private static double VERTICAL_CELL_WEIGHT = .08;
+    private static double VERTICAL_STATUS_WEIGHT = .20;
+
     public MusicXmlTasks() {
         setupStatusArea();
         setupFormatSelections();
@@ -235,8 +240,8 @@ public class MusicXmlTasks {
                 GridBagConstraints constraints = layout.getConstraints(panel);
                 constraints.gridwidth = 2;
 
-                JPanel leftPanel = addNewPanel(panel, 0, 0, .60, .08);
-                JPanel rightPanel = addNewPanel(panel, 0, 1, .40, .08);
+                JPanel leftPanel = addNewPanel(panel, 0, 0, .60, VERTICAL_CELL_WEIGHT);
+                JPanel rightPanel = addNewPanel(panel, 0, 1, .40, VERTICAL_CELL_WEIGHT);
                 JPasswordField passwordField = new JPasswordField();
                 passwordField.setText(inputRow.getValue());
                 leftPanel.add(passwordField, getConstraints());
@@ -546,7 +551,9 @@ public class MusicXmlTasks {
         constraints.weighty = weighty;
         //TODO: remove
         //constraints.fill = GridBagConstraints.BOTH;
+        //constraints.fill = GridBagConstraints.HORIZONTAL;
         //constraints.anchor = GridBagConstraints.EAST;
+        //constraints.anchor = GridBagConstraints.WEST;
 
         return constraints;
     }
@@ -571,41 +578,41 @@ public class MusicXmlTasks {
 
     private void setupUI() {
         taskForm = addNewPanel(null, 0, 0, 11, 2, 1, 1);
-        header = addNewPanel(taskForm, 0, 0, 1, 2, .40, .08);
+        header = addNewPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         headerLabel = addNewLabel(header, "MusicXml Tasks");
         setLabelBoldFont(headerLabel, 20);
-        convertLabelPanel = addNewPanel(taskForm, 1, 0, .40, .08);
+        convertLabelPanel = addNewPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         convertLabel = addNewLabel(convertLabelPanel);
-        convertPanel = addNewPanel(taskForm, 1, 1, 1, 3, .60, .08);
-        convertFromPanel = addNewPanel(convertPanel, 0, 0, .40, .08);
-        convertArrowPanel = addNewPanel(convertPanel, 0, 1, .20, .08);
+        convertPanel = addNewPanel(taskForm, 1, 1, 1, 3, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        convertFromPanel = addNewPanel(convertPanel, 0, 0, .40, VERTICAL_CELL_WEIGHT);
+        convertArrowPanel = addNewPanel(convertPanel, 0, 1, .20, VERTICAL_CELL_WEIGHT);
         convertArrowLabel = addNewLabel(convertArrowPanel);
-        convertToPanel = addNewPanel(convertPanel, 0, 2, .40, .08);
-        row3Left = addNewPanel(taskForm, 2, 0, .40, .08);
+        convertToPanel = addNewPanel(convertPanel, 0, 2, .40, VERTICAL_CELL_WEIGHT);
+        row3Left = addNewPanel(taskForm, 2, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement1Text = addNewLabel(row3Left);
-        row3Right = addNewPanel(taskForm, 2, 1, .60, .08);
-        row4Left = addNewPanel(taskForm, 3, 0, .40, .08);
+        row3Right = addNewPanel(taskForm, 2, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row4Left = addNewPanel(taskForm, 3, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement2Text = addNewLabel(row4Left);
-        row4Right = addNewPanel(taskForm, 3, 1, .60, .08);
-        row5Left = addNewPanel(taskForm, 4, 0, .40, .08);
+        row4Right = addNewPanel(taskForm, 3, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row5Left = addNewPanel(taskForm, 4, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement3Text = addNewLabel(row5Left);
-        row5Right = addNewPanel(taskForm, 4, 1, .60, .08);
-        row6Left = addNewPanel(taskForm, 5, 0, .40, .08);
+        row5Right = addNewPanel(taskForm, 4, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row6Left = addNewPanel(taskForm, 5, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement4Text = addNewLabel(row6Left);
-        row6Right = addNewPanel(taskForm, 5, 1, .60, .08);
-        row7Left = addNewPanel(taskForm, 6, 0, .40, .08);
+        row6Right = addNewPanel(taskForm, 5, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row7Left = addNewPanel(taskForm, 6, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement5Text = addNewLabel(row7Left);
-        row7Right = addNewPanel(taskForm, 6, 1, .60, .08);
-        row8Left = addNewPanel(taskForm, 7, 0, .40, .08);
+        row7Right = addNewPanel(taskForm, 6, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row8Left = addNewPanel(taskForm, 7, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement6Text = addNewLabel(row8Left);
-        row8Right = addNewPanel(taskForm, 7, 1, .60, .08);
-        row9Left = addNewPanel(taskForm, 8, 0, .40, .08);
+        row8Right = addNewPanel(taskForm, 7, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row9Left = addNewPanel(taskForm, 8, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement7Text = addNewLabel(row9Left);
-        row9Right = addNewPanel(taskForm, 8, 1, .60, .08);
-        row10Left = addNewPanel(taskForm, 9, 0, .40, .08);
+        row9Right = addNewPanel(taskForm, 8, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row10Left = addNewPanel(taskForm, 9, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement8Text = addNewLabel(row10Left);
-        row10Right = addNewPanel(taskForm, 9, 1, .60, .08);
-        statusPanel = addNewPanel(taskForm, 10, 0, 1, 2, 1, .20);
+        row10Right = addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        statusPanel = addNewPanel(taskForm, 10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
         statusScrollPane = addNewScrollPane(statusPanel);
         statusScrollPane.setVerticalScrollBarPolicy(22);
         statusTextArea = new JTextArea();
