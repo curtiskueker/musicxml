@@ -386,7 +386,7 @@ public class MusicXmlTasks {
 
     private void setupFormatSelections() {
         fromFormat = new JComboBox();
-        fromFormat.setBackground(new Color(-1));
+        fromFormat.setBackground(getBackgroundColor());
         final DefaultComboBoxModel fromModel = new DefaultComboBoxModel();
         fromModel.addElement("");
         fromModel.addElement("MusicXml File");
@@ -422,7 +422,7 @@ public class MusicXmlTasks {
         });
 
         toFormat = new JComboBox();
-        toFormat.setBackground(new Color(-1));
+        toFormat.setBackground(getBackgroundColor());
         final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
         toModel.addElement("");
         toFormat.setModel(toModel);
@@ -500,6 +500,7 @@ public class MusicXmlTasks {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBackground(getBackgroundColor());
+        //TODO: remove
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
         if (parentComponent != null) parentComponent.add(panel, getConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
 
@@ -543,7 +544,9 @@ public class MusicXmlTasks {
         constraints.gridwidth = gridWidth;
         constraints.weightx = weightx;
         constraints.weighty = weighty;
-        constraints.fill = GridBagConstraints.BOTH;
+        //TODO: remove
+        //constraints.fill = GridBagConstraints.BOTH;
+        constraints.anchor = GridBagConstraints.EAST;
 
         return constraints;
     }
