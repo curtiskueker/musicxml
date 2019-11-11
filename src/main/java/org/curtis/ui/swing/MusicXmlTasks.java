@@ -234,8 +234,9 @@ public class MusicXmlTasks {
                 break;
             case INPUT:
                 JTextField smallTextField = new JTextField();
+                smallTextField.setMinimumSize(new Dimension(150, 15));
                 smallTextField.setText(inputRow.getValue());
-                panel.add(smallTextField, getConstraints());
+                panel.add(smallTextField, getConstraints(HALIGN.LEFT));
                 component = smallTextField;
                 break;
             case PASSWORD:
@@ -251,13 +252,13 @@ public class MusicXmlTasks {
 
                 showPassword = new JCheckBox();
                 showPassword.setBackground(getBackgroundColor());
-                showPassword.setText("Show Password: ");
-                showPassword.setHorizontalTextPosition(SwingConstants.LEFT);
+                showPassword.setText("Show Password ");
+                showPassword.setHorizontalTextPosition(SwingConstants.RIGHT);
                 showPassword.addItemListener(e -> {
                     if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
                     else passwordField.setEchoChar('*');
                 });
-                rightPanel.add(showPassword, getConstraints());
+                rightPanel.add(showPassword, getConstraints(HALIGN.RIGHT));
 
                 component = passwordField;
                 break;
@@ -542,6 +543,10 @@ public class MusicXmlTasks {
 
     private GridBagConstraints getConstraints() {
         return getConstraints(0, 0, 1, 1, 1, 1, HALIGN.NONE);
+    }
+
+    private GridBagConstraints getConstraints(HALIGN halign) {
+        return getConstraints(0, 0, 1, 1, 1, 1, halign);
     }
 
     private GridBagConstraints getConstraints(int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty, HALIGN halign) {
