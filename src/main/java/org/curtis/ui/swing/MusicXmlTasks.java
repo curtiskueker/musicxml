@@ -1,6 +1,7 @@
 package org.curtis.ui.swing;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.swing.component.ConstraintsFactory;
 import org.curtis.ui.swing.input.DataInput;
 import org.curtis.ui.swing.input.DatabaseInput;
 import org.curtis.ui.swing.input.DatabaseOutput;
@@ -30,11 +31,33 @@ import org.curtis.ui.task.MusicXmlTask;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
-import javax.swing.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -290,7 +313,7 @@ public class MusicXmlTasks {
             case BUTTON:
                 JButton button = new JButton();
                 button.setText(inputRow.getName());
-                GridBagConstraints buttonConstraints = getNewConstraints();
+                GridBagConstraints buttonConstraints = ConstraintsFactory.getNewConstraints();
                 buttonConstraints.fill = GridBagConstraints.NONE;
                 buttonConstraints.anchor = GridBagConstraints.LINE_START;
                 addComponent(panel, button, buttonConstraints);
@@ -460,7 +483,7 @@ public class MusicXmlTasks {
             JPanel panel = rightPanels.get(index);
             panel.removeAll();
             GridBagLayout layout = (GridBagLayout)panel.getLayout();
-            layout.setConstraints(panel, getNewConstraints());
+            layout.setConstraints(panel, ConstraintsFactory.getNewConstraints());
         }
     }
 
@@ -493,7 +516,7 @@ public class MusicXmlTasks {
     }
 
     private void addComponent(JComponent parentComponent, JComponent childComponent) {
-        addComponent(parentComponent, childComponent, getNewConstraints());
+        addComponent(parentComponent, childComponent, ConstraintsFactory.getNewConstraints());
     }
 
     private void addComponent(JComponent parentComponent, JComponent childComponent, GridBagConstraints constraints) {
@@ -508,7 +531,7 @@ public class MusicXmlTasks {
     private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        addComponent(parentComponent, panel, getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
+        addComponent(parentComponent, panel, ConstraintsFactory.getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
 
         return panel;
     }
@@ -534,28 +557,11 @@ public class MusicXmlTasks {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        GridBagConstraints constraints = getNewConstraints();
+        GridBagConstraints constraints = ConstraintsFactory.getNewConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         addComponent(parentComponent, scrollPane, constraints);
 
         return scrollPane;
-    }
-
-    private GridBagConstraints getNewConstraints() {
-        return getNewConstraints(0, 0, 1, 1, 1, 1);
-    }
-
-    private GridBagConstraints getNewConstraints(int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridx = columnNumber;
-        constraints.gridy = rowNumber;
-        constraints.gridheight = gridHeight;
-        constraints.gridwidth = gridWidth;
-        constraints.weightx = weightx;
-        constraints.weighty = weighty;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-
-        return constraints;
     }
 
     private Color getBackgroundColor() {
@@ -614,7 +620,7 @@ public class MusicXmlTasks {
         row10Right = addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
         statusPanel = new JPanel();
         statusPanel.setLayout(new GridBagLayout());
-        GridBagConstraints statusPanelConstraints = getNewConstraints(10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
+        GridBagConstraints statusPanelConstraints = ConstraintsFactory.getNewConstraints(10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
         statusPanelConstraints.fill = GridBagConstraints.BOTH;
         statusPanelConstraints.anchor = GridBagConstraints.PAGE_END;
         addComponent(taskForm, statusPanel, statusPanelConstraints);
