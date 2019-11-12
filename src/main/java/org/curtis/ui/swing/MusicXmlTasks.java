@@ -541,12 +541,6 @@ public class MusicXmlTasks {
         return scrollPane;
     }
 
-    private GridBagConstraints getConstraints(Container container) {
-        GridBagLayout layout = (GridBagLayout)container.getLayout();
-
-        return layout.getConstraints(container);
-    }
-
     private GridBagConstraints getNewConstraints() {
         return getNewConstraints(0, 0, 1, 1, 1, 1);
     }
