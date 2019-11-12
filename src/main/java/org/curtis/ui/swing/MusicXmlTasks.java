@@ -124,11 +124,11 @@ public class MusicXmlTasks {
 
             JComboBox fromSelection = fromFormat;
             fromSelection.setSelectedItem(fromSelectedValue);
-            convertFromPanel.add(fromSelection, getNewConstraints());
+            addComponent(convertFromPanel, fromSelection);
 
             JComboBox toSelection = toFormat;
             toSelection.setSelectedItem(toSelectedValue);
-            convertToPanel.add(toSelection, getNewConstraints());
+            addComponent(convertToPanel, toSelection);
         } else {
             convertLabel.setText("");
             convertArrowLabel.setText("");
@@ -233,7 +233,7 @@ public class MusicXmlTasks {
             case INPUT:
                 JTextField smallTextField = new JTextField();
                 smallTextField.setText(inputRow.getValue());
-                panel.add(smallTextField, getNewConstraints());
+                addComponent(panel, smallTextField);
                 component = smallTextField;
                 break;
             case PASSWORD:
@@ -243,7 +243,7 @@ public class MusicXmlTasks {
                 JPanel rightPanel = addNewPanel(panel, 0, 1, .40, VERTICAL_CELL_WEIGHT);
                 JPasswordField passwordField = new JPasswordField();
                 passwordField.setText(inputRow.getValue());
-                leftPanel.add(passwordField, getNewConstraints());
+                addComponent(leftPanel, passwordField);
 
                 showPassword = new JCheckBox();
                 showPassword.setBackground(getBackgroundColor());
@@ -253,7 +253,7 @@ public class MusicXmlTasks {
                     if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
                     else passwordField.setEchoChar('*');
                 });
-                rightPanel.add(showPassword, getNewConstraints());
+                addComponent(rightPanel, showPassword);
 
                 component = passwordField;
                 break;
@@ -268,7 +268,7 @@ public class MusicXmlTasks {
                 }
                 if (StringUtil.isNotEmpty(inputRow.getSelectedFilename()))
                     inputFileChooser.setSelectedFile(new File(inputRow.getSelectedFilename()));
-                panel.add(inputFileChooser, getNewConstraints());
+                addComponent(panel, inputFileChooser);
                 component = inputFileChooser;
                 break;
             case OUTPUT_DIRECTORY:
@@ -277,20 +277,20 @@ public class MusicXmlTasks {
                 outputFileChooser.setControlButtonsAreShown(false);
                 outputFileChooser.setAcceptAllFileFilterUsed(false);
                 outputFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                panel.add(outputFileChooser, getNewConstraints());
+                addComponent(panel, outputFileChooser);
                 component = outputFileChooser;
                 break;
             case SELECTION:
                 JComboBox selection = new JComboBox(inputRow.getSelectionList());
                 selection.setSelectedItem(inputRow.getSelectedItem());
                 selection.setBackground(getBackgroundColor());
-                panel.add(selection, getNewConstraints());
+                addComponent(panel, selection);
                 component = selection;
                 break;
             case CHECKBOX:
                 JCheckBox checkBox = new JCheckBox();
                 checkBox.setBackground(getBackgroundColor());
-                panel.add(checkBox, getNewConstraints());
+                addComponent(panel, checkBox);
                 component = checkBox;
                 break;
             case BUTTON:
@@ -300,7 +300,7 @@ public class MusicXmlTasks {
                 GridBagConstraints buttonConstraints = getNewConstraints();
                 buttonConstraints.fill = GridBagConstraints.NONE;
                 buttonConstraints.anchor = GridBagConstraints.LINE_START;
-                panel.add(button, buttonConstraints);
+                addComponent(panel, button, buttonConstraints);
 
                 button.addActionListener(e -> {
                     clearStatusArea();
@@ -499,6 +499,16 @@ public class MusicXmlTasks {
         });
     }
 
+    private void addComponent(JComponent parentComponent, JComponent childComponent) {
+        addComponent(parentComponent, childComponent, getNewConstraints());
+    }
+
+    private void addComponent(JComponent parentComponent, JComponent childComponent, GridBagConstraints constraints) {
+        if (parentComponent == null) return;
+
+        parentComponent.add(childComponent, constraints);
+    }
+
     private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber, double weightx, double weighty) {
         return addNewPanel(parentComponent, rowNumber, columnNumber, 1, 1, weightx, weighty);
     }
@@ -507,7 +517,7 @@ public class MusicXmlTasks {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBackground(getBackgroundColor());
-        if (parentComponent != null) parentComponent.add(panel, getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
+        addComponent(parentComponent, panel, getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
 
         return panel;
     }
@@ -536,7 +546,7 @@ public class MusicXmlTasks {
 
         GridBagConstraints constraints = getNewConstraints();
         constraints.fill = GridBagConstraints.BOTH;
-        parentComponent.add(scrollPane, constraints);
+        addComponent(parentComponent, scrollPane, constraints);
 
         return scrollPane;
     }
@@ -618,7 +628,14 @@ public class MusicXmlTasks {
         row10Left = addNewPanel(taskForm, 9, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement8Text = addNewLabel(row10Left);
         row10Right = addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        statusPanel = addNewPanel(taskForm, 10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
+        //statusPanel = addNewPanel(taskForm, 10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
+        statusPanel = new JPanel();
+        statusPanel.setLayout(new GridBagLayout());
+        statusPanel.setBackground(getBackgroundColor());
+        GridBagConstraints statusPanelConstraints = getNewConstraints(10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
+        statusPanelConstraints.fill = GridBagConstraints.BOTH;
+        statusPanelConstraints.anchor = GridBagConstraints.PAGE_END;
+        addComponent(taskForm, statusPanel, statusPanelConstraints);
         statusScrollPane = addNewScrollPane(statusPanel);
         statusTextArea = new JTextArea();
         statusTextArea.setBackground(getBackgroundColor());
