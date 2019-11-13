@@ -9,6 +9,7 @@ import javafx.util.Pair;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.javafx.TasksController;
+import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
@@ -18,17 +19,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ConvertFormHandler extends FormHandler {
-    private static final String MUSICXML_FILE = "MusicXml File";
-    private static final String DATABASE_RECORD = "Database Record";
-    private static final String LILYPOND_FILE = "Lilypond File";
     private static final Pair<String, String> EMPTY_SELECTION = new Pair<>("", "");
-    private static final Pair<String, String> MUSICXML_FROM_SELECTION = new Pair<>(MUSICXML_FILE, "musicXmlFromBox");
-    private static final Pair<String, String> DB_FROM_SELECTION = new Pair<>(DATABASE_RECORD, "dbFromBox");
-    private static final Pair<String, String> LY_FROM_SELECTION = new Pair<>(LILYPOND_FILE, "lyFromBox");
-    private static final Pair<String, String> MUSICXML_TO_SELECTION = new Pair<>(MUSICXML_FILE, "musicXmlToBox");
-    private static final Pair<String, String> DB_TO_SELECTION = new Pair<>(DATABASE_RECORD, "dbToBox");
-    private static final Pair<String, String> LY_TO_SELECTION = new Pair<>(LILYPOND_FILE, "lyToBox");
-    private static final Pair<String, String> PDF_TO_SELECTION = new Pair<>("PDF File", "pdfToBox");
+    private static final Pair<String, String> MUSICXML_FROM_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_MUSICXML, "musicXmlFromBox");
+    private static final Pair<String, String> DB_FROM_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_DATABASE, "dbFromBox");
+    private static final Pair<String, String> LY_FROM_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_LILYPOND, "lyFromBox");
+    private static final Pair<String, String> MUSICXML_TO_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_MUSICXML, "musicXmlToBox");
+    private static final Pair<String, String> DB_TO_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_DATABASE, "dbToBox");
+    private static final Pair<String, String> LY_TO_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_LILYPOND, "lyToBox");
+    private static final Pair<String, String> PDF_TO_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_PDF, "pdfToBox");
     private static final Pair<String, String> PDF_TO_OFF_SELECTION = new Pair<>("PDF File Off", "pdfToOffBox");
     private static final List<Pair<String, String>> FROM_SELECTIONS = new ArrayList<>(
             Arrays.asList(EMPTY_SELECTION, MUSICXML_FROM_SELECTION, DB_FROM_SELECTION, LY_FROM_SELECTION)
@@ -77,7 +75,7 @@ public class ConvertFormHandler extends FormHandler {
 
         showFromBox(fromSelection.getValue());
 
-        if (selectionName.equals(DATABASE_RECORD)) setScoreNameFrom();
+        if (selectionName.equals(TaskConstants.CONVERSION_TYPE_DATABASE)) setScoreNameFrom();
         else clearScoreNameFrom();
     }
 

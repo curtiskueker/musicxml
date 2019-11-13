@@ -1,6 +1,7 @@
 package org.curtis.database;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
@@ -74,13 +75,13 @@ public class DBSessionFactory {
             Properties jpaProperties = new Properties();
 
             switch (databaseType) {
-                case "mysql":
+                case TaskConstants.DATABASE_MYSQL:
                     databaseProperties.putAll(mySqlProperties);
                     break;
-                case "postgresql":
+                case TaskConstants.DATABASE_POSTGRES:
                     databaseProperties.putAll(postgresProperties);
                     break;
-                case "oracle":
+                case TaskConstants.DATABASE_ORACLE:
                     databaseProperties.putAll(oracleProperties);
                     break;
                 default:
@@ -88,7 +89,7 @@ public class DBSessionFactory {
             }
             jpaProperties.putAll(databaseProperties);
 
-            String protocolConnector = databaseType.equals("oracle") ? ":thin:@" : "://";
+            String protocolConnector = databaseType.equals(TaskConstants.DATABASE_ORACLE) ? ":thin:@" : "://";
             String url = "jdbc:" + databaseType + protocolConnector + dbServer + "/" + databaseName;
 
             jpaProperties.put("hibernate.connection.url", url);

@@ -13,8 +13,6 @@ public class SetPropertiesTask extends MusicXmlTask {
     private String lilypondLocation;
     private String pdfReaderLocation;
 
-    public static final String[] DATABASE_TYPES = {"mysql", "postgresql", "oracle"};
-
     public SetPropertiesTask(TaskInitializer taskInitializer) {
         super(taskInitializer);
     }

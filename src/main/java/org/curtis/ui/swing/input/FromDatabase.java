@@ -13,7 +13,7 @@ public class FromDatabase extends FromInput {
         InputRow inputRow1 = new InputRow();
         inputRow1.setText("Score Name: ");
         inputRow1.setInputType(InputType.SELECTION);
-        inputRow1.setSelectionList(MusicXmlUtil.getScoreNames().toArray());
+        inputRow1.setSelectionList(MusicXmlUtil.getScoreNames());
         inputRow1.setName("scoreName");
         getInputRows().add(inputRow1);
     }

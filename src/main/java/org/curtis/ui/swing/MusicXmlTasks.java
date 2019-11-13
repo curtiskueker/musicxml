@@ -1,7 +1,7 @@
 package org.curtis.ui.swing;
 
 import org.curtis.properties.AppProperties;
-import org.curtis.ui.UIConstants;
+import org.curtis.ui.task.TaskConstants;
 import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
 import org.curtis.ui.swing.input.DataInput;
@@ -51,16 +51,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,8 +114,6 @@ public class MusicXmlTasks {
     private static final int NUMBER_OF_ROWS = 8;
     private int rowIndex = 0;
 
-    private static final int CHOOSER_SIZE = 450;
-
     private static double HORIZONTAL_SMALL_WEIGHT = .40;
     private static double HORIZONTAL_LARGE_WEIGHT = .60;
     private static double VERTICAL_CELL_WEIGHT = .08;
@@ -170,27 +165,27 @@ public class MusicXmlTasks {
                 break;
             case "Conversion Tasks":
                 switch (fromSelectedValue) {
-                    case "MusicXml File":
+                    case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         fromInput = new FromMusicXml();
                         break;
-                    case "Database Record":
+                    case TaskConstants.CONVERSION_TYPE_DATABASE:
                         fromInput = new FromDatabase();
                         break;
-                    case "Lilypond File":
+                    case TaskConstants.CONVERSION_TYPE_LILYPOND:
                         fromInput = new FromLilypond();
                         break;
                 }
                 switch (toSelectedValue) {
-                    case "MusicXml File":
+                    case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         toInput = new ToMusicXml();
                         break;
-                    case "Database Record":
+                    case TaskConstants.CONVERSION_TYPE_DATABASE:
                         toInput = new ToDatabase();
                         break;
-                    case "Lilypond File":
+                    case TaskConstants.CONVERSION_TYPE_LILYPOND:
                         toInput = new ToLilypond();
                         break;
-                    case "PDF File":
+                    case TaskConstants.CONVERSION_TYPE_PDF:
                         AppProperties.addLocalPropertiesBundle();
                         if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond"))) {
                             InputRow lilypondTextInputRow = new InputRow();
@@ -262,13 +257,10 @@ public class MusicXmlTasks {
             case PASSWORD:
                 JPanel leftPanel = addNewPanel(panel, 0, 0, .60, VERTICAL_CELL_WEIGHT);
                 JPanel rightPanel = addNewPanel(panel, 0, 1, .40, VERTICAL_CELL_WEIGHT);
-                JPasswordField passwordField = new JPasswordField();
-                passwordField.setText(inputRow.getValue());
+                JPasswordField passwordField = ComponentFactory.newPasswordField(inputRow.getValue());
                 addComponent(leftPanel, passwordField);
 
-                showPassword = new JCheckBox();
-                showPassword.setText("Show Password ");
-                showPassword.setHorizontalTextPosition(SwingConstants.RIGHT);
+                showPassword = ComponentFactory.newCheckBox(TaskConstants.SHOW_PASSWORD, SwingConstants.RIGHT);
                 showPassword.addItemListener(e -> {
                     if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
                     else passwordField.setEchoChar('*');
@@ -278,36 +270,22 @@ public class MusicXmlTasks {
                 component = passwordField;
                 break;
             case INPUT_FILE:
-                JFileChooser inputFileChooser = new JFileChooser();
-                UIManager.put("FileChooser.readOnly", Boolean.TRUE);
-                inputFileChooser.setControlButtonsAreShown(false);
-                inputFileChooser.setAcceptAllFileFilterUsed(false);
-                if (StringUtil.isNotEmpty(inputRow.getValue())) {
-                    FileFilter inputFileFilter = new FileNameExtensionFilter(inputRow.getValue(), inputRow.getValue());
-                    inputFileChooser.addChoosableFileFilter(inputFileFilter);
-                }
-                if (StringUtil.isNotEmpty(inputRow.getSelectedFilename()))
-                    inputFileChooser.setSelectedFile(new File(inputRow.getSelectedFilename()));
+                JFileChooser inputFileChooser = ComponentFactory.newFileChooser(inputRow.getValue(), inputRow.getSelectedFilename());
                 addComponent(panel, inputFileChooser);
                 component = inputFileChooser;
                 break;
             case OUTPUT_DIRECTORY:
-                JFileChooser outputFileChooser = new JFileChooser();
-                UIManager.put("FileChooser.readOnly", Boolean.TRUE);
-                outputFileChooser.setControlButtonsAreShown(false);
-                outputFileChooser.setAcceptAllFileFilterUsed(false);
-                outputFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                JFileChooser outputFileChooser = ComponentFactory.newDirectoryChooser();
                 addComponent(panel, outputFileChooser);
                 component = outputFileChooser;
                 break;
             case SELECTION:
-                JComboBox selection = new JComboBox(inputRow.getSelectionList());
-                selection.setSelectedItem(inputRow.getSelectedItem());
+                JComboBox<String> selection = ComponentFactory.newComboBox(inputRow.getSelectionList(), inputRow.getSelectedItem());
                 addComponent(panel, selection);
                 component = selection;
                 break;
             case CHECKBOX:
-                JCheckBox checkBox = new JCheckBox();
+                JCheckBox checkBox = ComponentFactory.newCheckBox();
                 addComponent(panel, checkBox);
                 component = checkBox;
                 break;
@@ -345,35 +323,35 @@ public class MusicXmlTasks {
                 break;
             case "Conversion Tasks":
                 switch (fromSelectedValue) {
-                    case "MusicXml File":
+                    case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         switch (toSelectedValue) {
-                            case "Database Record":
+                            case TaskConstants.CONVERSION_TYPE_DATABASE:
                                 musicXmlTask = new MusicXml2DbTask(swingTaskInitializer);
                                 break;
-                            case "Lilypond File":
+                            case TaskConstants.CONVERSION_TYPE_LILYPOND:
                                 musicXmlTask = new MusicXml2LyTask(swingTaskInitializer);
                                 break;
-                            case "PDF File":
+                            case TaskConstants.CONVERSION_TYPE_PDF:
                                 musicXmlTask = new MusicXml2PdfTask(swingTaskInitializer);
                                 break;
                         }
                         break;
-                    case "Database Record":
+                    case TaskConstants.CONVERSION_TYPE_DATABASE:
                         switch (toSelectedValue) {
-                            case "MusicXml File":
+                            case TaskConstants.CONVERSION_TYPE_MUSICXML:
                                 musicXmlTask = new Db2MusicXmlTask(swingTaskInitializer);
                                 break;
-                            case "Lilypond File":
+                            case TaskConstants.CONVERSION_TYPE_LILYPOND:
                                 musicXmlTask = new Db2LyTask(swingTaskInitializer);
                                 break;
-                            case "PDF File":
+                            case TaskConstants.CONVERSION_TYPE_PDF:
                                 musicXmlTask = new Db2PdfTask(swingTaskInitializer);
                                 break;
                         }
                         break;
-                    case "Lilypond File":
+                    case TaskConstants.CONVERSION_TYPE_LILYPOND:
                         switch (toSelectedValue) {
-                            case "PDF File":
+                            case TaskConstants.CONVERSION_TYPE_PDF:
                                 musicXmlTask = new Ly2PdfTask(swingTaskInitializer);
                                 break;
                         }
@@ -407,14 +385,7 @@ public class MusicXmlTasks {
     }
 
     private void setupFormatSelections() {
-        fromFormat = new JComboBox();
-        fromFormat.setBackground(ComponentFactory.getBackgroundColor());
-        final DefaultComboBoxModel fromModel = new DefaultComboBoxModel();
-        fromModel.addElement("");
-        fromModel.addElement("MusicXml File");
-        fromModel.addElement("Database Record");
-        fromModel.addElement("Lilypond File");
-        fromFormat.setModel(fromModel);
+        fromFormat = ComponentFactory.newComboBox(Arrays.asList(TaskConstants.CONVERSION_TYPE_MUSICXML, TaskConstants.CONVERSION_TYPE_DATABASE, TaskConstants.CONVERSION_TYPE_LILYPOND));
         fromFormat.addActionListener(e -> {
             String selection = (String) fromFormat.getSelectedItem();
             if (!selection.equals(fromSelectedValue)) {
@@ -424,18 +395,18 @@ public class MusicXmlTasks {
                 toModel.removeAllElements();
                 toModel.addElement("");
                 switch (fromSelectedValue) {
-                    case "MusicXml File":
-                        toModel.addElement("Database Record");
-                        toModel.addElement("Lilypond File");
-                        toModel.addElement("PDF File");
+                    case TaskConstants.CONVERSION_TYPE_MUSICXML:
+                        toModel.addElement(TaskConstants.CONVERSION_TYPE_DATABASE);
+                        toModel.addElement(TaskConstants.CONVERSION_TYPE_LILYPOND);
+                        toModel.addElement(TaskConstants.CONVERSION_TYPE_PDF);
                         break;
-                    case "Database Record":
-                        toModel.addElement("MusicXml File");
-                        toModel.addElement("Lilypond File");
-                        toModel.addElement("PDF File");
+                    case TaskConstants.CONVERSION_TYPE_DATABASE:
+                        toModel.addElement(TaskConstants.CONVERSION_TYPE_MUSICXML);
+                        toModel.addElement(TaskConstants.CONVERSION_TYPE_LILYPOND);
+                        toModel.addElement(TaskConstants.CONVERSION_TYPE_PDF);
                         break;
-                    case "Lilypond File":
-                        toModel.addElement("PDF File");
+                    case TaskConstants.CONVERSION_TYPE_LILYPOND:
+                        toModel.addElement(TaskConstants.CONVERSION_TYPE_PDF);
                         break;
                 }
 
@@ -443,11 +414,7 @@ public class MusicXmlTasks {
             }
         });
 
-        toFormat = new JComboBox();
-        toFormat.setBackground(ComponentFactory.getBackgroundColor());
-        final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
-        toModel.addElement("");
-        toFormat.setModel(toModel);
+        toFormat = ComponentFactory.newComboBox();
         toFormat.addActionListener(e -> {
             String selection = (String) toFormat.getSelectedItem();
             if (selection != null && !selection.equals(toSelectedValue)) {
@@ -555,7 +522,7 @@ public class MusicXmlTasks {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame(UIConstants.TASKS_TITLE);
+        JFrame frame = new JFrame(TaskConstants.TASKS_TITLE);
         MusicXmlTasks musicXmlTasks = new MusicXmlTasks();
         musicXmlTasks.addMenuItems(frame);
         frame.setContentPane(musicXmlTasks.taskForm);
@@ -571,7 +538,7 @@ public class MusicXmlTasks {
     private void setupUI() {
         taskForm = addNewPanel(null, 0, 0, 11, 2, 1, 1);
         header = addNewPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        headerLabel = ComponentFactory.newBoldLabel(UIConstants.TASKS_TITLE, 20);
+        headerLabel = ComponentFactory.newBoldLabel(TaskConstants.TASKS_TITLE, 20);
         header.add(headerLabel);
         convertLabelPanel = addNewPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         convertLabel = addNewLabel(convertLabelPanel);

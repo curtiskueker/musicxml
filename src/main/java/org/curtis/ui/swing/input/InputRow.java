@@ -1,5 +1,8 @@
 package org.curtis.ui.swing.input;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InputRow {
     private String text = "";
     private InputType inputType = InputType.NONE;
@@ -8,8 +11,8 @@ public class InputRow {
     private String selectedFilename = "";
     private boolean isBoldText = false;
     private int inputSize = SMALL_INPUT_SIZE;
-    private Object[] selectionList = {};
-    private Object selectedItem;
+    private List<String> selectionList = new ArrayList<>();
+    private String selectedItem;
 
     public static final int SMALL_INPUT_SIZE = 150;
     public static final int LARGE_INPUT_SIZE = 300;
@@ -74,19 +77,19 @@ public class InputRow {
         this.inputSize = inputSize;
     }
 
-    public Object[] getSelectionList() {
+    public List<String> getSelectionList() {
         return selectionList;
     }
 
-    public void setSelectionList(Object[] selectionList) {
+    public void setSelectionList(List<String> selectionList) {
         this.selectionList = selectionList;
     }
 
-    public Object getSelectedItem() {
+    public String getSelectedItem() {
         return selectedItem;
     }
 
-    public void setSelectedItem(Object selectedItem) {
+    public void setSelectedItem(String selectedItem) {
         this.selectedItem = selectedItem;
     }
 }

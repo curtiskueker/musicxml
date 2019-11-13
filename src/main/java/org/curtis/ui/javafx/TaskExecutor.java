@@ -23,6 +23,7 @@ import org.curtis.ui.task.MusicXml2PdfTask;
 import org.curtis.ui.task.MusicXmlTask;
 import org.curtis.ui.task.SetDbPropertiesTask;
 import org.curtis.ui.task.SetLyPdfPropertiesTask;
+import org.curtis.ui.task.TaskConstants;
 import org.curtis.ui.task.ValidateXmlTask;
 import org.curtis.ui.task.exception.TaskException;
 
@@ -79,35 +80,35 @@ public class TaskExecutor {
             case "executeConvert":
                 taskInitializer = new ConvertInitializer(tasksController);
                 switch (tasksController.getFromSelection()) {
-                    case "MusicXml File":
+                    case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         switch (tasksController.getToSelection()) {
-                            case "Database Record":
+                            case TaskConstants.CONVERSION_TYPE_DATABASE:
                                 musicXmlTask = new MusicXml2DbTask(taskInitializer);
                                 break;
-                            case "Lilypond File":
+                            case TaskConstants.CONVERSION_TYPE_LILYPOND:
                                 musicXmlTask = new MusicXml2LyTask(taskInitializer);
                                 break;
-                            case "PDF File":
+                            case TaskConstants.CONVERSION_TYPE_PDF:
                                 musicXmlTask = new MusicXml2PdfTask(taskInitializer);
                                 break;
                         }
                         break;
-                    case "Database Record":
+                    case TaskConstants.CONVERSION_TYPE_DATABASE:
                         switch (tasksController.getToSelection()) {
-                            case "MusicXml File":
+                            case TaskConstants.CONVERSION_TYPE_MUSICXML:
                                 musicXmlTask = new Db2MusicXmlTask(taskInitializer);
                                 break;
-                            case "Lilypond File":
+                            case TaskConstants.CONVERSION_TYPE_LILYPOND:
                                 musicXmlTask = new Db2LyTask(taskInitializer);
                                 break;
-                            case "PDF File":
+                            case TaskConstants.CONVERSION_TYPE_PDF:
                                 musicXmlTask = new Db2PdfTask(taskInitializer);
                                 break;
                         }
                         break;
-                    case "Lilypond File":
+                    case TaskConstants.CONVERSION_TYPE_LILYPOND:
                         switch (tasksController.getToSelection()) {
-                            case "PDF File":
+                            case TaskConstants.CONVERSION_TYPE_PDF:
                                 musicXmlTask = new Ly2PdfTask(taskInitializer);
                                 break;
                         }
