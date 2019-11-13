@@ -1,6 +1,8 @@
 package org.curtis.ui.swing;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.UIConstants;
+import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
 import org.curtis.ui.swing.input.DataInput;
 import org.curtis.ui.swing.input.DatabaseInput;
@@ -53,9 +55,7 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.File;
@@ -115,7 +115,6 @@ public class MusicXmlTasks {
     private List<JLabel> formElementTextLabels = new ArrayList<>();
     private List<JPanel> rightPanels = new ArrayList<>();
     private static final int NUMBER_OF_ROWS = 8;
-    private static final Color BACKGROUND_COLOR = Color.WHITE;
     private int rowIndex = 0;
 
     private static final int CHOOSER_SIZE = 450;
@@ -249,14 +248,16 @@ public class MusicXmlTasks {
 
         switch (inputRow.getInputType()) {
             case LABEL:
-                JLabel label = addNewLabel(panel, inputRow.getValue());
-                if (inputRow.isBoldText()) setLabelBoldFont(label, 16);
+                JLabel label;
+                String labelText = inputRow.getValue();
+                if (inputRow.isBoldText()) label = ComponentFactory.newBoldLabel(labelText, 16);
+                else label = ComponentFactory.newLabel(labelText);
+                panel.add(label);
                 break;
             case INPUT:
-                JTextField smallTextField = new JTextField();
-                smallTextField.setText(inputRow.getValue());
-                addComponent(panel, smallTextField);
-                component = smallTextField;
+                JTextField textField = ComponentFactory.newTextField(inputRow.getValue());
+                addComponent(panel, textField);
+                component = textField;
                 break;
             case PASSWORD:
                 JPanel leftPanel = addNewPanel(panel, 0, 0, .60, VERTICAL_CELL_WEIGHT);
@@ -313,9 +314,7 @@ public class MusicXmlTasks {
             case BUTTON:
                 JButton button = new JButton();
                 button.setText(inputRow.getName());
-                GridBagConstraints buttonConstraints = ConstraintsFactory.getNewConstraints();
-                buttonConstraints.fill = GridBagConstraints.NONE;
-                buttonConstraints.anchor = GridBagConstraints.LINE_START;
+                GridBagConstraints buttonConstraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.NONE, GridBagConstraints.LINE_START);
                 addComponent(panel, button, buttonConstraints);
 
                 button.addActionListener(e -> {
@@ -409,7 +408,7 @@ public class MusicXmlTasks {
 
     private void setupFormatSelections() {
         fromFormat = new JComboBox();
-        fromFormat.setBackground(getBackgroundColor());
+        fromFormat.setBackground(ComponentFactory.getBackgroundColor());
         final DefaultComboBoxModel fromModel = new DefaultComboBoxModel();
         fromModel.addElement("");
         fromModel.addElement("MusicXml File");
@@ -445,7 +444,7 @@ public class MusicXmlTasks {
         });
 
         toFormat = new JComboBox();
-        toFormat.setBackground(getBackgroundColor());
+        toFormat.setBackground(ComponentFactory.getBackgroundColor());
         final DefaultComboBoxModel toModel = new DefaultComboBoxModel();
         toModel.addElement("");
         toFormat.setModel(toModel);
@@ -520,7 +519,6 @@ public class MusicXmlTasks {
     }
 
     private void addComponent(JComponent parentComponent, JComponent childComponent, GridBagConstraints constraints) {
-        childComponent.setBackground(getBackgroundColor());
         if (parentComponent != null) parentComponent.add(childComponent, constraints);
     }
 
@@ -529,8 +527,7 @@ public class MusicXmlTasks {
     }
 
     private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
+        JPanel panel = ComponentFactory.newPanel();
         addComponent(parentComponent, panel, ConstraintsFactory.getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
 
         return panel;
@@ -541,35 +538,24 @@ public class MusicXmlTasks {
     }
 
     private JLabel addNewLabel(JComponent parentComponent, String text) {
-        JLabel label = new JLabel();
-        label.setBackground(getBackgroundColor());
-        label.setText(text);
+        JLabel label = ComponentFactory.newLabel(text);
         parentComponent.add(label);
 
         return label;
-    }
-
-    private void setLabelBoldFont(JLabel label, int size) {
-        label.setFont(new Font(label.getFont().getName(), Font.BOLD, size));
     }
 
     private JScrollPane addNewScrollPane(JComponent parentComponent) {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        GridBagConstraints constraints = ConstraintsFactory.getNewConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
+        GridBagConstraints constraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.BOTH);
         addComponent(parentComponent, scrollPane, constraints);
 
         return scrollPane;
     }
 
-    private Color getBackgroundColor() {
-        return BACKGROUND_COLOR;
-    }
-
     public static void main(String[] args) {
-        JFrame frame = new JFrame("MusicXmlTasks");
+        JFrame frame = new JFrame(UIConstants.TASKS_TITLE);
         MusicXmlTasks musicXmlTasks = new MusicXmlTasks();
         musicXmlTasks.addMenuItems(frame);
         frame.setContentPane(musicXmlTasks.taskForm);
@@ -585,8 +571,8 @@ public class MusicXmlTasks {
     private void setupUI() {
         taskForm = addNewPanel(null, 0, 0, 11, 2, 1, 1);
         header = addNewPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        headerLabel = addNewLabel(header, "MusicXml Tasks");
-        setLabelBoldFont(headerLabel, 20);
+        headerLabel = ComponentFactory.newBoldLabel(UIConstants.TASKS_TITLE, 20);
+        header.add(headerLabel);
         convertLabelPanel = addNewPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         convertLabel = addNewLabel(convertLabelPanel);
         convertPanel = addNewPanel(taskForm, 1, 1, 1, 3, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
@@ -618,15 +604,12 @@ public class MusicXmlTasks {
         row10Left = addNewPanel(taskForm, 9, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         formElement8Text = addNewLabel(row10Left);
         row10Right = addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        statusPanel = new JPanel();
-        statusPanel.setLayout(new GridBagLayout());
-        GridBagConstraints statusPanelConstraints = ConstraintsFactory.getNewConstraints(10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT);
-        statusPanelConstraints.fill = GridBagConstraints.BOTH;
-        statusPanelConstraints.anchor = GridBagConstraints.PAGE_END;
+        statusPanel = ComponentFactory.newPanel();
+        GridBagConstraints statusPanelConstraints = ConstraintsFactory.getNewConstraints(10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT, GridBagConstraints.BOTH, GridBagConstraints.PAGE_END);
         addComponent(taskForm, statusPanel, statusPanelConstraints);
         statusScrollPane = addNewScrollPane(statusPanel);
         statusTextArea = new JTextArea();
-        statusTextArea.setBackground(getBackgroundColor());
+        statusTextArea.setBackground(ComponentFactory.getBackgroundColor());
         statusTextArea.setEditable(false);
         statusTextArea.setRows(8);
         statusTextArea.setText("");
