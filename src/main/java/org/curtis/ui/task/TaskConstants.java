@@ -18,6 +18,9 @@ public class TaskConstants {
     public static final String CONVERSION_TYPE_LILYPOND = "Lilypond File";
     public static final String CONVERSION_TYPE_PDF = "PDF File";
 
+    public static final String MENU_SEPARATOR = "Menu Separator";
+    public static final String EXIT_APPLICATION = "Exit";
+
     private TaskConstants() {
 
     }

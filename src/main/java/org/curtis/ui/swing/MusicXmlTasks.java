@@ -49,7 +49,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
 import java.awt.Component;
@@ -290,8 +289,7 @@ public class MusicXmlTasks {
                 component = checkBox;
                 break;
             case BUTTON:
-                JButton button = new JButton();
-                button.setText(inputRow.getName());
+                JButton button = ComponentFactory.newButton(inputRow.getName());
                 GridBagConstraints buttonConstraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.NONE, GridBagConstraints.LINE_START);
                 addComponent(panel, button, buttonConstraints);
 
@@ -454,31 +452,28 @@ public class MusicXmlTasks {
     }
 
     private void addMenuItems(JFrame frame) {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu tasksMenu = new JMenu("Tasks");
-        addMenuItem(tasksMenu, "Set Properties");
-        addMenuItem(tasksMenu, "Database Tasks");
-        addMenuItem(tasksMenu, "Conversion Tasks");
-        tasksMenu.addSeparator();
-        addMenuItem(tasksMenu, "Exit");
-        menuBar.add(tasksMenu);
-        frame.setJMenuBar(menuBar);
-    }
+        JMenuBar menuBar = ComponentFactory.newMenu("Tasks", Arrays.asList("Set Properties", "Database Tasks", "Conversion Tasks", TaskConstants.MENU_SEPARATOR, TaskConstants.EXIT_APPLICATION));
 
-    private void addMenuItem(JMenu menu, String text) {
-        JMenuItem menuItem = new JMenuItem(text);
-        menu.add(menuItem);
-        menuItem.addActionListener(e -> {
-            JMenuItem actionMenuItem = (JMenuItem) e.getSource();
-            String selection = actionMenuItem.getText();
-            if (!selection.equals(selectedValue)) {
-                if (selection.equals("Exit")) System.exit(0);
-                else {
-                    selectedValue = selection;
-                    handleSelection();
-                }
+        for (int menuNumber = 0; menuNumber < menuBar.getMenuCount(); menuNumber++) {
+            JMenu menu = menuBar.getMenu(menuNumber);
+            for (int menuItemNumber = 0; menuItemNumber < menu.getItemCount(); menuItemNumber++) {
+                JMenuItem menuItem = menu.getItem(menuItemNumber);
+                if (menuItem == null) continue;
+
+                menuItem.addActionListener(e -> {
+                    JMenuItem actionMenuItem = (JMenuItem) e.getSource();
+                    String selection = actionMenuItem.getText();
+                    if (!selection.equals(selectedValue)) {
+                        if (selection.equals(TaskConstants.EXIT_APPLICATION)) System.exit(0);
+                        else {
+                            selectedValue = selection;
+                            handleSelection();
+                        }
+                    }
+                });
             }
-        });
+        }
+        frame.setJMenuBar(menuBar);
     }
 
     private void addComponent(JComponent parentComponent, JComponent childComponent) {
@@ -512,9 +507,7 @@ public class MusicXmlTasks {
     }
 
     private JScrollPane addNewScrollPane(JComponent parentComponent) {
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
+        JScrollPane scrollPane = ComponentFactory.newScrollPane();
         GridBagConstraints constraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.BOTH);
         addComponent(parentComponent, scrollPane, constraints);
 

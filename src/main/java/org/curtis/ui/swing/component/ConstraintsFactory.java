@@ -3,6 +3,8 @@ package org.curtis.ui.swing.component;
 import java.awt.GridBagConstraints;
 
 public class ConstraintsFactory {
+    private static final int DEFAULT = -1;
+
     private ConstraintsFactory() {
 
     }
@@ -20,11 +22,11 @@ public class ConstraintsFactory {
     }
 
     public static GridBagConstraints getNewConstraints(int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty) {
-        return getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty, -1, -1);
+        return getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty, DEFAULT, DEFAULT);
     }
 
     public static GridBagConstraints getNewConstraints(int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty, int fill) {
-        return getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty, fill, -1);
+        return getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty, fill, DEFAULT);
     }
 
     public static GridBagConstraints getNewConstraints(int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty, int fill, int anchor) {
@@ -35,9 +37,9 @@ public class ConstraintsFactory {
         constraints.gridwidth = gridWidth;
         constraints.weightx = weightx;
         constraints.weighty = weighty;
-        if (fill > 0) constraints.fill = fill;
+        if (fill != DEFAULT) constraints.fill = fill;
         else constraints.fill = GridBagConstraints.HORIZONTAL;
-        if (anchor > 0) constraints.anchor = anchor;
+        if (anchor != DEFAULT) constraints.anchor = anchor;
 
         return constraints;
     }

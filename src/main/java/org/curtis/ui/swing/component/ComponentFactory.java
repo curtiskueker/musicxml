@@ -1,15 +1,22 @@
 package org.curtis.ui.swing.component;
 
+import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -21,7 +28,7 @@ import java.io.File;
 import java.util.List;
 
 public class ComponentFactory {
-    private static final Color BACKGROUND_COLOR = Color.WHITE;
+    private static final Color BACKGROUND_COLOR = new Color(255, 255, 242);
 
     private ComponentFactory() {
 
@@ -134,6 +141,41 @@ public class ComponentFactory {
         comboBox.setSelectedItem(selectedItem);
 
         return comboBox;
+    }
+
+    public static JButton newButton(String text) {
+        JButton button = new JButton();
+        button.setBackground(getBackgroundColor());
+        button.setText(text);
+
+        return button;
+    }
+
+    public static JMenuBar newMenu(String title, List<String> menuItemLabels) {
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(getBackgroundColor());
+
+        JMenu menu = new JMenu(title);
+        menu.setBackground(getBackgroundColor());
+        for (String menuItemLabel : menuItemLabels) {
+            if (menuItemLabel.equals(TaskConstants.MENU_SEPARATOR)) menu.addSeparator();
+            else {
+                JMenuItem menuItem = new JMenuItem(menuItemLabel);
+                menuItem.setBackground(getBackgroundColor());
+                menu.add(menuItem);
+            }
+        }
+        menuBar.add(menu);
+
+        return menuBar;
+    }
+
+    public static JScrollPane newScrollPane() {
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBackground(getBackgroundColor());
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        return scrollPane;
     }
 
     public static Color getBackgroundColor() {
