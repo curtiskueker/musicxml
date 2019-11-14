@@ -8,11 +8,6 @@ public class ToDatabase extends ToInput {
     private void setup() {
         setTitle("Write To Database: ");
 
-        InputRow inputRow1 = new InputRow();
-        inputRow1.setText("Score Name: ");
-        inputRow1.setInputType(InputType.INPUT);
-        inputRow1.setInputSize(InputRow.LARGE_INPUT_SIZE);
-        inputRow1.setName("scoreName");
-        getInputRows().add(inputRow1);
+        getInputRows().add(InputRowFactory.newInput("scoreName", "Score Name: ", InputRow.LARGE_INPUT_SIZE));
     }
 }

@@ -5,7 +5,7 @@ public enum InputType {
     INPUT,
     PASSWORD,
     INPUT_FILE,
-    OUTPUT_DIRECTORY,
+    DIRECTORY,
     SELECTION,
     CHECKBOX,
     BUTTON,

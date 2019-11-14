@@ -10,11 +10,6 @@ public class FromDatabase extends FromInput {
     private void setup() {
         setTitle("Read From Database: ");
 
-        InputRow inputRow1 = new InputRow();
-        inputRow1.setText("Score Name: ");
-        inputRow1.setInputType(InputType.SELECTION);
-        inputRow1.setSelectionList(MusicXmlUtil.getScoreNames());
-        inputRow1.setName("scoreName");
-        getInputRows().add(inputRow1);
+        getInputRows().add(InputRowFactory.newSelection("scoreName", "Score Name: ", MusicXmlUtil.getScoreNames()));
     }
 }

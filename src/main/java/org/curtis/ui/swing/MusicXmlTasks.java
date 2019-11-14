@@ -3,6 +3,7 @@ package org.curtis.ui.swing;
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.swing.handler.ComponentHandler;
 import org.curtis.ui.swing.input.InputPanel;
+import org.curtis.ui.swing.input.InputRowFactory;
 import org.curtis.ui.task.TaskConstants;
 import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
@@ -12,8 +13,6 @@ import org.curtis.ui.swing.input.FromDatabase;
 import org.curtis.ui.swing.input.FromInput;
 import org.curtis.ui.swing.input.FromLilypond;
 import org.curtis.ui.swing.input.FromMusicXml;
-import org.curtis.ui.swing.input.InputRow;
-import org.curtis.ui.swing.input.InputType;
 import org.curtis.ui.swing.input.PropertiesInput;
 import org.curtis.ui.swing.input.PropertiesOutput;
 import org.curtis.ui.swing.input.ToDatabase;
@@ -172,15 +171,9 @@ public class MusicXmlTasks {
                         break;
                     case TaskConstants.CONVERSION_TYPE_PDF:
                         AppProperties.addLocalPropertiesBundle();
-                        if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond"))) {
-                            InputRow lilypondTextInputRow = new InputRow();
-                            lilypondTextInputRow.setInputType(InputType.LABEL);
-                            lilypondTextInputRow.setBoldText(true);
-                            lilypondTextInputRow.setValue("Set Lilypond Location in Set Properties to create PDF file");
-                            componentHandler.addFormRow(lilypondTextInputRow);
-                        } else {
-                            toInput = new ToPdf();
-                        }
+                        if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond")))
+                            componentHandler.addFormRow(InputRowFactory.newBoldLabel("Set Lilypond Location in Set Properties to create PDF file"));
+                        else toInput = new ToPdf();
                         break;
                 }
                 break;

@@ -52,7 +52,7 @@ public class ComponentHandler {
 
     private void displayDataInput(DataInput dataInput) {
         String title = dataInput.getTitle();
-        if (StringUtil.isNotEmpty(title)) addFormRow(InputRowFactory.newTitleLable(title));
+        if (StringUtil.isNotEmpty(title)) addFormRow(InputRowFactory.newBoldLabel(title));
 
         for (InputRow inputRow : dataInput.getInputRows()) {
             inputPanels.get(rowIndex).getLabel().setText(inputRow.getText());
@@ -77,8 +77,9 @@ public class ComponentHandler {
                 panel.add(label);
                 break;
             case INPUT:
-                JTextField textField = ComponentFactory.newTextField(inputRow.getValue());
-                addComponent(panel, textField);
+                JTextField textField = ComponentFactory.newTextField(inputRow.getValue(), inputRow.getInputSize());
+                GridBagConstraints inputConstraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.NONE, GridBagConstraints.LINE_START);
+                addComponent(panel, textField, inputConstraints);
                 component = textField;
                 break;
             case PASSWORD:
@@ -101,7 +102,7 @@ public class ComponentHandler {
                 addComponent(panel, inputFileChooser);
                 component = inputFileChooser;
                 break;
-            case OUTPUT_DIRECTORY:
+            case DIRECTORY:
                 JFileChooser outputFileChooser = ComponentFactory.newDirectoryChooser();
                 addComponent(panel, outputFileChooser);
                 component = outputFileChooser;

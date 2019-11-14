@@ -57,10 +57,11 @@ public class ComponentFactory {
         return label;
     }
 
-    public static JTextField newTextField(String text) {
+    public static JTextField newTextField(String text, int size) {
         JTextField textField = new JTextField();
         textField.setBackground(getBackgroundColor());
         textField.setText(text);
+        textField.setPreferredSize(new Dimension(size, 25));
 
         return textField;
     }
