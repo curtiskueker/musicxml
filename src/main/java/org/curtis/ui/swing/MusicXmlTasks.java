@@ -1,10 +1,11 @@
 package org.curtis.ui.swing;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.swing.handler.ComponentHandler;
+import org.curtis.ui.swing.input.InputPanel;
 import org.curtis.ui.task.TaskConstants;
 import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
-import org.curtis.ui.swing.input.DataInput;
 import org.curtis.ui.swing.input.DatabaseInput;
 import org.curtis.ui.swing.input.DatabaseOutput;
 import org.curtis.ui.swing.input.FromDatabase;
@@ -35,31 +36,22 @@ import org.curtis.util.StringUtil;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MusicXmlTasks {
     private JPanel taskForm;
@@ -99,24 +91,20 @@ public class MusicXmlTasks {
     private JPanel convertArrowPanel;
     private JPanel convertToPanel;
     private JLabel convertArrowLabel;
-    private JCheckBox showPassword;
     private String fromSelectedValue = "";
     private String toSelectedValue = "";
     private JComboBox fromFormat;
     private JComboBox toFormat;
 
     private String selectedValue;
-    private Map<String, Component> componentMap = new HashMap<>();
 
-    private List<JLabel> formElementTextLabels = new ArrayList<>();
-    private List<JPanel> rightPanels = new ArrayList<>();
-    private static final int NUMBER_OF_ROWS = 8;
-    private int rowIndex = 0;
+    private List<InputPanel> inputPanels = new ArrayList<>();
+    private ComponentHandler componentHandler = new ComponentHandler(inputPanels);
 
-    private static double HORIZONTAL_SMALL_WEIGHT = .40;
-    private static double HORIZONTAL_LARGE_WEIGHT = .60;
-    private static double VERTICAL_CELL_WEIGHT = .08;
-    private static double VERTICAL_STATUS_WEIGHT = .20;
+    public static final double HORIZONTAL_SMALL_WEIGHT = .40;
+    public static final double HORIZONTAL_LARGE_WEIGHT = .60;
+    public static final double VERTICAL_CELL_WEIGHT = .08;
+    public static final double VERTICAL_STATUS_WEIGHT = .20;
 
     public MusicXmlTasks() {
         setupStatusArea();
@@ -125,44 +113,42 @@ public class MusicXmlTasks {
     }
 
     private void handleSelection() {
-        resetFormElements();
+        componentHandler.resetFormElements();
 
         convertFromPanel.removeAll();
         convertToPanel.removeAll();
-
-        componentMap.clear();
+        componentHandler = new ComponentHandler(inputPanels);
 
         headerLabel.setText(selectedValue);
 
-        if (selectedValue.equals("Conversion Tasks")) {
+        if (selectedValue.equals(TaskConstants.MENU_CONVERSION_TASKS)) {
             convertLabel.setText("Convert: ");
             convertArrowLabel.setText(" -> ");
 
             JComboBox fromSelection = fromFormat;
             fromSelection.setSelectedItem(fromSelectedValue);
-            addComponent(convertFromPanel, fromSelection);
+            componentHandler.addComponent(convertFromPanel, fromSelection);
 
             JComboBox toSelection = toFormat;
             toSelection.setSelectedItem(toSelectedValue);
-            addComponent(convertToPanel, toSelection);
+            componentHandler.addComponent(convertToPanel, toSelection);
         } else {
             convertLabel.setText("");
             convertArrowLabel.setText("");
         }
 
-        rowIndex = 0;
         FromInput fromInput = null;
         ToInput toInput = null;
         switch (selectedValue) {
-            case "Set Properties":
+            case TaskConstants.MENU_SET_PROPERTIES:
                 fromInput = new PropertiesInput();
                 toInput = new PropertiesOutput();
                 break;
-            case "Database Tasks":
+            case TaskConstants.MENU_DATABASE_TASKS:
                 fromInput = new DatabaseInput();
                 toInput = new DatabaseOutput();
                 break;
-            case "Conversion Tasks":
+            case TaskConstants.MENU_CONVERSION_TASKS:
                 switch (fromSelectedValue) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         fromInput = new FromMusicXml();
@@ -191,7 +177,7 @@ public class MusicXmlTasks {
                             lilypondTextInputRow.setInputType(InputType.LABEL);
                             lilypondTextInputRow.setBoldText(true);
                             lilypondTextInputRow.setValue("Set Lilypond Location in Set Properties to create PDF file");
-                            addFormRow(lilypondTextInputRow);
+                            componentHandler.addFormRow(lilypondTextInputRow);
                         } else {
                             toInput = new ToPdf();
                         }
@@ -200,126 +186,36 @@ public class MusicXmlTasks {
                 break;
         }
 
-        if (fromInput != null && toInput != null) {
-            displayDataInput(fromInput);
-            displayDataInput(toInput);
-            InputRow buttonInputRow = new InputRow();
-            buttonInputRow.setInputType(InputType.BUTTON);
-            buttonInputRow.setName("Submit");
-            addFormRow(buttonInputRow);
-        }
-
+        componentHandler.displayData(fromInput, toInput);
         clearStatusArea();
+
+        Component submitButton = componentHandler.getComponentMap().get(TaskConstants.SUBMIT_BUTTON);
+        if (submitButton != null) {
+            JButton button = (JButton)submitButton;
+            button.addActionListener(e -> {
+                clearStatusArea();
+
+                Runnable formRunnable = this::handleForm;
+                Thread formThread = new Thread(formRunnable);
+                formThread.start();
+            });
+        }
 
         taskForm.revalidate();
     }
 
-    private void displayDataInput(DataInput dataInput) {
-        String title = dataInput.getTitle();
-        if (StringUtil.isNotEmpty(title)) {
-            InputRow titleInputRow = new InputRow();
-            titleInputRow.setInputType(InputType.LABEL);
-            titleInputRow.setBoldText(true);
-            titleInputRow.setValue(title);
-            addFormRow(titleInputRow);
-        }
-
-        for (InputRow inputRow : dataInput.getInputRows()) {
-            if (rowIndex < NUMBER_OF_ROWS) formElementTextLabels.get(rowIndex).setText(inputRow.getText());
-            addFormRow(inputRow);
-        }
-    }
-
-    private void addFormRow(InputRow inputRow) {
-        if (rowIndex >= NUMBER_OF_ROWS) return;
-
-        addFormElement(rightPanels.get(rowIndex), inputRow);
-        rowIndex++;
-    }
-
-    private void addFormElement(JPanel panel, InputRow inputRow) {
-        Component component = null;
-
-        switch (inputRow.getInputType()) {
-            case LABEL:
-                JLabel label;
-                String labelText = inputRow.getValue();
-                if (inputRow.isBoldText()) label = ComponentFactory.newBoldLabel(labelText, 16);
-                else label = ComponentFactory.newLabel(labelText);
-                panel.add(label);
-                break;
-            case INPUT:
-                JTextField textField = ComponentFactory.newTextField(inputRow.getValue());
-                addComponent(panel, textField);
-                component = textField;
-                break;
-            case PASSWORD:
-                JPanel leftPanel = addNewPanel(panel, 0, 0, .60, VERTICAL_CELL_WEIGHT);
-                JPanel rightPanel = addNewPanel(panel, 0, 1, .40, VERTICAL_CELL_WEIGHT);
-                JPasswordField passwordField = ComponentFactory.newPasswordField(inputRow.getValue());
-                addComponent(leftPanel, passwordField);
-
-                showPassword = ComponentFactory.newCheckBox(TaskConstants.SHOW_PASSWORD, SwingConstants.RIGHT);
-                showPassword.addItemListener(e -> {
-                    if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
-                    else passwordField.setEchoChar('*');
-                });
-                addComponent(rightPanel, showPassword);
-
-                component = passwordField;
-                break;
-            case INPUT_FILE:
-                JFileChooser inputFileChooser = ComponentFactory.newFileChooser(inputRow.getValue(), inputRow.getSelectedFilename());
-                addComponent(panel, inputFileChooser);
-                component = inputFileChooser;
-                break;
-            case OUTPUT_DIRECTORY:
-                JFileChooser outputFileChooser = ComponentFactory.newDirectoryChooser();
-                addComponent(panel, outputFileChooser);
-                component = outputFileChooser;
-                break;
-            case SELECTION:
-                JComboBox<String> selection = ComponentFactory.newComboBox(inputRow.getSelectionList(), inputRow.getSelectedItem());
-                addComponent(panel, selection);
-                component = selection;
-                break;
-            case CHECKBOX:
-                JCheckBox checkBox = ComponentFactory.newCheckBox();
-                addComponent(panel, checkBox);
-                component = checkBox;
-                break;
-            case BUTTON:
-                JButton button = ComponentFactory.newButton(inputRow.getName());
-                GridBagConstraints buttonConstraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.NONE, GridBagConstraints.LINE_START);
-                addComponent(panel, button, buttonConstraints);
-
-                button.addActionListener(e -> {
-                    clearStatusArea();
-
-                    Runnable formRunnable = this::handleForm;
-                    Thread formThread = new Thread(formRunnable);
-                    formThread.start();
-                });
-
-                component = button;
-                break;
-        }
-
-        if (component != null && StringUtil.isNotEmpty(inputRow.getName())) componentMap.put(inputRow.getName(), component);
-    }
-
     private void handleForm() {
         MusicXmlTask musicXmlTask = null;
-        SwingTaskInitializer swingTaskInitializer = new SwingTaskInitializer(componentMap);
+        SwingTaskInitializer swingTaskInitializer = new SwingTaskInitializer(componentHandler.getComponentMap());
 
         switch (selectedValue) {
-            case "Set Properties":
+            case TaskConstants.MENU_SET_PROPERTIES:
                 musicXmlTask = new SetPropertiesTask(swingTaskInitializer);
                 break;
-            case "Database Tasks":
+            case TaskConstants.MENU_DATABASE_TASKS:
                 musicXmlTask = new DatabaseTask(swingTaskInitializer);
                 break;
-            case "Conversion Tasks":
+            case TaskConstants.MENU_CONVERSION_TASKS:
                 switch (fromSelectedValue) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         switch (toSelectedValue) {
@@ -423,36 +319,25 @@ public class MusicXmlTasks {
     }
 
     private void setupFormElements() {
-        formElementTextLabels.add(formElement1Text);
-        formElementTextLabels.add(formElement2Text);
-        formElementTextLabels.add(formElement3Text);
-        formElementTextLabels.add(formElement4Text);
-        formElementTextLabels.add(formElement5Text);
-        formElementTextLabels.add(formElement6Text);
-        formElementTextLabels.add(formElement7Text);
-        formElementTextLabels.add(formElement8Text);
-        rightPanels.add(row3Right);
-        rightPanels.add(row4Right);
-        rightPanels.add(row5Right);
-        rightPanels.add(row6Right);
-        rightPanels.add(row7Right);
-        rightPanels.add(row8Right);
-        rightPanels.add(row9Right);
-        rightPanels.add(row10Right);
-    }
-
-    private void resetFormElements() {
-        for (int index = 0; index < NUMBER_OF_ROWS; index++) {
-            formElementTextLabels.get(index).setText("");
-            JPanel panel = rightPanels.get(index);
-            panel.removeAll();
-            GridBagLayout layout = (GridBagLayout)panel.getLayout();
-            layout.setConstraints(panel, ConstraintsFactory.getNewConstraints());
-        }
+        inputPanels.add(new InputPanel(formElement1Text, row3Right));
+        inputPanels.add(new InputPanel(formElement2Text, row4Right));
+        inputPanels.add(new InputPanel(formElement3Text, row5Right));
+        inputPanels.add(new InputPanel(formElement4Text, row6Right));
+        inputPanels.add(new InputPanel(formElement5Text, row7Right));
+        inputPanels.add(new InputPanel(formElement6Text, row8Right));
+        inputPanels.add(new InputPanel(formElement7Text, row9Right));
+        inputPanels.add(new InputPanel(formElement8Text, row10Right));
     }
 
     private void addMenuItems(JFrame frame) {
-        JMenuBar menuBar = ComponentFactory.newMenu("Tasks", Arrays.asList("Set Properties", "Database Tasks", "Conversion Tasks", TaskConstants.MENU_SEPARATOR, TaskConstants.EXIT_APPLICATION));
+        JMenuBar menuBar = ComponentFactory.newMenu(
+                "Tasks",
+                Arrays.asList(
+                        TaskConstants.MENU_SET_PROPERTIES, TaskConstants.MENU_DATABASE_TASKS, TaskConstants.MENU_CONVERSION_TASKS,
+                        TaskConstants.MENU_SEPARATOR,
+                        TaskConstants.MENU_EXIT_APPLICATION
+                )
+        );
 
         for (int menuNumber = 0; menuNumber < menuBar.getMenuCount(); menuNumber++) {
             JMenu menu = menuBar.getMenu(menuNumber);
@@ -464,7 +349,7 @@ public class MusicXmlTasks {
                     JMenuItem actionMenuItem = (JMenuItem) e.getSource();
                     String selection = actionMenuItem.getText();
                     if (!selection.equals(selectedValue)) {
-                        if (selection.equals(TaskConstants.EXIT_APPLICATION)) System.exit(0);
+                        if (selection.equals(TaskConstants.MENU_EXIT_APPLICATION)) System.exit(0);
                         else {
                             selectedValue = selection;
                             handleSelection();
@@ -474,44 +359,6 @@ public class MusicXmlTasks {
             }
         }
         frame.setJMenuBar(menuBar);
-    }
-
-    private void addComponent(JComponent parentComponent, JComponent childComponent) {
-        addComponent(parentComponent, childComponent, ConstraintsFactory.getNewConstraints());
-    }
-
-    private void addComponent(JComponent parentComponent, JComponent childComponent, GridBagConstraints constraints) {
-        if (parentComponent != null) parentComponent.add(childComponent, constraints);
-    }
-
-    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber, double weightx, double weighty) {
-        return addNewPanel(parentComponent, rowNumber, columnNumber, 1, 1, weightx, weighty);
-    }
-
-    private JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty) {
-        JPanel panel = ComponentFactory.newPanel();
-        addComponent(parentComponent, panel, ConstraintsFactory.getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
-
-        return panel;
-    }
-
-    private JLabel addNewLabel(JComponent parentComponent) {
-        return addNewLabel(parentComponent, "");
-    }
-
-    private JLabel addNewLabel(JComponent parentComponent, String text) {
-        JLabel label = ComponentFactory.newLabel(text);
-        parentComponent.add(label);
-
-        return label;
-    }
-
-    private JScrollPane addNewScrollPane(JComponent parentComponent) {
-        JScrollPane scrollPane = ComponentFactory.newScrollPane();
-        GridBagConstraints constraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.BOTH);
-        addComponent(parentComponent, scrollPane, constraints);
-
-        return scrollPane;
     }
 
     public static void main(String[] args) {
@@ -529,45 +376,45 @@ public class MusicXmlTasks {
     }
 
     private void setupUI() {
-        taskForm = addNewPanel(null, 0, 0, 11, 2, 1, 1);
-        header = addNewPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        taskForm = componentHandler.addNewPanel(null, 0, 0, 11, 2, 1, 1);
+        header = componentHandler.addNewPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         headerLabel = ComponentFactory.newBoldLabel(TaskConstants.TASKS_TITLE, 20);
         header.add(headerLabel);
-        convertLabelPanel = addNewPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        convertLabel = addNewLabel(convertLabelPanel);
-        convertPanel = addNewPanel(taskForm, 1, 1, 1, 3, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        convertFromPanel = addNewPanel(convertPanel, 0, 0, .40, VERTICAL_CELL_WEIGHT);
-        convertArrowPanel = addNewPanel(convertPanel, 0, 1, .20, VERTICAL_CELL_WEIGHT);
-        convertArrowLabel = addNewLabel(convertArrowPanel);
-        convertToPanel = addNewPanel(convertPanel, 0, 2, .40, VERTICAL_CELL_WEIGHT);
-        row3Left = addNewPanel(taskForm, 2, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement1Text = addNewLabel(row3Left);
-        row3Right = addNewPanel(taskForm, 2, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row4Left = addNewPanel(taskForm, 3, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement2Text = addNewLabel(row4Left);
-        row4Right = addNewPanel(taskForm, 3, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row5Left = addNewPanel(taskForm, 4, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement3Text = addNewLabel(row5Left);
-        row5Right = addNewPanel(taskForm, 4, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row6Left = addNewPanel(taskForm, 5, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement4Text = addNewLabel(row6Left);
-        row6Right = addNewPanel(taskForm, 5, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row7Left = addNewPanel(taskForm, 6, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement5Text = addNewLabel(row7Left);
-        row7Right = addNewPanel(taskForm, 6, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row8Left = addNewPanel(taskForm, 7, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement6Text = addNewLabel(row8Left);
-        row8Right = addNewPanel(taskForm, 7, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row9Left = addNewPanel(taskForm, 8, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement7Text = addNewLabel(row9Left);
-        row9Right = addNewPanel(taskForm, 8, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
-        row10Left = addNewPanel(taskForm, 9, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
-        formElement8Text = addNewLabel(row10Left);
-        row10Right = addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        convertLabelPanel = componentHandler.addNewPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        convertLabel = componentHandler.addNewLabel(convertLabelPanel);
+        convertPanel = componentHandler.addNewPanel(taskForm, 1, 1, 1, 3, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        convertFromPanel = componentHandler.addNewPanel(convertPanel, 0, 0, .40, VERTICAL_CELL_WEIGHT);
+        convertArrowPanel = componentHandler.addNewPanel(convertPanel, 0, 1, .20, VERTICAL_CELL_WEIGHT);
+        convertArrowLabel = componentHandler.addNewLabel(convertArrowPanel);
+        convertToPanel = componentHandler.addNewPanel(convertPanel, 0, 2, .40, VERTICAL_CELL_WEIGHT);
+        row3Left = componentHandler.addNewPanel(taskForm, 2, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement1Text = componentHandler.addNewLabel(row3Left);
+        row3Right = componentHandler.addNewPanel(taskForm, 2, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row4Left = componentHandler.addNewPanel(taskForm, 3, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement2Text = componentHandler.addNewLabel(row4Left);
+        row4Right = componentHandler.addNewPanel(taskForm, 3, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row5Left = componentHandler.addNewPanel(taskForm, 4, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement3Text = componentHandler.addNewLabel(row5Left);
+        row5Right = componentHandler.addNewPanel(taskForm, 4, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row6Left = componentHandler.addNewPanel(taskForm, 5, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement4Text = componentHandler.addNewLabel(row6Left);
+        row6Right = componentHandler.addNewPanel(taskForm, 5, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row7Left = componentHandler.addNewPanel(taskForm, 6, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement5Text = componentHandler.addNewLabel(row7Left);
+        row7Right = componentHandler.addNewPanel(taskForm, 6, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row8Left = componentHandler.addNewPanel(taskForm, 7, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement6Text = componentHandler.addNewLabel(row8Left);
+        row8Right = componentHandler.addNewPanel(taskForm, 7, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row9Left = componentHandler.addNewPanel(taskForm, 8, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement7Text = componentHandler.addNewLabel(row9Left);
+        row9Right = componentHandler.addNewPanel(taskForm, 8, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
+        row10Left = componentHandler.addNewPanel(taskForm, 9, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        formElement8Text = componentHandler.addNewLabel(row10Left);
+        row10Right = componentHandler.addNewPanel(taskForm, 9, 1, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
         statusPanel = ComponentFactory.newPanel();
         GridBagConstraints statusPanelConstraints = ConstraintsFactory.getNewConstraints(10, 0, 1, 2, 1, VERTICAL_STATUS_WEIGHT, GridBagConstraints.BOTH, GridBagConstraints.PAGE_END);
-        addComponent(taskForm, statusPanel, statusPanelConstraints);
-        statusScrollPane = addNewScrollPane(statusPanel);
+        componentHandler.addComponent(taskForm, statusPanel, statusPanelConstraints);
+        statusScrollPane = componentHandler.addNewScrollPane(statusPanel);
         statusTextArea = new JTextArea();
         statusTextArea.setBackground(ComponentFactory.getBackgroundColor());
         statusTextArea.setEditable(false);
