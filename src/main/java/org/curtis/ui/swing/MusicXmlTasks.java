@@ -192,7 +192,7 @@ public class MusicXmlTasks {
     }
 
     private void setupStatusArea() {
-        PrintStream statusPrintStream = new PrintStream(new SwingStatusOutput(statusTextArea));
+        PrintStream statusPrintStream = new PrintStream(new StatusOutput(statusTextArea));
         System.setErr(statusPrintStream);
         System.setOut(statusPrintStream);
     }
