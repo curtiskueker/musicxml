@@ -2,6 +2,7 @@ package org.curtis.ui.swing;
 
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.swing.handler.ComponentHandler;
+import org.curtis.ui.swing.handler.TaskHandler;
 import org.curtis.ui.swing.input.InputPanel;
 import org.curtis.ui.swing.input.InputRowFactory;
 import org.curtis.ui.task.TaskConstants;
@@ -20,17 +21,6 @@ import org.curtis.ui.swing.input.ToInput;
 import org.curtis.ui.swing.input.ToLilypond;
 import org.curtis.ui.swing.input.ToMusicXml;
 import org.curtis.ui.swing.input.ToPdf;
-import org.curtis.ui.task.DatabaseTask;
-import org.curtis.ui.task.Db2PdfTask;
-import org.curtis.ui.task.Ly2PdfTask;
-import org.curtis.ui.task.MusicXml2PdfTask;
-import org.curtis.ui.task.SetPropertiesTask;
-import org.curtis.ui.task.Db2LyTask;
-import org.curtis.ui.task.Db2MusicXmlTask;
-import org.curtis.ui.task.MusicXml2DbTask;
-import org.curtis.ui.task.MusicXml2LyTask;
-import org.curtis.ui.task.MusicXmlTask;
-import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
 import javax.swing.DefaultComboBoxModel;
@@ -90,12 +80,12 @@ public class MusicXmlTasks {
     private JPanel convertArrowPanel;
     private JPanel convertToPanel;
     private JLabel convertArrowLabel;
-    private String fromSelectedValue = "";
-    private String toSelectedValue = "";
+    private String convertFromSelection = "";
+    private String convertToSelection = "";
     private JComboBox fromFormat;
     private JComboBox toFormat;
 
-    private String selectedValue;
+    private String menuSelection;
 
     private List<InputPanel> inputPanels = new ArrayList<>();
     private ComponentHandler componentHandler = new ComponentHandler(inputPanels);
@@ -118,18 +108,18 @@ public class MusicXmlTasks {
         convertToPanel.removeAll();
         componentHandler = new ComponentHandler(inputPanels);
 
-        headerLabel.setText(selectedValue);
+        headerLabel.setText(menuSelection);
 
-        if (selectedValue.equals(TaskConstants.MENU_CONVERSION_TASKS)) {
+        if (menuSelection.equals(TaskConstants.MENU_CONVERSION_TASKS)) {
             convertLabel.setText("Convert: ");
             convertArrowLabel.setText(" -> ");
 
             JComboBox fromSelection = fromFormat;
-            fromSelection.setSelectedItem(fromSelectedValue);
+            fromSelection.setSelectedItem(convertFromSelection);
             componentHandler.addComponent(convertFromPanel, fromSelection);
 
             JComboBox toSelection = toFormat;
-            toSelection.setSelectedItem(toSelectedValue);
+            toSelection.setSelectedItem(convertToSelection);
             componentHandler.addComponent(convertToPanel, toSelection);
         } else {
             convertLabel.setText("");
@@ -138,7 +128,7 @@ public class MusicXmlTasks {
 
         FromInput fromInput = null;
         ToInput toInput = null;
-        switch (selectedValue) {
+        switch (menuSelection) {
             case TaskConstants.MENU_SET_PROPERTIES:
                 fromInput = new PropertiesInput();
                 toInput = new PropertiesOutput();
@@ -148,7 +138,7 @@ public class MusicXmlTasks {
                 toInput = new DatabaseOutput();
                 break;
             case TaskConstants.MENU_CONVERSION_TASKS:
-                switch (fromSelectedValue) {
+                switch (convertFromSelection) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         fromInput = new FromMusicXml();
                         break;
@@ -159,7 +149,7 @@ public class MusicXmlTasks {
                         fromInput = new FromLilypond();
                         break;
                 }
-                switch (toSelectedValue) {
+                switch (convertToSelection) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         toInput = new ToMusicXml();
                         break;
@@ -198,62 +188,7 @@ public class MusicXmlTasks {
     }
 
     private void handleForm() {
-        MusicXmlTask musicXmlTask = null;
-        SwingTaskInitializer swingTaskInitializer = new SwingTaskInitializer(componentHandler.getComponentMap());
-
-        switch (selectedValue) {
-            case TaskConstants.MENU_SET_PROPERTIES:
-                musicXmlTask = new SetPropertiesTask(swingTaskInitializer);
-                break;
-            case TaskConstants.MENU_DATABASE_TASKS:
-                musicXmlTask = new DatabaseTask(swingTaskInitializer);
-                break;
-            case TaskConstants.MENU_CONVERSION_TASKS:
-                switch (fromSelectedValue) {
-                    case TaskConstants.CONVERSION_TYPE_MUSICXML:
-                        switch (toSelectedValue) {
-                            case TaskConstants.CONVERSION_TYPE_DATABASE:
-                                musicXmlTask = new MusicXml2DbTask(swingTaskInitializer);
-                                break;
-                            case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                                musicXmlTask = new MusicXml2LyTask(swingTaskInitializer);
-                                break;
-                            case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new MusicXml2PdfTask(swingTaskInitializer);
-                                break;
-                        }
-                        break;
-                    case TaskConstants.CONVERSION_TYPE_DATABASE:
-                        switch (toSelectedValue) {
-                            case TaskConstants.CONVERSION_TYPE_MUSICXML:
-                                musicXmlTask = new Db2MusicXmlTask(swingTaskInitializer);
-                                break;
-                            case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                                musicXmlTask = new Db2LyTask(swingTaskInitializer);
-                                break;
-                            case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new Db2PdfTask(swingTaskInitializer);
-                                break;
-                        }
-                        break;
-                    case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                        switch (toSelectedValue) {
-                            case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new Ly2PdfTask(swingTaskInitializer);
-                                break;
-                        }
-                        break;
-                }
-                break;
-        }
-
-
-        try {
-            if (musicXmlTask != null) musicXmlTask.execute();
-            System.err.println("Task finished");
-        } catch (TaskException e) {
-            System.err.println(e.getMessage());
-        }
+        TaskHandler.handleTask(componentHandler.getComponentMap(), menuSelection, convertFromSelection, convertToSelection);
     }
 
     private void setupStatusArea() {
@@ -275,13 +210,13 @@ public class MusicXmlTasks {
         fromFormat = ComponentFactory.newComboBox(Arrays.asList(TaskConstants.CONVERSION_TYPE_MUSICXML, TaskConstants.CONVERSION_TYPE_DATABASE, TaskConstants.CONVERSION_TYPE_LILYPOND));
         fromFormat.addActionListener(e -> {
             String selection = (String) fromFormat.getSelectedItem();
-            if (!selection.equals(fromSelectedValue)) {
-                fromSelectedValue = selection;
+            if (!selection.equals(convertFromSelection)) {
+                convertFromSelection = selection;
 
                 DefaultComboBoxModel toModel = (DefaultComboBoxModel) toFormat.getModel();
                 toModel.removeAllElements();
                 toModel.addElement("");
-                switch (fromSelectedValue) {
+                switch (convertFromSelection) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         toModel.addElement(TaskConstants.CONVERSION_TYPE_DATABASE);
                         toModel.addElement(TaskConstants.CONVERSION_TYPE_LILYPOND);
@@ -304,8 +239,8 @@ public class MusicXmlTasks {
         toFormat = ComponentFactory.newComboBox();
         toFormat.addActionListener(e -> {
             String selection = (String) toFormat.getSelectedItem();
-            if (selection != null && !selection.equals(toSelectedValue)) {
-                toSelectedValue = selection;
+            if (selection != null && !selection.equals(convertToSelection)) {
+                convertToSelection = selection;
                 handleSelection();
             }
         });
@@ -341,10 +276,10 @@ public class MusicXmlTasks {
                 menuItem.addActionListener(e -> {
                     JMenuItem actionMenuItem = (JMenuItem) e.getSource();
                     String selection = actionMenuItem.getText();
-                    if (!selection.equals(selectedValue)) {
+                    if (!selection.equals(menuSelection)) {
                         if (selection.equals(TaskConstants.MENU_EXIT_APPLICATION)) System.exit(0);
                         else {
-                            selectedValue = selection;
+                            menuSelection = selection;
                             handleSelection();
                         }
                     }
