@@ -2,7 +2,6 @@ package org.curtis.ui.swing.handler;
 
 import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
-import org.curtis.ui.swing.input.LabelPanel;
 import org.curtis.ui.swing.input.PanelRow;
 import org.curtis.ui.swing.input.InputRow;
 import org.curtis.ui.task.TaskConstants;
@@ -36,7 +35,7 @@ public class ComponentHandler {
     }
 
     public void addFormRow(PanelRow panelRow, InputRow inputRow) {
-        panelRow.getLabelPanel().getLabel().setText(inputRow.getText());
+        panelRow.getLabel().setText(inputRow.getText());
         addFormElement(panelRow.getInputPanel(), inputRow);
     }
 
@@ -136,18 +135,16 @@ public class ComponentHandler {
         return label;
     }
 
-    public LabelPanel addNewLabelPanel(JComponent parentComponent, int rowNumber, int columnNumber, double weightx, double weighty) {
+    public JLabel addNewLabelPanel(JComponent parentComponent, int rowNumber, int columnNumber, double weightx, double weighty) {
         JPanel panel = addNewPanel(parentComponent, rowNumber, columnNumber, 1, 1, weightx, weighty);
-        JLabel label = addNewLabel(panel);
 
-        return new LabelPanel(label, panel);
+        return addNewLabel(panel);
     }
 
-    public LabelPanel addNewBoldLabelPanel(JComponent parentComponent, int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty, String text, int size) {
+    public JLabel addNewBoldLabelPanel(JComponent parentComponent, int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty, String text, int size) {
         JPanel panel = addNewPanel(parentComponent, rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty);
-        JLabel label = addNewBoldLabel(panel, text, size);
 
-        return new LabelPanel(label, panel);
+        return addNewBoldLabel(panel, text, size);
     }
 
     public JScrollPane addNewScrollPane(JComponent parentComponent) {
@@ -159,10 +156,10 @@ public class ComponentHandler {
     }
 
     public PanelRow addNewPanelRow(JComponent parentComponent, int rowNumber, double leftWeightx, double rightWeightx, double weighty) {
-        LabelPanel labelPanel = addNewLabelPanel(parentComponent, rowNumber, 0, leftWeightx, weighty);
+        JLabel label = addNewLabelPanel(parentComponent, rowNumber, 0, leftWeightx, weighty);
         JPanel inputPanel = addNewPanel(parentComponent, rowNumber, 1, rightWeightx, weighty);
 
-        return new PanelRow(labelPanel, inputPanel);
+        return new PanelRow(label, inputPanel);
     }
 
     public JButton getSubmitButton() {

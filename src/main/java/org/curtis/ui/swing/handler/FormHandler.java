@@ -13,7 +13,6 @@ import org.curtis.ui.swing.input.FromLilypond;
 import org.curtis.ui.swing.input.FromMusicXml;
 import org.curtis.ui.swing.input.InputRow;
 import org.curtis.ui.swing.input.InputRowFactory;
-import org.curtis.ui.swing.input.LabelPanel;
 import org.curtis.ui.swing.input.PanelRow;
 import org.curtis.ui.swing.input.PropertiesInput;
 import org.curtis.ui.swing.input.PropertiesOutput;
@@ -44,10 +43,10 @@ import java.util.List;
 public class FormHandler {
     private ComponentHandler componentHandler = new ComponentHandler();
     private JPanel taskForm;
-    private LabelPanel header;
-    private LabelPanel convertLabelPanel;
+    private JLabel headerLabel;
+    private JLabel convertLabel;
     private JPanel convertFromPanel;
-    private LabelPanel convertArrowPanel;
+    private JLabel convertArrowLabel;
     private JPanel convertToPanel;
     private JComboBox<String> fromFormat;
     private JComboBox<String> toFormat;
@@ -97,12 +96,12 @@ public class FormHandler {
 
     public JPanel initializeForm() {
         taskForm = componentHandler.addNewPanel(null, 0, 0, 11, 2, 1, 1);
-        header = componentHandler.addNewBoldLabelPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, TaskConstants.TASKS_TITLE, 20);
+        headerLabel = componentHandler.addNewBoldLabelPanel(taskForm, 0, 0, 1, 2, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT, TaskConstants.TASKS_TITLE, 20);
 
-        convertLabelPanel = componentHandler.addNewLabelPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
+        convertLabel = componentHandler.addNewLabelPanel(taskForm, 1, 0, HORIZONTAL_SMALL_WEIGHT, VERTICAL_CELL_WEIGHT);
         JPanel convertPanel = componentHandler.addNewPanel(taskForm, 1, 1, 1, 3, HORIZONTAL_LARGE_WEIGHT, VERTICAL_CELL_WEIGHT);
         convertFromPanel = componentHandler.addNewPanel(convertPanel, 0, 0, .40, VERTICAL_CELL_WEIGHT);
-        convertArrowPanel = componentHandler.addNewLabelPanel(convertPanel, 0, 1, .20, VERTICAL_CELL_WEIGHT);
+        convertArrowLabel = componentHandler.addNewLabelPanel(convertPanel, 0, 1, .20, VERTICAL_CELL_WEIGHT);
         convertToPanel = componentHandler.addNewPanel(convertPanel, 0, 2, .40, VERTICAL_CELL_WEIGHT);
 
         for (int index = 0; index < NUMBER_OF_ROWS; index++) {
@@ -134,7 +133,7 @@ public class FormHandler {
 
         for (int index = 0; index < NUMBER_OF_ROWS; index++) {
             PanelRow inputPanel = inputPanels.get(index);
-            inputPanel.getLabelPanel().getLabel().setText("");
+            inputPanel.getLabel().setText("");
             JPanel panel = inputPanel.getInputPanel();
             panel.removeAll();
             GridBagLayout layout = (GridBagLayout)panel.getLayout();
@@ -144,7 +143,7 @@ public class FormHandler {
         componentHandler = new ComponentHandler();
         convertFromPanel.removeAll();
         convertToPanel.removeAll();
-        header.getLabel().setText(menuSelection);
+        headerLabel.setText(menuSelection);
     }
 
 
@@ -181,8 +180,6 @@ public class FormHandler {
     public JButton handleSelection() {
         resetForm();
 
-        JLabel convertLabel = convertLabelPanel.getLabel();
-        JLabel convertArrowLabel = convertArrowPanel.getLabel();
         if (menuSelection.equals(TaskConstants.MENU_CONVERSION_TASKS)) {
             convertLabel.setText("Convert: ");
             convertArrowLabel.setText(" -> ");
