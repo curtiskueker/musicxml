@@ -1,4 +1,4 @@
-package org.curtis.ui.javafx.form;
+package org.curtis.ui.javafx.handler;
 
 import org.curtis.ui.javafx.TasksController;
 

@@ -1,11 +1,11 @@
 package org.curtis.ui.javafx;
 
 import org.curtis.properties.AppProperties;
-import org.curtis.ui.javafx.form.ConvertFormHandler;
-import org.curtis.ui.javafx.form.DbSettingsFormHandler;
-import org.curtis.ui.javafx.form.EmptyFormHandler;
-import org.curtis.ui.javafx.form.FormHandler;
-import org.curtis.ui.javafx.form.LyPdfSettingsFormHandler;
+import org.curtis.ui.javafx.handler.ConvertFormHandler;
+import org.curtis.ui.javafx.handler.DbSettingsFormHandler;
+import org.curtis.ui.javafx.handler.EmptyFormHandler;
+import org.curtis.ui.javafx.handler.FormHandler;
+import org.curtis.ui.javafx.handler.LyPdfSettingsFormHandler;
 import org.curtis.ui.javafx.initialize.ConvertInitializer;
 import org.curtis.ui.javafx.initialize.DbTablesInitializer;
 import org.curtis.ui.javafx.initialize.JavafxTaskInitializer;

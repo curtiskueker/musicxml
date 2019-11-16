@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.curtis.properties.AppProperties;
-import org.curtis.ui.javafx.form.ConvertFormHandler;
+import org.curtis.ui.javafx.handler.ConvertFormHandler;
 import org.curtis.util.StringUtil;
 
 import java.io.File;
