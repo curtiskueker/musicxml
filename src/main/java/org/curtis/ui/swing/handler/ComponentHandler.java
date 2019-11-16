@@ -1,12 +1,10 @@
 package org.curtis.ui.swing.handler;
 
-import org.curtis.ui.swing.MusicXmlTasks;
 import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
-import org.curtis.ui.swing.input.DataInput;
-import org.curtis.ui.swing.input.InputPanel;
+import org.curtis.ui.swing.input.LabelPanel;
+import org.curtis.ui.swing.input.PanelRow;
 import org.curtis.ui.swing.input.InputRow;
-import org.curtis.ui.swing.input.InputRowFactory;
 import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
@@ -23,46 +21,23 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ComponentHandler {
-    private List<InputPanel> inputPanels;
     private Map<String, Component> componentMap = new HashMap<>();
-    private static final int NUMBER_OF_ROWS = 8;
-    private int rowIndex = 0;
 
-    public ComponentHandler(List<InputPanel> inputPanels) {
-        this.inputPanels = inputPanels;
+    public ComponentHandler() {
+
     }
 
     public Map<String, Component> getComponentMap() {
         return componentMap;
     }
 
-    public void displayData(DataInput fromInput, DataInput toInput) {
-        if (fromInput == null || toInput == null) return;
-
-        displayDataInput(fromInput);
-        displayDataInput(toInput);
-        addFormRow(InputRowFactory.newButton(TaskConstants.SUBMIT_BUTTON));
-    }
-
-    private void displayDataInput(DataInput dataInput) {
-        String title = dataInput.getTitle();
-        if (StringUtil.isNotEmpty(title)) addFormRow(InputRowFactory.newBoldLabel(title));
-
-        for (InputRow inputRow : dataInput.getInputRows()) {
-            inputPanels.get(rowIndex).getLabel().setText(inputRow.getText());
-            addFormRow(inputRow);
-        }
-    }
-
-    public void addFormRow(InputRow inputRow) {
-        addFormElement(inputPanels.get(rowIndex).getPanel(), inputRow);
-        rowIndex++;
+    public void addFormRow(PanelRow panelRow, InputRow inputRow) {
+        panelRow.getLabelPanel().getLabel().setText(inputRow.getText());
+        addFormElement(panelRow.getInputPanel(), inputRow);
     }
 
     private void addFormElement(JPanel panel, InputRow inputRow) {
@@ -83,8 +58,8 @@ public class ComponentHandler {
                 component = textField;
                 break;
             case PASSWORD:
-                JPanel leftPanel = addNewPanel(panel, 0, 0, .60, MusicXmlTasks.VERTICAL_CELL_WEIGHT);
-                JPanel rightPanel = addNewPanel(panel, 0, 1, .40, MusicXmlTasks.VERTICAL_CELL_WEIGHT);
+                JPanel leftPanel = addNewPanel(panel, 0, 0, .60, FormHandler.VERTICAL_CELL_WEIGHT);
+                JPanel rightPanel = addNewPanel(panel, 0, 1, .40, FormHandler.VERTICAL_CELL_WEIGHT);
                 JPasswordField passwordField = ComponentFactory.newPasswordField(inputRow.getValue());
                 addComponent(leftPanel, passwordField);
 
@@ -128,17 +103,6 @@ public class ComponentHandler {
         if (component != null && StringUtil.isNotEmpty(inputRow.getName())) componentMap.put(inputRow.getName(), component);
     }
 
-    public void resetFormElements() {
-        for (int index = 0; index < NUMBER_OF_ROWS; index++) {
-            InputPanel inputPanel = inputPanels.get(index);
-            inputPanel.getLabel().setText("");
-            JPanel panel = inputPanel.getPanel();
-            panel.removeAll();
-            GridBagLayout layout = (GridBagLayout)panel.getLayout();
-            layout.setConstraints(panel, ConstraintsFactory.getNewConstraints());
-        }
-    }
-
     public void addComponent(JComponent parentComponent, JComponent childComponent) {
         addComponent(parentComponent, childComponent, ConstraintsFactory.getNewConstraints());
     }
@@ -151,7 +115,7 @@ public class ComponentHandler {
         return addNewPanel(parentComponent, rowNumber, columnNumber, 1, 1, weightx, weighty);
     }
 
-    public JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber,int gridHeight, int gridWidth, double weightx, double weighty) {
+    public JPanel addNewPanel(JComponent parentComponent, int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty) {
         JPanel panel = ComponentFactory.newPanel();
         addComponent(parentComponent, panel, ConstraintsFactory.getNewConstraints(rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty));
 
@@ -165,11 +129,43 @@ public class ComponentHandler {
         return label;
     }
 
+    public JLabel addNewBoldLabel(JComponent parentComponent, String text, int size) {
+        JLabel label = ComponentFactory.newBoldLabel(text, size);
+        parentComponent.add(label);
+
+        return label;
+    }
+
+    public LabelPanel addNewLabelPanel(JComponent parentComponent, int rowNumber, int columnNumber, double weightx, double weighty) {
+        JPanel panel = addNewPanel(parentComponent, rowNumber, columnNumber, 1, 1, weightx, weighty);
+        JLabel label = addNewLabel(panel);
+
+        return new LabelPanel(label, panel);
+    }
+
+    public LabelPanel addNewBoldLabelPanel(JComponent parentComponent, int rowNumber, int columnNumber, int gridHeight, int gridWidth, double weightx, double weighty, String text, int size) {
+        JPanel panel = addNewPanel(parentComponent, rowNumber, columnNumber, gridHeight, gridWidth, weightx, weighty);
+        JLabel label = addNewBoldLabel(panel, text, size);
+
+        return new LabelPanel(label, panel);
+    }
+
     public JScrollPane addNewScrollPane(JComponent parentComponent) {
         JScrollPane scrollPane = ComponentFactory.newScrollPane();
         GridBagConstraints constraints = ConstraintsFactory.getNewConstraints(GridBagConstraints.BOTH);
         addComponent(parentComponent, scrollPane, constraints);
 
         return scrollPane;
+    }
+
+    public PanelRow addNewPanelRow(JComponent parentComponent, int rowNumber, double leftWeightx, double rightWeightx, double weighty) {
+        LabelPanel labelPanel = addNewLabelPanel(parentComponent, rowNumber, 0, leftWeightx, weighty);
+        JPanel inputPanel = addNewPanel(parentComponent, rowNumber, 1, rightWeightx, weighty);
+
+        return new PanelRow(labelPanel, inputPanel);
+    }
+
+    public JButton getSubmitButton() {
+        return (JButton)componentMap.get(TaskConstants.SUBMIT_BUTTON);
     }
 }

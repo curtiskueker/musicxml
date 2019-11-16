@@ -34,6 +34,14 @@ public class InputRowFactory {
         return inputRow;
     }
 
+    public static InputRow newSelection(String name, String text, List<String> selections, String selectedItem) {
+        InputRow inputRow = newSelection(name, text, selections);
+        inputRow.setSelectedItem(selectedItem);
+        inputRow.setName(name);
+
+        return inputRow;
+    }
+
     public static InputRow newInputFile(String name, String text, String extension) {
         InputRow inputRow = new InputRow();
         inputRow.setText(text);
