@@ -16,16 +16,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.javafx.handler.ConvertFormHandler;
 import org.curtis.util.StringUtil;
 
 import java.io.File;
-import java.io.PrintStream;
 
 public class TasksController {
-    private StatusOutput statusOutput;
+    private TaskForm taskForm;
     private ConvertFormHandler convertFormHandler = new ConvertFormHandler(this);
-    private Thread outputThread;
 
     @FXML
     private VBox taskBox;
@@ -35,19 +34,14 @@ public class TasksController {
 
     @FXML
     public void initialize() {
-        // Setup status output box
-        statusOutput = new StatusOutput(statusTextArea);
-        PrintStream statusPrintStream = new PrintStream(statusOutput);
-        System.setErr(statusPrintStream);
-        System.setOut(statusPrintStream);
-
-        Runnable outputRunnable = statusOutput::handle;
-        outputThread = new Thread(outputRunnable);
-        outputThread.start();
+        taskForm = new TaskForm();
+        taskForm.setTaskBox(taskBox);
+        taskForm.setStatusTextArea(statusTextArea);
+        taskForm.initialize();
     }
 
     public void cleanup() {
-        if (outputThread != null) outputThread.interrupt();
+        taskForm.cleanup();
     }
 
     public Scene getScene() {
@@ -70,7 +64,7 @@ public class TasksController {
 
     @FXML
     private void buttonPressed(ActionEvent actionEvent) {
-        statusOutput.clear();
+        taskForm.clearOutput();
 
         Button button = (Button)actionEvent.getSource();
 
