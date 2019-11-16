@@ -26,7 +26,6 @@ public class TasksController {
     private StatusOutput statusOutput;
     private ConvertFormHandler convertFormHandler = new ConvertFormHandler(this);
     private Thread outputThread;
-    private boolean outputTest = false;
 
     @FXML
     private VBox taskBox;
@@ -39,10 +38,8 @@ public class TasksController {
         // Setup status output box
         statusOutput = new StatusOutput(statusTextArea);
         PrintStream statusPrintStream = new PrintStream(statusOutput);
-        if (!outputTest) {
-            System.setErr(statusPrintStream);
-            System.setOut(statusPrintStream);
-        }
+        System.setErr(statusPrintStream);
+        System.setOut(statusPrintStream);
 
         Runnable outputRunnable = statusOutput::handle;
         outputThread = new Thread(outputRunnable);
