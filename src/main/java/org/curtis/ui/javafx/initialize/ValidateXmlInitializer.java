@@ -1,13 +1,13 @@
 package org.curtis.ui.javafx.initialize;
 
-import org.curtis.ui.javafx.TasksController;
+import org.curtis.ui.javafx.form.TaskForm;
 
 public class ValidateXmlInitializer extends JavafxTaskInitializer {
-    public ValidateXmlInitializer(TasksController tasksController) {
-        super(tasksController);
+    public ValidateXmlInitializer(TaskForm taskForm) {
+        super(taskForm);
     }
 
     public void initializeNodeMap() {
-        nodeMap.put("xmlFile", tasksController.getNode("validateLocation"));
+        nodeMap.put("xmlFile", taskForm.getNode("validateLocation"));
     }
 }

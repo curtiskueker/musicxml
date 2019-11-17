@@ -1,6 +1,7 @@
 package org.curtis.ui.javafx;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.javafx.handler.ConvertFormHandler;
 import org.curtis.ui.javafx.handler.DbSettingsFormHandler;
 import org.curtis.ui.javafx.handler.EmptyFormHandler;
@@ -29,28 +30,28 @@ import org.curtis.ui.task.exception.TaskException;
 
 public class TaskExecutor {
     private String controlId;
-    private TasksController tasksController;
+    TaskForm taskForm;
 
-    public TaskExecutor(String controlId, TasksController tasksController) {
+    public TaskExecutor(String controlId, TaskForm taskForm) {
         this.controlId = controlId;
-        this.tasksController = tasksController;
+        this.taskForm = taskForm;
     }
 
     public void initializeForm() {
         FormHandler formHandler = null;
         switch (controlId) {
             case "settingsTab":
-                formHandler = new DbSettingsFormHandler(tasksController);
+                formHandler = new DbSettingsFormHandler(taskForm);
                 break;
             case "lyPdfTab":
-                formHandler = new LyPdfSettingsFormHandler(tasksController);
+                formHandler = new LyPdfSettingsFormHandler(taskForm);
                 break;
             case "tablesTab":
             case "validateTab":
-                formHandler = new EmptyFormHandler(tasksController);
+                formHandler = new EmptyFormHandler(taskForm);
                 break;
             case "convertTab":
-                formHandler = new ConvertFormHandler(tasksController);
+                formHandler = new ConvertFormHandler(taskForm);
                 break;
         }
 
@@ -62,26 +63,26 @@ public class TaskExecutor {
         JavafxTaskInitializer taskInitializer = null;
         switch (controlId) {
             case "saveSettingsButton":
-                taskInitializer = new SaveDbSettingsInitializer(tasksController);
+                taskInitializer = new SaveDbSettingsInitializer(taskForm);
                 musicXmlTask = new SetDbPropertiesTask(taskInitializer);
                 break;
             case "executeLyPdf":
-                taskInitializer = new LyPdfSettingsInitializer(tasksController);
+                taskInitializer = new LyPdfSettingsInitializer(taskForm);
                 musicXmlTask = new SetLyPdfPropertiesTask(taskInitializer);
                 break;
             case "executeTables":
-                taskInitializer = new DbTablesInitializer(tasksController);
+                taskInitializer = new DbTablesInitializer(taskForm);
                 musicXmlTask = new DatabaseTask(taskInitializer);
                 break;
             case "executeValidate":
-                taskInitializer = new ValidateXmlInitializer(tasksController);
+                taskInitializer = new ValidateXmlInitializer(taskForm);
                 musicXmlTask = new ValidateXmlTask(taskInitializer);
                 break;
             case "executeConvert":
-                taskInitializer = new ConvertInitializer(tasksController);
-                switch (tasksController.getFromSelection()) {
+                taskInitializer = new ConvertInitializer(taskForm);
+                switch (taskForm.getFromSelection()) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
-                        switch (tasksController.getToSelection()) {
+                        switch (taskForm.getToSelection()) {
                             case TaskConstants.CONVERSION_TYPE_DATABASE:
                                 musicXmlTask = new MusicXml2DbTask(taskInitializer);
                                 break;
@@ -94,7 +95,7 @@ public class TaskExecutor {
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_DATABASE:
-                        switch (tasksController.getToSelection()) {
+                        switch (taskForm.getToSelection()) {
                             case TaskConstants.CONVERSION_TYPE_MUSICXML:
                                 musicXmlTask = new Db2MusicXmlTask(taskInitializer);
                                 break;
@@ -107,7 +108,7 @@ public class TaskExecutor {
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                        switch (tasksController.getToSelection()) {
+                        switch (taskForm.getToSelection()) {
                             case TaskConstants.CONVERSION_TYPE_PDF:
                                 musicXmlTask = new Ly2PdfTask(taskInitializer);
                                 break;
@@ -122,7 +123,7 @@ public class TaskExecutor {
             if (musicXmlTask != null) {
                 musicXmlTask.execute();
                 AppProperties.addLocalPropertiesBundle();
-                tasksController.handlePdfReaderDisplay();
+                taskForm.handlePdfReaderDisplay();
             }
             System.err.println("Task finished");
         } catch (TaskException e) {

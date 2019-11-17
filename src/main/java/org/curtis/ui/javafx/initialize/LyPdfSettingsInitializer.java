@@ -1,14 +1,14 @@
 package org.curtis.ui.javafx.initialize;
 
-import org.curtis.ui.javafx.TasksController;
+import org.curtis.ui.javafx.form.TaskForm;
 
 public class LyPdfSettingsInitializer extends JavafxTaskInitializer {
-    public LyPdfSettingsInitializer(TasksController tasksController) {
-        super(tasksController);
+    public LyPdfSettingsInitializer(TaskForm taskForm) {
+        super(taskForm);
     }
 
     public void initializeNodeMap() {
-        nodeMap.put("lilypondLocation", tasksController.getNode("lilypondLocation"));
-        nodeMap.put("pdfReaderLocation", tasksController.getNode("pdfLocation"));
+        nodeMap.put("lilypondLocation", taskForm.getNode("lilypondLocation"));
+        nodeMap.put("pdfReaderLocation", taskForm.getNode("pdfLocation"));
     }
 }

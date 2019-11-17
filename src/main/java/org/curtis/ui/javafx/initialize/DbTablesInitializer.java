@@ -1,15 +1,15 @@
 package org.curtis.ui.javafx.initialize;
 
-import org.curtis.ui.javafx.TasksController;
+import org.curtis.ui.javafx.form.TaskForm;
 
 public class DbTablesInitializer extends JavafxTaskInitializer  {
-    public DbTablesInitializer(TasksController tasksController) {
-        super(tasksController);
+    public DbTablesInitializer(TaskForm taskForm) {
+        super(taskForm);
     }
 
     public void initializeNodeMap() {
-        nodeMap.put("createDatabase", tasksController.getNode("createTables"));
-        nodeMap.put("generateSchema", tasksController.getNode("generateSchema"));
-        nodeMap.put("schemaLocation", tasksController.getNode("schemaFileLocation"));
+        nodeMap.put("createDatabase", taskForm.getNode("createTables"));
+        nodeMap.put("generateSchema", taskForm.getNode("generateSchema"));
+        nodeMap.put("schemaLocation", taskForm.getNode("schemaFileLocation"));
     }
 }

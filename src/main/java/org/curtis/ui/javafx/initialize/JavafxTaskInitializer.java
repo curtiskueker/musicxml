@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputControl;
-import org.curtis.ui.javafx.TasksController;
+import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.task.TaskInitializer;
 
 import java.util.HashMap;
@@ -12,10 +12,10 @@ import java.util.Map;
 
 public abstract class JavafxTaskInitializer implements TaskInitializer {
     protected Map<String, Node> nodeMap = new HashMap<>();
-    protected TasksController tasksController;
+    protected TaskForm taskForm;
 
-    public JavafxTaskInitializer(TasksController tasksController) {
-        this.tasksController = tasksController;
+    public JavafxTaskInitializer(TaskForm taskForm) {
+        this.taskForm = taskForm;
     }
 
     public String getText(String nodeName) {

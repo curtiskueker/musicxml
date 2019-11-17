@@ -1,43 +1,43 @@
 package org.curtis.ui.javafx.initialize;
 
-import org.curtis.ui.javafx.TasksController;
+import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.task.TaskConstants;
 
 public class ConvertInitializer extends JavafxTaskInitializer {
-    public ConvertInitializer(TasksController tasksController) {
-        super(tasksController);
+    public ConvertInitializer(TaskForm taskForm) {
+        super(taskForm);
     }
 
     public void initializeNodeMap() {
-        String fromSelection = tasksController.getFromSelection();
-        String toSelection = tasksController.getToSelection();
+        String fromSelection = taskForm.getFromSelection();
+        String toSelection = taskForm.getToSelection();
 
         switch (fromSelection) {
             case TaskConstants.CONVERSION_TYPE_MUSICXML:
-                nodeMap.put("inputFile", tasksController.getNode("musicXmlFromFile"));
+                nodeMap.put("inputFile", taskForm.getNode("musicXmlFromFile"));
                 break;
             case TaskConstants.CONVERSION_TYPE_DATABASE:
-                nodeMap.put("scoreName", tasksController.getNode("scoreNameFrom"));
+                nodeMap.put("scoreName", taskForm.getNode("scoreNameFrom"));
                 break;
             case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                nodeMap.put("inputFile", tasksController.getNode("lyFromFile"));
+                nodeMap.put("inputFile", taskForm.getNode("lyFromFile"));
                 break;
         }
         switch (toSelection) {
             case TaskConstants.CONVERSION_TYPE_MUSICXML:
-                nodeMap.put("outputFile", tasksController.getNode("musicXmlToFile"));
-                nodeMap.put("skipComments", tasksController.getNode("skipComments"));
+                nodeMap.put("outputFile", taskForm.getNode("musicXmlToFile"));
+                nodeMap.put("skipComments", taskForm.getNode("skipComments"));
                 break;
             case TaskConstants.CONVERSION_TYPE_DATABASE:
-                nodeMap.put("scoreName", tasksController.getNode("scoreNameTo"));
+                nodeMap.put("scoreName", taskForm.getNode("scoreNameTo"));
                 break;
             case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                nodeMap.put("outputFile", tasksController.getNode("lyToFile"));
-                nodeMap.put("includeBreaks", tasksController.getNode("includePageBreaks"));
+                nodeMap.put("outputFile", taskForm.getNode("lyToFile"));
+                nodeMap.put("includeBreaks", taskForm.getNode("includePageBreaks"));
                 break;
             case TaskConstants.CONVERSION_TYPE_PDF:
-                nodeMap.put("outputFile", tasksController.getNode("pdfToFile"));
-                nodeMap.put("openPdf", tasksController.getNode("openPdf"));
+                nodeMap.put("outputFile", taskForm.getNode("pdfToFile"));
+                nodeMap.put("openPdf", taskForm.getNode("openPdf"));
                 break;
         }
     }
