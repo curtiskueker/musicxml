@@ -17,6 +17,8 @@ public class DatabaseExec extends MusicXmlScript {
     }
 
     public void execute() throws MusicXmlException {
+        if (!isCreateDatabase() && !isTestDatabase() && !isGenerateSchema()) return;
+
         try {
             if (isCreateDatabase()) {
                 System.err.println("Creating database tables ...");

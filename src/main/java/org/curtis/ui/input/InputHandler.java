@@ -1,13 +1,12 @@
 package org.curtis.ui.input;
 
 import org.curtis.musicxml.bin.MusicXmlScript;
+import org.curtis.ui.task.TaskInitializer;
 
 public abstract class InputHandler {
-    protected MusicXmlScript musicXmlScript;
+    protected InputHandler() {
 
-    protected InputHandler(MusicXmlScript musicXmlScript) {
-        this.musicXmlScript = musicXmlScript;
     }
 
-    public abstract void transferInputToTask();
+    public abstract MusicXmlScript transferInputToTask(TaskInitializer taskInitializer);
 }
