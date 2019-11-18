@@ -2,6 +2,7 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.Ly2Pdf;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.ui.input.Ly2PdfHandler;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
@@ -12,7 +13,7 @@ public class Ly2PdfTask extends MusicXmlTask {
     private Boolean openPdf;
 
     public Ly2PdfTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new Ly2PdfHandler());
     }
 
     public void executeTask() throws TaskException {

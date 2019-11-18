@@ -3,6 +3,7 @@ package org.curtis.ui.task;
 import org.curtis.musicxml.bin.MusicXml2Ly;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.ui.input.MusicXml2LyHandler;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
@@ -12,7 +13,7 @@ public class MusicXml2LyTask extends MusicXmlTask {
     private String outputFile;
 
     public MusicXml2LyTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new MusicXml2LyHandler());
     }
 
     public void executeTask() throws TaskException {

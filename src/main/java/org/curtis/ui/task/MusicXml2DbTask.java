@@ -2,6 +2,7 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.MusicXml2Db;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.ui.input.MusicXml2DbHandler;
 import org.curtis.ui.task.exception.TaskException;
 
 public class MusicXml2DbTask extends MusicXmlTask {
@@ -9,7 +10,7 @@ public class MusicXml2DbTask extends MusicXmlTask {
     private String inputFileName = "";
 
     public MusicXml2DbTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new MusicXml2DbHandler());
     }
 
     public void executeTask() throws TaskException {

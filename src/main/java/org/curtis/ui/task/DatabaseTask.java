@@ -2,6 +2,7 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.DatabaseExec;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.ui.input.DatabaseHandler;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
@@ -14,7 +15,7 @@ public class DatabaseTask extends MusicXmlTask {
     private String schemaLocation;
 
     public DatabaseTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new DatabaseHandler());
     }
 
     public void executeTask() throws TaskException {

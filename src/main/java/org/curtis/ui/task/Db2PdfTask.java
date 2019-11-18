@@ -2,6 +2,7 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.Db2Pdf;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.ui.input.Db2PdfHandler;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
@@ -12,7 +13,7 @@ public class Db2PdfTask extends MusicXmlTask {
     private Boolean openPdf;
 
     public Db2PdfTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new Db2PdfHandler());
     }
 
     public void executeTask() throws TaskException {

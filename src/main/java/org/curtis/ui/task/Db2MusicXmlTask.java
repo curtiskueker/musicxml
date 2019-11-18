@@ -2,6 +2,7 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.Db2MusicXml;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.ui.input.Db2MusicXmlHandler;
 import org.curtis.ui.task.exception.TaskException;
 import org.curtis.util.StringUtil;
 
@@ -12,7 +13,7 @@ public class Db2MusicXmlTask extends MusicXmlTask {
     private boolean skipComments;
 
     public Db2MusicXmlTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new Db2MusicXmlHandler());
     }
 
     public void executeTask() throws TaskException {

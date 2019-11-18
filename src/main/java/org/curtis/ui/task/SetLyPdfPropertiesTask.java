@@ -3,6 +3,7 @@ package org.curtis.ui.task;
 import org.curtis.musicxml.bin.SetProperties;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.input.SetLyPdfPropertiesHandler;
 import org.curtis.ui.task.exception.TaskException;
 
 public class SetLyPdfPropertiesTask extends MusicXmlTask {
@@ -10,7 +11,7 @@ public class SetLyPdfPropertiesTask extends MusicXmlTask {
     private String pdfReaderLocation;
 
     public SetLyPdfPropertiesTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new SetLyPdfPropertiesHandler());
     }
 
     public void executeTask() throws TaskException {

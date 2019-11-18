@@ -4,6 +4,7 @@ import org.curtis.musicxml.bin.DatabaseExec;
 import org.curtis.musicxml.bin.SetProperties;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.input.SetDbPropertiesHandler;
 import org.curtis.ui.task.exception.TaskException;
 
 public class SetDbPropertiesTask extends MusicXmlTask {
@@ -15,7 +16,7 @@ public class SetDbPropertiesTask extends MusicXmlTask {
     private boolean testDatabase;
 
     public SetDbPropertiesTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new SetDbPropertiesHandler());
     }
 
     public void executeTask() throws TaskException {

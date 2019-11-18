@@ -2,6 +2,7 @@ package org.curtis.ui.task;
 
 import org.curtis.musicxml.bin.SetProperties;
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.ui.input.SetPropertiesHandler;
 import org.curtis.ui.task.exception.TaskException;
 
 public class SetPropertiesTask extends MusicXmlTask {
@@ -14,7 +15,7 @@ public class SetPropertiesTask extends MusicXmlTask {
     private String pdfReaderLocation;
 
     public SetPropertiesTask(TaskInitializer taskInitializer) {
-        super(taskInitializer);
+        super(taskInitializer, new SetPropertiesHandler());
     }
 
     public void executeTask() throws TaskException {
