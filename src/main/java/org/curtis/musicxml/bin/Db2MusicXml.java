@@ -1,9 +1,11 @@
 package org.curtis.musicxml.bin;
 
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.util.StringUtil;
 
 public class Db2MusicXml extends MusicXmlScript {
     public void execute() throws MusicXmlException {
+        if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Empty output filename");
         outputResultsToFile(getXmlResults(getScoreFromDb()));
     }
 
