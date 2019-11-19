@@ -87,7 +87,7 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() throws BuildException {
-        directions.addAll(note.getDirections());
+        transferDirections(note);
         preNoteBuild();
         preDirectionBuild();
         startGraceBuild();
@@ -487,7 +487,7 @@ public class NoteBuilder extends MusicDataBuilder {
             NoteBuilder noteBuilder = new NoteBuilder(note);
             noteBuilders.add(noteBuilder);
 
-            directions.addAll(note.getDirections());
+            transferDirections(note);
 
             List<Notations> notationsList = note.getNotationsList();
             chord.getNotationsList().addAll(notationsList);
@@ -679,5 +679,11 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         return stringBuilder;
+    }
+
+    private void transferDirections(Note note) {
+        List<Direction> noteDirections = note.getDirections();
+        directions.addAll(noteDirections);
+        noteDirections.clear();
     }
 }
