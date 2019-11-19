@@ -1,16 +1,17 @@
 package org.curtis.ui.swing.handler;
 
+import org.curtis.ui.input.DatabaseHandler;
+import org.curtis.ui.input.Db2LyHandler;
+import org.curtis.ui.input.Db2MusicXmlHandler;
+import org.curtis.ui.input.Db2PdfHandler;
+import org.curtis.ui.input.InputHandler;
+import org.curtis.ui.input.Ly2PdfHandler;
+import org.curtis.ui.input.MusicXml2DbHandler;
+import org.curtis.ui.input.MusicXml2LyHandler;
+import org.curtis.ui.input.MusicXml2PdfHandler;
+import org.curtis.ui.input.SetPropertiesHandler;
 import org.curtis.ui.swing.SwingTaskInitializer;
-import org.curtis.ui.task.DatabaseTask;
-import org.curtis.ui.task.Db2LyTask;
-import org.curtis.ui.task.Db2MusicXmlTask;
-import org.curtis.ui.task.Db2PdfTask;
-import org.curtis.ui.task.Ly2PdfTask;
-import org.curtis.ui.task.MusicXml2DbTask;
-import org.curtis.ui.task.MusicXml2LyTask;
-import org.curtis.ui.task.MusicXml2PdfTask;
 import org.curtis.ui.task.MusicXmlTask;
-import org.curtis.ui.task.SetPropertiesTask;
 import org.curtis.ui.task.TaskConstants;
 import org.curtis.ui.task.exception.TaskException;
 
@@ -23,48 +24,48 @@ public class TaskHandler {
     }
 
     public static void handleTask(Map<String, Component> componentMap, String menuSelection, String convertFromSelection, String convertToSelection) {
-        MusicXmlTask musicXmlTask = null;
+        InputHandler inputHandler = null;
         SwingTaskInitializer swingTaskInitializer = new SwingTaskInitializer(componentMap);
 
         switch (menuSelection) {
             case TaskConstants.MENU_SET_PROPERTIES:
-                musicXmlTask = new SetPropertiesTask(swingTaskInitializer);
+                inputHandler = new SetPropertiesHandler();
                 break;
             case TaskConstants.MENU_DATABASE_TASKS:
-                musicXmlTask = new DatabaseTask(swingTaskInitializer);
+                inputHandler = new DatabaseHandler();
                 break;
             case TaskConstants.MENU_CONVERSION_TASKS:
                 switch (convertFromSelection) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         switch (convertToSelection) {
                             case TaskConstants.CONVERSION_TYPE_DATABASE:
-                                musicXmlTask = new MusicXml2DbTask(swingTaskInitializer);
+                                inputHandler = new MusicXml2DbHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                                musicXmlTask = new MusicXml2LyTask(swingTaskInitializer);
+                                inputHandler = new MusicXml2LyHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new MusicXml2PdfTask(swingTaskInitializer);
+                                inputHandler = new MusicXml2PdfHandler();
                                 break;
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_DATABASE:
                         switch (convertToSelection) {
                             case TaskConstants.CONVERSION_TYPE_MUSICXML:
-                                musicXmlTask = new Db2MusicXmlTask(swingTaskInitializer);
+                                inputHandler = new Db2MusicXmlHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                                musicXmlTask = new Db2LyTask(swingTaskInitializer);
+                                inputHandler = new Db2LyHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new Db2PdfTask(swingTaskInitializer);
+                                inputHandler = new Db2PdfHandler();
                                 break;
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_LILYPOND:
                         switch (convertToSelection) {
                             case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new Ly2PdfTask(swingTaskInitializer);
+                                inputHandler = new Ly2PdfHandler();
                                 break;
                         }
                         break;
@@ -73,7 +74,10 @@ public class TaskHandler {
         }
 
         try {
-            if (musicXmlTask != null) musicXmlTask.execute();
+            if (inputHandler != null) {
+                MusicXmlTask musicXmlTask = new MusicXmlTask(swingTaskInitializer, inputHandler);
+                musicXmlTask.execute();
+            }
             System.err.println("Task finished");
         } catch (TaskException e) {
             System.err.println(e.getMessage());

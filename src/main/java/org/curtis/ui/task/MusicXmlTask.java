@@ -6,7 +6,7 @@ import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.input.InputHandler;
 import org.curtis.ui.task.exception.TaskException;
 
-public abstract class MusicXmlTask {
+public class MusicXmlTask {
     protected TaskInitializer taskInitializer;
     protected InputHandler inputHandler;
 
@@ -14,7 +14,7 @@ public abstract class MusicXmlTask {
         MusicXmlUtil.DEBUG = true;
     }
 
-    protected MusicXmlTask(TaskInitializer taskInitializer, InputHandler inputHandler) {
+    public MusicXmlTask(TaskInitializer taskInitializer, InputHandler inputHandler) {
         this.taskInitializer = taskInitializer;
         this.inputHandler = inputHandler;
     }

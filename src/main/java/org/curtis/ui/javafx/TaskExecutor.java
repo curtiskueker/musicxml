@@ -1,6 +1,18 @@
 package org.curtis.ui.javafx;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.ui.input.DatabaseHandler;
+import org.curtis.ui.input.Db2LyHandler;
+import org.curtis.ui.input.Db2MusicXmlHandler;
+import org.curtis.ui.input.Db2PdfHandler;
+import org.curtis.ui.input.InputHandler;
+import org.curtis.ui.input.Ly2PdfHandler;
+import org.curtis.ui.input.MusicXml2DbHandler;
+import org.curtis.ui.input.MusicXml2LyHandler;
+import org.curtis.ui.input.MusicXml2PdfHandler;
+import org.curtis.ui.input.SetDbPropertiesHandler;
+import org.curtis.ui.input.SetLyPdfPropertiesHandler;
+import org.curtis.ui.input.ValidateXmlHandler;
 import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.javafx.handler.ConvertFormHandler;
 import org.curtis.ui.javafx.handler.DbSettingsFormHandler;
@@ -13,24 +25,13 @@ import org.curtis.ui.javafx.initialize.JavafxTaskInitializer;
 import org.curtis.ui.javafx.initialize.LyPdfSettingsInitializer;
 import org.curtis.ui.javafx.initialize.SaveDbSettingsInitializer;
 import org.curtis.ui.javafx.initialize.ValidateXmlInitializer;
-import org.curtis.ui.task.DatabaseTask;
-import org.curtis.ui.task.Db2LyTask;
-import org.curtis.ui.task.Db2MusicXmlTask;
-import org.curtis.ui.task.Db2PdfTask;
-import org.curtis.ui.task.Ly2PdfTask;
-import org.curtis.ui.task.MusicXml2DbTask;
-import org.curtis.ui.task.MusicXml2LyTask;
-import org.curtis.ui.task.MusicXml2PdfTask;
 import org.curtis.ui.task.MusicXmlTask;
-import org.curtis.ui.task.SetDbPropertiesTask;
-import org.curtis.ui.task.SetLyPdfPropertiesTask;
 import org.curtis.ui.task.TaskConstants;
-import org.curtis.ui.task.ValidateXmlTask;
 import org.curtis.ui.task.exception.TaskException;
 
 public class TaskExecutor {
     private String controlId;
-    TaskForm taskForm;
+    private TaskForm taskForm;
 
     public TaskExecutor(String controlId, TaskForm taskForm) {
         this.controlId = controlId;
@@ -59,24 +60,24 @@ public class TaskExecutor {
     }
 
     public void execute() {
-        MusicXmlTask musicXmlTask = null;
+        InputHandler inputHandler = null;
         JavafxTaskInitializer taskInitializer = null;
         switch (controlId) {
             case "saveSettingsButton":
                 taskInitializer = new SaveDbSettingsInitializer(taskForm);
-                musicXmlTask = new SetDbPropertiesTask(taskInitializer);
+                inputHandler = new SetDbPropertiesHandler();
                 break;
             case "executeLyPdf":
                 taskInitializer = new LyPdfSettingsInitializer(taskForm);
-                musicXmlTask = new SetLyPdfPropertiesTask(taskInitializer);
+                inputHandler = new SetLyPdfPropertiesHandler();
                 break;
             case "executeTables":
                 taskInitializer = new DbTablesInitializer(taskForm);
-                musicXmlTask = new DatabaseTask(taskInitializer);
+                inputHandler = new DatabaseHandler();
                 break;
             case "executeValidate":
                 taskInitializer = new ValidateXmlInitializer(taskForm);
-                musicXmlTask = new ValidateXmlTask(taskInitializer);
+                inputHandler = new ValidateXmlHandler();
                 break;
             case "executeConvert":
                 taskInitializer = new ConvertInitializer(taskForm);
@@ -84,33 +85,33 @@ public class TaskExecutor {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         switch (taskForm.getToSelection()) {
                             case TaskConstants.CONVERSION_TYPE_DATABASE:
-                                musicXmlTask = new MusicXml2DbTask(taskInitializer);
+                                inputHandler = new MusicXml2DbHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                                musicXmlTask = new MusicXml2LyTask(taskInitializer);
+                                inputHandler = new MusicXml2LyHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new MusicXml2PdfTask(taskInitializer);
+                                inputHandler = new MusicXml2PdfHandler();
                                 break;
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_DATABASE:
                         switch (taskForm.getToSelection()) {
                             case TaskConstants.CONVERSION_TYPE_MUSICXML:
-                                musicXmlTask = new Db2MusicXmlTask(taskInitializer);
+                                inputHandler = new Db2MusicXmlHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                                musicXmlTask = new Db2LyTask(taskInitializer);
+                                inputHandler = new Db2LyHandler();
                                 break;
                             case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new Db2PdfTask(taskInitializer);
+                                inputHandler = new Db2PdfHandler();
                                 break;
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_LILYPOND:
                         switch (taskForm.getToSelection()) {
                             case TaskConstants.CONVERSION_TYPE_PDF:
-                                musicXmlTask = new Ly2PdfTask(taskInitializer);
+                                inputHandler = new Ly2PdfHandler();
                                 break;
                         }
                         break;
@@ -119,8 +120,9 @@ public class TaskExecutor {
         }
 
         try {
-            if (taskInitializer != null) taskInitializer.initializeNodeMap();
-            if (musicXmlTask != null) {
+            if (taskInitializer != null && inputHandler != null) {
+                taskInitializer.initializeNodeMap();
+                MusicXmlTask musicXmlTask = new MusicXmlTask(taskInitializer, inputHandler);
                 musicXmlTask.execute();
                 AppProperties.addLocalPropertiesBundle();
                 taskForm.handlePdfReaderDisplay();
