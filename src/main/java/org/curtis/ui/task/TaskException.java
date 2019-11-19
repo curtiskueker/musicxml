@@ -1,4 +1,4 @@
-package org.curtis.ui.task.exception;
+package org.curtis.ui.task;
 
 import org.curtis.exception.BaseException;
 

@@ -4,7 +4,6 @@ import org.curtis.musicxml.bin.MusicXmlScript;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.ui.input.InputHandler;
-import org.curtis.ui.task.exception.TaskException;
 
 public class MusicXmlTask {
     protected TaskInitializer taskInitializer;

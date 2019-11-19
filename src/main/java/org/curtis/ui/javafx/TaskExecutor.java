@@ -27,7 +27,7 @@ import org.curtis.ui.javafx.initialize.SaveDbSettingsInitializer;
 import org.curtis.ui.javafx.initialize.ValidateXmlInitializer;
 import org.curtis.ui.task.MusicXmlTask;
 import org.curtis.ui.task.TaskConstants;
-import org.curtis.ui.task.exception.TaskException;
+import org.curtis.ui.task.TaskException;
 
 public class TaskExecutor {
     private String controlId;

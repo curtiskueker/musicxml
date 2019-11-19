@@ -13,7 +13,7 @@ import org.curtis.ui.input.SetPropertiesHandler;
 import org.curtis.ui.swing.SwingTaskInitializer;
 import org.curtis.ui.task.MusicXmlTask;
 import org.curtis.ui.task.TaskConstants;
-import org.curtis.ui.task.exception.TaskException;
+import org.curtis.ui.task.TaskException;
 
 import java.awt.Component;
 import java.util.Map;
