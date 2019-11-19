@@ -3,6 +3,7 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.part.HarmonyPartBuilder;
 import org.curtis.lilypond.part.PartBuilder;
+import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.Clef;
@@ -24,6 +25,7 @@ import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.util.MusicXmlUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -256,21 +258,26 @@ public class ScoreBuilder extends LilypondBuilder {
                 } else {
                     if (musicData instanceof Attributes) {
                         Attributes attributes = (Attributes)musicData;
+                        // adjust per-staff Attributes
                         List<Clef> clefs = attributes.getClefs();
                         for (Integer index = 0; index < staves; index++) {
+                            Attributes attributesCopy = AttributesUtil.attributesCopy(attributes);
+                            List<Clef> staffClefs = new ArrayList<>();
                             Integer staffNumber = index + 1;
-                            Measure staffMeasure = staffMeasures[index];
-                            Attributes staffMeasureAttributes = new Attributes();
                             for (Clef clef : clefs) {
                                 Integer clefNumber = clef.getNumber();
-                                if (clefNumber == null || staffNumber.equals(clefNumber)) staffMeasureAttributes.getClefs().add(clef);
+                                if (clefNumber == null || staffNumber.equals(clefNumber)) {
+                                    staffClefs.add(clef);
+                                }
                             }
-                            staffMeasure.getMusicDataList().add(staffMeasureAttributes);
+                            attributesCopy.setClefs(staffClefs);
+                            Measure staffMeasure = staffMeasures[index];
+                            staffMeasure.getMusicDataList().add(attributesCopy);
                         }
-                        clefs.clear();
-                    }
-                    for(Measure staffMeasure : staffMeasures) {
-                        staffMeasure.getMusicDataList().add(musicData);
+                    } else {
+                        for (Measure staffMeasure : staffMeasures) {
+                            staffMeasure.getMusicDataList().add(musicData);
+                        }
                     }
                 }
             }
