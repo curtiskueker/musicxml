@@ -139,6 +139,7 @@ public class ScoreBuilder extends LilypondBuilder {
 
     private List<MusicData> getMusicDataList(Measure measure) {
         List<MeasureItem> measureItems = measure.getMeasureItems();
+        measure.getMusicDataList().clear();
         if (!measureItems.isEmpty()) {
             for (MeasureItem measureItem : measureItems) {
                 try {
