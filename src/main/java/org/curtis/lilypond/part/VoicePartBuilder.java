@@ -200,7 +200,6 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     // chord type
                     if (previousNote != null) {
                         if (fullNote.isChord() && !previousNote.getFullNote().isChord()) {
-                            previousNote.getFullNote().setChord(true);
                             previousNote.getFullNote().setChordType(Connection.START);
                         } else if (fullNote.isChord() && previousNote.getFullNote().isChord()) {
                             previousNote.getFullNote().setChordType(Connection.CONTINUE);
@@ -224,7 +223,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 tupletsOn.put(voice, false);
                                 break;
                         }
-                    } else if (note.getFullNote().isChord() && previousNote.getFullNote().isChord() && measureBuilder.getTupletType(previousNote) == Connection.STOP) {
+                    } else if (note.getFullNote().isChord() && previousNote.getFullNote().getChordType() != null && measureBuilder.getTupletType(previousNote) == Connection.STOP) {
                         // adjust end tuplet on chords
                         measureBuilder.setTupletType(previousNote, Connection.CONTINUE);
                         measureBuilder.setTupletType(note, Connection.STOP);
