@@ -83,10 +83,10 @@ public class MusicXmlUtil {
         return sessionFactory.getTransaction();
     }
 
-    public static void getNewDbTransaction() throws DBException {
+    public static DBTransaction getNewDbTransaction() throws DBException {
         clearDb();
 
-        getDbTransaction();
+        return getDbTransaction();
     }
 
     public static void clearDb() throws DBException {

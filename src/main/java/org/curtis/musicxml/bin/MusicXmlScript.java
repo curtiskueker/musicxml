@@ -118,9 +118,9 @@ public abstract class MusicXmlScript {
         try {
             Score score = null;
             if (getScoreId() != null) {
-                score = MusicXmlUtil.getDbTransaction().getObjectById(Score.class, getScoreId());
+                score = MusicXmlUtil.getNewDbTransaction().getObjectById(Score.class, getScoreId());
             } else if (StringUtil.isNotEmpty(getScoreName())) {
-                score = MusicXmlUtil.getDbTransaction().find(Score.class, "scoreName", getScoreName());
+                score = MusicXmlUtil.getNewDbTransaction().find(Score.class, "scoreName", getScoreName());
             }
             if (score == null) {
                 throw new MusicXmlException("Score not found");
