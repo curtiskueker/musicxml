@@ -51,6 +51,22 @@ public class MusicXmlUtil {
     public static Boolean DEBUG = false;
     public static Boolean INCLUDE_BREAKS = false;
 
+    private static final Map<String, Class> measureItemElements = Map.ofEntries(
+            Map.entry("note", Note.class),
+            Map.entry("backup", Backup.class),
+            Map.entry("forward", Forward.class),
+            Map.entry("direction", Direction.class),
+            Map.entry("attributes", Attributes.class),
+            Map.entry("harmony", Harmony.class),
+            Map.entry("figured bass", FiguredBass.class),
+            Map.entry("print", Print.class),
+            Map.entry("sound", Sound.class),
+            Map.entry("barline", Barline.class),
+            Map.entry("grouping", Grouping.class),
+            Map.entry("link", Link.class),
+            Map.entry("bookmark", Bookmark.class)
+    );
+
     private MusicXmlUtil() {
 
     }
@@ -112,38 +128,12 @@ public class MusicXmlUtil {
 
         Integer measureItemId = measureItem.getId();
         String musicDataType = measureItem.getMusicDataType();
+        Class<MusicData> measureItemClass = measureItemElements.get(musicDataType);
+
+        if (measureItemClass == null) throw new MusicXmlException("MeasureItem type not found");
 
         try {
-            switch (musicDataType) {
-                case "note":
-                    return getDbTransaction().getObjectById(Note.class, measureItemId);
-                case "backup":
-                    return getDbTransaction().getObjectById(Backup.class, measureItemId);
-                case "forward":
-                    return getDbTransaction().getObjectById(Forward.class, measureItemId);
-                case "direction":
-                    return getDbTransaction().getObjectById(Direction.class, measureItemId);
-                case "attributes":
-                    return getDbTransaction().getObjectById(Attributes.class, measureItemId);
-                case "harmony":
-                    return getDbTransaction().getObjectById(Harmony.class, measureItemId);
-                case "figured bass":
-                    return getDbTransaction().getObjectById(FiguredBass.class, measureItemId);
-                case "print":
-                    return getDbTransaction().getObjectById(Print.class, measureItemId);
-                case "sound":
-                    return getDbTransaction().getObjectById(Sound.class, measureItemId);
-                case "barline":
-                    return getDbTransaction().getObjectById(Barline.class, measureItemId);
-                case "grouping":
-                    return getDbTransaction().getObjectById(Grouping.class, measureItemId);
-                case "link":
-                    return getDbTransaction().getObjectById(Link.class, measureItemId);
-                case "bookmark":
-                    return getDbTransaction().getObjectById(Bookmark.class, measureItemId);
-                default:
-                    throw new MusicXmlException("MeasureItem type not found");
-            }
+            return getDbTransaction().getObjectById(measureItemClass, measureItemId);
         } catch (DBException e) {
             throw new MusicXmlException(e);
         }
