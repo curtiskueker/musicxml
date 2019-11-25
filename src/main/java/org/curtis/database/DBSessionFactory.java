@@ -4,6 +4,7 @@ import org.curtis.properties.AppProperties;
 import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
+import org.hibernate.tool.schema.spi.SchemaManagementException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ import java.util.Properties;
 
 public class DBSessionFactory {
     private static DBSessionFactory sessionFactory;
+    private static boolean schemaValidated = false;
 
     private String databaseName;
     private String databaseType;
@@ -27,6 +29,7 @@ public class DBSessionFactory {
     private DBTransaction transaction = null;
 
     private static final Map<Object, Object> createDbProperties;
+    private static final Map<Object, Object> validateDbProperties;
     private static final Map<Object, Object> generateSchemaProperties;
 
     private static final Map<Object, Object> mySqlProperties;
@@ -49,6 +52,9 @@ public class DBSessionFactory {
         createDbProperties = new HashMap<>();
         createDbProperties.put("hibernate.hbm2ddl.auto", "update");
 
+        validateDbProperties = new HashMap<>();
+        validateDbProperties.put("hibernate.hbm2ddl.auto", "validate");
+
         generateSchemaProperties = new HashMap<>();
         generateSchemaProperties.put("javax.persistence.schema-generation.scripts.action", "create");
         generateSchemaProperties.put("hibernate.hbm2ddl.delimiter", ";");
@@ -64,6 +70,10 @@ public class DBSessionFactory {
     }
 
     private void instantiateSessionFactory() throws DBException {
+        instantiateSessionFactory(false);
+    }
+
+    private void instantiateSessionFactory(boolean createTables) throws DBException {
         try {
             if (StringUtil.isEmpty(databaseType)) throw new DBException("Error: Database type undefined");
 
@@ -99,12 +109,22 @@ public class DBSessionFactory {
             jpaProperties.put("hibernate.show_sql", AppProperties.getBoolean("database.hibernate.show_sql"));
             jpaProperties.put("hibernate.format_sql", AppProperties.getBoolean("database.hibernate.format_sql"));
 
+            if (createTables) jpaProperties.putAll(createDbProperties);
+            else if (!schemaValidated) jpaProperties.putAll(validateDbProperties);
+
             jpaProperties.putAll(additionalProperties);
 
             emf = Persistence.createEntityManagerFactory(persistenceUnitName, jpaProperties);
+            schemaValidated = true;
+
             System.err.println("Database initialized.");
         } catch (Exception e) {
-            throw new DBException(e);
+            if (e.getCause() instanceof SchemaManagementException) {
+                createDb();
+                instantiateSessionFactory();
+                if (!schemaValidated) throw new DBException("Error: Unable to create database tables");
+            }
+            else throw new DBException(e);
         }
     }
 
@@ -138,8 +158,7 @@ public class DBSessionFactory {
     public static void createDb() throws DBException {
         try {
             DBSessionFactory dbSessionFactory = new DBSessionFactory();
-            dbSessionFactory.getAdditionalProperties().putAll(createDbProperties);
-            dbSessionFactory.instantiateSessionFactory();
+            dbSessionFactory.instantiateSessionFactory(true);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DBException(e);
