@@ -30,6 +30,7 @@ public class ConvertInitializer extends JavafxTaskInitializer {
                 break;
             case TaskConstants.CONVERSION_TYPE_DATABASE:
                 nodeMap.put("scoreName", taskForm.getNode("scoreNameTo"));
+                taskForm.setResetScoreNames();
                 break;
             case TaskConstants.CONVERSION_TYPE_LILYPOND:
                 nodeMap.put("outputFile", taskForm.getNode("lyToFile"));

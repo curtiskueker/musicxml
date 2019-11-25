@@ -136,4 +136,14 @@ public class TasksController {
     private void setValidateLocation() {
         taskForm.setOpenFileLocationInTextField("validateLocation");
     }
+
+    @FXML
+    private void scoreNameSelected() {
+        taskForm.scoreNameSelected();
+    }
+
+    @FXML
+    private void scoreNameDeleteChecked() {
+        taskForm.scoreNameDeleteChecked();
+    }
 }

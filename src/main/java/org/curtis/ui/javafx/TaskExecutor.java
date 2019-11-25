@@ -1,10 +1,12 @@
 package org.curtis.ui.javafx;
 
+import javafx.application.Platform;
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.input.DatabaseHandler;
 import org.curtis.ui.input.Db2LyHandler;
 import org.curtis.ui.input.Db2MusicXmlHandler;
 import org.curtis.ui.input.Db2PdfHandler;
+import org.curtis.ui.input.DeleteScoreHandler;
 import org.curtis.ui.input.InputHandler;
 import org.curtis.ui.input.Ly2PdfHandler;
 import org.curtis.ui.input.MusicXml2DbHandler;
@@ -21,6 +23,7 @@ import org.curtis.ui.javafx.handler.FormHandler;
 import org.curtis.ui.javafx.handler.LyPdfSettingsFormHandler;
 import org.curtis.ui.javafx.initialize.ConvertInitializer;
 import org.curtis.ui.javafx.initialize.DbTablesInitializer;
+import org.curtis.ui.javafx.initialize.DeleteScoreInitializer;
 import org.curtis.ui.javafx.initialize.JavafxTaskInitializer;
 import org.curtis.ui.javafx.initialize.LyPdfSettingsInitializer;
 import org.curtis.ui.javafx.initialize.SaveDbSettingsInitializer;
@@ -109,13 +112,15 @@ public class TaskExecutor {
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                        switch (taskForm.getToSelection()) {
-                            case TaskConstants.CONVERSION_TYPE_PDF:
-                                inputHandler = new Ly2PdfHandler();
-                                break;
+                        if (TaskConstants.CONVERSION_TYPE_PDF.equals(taskForm.getToSelection())) {
+                            inputHandler = new Ly2PdfHandler();
                         }
                         break;
                 }
+                break;
+            case "executeDelete":
+                taskInitializer = new DeleteScoreInitializer(taskForm);
+                inputHandler = new DeleteScoreHandler();
                 break;
         }
 
@@ -124,8 +129,11 @@ public class TaskExecutor {
                 taskInitializer.initializeNodeMap();
                 MusicXmlTask musicXmlTask = new MusicXmlTask(taskInitializer, inputHandler);
                 musicXmlTask.execute();
-                AppProperties.addLocalPropertiesBundle();
-                taskForm.handlePdfReaderDisplay();
+
+                Platform.runLater(() -> {
+                    AppProperties.addLocalPropertiesBundle();
+                    taskForm.handleDisplayUpdates();
+                });
             }
             System.err.println("Task finished");
         } catch (TaskException e) {

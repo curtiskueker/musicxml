@@ -6,10 +6,6 @@ import org.curtis.ui.task.TaskInitializer;
 import org.curtis.util.StringUtil;
 
 public class DatabaseHandler extends InputHandler {
-    public DatabaseHandler() {
-
-    }
-
     @Override
     public MusicXmlScript transferInputToTask(TaskInitializer taskInitializer) {
         DatabaseExec databaseExec = new DatabaseExec();

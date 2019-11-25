@@ -24,6 +24,7 @@ public class TaskForm {
     private StatusOutput statusOutput;
     private TextArea statusTextArea;
     private ConvertFormHandler convertFormHandler;
+    private boolean resetScoreNames = false;
 
     private Thread outputThread;
 
@@ -80,6 +81,10 @@ public class TaskForm {
         return (TextField)getNode(nodeName);
     }
 
+    private CheckBox getCheckbox(String nodeName) {
+        return (CheckBox)getNode(nodeName);
+    }
+
     public String getFromSelection() {
         ComboBox<String> fromList = getSelectList("convertFromList");
         return fromList.getValue();
@@ -99,9 +104,39 @@ public class TaskForm {
     }
 
     public boolean checkboxOn(String controlName) {
-        CheckBox checkBox = (CheckBox)getNode(controlName);
+        CheckBox checkBox = getCheckbox(controlName);
 
         return checkBox.isSelected();
+    }
+
+    public void scoreNameSelected() {
+        CheckBox scoreNameDeleteCheckBox = getScoreNameDeleteCheckbox();
+        scoreNameDeleteCheckBox.setVisible(StringUtil.isNotEmpty(getScoreNameSelection()));
+        scoreNameDeleteCheckBox.setSelected(false);
+        convertFormHandler.scoreNameDeleteChecked("", false);
+    }
+
+    private String getScoreNameSelection() {
+        return getSelectList("scoreNameFrom").getValue();
+    }
+
+    public void scoreNameDeleteChecked() {
+        convertFormHandler.scoreNameDeleteChecked(getScoreNameSelection(), getScoreNameDeleteCheckbox().isSelected());
+    }
+
+    private CheckBox getScoreNameDeleteCheckbox() {
+        return getCheckbox("scoreNameDelete");
+    }
+
+    public void setResetScoreNames() {
+        resetScoreNames = true;
+    }
+
+    private void handleResetScoreNames() {
+        if (!resetScoreNames) return;
+
+        convertFormHandler.clearScoreNameFrom();
+        convertFormHandler.setScoreNameFrom();
     }
 
     public void showPassword() {
@@ -154,17 +189,16 @@ public class TaskForm {
         convertFormHandler.initializeForm();
     }
 
+    public void handleDisplayUpdates() {
+        handleResetScoreNames();
+        handlePdfReaderDisplay();
+    }
+
     public void handlePdfReaderDisplay() {
-        if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.pdfreader"))) {
-            getNode("openPdf").setVisible(false);
-            getNode("openPdfLabel1").setVisible(true);
-            getNode("openPdfLabel2").setVisible(true);
-            getNode("openPdfLabel3").setVisible(true);
-        } else {
-            getNode("openPdf").setVisible(true);
-            getNode("openPdfLabel1").setVisible(false);
-            getNode("openPdfLabel2").setVisible(false);
-            getNode("openPdfLabel3").setVisible(false);
-        }
+        boolean pdfReaderSet = StringUtil.isNotEmpty(AppProperties.getOptionalProperty("location.pdfreader"));
+        getNode("openPdf").setVisible(pdfReaderSet);
+        getNode("openPdfLabel1").setVisible(!pdfReaderSet);
+        getNode("openPdfLabel2").setVisible(!pdfReaderSet);
+        getNode("openPdfLabel3").setVisible(!pdfReaderSet);
     }
 }

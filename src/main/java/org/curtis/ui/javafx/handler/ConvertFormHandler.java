@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import org.curtis.musicxml.util.MusicXmlUtil;
@@ -29,11 +30,12 @@ public class ConvertFormHandler extends FormHandler {
     private static final Pair<String, String> LY_TO_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_LILYPOND, "lyToBox");
     private static final Pair<String, String> PDF_TO_SELECTION = new Pair<>(TaskConstants.CONVERSION_TYPE_PDF, "pdfToBox");
     private static final Pair<String, String> PDF_TO_OFF_SELECTION = new Pair<>("PDF File Off", "pdfToOffBox");
+    private static final Pair<String, String> DELETE_SCORE_SELECTION = new Pair<>("Delete Score", "deleteScoreToBox");
     private static final List<Pair<String, String>> FROM_SELECTIONS = new ArrayList<>(
             Arrays.asList(EMPTY_SELECTION, MUSICXML_FROM_SELECTION, DB_FROM_SELECTION, LY_FROM_SELECTION)
     );
     private static final List<Pair<String, String>> TO_SELECTIONS = new ArrayList<>(
-            Arrays.asList(EMPTY_SELECTION, MUSICXML_TO_SELECTION, DB_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION, PDF_TO_OFF_SELECTION)
+            Arrays.asList(EMPTY_SELECTION, MUSICXML_TO_SELECTION, DB_TO_SELECTION, LY_TO_SELECTION, PDF_TO_SELECTION, PDF_TO_OFF_SELECTION, DELETE_SCORE_SELECTION)
     );
     private static final Map<Pair<String, String>, List<Pair<String, String>>> SELECTION_MAP = Map.ofEntries(
             Map.entry(EMPTY_SELECTION, new ArrayList<>(Collections.singletonList(EMPTY_SELECTION))),
@@ -93,21 +95,37 @@ public class ConvertFormHandler extends FormHandler {
         }
     }
 
+    public void scoreNameDeleteChecked(String scoreName, boolean checked) {
+        if (checked) {
+            ComboBox<String> convertToList = taskForm.getSelectList("convertToList");
+            convertToList.setItems(FXCollections.observableArrayList(Collections.singletonList(DELETE_SCORE_SELECTION.getKey())));
+            convertToList.setValue(DELETE_SCORE_SELECTION.getKey());
+            Label scoreLabel = (Label)taskForm.getNode("deleteScoreLabel2");
+            scoreLabel.setText(scoreName);
+            showToBox(DELETE_SCORE_SELECTION.getValue());
+        } else {
+            fromListSelected(TaskConstants.CONVERSION_TYPE_DATABASE);
+        }
+    }
+
     private Pair<String, String> getSelectedPair(String selectionName, List<Pair<String, String>> selectionList) {
         return selectionList.stream().filter(pair -> pair.getKey().equals(selectionName)).findFirst().orElse(null);
     }
 
-    private void setScoreNameFrom() {
-        ComboBox<String> scoreNameFrom = taskForm.getSelectList("scoreNameFrom");
+    private ComboBox<String> getScoreNameList() {
+        return taskForm.getSelectList("scoreNameFrom");
+    }
+
+    public void setScoreNameFrom() {
+        ComboBox<String> scoreNameFrom = getScoreNameList();
         if (!scoreNameFrom.getItems().isEmpty()) return;
 
         ObservableList<String> scoreNames = FXCollections.observableArrayList(MusicXmlUtil.getScoreNames());
         scoreNameFrom.setItems(scoreNames);
     }
 
-    private void clearScoreNameFrom() {
-        ComboBox<String> scoreNameFrom = taskForm.getSelectList("scoreNameFrom");
-        scoreNameFrom.getItems().clear();
+    public void clearScoreNameFrom() {
+        getScoreNameList().getItems().clear();
     }
 
     private void showFromBox(String boxName) {
@@ -116,8 +134,8 @@ public class ConvertFormHandler extends FormHandler {
 
     private void showToBox(String boxName) {
         showBox(TO_SELECTIONS, boxName);
-        Button executeConvert = (Button)taskForm.getNode("executeConvert");
-        executeConvert.setVisible(StringUtil.isNotEmpty(boxName) && !boxName.equals("pdfToOffBox"));
+        getExecuteButton().setVisible(StringUtil.isNotEmpty(boxName) && !boxName.equals("pdfToOffBox") && !boxName.equals("deleteScoreToBox"));
+        getDeleteButton().setVisible(StringUtil.isNotEmpty(boxName) && boxName.equals("deleteScoreToBox"));
     }
 
     private void showBox(List<Pair<String, String>> boxes, String boxName) {
@@ -135,5 +153,9 @@ public class ConvertFormHandler extends FormHandler {
 
     private Button getExecuteButton() {
         return (Button)taskForm.getNode("executeConvert");
+    }
+
+    private Button getDeleteButton() {
+        return (Button)taskForm.getNode("executeDelete");
     }
 }

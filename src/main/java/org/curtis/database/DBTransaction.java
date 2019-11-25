@@ -45,6 +45,16 @@ public class DBTransaction {
         }
     }
 
+    public void delete(Object object) throws DBException {
+        checkDatabase();
+
+        try {
+            em.remove(object);
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
+    }
+
     public <T> T getObjectById(Class<T> classObject, int id) throws DBException {
         checkDatabase();
 
@@ -88,8 +98,6 @@ public class DBTransaction {
         }
     }
 
-    // Private helper method that checks that the database is in a valid
-    // state to execute against.  Throws an exception if it is not.
     private void checkDatabase() throws DBException {
         if (em == null || !em.isOpen()) {
             throw new DBException("Database is closed");
