@@ -42,9 +42,6 @@ public class TaskForm {
 
     public void initialize() {
         statusOutput = new StatusOutput(statusTextArea);
-        PrintStream statusPrintStream = new PrintStream(statusOutput);
-        System.setErr(statusPrintStream);
-        System.setOut(statusPrintStream);
 
         Runnable outputRunnable = statusOutput::handle;
         outputThread = new Thread(outputRunnable);
@@ -137,6 +134,15 @@ public class TaskForm {
 
         convertFormHandler.clearScoreNameFrom();
         convertFormHandler.setScoreNameFrom();
+    }
+
+    public void showSql(String controlName) {
+        boolean checkboxOn = checkboxOn(controlName);
+
+        getCheckbox("showSqlFrom").setSelected(checkboxOn);
+        getCheckbox("showSqlTo").setSelected(checkboxOn);
+
+        statusOutput.getOutStream().setPrintToBuffer(checkboxOn);
     }
 
     public void showPassword() {

@@ -2,27 +2,28 @@ package org.curtis.ui.javafx;
 
 import javafx.scene.control.TextArea;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintStream;
 
-public class StatusOutput extends OutputStream {
-    private TextArea textArea;
+public class StatusOutput {
+    public static final boolean PRINT_ON = true;
+    public static final boolean PRINT_OFF = false;
+
     private StringBuilder buffer = new StringBuilder();
+
+    private StatusPrintStream errStream = new StatusPrintStream(buffer, PRINT_ON);
+    private StatusPrintStream outStream = new StatusPrintStream(buffer, PRINT_OFF);
+
+    private TextArea textArea;
     private static final long SLEEP_MILLIS = 100;
 
     public StatusOutput(TextArea textArea) {
         this.textArea = textArea;
+        System.setErr(new PrintStream(errStream));
+        System.setOut(new PrintStream(outStream));
     }
 
-    @Override
-    public void write(int b) throws IOException {
-        char input = (char)b;
-        buffer.append(input);
-    }
-
-    public void clear() {
-        clearBuffer();
-        textArea.clear();
+    public StatusPrintStream getOutStream() {
+        return outStream;
     }
 
     public void handle() {
@@ -37,6 +38,11 @@ public class StatusOutput extends OutputStream {
         }
     }
 
+    public void clear() {
+        clearBuffer();
+        textArea.clear();
+    }
+
     private void flushOutput() {
         if (buffer.length() == 0) return;
 
@@ -46,6 +52,6 @@ public class StatusOutput extends OutputStream {
     }
 
     private void clearBuffer() {
-        buffer = new StringBuilder();
+        buffer.delete(0, buffer.length());
     }
 }

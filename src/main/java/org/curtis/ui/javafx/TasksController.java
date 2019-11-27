@@ -3,6 +3,7 @@ package org.curtis.ui.javafx;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -145,5 +146,10 @@ public class TasksController {
     @FXML
     private void scoreNameDeleteChecked() {
         taskForm.scoreNameDeleteChecked();
+    }
+
+    @FXML
+    private void showSql(ActionEvent actionEvent) {
+        taskForm.showSql(((Node)actionEvent.getSource()).getId());
     }
 }
