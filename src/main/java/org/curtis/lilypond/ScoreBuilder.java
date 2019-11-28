@@ -141,15 +141,15 @@ public class ScoreBuilder extends LilypondBuilder {
 
     private List<MusicData> getMusicDataList(Measure measure) {
         List<MeasureItem> measureItems = measure.getMeasureItems();
+        if (measureItems.isEmpty()) return measure.getMusicDataList();
+
         measure.getMusicDataList().clear();
-        if (!measureItems.isEmpty()) {
-            for (MeasureItem measureItem : measureItems) {
-                try {
-                    MusicData musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
-                    measure.getMusicDataList().add(musicData);
-                } catch (MusicXmlException e) {
-                    displayMeasureMessage(measure, "MusicData not found for " + measureItem.getMusicDataType());
-                }
+        for (MeasureItem measureItem : measureItems) {
+            try {
+                MusicData musicData = MusicXmlUtil.getMusicDataForMeasureItem(measureItem);
+                measure.getMusicDataList().add(musicData);
+            } catch (MusicXmlException e) {
+                displayMeasureMessage(measure, "MusicData not found for " + measureItem.getMusicDataType());
             }
         }
 
