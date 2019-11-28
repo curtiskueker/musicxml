@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.curtis.properties.AppProperties;
 import org.curtis.ui.javafx.StatusOutput;
 import org.curtis.ui.javafx.handler.ConvertFormHandler;
+import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
 import java.io.File;
@@ -108,7 +109,7 @@ public class TaskForm {
         CheckBox scoreNameDeleteCheckBox = getScoreNameDeleteCheckbox();
         scoreNameDeleteCheckBox.setVisible(StringUtil.isNotEmpty(getScoreNameSelection()));
         scoreNameDeleteCheckBox.setSelected(false);
-        convertFormHandler.scoreNameDeleteChecked("", false);
+        if (getFromSelection().equals(TaskConstants.CONVERSION_TYPE_DATABASE)) convertFormHandler.scoreNameDeleteChecked("", false);
     }
 
     private String getScoreNameSelection() {
