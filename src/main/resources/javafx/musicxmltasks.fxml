@@ -46,7 +46,7 @@
                                     <VBox.margin>
                                         <Insets bottom="10.0" />
                                     </VBox.margin></HBox>
-                                <SplitPane fx:id="toFromSplitPane" dividerPositions="0.5" prefHeight="600.0" prefWidth="600.0">
+                                <SplitPane fx:id="toFromSplitPane" dividerPositions="0.5" prefHeight="450.0" prefWidth="600.0">
                                     <items>
                                         <StackPane fx:id="fromPane" prefHeight="150.0" prefWidth="200.0">
                                             <children>
@@ -329,7 +329,7 @@
                                         </StackPane>
                                     </items>
                                 </SplitPane>
-                                <Pane fx:id="executeConvertPane" prefHeight="150.0" prefWidth="200.0">
+                                <Pane fx:id="executeConvertPane" prefHeight="125.0" prefWidth="200.0">
                                     <children>
                                         <Button fx:id="executeConvert" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonPressed" text="Convert" visible="false" />
                               <Button fx:id="executeDelete" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonPressed" text="Delete" visible="false" />
@@ -495,7 +495,6 @@
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
@@ -517,7 +516,7 @@
                                         </Label>
                                         <CheckBox fx:id="createTables" mnemonicParsing="false" GridPane.columnIndex="1" />
                                         <CheckBox fx:id="generateSchema" mnemonicParsing="false" onAction="#showSchemaFileLocation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Button fx:id="executeTables" mnemonicParsing="false" onAction="#buttonPressed" text="Execute" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                                        <Button fx:id="executeTables" mnemonicParsing="false" onAction="#buttonPressed" text="Execute" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                         <Hyperlink fx:id="chooseSchemaLocationLink" onAction="#chooseSchemaLocation" text="Choose schema location" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                             <GridPane.margin>
                                                 <Insets right="10.0" />
@@ -583,9 +582,9 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <ScrollPane fx:id="statusPane" fitToHeight="true" fitToWidth="true">
+        <ScrollPane fx:id="statusPane" fitToHeight="true" fitToWidth="true" prefHeight="300.0" prefWidth="600.0">
             <content>
-                <TextArea fx:id="statusTextArea" editable="false" prefHeight="100.0" prefWidth="600.0" />
+                <TextArea fx:id="statusTextArea" editable="false" prefHeight="300.0" prefWidth="600.0" />
             </content>
         </ScrollPane>
     </children>
