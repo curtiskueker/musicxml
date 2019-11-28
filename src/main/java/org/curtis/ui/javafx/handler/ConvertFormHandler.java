@@ -44,6 +44,7 @@ public class ConvertFormHandler extends FormHandler {
             Map.entry(LY_FROM_SELECTION, new ArrayList<>(Arrays.asList(EMPTY_SELECTION, PDF_TO_SELECTION)))
     );
     private static Boolean FORM_INITIALIZED = false;
+    private boolean resetScoreNames = true;
 
     public ConvertFormHandler(TaskForm taskForm) {
         super(taskForm);
@@ -79,7 +80,7 @@ public class ConvertFormHandler extends FormHandler {
         showFromBox(fromSelection.getValue());
 
         if (selectionName.equals(TaskConstants.CONVERSION_TYPE_DATABASE)) setScoreNameFrom();
-        else clearScoreNameFrom();
+        else setResetScoreNames();
     }
 
     public void toListSelected(String selectionName) {
@@ -117,15 +118,17 @@ public class ConvertFormHandler extends FormHandler {
     }
 
     public void setScoreNameFrom() {
-        ComboBox<String> scoreNameFrom = getScoreNameList();
-        if (!scoreNameFrom.getItems().isEmpty()) return;
+        if (!resetScoreNames) return;
 
+        ComboBox<String> scoreNameFrom = getScoreNameList();
         ObservableList<String> scoreNames = FXCollections.observableArrayList(MusicXmlUtil.getScoreNames());
         scoreNameFrom.setItems(scoreNames);
+
+        resetScoreNames = false;
     }
 
-    public void clearScoreNameFrom() {
-        getScoreNameList().getItems().clear();
+    public void setResetScoreNames() {
+        resetScoreNames = true;
     }
 
     private void showFromBox(String boxName) {

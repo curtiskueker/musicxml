@@ -16,7 +16,6 @@ import org.curtis.ui.javafx.handler.ConvertFormHandler;
 import org.curtis.util.StringUtil;
 
 import java.io.File;
-import java.io.PrintStream;
 
 public class TaskForm {
     // The outermost Container
@@ -24,7 +23,6 @@ public class TaskForm {
     private StatusOutput statusOutput;
     private TextArea statusTextArea;
     private ConvertFormHandler convertFormHandler;
-    private boolean resetScoreNames = false;
 
     private Thread outputThread;
 
@@ -126,13 +124,10 @@ public class TaskForm {
     }
 
     public void setResetScoreNames() {
-        resetScoreNames = true;
+        convertFormHandler.setResetScoreNames();
     }
 
     private void handleResetScoreNames() {
-        if (!resetScoreNames) return;
-
-        convertFormHandler.clearScoreNameFrom();
         convertFormHandler.setScoreNameFrom();
     }
 
