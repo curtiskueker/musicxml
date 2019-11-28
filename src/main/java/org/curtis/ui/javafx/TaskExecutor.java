@@ -65,14 +65,18 @@ public class TaskExecutor {
     public void execute() {
         InputHandler inputHandler = null;
         JavafxTaskInitializer taskInitializer = null;
+        boolean isPropertiesSettingsUpdate = false;
+        boolean isDbUpdate = false;
         switch (controlId) {
             case "saveSettingsButton":
                 taskInitializer = new SaveDbSettingsInitializer(taskForm);
                 inputHandler = new SetDbPropertiesHandler();
+                isPropertiesSettingsUpdate = true;
                 break;
             case "executeLyPdf":
                 taskInitializer = new LyPdfSettingsInitializer(taskForm);
                 inputHandler = new SetLyPdfPropertiesHandler();
+                isPropertiesSettingsUpdate = true;
                 break;
             case "executeTables":
                 taskInitializer = new DbTablesInitializer(taskForm);
@@ -89,6 +93,7 @@ public class TaskExecutor {
                         switch (taskForm.getToSelection()) {
                             case TaskConstants.CONVERSION_TYPE_DATABASE:
                                 inputHandler = new MusicXml2DbHandler();
+                                isDbUpdate = true;
                                 break;
                             case TaskConstants.CONVERSION_TYPE_LILYPOND:
                                 inputHandler = new MusicXml2LyHandler();
@@ -121,6 +126,7 @@ public class TaskExecutor {
             case "executeDelete":
                 taskInitializer = new DeleteScoreInitializer(taskForm);
                 inputHandler = new DeleteScoreHandler();
+                isDbUpdate = true;
                 break;
         }
 
@@ -130,10 +136,8 @@ public class TaskExecutor {
                 MusicXmlTask musicXmlTask = new MusicXmlTask(taskInitializer, inputHandler);
                 musicXmlTask.execute();
 
-                Platform.runLater(() -> {
-                    AppProperties.addLocalPropertiesBundle();
-                    taskForm.handleDisplayUpdates();
-                });
+                if (isPropertiesSettingsUpdate) Platform.runLater(AppProperties::addLocalPropertiesBundle);
+                if (isDbUpdate) Platform.runLater(() -> {taskForm.handleDisplayUpdates();});
             }
             System.err.println("Task finished");
         } catch (TaskException e) {
