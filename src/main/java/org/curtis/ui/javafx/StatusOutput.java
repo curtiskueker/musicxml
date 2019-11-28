@@ -14,7 +14,7 @@ public class StatusOutput {
     private StatusPrintStream outStream = new StatusPrintStream(buffer, PRINT_OFF);
 
     private TextArea textArea;
-    private static final long SLEEP_MILLIS = 100;
+    private static final long SLEEP_MILLIS = 500;
 
     public StatusOutput(TextArea textArea) {
         this.textArea = textArea;
