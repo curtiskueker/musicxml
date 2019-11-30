@@ -5,6 +5,7 @@ import org.curtis.exception.FileException;
 import org.curtis.lilypond.ScoreBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.common.XmlComment;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Score;
@@ -37,6 +38,8 @@ public abstract class MusicXmlScript {
     private String scoreName;
     private Boolean skipComments = false;
     private Boolean openPdf = false;
+
+    private static final int COMMENTS_THRESHOLD = 250;
 
     public Integer getScoreId() {
         return scoreId;
@@ -160,7 +163,11 @@ public abstract class MusicXmlScript {
         try {
             System.err.println("Formatting results...");
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes(StandardCharsets.UTF_8))));
-            if (!getSkipComments()) MusicXmlUtil.setXmlComments(document, score.getXmlComments());
+            if (!getSkipComments()) {
+                List<XmlComment> scoreComments = score.getXmlComments();
+                if (scoreComments.size() > COMMENTS_THRESHOLD) MusicXmlUtil.setXmlCommentsByWalk(document, scoreComments);
+                else MusicXmlUtil.setXmlCommentsByXpath(document, scoreComments);
+            }
             results = MusicXmlUtil.getFormattedXml(document);
         } catch (Exception e) {
             // skip, use results above

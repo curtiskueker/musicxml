@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
@@ -196,7 +197,7 @@ public class MusicXmlUtil {
         return xmlComments;
     }
 
-    public static void setXmlComments(Document document, List<XmlComment> xmlComments) {
+    public static void setXmlCommentsByXpath(Document document, List<XmlComment> xmlComments) {
         if (document == null || xmlComments == null || xmlComments.isEmpty()) return;
 
         System.err.println("Inserting comments...");
@@ -204,10 +205,7 @@ public class MusicXmlUtil {
         Map<String, Node> nodeMap = new HashMap<>();
         for (XmlComment xmlComment : xmlComments) {
             try {
-                Node commentNode;
-                if (xmlComment.getTarget() == null) commentNode = document.createComment(xmlComment.getData());
-                else commentNode = document.createProcessingInstruction(xmlComment.getTarget(), xmlComment.getData());
-
+                Node commentNode = getCommentNodeForXmlComment(document, xmlComment);
                 String parentLocation = xmlComment.getParent();
                 Node parentNode = nodeMap.get(parentLocation);
                 if (parentNode == null) {
@@ -232,5 +230,53 @@ public class MusicXmlUtil {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void setXmlCommentsByWalk(Document document, List<XmlComment> xmlComments) {
+        if (document == null || xmlComments == null || xmlComments.isEmpty()) return;
+
+        System.err.println("Inserting comments...");
+        Map<String, List<XmlComment>> commentMap = new HashMap<>();
+        for (XmlComment xmlComment : xmlComments) {
+            String parent = xmlComment.getParent();
+            List<XmlComment> nodeComments = commentMap.computeIfAbsent(parent, parentComments -> new ArrayList<>());
+            nodeComments.add(xmlComment);
+        }
+
+        setXmlCommentsByWalk(document, document, "", commentMap);
+    }
+
+    private static void setXmlCommentsByWalk(Document document, Node node, String path, Map<String, List<XmlComment>> commentMap) {
+        List<XmlComment> nodeComments = commentMap.get(path);
+
+        if (nodeComments != null) {
+            List<XmlComment> parentComments = nodeComments.stream().filter(parentComment -> StringUtil.isEmpty(parentComment.getNextSibling())).collect(Collectors.toList());
+            for (XmlComment parentComment : parentComments) node.appendChild(getCommentNodeForXmlComment(document, parentComment));
+        }
+
+        NodeList nodeList = node.getChildNodes();
+        List<Node> nodeListCopy = new ArrayList<>();
+        for (int i = 0; i < nodeList.getLength(); i++) nodeListCopy.add(nodeList.item(i));
+        Map<String, Integer> nodeNameMap = new HashMap<>();
+        for (Node childNode : nodeListCopy) {
+            if (childNode.getNodeType() != Node.ELEMENT_NODE) continue;
+
+            String nodeName = childNode.getNodeName();
+            Integer nodeCount = nodeNameMap.computeIfAbsent(nodeName, name -> 0);
+            nodeCount++;
+            nodeNameMap.put(nodeName, nodeCount);
+            String nodePath = nodeName + "[" + nodeCount + "]";
+            String completePath = path + "/" + nodePath;
+            if (nodeComments != null) {
+                List<XmlComment> childComments = nodeComments.stream().filter(childComment -> nodePath.equals(childComment.getNextSibling())).collect(Collectors.toList());
+                for (XmlComment childComment : childComments) node.insertBefore(getCommentNodeForXmlComment(document, childComment), childNode);
+            }
+            if (childNode.hasChildNodes()) setXmlCommentsByWalk(document, childNode, completePath, commentMap);
+        }
+    }
+
+    private static Node getCommentNodeForXmlComment(Document document, XmlComment xmlComment) {
+        if (xmlComment.getTarget() == null) return document.createComment(xmlComment.getData());
+        else return document.createProcessingInstruction(xmlComment.getTarget(), xmlComment.getData());
     }
 }
