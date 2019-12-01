@@ -91,7 +91,6 @@ public class MusicXmlUtil {
     }
 
     public static void clearDb() throws DBException {
-        sessionFactory = null;
         DBSessionFactory.clearSessionFactory();
     }
 

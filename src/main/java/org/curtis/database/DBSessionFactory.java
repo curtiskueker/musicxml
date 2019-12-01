@@ -188,6 +188,8 @@ public class DBSessionFactory {
     }
 
     public synchronized void closeTransaction() throws DBException {
+        if (transaction == null) return;
+
         if (transaction.isActive()) transaction.commit();
         transaction = null;
 
@@ -204,7 +206,7 @@ public class DBSessionFactory {
         return dbTransaction;
     }
 
-    private EntityManager getEntityManager() throws DBException {
+    public EntityManager getEntityManager() throws DBException {
         if (entityManager == null) {
             entityManager = createEntityManager();
         }
