@@ -26,6 +26,8 @@ import java.util.Map;
 public class ComponentHandler {
     private Map<String, Component> componentMap = new HashMap<>();
 
+    private static final String SHOW_PASSWORD = "Show password";
+
     public ComponentHandler() {
 
     }
@@ -62,7 +64,7 @@ public class ComponentHandler {
                 JPasswordField passwordField = ComponentFactory.newPasswordField(inputRow.getValue());
                 addComponent(leftPanel, passwordField);
 
-                JCheckBox showPassword = ComponentFactory.newCheckBox(TaskConstants.SHOW_PASSWORD, SwingConstants.RIGHT);
+                JCheckBox showPassword = ComponentFactory.newCheckBox(SHOW_PASSWORD, SwingConstants.RIGHT);
                 showPassword.addItemListener(e -> {
                     if (showPassword.isSelected()) passwordField.setEchoChar((char) 0);
                     else passwordField.setEchoChar('*');
@@ -163,6 +165,6 @@ public class ComponentHandler {
     }
 
     public JButton getSubmitButton() {
-        return (JButton)componentMap.get(TaskConstants.SUBMIT_BUTTON);
+        return (JButton)componentMap.get(FormHandler.SUBMIT_BUTTON);
     }
 }

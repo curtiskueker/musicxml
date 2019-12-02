@@ -1,6 +1,6 @@
 package org.curtis.ui.swing.component;
 
-import org.curtis.ui.task.TaskConstants;
+import org.curtis.ui.swing.handler.FormHandler;
 import org.curtis.util.StringUtil;
 
 import javax.swing.DefaultComboBoxModel;
@@ -159,7 +159,7 @@ public class ComponentFactory {
         JMenu menu = new JMenu(title);
         menu.setBackground(getBackgroundColor());
         for (String menuItemLabel : menuItemLabels) {
-            if (menuItemLabel.equals(TaskConstants.MENU_SEPARATOR)) menu.addSeparator();
+            if (menuItemLabel.equals(FormHandler.MENU_SEPARATOR)) menu.addSeparator();
             else {
                 JMenuItem menuItem = new JMenuItem(menuItemLabel);
                 menuItem.setBackground(getBackgroundColor());

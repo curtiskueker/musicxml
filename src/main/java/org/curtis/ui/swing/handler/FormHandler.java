@@ -54,6 +54,14 @@ public class FormHandler {
 
     private List<PanelRow> inputPanels = new ArrayList<>();
 
+    public static final String MENU_SET_PROPERTIES = "Set Properties";
+    public static final String MENU_DATABASE_TASKS = "Database Tasks";
+    public static final String MENU_CONVERSION_TASKS = "Conversion Tasks";
+    public static final String MENU_SEPARATOR = "Menu Separator";
+    public static final String MENU_EXIT_APPLICATION = "Exit";
+
+    public static final String SUBMIT_BUTTON = "Submit";
+
     private static final double HORIZONTAL_SMALL_WEIGHT = .40;
     private static final double HORIZONTAL_LARGE_WEIGHT = .60;
     public static final double VERTICAL_CELL_WEIGHT = .08;
@@ -151,9 +159,9 @@ public class FormHandler {
         return ComponentFactory.newMenu(
                 "Tasks",
                 Arrays.asList(
-                        TaskConstants.MENU_SET_PROPERTIES, TaskConstants.MENU_DATABASE_TASKS, TaskConstants.MENU_CONVERSION_TASKS,
-                        TaskConstants.MENU_SEPARATOR,
-                        TaskConstants.MENU_EXIT_APPLICATION
+                        MENU_CONVERSION_TASKS, MENU_SET_PROPERTIES, MENU_DATABASE_TASKS,
+                        MENU_SEPARATOR,
+                        MENU_EXIT_APPLICATION
                 )
         );
     }
@@ -180,7 +188,7 @@ public class FormHandler {
     public JButton handleSelection() {
         resetForm();
 
-        if (menuSelection.equals(TaskConstants.MENU_CONVERSION_TASKS)) {
+        if (menuSelection.equals(MENU_CONVERSION_TASKS)) {
             convertLabel.setText("Convert: ");
             convertArrowLabel.setText(" -> ");
 
@@ -199,15 +207,15 @@ public class FormHandler {
         FromInput fromInput = null;
         ToInput toInput = null;
         switch (menuSelection) {
-            case TaskConstants.MENU_SET_PROPERTIES:
+            case MENU_SET_PROPERTIES:
                 fromInput = new PropertiesInput();
                 toInput = new PropertiesOutput();
                 break;
-            case TaskConstants.MENU_DATABASE_TASKS:
+            case MENU_DATABASE_TASKS:
                 fromInput = new DatabaseInput();
                 toInput = new DatabaseOutput();
                 break;
-            case TaskConstants.MENU_CONVERSION_TASKS:
+            case MENU_CONVERSION_TASKS:
                 switch (convertFromSelection) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         fromInput = new FromMusicXml();
@@ -256,7 +264,7 @@ public class FormHandler {
 
         displayDataInput(fromInput);
         displayDataInput(toInput);
-        addFormRow(InputRowFactory.newButton(TaskConstants.SUBMIT_BUTTON));
+        addFormRow(InputRowFactory.newButton(SUBMIT_BUTTON));
     }
 
     private void displayDataInput(DataInput dataInput) {

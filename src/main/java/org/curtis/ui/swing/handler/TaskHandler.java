@@ -28,13 +28,13 @@ public class TaskHandler {
         SwingTaskInitializer swingTaskInitializer = new SwingTaskInitializer(componentMap);
 
         switch (menuSelection) {
-            case TaskConstants.MENU_SET_PROPERTIES:
+            case FormHandler.MENU_SET_PROPERTIES:
                 inputHandler = new SetPropertiesHandler();
                 break;
-            case TaskConstants.MENU_DATABASE_TASKS:
+            case FormHandler.MENU_DATABASE_TASKS:
                 inputHandler = new DatabaseHandler();
                 break;
-            case TaskConstants.MENU_CONVERSION_TASKS:
+            case FormHandler.MENU_CONVERSION_TASKS:
                 switch (convertFromSelection) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
                         switch (convertToSelection) {

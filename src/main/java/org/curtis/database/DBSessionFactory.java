@@ -85,13 +85,13 @@ public class DBSessionFactory {
             Properties jpaProperties = new Properties();
 
             switch (databaseType) {
-                case TaskConstants.DATABASE_MYSQL:
+                case DBConstants.DATABASE_MYSQL:
                     databaseProperties.putAll(mySqlProperties);
                     break;
-                case TaskConstants.DATABASE_POSTGRES:
+                case DBConstants.DATABASE_POSTGRES:
                     databaseProperties.putAll(postgresProperties);
                     break;
-                case TaskConstants.DATABASE_ORACLE:
+                case DBConstants.DATABASE_ORACLE:
                     databaseProperties.putAll(oracleProperties);
                     break;
                 default:
@@ -99,7 +99,7 @@ public class DBSessionFactory {
             }
             jpaProperties.putAll(databaseProperties);
 
-            String protocolConnector = databaseType.equals(TaskConstants.DATABASE_ORACLE) ? ":thin:@" : "://";
+            String protocolConnector = databaseType.equals(DBConstants.DATABASE_ORACLE) ? ":thin:@" : "://";
             String url = "jdbc:" + databaseType + protocolConnector + dbServer + "/" + databaseName;
 
             jpaProperties.put("hibernate.connection.url", url);

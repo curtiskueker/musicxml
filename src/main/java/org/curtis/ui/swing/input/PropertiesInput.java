@@ -1,7 +1,7 @@
 package org.curtis.ui.swing.input;
 
+import org.curtis.database.DBConstants;
 import org.curtis.properties.AppProperties;
-import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
 public class PropertiesInput extends FromInput {
@@ -18,7 +18,7 @@ public class PropertiesInput extends FromInput {
         String server = AppProperties.getOptionalProperty("musicxml.database.server");
         if (StringUtil.isEmpty(server)) server = "localhost";
         getInputRows().add(InputRowFactory.newInput("server", "Server: ", InputRow.SMALL_INPUT_SIZE, server));
-        getInputRows().add(InputRowFactory.newSelection("databaseType", "Database Type: ", TaskConstants.DATABASE_TYPES, AppProperties.getOptionalProperty("musicxml.database.type")));
+        getInputRows().add(InputRowFactory.newSelection("databaseType", "Database Type: ", DBConstants.DATABASE_TYPES, AppProperties.getOptionalProperty("musicxml.database.type")));
         getInputRows().add(InputRowFactory.newSelectedInputFile("lilypondLocation", "Lilypond Location: ", AppProperties.getOptionalProperty("location.lilypond")));
         getInputRows().add(InputRowFactory.newSelectedInputFile("pdfReaderLocation", "PDF Reader Location: ", AppProperties.getOptionalProperty("location.pdfreader")));
     }

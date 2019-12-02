@@ -44,7 +44,7 @@ public class MusicXmlTasks {
                     JMenuItem actionMenuItem = (JMenuItem) e.getSource();
                     String selection = actionMenuItem.getText();
                     if (!selection.equals(formHandler.getMenuSelection())) {
-                        if (selection.equals(TaskConstants.MENU_EXIT_APPLICATION)) System.exit(0);
+                        if (selection.equals(FormHandler.MENU_EXIT_APPLICATION)) System.exit(0);
                         else {
                             formHandler.setMenuSelection(selection);
                             handleSelection();
