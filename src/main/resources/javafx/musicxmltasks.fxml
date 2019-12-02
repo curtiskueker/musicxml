@@ -351,6 +351,11 @@
                                         <Insets bottom="20.0" left="150.0" top="20.0" />
                                     </padding>
                                 </Label>
+                        <Label fx:id="validateSubLabel" maxHeight="40.0" prefHeight="40.0" text="Validate a MusicXML file against the MusicXML schema">
+                           <padding>
+                              <Insets bottom="20.0" left="110.0" />
+                           </padding>
+                        </Label>
                                 <GridPane fx:id="validatePane" prefHeight="596.0" prefWidth="600.0">
                                     <children>
                                         <Hyperlink fx:id="validateLocationLink" onAction="#setValidateLocation" text="Choose MusicXML file" GridPane.halignment="RIGHT">
