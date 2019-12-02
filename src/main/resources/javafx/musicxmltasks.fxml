@@ -480,11 +480,59 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab fx:id="tablesTab" onSelectionChanged="#tabSelected" text="DB Tables">
+                <Tab fx:id="lyPdfTab" onSelectionChanged="#tabSelected" text="Lilypond/PDF Settings">
+                    <content>
+                        <VBox fx:id="lyPdfBox" prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Label fx:id="lyPdfLabel" alignment="CENTER" contentDisplay="CENTER" text="Lilypond/PDF Settings">
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets bottom="20.0" left="175.0" top="20.0" />
+                                    </padding>
+                                </Label>
+                                <GridPane fx:id="lyPdfPane" prefHeight="596.0" prefWidth="600.0">
+                                    <children>
+                                        <Hyperlink fx:id="setLilypondLocationLink" onAction="#setLilypondLocation" text="Choose Lilypond location" GridPane.halignment="RIGHT">
+                                            <font>
+                                                <Font size="12.0" />
+                                            </font>
+                                            <GridPane.margin>
+                                                <Insets right="10.0" />
+                                            </GridPane.margin>
+                                        </Hyperlink>
+                                        <TextField fx:id="lilypondLocation" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                                        <Hyperlink fx:id="setPdfLocationLink" layoutX="85.0" layoutY="71.0" onAction="#setPdfLocation" text="Choose PDF Reader location" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                            <font>
+                                                <Font size="12.0" />
+                                            </font>
+                                            <GridPane.margin>
+                                                <Insets right="10.0" />
+                                            </GridPane.margin>
+                                        </Hyperlink>
+                                        <TextField fx:id="pdfLocation" layoutX="250.0" layoutY="69.0" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Button fx:id="executeLyPdf" mnemonicParsing="false" onAction="#buttonPressed" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                    </children>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                </GridPane>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab fx:id="tablesTab" onSelectionChanged="#tabSelected" text="DB Actions">
                     <content>
                         <VBox fx:id="tablesBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
-                                <Label fx:id="tablesLabel" alignment="CENTER" contentDisplay="CENTER" text="Database Tables">
+                                <Label fx:id="tablesLabel" alignment="CENTER" contentDisplay="CENTER" text="Database Actions">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
@@ -532,54 +580,6 @@
                                         </Hyperlink>
                                         <TextField fx:id="schemaFileLocation" maxWidth="300.0" prefWidth="300.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
                                     </children>
-                                </GridPane>
-                            </children>
-                        </VBox>
-                    </content>
-                </Tab>
-                <Tab fx:id="lyPdfTab" onSelectionChanged="#tabSelected" text="Lilypond/PDF Settings">
-                    <content>
-                        <VBox fx:id="lyPdfBox" prefHeight="200.0" prefWidth="100.0">
-                            <children>
-                                <Label fx:id="lyPdfLabel" alignment="CENTER" contentDisplay="CENTER" text="Lilypond/PDF Settings">
-                                    <font>
-                                        <Font size="24.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets bottom="20.0" left="175.0" top="20.0" />
-                                    </padding>
-                                </Label>
-                                <GridPane fx:id="lyPdfPane" prefHeight="596.0" prefWidth="600.0">
-                                    <children>
-                                        <Hyperlink fx:id="setLilypondLocationLink" onAction="#setLilypondLocation" text="Choose Lilypond location" GridPane.halignment="RIGHT">
-                                            <font>
-                                                <Font size="12.0" />
-                                            </font>
-                                            <GridPane.margin>
-                                                <Insets right="10.0" />
-                                            </GridPane.margin>
-                                        </Hyperlink>
-                                        <TextField fx:id="lilypondLocation" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-                                        <Hyperlink fx:id="setPdfLocationLink" layoutX="85.0" layoutY="71.0" onAction="#setPdfLocation" text="Choose PDF Reader location" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                            <font>
-                                                <Font size="12.0" />
-                                            </font>
-                                            <GridPane.margin>
-                                                <Insets right="10.0" />
-                                            </GridPane.margin>
-                                        </Hyperlink>
-                                        <TextField fx:id="pdfLocation" layoutX="250.0" layoutY="69.0" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Button fx:id="executeLyPdf" mnemonicParsing="false" onAction="#buttonPressed" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                                    </children>
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
                                 </GridPane>
                             </children>
                         </VBox>
