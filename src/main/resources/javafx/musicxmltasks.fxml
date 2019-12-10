@@ -548,6 +548,7 @@
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
@@ -569,7 +570,7 @@
                                         </Label>
                                         <CheckBox fx:id="createTables" mnemonicParsing="false" GridPane.columnIndex="1" />
                                         <CheckBox fx:id="generateSchema" mnemonicParsing="false" onAction="#showSchemaFileLocation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Button fx:id="executeDbActions" mnemonicParsing="false" onAction="#buttonPressed" text="Execute" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                        <Button fx:id="executeDbActions" mnemonicParsing="false" onAction="#buttonPressed" text="Execute" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                                         <Hyperlink fx:id="chooseSchemaLocationLink" onAction="#chooseSchemaLocation" text="Choose schema location" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                             <GridPane.margin>
                                                 <Insets right="10.0" />
