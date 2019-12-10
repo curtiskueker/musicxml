@@ -1,5 +1,6 @@
 package org.curtis.ui.javafx.initialize;
 
+import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
 
 public class ValidateXmlInitializer extends JavafxTaskInitializer {
@@ -8,6 +9,6 @@ public class ValidateXmlInitializer extends JavafxTaskInitializer {
     }
 
     public void initializeNodeMap() {
-        nodeMap.put("xmlFile", taskForm.getNode("validateLocation"));
+        nodeMap.put("xmlFile", taskForm.getNode(FormNode.VALIDATE_LOCATION));
     }
 }

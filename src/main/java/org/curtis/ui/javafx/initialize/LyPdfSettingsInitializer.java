@@ -1,5 +1,6 @@
 package org.curtis.ui.javafx.initialize;
 
+import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
 
 public class LyPdfSettingsInitializer extends JavafxTaskInitializer {
@@ -8,7 +9,7 @@ public class LyPdfSettingsInitializer extends JavafxTaskInitializer {
     }
 
     public void initializeNodeMap() {
-        nodeMap.put("lilypondLocation", taskForm.getNode("lilypondLocation"));
-        nodeMap.put("pdfReaderLocation", taskForm.getNode("pdfLocation"));
+        nodeMap.put("lilypondLocation", taskForm.getNode(FormNode.LILYPOND_LOCATION));
+        nodeMap.put("pdfReaderLocation", taskForm.getNode(FormNode.PDF_LOCATION));
     }
 }

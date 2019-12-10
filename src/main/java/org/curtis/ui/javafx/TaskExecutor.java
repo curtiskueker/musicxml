@@ -15,6 +15,7 @@ import org.curtis.ui.input.MusicXml2PdfHandler;
 import org.curtis.ui.input.SetDbPropertiesHandler;
 import org.curtis.ui.input.SetLyPdfPropertiesHandler;
 import org.curtis.ui.input.ValidateXmlHandler;
+import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.javafx.handler.ConvertFormHandler;
 import org.curtis.ui.javafx.handler.DbSettingsFormHandler;
@@ -44,17 +45,17 @@ public class TaskExecutor {
     public void initializeForm() {
         FormHandler formHandler = null;
         switch (controlId) {
-            case "settingsTab":
+            case FormNode.DB_SETTINGS_TAB:
                 formHandler = new DbSettingsFormHandler(taskForm);
                 break;
-            case "lyPdfTab":
+            case FormNode.LY_PDF_SETTINGS_TAB:
                 formHandler = new LyPdfSettingsFormHandler(taskForm);
                 break;
-            case "tablesTab":
-            case "validateTab":
+            case FormNode.DB_ACTIONS_TAB:
+            case FormNode.VALIDATE_TAB:
                 formHandler = new EmptyFormHandler(taskForm);
                 break;
-            case "convertTab":
+            case FormNode.CONVERT_TAB:
                 formHandler = new ConvertFormHandler(taskForm);
                 break;
         }
@@ -68,25 +69,25 @@ public class TaskExecutor {
         boolean isPropertiesSettingsUpdate = false;
         boolean isDbUpdate = false;
         switch (controlId) {
-            case "saveSettingsButton":
+            case FormNode.SAVE_DB_SETTINGS_BUTTON:
                 taskInitializer = new SaveDbSettingsInitializer(taskForm);
                 inputHandler = new SetDbPropertiesHandler();
                 isPropertiesSettingsUpdate = true;
                 break;
-            case "executeLyPdf":
+            case FormNode.SAVE_LY_PDF_SETTINGS_BUTTON:
                 taskInitializer = new LyPdfSettingsInitializer(taskForm);
                 inputHandler = new SetLyPdfPropertiesHandler();
                 isPropertiesSettingsUpdate = true;
                 break;
-            case "executeTables":
+            case FormNode.EXECUTE_DB_ACTIONS_BUTTON:
                 taskInitializer = new DbTablesInitializer(taskForm);
                 inputHandler = new DatabaseHandler();
                 break;
-            case "executeValidate":
+            case FormNode.EXECUTE_VALIDATE_BUTTON:
                 taskInitializer = new ValidateXmlInitializer(taskForm);
                 inputHandler = new ValidateXmlHandler();
                 break;
-            case "executeConvert":
+            case FormNode.EXECUTE_CONVERT_BUTTON:
                 taskInitializer = new ConvertInitializer(taskForm);
                 switch (taskForm.getFromSelection()) {
                     case TaskConstants.CONVERSION_TYPE_MUSICXML:
@@ -123,7 +124,7 @@ public class TaskExecutor {
                         break;
                 }
                 break;
-            case "executeDelete":
+            case FormNode.EXECUTE_DELETE_BUTTON:
                 taskInitializer = new DeleteScoreInitializer(taskForm);
                 inputHandler = new DeleteScoreHandler();
                 isDbUpdate = true;

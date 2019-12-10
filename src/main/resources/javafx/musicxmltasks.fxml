@@ -381,7 +381,7 @@
                             </children>
                         </VBox>
                     </content></Tab>
-                <Tab fx:id="settingsTab" onSelectionChanged="#tabSelected" text="DB Settings">
+                <Tab fx:id="dbSettingsTab" onSelectionChanged="#tabSelected" text="DB Settings">
                     <content>
                         <VBox fx:id="settingsBox">
                             <children>
@@ -473,14 +473,14 @@
                                         </CheckBox>
                                         <CheckBox fx:id="testDbConnection" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
                                         <ComboBox fx:id="dbType" maxWidth="175.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
-                                        <Button fx:id="saveSettingsButton" mnemonicParsing="false" onAction="#buttonPressed" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+                                        <Button fx:id="saveDbSettingsButton" mnemonicParsing="false" onAction="#buttonPressed" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="TOP" />
                                     </children>
                                 </GridPane>
                             </children>
                         </VBox>
                     </content>
                 </Tab>
-                <Tab fx:id="lyPdfTab" onSelectionChanged="#tabSelected" text="Lilypond/PDF Settings">
+                <Tab fx:id="lyPdfSettingsTab" onSelectionChanged="#tabSelected" text="Lilypond/PDF Settings">
                     <content>
                         <VBox fx:id="lyPdfBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
@@ -512,7 +512,7 @@
                                             </GridPane.margin>
                                         </Hyperlink>
                                         <TextField fx:id="pdfLocation" layoutX="250.0" layoutY="69.0" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Button fx:id="executeLyPdf" mnemonicParsing="false" onAction="#buttonPressed" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                        <Button fx:id="saveLyPdfSettingsButton" mnemonicParsing="false" onAction="#buttonPressed" text="Save Settings" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                     </children>
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
@@ -528,7 +528,7 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab fx:id="tablesTab" onSelectionChanged="#tabSelected" text="DB Actions">
+                <Tab fx:id="dbActionsTab" onSelectionChanged="#tabSelected" text="DB Actions">
                     <content>
                         <VBox fx:id="tablesBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
@@ -569,7 +569,7 @@
                                         </Label>
                                         <CheckBox fx:id="createTables" mnemonicParsing="false" GridPane.columnIndex="1" />
                                         <CheckBox fx:id="generateSchema" mnemonicParsing="false" onAction="#showSchemaFileLocation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <Button fx:id="executeTables" mnemonicParsing="false" onAction="#buttonPressed" text="Execute" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                        <Button fx:id="executeDbActions" mnemonicParsing="false" onAction="#buttonPressed" text="Execute" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                         <Hyperlink fx:id="chooseSchemaLocationLink" onAction="#chooseSchemaLocation" text="Choose schema location" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                             <GridPane.margin>
                                                 <Insets right="10.0" />

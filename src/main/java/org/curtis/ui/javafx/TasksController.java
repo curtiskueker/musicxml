@@ -10,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
 
 public class TasksController {
@@ -87,12 +88,12 @@ public class TasksController {
 
     @FXML
     private void chooseSchemaLocation() {
-        taskForm.setChooseFileLocationInTextField("schemaFileLocation", "SQL Files (*.sql)", "*.sql");
+        taskForm.setChooseFileLocationInTextField(FormNode.SCHEMA_FILE_LOCATION, "SQL Files (*.sql)", "*.sql");
     }
 
     @FXML
     private void setConvertFromList() {
-        ComboBox<String> convertFromList = taskForm.getSelectList("convertFromList");
+        ComboBox<String> convertFromList = taskForm.getSelectList(FormNode.CONVERT_FROM_LIST);
         if (!convertFromList.getItems().isEmpty()) return;
 
         taskForm.initializeConvertForm();
@@ -100,42 +101,42 @@ public class TasksController {
 
     @FXML
     private void chooseMusicXmlFromFile() {
-        taskForm.setOpenFileLocationInTextField("musicXmlFromFile");
+        taskForm.setOpenFileLocationInTextField(FormNode.MUSICXML_FROM_FILE);
     }
 
     @FXML
     private void chooseLyFromFile() {
-        taskForm.setOpenFileLocationInTextField("lyFromFile");
+        taskForm.setOpenFileLocationInTextField(FormNode.LY_FROM_FILE);
     }
 
     @FXML
     private void chooseMusicXmlToFile() {
-        taskForm.setChooseFileLocationInTextField("musicXmlToFile", "XML Files (*.xml)", "*.xml");
+        taskForm.setChooseFileLocationInTextField(FormNode.MUSICXML_TO_FILE, "XML Files (*.xml)", "*.xml");
     }
 
     @FXML
     private void chooseLyToFile() {
-        taskForm.setChooseFileLocationInTextField("lyToFile", "Lilypond Files (*.ly)", "*.ly");
+        taskForm.setChooseFileLocationInTextField(FormNode.LY_TO_FILE, "Lilypond Files (*.ly)", "*.ly");
     }
 
     @FXML
     private void choosePdfToFile() {
-        taskForm.setChooseFileLocationInTextField("pdfToFile", "No extension", "");
+        taskForm.setChooseFileLocationInTextField(FormNode.PDF_TO_FILE, "No extension", "");
     }
 
     @FXML
     private void setLilypondLocation() {
-        taskForm.setOpenFileLocationInTextField("lilypondLocation");
+        taskForm.setOpenFileLocationInTextField(FormNode.LILYPOND_LOCATION);
     }
 
     @FXML
     private void setPdfLocation() {
-        taskForm.setOpenFileLocationInTextField("pdfLocation");
+        taskForm.setOpenFileLocationInTextField(FormNode.PDF_LOCATION);
     }
 
     @FXML
     private void setValidateLocation() {
-        taskForm.setOpenFileLocationInTextField("validateLocation");
+        taskForm.setOpenFileLocationInTextField(FormNode.VALIDATE_LOCATION);
     }
 
     @FXML

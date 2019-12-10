@@ -82,12 +82,12 @@ public class TaskForm {
     }
 
     public String getFromSelection() {
-        ComboBox<String> fromList = getSelectList("convertFromList");
+        ComboBox<String> fromList = getSelectList(FormNode.CONVERT_FROM_LIST);
         return fromList.getValue();
     }
 
     public String getToSelection() {
-        ComboBox<String> toList = getSelectList("convertToList");
+        ComboBox<String> toList = getSelectList(FormNode.CONVERT_TO_LIST);
         return toList.getValue();
     }
 
@@ -113,7 +113,7 @@ public class TaskForm {
     }
 
     private String getScoreNameSelection() {
-        return getSelectList("scoreNameFrom").getValue();
+        return getSelectList(FormNode.SCORE_NAME_FROM).getValue();
     }
 
     public void scoreNameDeleteChecked() {
@@ -121,7 +121,7 @@ public class TaskForm {
     }
 
     private CheckBox getScoreNameDeleteCheckbox() {
-        return getCheckbox("scoreNameDelete");
+        return getCheckbox(FormNode.SCORE_NAME_DELETE);
     }
 
     public void setResetScoreNames() {
@@ -135,18 +135,16 @@ public class TaskForm {
     public void showSql(String controlName) {
         boolean checkboxOn = checkboxOn(controlName);
 
-        getCheckbox("showSqlFrom").setSelected(checkboxOn);
-        getCheckbox("showSqlTo").setSelected(checkboxOn);
+        getCheckbox(FormNode.SHOW_SQL_FROM).setSelected(checkboxOn);
+        getCheckbox(FormNode.SHOW_SQL_TO).setSelected(checkboxOn);
 
         statusOutput.getOutStream().setPrintToBuffer(checkboxOn);
     }
 
     public void showPassword() {
-        String passwordNodeName = "dbPassword";
-        String passwordShowNodeName = "dbPasswordShow";
-        boolean showPassword = checkboxOn("showPassword");
-        if (showPassword) togglePassword(passwordNodeName, passwordShowNodeName);
-        else togglePassword(passwordShowNodeName, passwordNodeName);
+        boolean showPassword = checkboxOn(FormNode.SHOW_PASSWORD);
+        if (showPassword) togglePassword(FormNode.DB_PASSWORD, FormNode.DB_PASSWORD_SHOW);
+        else togglePassword(FormNode.DB_PASSWORD_SHOW, FormNode.DB_PASSWORD);
     }
 
     private void togglePassword(String fromNodeName, String toNodeName) {
@@ -158,10 +156,10 @@ public class TaskForm {
     }
 
     public void showSchemaFileLocation() {
-        boolean showSchemaLocation = checkboxOn("generateSchema");
-        Node chooseSchemaLocationLink = getNode("chooseSchemaLocationLink");
+        boolean showSchemaLocation = checkboxOn(FormNode.GENERATE_SCHEMA);
+        Node chooseSchemaLocationLink = getNode(FormNode.CHOOSE_SCHEMA_LOCATION);
         chooseSchemaLocationLink.setVisible(showSchemaLocation);
-        Node schemaFileLocation = getNode("schemaFileLocation");
+        Node schemaFileLocation = getNode(FormNode.SCHEMA_FILE_LOCATION);
         schemaFileLocation.setVisible(showSchemaLocation);
     }
 
@@ -198,9 +196,9 @@ public class TaskForm {
 
     public void handlePdfReaderDisplay() {
         boolean pdfReaderSet = StringUtil.isNotEmpty(AppProperties.getOptionalProperty("location.pdfreader"));
-        getNode("openPdf").setVisible(pdfReaderSet);
-        getNode("openPdfLabel1").setVisible(!pdfReaderSet);
-        getNode("openPdfLabel2").setVisible(!pdfReaderSet);
-        getNode("openPdfLabel3").setVisible(!pdfReaderSet);
+        getNode(FormNode.OPEN_PDF).setVisible(pdfReaderSet);
+        getNode(FormNode.OPEN_PDF_LABEL_1).setVisible(!pdfReaderSet);
+        getNode(FormNode.OPEN_PDF_LABEL_2).setVisible(!pdfReaderSet);
+        getNode(FormNode.OPEN_PDF_LABEL_3).setVisible(!pdfReaderSet);
     }
 }
