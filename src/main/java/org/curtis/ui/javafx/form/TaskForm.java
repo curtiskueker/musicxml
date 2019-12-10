@@ -18,13 +18,30 @@ import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class TaskForm {
     // The outermost Container
     private VBox taskBox;
+
     private StatusOutput statusOutput;
     private TextArea statusTextArea;
     private ConvertFormHandler convertFormHandler;
+
+    private static final List<String> ACTIVATABLE_NODES = Arrays.asList(
+            FormNode.EXECUTE_CONVERT_BUTTON,
+            FormNode.EXECUTE_DELETE_BUTTON,
+            FormNode.SAVE_DB_SETTINGS_BUTTON,
+            FormNode.SAVE_LY_PDF_SETTINGS_BUTTON,
+            FormNode.EXECUTE_DB_ACTIONS_BUTTON,
+            FormNode.EXECUTE_VALIDATE_BUTTON,
+            FormNode.SHOW_SQL_FROM,
+            FormNode.SHOW_SQL_TO,
+            FormNode.SCORE_NAME_DELETE,
+            FormNode.SKIP_COMMENTS,
+            FormNode.INCLUDE_PAGE_BREAKS
+    );
 
     private Thread outputThread;
 
@@ -201,5 +218,9 @@ public class TaskForm {
         getNode(FormNode.OPEN_PDF_LABEL_1).setVisible(!pdfReaderSet);
         getNode(FormNode.OPEN_PDF_LABEL_2).setVisible(!pdfReaderSet);
         getNode(FormNode.OPEN_PDF_LABEL_3).setVisible(!pdfReaderSet);
+    }
+
+    public void disableNodes(boolean disable) {
+        for (String nodeName : ACTIVATABLE_NODES) getNode(nodeName).setDisable(disable);
     }
 }

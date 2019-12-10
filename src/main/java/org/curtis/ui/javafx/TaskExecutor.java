@@ -133,6 +133,7 @@ public class TaskExecutor {
 
         try {
             if (taskInitializer != null && inputHandler != null) {
+                taskForm.disableNodes(true);
                 taskInitializer.initializeNodeMap();
                 MusicXmlTask musicXmlTask = new MusicXmlTask(taskInitializer, inputHandler);
                 musicXmlTask.execute();
@@ -143,6 +144,8 @@ public class TaskExecutor {
             System.err.println("Task finished");
         } catch (TaskException e) {
             System.err.println(e.getMessage());
+        } finally {
+            taskForm.disableNodes(false);
         }
     }
 }
