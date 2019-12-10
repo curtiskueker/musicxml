@@ -10,7 +10,7 @@ public class SaveDbSettingsInitializer extends JavafxTaskInitializer {
 
     public void initializeNodeMap() {
         nodeMap.put("username", taskForm.getNode(FormNode.DB_USERNAME));
-        boolean showPassword = taskForm.checkboxOn(FormNode.DB_PASSWORD);
+        boolean showPassword = taskForm.checkboxOn(FormNode.SHOW_PASSWORD);
         if (showPassword) nodeMap.put("password", taskForm.getNode(FormNode.DB_PASSWORD_SHOW));
         else nodeMap.put("password", taskForm.getNode(FormNode.DB_PASSWORD));
         nodeMap.put("databaseName", taskForm.getNode(FormNode.DB_NAME));
