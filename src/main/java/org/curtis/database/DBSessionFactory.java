@@ -1,6 +1,6 @@
 package org.curtis.database;
 
-import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
@@ -64,9 +64,9 @@ public class DBSessionFactory {
     private Properties additionalProperties = new Properties();
 
     private DBSessionFactory() {
-        databaseName = AppProperties.getRequiredProperty(PropertiesConstants.DB_NAME);
-        databaseType = AppProperties.getRequiredProperty(PropertiesConstants.DB_TYPE);
-        persistenceUnitName = AppProperties.getRequiredProperty("database.persistenceunit.name");
+        databaseName = PropertiesHandler.getRequiredProperty(PropertiesConstants.DB_NAME);
+        databaseType = PropertiesHandler.getRequiredProperty(PropertiesConstants.DB_TYPE);
+        persistenceUnitName = PropertiesHandler.getRequiredProperty("database.persistenceunit.name");
     }
 
     private void instantiateSessionFactory() throws DBException {
@@ -78,9 +78,9 @@ public class DBSessionFactory {
             if (StringUtil.isEmpty(databaseType)) throw new DBException("Error: Database type undefined");
 
             System.err.println("Initializing database connection...");
-            String name = AppProperties.getString(PropertiesConstants.DB_USERNAME);
-            String password = AppProperties.getString(PropertiesConstants.DB_PASSWORD);
-            String dbServer = AppProperties.getString(PropertiesConstants.DB_SERVER);
+            String name = PropertiesHandler.getString(PropertiesConstants.DB_USERNAME);
+            String password = PropertiesHandler.getString(PropertiesConstants.DB_PASSWORD);
+            String dbServer = PropertiesHandler.getString(PropertiesConstants.DB_SERVER);
 
             Properties jpaProperties = new Properties();
 
@@ -106,8 +106,8 @@ public class DBSessionFactory {
             jpaProperties.put("hibernate.connection.username", name);
             jpaProperties.put("hibernate.connection.password", password);
 
-            jpaProperties.put("hibernate.show_sql", AppProperties.getBoolean("database.hibernate.show_sql"));
-            jpaProperties.put("hibernate.format_sql", AppProperties.getBoolean("database.hibernate.format_sql"));
+            jpaProperties.put("hibernate.show_sql", PropertiesHandler.getBoolean("database.hibernate.show_sql"));
+            jpaProperties.put("hibernate.format_sql", PropertiesHandler.getBoolean("database.hibernate.format_sql"));
 
             if (createTables) jpaProperties.putAll(createDbProperties);
             else if (!schemaValidated) jpaProperties.putAll(validateDbProperties);

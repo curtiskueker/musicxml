@@ -4,7 +4,7 @@ import org.curtis.database.DBException;
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
-import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
@@ -36,14 +36,14 @@ public class SetProperties extends MusicXmlScript {
         stringBuilder.append(getPropertyString(PropertiesConstants.PDF_LOCATION, pdfReaderLocation));
 
         try {
-            FileUtil.stringToFile(stringBuilder.toString(), AppProperties.PROPERTIES_FILENAME + ".properties");
+            FileUtil.stringToFile(stringBuilder.toString(), PropertiesHandler.PROPERTIES_FILENAME + ".properties");
         } catch (FileException e) {
             throw new MusicXmlException(e.getMessage());
         }
 
         try {
             MusicXmlUtil.clearDb();
-            AppProperties.addLocalPropertiesBundle();
+            PropertiesHandler.addLocalPropertiesBundle();
         } catch (DBException e) {
             throw new MusicXmlException(e);
         }

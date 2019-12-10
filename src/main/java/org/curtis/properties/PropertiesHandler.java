@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class AppProperties {
+public class PropertiesHandler {
     private static Map<String, ResourceBundle> bundles = new HashMap<>();
     private static String prefix = null;
     private static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
@@ -52,7 +52,7 @@ public class AppProperties {
     }
 
     public static void setPrefix(String prefix) {
-        AppProperties.prefix = prefix;
+        PropertiesHandler.prefix = prefix;
     }
 
     public static String getString(String propertyName) throws PropertyException {

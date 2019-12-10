@@ -1,7 +1,7 @@
 package org.curtis.ui.javafx;
 
 import javafx.application.Platform;
-import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.ui.input.DatabaseHandler;
 import org.curtis.ui.input.Db2LyHandler;
 import org.curtis.ui.input.Db2MusicXmlHandler;
@@ -137,7 +137,7 @@ public class TaskExecutor {
                 MusicXmlTask musicXmlTask = new MusicXmlTask(taskInitializer, inputHandler);
                 musicXmlTask.execute();
 
-                if (isPropertiesSettingsUpdate) Platform.runLater(AppProperties::addLocalPropertiesBundle);
+                if (isPropertiesSettingsUpdate) Platform.runLater(PropertiesHandler::addLocalPropertiesBundle);
                 if (isDbUpdate) Platform.runLater(() -> {taskForm.handleDisplayUpdates();});
             }
             System.err.println("Task finished");

@@ -4,7 +4,7 @@ import org.curtis.musicxml.bin.DatabaseExec;
 import org.curtis.musicxml.bin.MusicXmlScript;
 import org.curtis.musicxml.bin.SetDbProperties;
 import org.curtis.musicxml.bin.SetProperties;
-import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.ui.task.TaskInitializer;
 
@@ -21,8 +21,8 @@ public class SetDbPropertiesHandler extends InputHandler {
         setProperties.setDatabaseName(taskInitializer.getText("databaseName"));
         setProperties.setServer(taskInitializer.getText("server"));
         setProperties.setDatabaseType(taskInitializer.getSelection("databaseType"));
-        setProperties.setLilypondLocation(AppProperties.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION));
-        setProperties.setPdfReaderLocation(AppProperties.getOptionalProperty(PropertiesConstants.PDF_LOCATION));
+        setProperties.setLilypondLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION));
+        setProperties.setPdfReaderLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.PDF_LOCATION));
 
         DatabaseExec databaseExec = new DatabaseExec();
         databaseExec.setTestDatabase(taskInitializer.isSelected("testDatabase"));

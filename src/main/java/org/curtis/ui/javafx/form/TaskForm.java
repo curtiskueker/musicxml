@@ -10,7 +10,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.ui.javafx.StatusOutput;
 import org.curtis.ui.javafx.handler.ConvertFormHandler;
@@ -196,7 +196,7 @@ public class TaskForm {
     }
 
     public void handlePdfReaderDisplay() {
-        boolean pdfReaderSet = StringUtil.isNotEmpty(AppProperties.getOptionalProperty(PropertiesConstants.PDF_LOCATION));
+        boolean pdfReaderSet = StringUtil.isNotEmpty(PropertiesHandler.getOptionalProperty(PropertiesConstants.PDF_LOCATION));
         getNode(FormNode.OPEN_PDF).setVisible(pdfReaderSet);
         getNode(FormNode.OPEN_PDF_LABEL_1).setVisible(!pdfReaderSet);
         getNode(FormNode.OPEN_PDF_LABEL_2).setVisible(!pdfReaderSet);

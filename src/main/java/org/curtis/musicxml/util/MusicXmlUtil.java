@@ -21,7 +21,7 @@ import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.ScoreName;
-import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlException;
@@ -75,9 +75,9 @@ public class MusicXmlUtil {
 
     public static DBTransaction getDbTransaction() throws DBException {
         if (sessionFactory == null) {
-            AppProperties.setPrefix(PropertiesConstants.PREFIX);
-            AppProperties.addPropertiesFile("properties/database");
-            AppProperties.addLocalPropertiesBundle();
+            PropertiesHandler.setPrefix(PropertiesConstants.PREFIX);
+            PropertiesHandler.addPropertiesFile("properties/database");
+            PropertiesHandler.addLocalPropertiesBundle();
 
             sessionFactory = DBSessionFactory.getInstance();
         }
