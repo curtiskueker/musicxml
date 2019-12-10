@@ -1,7 +1,7 @@
 package org.curtis.database;
 
 import org.curtis.properties.AppProperties;
-import org.curtis.ui.task.TaskConstants;
+import org.curtis.properties.PropertiesConstants;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 import org.hibernate.tool.schema.spi.SchemaManagementException;
@@ -64,8 +64,8 @@ public class DBSessionFactory {
     private Properties additionalProperties = new Properties();
 
     private DBSessionFactory() {
-        databaseName = AppProperties.getRequiredProperty("database.name");
-        databaseType = AppProperties.getRequiredProperty("database.type");
+        databaseName = AppProperties.getRequiredProperty(PropertiesConstants.DB_NAME);
+        databaseType = AppProperties.getRequiredProperty(PropertiesConstants.DB_TYPE);
         persistenceUnitName = AppProperties.getRequiredProperty("database.persistenceunit.name");
     }
 
@@ -78,9 +78,9 @@ public class DBSessionFactory {
             if (StringUtil.isEmpty(databaseType)) throw new DBException("Error: Database type undefined");
 
             System.err.println("Initializing database connection...");
-            String name = AppProperties.getString("database.username");
-            String password = AppProperties.getString("database.password");
-            String dbServer = AppProperties.getString("database.server");
+            String name = AppProperties.getString(PropertiesConstants.DB_USERNAME);
+            String password = AppProperties.getString(PropertiesConstants.DB_PASSWORD);
+            String dbServer = AppProperties.getString(PropertiesConstants.DB_SERVER);
 
             Properties jpaProperties = new Properties();
 

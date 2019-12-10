@@ -11,6 +11,7 @@ import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesConstants;
 import org.curtis.properties.PropertyException;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
@@ -207,7 +208,7 @@ public abstract class MusicXmlScript {
         System.err.println("Converting Lilypond notation to PDF File...");
         String lilypondLocation;
         try {
-            lilypondLocation = AppProperties.getString("location.lilypond");
+            lilypondLocation = AppProperties.getString(PropertiesConstants.LILYPOND_LOCATION);
         } catch (PropertyException e) {
             throw new MusicXmlException("Lilypond Location not set");
         }
@@ -251,7 +252,7 @@ public abstract class MusicXmlScript {
         }
 
         if (openPdf) {
-            String pdfReaderLocation = AppProperties.getOptionalProperty("location.pdfreader");
+            String pdfReaderLocation = AppProperties.getOptionalProperty(PropertiesConstants.PDF_LOCATION);
             if (StringUtil.isEmpty(pdfReaderLocation)) {
                 System.err.println("Set PDF Reader Location in Set Properties to open PDF file on completion");
             } else {

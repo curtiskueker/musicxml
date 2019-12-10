@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesConstants;
 import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.task.TaskConstants;
@@ -90,7 +91,7 @@ public class ConvertFormHandler extends FormHandler {
         else {
             if (toSelection == PDF_TO_SELECTION) {
                 AppProperties.addLocalPropertiesBundle();
-                if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond"))) toSelection = PDF_TO_OFF_SELECTION;
+                if (StringUtil.isEmpty(AppProperties.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION))) toSelection = PDF_TO_OFF_SELECTION;
                 else taskForm.handlePdfReaderDisplay();
             }
             showToBox(toSelection.getValue());

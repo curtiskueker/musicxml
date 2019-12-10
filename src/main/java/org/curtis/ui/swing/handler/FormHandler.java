@@ -1,6 +1,7 @@
 package org.curtis.ui.swing.handler;
 
 import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesConstants;
 import org.curtis.ui.swing.StatusOutput;
 import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
@@ -239,7 +240,7 @@ public class FormHandler {
                         break;
                     case TaskConstants.CONVERSION_TYPE_PDF:
                         AppProperties.addLocalPropertiesBundle();
-                        if (StringUtil.isEmpty(AppProperties.getOptionalProperty("location.lilypond")))
+                        if (StringUtil.isEmpty(AppProperties.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION)))
                             addFormRow(InputRowFactory.newBoldLabel("Set Lilypond Location in Set Properties to create PDF file"));
                         else toInput = new ToPdf();
                         break;

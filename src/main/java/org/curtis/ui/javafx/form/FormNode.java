@@ -50,7 +50,7 @@ public class FormNode {
     public static final String DB_USERNAME = "dbUsername";
     public static final String DB_PASSWORD = "dbPassword";
     public static final String DB_PASSWORD_SHOW = "dbPasswordShow";
-    public static final String SHOW_PASSWORD = "dbPasswordShow";
+    public static final String SHOW_PASSWORD = "showPassword";
     public static final String DB_NAME = "dbName";
     public static final String DB_SERVER = "dbServer";
     public static final String DB_TYPE = "dbType";

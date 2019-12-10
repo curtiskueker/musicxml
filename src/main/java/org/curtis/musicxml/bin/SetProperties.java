@@ -5,6 +5,7 @@ import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.AppProperties;
+import org.curtis.properties.PropertiesConstants;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
@@ -23,14 +24,16 @@ public class SetProperties extends MusicXmlScript {
 
     public void execute() throws MusicXmlException {
         // write properties to file
+        String prefix = PropertiesConstants.PREFIX + ".";
+
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getPropertyString("musicxml.database.username", username));
-        stringBuilder.append(getPropertyString("musicxml.database.password", password));
-        stringBuilder.append(getPropertyString("musicxml.database.name", databaseName));
-        stringBuilder.append(getPropertyString("musicxml.database.server", server));
-        stringBuilder.append(getPropertyString("musicxml.database.type", databaseType));
-        stringBuilder.append(getPropertyString("location.lilypond", lilypondLocation));
-        stringBuilder.append(getPropertyString("location.pdfreader", pdfReaderLocation));
+        stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_USERNAME, username));
+        stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_PASSWORD, password));
+        stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_NAME, databaseName));
+        stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_SERVER, server));
+        stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_TYPE, databaseType));
+        stringBuilder.append(getPropertyString(PropertiesConstants.LILYPOND_LOCATION, lilypondLocation));
+        stringBuilder.append(getPropertyString(PropertiesConstants.PDF_LOCATION, pdfReaderLocation));
 
         try {
             FileUtil.stringToFile(stringBuilder.toString(), AppProperties.PROPERTIES_FILENAME + ".properties");
