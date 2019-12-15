@@ -1,5 +1,6 @@
 package org.curtis.ui.javafx.form;
 
+import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -92,6 +93,22 @@ public class TaskForm {
         return (ComboBox<String>)getNode(nodeName);
     }
 
+    public String getSelectListValue(String nodeName) {
+        return getSelectList(nodeName).getValue();
+    }
+
+    public ComboBox<String> setSelectList(String nodeName, List<String> selectItems) {
+        ComboBox<String> comboBox = getSelectList(nodeName);
+        comboBox.setItems(FXCollections.observableArrayList(selectItems));
+
+        return comboBox;
+    }
+
+    public void setSelectList(String nodeName, List<String> selectItems, String selectedItem) {
+        ComboBox<String> comboBox = setSelectList(nodeName, selectItems);
+        comboBox.setValue(selectedItem);
+    }
+
     public TextField getTextField(String nodeName) {
         return (TextField)getNode(nodeName);
     }
@@ -101,13 +118,11 @@ public class TaskForm {
     }
 
     public String getFromSelection() {
-        ComboBox<String> fromList = getSelectList(FormNode.CONVERT_FROM_LIST);
-        return fromList.getValue();
+        return getSelectListValue(FormNode.CONVERT_FROM_LIST);
     }
 
     public String getToSelection() {
-        ComboBox<String> toList = getSelectList(FormNode.CONVERT_TO_LIST);
-        return toList.getValue();
+        return getSelectListValue(FormNode.CONVERT_TO_LIST);
     }
 
     public void fromListSelected(String value) {
@@ -132,7 +147,7 @@ public class TaskForm {
     }
 
     private String getScoreNameSelection() {
-        return getSelectList(FormNode.SCORE_NAME_FROM).getValue();
+        return getSelectListValue(FormNode.SCORE_NAME_FROM);
     }
 
     public void scoreNameDeleteChecked() {

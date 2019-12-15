@@ -55,10 +55,7 @@ public class ConvertFormHandler extends FormHandler {
     public void initializeForm() {
         if (FORM_INITIALIZED) return;
 
-        ComboBox<String> convertFromList = taskForm.getSelectList(FormNode.CONVERT_FROM_LIST);
-        ObservableList<String> convertFromTypes = FXCollections.observableArrayList(FROM_SELECTIONS.stream().map(Pair::getKey).collect(Collectors.toList()));
-        convertFromList.setItems(convertFromTypes);
-
+        taskForm.setSelectList(FormNode.CONVERT_FROM_LIST, FROM_SELECTIONS.stream().map(Pair::getKey).collect(Collectors.toList()));
         ComboBox<String> convertToList = taskForm.getSelectList(FormNode.CONVERT_TO_LIST);
         convertToList.getItems().clear();
 
@@ -72,12 +69,7 @@ public class ConvertFormHandler extends FormHandler {
     public void fromListSelected(String selectionName) {
         // set to select list based on from selection
         Pair<String, String> fromSelection = getSelectedPair(selectionName, FROM_SELECTIONS);
-
-        ComboBox<String> convertToList = taskForm.getSelectList(FormNode.CONVERT_TO_LIST);
-
-        List<Pair<String, String>> toPairs = SELECTION_MAP.get(fromSelection);
-        ObservableList<String> convertToTypes = FXCollections.observableArrayList(toPairs.stream().map(Pair::getKey).collect(Collectors.toList()));
-        convertToList.setItems(convertToTypes);
+        taskForm.setSelectList(FormNode.CONVERT_TO_LIST, SELECTION_MAP.get(fromSelection).stream().map(Pair::getKey).collect(Collectors.toList()));
 
         showFromBox(fromSelection.getValue());
 
@@ -100,9 +92,7 @@ public class ConvertFormHandler extends FormHandler {
 
     public void scoreNameDeleteChecked(String scoreName, boolean checked) {
         if (checked) {
-            ComboBox<String> convertToList = taskForm.getSelectList(FormNode.CONVERT_TO_LIST);
-            convertToList.setItems(FXCollections.observableArrayList(Collections.singletonList(DELETE_SCORE_SELECTION.getKey())));
-            convertToList.setValue(DELETE_SCORE_SELECTION.getKey());
+            taskForm.setSelectList(FormNode.CONVERT_TO_LIST, Collections.singletonList(DELETE_SCORE_SELECTION.getKey()), DELETE_SCORE_SELECTION.getKey());
             Label scoreLabel = (Label)taskForm.getNode(FormNode.DELETE_SCORE_LABEL_2);
             scoreLabel.setText(scoreName);
             showToBox(DELETE_SCORE_SELECTION.getValue());
