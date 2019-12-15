@@ -22,6 +22,7 @@ import org.curtis.ui.javafx.handler.DbSettingsFormHandler;
 import org.curtis.ui.javafx.handler.EmptyFormHandler;
 import org.curtis.ui.javafx.handler.FormHandler;
 import org.curtis.ui.javafx.handler.LyPdfSettingsFormHandler;
+import org.curtis.ui.javafx.handler.OutputSettingsFormHandler;
 import org.curtis.ui.javafx.initialize.ConvertInitializer;
 import org.curtis.ui.javafx.initialize.DbTablesInitializer;
 import org.curtis.ui.javafx.initialize.DeleteScoreInitializer;
@@ -50,6 +51,9 @@ public class TaskExecutor {
                 break;
             case FormNode.LY_PDF_SETTINGS_TAB:
                 formHandler = new LyPdfSettingsFormHandler(taskForm);
+                break;
+            case FormNode.OUTPUT_SETTINGS_TAB:
+                formHandler = new OutputSettingsFormHandler(taskForm);
                 break;
             case FormNode.DB_ACTIONS_TAB:
             case FormNode.VALIDATE_TAB:

@@ -1,5 +1,8 @@
 package org.curtis.ui.javafx.form;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class FormNode {
     public static final String MUSICXML_FROM_BOX = "musicXmlFromBox";
     public static final String DB_FROM_BOX = "dbFromBox";
@@ -15,6 +18,7 @@ public class FormNode {
     public static final String VALIDATE_TAB = "validateTab";
     public static final String DB_SETTINGS_TAB = "dbSettingsTab";
     public static final String LY_PDF_SETTINGS_TAB = "lyPdfSettingsTab";
+    public static final String OUTPUT_SETTINGS_TAB = "outputSettingsTab";
     public static final String DB_ACTIONS_TAB = "dbActionsTab";
 
     public static final String CONVERT_FROM_LIST = "convertFromList";
@@ -55,6 +59,16 @@ public class FormNode {
     public static final String DB_SERVER = "dbServer";
     public static final String DB_TYPE = "dbType";
 
+    public static final String TASK_OUTPUT_TYPE = "taskOutputType";
+    public static final String SQL_OUTPUT_TYPE = "sqlOutputType";
+    public static final String CHOOSE_TASK_OUTPUT_LOCATION = "chooseTaskOutputLocation";
+    public static final String CHOOSE_SQL_OUTPUT_LOCATION = "chooseSqlOutputLocation";
+    public static final String TASK_OUTPUT_LOCATION = "taskOutputLocation";
+    public static final String SQL_OUTPUT_LOCATION = "sqlOutputLocation";
+    public static final String OUTPUT_TO_CONSOLE = "To Console";
+    public static final String OUTPUT_TO_FILE = "To File";
+    public static final List<String> OUTPUT_TYPES = Arrays.asList(OUTPUT_TO_CONSOLE, OUTPUT_TO_FILE);
+
     public static final String DB_TEST_CONNECTION = "testDbConnection";
     public static final String CREATE_DB_TABLES = "generateSchema";
     public static final String GENERATE_SCHEMA = "generateSchema";
@@ -65,6 +79,7 @@ public class FormNode {
     public static final String EXECUTE_DELETE_BUTTON = "executeDelete";
     public static final String SAVE_DB_SETTINGS_BUTTON = "saveDbSettingsButton";
     public static final String SAVE_LY_PDF_SETTINGS_BUTTON = "saveLyPdfSettingsButton";
+    public static final String SAVE_OUTPUT_SETTINGS_BUTTON = "saveOutputSettingsButton";
     public static final String EXECUTE_DB_ACTIONS_BUTTON = "executeDbActions";
     public static final String EXECUTE_VALIDATE_BUTTON = "executeValidate";
 

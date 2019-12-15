@@ -153,4 +153,20 @@ public class TasksController {
     private void showSql(ActionEvent actionEvent) {
         taskForm.showSql(((Node)actionEvent.getSource()).getId());
     }
+
+    @FXML
+    private void outputTypeSelected(ActionEvent actionEvent) {
+        ComboBox comboBox = (ComboBox)actionEvent.getSource();
+        taskForm.outputTypeSelected(comboBox.getId(), (String)comboBox.getValue());
+    }
+
+    @FXML
+    private void chooseTaskOutputLocation() {
+        taskForm.setChooseFileLocationInTextField(FormNode.TASK_OUTPUT_LOCATION, "Text Files (*.txt)", ".txt");
+    }
+
+    @FXML
+    private void chooseSqlOutputLocation() {
+        taskForm.setChooseFileLocationInTextField(FormNode.SQL_OUTPUT_LOCATION, "Text Files (*.txt)", ".txt");
+    }
 }

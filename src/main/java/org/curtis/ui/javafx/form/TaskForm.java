@@ -34,6 +34,7 @@ public class TaskForm {
             FormNode.EXECUTE_DELETE_BUTTON,
             FormNode.SAVE_DB_SETTINGS_BUTTON,
             FormNode.SAVE_LY_PDF_SETTINGS_BUTTON,
+            FormNode.SAVE_OUTPUT_SETTINGS_BUTTON,
             FormNode.EXECUTE_DB_ACTIONS_BUTTON,
             FormNode.EXECUTE_VALIDATE_BUTTON,
             FormNode.SHOW_SQL_FROM,
@@ -171,6 +172,16 @@ public class TaskForm {
         toTextInput.setText(fromTextInput.getText());
         fromTextInput.setVisible(false);
         toTextInput.setVisible(true);
+    }
+
+    public void outputTypeSelected(String controlName, String value) {
+        if (controlName.equals(FormNode.TASK_OUTPUT_TYPE)) {
+            getNode(FormNode.CHOOSE_TASK_OUTPUT_LOCATION).setVisible(value.equals(FormNode.OUTPUT_TO_FILE));
+            getNode(FormNode.TASK_OUTPUT_LOCATION).setVisible(value.equals(FormNode.OUTPUT_TO_FILE));
+        } else if (controlName.equals(FormNode.SQL_OUTPUT_TYPE)) {
+            getNode(FormNode.CHOOSE_SQL_OUTPUT_LOCATION).setVisible(value.equals(FormNode.OUTPUT_TO_FILE));
+            getNode(FormNode.SQL_OUTPUT_LOCATION).setVisible(value.equals(FormNode.OUTPUT_TO_FILE));
+        }
     }
 
     public void showSchemaFileLocation() {
