@@ -23,6 +23,10 @@ public class SetDbPropertiesHandler extends InputHandler {
         setProperties.setDatabaseType(taskInitializer.getSelection("databaseType"));
         setProperties.setLilypondLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION));
         setProperties.setPdfReaderLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.PDF_LOCATION));
+        setProperties.setTaskOutputType(PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_TYPE));
+        setProperties.setTaskOutputLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_LOCATION));
+        setProperties.setSqlOutputType(PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_TYPE));
+        setProperties.setSqlOutputLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_LOCATION));
 
         DatabaseExec databaseExec = new DatabaseExec();
         databaseExec.setTestDatabase(taskInitializer.isSelected("testDatabase"));

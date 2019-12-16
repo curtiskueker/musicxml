@@ -190,6 +190,8 @@ public class TaskForm {
     }
 
     public void outputTypeSelected(String controlName, String value) {
+        if (StringUtil.isEmpty(value)) return;
+
         if (controlName.equals(FormNode.TASK_OUTPUT_TYPE)) {
             getNode(FormNode.CHOOSE_TASK_OUTPUT_LOCATION).setVisible(value.equals(FormNode.OUTPUT_TO_FILE));
             getNode(FormNode.TASK_OUTPUT_LOCATION).setVisible(value.equals(FormNode.OUTPUT_TO_FILE));

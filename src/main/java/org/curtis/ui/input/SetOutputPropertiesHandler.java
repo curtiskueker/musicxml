@@ -2,12 +2,12 @@ package org.curtis.ui.input;
 
 import org.curtis.musicxml.bin.MusicXmlScript;
 import org.curtis.musicxml.bin.SetProperties;
-import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.ui.task.TaskInitializer;
 
-public class SetLyPdfPropertiesHandler extends InputHandler {
-    public SetLyPdfPropertiesHandler() {
+public class SetOutputPropertiesHandler extends InputHandler {
+    public SetOutputPropertiesHandler() {
 
     }
 
@@ -21,12 +21,12 @@ public class SetLyPdfPropertiesHandler extends InputHandler {
         setProperties.setDatabaseName(PropertiesHandler.getOptionalProperty(prefix + PropertiesConstants.DB_NAME));
         setProperties.setServer(PropertiesHandler.getOptionalProperty(prefix + PropertiesConstants.DB_SERVER));
         setProperties.setDatabaseType(PropertiesHandler.getOptionalProperty(prefix + PropertiesConstants.DB_TYPE));
-        setProperties.setLilypondLocation(taskInitializer.getText("lilypondLocation"));
-        setProperties.setPdfReaderLocation(taskInitializer.getText("pdfReaderLocation"));
-        setProperties.setTaskOutputType(PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_TYPE));
-        setProperties.setTaskOutputLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_LOCATION));
-        setProperties.setSqlOutputType(PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_TYPE));
-        setProperties.setSqlOutputLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_LOCATION));
+        setProperties.setLilypondLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION));
+        setProperties.setPdfReaderLocation(PropertiesHandler.getOptionalProperty(PropertiesConstants.PDF_LOCATION));
+        setProperties.setTaskOutputType(taskInitializer.getSelection("taskOutputType"));
+        setProperties.setTaskOutputLocation(taskInitializer.getText("taskOutputLocation"));
+        setProperties.setSqlOutputType(taskInitializer.getSelection("sqlOutputType"));
+        setProperties.setSqlOutputLocation(taskInitializer.getText("sqlOutputLocation"));
 
         return setProperties;
     }

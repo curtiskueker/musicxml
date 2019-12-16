@@ -17,6 +17,10 @@ public class SetProperties extends MusicXmlScript {
     private String databaseType;
     private String lilypondLocation;
     private String pdfReaderLocation;
+    private String taskOutputType;
+    private String taskOutputLocation;
+    private String sqlOutputType;
+    private String sqlOutputLocation;
 
     public SetProperties() {
 
@@ -34,6 +38,10 @@ public class SetProperties extends MusicXmlScript {
         stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_TYPE, databaseType));
         stringBuilder.append(getPropertyString(PropertiesConstants.LILYPOND_LOCATION, lilypondLocation));
         stringBuilder.append(getPropertyString(PropertiesConstants.PDF_LOCATION, pdfReaderLocation));
+        stringBuilder.append(getPropertyString(PropertiesConstants.TASK_OUTPUT_TYPE, taskOutputType));
+        stringBuilder.append(getPropertyString(PropertiesConstants.TASK_OUTPUT_LOCATION, taskOutputLocation));
+        stringBuilder.append(getPropertyString(PropertiesConstants.SQL_OUTPUT_TYPE, sqlOutputType));
+        stringBuilder.append(getPropertyString(PropertiesConstants.SQL_OUTPUT_LOCATION, sqlOutputLocation));
 
         try {
             FileUtil.stringToFile(stringBuilder.toString(), PropertiesHandler.PROPERTIES_FILENAME + ".properties");
@@ -88,6 +96,22 @@ public class SetProperties extends MusicXmlScript {
 
     public void setPdfReaderLocation(String pdfReaderLocation) {
         this.pdfReaderLocation = pdfReaderLocation;
+    }
+
+    public void setTaskOutputType(String taskOutputType) {
+        this.taskOutputType = taskOutputType;
+    }
+
+    public void setTaskOutputLocation(String taskOutputLocation) {
+        this.taskOutputLocation = taskOutputLocation;
+    }
+
+    public void setSqlOutputType(String sqlOutputType) {
+        this.sqlOutputType = sqlOutputType;
+    }
+
+    public void setSqlOutputLocation(String sqlOutputLocation) {
+        this.sqlOutputLocation = sqlOutputLocation;
     }
 
     public static void main(String[] args) {

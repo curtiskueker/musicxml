@@ -14,6 +14,7 @@ import org.curtis.ui.input.MusicXml2LyHandler;
 import org.curtis.ui.input.MusicXml2PdfHandler;
 import org.curtis.ui.input.SetDbPropertiesHandler;
 import org.curtis.ui.input.SetLyPdfPropertiesHandler;
+import org.curtis.ui.input.SetOutputPropertiesHandler;
 import org.curtis.ui.input.ValidateXmlHandler;
 import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
@@ -28,6 +29,7 @@ import org.curtis.ui.javafx.initialize.DbTablesInitializer;
 import org.curtis.ui.javafx.initialize.DeleteScoreInitializer;
 import org.curtis.ui.javafx.initialize.JavafxTaskInitializer;
 import org.curtis.ui.javafx.initialize.LyPdfSettingsInitializer;
+import org.curtis.ui.javafx.initialize.OutputSettingsInitializer;
 import org.curtis.ui.javafx.initialize.SaveDbSettingsInitializer;
 import org.curtis.ui.javafx.initialize.ValidateXmlInitializer;
 import org.curtis.ui.task.MusicXmlTask;
@@ -81,6 +83,11 @@ public class TaskExecutor {
             case FormNode.SAVE_LY_PDF_SETTINGS_BUTTON:
                 taskInitializer = new LyPdfSettingsInitializer(taskForm);
                 inputHandler = new SetLyPdfPropertiesHandler();
+                isPropertiesSettingsUpdate = true;
+                break;
+            case FormNode.SAVE_OUTPUT_SETTINGS_BUTTON:
+                taskInitializer = new OutputSettingsInitializer(taskForm);
+                inputHandler = new SetOutputPropertiesHandler();
                 isPropertiesSettingsUpdate = true;
                 break;
             case FormNode.EXECUTE_DB_ACTIONS_BUTTON:
