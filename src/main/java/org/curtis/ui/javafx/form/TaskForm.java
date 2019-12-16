@@ -13,7 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
-import org.curtis.ui.javafx.StatusOutput;
+import org.curtis.ui.javafx.status.StatusOutput;
 import org.curtis.ui.javafx.handler.ConvertFormHandler;
 import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
