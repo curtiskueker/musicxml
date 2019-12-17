@@ -77,6 +77,10 @@ public class TaskForm {
         statusOutput.clear();
     }
 
+    public void resetOutputStream() {
+        statusOutput.resetOutputHandler();
+    }
+
     public Node getNode(String nodeName) {
         return getScene().lookup("#" + nodeName);
     }
@@ -172,7 +176,7 @@ public class TaskForm {
         getCheckbox(FormNode.SHOW_SQL_FROM).setSelected(checkboxOn);
         getCheckbox(FormNode.SHOW_SQL_TO).setSelected(checkboxOn);
 
-        statusOutput.getOutStream().setPrintToBuffer(checkboxOn);
+        statusOutput.printToOutputStream(checkboxOn);
     }
 
     public void showPassword() {

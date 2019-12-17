@@ -22,7 +22,7 @@ public class MusicXml2Db extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         File inputFile = null;
         try {
-            inputFile = FileUtil.newFile(getInputFile());
+            inputFile = FileUtil.openFile(getInputFile());
         } catch (FileException e) {
             throw new MusicXmlException(e.getMessage());
         }

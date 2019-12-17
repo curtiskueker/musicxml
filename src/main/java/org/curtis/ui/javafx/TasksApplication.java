@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.curtis.properties.PropertiesHandler;
 import org.curtis.ui.task.TaskConstants;
 
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class TasksApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        PropertiesHandler.addLocalPropertiesBundle();
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("javafx/musicxmltasks.fxml")));
         Parent root = loader.load();
         primaryStage.setTitle(TaskConstants.TASKS_TITLE);
