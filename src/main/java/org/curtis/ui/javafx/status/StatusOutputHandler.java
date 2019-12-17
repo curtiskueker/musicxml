@@ -11,6 +11,7 @@ public class StatusOutputHandler {
     private TextArea textArea;
     private StatusStreamOutput errStream;
     private StatusStreamOutput outStream;
+    private boolean printToOut = false;
 
     public StatusOutputHandler(TextArea textArea) {
         this.textArea = textArea;
@@ -20,8 +21,6 @@ public class StatusOutputHandler {
     public void reset() {
         flush();
         close();
-
-        boolean currentOutPrint = outStream != null && outStream.isPrintToBuffer();
 
         String errType = PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_TYPE);
         String outType = PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_TYPE);
@@ -34,12 +33,13 @@ public class StatusOutputHandler {
         open();
 
         System.setErr(new PrintStream(errStream));
-        //System.setOut(new PrintStream(outStream));
+        System.setOut(new PrintStream(outStream));
 
-        printToOutputStream(currentOutPrint);
+        outStream.setPrintToBuffer(printToOut);
     }
 
     public void printToOutputStream(boolean printOutput) {
+        printToOut = printOutput;
         outStream.setPrintToBuffer(printOutput);
     }
 
