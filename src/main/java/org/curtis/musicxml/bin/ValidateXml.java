@@ -1,6 +1,7 @@
 package org.curtis.musicxml.bin;
 
 import org.curtis.musicxml.exception.MusicXmlException;
+import org.curtis.util.StringUtil;
 import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
 import org.curtis.xml.XmlUtil;
@@ -25,10 +26,13 @@ public class ValidateXml extends MusicXmlScript {
 
     public void execute() throws MusicXmlException {
         try {
+            if (StringUtil.isEmpty(getXmlFileLocation())) throw new MusicXmlException("XML filename is required.");
+
             System.err.println("Validating XML file...");
 
             File inputFile = new File(getXmlFileLocation());
             if (!inputFile.isFile()) throw new MusicXmlException("Unknown file: " + inputFile.getAbsolutePath());
+
             Document xmlDocument = XmlUtil.fileToDocument(inputFile);
             SchemaValidator.getInstance().validate(xmlDocument);
 

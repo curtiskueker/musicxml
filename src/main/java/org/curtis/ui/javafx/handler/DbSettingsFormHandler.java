@@ -13,7 +13,7 @@ public class DbSettingsFormHandler extends FormHandler {
     }
 
     public void initializeForm() {
-        String prefix = PropertiesConstants.PREFIX + ".";
+        String prefix = PropertiesConstants.PROPERTIES_PREFIX + ".";
 
         PropertiesHandler.addLocalPropertiesBundle();
         taskForm.getTextField(FormNode.DB_USERNAME).setText(PropertiesHandler.getOptionalProperty(prefix + PropertiesConstants.DB_USERNAME));

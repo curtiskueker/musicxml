@@ -13,7 +13,7 @@ public class PropertiesInput extends FromInput {
     private void setup() {
         PropertiesHandler.addLocalPropertiesBundle();
 
-        String prefix = PropertiesConstants.PREFIX + ".";
+        String prefix = PropertiesConstants.PROPERTIES_PREFIX + ".";
         getInputRows().add(InputRowFactory.newInput("username", "Username: ", InputRow.SMALL_INPUT_SIZE, PropertiesHandler.getOptionalProperty(prefix  + PropertiesConstants.DB_USERNAME)));
         getInputRows().add(InputRowFactory.newInput("password", "Password: ", InputRow.SMALL_INPUT_SIZE, PropertiesHandler.getOptionalProperty(prefix + PropertiesConstants.DB_PASSWORD)));
         getInputRows().add(InputRowFactory.newInput("databaseName", "Database Name: ", InputRow.SMALL_INPUT_SIZE, PropertiesHandler.getOptionalProperty(prefix + PropertiesConstants.DB_NAME)));

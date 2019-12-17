@@ -13,7 +13,7 @@ public class SetLyPdfPropertiesHandler extends InputHandler {
 
     @Override
     public MusicXmlScript transferInputToTask(TaskInitializer taskInitializer) {
-        String prefix = PropertiesConstants.PREFIX + ".";
+        String prefix = PropertiesConstants.PROPERTIES_PREFIX + ".";
 
         SetProperties setProperties = new SetProperties();
         setProperties.setUsername(PropertiesHandler.getOptionalProperty(prefix + PropertiesConstants.DB_USERNAME));

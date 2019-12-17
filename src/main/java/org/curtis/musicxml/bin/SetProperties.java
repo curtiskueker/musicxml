@@ -6,6 +6,7 @@ import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
+import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 
@@ -27,8 +28,13 @@ public class SetProperties extends MusicXmlScript {
     }
 
     public void execute() throws MusicXmlException {
+        if (StringUtil.isNotEmpty(taskOutputType) && taskOutputType.equals(TaskConstants.OUTPUT_TO_FILE) && StringUtil.isEmpty(taskOutputLocation))
+            throw new MusicXmlException("Task output filename is required");
+        if (StringUtil.isNotEmpty(sqlOutputType) && sqlOutputType.equals(TaskConstants.OUTPUT_TO_FILE) && StringUtil.isEmpty(sqlOutputLocation))
+            throw new MusicXmlException("SQL output filename is required");
+
         // write properties to file
-        String prefix = PropertiesConstants.PREFIX + ".";
+        String prefix = PropertiesConstants.PROPERTIES_PREFIX + ".";
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_USERNAME, username));

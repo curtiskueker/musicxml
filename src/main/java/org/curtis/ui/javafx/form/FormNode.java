@@ -1,8 +1,5 @@
 package org.curtis.ui.javafx.form;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class FormNode {
     public static final String MUSICXML_FROM_BOX = "musicXmlFromBox";
     public static final String DB_FROM_BOX = "dbFromBox";
@@ -65,9 +62,6 @@ public class FormNode {
     public static final String CHOOSE_SQL_OUTPUT_LOCATION = "chooseSqlOutputLocation";
     public static final String TASK_OUTPUT_LOCATION = "taskOutputLocation";
     public static final String SQL_OUTPUT_LOCATION = "sqlOutputLocation";
-    public static final String OUTPUT_TO_CONSOLE = "To Console";
-    public static final String OUTPUT_TO_FILE = "To File";
-    public static final List<String> OUTPUT_TYPES = Arrays.asList(OUTPUT_TO_CONSOLE, OUTPUT_TO_FILE);
 
     public static final String DB_TEST_CONNECTION = "testDbConnection";
     public static final String CREATE_DB_TABLES = "generateSchema";

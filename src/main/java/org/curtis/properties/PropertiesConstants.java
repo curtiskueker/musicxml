@@ -1,6 +1,8 @@
 package org.curtis.properties;
 
 public class PropertiesConstants {
+    public static final String PROPERTIES_PREFIX = "musicxml";
+
     public static final String DB_USERNAME = "database.username";
     public static final String DB_PASSWORD = "database.password";
     public static final String DB_NAME = "database.name";
@@ -12,8 +14,6 @@ public class PropertiesConstants {
     public static final String TASK_OUTPUT_LOCATION = "output.task.location";
     public static final String SQL_OUTPUT_TYPE = "output.sql.type";
     public static final String SQL_OUTPUT_LOCATION = "output.sql.location";
-
-    public static final String PREFIX = "musicxml";
 
     private PropertiesConstants() {
 

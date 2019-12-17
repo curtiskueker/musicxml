@@ -3,7 +3,7 @@ package org.curtis.ui.javafx.status;
 import javafx.scene.control.TextArea;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.properties.PropertiesHandler;
-import org.curtis.ui.javafx.form.FormNode;
+import org.curtis.ui.task.TaskConstants;
 
 import java.io.PrintStream;
 
@@ -25,9 +25,9 @@ public class StatusOutputHandler {
         String errType = PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_TYPE);
         String outType = PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_TYPE);
 
-        if (errType.equals(FormNode.OUTPUT_TO_FILE)) errStream = new StatusFileOutput(PropertiesHandler.getRequiredProperty(PropertiesConstants.TASK_OUTPUT_LOCATION));
+        if (errType.equals(TaskConstants.OUTPUT_TO_FILE)) errStream = new StatusFileOutput(PropertiesHandler.getRequiredProperty(PropertiesConstants.TASK_OUTPUT_LOCATION));
         else errStream = new StatusConsoleOutput(textArea);
-        if (outType.equals(FormNode.OUTPUT_TO_FILE)) outStream = new StatusFileOutput(PropertiesHandler.getRequiredProperty(PropertiesConstants.SQL_OUTPUT_LOCATION));
+        if (outType.equals(TaskConstants.OUTPUT_TO_FILE)) outStream = new StatusFileOutput(PropertiesHandler.getRequiredProperty(PropertiesConstants.SQL_OUTPUT_LOCATION));
         else outStream = new StatusConsoleOutput(textArea);
 
         open();
