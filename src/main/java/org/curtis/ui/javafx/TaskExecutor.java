@@ -74,6 +74,7 @@ public class TaskExecutor {
         JavafxTaskInitializer taskInitializer = null;
         boolean isPropertiesSettingsUpdate = false;
         boolean isDbUpdate = false;
+        boolean isOutputSettingsUpdate = false;
         switch (controlId) {
             case FormNode.SAVE_DB_SETTINGS_BUTTON:
                 taskInitializer = new SaveDbSettingsInitializer(taskForm);
@@ -89,6 +90,7 @@ public class TaskExecutor {
                 taskInitializer = new OutputSettingsInitializer(taskForm);
                 inputHandler = new SetOutputPropertiesHandler();
                 isPropertiesSettingsUpdate = true;
+                isOutputSettingsUpdate = true;
                 break;
             case FormNode.EXECUTE_DB_ACTIONS_BUTTON:
                 taskInitializer = new DbTablesInitializer(taskForm);
@@ -151,6 +153,7 @@ public class TaskExecutor {
 
                 if (isPropertiesSettingsUpdate) Platform.runLater(PropertiesHandler::addLocalPropertiesBundle);
                 if (isDbUpdate) Platform.runLater(() -> {taskForm.handleDisplayUpdates();});
+                if (isOutputSettingsUpdate) Platform.runLater(() -> taskForm.resetOutputStream());
             }
             System.err.println("Task finished");
         } catch (TaskException e) {
