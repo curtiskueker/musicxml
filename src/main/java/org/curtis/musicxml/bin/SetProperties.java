@@ -63,7 +63,6 @@ public class SetProperties extends MusicXmlScript {
         }
     }
 
-
     private String getPropertyString(String propertyName, String propertyValue) {
         if (StringUtil.isEmpty(propertyValue)) return "";
 

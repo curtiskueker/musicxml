@@ -252,20 +252,26 @@ public abstract class MusicXmlScript {
         }
 
         if (openPdf) {
-            String pdfReaderLocation = PropertiesHandler.getOptionalProperty(PropertiesConstants.PDF_LOCATION);
-            if (StringUtil.isEmpty(pdfReaderLocation)) {
-                System.err.println("Set PDF Reader Location in Set Properties to open PDF file on completion");
-            } else {
-                try {
-                    Process pdfReaderProcess = new ProcessBuilder(pdfReaderLocation, getOutputFile() + ".pdf").start();
-                    InputStream pdfReaderProcessErrorStream = pdfReaderProcess.getErrorStream();
-                    int c;
-                    while ((c = pdfReaderProcessErrorStream.read()) != -1) {
-                        System.err.print((char)c);
-                    }
-                } catch (IOException e) {
-                    throw new MusicXmlException(e);
+            Runnable pdfRunnable = this::openReader;
+            Thread pdfThread = new Thread(pdfRunnable);
+            pdfThread.start();
+        }
+    }
+
+    private void openReader() {
+        String pdfReaderLocation = PropertiesHandler.getOptionalProperty(PropertiesConstants.PDF_LOCATION);
+        if (StringUtil.isEmpty(pdfReaderLocation)) {
+            System.err.println("Set PDF Reader Location in Set Properties to open PDF file on completion");
+        } else {
+            try {
+                Process pdfReaderProcess = new ProcessBuilder(pdfReaderLocation, getOutputFile() + ".pdf").start();
+                InputStream pdfReaderProcessErrorStream = pdfReaderProcess.getErrorStream();
+                int c;
+                while ((c = pdfReaderProcessErrorStream.read()) != -1) {
+                    System.err.print((char)c);
                 }
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
             }
         }
     }
