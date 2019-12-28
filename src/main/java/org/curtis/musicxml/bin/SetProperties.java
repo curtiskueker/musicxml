@@ -70,7 +70,7 @@ public class SetProperties extends MusicXmlScript {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(propertyName);
         stringBuilder.append("=");
-        stringBuilder.append(propertyValue);
+        stringBuilder.append(propertyValue.replace("\\", "/"));
         stringBuilder.append("\n");
 
         return stringBuilder.toString();
