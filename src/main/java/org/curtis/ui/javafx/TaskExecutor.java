@@ -155,8 +155,9 @@ public class TaskExecutor {
                 if (isDbUpdate) Platform.runLater(() -> {taskForm.handleDisplayUpdates();});
                 if (isOutputSettingsUpdate) Platform.runLater(() -> taskForm.resetOutputStream());
             }
-            System.err.println("Task finished");
+            System.err.println("Task finished successfully");
         } catch (TaskException e) {
+            System.err.println("Task exited with exception");
             System.err.println(e.getMessage());
         } finally {
             taskForm.disableNodes(false);
