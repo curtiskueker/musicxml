@@ -67,10 +67,19 @@ public class SetProperties extends MusicXmlScript {
         if (StringUtil.isEmpty(propertyValue)) return "";
 
         StringBuilder stringBuilder = new StringBuilder();
+
         stringBuilder.append(propertyName);
         stringBuilder.append("=");
         stringBuilder.append(propertyValue.replace("\\", "/"));
         stringBuilder.append("\n");
+
+        String displayPropertyName = PropertiesConstants.getDisplayProperty(propertyName);
+        if (StringUtil.isNotEmpty(displayPropertyName)) {
+            stringBuilder.append(displayPropertyName);
+            stringBuilder.append("=");
+            stringBuilder.append(propertyValue.replace("\\", "\\\\"));
+            stringBuilder.append("\n");
+        }
 
         return stringBuilder.toString();
     }

@@ -30,7 +30,16 @@ public class MusicXml2Db extends MusicXmlScript {
         try {
             DBTransaction dbTransaction = MusicXmlUtil.getDbTransaction();
 
-            String scoreName = StringUtil.isEmpty(getScoreName()) ? getInputFile().substring(getInputFile().lastIndexOf("/") + 1, getInputFile().lastIndexOf(".")) : getScoreName();
+            String scoreName = getScoreName();
+            if (StringUtil.isEmpty(getScoreName())) {
+                int beginIndex = getInputFile().lastIndexOf("/");
+                if (beginIndex == -1) beginIndex = getInputFile().lastIndexOf("\\");
+                int endIndex = getInputFile().lastIndexOf(".");
+                if (endIndex == -1) endIndex = getInputFile().length();
+
+                scoreName = getInputFile().substring(beginIndex + 1, endIndex);
+            }
+
             if (dbTransaction.find(Score.class, "scoreName", scoreName) != null) throw new MusicXmlException("Score name " + scoreName + " already exists");
 
             ScoreHandler scoreHandler = handleXmlScoreFile(inputFile);

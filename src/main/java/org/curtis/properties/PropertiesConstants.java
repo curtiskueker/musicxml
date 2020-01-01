@@ -1,5 +1,9 @@
 package org.curtis.properties;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class PropertiesConstants {
     public static final String PROPERTIES_PREFIX = "musicxml";
 
@@ -15,7 +19,28 @@ public class PropertiesConstants {
     public static final String SQL_OUTPUT_TYPE = "output.sql.type";
     public static final String SQL_OUTPUT_LOCATION = "output.sql.location";
 
+    private static final String DISPLAY_PROPERTY_SUFFIX = ".display";
+
+    private static final List<String> USER_INPUT_PROPERTIES = new ArrayList<>(
+            Arrays.asList(
+                    PROPERTIES_PREFIX + "." + DB_USERNAME,
+                    PROPERTIES_PREFIX + "." + DB_PASSWORD,
+                    PROPERTIES_PREFIX + "." + DB_NAME,
+                    PROPERTIES_PREFIX + "." + DB_SERVER,
+                    LILYPOND_LOCATION,
+                    PDF_LOCATION,
+                    TASK_OUTPUT_LOCATION,
+                    SQL_OUTPUT_LOCATION
+            )
+    );
+
     private PropertiesConstants() {
 
+    }
+
+    public static String getDisplayProperty(String inputProperty) {
+        if (!USER_INPUT_PROPERTIES.contains(inputProperty)) return "";
+
+        return inputProperty + DISPLAY_PROPERTY_SUFFIX;
     }
 }

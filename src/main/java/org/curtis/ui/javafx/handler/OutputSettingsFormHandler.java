@@ -15,8 +15,8 @@ public class OutputSettingsFormHandler extends FormHandler {
         PropertiesHandler.addLocalPropertiesBundle();
 
         taskForm.setSelectList(FormNode.TASK_OUTPUT_TYPE, TaskConstants.OUTPUT_TYPES, PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_TYPE));
-        taskForm.getTextField(FormNode.TASK_OUTPUT_LOCATION).setText(PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_LOCATION));
+        taskForm.getTextField(FormNode.TASK_OUTPUT_LOCATION).setText(PropertiesHandler.getOptionalProperty(PropertiesConstants.getDisplayProperty(PropertiesConstants.TASK_OUTPUT_LOCATION)));
         taskForm.setSelectList(FormNode.SQL_OUTPUT_TYPE, TaskConstants.OUTPUT_TYPES, PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_TYPE));
-        taskForm.getTextField(FormNode.SQL_OUTPUT_LOCATION).setText(PropertiesHandler.getOptionalProperty(PropertiesConstants.SQL_OUTPUT_LOCATION));
+        taskForm.getTextField(FormNode.SQL_OUTPUT_LOCATION).setText(PropertiesHandler.getOptionalProperty(PropertiesConstants.getDisplayProperty(PropertiesConstants.SQL_OUTPUT_LOCATION)));
     }
 }
