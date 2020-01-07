@@ -1,0 +1,51 @@
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+
+    <xs:include schemaLocation="common.xsd"/>
+
+    <xs:attributeGroup name="link-attributes">
+        <xs:annotation>
+            <xs:documentation>The link-attributes group includes all the simple XLink attributes supported in the MusicXML format.</xs:documentation>
+        </xs:annotation>
+
+        <xs:attribute ref="xlink:href" use="required"/>
+        <xs:attribute ref="xlink:type" fixed="simple"/>
+        <xs:attribute ref="xlink:role"/>
+        <xs:attribute ref="xlink:title"/>
+        <xs:attribute ref="xlink:show" default="replace"/>
+        <xs:attribute ref="xlink:actuate" default="onRequest"/>
+    </xs:attributeGroup>
+
+    <xs:complexType name="link">
+        <xs:annotation>
+            <xs:documentation>The link type serves as an outgoing simple XLink. It is also used to connect a MusicXML score with a MusicXML opus. If a relative link is used within a document that is part of a compressed MusicXML file, the link is relative to the  root folder of the zip file.</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="link-attributes"/>
+        <xs:attribute name="name" type="xs:token"/>
+        <xs:attributeGroup ref="element-position"/>
+        <xs:attributeGroup ref="position"/>
+    </xs:complexType>
+
+    <xs:complexType name="bookmark">
+        <xs:annotation>
+            <xs:documentation>The bookmark type serves as a well-defined target for an incoming simple XLink.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="name" type="xs:token"/>
+        <xs:attributeGroup ref="element-position"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="element-position">
+        <xs:annotation>
+            <xs:documentation>The element and position attributes are new as of Version 2.0. They allow for bookmarks and links to be positioned at higher resolution than the level of music-data elements. When no element and position attributes are present, the bookmark or link element refers to the next sibling element in the MusicXML file. The element attribute specifies an element type for a descendant of the next sibling element that is not a link or bookmark. The position attribute specifies the position of this descendant element, where the first position is 1. The position attribute is ignored if the element attribute is not present. For instance, an element value of "beam" and a position value of "2" defines the link or bookmark to refer to the second beam descendant of the next sibling element that is not a link or bookmark. This is equivalent to an XPath test of [.//beam[2]] done in the context of the sibling element.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="element" type="xs:NMTOKEN"/>
+        <xs:attribute name="position" type="xs:positiveInteger"/>
+    </xs:attributeGroup>
+
+</xs:schema>
