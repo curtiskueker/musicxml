@@ -27,7 +27,7 @@ public class SchemaValidator {
 
     public void validate(String documentElement) throws XmlException {
         try {
-            String schemaLocation = "musicxml/xsd/score.xsd";
+            String schemaLocation = "xsd/3.0/score.xsd";
 
             SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
             Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(schemaLocation)));
