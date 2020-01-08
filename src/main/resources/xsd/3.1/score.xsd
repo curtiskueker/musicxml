@@ -1,7 +1,6 @@
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        elementFormDefault="qualified"
-        attributeFormDefault="unqualified">
+        elementFormDefault="qualified">
 
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
 
@@ -163,13 +162,13 @@
 
     <xs:complexType name="credit">
         <xs:annotation>
-            <xs:documentation>The credit type represents the appearance of the title, composer, arranger, lyricist, copyright, dedication, and other text and graphics that commonly appears on the first page of a score. The credit-words and credit-image elements are similar to the words and image elements for directions. However, since the credit is not part of a measure, the default-x and default-y attributes adjust the origin relative to the bottom left-hand corner of the first page. The enclosure for credit-words is none by default.
+            <xs:documentation>The credit type represents the appearance of the title, composer, arranger, lyricist, copyright, dedication, and other text, symbols, and graphics that commonly appear on the first page of a score. The credit-words, credit-symbol, and credit-image elements are similar to the words, symbol, and image elements for directions. However, since the credit is not part of a measure, the default-x and default-y attributes adjust the origin relative to the bottom left-hand corner of the page. The enclosure for credit-words and credit-symbol is none by default.
 
-                By default, a series of credit-words elements within a single credit element follow one another in sequence visually. Non-positional formatting attributes are carried over from the previous element by default.
+                By default, a series of credit-words and credit-symbol elements within a single credit element follow one another in sequence visually. Non-positional formatting attributes are carried over from the previous element by default.
 
-                The page attribute for the credit element, new in Version 2.0, specifies the page number where the credit should appear. This is an integer value that starts with 1 for the first page. Its value is 1 by default. Since credits occur before the music, these page numbers do not refer to the page numbering specified by the print element's page-number attribute.
+                The page attribute for the credit element specifies the page number where the credit should appear. This is an integer value that starts with 1 for the first page. Its value is 1 by default. Since credits occur before the music, these page numbers do not refer to the page numbering specified by the print element's page-number attribute.
 
-                The credit-type element, new in Version 3.0, indicates the purpose behind a credit. Multiple types of data may be combined in a single credit, so multiple elements may be used. Standard values include page number, title, subtitle, composer, arranger, lyricist, and rights.
+                The credit-type element indicates the purpose behind a credit. Multiple types of data may be combined in a single credit, so multiple elements may be used. Standard values include page number, title, subtitle, composer, arranger, lyricist, and rights.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -179,16 +178,23 @@
             <xs:choice>
                 <xs:element name="credit-image" type="image"/>
                 <xs:sequence>
-                    <xs:element name="credit-words" type="formatted-text"/>
+                    <xs:choice>
+                        <xs:element name="credit-words" type="formatted-text-id"/>
+                        <xs:element name="credit-symbol" type="formatted-symbol-id"/>
+                    </xs:choice>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
                         <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded"/>
                         <xs:element name="bookmark" type="bookmark" minOccurs="0" maxOccurs="unbounded"/>
-                        <xs:element name="credit-words" type="formatted-text"/>
+                        <xs:choice>
+                            <xs:element name="credit-words" type="formatted-text-id"/>
+                            <xs:element name="credit-symbol" type="formatted-symbol-id"/>
+                        </xs:choice>
                     </xs:sequence>
                 </xs:sequence>
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="page" type="xs:positiveInteger"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:complexType name="part-list">
@@ -454,14 +460,27 @@
 
                 The non-controlling attribute is intended for use in multimetric music like the Don Giovanni minuet. If set to "yes", the left barline in this measure does not coincide with the left barline of measures in other parts. The value is "no" if not specified.
 
-                In partwise files, the number attribute should be the same for measures in different parts that share the same left barline. While the number attribute is often numeric, it does not have to be. Non-numeric values are typically used together with the implicit or non-controlling attributes being set to "yes". For a pickup measure, the number attribute is typically set to "0" and the implicit attribute is typically set to "yes". Further details about measure numbering can be defined using the measure-numbering element.
+                In partwise files, the number attribute should be the same for measures in different parts that share the same left barline. While the number attribute is often numeric, it does not have to be. Non-numeric values are typically used together with the implicit or non-controlling attributes being set to "yes". For a pickup measure, the number attribute is typically set to "0" and the implicit attribute is typically set to "yes".
+
+                If measure numbers are not unique within a part, this can cause problems for conversions between partwise and timewise formats. The text attribute allows specification of displayed measure numbers that are different than what is used in the number attribute. This attribute is ignored for measures where the implicit attribute is set to "yes". Further details about measure numbering can be specified using the measure-numbering element.
 
                 Measure width is specified in tenths. These are the global tenths specified in the scaling element, not local tenths as modified by the staff-size element.	The width covers the entire measure from barline or system start to barline or system end.</xs:documentation>
         </xs:annotation>
         <xs:attribute name="number" type="xs:token" use="required"/>
+        <xs:attribute name="text" type="measure-text"/>
         <xs:attribute name="implicit" type="yes-no"/>
         <xs:attribute name="non-controlling" type="yes-no"/>
         <xs:attribute name="width" type="tenths"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:attributeGroup>
+
+    <xs:simpleType name="measure-text">
+        <xs:annotation>
+            <xs:documentation>The measure-text type is used for the text attribute of measure elements. It has at least one character. The implicit attribute of the measure element should be set to "yes" rather than setting the text attribute to an empty string.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

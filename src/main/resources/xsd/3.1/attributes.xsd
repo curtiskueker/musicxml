@@ -1,7 +1,6 @@
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        elementFormDefault="qualified"
-        attributeFormDefault="unqualified">
+        elementFormDefault="qualified">
 
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
 
@@ -145,6 +144,7 @@
         <xs:attribute name="number" type="staff-number"/>
         <xs:attributeGroup ref="print-style"/>
         <xs:attributeGroup ref="print-object"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:group name="traditional-key">
@@ -209,13 +209,24 @@
                     <xs:documentation>Non-traditional key signatures can be represented using the Humdrum/Scot concept of a list of altered tones. The key-alter element represents the alteration for a given pitch step, represented with semitones in the same manner as the alter element.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="key-accidental" type="accidental-value" minOccurs="0">
+            <xs:element name="key-accidental" type="key-accidental" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Non-traditional key signatures can be represented using the Humdrum/Scot concept of a list of altered tones. The key-accidental element indicates the accidental to be displayed in the key signature, represented in the same manner as the accidental element. It is used for disambiguating microtonal accidentals.</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
     </xs:group>
+
+    <xs:complexType name="key-accidental">
+        <xs:annotation>
+            <xs:documentation>The key-accidental type indicates the accidental to be displayed in a non-traditional key signature, represented in the same manner as the accidental type without the formatting attributes.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="accidental-value">
+                <xs:attribute name="smufl" type="smufl-accidental-glyph-name"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
 
     <xs:complexType name="key-octave">
         <xs:annotation>
@@ -251,6 +262,7 @@
         <xs:attribute name="separator" type="time-separator"/>
         <xs:attributeGroup ref="print-style-align"/>
         <xs:attributeGroup ref="print-object"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:group name="time-signature">
@@ -357,6 +369,7 @@
         <xs:attribute name="after-barline" type="yes-no"/>
         <xs:attributeGroup ref="print-style"/>
         <xs:attributeGroup ref="print-object"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:simpleType name="clef-sign">
@@ -468,6 +481,7 @@
             </xs:element>
         </xs:sequence>
         <xs:attribute name="number" type="staff-number"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:complexType name="measure-style">
@@ -485,6 +499,7 @@
         <xs:attribute name="number" type="staff-number"/>
         <xs:attributeGroup ref="font"/>
         <xs:attributeGroup ref="color"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:complexType name="multiple-rest">
@@ -539,14 +554,21 @@
             <xs:documentation>The slash group combines elements used for more complete specification of the slash and beat-repeat measure-style elements. They have the same values as the type and dot elements, and define what the beat is for the display of repetition marks. If not present, the beat is based on the current time signature.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="slash-type" type="note-type-value">
+            <xs:sequence minOccurs="0">
+                <xs:element name="slash-type" type="note-type-value">
+                    <xs:annotation>
+                        <xs:documentation>The slash-type element indicates the graphical note type to use for the display of repetition marks.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="slash-dot" type="empty" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>The slash-dot element is used to specify any augmentation dots in the note type used to display repetition marks.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element name="except-voice" type="xs:string" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
-                    <xs:documentation>The slash-type element indicates the graphical note type to use for the display of repetition marks.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="slash-dot" type="empty" minOccurs="0" maxOccurs="unbounded">
-                <xs:annotation>
-                    <xs:documentation>The slash-dot element is used to specify any augmentation dots in the note type used to display repetition marks.</xs:documentation>
+                    <xs:documentation>The except-voice element is used to specify a combination of slash notation and regular notation. Any note elements that are in voices specified by the except-voice elements are displayed in normal notation, in addition to the slash notation that is always displayed.</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
@@ -557,14 +579,17 @@
             <xs:documentation>The image type is used to include graphical images in a score.</xs:documentation>
         </xs:annotation>
         <xs:attributeGroup ref="image-attributes"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:attributeGroup name="image-attributes">
         <xs:annotation>
-            <xs:documentation>The image-attributes group is used to include graphical images in a score. The required source attribute is the URL for the image file. The required type attribute is the MIME type for the image file format. Typical choices include application/postscript, image/gif, image/jpeg, image/png, and image/tiff.</xs:documentation>
+            <xs:documentation>The image-attributes group is used to include graphical images in a score. The required source attribute is the URL for the image file. The required type attribute is the MIME type for the image file format. Typical choices include application/postscript, image/gif, image/jpeg, image/png, and image/tiff. The optional height and width attributes are used to size and scale an image. The image should be scaled independently in X and Y if both height and width are specified. If only one attribute is specified, the image should be scaled proportionally to fit in the specified dimension.</xs:documentation>
         </xs:annotation>
         <xs:attribute name="source" type="xs:anyURI" use="required"/>
         <xs:attribute name="type" type="xs:token" use="required"/>
+        <xs:attribute name="height" type="tenths"/>
+        <xs:attribute name="width" type="tenths"/>
         <xs:attributeGroup ref="position"/>
         <xs:attributeGroup ref="halign"/>
         <xs:attributeGroup ref="valign-image"/>

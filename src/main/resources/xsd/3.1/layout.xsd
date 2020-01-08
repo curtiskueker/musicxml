@@ -1,7 +1,6 @@
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        elementFormDefault="qualified"
-        attributeFormDefault="unqualified">
+        elementFormDefault="qualified">
 
     <xs:include schemaLocation="common.xsd"/>
 
@@ -158,9 +157,30 @@
             <xs:element name="line-width" type="line-width" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="note-size" type="note-size" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="distance" type="distance" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="glyph" type="glyph" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="other-appearance" type="other-appearance" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="glyph">
+        <xs:annotation>
+            <xs:documentation>The glyph element represents what SMuFL glyph should be used for different variations of symbols that are semantically identical. The type attribute specifies what type of glyph is being defined. The element value specifies what SMuFL glyph to use, including recommended stylistic alternates. The SMuFL glyph name should match the type. For instance, a type of quarter-rest would use values restQuarter, restQuarterOld, or restQuarterZ. A type of g-clef-ottava-bassa would use values gClef8vb, gClef8vbOld, or gClef8vbCClef. A type of octave-shift-up-8 would use values ottava, ottavaBassa, ottavaBassaBa, ottavaBassaVb, or octaveBassa.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="smufl-glyph-name">
+                <xs:attribute name="type" type="glyph-type" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="glyph-type">
+        <xs:annotation>
+            <xs:documentation>The glyph-type defines what type of glyph is being defined in a glyph element. Values include quarter-rest, g-clef-ottava-bassa, c-clef, f-clef, percussion-clef, octave-shift-up-8, octave-shift-down-8, octave-shift-continue-8, octave-shift-down-15, octave-shift-up-15, octave-shift-continue-15, octave-shift-down-22, octave-shift-up-22, and octave-shift-continue-22. This is left as a string so that other application-specific types can be defined, but it is made a separate type so that it can be redefined more strictly.
+
+                A quarter-rest type specifies the glyph to use when a note has a rest element and a type value of quarter. The c-clef, f-clef, and percussion-clef types specify the glyph to use when a clef sign element value is C, F, or percussion respectively. The g-clef-ottava-bassa type specifies the glyph to use when a clef sign element value is G and the clef-octave-change element value is -1. The octave-shift types specify the glyph to use when an octave-shift type attribute value is up, down, or continue and the octave-shift size attribute value is 8, 15, or 22.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
 
     <xs:complexType name="line-width">
         <xs:annotation>
@@ -193,11 +213,12 @@
 
     <xs:simpleType name="note-size-type">
         <xs:annotation>
-            <xs:documentation>The note-size-type type indicates the type of note being defined by a note-size element. The grace type is used for notes of cue size that that include a grace element. The cue type is used for all other notes with cue size, whether defined explicitly or implicitly via a cue element. The large type is used for notes of large size.</xs:documentation>
+            <xs:documentation>The note-size-type type indicates the type of note being defined by a note-size element. The grace-cue type is used for notes of grace-cue size. The grace type is used for notes of cue size that include a grace element. The cue type is used for all other notes with cue size, whether defined explicitly or implicitly via a cue element. The large type is used for notes of large size.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:token">
             <xs:enumeration value="cue"/>
             <xs:enumeration value="grace"/>
+            <xs:enumeration value="grace-cue"/>
             <xs:enumeration value="large"/>
         </xs:restriction>
     </xs:simpleType>

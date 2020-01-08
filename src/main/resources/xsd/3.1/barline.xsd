@@ -1,7 +1,6 @@
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        elementFormDefault="qualified"
-        attributeFormDefault="unqualified">
+        elementFormDefault="qualified">
 
     <xs:include schemaLocation="attributes.xsd"/>
     <xs:include schemaLocation="layout.xsd"/>
@@ -16,8 +15,8 @@
             <xs:element name="bar-style" type="bar-style-color" minOccurs="0"/>
             <xs:group ref="editorial"/>
             <xs:element name="wavy-line" type="wavy-line" minOccurs="0"/>
-            <xs:element name="segno" type="empty-print-style-align" minOccurs="0"/>
-            <xs:element name="coda" type="empty-print-style-align" minOccurs="0"/>
+            <xs:element name="segno" type="segno" minOccurs="0"/>
+            <xs:element name="coda" type="coda" minOccurs="0"/>
             <xs:element name="fermata" type="fermata" minOccurs="0" maxOccurs="2"/>
             <xs:element name="ending" type="ending" minOccurs="0"/>
             <xs:element name="repeat" type="repeat" minOccurs="0"/>
@@ -26,6 +25,7 @@
         <xs:attribute name="segno" type="xs:token"/>
         <xs:attribute name="coda" type="xs:token"/>
         <xs:attribute name="divisions" type="divisions"/>
+        <xs:attributeGroup ref="optional-unique-id"/>
     </xs:complexType>
 
     <xs:complexType name="bar-style-color">
