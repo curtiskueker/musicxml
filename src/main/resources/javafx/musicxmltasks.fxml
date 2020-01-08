@@ -348,10 +348,10 @@
                                         <Font size="24.0" />
                                     </font>
                                     <padding>
-                                        <Insets bottom="20.0" left="150.0" top="20.0" />
+                                        <Insets bottom="20.0" left="170.0" top="20.0" />
                                     </padding>
                                 </Label>
-                        <Label fx:id="validateSubLabel" maxHeight="40.0" prefHeight="40.0" text="Validate a MusicXML file against the MusicXML schema">
+                        <Label fx:id="validateSubLabel" maxHeight="40.0" prefHeight="40.0" text="Validate a MusicXML file against the MusicXML 3.1 schema">
                            <padding>
                               <Insets bottom="20.0" left="110.0" />
                            </padding>
