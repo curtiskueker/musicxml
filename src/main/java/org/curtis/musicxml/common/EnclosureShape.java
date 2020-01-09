@@ -8,5 +8,11 @@ public enum EnclosureShape {
     BRACKET,
     TRIANGLE,
     DIAMOND,
+    PENTAGON,
+    HEXAGON,
+    HEPTAGON,
+    OCTAGON,
+    NONAGON,
+    DECAGON,
     NONE
 }

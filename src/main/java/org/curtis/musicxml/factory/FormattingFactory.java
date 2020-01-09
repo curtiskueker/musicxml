@@ -323,6 +323,18 @@ public class FormattingFactory {
                 return EnclosureShape.TRIANGLE;
             case "diamond":
                 return EnclosureShape.DIAMOND;
+            case "pentagon":
+                return EnclosureShape.PENTAGON;
+            case "hexagon":
+                return EnclosureShape.HEXAGON;
+            case "heptagon":
+                return EnclosureShape.HEPTAGON;
+            case "octagon":
+                return EnclosureShape.OCTAGON;
+            case "nonagon":
+                return EnclosureShape.NONAGON;
+            case "decagon":
+                return EnclosureShape.DECAGON;
             case "none":
                 return EnclosureShape.NONE;
             default:
