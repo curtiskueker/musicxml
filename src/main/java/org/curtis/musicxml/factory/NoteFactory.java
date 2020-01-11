@@ -22,25 +22,7 @@ public class NoteFactory {
     }
 
     public static Step newStep(Element stepElement) {
-        String stepValue = XmlUtil.getElementText(stepElement);
-        switch (stepValue) {
-            case "A":
-                return Step.A;
-            case "B":
-                return Step.B;
-            case "C":
-                return Step.C;
-            case "D":
-                return Step.D;
-            case "E":
-                return Step.E;
-            case "F":
-                return Step.F;
-            case "G":
-                return Step.G;
-            default:
-                return null;
-        }
+        return (Step)FactoryUtil.enumValue(Step.class, XmlUtil.getElementText(stepElement));
     }
 
     public static NoteTypeValue newNoteTypeValue(Element noteTypeElement) {
@@ -55,36 +37,16 @@ public class NoteFactory {
 
         switch (noteTypeValue) {
             case "1024th":
-                return NoteTypeValue._1024TH;
             case "512th":
-                return NoteTypeValue._512TH;
             case "256th":
-                return NoteTypeValue._256TH;
             case "128th":
-                return NoteTypeValue._128TH;
             case "64th":
-                return NoteTypeValue._64TH;
             case "32nd":
-                return NoteTypeValue._32ND;
             case "16th":
-                return NoteTypeValue._16TH;
-            case "eighth":
-                return NoteTypeValue.EIGHTH;
-            case "quarter":
-                return NoteTypeValue.QUARTER;
-            case "half":
-                return NoteTypeValue.HALF;
-            case "whole":
-                return NoteTypeValue.WHOLE;
-            case "breve":
-                return NoteTypeValue.BREVE;
-            case "long":
-                return NoteTypeValue.LONG;
-            case "maxima":
-                return NoteTypeValue.MAXIMA;
+                noteTypeValue = "_" + noteTypeValue;
         }
 
-        return null;
+        return (NoteTypeValue)FactoryUtil.enumValue(NoteTypeValue.class, noteTypeValue);
     }
 
     public static AccidentalType newAccidentalType(Element accidentalElement) {
@@ -109,20 +71,7 @@ public class NoteFactory {
     public static BeamType newBeamType(Element element) {
         if(element == null) return null;
 
-        switch (XmlUtil.getElementText(element)) {
-            case "begin":
-                return BeamType.BEGIN;
-            case "continue":
-                return BeamType.CONTINUE;
-            case "end":
-                return BeamType.END;
-            case "forward hook":
-                return BeamType.FORWARD_HOOK;
-            case "backward hook":
-                return BeamType.BACKWARD_HOOK;
-            default:
-                return null;
-        }
+        return (BeamType)FactoryUtil.enumValue(BeamType.class, XmlUtil.getElementText(element));
     }
 
     public static TimeModification newTimeModification(Element element) {

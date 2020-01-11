@@ -110,77 +110,12 @@ public class ScorePartFactory {
                     break;
                 case "mute":
                     Mute mute = new Mute();
-                    switch (XmlUtil.getElementText(playSubelement)) {
-                        case "on":
-                            mute.setMuteType(MuteType.ON);
-                            break;
-                        case "off":
-                            mute.setMuteType(MuteType.OFF);
-                            break;
-                        case "straight":
-                            mute.setMuteType(MuteType.STRAIGHT);
-                            break;
-                        case "cup":
-                            mute.setMuteType(MuteType.CUP);
-                            break;
-                        case "harmon-no-stem":
-                            mute.setMuteType(MuteType.HARMON_NO_STEM);
-                            break;
-                        case "harmon-stem":
-                            mute.setMuteType(MuteType.HARMON_STEM);
-                            break;
-                        case "bucket":
-                            mute.setMuteType(MuteType.BUCKET);
-                            break;
-                        case "plunger":
-                            mute.setMuteType(MuteType.PLUNGER);
-                            break;
-                        case "hat":
-                            mute.setMuteType(MuteType.HAT);
-                            break;
-                        case "solotone":
-                            mute.setMuteType(MuteType.SOLOTONE);
-                            break;
-                        case "practice":
-                            mute.setMuteType(MuteType.PRACTICE);
-                            break;
-                        case "stop-mute":
-                            mute.setMuteType(MuteType.STOP_MUTE);
-                            break;
-                        case "stop-hand":
-                            mute.setMuteType(MuteType.STOP_HAND);
-                            break;
-                        case "echo":
-                            mute.setMuteType(MuteType.ECHO);
-                            break;
-                        case "palm":
-                            mute.setMuteType(MuteType.PALM);
-                            break;
-                    }
+                    mute.setMuteType((MuteType)FactoryUtil.enumValue(MuteType.class, XmlUtil.getElementText(playSubelement)));
                     playType = mute;
                     break;
                 case "semi-pitched":
                     SemiPitched semiPitched = new SemiPitched();
-                    switch (XmlUtil.getElementText(playSubelement)) {
-                        case "high":
-                            semiPitched.setSemiPitchedType(SemiPitchedType.HIGH);
-                            break;
-                        case "medium-high":
-                            semiPitched.setSemiPitchedType(SemiPitchedType.MEDIUM_HIGH);
-                            break;
-                        case "medium":
-                            semiPitched.setSemiPitchedType(SemiPitchedType.MEDIUM);
-                            break;
-                        case "medium-low":
-                            semiPitched.setSemiPitchedType(SemiPitchedType.MEDIUM_LOW);
-                            break;
-                        case "low":
-                            semiPitched.setSemiPitchedType(SemiPitchedType.LOW);
-                            break;
-                        case "very-low":
-                            semiPitched.setSemiPitchedType(SemiPitchedType.VERY_LOW);
-                            break;
-                    }
+                    semiPitched.setSemiPitchedType((SemiPitchedType)FactoryUtil.enumValue(SemiPitchedType.class, XmlUtil.getElementText(playSubelement)));
                     playType = semiPitched;
                     break;
                 case "other-play":

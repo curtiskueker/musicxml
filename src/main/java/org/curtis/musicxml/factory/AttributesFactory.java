@@ -45,20 +45,7 @@ public class AttributesFactory {
         if(cancelElement != null) {
             Cancel cancel = new Cancel();
             cancel.setFifths(StringUtil.getInteger(XmlUtil.getElementText(cancelElement)));
-            String location = cancelElement.getAttribute("location");
-            if(StringUtil.isNotEmpty(location)) {
-                switch (location) {
-                    case "left":
-                        cancel.setLocation(CancelLocation.LEFT);
-                        break;
-                    case "right":
-                        cancel.setLocation(CancelLocation.RIGHT);
-                        break;
-                    case "before-barline":
-                        cancel.setLocation(CancelLocation.BEFORE_BARLINE);
-                        break;
-                }
-            }
+            cancel.setLocation((CancelLocation)FactoryUtil.enumValue(CancelLocation.class, cancelElement.getAttribute("location")));
             traditionalKey.setCancel(cancel);
         }
         traditionalKey.setFifths(StringUtil.getInteger(XmlUtil.getChildElementText(element, "fifths")));
@@ -124,29 +111,7 @@ public class AttributesFactory {
                     break;
                 case "interchangeable":
                     Interchangeable interchangeable = new Interchangeable();
-                    String timeRelation = XmlUtil.getChildElementText(timeSubelement, "time-relation");
-                    if(StringUtil.isNotEmpty(timeRelation)) {
-                        switch (timeRelation) {
-                            case "parentheses":
-                                interchangeable.setTimeRelation(TimeRelation.PARENTHESES);
-                                break;
-                            case "bracket":
-                                interchangeable.setTimeRelation(TimeRelation.BRACKET);
-                                break;
-                            case "equals":
-                                interchangeable.setTimeRelation(TimeRelation.EQUALS);
-                                break;
-                            case "slash":
-                                interchangeable.setTimeRelation(TimeRelation.SLASH);
-                                break;
-                            case "space":
-                                interchangeable.setTimeRelation(TimeRelation.SPACE);
-                                break;
-                            case "hyphen":
-                                interchangeable.setTimeRelation(TimeRelation.HYPHEN);
-                                break;
-                        }
-                    }
+                    interchangeable.setTimeRelation((TimeRelation)FactoryUtil.enumValue(TimeRelation.class, XmlUtil.getChildElementText(timeSubelement, "time-relation")));
                     interchangeable.setTimeSignature(newTimeSignature(timeSubelement));
                     interchangeable.setSymbol(AttributesFactory.newTimeSymbol(timeSubelement));
                     interchangeable.setSeparator(AttributesFactory.newTimeSeparator(timeSubelement));
@@ -160,69 +125,19 @@ public class AttributesFactory {
     public static TimeSymbol newTimeSymbol(Element element) {
         if(element == null) return null;
 
-        String symbol = element.getAttribute("symbol");
-        if(StringUtil.isEmpty(symbol)) return null;
-
-        switch (symbol) {
-            case "common":
-                return TimeSymbol.COMMON;
-            case "cut":
-                return TimeSymbol.CUT;
-            case "single-number":
-                return TimeSymbol.SINGLE_NUMBER;
-            case "note":
-                return TimeSymbol.NOTE;
-            case "dotted-note":
-                return TimeSymbol.DOTTED_NOTE;
-            case "normal":
-                return TimeSymbol.NORMAL;
-            default:
-                return null;
-        }
+        return (TimeSymbol)FactoryUtil.enumValue(TimeSymbol.class, element.getAttribute("symbol"));
     }
 
     public static TimeSeparator newTimeSeparator(Element element) {
         if(element == null) return null;
 
-        String separator = element.getAttribute("separator");
-        if(StringUtil.isEmpty(separator)) return null;
-
-        switch (separator) {
-            case "none":
-                return TimeSeparator.NONE;
-            case "horizontal":
-                return TimeSeparator.HORIZONTAL;
-            case "diagonal":
-                return TimeSeparator.DIAGONAL;
-            case "vertical":
-                return TimeSeparator.VERTICAL;
-            case "adjacent":
-                return TimeSeparator.ADJACENT;
-            default:
-                return null;
-        }
+        return (TimeSeparator)FactoryUtil.enumValue(TimeSeparator.class, element.getAttribute("separator"));
     }
 
     public static GroupSymbolType newGroupSymbolType(Element element) {
         if(element == null) return null;
 
-        String symbolValue = XmlUtil.getElementText(element);
-        if(StringUtil.isEmpty(symbolValue)) return null;
-
-        switch (symbolValue) {
-            case "none":
-            return GroupSymbolType.NONE;
-            case "brace":
-                return GroupSymbolType.BRACE;
-            case "line":
-                return GroupSymbolType.LINE;
-            case "bracket":
-                return GroupSymbolType.BRACKET;
-            case "square":
-                return GroupSymbolType.SQUARE;
-            default:
-                return null;
-        }
+        return (GroupSymbolType)FactoryUtil.enumValue(GroupSymbolType.class, XmlUtil.getElementText(element));
     }
 
     public static Tuning newTuning(Element element) {

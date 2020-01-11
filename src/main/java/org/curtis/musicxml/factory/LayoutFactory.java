@@ -47,20 +47,9 @@ public class LayoutFactory {
 
                         String marginType = pageMarginsElement.getAttribute("type");
                         if (StringUtil.isEmpty(marginType)) marginType = "both";
-                        switch (marginType) {
-                            case "odd":
-                                pageMargins.setType(MarginType.ODD);
-                                pageMargins.setMarginTypeKey(MarginType.ODD);
-                                break;
-                            case "even":
-                                pageMargins.setType(MarginType.EVEN);
-                                pageMargins.setMarginTypeKey(MarginType.EVEN);
-                                break;
-                            case "both":
-                                pageMargins.setType(MarginType.BOTH);
-                                pageMargins.setMarginTypeKey(MarginType.BOTH);
-                                break;
-                        }
+                        MarginType marginTypeValue = (MarginType)FactoryUtil.enumValue(MarginType.class, marginType);
+                        pageMargins.setType(marginTypeValue);
+                        pageMargins.setMarginTypeKey(marginTypeValue);
 
                         pageMarginsMap.put(pageMargins.getType(), pageMargins);
                     }

@@ -183,59 +183,21 @@ public class FormattingFactory {
 
         Font font = new Font();
         font.setFontFamily(fontFamily);
-
-        if(StringUtil.isNotEmpty(fontStyle)) {
-            switch (fontStyle) {
-                case "normal":
-                    font.setFontStyle(FontStyle.NORMAL);
-                    break;
-                case "italic":
-                    font.setFontStyle(FontStyle.ITALIC);
-                    break;
-            }
-        }
+        font.setFontStyle((FontStyle)FactoryUtil.enumValue(FontStyle.class, fontStyle));
 
         if (StringUtil.isNotEmpty(fontSizeValue)) {
             FontSize fontSize = new FontSize();
-            switch (fontSizeValue) {
-                case "xx-small":
-                    fontSize.setCssFontSize(CssFontSize.XX_SMALL);
-                    break;
-                case "x-small":
-                    fontSize.setCssFontSize(CssFontSize.X_SMALL);
-                    break;
-                case "small":
-                    fontSize.setCssFontSize(CssFontSize.SMALL);
-                    break;
-                case "medium":
-                    fontSize.setCssFontSize(CssFontSize.MEDIUM);
-                    break;
-                case "large":
-                    fontSize.setCssFontSize(CssFontSize.LARGE);
-                    break;
-                case "x-large":
-                    fontSize.setCssFontSize(CssFontSize.X_LARGE);
-                    break;
-                case "xx-large":
-                    fontSize.setCssFontSize(CssFontSize.XX_LARGE);
-                    break;
-                default:
-                    BigDecimal fontSizeNumber = MathUtil.newBigDecimal(fontSizeValue);
-                    fontSize.setFontSize(fontSizeNumber);
-            }
+            CssFontSize cssFontSize = (CssFontSize)FactoryUtil.enumValue(CssFontSize.class, fontSizeValue);
+
+            if (cssFontSize == null) {
+                BigDecimal fontSizeNumber = MathUtil.newBigDecimal(fontSizeValue);
+                fontSize.setFontSize(fontSizeNumber);
+            } else fontSize.setCssFontSize(cssFontSize);
+
             font.setFontSize(fontSize);
         }
 
-        if (StringUtil.isNotEmpty(fontWeight)) {
-            switch (fontWeight) {
-                case "normal":
-                    font.setFontWeight(FontWeight.NORMAL);
-                    break;
-                case "bold":
-                    font.setFontWeight(FontWeight.BOLD);
-                    break;
-            }
-        }
+        font.setFontWeight((FontWeight)FactoryUtil.enumValue(FontWeight.class, fontWeight));
 
         return font;
     }

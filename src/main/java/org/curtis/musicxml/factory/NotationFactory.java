@@ -92,17 +92,7 @@ public class NotationFactory {
     }
 
     public static ShowTuplet newShowTuplet(String showTupletValue) {
-        if(StringUtil.isEmpty(showTupletValue)) return null;
-        switch (showTupletValue) {
-            case "actual":
-                return ShowTuplet.ACTUAL;
-            case "both":
-                return ShowTuplet.BOTH;
-            case "none":
-                return ShowTuplet.NONE;
-        }
-
-        return null;
+        return (ShowTuplet)FactoryUtil.enumValue(ShowTuplet.class, showTupletValue);
     }
 
     public static Fermata newFermata(Element fermataElement) {
@@ -110,16 +100,7 @@ public class NotationFactory {
 
         Fermata fermata = new Fermata();
         fermata.setFermataShape((FermataShape)FactoryUtil.enumValueWithEmptyValue(FermataShape.class, XmlUtil.getElementText(fermataElement)));
-
-        switch (fermataElement.getAttribute("type")) {
-            case "upright":
-                fermata.setType(FermataType.UPRIGHT);
-                break;
-            case "inverted":
-                fermata.setType(FermataType.INVERTED);
-                break;
-        }
-
+        fermata.setType((FermataType)FactoryUtil.enumValue(FermataType.class, fermataElement.getAttribute("type")));
         fermata.setPrintStyle(FormattingFactory.newPrintStyle(fermataElement));
 
         return fermata;
@@ -141,37 +122,13 @@ public class NotationFactory {
     public static LineShape newLineShape(Element lineShapeElement) {
         if(lineShapeElement == null) return null;
 
-        String lineShape = lineShapeElement.getAttribute("line-shape");
-        if(StringUtil.isEmpty(lineShape)) return null;
-
-        switch (lineShape) {
-            case "straight":
-                return LineShape.STRAIGHT;
-            case "curved":
-                return LineShape.CURVED;
-            default:
-                return null;
-        }
+        return (LineShape)FactoryUtil.enumValue(LineShape.class, lineShapeElement.getAttribute("line-shape"));
     }
 
     public static LineType newLineType(Element lineTypeElement) {
         if(lineTypeElement == null) return null;
 
-        String lineType = lineTypeElement.getAttribute("line-type");
-        if(StringUtil.isEmpty(lineType)) return null;
-
-        switch (lineType) {
-            case "solid":
-                return LineType.SOLID;
-            case "dashed":
-                return LineType.DASHED;
-            case "dotted":
-                return LineType.DOTTED;
-            case "wavy":
-                return LineType.WAVY;
-            default:
-                return null;
-        }
+        return (LineType)FactoryUtil.enumValue(LineType.class, lineTypeElement.getAttribute("line-type"));
     }
 
     public static AccidentalMark newAccidentalMark(Element element) {
@@ -194,81 +151,7 @@ public class NotationFactory {
         List<DynamicsMarking> dynamicsMarkings = dynamics.getMarkings();
         for(Element dynamicsElement : dynamicsElements) {
             DynamicsMarking dynamicsMarking = new DynamicsMarking();
-            String dynamicsElementName = dynamicsElement.getTagName();
-            switch (dynamicsElementName) {
-                case "p":
-                    dynamicsMarking.setDynamicsType(DynamicsType.P);
-                    break;
-                case "pp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.PP);
-                    break;
-                case "ppp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.PPP);
-                    break;
-                case "pppp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.PPPP);
-                    break;
-                case "ppppp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.PPPPP);
-                    break;
-                case "pppppp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.PPPPPP);
-                    break;
-                case "f":
-                    dynamicsMarking.setDynamicsType(DynamicsType.F);
-                    break;
-                case "ff":
-                    dynamicsMarking.setDynamicsType(DynamicsType.FF);
-                    break;
-                case "fff":
-                    dynamicsMarking.setDynamicsType(DynamicsType.FFF);
-                    break;
-                case "ffff":
-                    dynamicsMarking.setDynamicsType(DynamicsType.FFFF);
-                    break;
-                case "fffff":
-                    dynamicsMarking.setDynamicsType(DynamicsType.FFFFF);
-                    break;
-                case "ffffff":
-                    dynamicsMarking.setDynamicsType(DynamicsType.FFFFFF);
-                    break;
-                case "mp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.MP);
-                    break;
-                case "mf":
-                    dynamicsMarking.setDynamicsType(DynamicsType.MF);
-                    break;
-                case "sf":
-                    dynamicsMarking.setDynamicsType(DynamicsType.SF);
-                    break;
-                case "sfp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.SFP);
-                    break;
-                case "sfpp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.SFPP);
-                    break;
-                case "fp":
-                    dynamicsMarking.setDynamicsType(DynamicsType.FP);
-                    break;
-                case "rf":
-                    dynamicsMarking.setDynamicsType(DynamicsType.RF);
-                    break;
-                case "rfz":
-                    dynamicsMarking.setDynamicsType(DynamicsType.RFZ);
-                    break;
-                case "sfz":
-                    dynamicsMarking.setDynamicsType(DynamicsType.SFZ);
-                    break;
-                case "sffz":
-                    dynamicsMarking.setDynamicsType(DynamicsType.SFFZ);
-                    break;
-                case "fz":
-                    dynamicsMarking.setDynamicsType(DynamicsType.FZ);
-                    break;
-                case "other-dynamics":
-                    dynamicsMarking.setDynamicsType(DynamicsType.OTHER_DYNAMICS);
-                    break;
-            }
+            dynamicsMarking.setDynamicsType((DynamicsType)FactoryUtil.enumValue(DynamicsType.class, dynamicsElement.getTagName()));
             dynamicsMarkings.add(dynamicsMarking);
         }
 

@@ -103,21 +103,7 @@ public class DirectionFactory {
                 return coda;
             case "wedge":
                 Wedge wedge = new Wedge();
-                String wedgeType = element.getAttribute("type");
-                switch (wedgeType) {
-                    case "crescendo":
-                        wedge.setType(WedgeType.CRESCENDO);
-                        break;
-                    case "diminuendo":
-                        wedge.setType(WedgeType.DIMINUENDO);
-                        break;
-                    case "stop":
-                        wedge.setType(WedgeType.STOP);
-                        break;
-                    case "continue":
-                        wedge.setType(WedgeType.CONTINUE);
-                        break;
-                }
+                wedge.setType((WedgeType)FactoryUtil.enumValue(WedgeType.class, element.getAttribute("type")));
                 wedge.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 wedge.setSpread(MathUtil.newBigDecimal(element.getAttribute("spread")));
                 wedge.setNiente(TypeUtil.getYesNo(element.getAttribute("niente")));
@@ -140,21 +126,7 @@ public class DirectionFactory {
                 Bracket bracket = new Bracket();
                 bracket.setType(PlacementUtil.getConnection(element.getAttribute("type")));
                 bracket.setNumber(StringUtil.getInteger(element.getAttribute("number")));
-                String lineEnd = element.getAttribute("line-end");
-                if(StringUtil.isNotEmpty(lineEnd)) {
-                    switch (lineEnd) {
-                        case "up":
-                            bracket.setLineEnd(LineEnd.UP);
-                        case "down":
-                            bracket.setLineEnd(LineEnd.DOWN);
-                        case "both":
-                            bracket.setLineEnd(LineEnd.BOTH);
-                        case "arrow":
-                            bracket.setLineEnd(LineEnd.ARROW);
-                        case "none":
-                            bracket.setLineEnd(LineEnd.NONE);
-                    }
-                }
+                bracket.setLineEnd((LineEnd)FactoryUtil.enumValue(LineEnd.class, element.getAttribute("line-end")));
                 bracket.setEndLength(MathUtil.newBigDecimal(element.getAttribute("end-length")));
                 bracket.setLineType(NotationFactory.newLineType(element));
                 bracket.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
@@ -181,21 +153,7 @@ public class DirectionFactory {
                 return metronome;
             case "octave-shift":
                 OctaveShift octaveShift = new OctaveShift();
-                String octaveShiftType = element.getAttribute("type");
-                switch (octaveShiftType) {
-                    case "up":
-                        octaveShift.setType(OctaveShiftType.UP);
-                        break;
-                    case "down":
-                        octaveShift.setType(OctaveShiftType.DOWN);
-                        break;
-                    case "stop":
-                        octaveShift.setType(OctaveShiftType.STOP);
-                        break;
-                    case "continue":
-                        octaveShift.setType(OctaveShiftType.CONTINUE);
-                        break;
-                }
+                octaveShift.setType((OctaveShiftType)FactoryUtil.enumValue(OctaveShiftType.class, element.getAttribute("type")));
                 octaveShift.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 Integer octaveShiftSize = StringUtil.getInteger(element.getAttribute("size"));
                 if (octaveShiftSize != null) {
@@ -229,15 +187,7 @@ public class DirectionFactory {
                 return eyeglasses;
             case "string-mute":
                 StringMute stringMute = new StringMute();
-                String stringMuteType = element.getAttribute("type");
-                switch (stringMuteType) {
-                    case "on":
-                        stringMute.setType(StringMuteDirection.ON);
-                        break;
-                    case "off":
-                        stringMute.setType(StringMuteDirection.OFF);
-                        break;
-                }
+                stringMute.setType((StringMuteDirection)FactoryUtil.enumValue(StringMuteDirection.class, element.getAttribute("type")));
                 stringMute.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return stringMute;
             case "scordatura":
@@ -256,21 +206,7 @@ public class DirectionFactory {
                 PrincipalVoice principalVoice = new PrincipalVoice();
                 principalVoice.setPrincipalVoice(XmlUtil.getElementText(element));
                 principalVoice.setType(PlacementUtil.getConnection(element.getAttribute("type")));
-                String symbol = element.getAttribute("symbol");
-                switch (symbol) {
-                    case "hauptstimme":
-                        principalVoice.setSymbol(PrincipalVoiceSymbol.HAUPTSTIMME);
-                        break;
-                    case "nebenstimme":
-                        principalVoice.setSymbol(PrincipalVoiceSymbol.NEBENSTIMME);
-                        break;
-                    case "plain":
-                        principalVoice.setSymbol(PrincipalVoiceSymbol.PLAIN);
-                        break;
-                    case "none":
-                        principalVoice.setSymbol(PrincipalVoiceSymbol.NONE);
-                        break;
-                }
+                principalVoice.setSymbol((PrincipalVoiceSymbol)FactoryUtil.enumValue(PrincipalVoiceSymbol.class, element.getAttribute("symbol")));
                 principalVoice.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return principalVoice;
             case "accordion-registration":
@@ -438,43 +374,13 @@ public class DirectionFactory {
                 Stick stick = new Stick();
                 String stickType = XmlUtil.getChildElementText(element, "stick-type");
                 stick.setStickType((StickType)FactoryUtil.enumValue(StickType.class, stickType));
-                String stickMaterial = XmlUtil.getChildElementText(element, "stick-material");
-                switch (stickMaterial) {
-                    case "soft":
-                        stick.setStickMaterial(StickMaterial.SOFT);
-                        break;
-                    case "medium":
-                        stick.setStickMaterial(StickMaterial.MEDIUM);
-                        break;
-                    case "hard":
-                        stick.setStickMaterial(StickMaterial.HARD);
-                        break;
-                    case "shaded":
-                        stick.setStickMaterial(StickMaterial.SHADED);
-                        break;
-                    case "x":
-                        stick.setStickMaterial(StickMaterial.X);
-                        break;
-                }
+                stick.setStickMaterial((StickMaterial)FactoryUtil.enumValue(StickMaterial.class, XmlUtil.getChildElementText(element, "stick-material")));
                 stick.setTip(newTipDirection(element));
                 percussion = stick;
                 break;
             case "stick-location":
                 StickLocation stickLocation = new StickLocation();
-                switch (elementValue) {
-                    case "center":
-                        stickLocation.setType(StickLocationType.CENTER);
-                        break;
-                    case "rim":
-                        stickLocation.setType(StickLocationType.RIM);
-                        break;
-                    case "cymbal bell":
-                        stickLocation.setType(StickLocationType.CYMBAL_BELL);
-                        break;
-                    case "cymbal edge":
-                        stickLocation.setType(StickLocationType.CYMBAL_EDGE);
-                        break;
-                }
+                stickLocation.setType((StickLocationType)FactoryUtil.enumValue(StickLocationType.class, elementValue));
                 percussion = stickLocation;
                 break;
             case "other-percussion":
@@ -495,28 +401,7 @@ public class DirectionFactory {
     private static TipDirection newTipDirection(Element element) {
         if (element == null) return null;
 
-        String tip = element.getAttribute("tip");
-        if (StringUtil.isEmpty(tip)) return null;
-        switch (tip) {
-            case "up":
-                return TipDirection.UP;
-            case "down":
-                return TipDirection.DOWN;
-            case "left":
-                return TipDirection.LEFT;
-            case "right":
-                return TipDirection.RIGHT;
-            case "northwest":
-                return TipDirection.NORTHWEST;
-            case "northeast":
-                return TipDirection.NORTHEAST;
-            case "southeast":
-                return TipDirection.SOUTHEAST;
-            case "southwest":
-                return TipDirection.SOUTHWEST;
-            default:
-                return null;
-        }
+        return (TipDirection)FactoryUtil.enumValue(TipDirection.class, element.getAttribute("tip"));
     }
 
     public static Sound newSound(Element element) {

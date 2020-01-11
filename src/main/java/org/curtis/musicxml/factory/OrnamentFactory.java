@@ -32,52 +32,9 @@ public class OrnamentFactory {
         if(element == null) return null;
 
         TrillSound trillSound = new TrillSound();
-
-        String startNote = element.getAttribute("start-note");
-        if(StringUtil.isNotEmpty(startNote)) {
-            switch (startNote) {
-                case "upper":
-                    trillSound.setStartNote(StartNote.UPPER);
-                    break;
-                case "main":
-                    trillSound.setStartNote(StartNote.MAIN);
-                    break;
-                case "below":
-                    trillSound.setStartNote(StartNote.BELOW);
-                    break;
-            }
-        }
-
-        String trillStep = element.getAttribute("trill-step");
-        if(StringUtil.isNotEmpty(trillStep)) {
-            switch (trillStep) {
-                case "whole":
-                    trillSound.setTrillStep(TrillStep.WHOLE);
-                    break;
-                case "half":
-                    trillSound.setTrillStep(TrillStep.HALF);
-                    break;
-                case "unison":
-                    trillSound.setTrillStep(TrillStep.UNISON);
-                    break;
-            }
-        }
-
-        String twoNoteTurn = element.getAttribute("two-note-turn");
-        if(StringUtil.isNotEmpty(twoNoteTurn)) {
-            switch (twoNoteTurn) {
-                case "whole":
-                    trillSound.setTwoNoteTurn(TwoNoteTurn.WHOLE);
-                    break;
-                case "half":
-                    trillSound.setTwoNoteTurn(TwoNoteTurn.HALF);
-                    break;
-                case "none":
-                    trillSound.setTwoNoteTurn(TwoNoteTurn.NONE);
-                    break;
-            }
-        }
-
+        trillSound.setStartNote((StartNote)FactoryUtil.enumValue(StartNote.class, element.getAttribute("start-note")));
+        trillSound.setTrillStep((TrillStep)FactoryUtil.enumValue(TrillStep.class, element.getAttribute("trill-step")));
+        trillSound.setTwoNoteTurn((TwoNoteTurn)FactoryUtil.enumValue(TwoNoteTurn.class, element.getAttribute("two-note-turn")));
         trillSound.setAccelerate(TypeUtil.getYesNo(element.getAttribute("accelerate")));
         trillSound.setBeats(MathUtil.newBigDecimal(element.getAttribute("beats")));
         trillSound.setSecondBeat(MathUtil.newBigDecimal(element.getAttribute("second-beat")));

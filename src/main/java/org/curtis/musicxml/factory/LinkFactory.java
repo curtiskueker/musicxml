@@ -33,42 +33,12 @@ public class LinkFactory {
         linkAttributes.setHref(element.getAttribute("xlink:href"));
         linkAttributes.setRole(element.getAttribute("xlink:role"));
         linkAttributes.setTitle(element.getAttribute("xlink:title"));
-        String show = element.getAttribute("xlink:show");
-        if (StringUtil.isNotEmpty(show)) {
-            switch (show) {
-                case "new":
-                    linkAttributes.setShow(Show.NEW);
-                    break;
-                case "replace":
-                    linkAttributes.setShow(Show.REPLACE);
-                    break;
-                case "embed":
-                    linkAttributes.setShow(Show.EMBED);
-                    break;
-                case "other":
-                    linkAttributes.setShow(Show.OTHER);
-                    break;
-                case "none":
-                    linkAttributes.setShow(Show.NONE);
-                    break;
-            }
-        }
+        linkAttributes.setShow((Show)FactoryUtil.enumValue(Show.class, element.getAttribute("xlink:show")));
         String actuate = element.getAttribute("xlink:actuate");
         if (StringUtil.isNotEmpty(actuate)) {
-            switch (actuate) {
-                case "onRequest":
-                    linkAttributes.setActuate(Actuate.ON_REQUEST);
-                    break;
-                case "onLoad":
-                    linkAttributes.setActuate(Actuate.ON_LOAD);
-                    break;
-                case "other":
-                    linkAttributes.setActuate(Actuate.OTHER);
-                    break;
-                case "none":
-                    linkAttributes.setActuate(Actuate.NONE);
-                    break;
-            }
+            actuate = actuate.replace("onRequest", "on request");
+            actuate = actuate.replace("onLoad", "on load");
+            linkAttributes.setActuate((Actuate)FactoryUtil.enumValue(Actuate.class, actuate));
         }
 
         return linkAttributes;
