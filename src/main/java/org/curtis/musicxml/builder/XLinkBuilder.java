@@ -1,6 +1,5 @@
 package org.curtis.musicxml.builder;
 
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.ElementPosition;
 import org.curtis.musicxml.link.Link;

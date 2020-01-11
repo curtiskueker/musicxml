@@ -5,7 +5,7 @@ import org.curtis.musicxml.attributes.Tuning;
 import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.DisplayText;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;

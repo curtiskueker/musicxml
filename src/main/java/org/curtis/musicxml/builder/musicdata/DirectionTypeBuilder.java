@@ -3,7 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
 import org.curtis.musicxml.direction.directiontype.Bracket;

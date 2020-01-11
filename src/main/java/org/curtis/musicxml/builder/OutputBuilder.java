@@ -1,7 +1,6 @@
 package org.curtis.musicxml.builder;
 
 import org.apache.commons.text.StringEscapeUtils;
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;

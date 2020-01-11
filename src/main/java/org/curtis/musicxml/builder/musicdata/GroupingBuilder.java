@@ -1,6 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.direction.Feature;
 import org.curtis.musicxml.direction.Grouping;
 

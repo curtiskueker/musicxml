@@ -2,7 +2,7 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;

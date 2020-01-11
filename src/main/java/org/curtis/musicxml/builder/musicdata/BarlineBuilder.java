@@ -5,7 +5,7 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.note.notation.Fermata;
 

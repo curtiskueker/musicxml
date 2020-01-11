@@ -1,4 +1,4 @@
-package org.curtis.musicxml.builder.util;
+package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.util.MathUtil;

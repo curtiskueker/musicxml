@@ -4,7 +4,7 @@ import org.curtis.database.DBException;
 import org.curtis.exception.FileException;
 import org.curtis.lilypond.ScoreBuilder;
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.XmlComment;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;

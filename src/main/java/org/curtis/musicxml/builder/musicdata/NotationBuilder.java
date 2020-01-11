@@ -2,7 +2,7 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.PlacementBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Articulations;

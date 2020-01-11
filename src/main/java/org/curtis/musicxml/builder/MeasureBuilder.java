@@ -18,7 +18,6 @@ import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.builder.musicdata.NoteBuilder;
 import org.curtis.musicxml.builder.musicdata.PrintBuilder;
 import org.curtis.musicxml.builder.musicdata.SoundBuilder;
-import org.curtis.musicxml.builder.util.BuilderUtil;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Grouping;
 import org.curtis.musicxml.direction.Print;
