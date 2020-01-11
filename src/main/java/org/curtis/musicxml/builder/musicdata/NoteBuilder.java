@@ -110,14 +110,8 @@ public class NoteBuilder extends MusicDataBuilder {
         }
         Notehead notehead = note.getNotehead();
         if (notehead != null) {
-            String noteheadType = BuilderUtil.enumValue(notehead.getType());
-            noteheadType = noteheadType.replace("inverted-triangle", "inverted triangle");
-            noteheadType = noteheadType.replace("arrow-down", "arrow down");
-            noteheadType = noteheadType.replace("arrow-up", "arrow up");
-            noteheadType = noteheadType.replace("back-slashed", "back slashed");
-            noteheadType = noteheadType.replace("circle-dot", "circle dot");
-            noteheadType = noteheadType.replace("left-triangle", "left triangle");
-            noteheadType = noteheadType.replace("fa-up", "fa up");
+            String noteheadType = BuilderUtil.enumValueWithSpaces(notehead.getType());
+            noteheadType = noteheadType.replace("circle x", "circle-x");
             Map<String, String> noteheadAttributes = new HashMap<>();
             noteheadAttributes.put("filled", BuilderUtil.yesOrNo(notehead.getFilled()));
             noteheadAttributes.put("parentheses", BuilderUtil.yesOrNo(notehead.getParentheses()));

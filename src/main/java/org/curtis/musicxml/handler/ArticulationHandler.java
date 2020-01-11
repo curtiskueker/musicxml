@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
@@ -117,16 +118,7 @@ public class ArticulationHandler extends BaseHandler {
                 case "breath-mark":
                     BreathMark breathMark = new BreathMark();
                     String breathMarkValue = XmlUtil.getElementText(articulationsSubelement);
-                    if (StringUtil.isNotEmpty(breathMarkValue)) {
-                        switch (breathMarkValue) {
-                            case "comma":
-                                breathMark.setBreathMarkValue(BreathMarkType.COMMA);
-                                break;
-                            case "tick":
-                                breathMark.setBreathMarkValue(BreathMarkType.TICK);
-                                break;
-                        }
-                    }
+                    breathMark.setBreathMarkValue((BreathMarkType) FactoryUtil.enumValueWithEmptyValue(BreathMarkType.class, breathMarkValue));
                     breathMark.setPrintStyle(FormattingFactory.newPrintStyle(articulationsSubelement));
                     breathMark.setPlacement(PlacementFactory.newPlacementLocation(articulationsSubelement));
                     articulation = breathMark;

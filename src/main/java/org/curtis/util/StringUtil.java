@@ -12,6 +12,10 @@ public class StringUtil {
         return !isEmpty(string);
     }
 
+    public static boolean isEmptyString(String string) {
+        return string != null && string.equals("");
+    }
+
     public static String nullToString(String string) {
         return string == null ? "" : string;
     }

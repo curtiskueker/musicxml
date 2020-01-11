@@ -46,6 +46,7 @@ import org.curtis.musicxml.direction.directiontype.percussion.Stick;
 import org.curtis.musicxml.direction.directiontype.percussion.StickLocation;
 import org.curtis.musicxml.direction.directiontype.percussion.Timpani;
 import org.curtis.musicxml.direction.directiontype.percussion.Wood;
+import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -294,25 +295,18 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildMetal(Metal metal) {
-        String type = BuilderUtil.enumValue(metal.getType());
-        type = type.replace("bell-plate", "bell plate");
-        type = type.replace("brake-drum", "brake drum");
-        type = type.replace("chinese-cymbal", "Chinese cymbal");
-        type = type.replace("crash-cymbals", "crash cymbals");
-        type = type.replace("cymbal-tongs", "cymbal tongs");
-        type = type.replace("domed-gong", "domed gong");
-        type = type.replace("finger-cymbals", "finger cymbals");
-        type = type.replace("high-hat-cymbals", "high-hat cymbals");
-        type = type.replace("sizzle-cymbal", "sizzle cymbal");
-        type = type.replace("sleigh-bells", "sleigh bells");
-        type = type.replace("suspended-cymbal", "suspended cymbal");
-        type = type.replace("tam-tam", "tam tam");
-        type = type.replace("vietnamese-hat", "Vietnamese hat");
+        String type = BuilderUtil.enumValueWithSpaces(metal.getType());
+        type = type.replace("chinese cymbal", "Chinese cymbal");
+        type = type.replace("high hat", "high-hat");
+        type = type.replace("high hat cymbals", "high-hat cymbals");
+        type = type.replace("vietnamese hat", "Vietnamese hat");
         buildElementWithValue("metal", type);
     }
 
     private void buildWood(Wood wood) {
-        buildElementWithValue("wood", BuilderUtil.enumValueWithSpaces(wood.getType()));
+        String woodType = BuilderUtil.enumValueWithSpaces(wood.getType());
+        woodType = woodType.replace("reco reco", "reco-reco");
+        buildElementWithValue("wood", woodType);
     }
 
     private void buildPitched(Pitched pitched) {
@@ -320,7 +314,14 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildMembrane(Membrane membrane) {
-        buildElementWithValue("membrane", BuilderUtil.enumValueWithSpaces(membrane.getType()));
+        String attributeValue = BuilderUtil.enumValueWithSpaces(membrane.getType());
+        if (StringUtil.isNotEmpty(attributeValue)) {
+            attributeValue = attributeValue.replace("chinese tomtom", "Chinese tomtom");
+            attributeValue = attributeValue.replace("indo american tomtom", "Indo-American tomtom");
+            attributeValue = attributeValue.replace("japanese tomtom", "Japanese tomtom");
+        }
+
+        buildElementWithValue("membrane", attributeValue);
     }
 
     private void buildEffect(Effect effect) {

@@ -397,250 +397,32 @@ public class DirectionFactory {
         switch (elementName) {
             case "glass":
                 Glass glass = new Glass();
-                switch (elementValue) {
-                    case "wind chimes":
-                        glass.setType(GlassType.WIND_CHIMES);
-                }
+                glass.setType((GlassType)FactoryUtil.enumValue(GlassType.class, elementValue));
                 percussion = glass;
                 break;
             case "metal":
                 Metal metal = new Metal();
-                switch (elementValue) {
-                    case "almglocken":
-                        metal.setType(MetalType.ALMGLOCKEN);
-                        break;
-                    case "bell":
-                        metal.setType(MetalType.BELL);
-                        break;
-                    case "bell plate":
-                        metal.setType(MetalType.BELL_PLATE);
-                        break;
-                    case "brake drum":
-                        metal.setType(MetalType.BRAKE_DRUM);
-                        break;
-                    case "Chinese cymbal":
-                        metal.setType(MetalType.CHINESE_CYMBAL);
-                        break;
-                    case "cowbell":
-                        metal.setType(MetalType.COWBELL);
-                        break;
-                    case "crash cymbals":
-                        metal.setType(MetalType.CRASH_CYMBALS);
-                        break;
-                    case "crotale":
-                        metal.setType(MetalType.CROTALE);
-                        break;
-                    case "cymbal tongs":
-                        metal.setType(MetalType.CYMBAL_TONGS);
-                        break;
-                    case "domed gong":
-                        metal.setType(MetalType.DOMED_GONG);
-                        break;
-                    case "finger cymbals":
-                        metal.setType(MetalType.FINGER_CYMBALS);
-                        break;
-                    case "flexatone":
-                        metal.setType(MetalType.FLEXATONE);
-                        break;
-                    case "gong":
-                        metal.setType(MetalType.GONG);
-                        break;
-                    case "hi-hat":
-                        metal.setType(MetalType.HI_HAT);
-                        break;
-                    case "high-hat cymbals":
-                        metal.setType(MetalType.HI_HAT_CYMBALS);
-                        break;
-                    case "handbell":
-                        metal.setType(MetalType.HANDBELL);
-                        break;
-                    case "sistrum":
-                        metal.setType(MetalType.SISTRUM);
-                        break;
-                    case "sizzle cymbal":
-                        metal.setType(MetalType.SIZZLE_CYMBAL);
-                        break;
-                    case "sleigh bells":
-                        metal.setType(MetalType.SLEIGH_BELLS);
-                        break;
-                    case "suspended cymbal":
-                        metal.setType(MetalType.SUSPENDED_CYMBAL);
-                        break;
-                    case "tam tam":
-                        metal.setType(MetalType.TAM_TAM);
-                        break;
-                    case "triangle":
-                        metal.setType(MetalType.TRIANGLE);
-                        break;
-                    case "Vietnamese hat":
-                        metal.setType(MetalType.VIETNAMESE_HAT);
-                        break;
-                }
+                metal.setType((MetalType)FactoryUtil.enumValue(MetalType.class, elementValue));
                 percussion = metal;
                 break;
             case "wood":
                 Wood wood = new Wood();
-                switch (elementValue) {
-                    case "board clapper":
-                        wood.setType(WoodType.BOARD_CLAPPER);
-                        break;
-                    case "cabasa":
-                        wood.setType(WoodType.CABASA);
-                        break;
-                    case "castanets":
-                        wood.setType(WoodType.CASTANETS);
-                        break;
-                    case "claves":
-                        wood.setType(WoodType.CLAVES);
-                        break;
-                    case "guiro":
-                        wood.setType(WoodType.GUIRO);
-                        break;
-                    case "log drum":
-                        wood.setType(WoodType.LOG_DRUM);
-                        break;
-                    case "maraca":
-                        wood.setType(WoodType.MARACA);
-                        break;
-                    case "maracas":
-                        wood.setType(WoodType.MARACAS);
-                        break;
-                    case "ratchet":
-                        wood.setType(WoodType.RATCHET);
-                        break;
-                    case "sandpaper blocks":
-                        wood.setType(WoodType.SANDPAPER_BLOCKS);
-                        break;
-                    case "slit drum":
-                        wood.setType(WoodType.SLIT_DRUM);
-                        break;
-                    case "temple block":
-                        wood.setType(WoodType.TEMPLE_BLOCK);
-                        break;
-                    case "vibraslap":
-                        wood.setType(WoodType.VIBRASLAP);
-                        break;
-                    case "wood block":
-                        wood.setType(WoodType.WOOD_BLOCK);
-                        break;
-                }
+                wood.setType((WoodType)FactoryUtil.enumValue(WoodType.class, elementValue));
                 percussion = wood;
                 break;
             case "pitched":
                 Pitched pitched = new Pitched();
-                switch (elementValue) {
-                    case "chimes":
-                        pitched.setType(PitchedType.CHIMES);
-                        break;
-                    case "glockenspiel":
-                        pitched.setType(PitchedType.GLOCKENSPIEL);
-                        break;
-                    case "mallet":
-                        pitched.setType(PitchedType.MALLET);
-                        break;
-                    case "marimba":
-                        pitched.setType(PitchedType.MARIMBA);
-                        break;
-                    case "tubular chimes":
-                        pitched.setType(PitchedType.TUBULAR_CHIMES);
-                        break;
-                    case "vibraphone":
-                        pitched.setType(PitchedType.VIBRAPHONE);
-                        break;
-                    case "xylophone":
-                        pitched.setType(PitchedType.XYLOPHONE);
-                        break;
-                }
+                pitched.setType((PitchedType)FactoryUtil.enumValue(PitchedType.class, elementValue));
                 percussion = pitched;
                 break;
             case "membrane":
                 Membrane membrane = new Membrane();
-                switch (elementValue) {
-                    case "bass drum":
-                        membrane.setType(MembraneType.BASS_DRUM);
-                        break;
-                    case "bass drum on side":
-                        membrane.setType(MembraneType.BASS_DRUM_ON_SIDE);
-                        break;
-                    case "bongos":
-                        membrane.setType(MembraneType.BONGOS);
-                        break;
-                    case "conga drum":
-                        membrane.setType(MembraneType.CONGA_DRUM);
-                        break;
-                    case "goblet drum":
-                        membrane.setType(MembraneType.GOBLET_DRUM);
-                        break;
-                    case "military drum":
-                        membrane.setType(MembraneType.MILITARY_DRUM);
-                        break;
-                    case "snare drum":
-                        membrane.setType(MembraneType.SNARE_DRUM);
-                        break;
-                    case "snare drum snares off":
-                        membrane.setType(MembraneType.SHARE_DRUM_SNARES_OFF);
-                        break;
-                    case "tambourine":
-                        membrane.setType(MembraneType.TAMBOURINE);
-                        break;
-                    case "tenor drum":
-                        membrane.setType(MembraneType.TENOR_DRUM);
-                        break;
-                    case "timbales":
-                        membrane.setType(MembraneType.TIMBALES);
-                        break;
-                    case "tomtom":
-                        membrane.setType(MembraneType.TOMTOM);
-                        break;
-                }
+                membrane.setType((MembraneType)FactoryUtil.enumValue(MembraneType.class, elementValue));
                 percussion = membrane;
                 break;
             case "effect":
                 Effect effect = new Effect();
-                switch (elementValue) {
-                    case "anvil":
-                        effect.setType(EffectType.ANVIL);
-                        break;
-                    case "auto horn":
-                        effect.setType(EffectType.AUTO_HORN);
-                        break;
-                    case "bird whistle":
-                        effect.setType(EffectType.BIRD_WHISTLE);
-                        break;
-                    case "cannon":
-                        effect.setType(EffectType.CANNON);
-                        break;
-                    case "duck call":
-                        effect.setType(EffectType.DUCK_CALL);
-                        break;
-                    case "gun shot":
-                        effect.setType(EffectType.GUN_SHOT);
-                        break;
-                    case "klaxon horn":
-                        effect.setType(EffectType.KLAXON_HORN);
-                        break;
-                    case "lions roar":
-                        effect.setType(EffectType.LIONS_ROAR);
-                        break;
-                    case "police whistle":
-                        effect.setType(EffectType.POLICE_WHISTLE);
-                        break;
-                    case "siren":
-                        effect.setType(EffectType.SIREN);
-                        break;
-                    case "slide whistle":
-                        effect.setType(EffectType.SLIDE_WHISTLE);
-                        break;
-                    case "thunder sheet":
-                        effect.setType(EffectType.THUNDER_SHEET);
-                        break;
-                    case "wind machine":
-                        effect.setType(EffectType.WIND_MACHINE);
-                        break;
-                    case "wind whistle":
-                        effect.setType(EffectType.WIND_WHISTLE);
-                        break;
-                }
+                effect.setType((EffectType)FactoryUtil.enumValue(EffectType.class, elementValue));
                 percussion = effect;
                 break;
             case "timpani":
@@ -648,82 +430,14 @@ public class DirectionFactory {
                 break;
             case "beater":
                 Beater beater = new Beater();
-                switch (elementValue) {
-                    case "bow":
-                        beater.setBeaterValue(BeaterValue.BOW);
-                        break;
-                    case "chime hammer":
-                        beater.setBeaterValue(BeaterValue.CHIME_HAMMER);
-                        break;
-                    case "coin":
-                        beater.setBeaterValue(BeaterValue.COIN);
-                        break;
-                    case "finger":
-                        beater.setBeaterValue(BeaterValue.FINGER);
-                        break;
-                    case "fingernail":
-                        beater.setBeaterValue(BeaterValue.FINGERNAIL);
-                        break;
-                    case "fist":
-                        beater.setBeaterValue(BeaterValue.FIST);
-                        break;
-                    case "guiro scraper":
-                        beater.setBeaterValue(BeaterValue.GUIRO_SCRAPER);
-                        break;
-                    case "hammer":
-                        beater.setBeaterValue(BeaterValue.HAMMER);
-                        break;
-                    case "hand":
-                        beater.setBeaterValue(BeaterValue.HAND);
-                        break;
-                    case "jazz stick":
-                        beater.setBeaterValue(BeaterValue.JAZZ_STICK);
-                        break;
-                    case "knitting needle":
-                        beater.setBeaterValue(BeaterValue.KNITTING_NEEDLE);
-                        break;
-                    case "metal hammer":
-                        beater.setBeaterValue(BeaterValue.METAL_HAMMER);
-                        break;
-                    case "snare stick":
-                        beater.setBeaterValue(BeaterValue.SNARE_STICK);
-                        break;
-                    case "spoon mallet":
-                        beater.setBeaterValue(BeaterValue.SPOON_MALLET);
-                        break;
-                    case "triangle beater":
-                        beater.setBeaterValue(BeaterValue.TRIANGLE_BEATER);
-                        break;
-                    case "triangle beater plain":
-                        beater.setBeaterValue(BeaterValue.TRIANGLE_BEATER_PLAIN);
-                        break;
-                    case "wire brush":
-                        beater.setBeaterValue(BeaterValue.WIRE_BRUSH);
-                        break;
-                }
+                beater.setBeaterValue((BeaterValue)FactoryUtil.enumValue(BeaterValue.class, elementValue));
                 beater.setTip(newTipDirection(element));
                 percussion = beater;
                 break;
             case "stick":
                 Stick stick = new Stick();
                 String stickType = XmlUtil.getChildElementText(element, "stick-type");
-                switch (stickType) {
-                    case "bass drum":
-                        stick.setStickType(StickType.BASS_DRUM);
-                        break;
-                    case "double bass drum":
-                        stick.setStickType(StickType.DOUBLE_BASS_DRUM);
-                        break;
-                    case "timpani":
-                        stick.setStickType(StickType.TIMPANI);
-                        break;
-                    case "xylophone":
-                        stick.setStickType(StickType.XYLOPHONE);
-                        break;
-                    case "yarn":
-                        stick.setStickType(StickType.YARN);
-                        break;
-                }
+                stick.setStickType((StickType)FactoryUtil.enumValue(StickType.class, stickType));
                 String stickMaterial = XmlUtil.getChildElementText(element, "stick-material");
                 switch (stickMaterial) {
                     case "soft":

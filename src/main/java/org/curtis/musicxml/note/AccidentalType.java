@@ -19,6 +19,12 @@ public enum AccidentalType {
     NATURAL_UP,
     FLAT_DOWN,
     FLAT_UP,
+    DOUBLE_SHARP_DOWN,
+    DOUBLE_SHARP_UP,
+    FLAT_FLAT_DOWN,
+    FLAT_FLAT_UP,
+    ARROW_DOWN,
+    ARROW_UP,
     TRIPLE_SHARP,
     TRIPLE_FLAT,
     SLASH_QUARTER_SHARP,
@@ -34,5 +40,6 @@ public enum AccidentalType {
     FLAT_3,
     FLAT_4,
     SORI,
-    KORON
+    KORON,
+    OTHER
 }

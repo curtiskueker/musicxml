@@ -1,6 +1,7 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.factory.DirectionFactory;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
@@ -98,17 +99,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                                             NoteSize noteSize = new NoteSize();
                                             noteSize.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
                                             String noteSizeType = appearanceSubelement.getAttribute("type");
-                                            switch (noteSizeType) {
-                                                case "cue":
-                                                    noteSize.setType(NoteSizeType.CUE);
-                                                    break;
-                                                case "grace":
-                                                    noteSize.setType(NoteSizeType.GRACE);
-                                                    break;
-                                                case "large":
-                                                    noteSize.setType(NoteSizeType.LARGE);
-                                                    break;
-                                            }
+                                            noteSize.setType((NoteSizeType) FactoryUtil.enumValue(NoteSizeType.class, noteSizeType));
                                             noteSizes.add(noteSize);
                                             break;
                                         case "distance":

@@ -1,10 +1,14 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
 public enum MetalType {
+    AGOGO,
     ALMGLOCKEN,
     BELL,
     BELL_PLATE,
+    BELL_TREE,
     BRAKE_DRUM,
+    CENCERRO,
+    CHAIN_RATTLE,
     CHINESE_CYMBAL,
     COWBELL,
     CRASH_CYMBALS,
@@ -17,11 +21,16 @@ public enum MetalType {
     HI_HAT,
     HI_HAT_CYMBALS,
     HANDBELL,
+    JAW_HARP,
+    JINGLE_BELLS,
+    MUSICAL_SAW,
+    SHELL_BELLS,
     SISTRUM,
     SIZZLE_CYMBAL,
     SLEIGH_BELLS,
     SUSPENDED_CYMBAL,
     TAM_TAM,
+    TAM_TAM_WITH_BEATER,
     TRIANGLE,
     VIETNAMESE_HAT
 }

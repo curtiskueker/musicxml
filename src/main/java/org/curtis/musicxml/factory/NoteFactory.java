@@ -93,78 +93,7 @@ public class NoteFactory {
 
         }
 
-        switch (XmlUtil.getElementText(accidentalElement)) {
-            case "sharp":
-                return AccidentalType.SHARP;
-            case "natural":
-                return AccidentalType.NATURAL;
-            case "flat":
-                return AccidentalType.FLAT;
-            case "double-sharp":
-                return AccidentalType.DOUBLE_SHARP;
-            case "sharp-sharp":
-                return AccidentalType.SHARP_SHARP;
-            case "flat-flat":
-                return AccidentalType.FLAT_FLAT;
-            case "natural-sharp":
-                return AccidentalType.NATURAL_SHARP;
-            case "natural-flat":
-                return AccidentalType.NATURAL_FLAT;
-            case "quarter-flat":
-                return AccidentalType.QUARTER_FLAT;
-            case "quarter-sharp":
-                return AccidentalType.QUARTER_SHARP;
-            case "three-quarters-flat":
-                return AccidentalType.THREE_QUARTERS_FLAT;
-            case "three-quarters-sharp":
-                return AccidentalType.THREE_QUARTERS_SHARP;
-            case "sharp-down":
-                return AccidentalType.SHARP_DOWN;
-            case "sharp-up":
-                return AccidentalType.SHARP_UP;
-            case "natural-down":
-                return AccidentalType.NATURAL_DOWN;
-            case "natural-up":
-                return AccidentalType.NATURAL_UP;
-            case "flat-down":
-                return AccidentalType.FLAT_DOWN;
-            case "flat-up":
-                return AccidentalType.FLAT_UP;
-            case "triple-sharp":
-                return AccidentalType.TRIPLE_SHARP;
-            case "triple-flat":
-                return AccidentalType.TRIPLE_FLAT;
-            case "slash-quarter-sharp":
-                return AccidentalType.SLASH_QUARTER_SHARP;
-            case "slash-sharp":
-                return AccidentalType.SLASH_SHARP;
-            case "slash-flat":
-                return AccidentalType.SLASH_FLAT;
-            case "double-slash-flat":
-                return AccidentalType.DOUBLE_SLASH_FLAT;
-            case "sharp-1":
-                return AccidentalType.SHARP_1;
-            case "sharp-2":
-                return AccidentalType.SHARP_2;
-            case "sharp-3":
-                return AccidentalType.SHARP_3;
-            case "sharp-5":
-                return AccidentalType.SHARP_5;
-            case "flat-1":
-                return AccidentalType.FLAT_1;
-            case "flat-2":
-                return AccidentalType.FLAT_2;
-            case "flat-3":
-                return AccidentalType.FLAT_3;
-            case "flat-4":
-                return AccidentalType.FLAT_4;
-            case "sori":
-                return AccidentalType.SORI;
-            case "koron":
-                return AccidentalType.KORON;
-            default:
-                return null;
-        }
+        return ((AccidentalType)FactoryUtil.enumValue(AccidentalType.class, XmlUtil.getElementText(accidentalElement)));
     }
 
     public static AccidentalText newAccidentalText(Element element) {

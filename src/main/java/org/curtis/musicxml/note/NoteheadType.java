@@ -11,6 +11,7 @@ public enum NoteheadType {
     INVERTED_TRIANGLE,
     ARROW_DOWN,
     ARROW_UP,
+    CIRCLED,
     SLASHED,
     BACK_SLASHED,
     NORMAL,
@@ -25,5 +26,6 @@ public enum NoteheadType {
     FA_UP,
     SO,
     LA,
-    TI
+    TI,
+    OTHER
 }

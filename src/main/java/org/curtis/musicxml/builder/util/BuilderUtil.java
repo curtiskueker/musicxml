@@ -19,6 +19,8 @@ public class BuilderUtil {
         String value = enumValue.toString();
         if(StringUtil.isEmpty(value)) return "";
 
+        if (value.equals("EMPTY_VALUE")) value = "";
+
         return value.toLowerCase().replace("_", "-");
     }
 

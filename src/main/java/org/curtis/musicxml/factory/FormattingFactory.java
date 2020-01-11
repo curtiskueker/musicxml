@@ -245,21 +245,7 @@ public class FormattingFactory {
             return null;
         }
 
-        String size = symbolSizeElement.getAttribute("size");
-        if(StringUtil.isEmpty(size)) {
-            return null;
-        }
-
-        switch (size) {
-            case "full":
-                return SymbolSize.FULL;
-            case "cue":
-                return SymbolSize.CUE;
-            case "large":
-                return SymbolSize.LARGE;
-            default:
-                return null;
-        }
+        return (SymbolSize)FactoryUtil.enumValue(SymbolSize.class, symbolSizeElement.getAttribute("size"));
     }
 
     public static DashedFormatting newDashedFormatting(Element dashedFormattingElement) {
@@ -305,41 +291,7 @@ public class FormattingFactory {
     public static EnclosureShape newEnclosureShape(Element element) {
         if(element == null) return null;
 
-        String enclosure = element.getAttribute("enclosure");
-        if(StringUtil.isEmpty(enclosure)) return null;
-
-        switch (enclosure) {
-            case "rectangle":
-                return EnclosureShape.RECTANGLE;
-            case "square":
-                return EnclosureShape.SQUARE;
-            case "oval":
-                return EnclosureShape.OVAL;
-            case "circle":
-                return EnclosureShape.CIRCLE;
-            case "bracket":
-                return EnclosureShape.BRACKET;
-            case "triangle":
-                return EnclosureShape.TRIANGLE;
-            case "diamond":
-                return EnclosureShape.DIAMOND;
-            case "pentagon":
-                return EnclosureShape.PENTAGON;
-            case "hexagon":
-                return EnclosureShape.HEXAGON;
-            case "heptagon":
-                return EnclosureShape.HEPTAGON;
-            case "octagon":
-                return EnclosureShape.OCTAGON;
-            case "nonagon":
-                return EnclosureShape.NONAGON;
-            case "decagon":
-                return EnclosureShape.DECAGON;
-            case "none":
-                return EnclosureShape.NONE;
-            default:
-                return null;
-        }
+        return (EnclosureShape)FactoryUtil.enumValue(EnclosureShape.class, element.getAttribute("enclosure"));
     }
 
     public static Editorial newEditorial(Element element) {

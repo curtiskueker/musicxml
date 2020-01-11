@@ -9,6 +9,8 @@ public enum EffectType {
     GUN_SHOT,
     KLAXON_HORN,
     LIONS_ROAR,
+    LOTUS_FLUTE,
+    MEGAPHONE,
     POLICE_WHISTLE,
     SIREN,
     SLIDE_WHISTLE,

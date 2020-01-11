@@ -109,20 +109,7 @@ public class NotationFactory {
         if(fermataElement == null) return null;
 
         Fermata fermata = new Fermata();
-        String fermataShape = XmlUtil.getElementText(fermataElement);
-        if (StringUtil.isNotEmpty(fermataShape)) {
-            switch (fermataShape) {
-                case "normal":
-                    fermata.setFermataShape(FermataShape.NORMAL);
-                    break;
-                case "angled":
-                    fermata.setFermataShape(FermataShape.ANGLED);
-                    break;
-                case "square":
-                    fermata.setFermataShape(FermataShape.SQUARE);
-                    break;
-            }
-        }
+        fermata.setFermataShape((FermataShape)FactoryUtil.enumValueWithEmptyValue(FermataShape.class, XmlUtil.getElementText(fermataElement)));
 
         switch (fermataElement.getAttribute("type")) {
             case "upright":

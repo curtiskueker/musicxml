@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note.notation.technical;
 
 public enum HandbellType {
+    BELLTREE,
     DAMP,
     ECHO,
     GYRO,

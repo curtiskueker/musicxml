@@ -1,6 +1,7 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
@@ -151,86 +152,7 @@ public class NoteHandler extends MusicDataHandler {
                 case "notehead":
                     Notehead notehead = new Notehead();
                     String noteheadType = XmlUtil.getElementText(noteSubelement);
-                    if(StringUtil.isNotEmpty(noteheadType)) {
-                        switch (noteheadType) {
-                            case "slash":
-                                notehead.setType(NoteheadType.SLASH);
-                                break;
-                            case "triangle":
-                                notehead.setType(NoteheadType.TRIANGLE);
-                                break;
-                            case "diamond":
-                                notehead.setType(NoteheadType.DIAMOND);
-                                break;
-                            case "square":
-                                notehead.setType(NoteheadType.SQUARE);
-                                break;
-                            case "cross":
-                                notehead.setType(NoteheadType.CROSS);
-                                break;
-                            case "x":
-                                notehead.setType(NoteheadType.X);
-                                break;
-                            case "circle-x":
-                                notehead.setType(NoteheadType.CIRCLE_X);
-                                break;
-                            case "inverted-triangle":
-                                notehead.setType(NoteheadType.INVERTED_TRIANGLE);
-                                break;
-                            case "arrow-down":
-                                notehead.setType(NoteheadType.ARROW_DOWN);
-                                break;
-                            case "arrow-up":
-                                notehead.setType(NoteheadType.ARROW_UP);
-                                break;
-                            case "slashed":
-                                notehead.setType(NoteheadType.SLASHED);
-                                break;
-                            case "back-slashed":
-                                notehead.setType(NoteheadType.BACK_SLASHED);
-                                break;
-                            case "normal":
-                                notehead.setType(NoteheadType.NORMAL);
-                                break;
-                            case "cluster":
-                                notehead.setType(NoteheadType.CLUSTER);
-                                break;
-                            case "circle-dot":
-                                notehead.setType(NoteheadType.CIRCLE_DOT);
-                                break;
-                            case "left-triangle":
-                                notehead.setType(NoteheadType.LEFT_TRIANGLE);
-                                break;
-                            case "none":
-                                notehead.setType(NoteheadType.NONE);
-                                break;
-                            case "do":
-                                notehead.setType(NoteheadType.DO);
-                                break;
-                            case "re":
-                                notehead.setType(NoteheadType.RE);
-                                break;
-                            case "mi":
-                                notehead.setType(NoteheadType.MI);
-                                break;
-                            case "fa":
-                                notehead.setType(NoteheadType.FA);
-                                break;
-                            case "fa-up":
-                                notehead.setType(NoteheadType.FA_UP);
-                                break;
-                            case "so":
-                                notehead.setType(NoteheadType.SO);
-                                break;
-                            case "la":
-                                notehead.setType(NoteheadType.LA);
-                                break;
-                            case "ti":
-                                notehead.setType(NoteheadType.TI);
-                                break;
-                        }
-                    }
-
+                    notehead.setType((NoteheadType) FactoryUtil.enumValue(NoteheadType.class, noteheadType));
                     String filledNotehead = noteSubelement.getAttribute("filled");
                     notehead.setFilled(TypeUtil.getYesNo(filledNotehead));
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));

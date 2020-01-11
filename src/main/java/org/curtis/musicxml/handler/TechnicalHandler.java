@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
@@ -311,41 +312,7 @@ public class TechnicalHandler extends BaseHandler {
                 case "handbell":
                     Handbell handbell = new Handbell();
                     String handbellType = XmlUtil.getElementText(technicalElement);
-                    switch (handbellType) {
-                        case "damp":
-                            handbell.setHandbellType(HandbellType.DAMP);
-                            break;
-                        case "echo":
-                            handbell.setHandbellType(HandbellType.ECHO);
-                            break;
-                        case "gyro":
-                            handbell.setHandbellType(HandbellType.GYRO);
-                            break;
-                        case "hand martellato":
-                            handbell.setHandbellType(HandbellType.HAND_MARTELLATO);
-                            break;
-                        case "mallet lift":
-                            handbell.setHandbellType(HandbellType.MALLET_LIFT);
-                            break;
-                        case "mallet table":
-                            handbell.setHandbellType(HandbellType.MALLET_TABLE);
-                            break;
-                        case "martellato":
-                            handbell.setHandbellType(HandbellType.MARTELLATO);
-                            break;
-                        case "martellato lift":
-                            handbell.setHandbellType(HandbellType.MARTELLATO_LIFT);
-                            break;
-                        case "muted martellato":
-                            handbell.setHandbellType(HandbellType.MUTED_MARTELLATO);
-                            break;
-                        case "pluck lift":
-                            handbell.setHandbellType(HandbellType.PLUCK_LIFT);
-                            break;
-                        case "swing":
-                            handbell.setHandbellType(HandbellType.SWING);
-                            break;
-                    }
+                    handbell.setHandbellType((HandbellType) FactoryUtil.enumValue(HandbellType.class, handbellType));
                     handbell.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     handbell.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = handbell;
