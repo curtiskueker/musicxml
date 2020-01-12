@@ -22,6 +22,8 @@ public class NonTraditionalKeyType extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "key_accidental")
     private AccidentalType keyAccidental;
+    @Column(name = "key_accidental_smufl")
+    private String keyAccidentalSmufl;
 
     public NonTraditionalKeyType() {
 
@@ -49,5 +51,13 @@ public class NonTraditionalKeyType extends DatabaseItem {
 
     public void setKeyAccidental(AccidentalType keyAccidental) {
         this.keyAccidental = keyAccidental;
+    }
+
+    public String getKeyAccidentalSmufl() {
+        return keyAccidentalSmufl;
+    }
+
+    public void setKeyAccidentalSmufl(String keyAccidentalSmufl) {
+        this.keyAccidentalSmufl = keyAccidentalSmufl;
     }
 }

@@ -62,7 +62,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildTied(Tied tied) {
         Map<String, String> attributes = new HashMap<>();
-        attributes.put("type", BuilderUtil.enumValue(tied.getType()));
+        attributes.put("type", BuilderUtil.enumValue(tied.getTiedType()));
         attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(tied.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(tied.getDashedFormatting()));

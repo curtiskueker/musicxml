@@ -43,6 +43,7 @@ import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
+import org.curtis.musicxml.note.notation.ornament.TremoloType;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -169,7 +170,7 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         Tremolo tremolo = note.getTremolo();
-        if (tremolo != null && tremolo.getType() == Connection.START) {
+        if (tremolo != null && tremolo.getTremoloType() == TremoloType.START) {
             append("\\repeat tremolo ");
             append(MathUtil.truncate(MathUtil.divide(note.getDuration(), MathUtil.divide(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks())))));
             append(" { ");
@@ -240,7 +241,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private StringBuilder postNoteBuild() throws BuildException {
         Tremolo tremolo = note.getTremolo();
-        if (tremolo != null && tremolo.getType() == Connection.STOP) {
+        if (tremolo != null && tremolo.getTremoloType() == TremoloType.STOP) {
             append(" } ");
         }
 
@@ -253,7 +254,7 @@ public class NoteBuilder extends MusicDataBuilder {
         BigDecimal duration = note.getDuration();
         Tremolo tremolo = note.getTremolo();
         try {
-            if (tremolo != null && (tremolo.getType() == Connection.START || tremolo.getType() == Connection.STOP)) {
+            if (tremolo != null && (tremolo.getTremoloType() == TremoloType.START || tremolo.getTremoloType() == TremoloType.STOP)) {
                 append(MathUtil.truncate(MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks() + 2)));
             } else if (fullNoteType instanceof Rest && TypeUtil.getBoolean(((Rest)fullNoteType).getMeasure())) {
                 append(TimeSignatureUtil.getWholeMeasureRestRepresentation());

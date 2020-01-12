@@ -85,7 +85,7 @@ public class BarlineHandler extends MusicDataHandler {
                     barline.setSegnoPrint(FormattingFactory.newPrintStyleAlign(barlineSubelement));
                     break;
                 case "coda":
-                    barline.setCodaPrint(FormattingFactory.newPrintStyleAlign(barlineSubelement));
+                    barline.setCodaPrint(NotationFactory.newCoda(barlineSubelement));
                     break;
                 case "fermata":
                     List<Fermata> fermataList = barline.getFermataList();

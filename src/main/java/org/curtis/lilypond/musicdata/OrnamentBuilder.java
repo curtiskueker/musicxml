@@ -1,7 +1,6 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.PlacementBuildUtil;
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.note.notation.ornament.InvertedMordent;
 import org.curtis.musicxml.note.notation.ornament.InvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.Mordent;
@@ -67,8 +66,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
     public StringBuilder buildTremolo(Tremolo tremolo) {
         Integer tremoloMarks = tremolo.getTremoloMarks();
         if(tremoloMarks != null) {
-            Connection tremoloType = tremolo.getType();
-            switch (tremoloType) {
+            switch (tremolo.getTremoloType()) {
                 case SINGLE:
                     append(":");
                     append(MathUtil.truncate(MathUtil.multiply(MathUtil.exp(MathUtil.newBigDecimal(2), tremoloMarks), MathUtil.newBigDecimal(4))));

@@ -8,7 +8,6 @@ import org.curtis.musicxml.direction.SoundMidi;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
 import org.curtis.musicxml.direction.directiontype.Bracket;
-import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Damp;
 import org.curtis.musicxml.direction.directiontype.DampAll;
 import org.curtis.musicxml.direction.directiontype.Dashes;
@@ -79,8 +78,7 @@ public class DirectionFactory {
     public static DirectionType newDirectionType(Element element) {
         if(element == null) return null;
 
-        String directionTypeElementName = element.getTagName();
-        switch (directionTypeElementName) {
+        switch (element.getTagName()) {
             case "rehearsal":
                 Rehearsal rehearsal = new Rehearsal();
                 FormattedText rehearsalFormattedText = FormattingFactory.newFormattedText(element);
@@ -90,6 +88,7 @@ public class DirectionFactory {
             case "segno":
                 Segno segno = new Segno();
                 segno.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                segno.setSmufl(element.getAttribute("smufl"));
                 return segno;
             case "words":
                 Words words = new Words();
@@ -98,9 +97,7 @@ public class DirectionFactory {
                 words.setFormattedText(wordsFormattedText);
                 return words;
             case "coda":
-                Coda coda = new Coda();
-                coda.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
-                return coda;
+                return NotationFactory.newCoda(element);
             case "wedge":
                 Wedge wedge = new Wedge();
                 wedge.setType((WedgeType)FactoryUtil.enumValue(WedgeType.class, element.getAttribute("type")));
@@ -334,6 +331,7 @@ public class DirectionFactory {
             case "glass":
                 Glass glass = new Glass();
                 glass.setType((GlassType)FactoryUtil.enumValue(GlassType.class, elementValue));
+                glass.setSmufl(element.getAttribute("smufl"));
                 percussion = glass;
                 break;
             case "metal":
@@ -349,6 +347,7 @@ public class DirectionFactory {
             case "pitched":
                 Pitched pitched = new Pitched();
                 pitched.setType((PitchedType)FactoryUtil.enumValue(PitchedType.class, elementValue));
+                pitched.setSmufl(element.getAttribute("smufl"));
                 percussion = pitched;
                 break;
             case "membrane":

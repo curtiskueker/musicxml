@@ -98,7 +98,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
 
     private void buildTremolo(Tremolo tremolo) {
         Map<String, String> attributes = new HashMap<>();
-        attributes.put("type", BuilderUtil.enumValue(tremolo.getType()));
+        attributes.put("type", BuilderUtil.enumValue(tremolo.getTremoloType()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(tremolo.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(tremolo.getPlacement()));
         buildElementWithValueAndAttributes("tremolo", tremolo.getTremoloMarks(), attributes);

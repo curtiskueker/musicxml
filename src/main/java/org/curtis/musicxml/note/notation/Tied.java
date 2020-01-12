@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note.notation;
 
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
@@ -20,8 +19,8 @@ import javax.persistence.Transient;
 @DiscriminatorValue("tied")
 public class Tied extends Notation {
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_value")
-    private Connection type;
+    @Column(name = "tied_type")
+    private TiedType tiedType;
     @Column(name = "notation_number")
     private Integer number;
     @Enumerated(EnumType.STRING)
@@ -55,12 +54,12 @@ public class Tied extends Notation {
 
     }
 
-    public Connection getType() {
-        return type;
+    public TiedType getTiedType() {
+        return tiedType;
     }
 
-    public void setType(Connection type) {
-        this.type = type;
+    public void setTiedType(TiedType tiedType) {
+        this.tiedType = tiedType;
     }
 
     public Integer getNumber() {

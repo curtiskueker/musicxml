@@ -22,6 +22,7 @@ import org.curtis.musicxml.note.Stem;
 import org.curtis.musicxml.note.Tie;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.Unpitched;
+import org.curtis.musicxml.note.lyric.Elision;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
@@ -217,17 +218,13 @@ public class NoteBuilder extends MusicDataBuilder {
         if (lyricItem instanceof LyricText) {
             LyricText lyricText = (LyricText)lyricItem;
             for (LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
-                TextFontColor lyricElision = lyricSyllable.getLyricElision();
-                if (lyricElision != null) {
+                Elision elision = lyricSyllable.getElision();
+                if (elision != null) {
                     Map<String, String> elisionAttributes = new HashMap<>();
-                    elisionAttributes.putAll(FormattingBuilder.buildFont(lyricElision.getFont()));
-                    elisionAttributes.put("color", lyricElision.getColor());
-                    elisionAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricElision.getTextDecoration()));
-                    elisionAttributes.put("rotation", BuilderUtil.stringValue(lyricElision.getTextRotation()));
-                    elisionAttributes.put("letter-spacing", lyricElision.getLetterSpacing());
-                    elisionAttributes.put("xml:lang", lyricElision.getLang());
-                    elisionAttributes.put("dir", BuilderUtil.enumValue(lyricElision.getTextDirection()));
-                    buildElementWithValueAndAttributes("elision", lyricElision.getValue(), elisionAttributes);
+                    elisionAttributes.putAll(FormattingBuilder.buildFont(elision.getFont()));
+                    elisionAttributes.put("color", elision.getColor());
+                    elisionAttributes.put("smufl", elision.getSmufl());
+                    buildElementWithValueAndAttributes("elision", elision.getValue(), elisionAttributes);
                 }
                 buildElementWithValue("syllabic", lyricSyllable.getSyllabic());
                 TextData lyricSyllableText = lyricSyllable.getText();

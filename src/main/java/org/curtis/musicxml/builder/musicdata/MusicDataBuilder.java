@@ -22,6 +22,7 @@ import org.curtis.musicxml.common.play.OtherPlay;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.common.play.PlayType;
 import org.curtis.musicxml.common.play.SemiPitched;
+import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.note.AccidentalText;
@@ -93,6 +94,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("line-shape", BuilderUtil.enumValue(line.getLineShape()));
         attributes.put("line-type", BuilderUtil.enumValue(line.getLineType()));
+        attributes.put("line-length", BuilderUtil.enumValue(line.getLineLength()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(line.getDashedFormatting()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(line.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(line.getPlacement()));
@@ -291,6 +293,14 @@ public abstract class MusicDataBuilder extends BaseBuilder {
             buildElement(dynamicsMarking.getDynamicsType());
         }
         buildEndElement("dynamics");
+    }
+
+    protected void buildCoda(Coda coda) {
+        if (coda == null) return;
+
+        Map<String, String> codaAttributes = FormattingBuilder.buildPrintStyleAlign(coda.getPrintStyleAlign());
+        codaAttributes.put("smufl", coda.getSmufl());
+        buildElementWithOptionalAttributes("coda", codaAttributes);
     }
 
     protected void buildStringNumber(StringNumber stringNumber) {

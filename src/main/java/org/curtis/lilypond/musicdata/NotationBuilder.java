@@ -26,8 +26,8 @@ public class NotationBuilder extends MusicDataBuilder {
                 append("\\repeatTie ");
                 return stringBuilder;
         }
-        Connection tieType = tied.getType();
-        switch (tieType) {
+
+        switch (tied.getTiedType()) {
             case START:
             case CONTINUE:
                 if (tied.isUnterminated()) throw new BuildException("Unterminated tie");

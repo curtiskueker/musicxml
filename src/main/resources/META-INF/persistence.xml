@@ -178,6 +178,7 @@
         <class>org.curtis.musicxml.note.Rest</class>
         <class>org.curtis.musicxml.note.Tie</class>
         <class>org.curtis.musicxml.note.TimeModification</class>
+        <class>org.curtis.musicxml.note.lyric.Elision</class>
         <class>org.curtis.musicxml.note.lyric.Extend</class>
         <class>org.curtis.musicxml.note.lyric.Humming</class>
         <class>org.curtis.musicxml.note.lyric.Laughing</class>

@@ -36,8 +36,7 @@ public class BarlineBuilder extends MusicDataBuilder {
         buildWavyLine(barline.getWavyLine());
         PrintStyleAlign segnoPrint = barline.getSegnoPrint();
         if (segnoPrint != null) buildElementWithAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segnoPrint));
-        PrintStyleAlign codaPrint = barline.getCodaPrint();
-        if (codaPrint != null) buildElementWithAttributes("coda", FormattingBuilder.buildPrintStyleAlign(codaPrint));
+        buildCoda(barline.getCodaPrint());
         for (Fermata fermata : barline.getFermataList()) buildFermata(fermata);
         Ending ending = barline.getEnding();
         if (ending != null) {

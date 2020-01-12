@@ -203,7 +203,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         for (NonTraditionalKeyType nonTraditionalKeyType : nonTraditionalKey.getNonTraditionalKeyList()) {
             buildElementWithValue("key-step", BuilderUtil.enumValue(nonTraditionalKeyType.getKeyStep()).toUpperCase());
             buildElementWithValue("key-alter", nonTraditionalKeyType.getKeyAlter());
-            buildElementWithValue("key-accidental", nonTraditionalKeyType.getKeyAccidental());
+            buildElementWithValueAndAttribute("key-accidental", nonTraditionalKeyType.getKeyAccidental(), "smufl", nonTraditionalKeyType.getKeyAccidentalSmufl());
         }
     }
 

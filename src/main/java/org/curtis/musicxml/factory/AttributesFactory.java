@@ -72,6 +72,7 @@ public class AttributesFactory {
                     break;
                 case "key-accidental":
                     nonTraditionalKeyType.setKeyAccidental(NoteFactory.newAccidentalType(nonTraditionalKeyElement));
+                    nonTraditionalKeyType.setKeyAccidentalSmufl(nonTraditionalKeyElement.getAttribute("smufl"));
                     break;
             }
         }

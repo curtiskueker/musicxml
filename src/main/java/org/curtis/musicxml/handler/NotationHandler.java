@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
@@ -14,6 +15,7 @@ import org.curtis.musicxml.note.notation.OtherNotation;
 import org.curtis.musicxml.note.notation.Slide;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
+import org.curtis.musicxml.note.notation.TiedType;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -39,7 +41,7 @@ public class NotationHandler extends BaseHandler {
             switch (notationsSubelement.getTagName()) {
                 case "tied":
                     Tied tied = new Tied();
-                    tied.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
+                    tied.setTiedType((TiedType) FactoryUtil.enumValue(TiedType.class, notationsSubelement.getAttribute("type")));
                     tied.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     tied.setLineType(NotationFactory.newLineType(notationsSubelement));
                     tied.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));

@@ -12,6 +12,8 @@ public class Pitched extends Percussion {
     @Enumerated(EnumType.STRING)
     @Column(name = "direction_type")
     private PitchedType type;
+    @Column
+    private String smufl;
 
     public Pitched() {
 
@@ -23,5 +25,13 @@ public class Pitched extends Percussion {
 
     public void setType(PitchedType type) {
         this.type = type;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

@@ -1,10 +1,10 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.OrnamentAccidental;
 import org.curtis.musicxml.note.notation.Ornaments;
@@ -12,6 +12,7 @@ import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.OtherOrnament;
 import org.curtis.musicxml.note.notation.ornament.Schleifer;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
+import org.curtis.musicxml.note.notation.ornament.TremoloType;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
@@ -66,7 +67,7 @@ public class OrnamentHandler extends BaseHandler {
                 case "tremolo":
                     Tremolo tremolo = new Tremolo();
                     tremolo.setTremoloMarks(StringUtil.getInteger(XmlUtil.getElementText(ornamentElement)));
-                    tremolo.setType(PlacementUtil.getConnection(ornamentElement.getAttribute("type")));
+                    tremolo.setTremoloType((TremoloType) FactoryUtil.enumValue(TremoloType.class, ornamentElement.getAttribute("type")));
                     tremolo.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
                     tremolo.setPlacement(PlacementFactory.newPlacementLocation(ornamentElement));
                     ornament = tremolo;

@@ -23,6 +23,9 @@ public class Line extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_type")
     private LineType lineType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "line_length")
+    private LineLength lineLength;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
@@ -51,6 +54,14 @@ public class Line extends DatabaseItem {
 
     public void setLineType(LineType lineType) {
         this.lineType = lineType;
+    }
+
+    public LineLength getLineLength() {
+        return lineLength;
+    }
+
+    public void setLineLength(LineLength lineLength) {
+        this.lineLength = lineLength;
     }
 
     public DashedFormatting getDashedFormatting() {

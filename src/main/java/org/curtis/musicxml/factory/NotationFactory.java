@@ -1,11 +1,13 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
 import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Line;
+import org.curtis.musicxml.note.LineLength;
 import org.curtis.musicxml.note.LineShape;
 import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.notation.AccidentalMark;
@@ -112,6 +114,7 @@ public class NotationFactory {
         Line line = new Line();
         line.setLineShape(newLineShape(element));
         line.setLineType(newLineType(element));
+        line.setLineLength((LineLength)FactoryUtil.enumValue(LineLength.class, element.getAttribute("line-length")));
         line.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
         line.setPrintStyle(FormattingFactory.newPrintStyle(element));
         line.setPlacement(PlacementFactory.newPlacementLocation(element));
@@ -119,7 +122,7 @@ public class NotationFactory {
         return line;
     }
 
-    public static LineShape newLineShape(Element lineShapeElement) {
+    private static LineShape newLineShape(Element lineShapeElement) {
         if(lineShapeElement == null) return null;
 
         return (LineShape)FactoryUtil.enumValue(LineShape.class, lineShapeElement.getAttribute("line-shape"));
@@ -193,5 +196,14 @@ public class NotationFactory {
         bezier.setBezierY2(bezierY2);
 
         return bezier;
+    }
+
+    public static Coda newCoda(Element element) {
+        if (element == null) return null;
+
+        Coda coda = new Coda();
+        coda.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+        coda.setSmufl(element.getAttribute("smufl"));
+        return coda;
     }
 }

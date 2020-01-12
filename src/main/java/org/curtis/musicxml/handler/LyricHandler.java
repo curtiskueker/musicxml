@@ -4,6 +4,7 @@ import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.LyricFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.handler.util.PlacementUtil;
+import org.curtis.musicxml.note.lyric.Elision;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
@@ -11,8 +12,6 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
-import org.curtis.musicxml.note.lyric.TextFontColor;
-import org.curtis.util.MathUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -62,16 +61,12 @@ public class LyricHandler extends BaseHandler {
                         String textElementName = textElement.getTagName();
                         switch (textElementName) {
                             case "elision":
-                                TextFontColor textFontColor = new TextFontColor();
-                                textFontColor.setValue(XmlUtil.getElementText(textElement));
-                                textFontColor.setFont(FormattingFactory.newFont(textElement));
-                                textFontColor.setColor(textElement.getAttribute("color"));
-                                textFontColor.setTextDecoration(LyricFactory.newTextDecoration(textElement));
-                                textFontColor.setTextRotation(MathUtil.newBigDecimal(textElement.getAttribute("rotation")));
-                                textFontColor.setLetterSpacing(textElement.getAttribute("letter-spacing"));
-                                textFontColor.setLang(textElement.getAttribute("xml:lang"));
-                                textFontColor.setTextDirection(PlacementUtil.getLocation(textElement.getAttribute("dir")));
-                                lyricSyllable.setLyricElision(textFontColor);
+                                Elision elision = new Elision();
+                                elision.setValue(XmlUtil.getElementText(textElement));
+                                elision.setFont(FormattingFactory.newFont(textElement));
+                                elision.setColor(textElement.getAttribute("color"));
+                                elision.setSmufl(textElement.getAttribute("smufl"));
+                                lyricSyllable.setElision(elision);
                                 break;
                             case "syllabic":
                                 lyricSyllable.setSyllabic(PlacementUtil.getConnection(XmlUtil.getElementText(textElement)));

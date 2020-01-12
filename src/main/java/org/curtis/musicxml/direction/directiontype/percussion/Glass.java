@@ -12,6 +12,8 @@ public class Glass extends Percussion {
     @Enumerated(EnumType.STRING)
     @Column(name = "direction_type")
     private GlassType type;
+    @Column
+    private String smufl;
 
     public Glass() {
 
@@ -23,5 +25,13 @@ public class Glass extends Percussion {
 
     public void setType(GlassType type) {
         this.type = type;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note.notation.ornament;
 
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 
@@ -19,8 +18,8 @@ public class Tremolo extends Ornament {
     @Column(name = "tremolo_marks")
     private Integer tremoloMarks;
     @Enumerated(EnumType.STRING)
-    @Column(name = "connection_type")
-    private Connection type = Connection.SINGLE;
+    @Column(name = "tremolo_type")
+    private TremoloType tremoloType = TremoloType.SINGLE;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
@@ -40,12 +39,12 @@ public class Tremolo extends Ornament {
         this.tremoloMarks = tremoloMarks;
     }
 
-    public Connection getType() {
-        return type;
+    public TremoloType getTremoloType() {
+        return tremoloType;
     }
 
-    public void setType(Connection type) {
-        this.type = type;
+    public void setTremoloType(TremoloType tremoloType) {
+        this.tremoloType = tremoloType;
     }
 
     public PrintStyle getPrintStyle() {

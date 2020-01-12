@@ -26,6 +26,7 @@ import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.SlurType;
 import org.curtis.musicxml.note.notation.Tied;
+import org.curtis.musicxml.note.notation.TiedType;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.TrillMark;
@@ -162,8 +163,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 }
                             } else if (notation instanceof Tied) {
                                 Tied tied = (Tied)notation;
-                                Connection tiedType = tied.getType();
-                                if (tiedType == Connection.START && tiedFromNoteList.isEmpty()) {
+                                if (tied.getTiedType() == TiedType.START && tiedFromNoteList.isEmpty()) {
                                     tiedFromNoteList.add(note);
                                     startTieAdded = true;
                                 }
@@ -453,7 +453,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private void processTies(List<Note> tiedFromNoteList, List<Note> tiedToNoteList, Note currentNote) {
         if (!hasNoteMatch(tiedFromNoteList, tiedToNoteList)) tiedFromNoteList.stream().flatMap(fromNote -> fromNote.getTieds().stream()).forEach(tied -> tied.setUnterminated(true));
         tiedFromNoteList.clear();
-        if (tiedToNoteList.stream().flatMap(toNote -> toNote.getTieds().stream()).anyMatch(tied -> tied.getType() == Connection.CONTINUE || tied.getType() == Connection.START)) {
+        if (tiedToNoteList.stream().flatMap(toNote -> toNote.getTieds().stream()).anyMatch(tied -> tied.getTiedType() == TiedType.CONTINUE || tied.getTiedType() == TiedType.START)) {
             tiedFromNoteList.addAll(tiedToNoteList);
             tiedToNoteList.clear();
             tiedToNoteList.add(currentNote);

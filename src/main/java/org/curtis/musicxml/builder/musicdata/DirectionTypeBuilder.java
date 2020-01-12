@@ -92,15 +92,13 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildSegno(Segno segno) {
-        buildElementWithOptionalAttributes("segno", FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign()));
+        Map<String, String> segnoAttributes = new HashMap<>(FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign()));
+        segnoAttributes.put("smufl", segno.getSmufl());
+        buildElementWithOptionalAttributes("segno", segnoAttributes);
     }
 
     private void buildWords(Words words) {
         if (words.getFormattedText() != null) buildFormattedText("words", words.getFormattedText());
-    }
-
-    private void buildCoda(Coda coda) {
-        buildElementWithOptionalAttributes("coda", FormattingBuilder.buildPrintStyleAlign(coda.getPrintStyleAlign()));
     }
 
     private void buildWedge(Wedge wedge) {
@@ -282,7 +280,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         else if (percussion instanceof Pitched) buildPitched((Pitched)percussion);
         else if (percussion instanceof Membrane) buildMembrane((Membrane)percussion);
         else if (percussion instanceof Effect) buildEffect((Effect)percussion);
-        else if (percussion instanceof Timpani) buildTimpani((Timpani)percussion);
+        else if (percussion instanceof Timpani) buildTimpani();
         else if (percussion instanceof Beater) buildBeater((Beater)percussion);
         else if (percussion instanceof Stick) buildStick((Stick)percussion);
         else if (percussion instanceof StickLocation) buildStickLocation((StickLocation)percussion);
@@ -291,7 +289,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildGlass(Glass glass) {
-        buildElementWithValue("glass", BuilderUtil.enumValueWithSpaces(glass.getType()));
+        buildElementWithValueAndAttribute("glass", BuilderUtil.enumValueWithSpaces(glass.getType()), "smufl", glass.getSmufl());
     }
 
     private void buildMetal(Metal metal) {
@@ -310,7 +308,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildPitched(Pitched pitched) {
-        buildElementWithValue("pitched", BuilderUtil.enumValueWithSpaces(pitched.getType()));
+        buildElementWithValueAndAttribute("pitched", BuilderUtil.enumValueWithSpaces(pitched.getType()), "smufl", pitched.getSmufl());
     }
 
     private void buildMembrane(Membrane membrane) {
@@ -328,7 +326,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         buildElementWithValue("effect", BuilderUtil.enumValueWithSpaces(effect.getType()));
     }
 
-    private void buildTimpani(Timpani timpani) {
+    private void buildTimpani() {
         buildElement("timpani");
     }
 

@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @Table(name = "lyric_syllable")
 public class LyricSyllable extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "lyric_elision_id")
-    private TextFontColor lyricElision;
+    @JoinColumn(name = "elision_id")
+    private Elision elision;
     @Enumerated(EnumType.STRING)
     @Column
     private Connection syllabic;
@@ -29,12 +29,12 @@ public class LyricSyllable extends DatabaseItem {
 
     }
 
-    public TextFontColor getLyricElision() {
-        return lyricElision;
+    public Elision getElision() {
+        return elision;
     }
 
-    public void setLyricElision(TextFontColor lyricElision) {
-        this.lyricElision = lyricElision;
+    public void setElision(Elision elision) {
+        this.elision = elision;
     }
 
     public Connection getSyllabic() {
