@@ -1,11 +1,12 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.factory.AttributesFactory;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.score.GroupBarline;
 import org.curtis.musicxml.score.GroupBarlineType;
 import org.curtis.musicxml.score.GroupSymbol;
@@ -38,7 +39,7 @@ public class PartListHandler extends BaseHandler {
             switch (elementName) {
                 case "part-group":
                     PartGroup partGroup = new PartGroup();
-                    partGroup.setType(PlacementUtil.getConnection(partListSubelement.getAttribute("type")));
+                    partGroup.setType((Connection) FactoryUtil.enumValue(Connection.class, partListSubelement.getAttribute("type")));
                     partGroup.setEditorial(FormattingFactory.newEditorial(partListSubelement));
                     partGroup.setNumber(partListSubelement.getAttribute("number"));
                     partGroup.setGroupName(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-name")));

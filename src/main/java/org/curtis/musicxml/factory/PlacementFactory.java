@@ -3,7 +3,6 @@ package org.curtis.musicxml.factory;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.PlacementText;
@@ -36,7 +35,7 @@ public class PlacementFactory {
     public static Location newPlacementLocation(Element element) {
         if (element == null) return null;
 
-        return PlacementUtil.getLocation(element.getAttribute("placement"));
+        return (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("placement"));
     }
 
     public static PlacementText newPlacementText(Element element) {

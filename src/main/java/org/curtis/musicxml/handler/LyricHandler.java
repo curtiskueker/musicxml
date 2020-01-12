@@ -1,9 +1,11 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.LyricFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.lyric.Elision;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Humming;
@@ -69,7 +71,7 @@ public class LyricHandler extends BaseHandler {
                                 lyricSyllable.setElision(elision);
                                 break;
                             case "syllabic":
-                                lyricSyllable.setSyllabic(PlacementUtil.getConnection(XmlUtil.getElementText(textElement)));
+                                lyricSyllable.setSyllabic((Connection) FactoryUtil.enumValue(Connection.class, XmlUtil.getElementText(textElement)));
                                 break;
                             case "text":
                                 lyricSyllable.setText(LyricFactory.newTextData(textElement));
@@ -86,7 +88,7 @@ public class LyricHandler extends BaseHandler {
                 break;
             case "extend":
                 Extend extend = new Extend();
-                extend.setType(PlacementUtil.getConnection(lyricItemElement.getAttribute("type")));
+                extend.setType((Connection) FactoryUtil.enumValue(Connection.class, lyricItemElement.getAttribute("type")));
                 extend.setPrintStyle(FormattingFactory.newPrintStyle(lyricItemElement));
                 lyricItem = extend;
                 break;
@@ -115,7 +117,7 @@ public class LyricHandler extends BaseHandler {
         lyric.setEditorial(FormattingFactory.newEditorial(element));
         lyric.setNumber(element.getAttribute("number"));
         lyric.setName(element.getAttribute("name"));
-        lyric.setJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
+        lyric.setJustify((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
         lyric.setPosition(PlacementFactory.newPosition(element));
         lyric.setPlacement(PlacementFactory.newPlacementLocation(element));
         lyric.setColor(element.getAttribute("color"));

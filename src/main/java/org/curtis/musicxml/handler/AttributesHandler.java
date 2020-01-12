@@ -17,10 +17,11 @@ import org.curtis.musicxml.attributes.measure.MeasureStyle;
 import org.curtis.musicxml.attributes.measure.MultipleRest;
 import org.curtis.musicxml.attributes.measure.Slash;
 import org.curtis.musicxml.attributes.time.Time;
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.factory.AttributesFactory;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.PartSymbol;
@@ -234,14 +235,14 @@ public class AttributesHandler extends MusicDataHandler {
                             case "measure-repeat":
                                 MeasureRepeat measureRepeat = new MeasureRepeat();
                                 measureRepeat.setValue(StringUtil.getInteger(XmlUtil.getElementText(measureStyleSubelement)));
-                                measureRepeat.setType(PlacementUtil.getConnection(measureStyleSubelement.getAttribute("type")));
+                                measureRepeat.setType((Connection) FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
                                 measureRepeat.setSlashes(StringUtil.getInteger(measureStyleSubelement.getAttribute("slashes")));
                                 measureStyle = measureRepeat;
                                 break;
                             case "beat-repeat":
                                 BeatRepeat beatRepeat = new BeatRepeat();
                                 beatRepeat.setSlashGroup(AttributesFactory.newSlashGroup(measureStyleSubelement));
-                                beatRepeat.setType(PlacementUtil.getConnection(measureStyleSubelement.getAttribute("type")));
+                                beatRepeat.setType((Connection) FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
                                 beatRepeat.setSlashes(StringUtil.getInteger(measureStyleSubelement.getAttribute("slashes")));
                                 beatRepeat.setUseDots(TypeUtil.getYesNo(measureStyleSubelement.getAttribute("use-dots")));
                                 measureStyle = beatRepeat;
@@ -249,7 +250,7 @@ public class AttributesHandler extends MusicDataHandler {
                             case "slash":
                                 Slash slash = new Slash();
                                 slash.setSlashGroup(AttributesFactory.newSlashGroup(measureStyleSubelement));
-                                slash.setType(PlacementUtil.getConnection(measureStyleSubelement.getAttribute("type")));
+                                slash.setType((Connection) FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
                                 slash.setUseDots(TypeUtil.getYesNo(measureStyleSubelement.getAttribute("use-dots")));
                                 slash.setUseStems(TypeUtil.getYesNo(measureStyleSubelement.getAttribute("use-stems")));
                                 measureStyle = slash;

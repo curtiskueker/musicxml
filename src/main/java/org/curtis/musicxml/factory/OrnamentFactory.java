@@ -1,6 +1,7 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.handler.util.PlacementUtil;
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
@@ -85,8 +86,8 @@ public class OrnamentFactory {
 
         AbstractMordent abstractMordent = (AbstractMordent)placedTrillSound;
         abstractMordent.setLongMordent(TypeUtil.getYesNo(element.getAttribute("long")));
-        abstractMordent.setApproach(PlacementUtil.getLocation(element.getAttribute("approach")));
-        abstractMordent.setDeparture(PlacementUtil.getLocation(element.getAttribute("departure")));
+        abstractMordent.setApproach((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("approach")));
+        abstractMordent.setDeparture((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("departure")));
 
         return abstractMordent;
     }
@@ -125,7 +126,7 @@ public class OrnamentFactory {
         if(element == null) return null;
 
         WavyLine wavyLine = new WavyLine();
-        wavyLine.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+        wavyLine.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         wavyLine.setNumber(StringUtil.getInteger(element.getAttribute("number")));
         wavyLine.setPosition(PlacementFactory.newPosition(element));
         wavyLine.setPlacement(PlacementFactory.newPlacementLocation(element));

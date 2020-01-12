@@ -1,7 +1,9 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.attributes.Image;
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.SoundMidi;
@@ -61,7 +63,6 @@ import org.curtis.musicxml.direction.directiontype.percussion.Timpani;
 import org.curtis.musicxml.direction.directiontype.percussion.TipDirection;
 import org.curtis.musicxml.direction.directiontype.percussion.Wood;
 import org.curtis.musicxml.direction.directiontype.percussion.WoodType;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -113,7 +114,7 @@ public class DirectionFactory {
                 return NotationFactory.newDynamics(element);
             case "dashes":
                 Dashes dashes = new Dashes();
-                dashes.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+                dashes.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 dashes.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 dashes.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
                 dashes.setPosition(PlacementFactory.newPosition(element));
@@ -121,7 +122,7 @@ public class DirectionFactory {
                 return dashes;
             case "bracket":
                 Bracket bracket = new Bracket();
-                bracket.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+                bracket.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 bracket.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 bracket.setLineEnd((LineEnd)FactoryUtil.enumValue(LineEnd.class, element.getAttribute("line-end")));
                 bracket.setEndLength(MathUtil.newBigDecimal(element.getAttribute("end-length")));
@@ -132,7 +133,7 @@ public class DirectionFactory {
                 return bracket;
             case "pedal":
                 Pedal pedal = new Pedal();
-                pedal.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+                pedal.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 pedal.setLine(TypeUtil.getYesNo(element.getAttribute("line")));
                 pedal.setSign(TypeUtil.getYesNo(element.getAttribute("sign")));
                 pedal.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
@@ -145,7 +146,7 @@ public class DirectionFactory {
                 else if(metronomeNoteElement != null) metronome = newNoteMetronome(element);
                 else return null;
                 metronome.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
-                metronome.setJustify(PlacementUtil.getLocation(element.getAttribute("justify")));
+                metronome.setJustify((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
                 metronome.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
                 return metronome;
             case "octave-shift":
@@ -202,7 +203,7 @@ public class DirectionFactory {
             case "principal-voice":
                 PrincipalVoice principalVoice = new PrincipalVoice();
                 principalVoice.setPrincipalVoice(XmlUtil.getElementText(element));
-                principalVoice.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+                principalVoice.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 principalVoice.setSymbol((PrincipalVoiceSymbol)FactoryUtil.enumValue(PrincipalVoiceSymbol.class, element.getAttribute("symbol")));
                 principalVoice.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return principalVoice;
@@ -294,7 +295,7 @@ public class DirectionFactory {
                             case "metronome-tuplet":
                                 MetronomeTuplet metronomeTuplet = new MetronomeTuplet();
                                 metronomeTuplet.setTimeModification(NoteFactory.newTimeModification(metronomeNoteElement));
-                                metronomeTuplet.setType(PlacementUtil.getConnection(metronomeNoteElement.getAttribute("type")));
+                                metronomeTuplet.setType((Connection) FactoryUtil.enumValue(Connection.class, metronomeNoteElement.getAttribute("type")));
                                 metronomeTuplet.setBracket(TypeUtil.getYesNo(metronomeNoteElement.getAttribute("bracket")));
                                 metronomeTuplet.setShowNumber(NotationFactory.newShowTuplet(metronomeNoteElement.getAttribute("show-number")));
                                 metronomeNote.setMetronomeTuplet(metronomeTuplet);
@@ -467,8 +468,8 @@ public class DirectionFactory {
         image.setSource(element.getAttribute("source"));
         image.setType(element.getAttribute("type"));
         image.setPosition(PlacementFactory.newPosition(element));
-        image.setHalign(PlacementUtil.getLocation(element.getAttribute("halign")));
-        image.setValignImage(PlacementUtil.getLocation(element.getAttribute("valign")));
+        image.setHalign((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("halign")));
+        image.setValignImage((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("valign")));
 
         return image;
     }

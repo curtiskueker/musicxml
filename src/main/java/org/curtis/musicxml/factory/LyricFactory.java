@@ -1,7 +1,8 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.TextDecoration;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.TextData;
 import org.curtis.util.MathUtil;
@@ -25,7 +26,7 @@ public class LyricFactory {
         textData.setTextRotation(MathUtil.newBigDecimal(element.getAttribute("rotation")));
         textData.setLetterSpacing(element.getAttribute("letter-spacing"));
         textData.setLang(element.getAttribute("xml:lang"));
-        textData.setTextDirection(PlacementUtil.getLocation(element.getAttribute("dir")));
+        textData.setTextDirection((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("dir")));
 
         return textData;
     }
@@ -51,7 +52,7 @@ public class LyricFactory {
         if(element == null) return null;
 
         Extend extend = new Extend();
-        extend.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+        extend.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         extend.setPrintStyle(FormattingFactory.newPrintStyle(element));
 
         return extend;

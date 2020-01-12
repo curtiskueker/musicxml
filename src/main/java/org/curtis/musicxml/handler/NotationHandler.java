@@ -1,11 +1,12 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.notation.Arpeggiate;
 import org.curtis.musicxml.note.notation.Glissando;
@@ -47,20 +48,20 @@ public class NotationHandler extends BaseHandler {
                     tied.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     tied.setPosition(PlacementFactory.newPosition(notationsSubelement));
                     tied.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
-                    tied.setOrientation(PlacementUtil.getLocation(notationsSubelement.getAttribute("orientation")));
+                    tied.setOrientation((Location)FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("orientation")));
                     tied.setBezier(NotationFactory.newBezier(notationsSubelement));
                     tied.setColor(notationsSubelement.getAttribute("color"));
                     notation = tied;
                     break;
                 case "slur":
                     Slur slur = new Slur();
-                    slur.setConnectionType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
+                    slur.setConnectionType((Connection) FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
                     slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slur.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slur.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     slur.setPosition(PlacementFactory.newPosition(notationsSubelement));
                     slur.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
-                    slur.setOrientation(PlacementUtil.getLocation(notationsSubelement.getAttribute("orientation")));
+                    slur.setOrientation((Location)FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("orientation")));
                     slur.setBezier(NotationFactory.newBezier(notationsSubelement));
                     slur.setColor(notationsSubelement.getAttribute("color"));
                     notation = slur;
@@ -71,7 +72,7 @@ public class NotationHandler extends BaseHandler {
                 case "glissando":
                     Glissando glissando = new Glissando();
                     glissando.setValue(XmlUtil.getElementText(notationsSubelement));
-                    glissando.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
+                    glissando.setType((Connection) FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
                     glissando.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     glissando.setLineType(NotationFactory.newLineType(notationsSubelement));
                     glissando.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
@@ -81,7 +82,7 @@ public class NotationHandler extends BaseHandler {
                 case "slide":
                     Slide slide = new Slide();
                     slide.setValue(XmlUtil.getElementText(notationsSubelement));
-                    slide.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
+                    slide.setType((Connection) FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
                     slide.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slide.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slide.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
@@ -113,7 +114,7 @@ public class NotationHandler extends BaseHandler {
                 case "arpeggiate":
                     Arpeggiate arpeggiate = new Arpeggiate();
                     arpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
-                    arpeggiate.setDirection(PlacementUtil.getLocation(notationsSubelement.getAttribute("direction")));
+                    arpeggiate.setDirection((Location)FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("direction")));
                     arpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
                     arpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
                     arpeggiate.setColor(notationsSubelement.getAttribute("color"));
@@ -121,7 +122,7 @@ public class NotationHandler extends BaseHandler {
                     break;
                 case "non-arpeggiate":
                     NonArpeggiate nonArpeggiate = new NonArpeggiate();
-                    nonArpeggiate.setType(PlacementUtil.getLocation(notationsSubelement.getAttribute("type")));
+                    nonArpeggiate.setType((Location)FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("type")));
                     nonArpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     nonArpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
                     nonArpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
@@ -134,7 +135,7 @@ public class NotationHandler extends BaseHandler {
                 case "other-notation":
                     OtherNotation otherNotation = new OtherNotation();
                     otherNotation.setValue(XmlUtil.getElementText(notationsSubelement));
-                    otherNotation.setType(PlacementUtil.getConnection(notationsSubelement.getAttribute("type")));
+                    otherNotation.setType((Connection) FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
                     otherNotation.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     otherNotation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
                     otherNotation.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.handler.util.PlacementUtil;
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.Fingering;
@@ -77,7 +77,7 @@ public class TechnicalFactory {
 
     private static void populateHammerOnPullOff(HammerOnPullOff hammerOnPullOff, Element element) {
         hammerOnPullOff.setValue(XmlUtil.getElementText(element));
-        hammerOnPullOff.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+        hammerOnPullOff.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         String numberLevel = element.getAttribute("number");
         if (StringUtil.isNotEmpty(numberLevel)) hammerOnPullOff.setNumber(StringUtil.getInteger(numberLevel));
         hammerOnPullOff.setPrintStyle(FormattingFactory.newPrintStyle(element));

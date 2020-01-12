@@ -1,10 +1,10 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.LineLength;
@@ -44,7 +44,7 @@ public class NotationFactory {
         tuplet.setTupletActual(tupletActual);
         TupletPortion tupletNormal = newTupletPortion(XmlUtil.getChildElement(element, "tuplet-normal"));
         tuplet.setTupletNormal(tupletNormal);
-        tuplet.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+        tuplet.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         tuplet.setNumber(StringUtil.getInteger(element.getAttribute("number")));
         tuplet.setBracket(TypeUtil.getYesNo(element.getAttribute("bracket")));
         tuplet.setShowNumber(newShowTuplet(element.getAttribute("show-number")));

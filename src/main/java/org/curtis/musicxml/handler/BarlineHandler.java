@@ -7,10 +7,12 @@ import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.barline.RepeatDirection;
 import org.curtis.musicxml.barline.Winged;
+import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -28,7 +30,7 @@ public class BarlineHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Barline barline = new Barline();
         barline.setEditorial(FormattingFactory.newEditorial(element));
-        barline.setLocation(PlacementUtil.getLocation(element.getAttribute("location")));
+        barline.setLocation((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("location")));
         barline.setSegno(element.getAttribute("segno"));
         barline.setCoda(element.getAttribute("coda"));
         barline.setDivisions(MathUtil.newBigDecimal(element.getAttribute("divisions")));
@@ -97,7 +99,7 @@ public class BarlineHandler extends MusicDataHandler {
                     Ending ending = new Ending();
                     ending.setValue(XmlUtil.getElementText(barlineSubelement));
                     ending.setNumber(barlineSubelement.getAttribute("number"));
-                    ending.setType(PlacementUtil.getConnection(barlineSubelement.getAttribute("type")));
+                    ending.setType((Connection) FactoryUtil.enumValue(Connection.class, barlineSubelement.getAttribute("type")));
                     ending.setPrintObject(FormattingFactory.getPrintObject(barlineSubelement));
                     ending.setPrintStyle(FormattingFactory.newPrintStyle(barlineSubelement));
                     ending.setEndLength(MathUtil.newBigDecimal(barlineSubelement.getAttribute("end-length")));

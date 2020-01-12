@@ -1,8 +1,9 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.direction.Feature;
 import org.curtis.musicxml.direction.Grouping;
-import org.curtis.musicxml.handler.util.PlacementUtil;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -25,7 +26,7 @@ public class GroupingHandler extends MusicDataHandler {
             feature.setType(featureElement.getAttribute("type"));
             grouping.getFeatures().add(feature);
         }
-        grouping.setType(PlacementUtil.getConnection(element.getAttribute("type")));
+        grouping.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         String groupingNumber = element.getAttribute("number");
         if (StringUtil.isNotEmpty(groupingNumber)) grouping.setNumber(groupingNumber);
         grouping.setNumberOf(element.getAttribute("number-of"));

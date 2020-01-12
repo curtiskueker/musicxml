@@ -23,7 +23,6 @@ import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.common.TextFormatting;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.layout.PrintObjectStyleAlign;
 import org.curtis.util.MathUtil;
@@ -58,7 +57,7 @@ public class FormattingFactory {
     public static TextFormatting newTextFormatting(Element element) {
         if (element == null) return null;
 
-        Location justify = PlacementUtil.getLocation(element.getAttribute("justify"));
+        Location justify = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
         PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
         TextDecoration textDecoration = LyricFactory.newTextDecoration(element);
         BigDecimal rotation = MathUtil.newBigDecimal(element.getAttribute("rotation"));
@@ -66,7 +65,7 @@ public class FormattingFactory {
         String lineHeight = element.getAttribute("line-height");
         String lang = element.getAttribute("xml:lang");
         String space = element.getAttribute("xml:space");
-        Location dir = PlacementUtil.getLocation(element.getAttribute("dir"));
+        Location dir = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
         EnclosureShape enclosureShape = newEnclosureShape(element);
 
         if (justify == null && printStyleAlign == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
@@ -116,14 +115,14 @@ public class FormattingFactory {
         return text;
     }
 
-    public static PrintStyleAlign newPrintStyleAlign(Element printStyleAlignElement) {
-        if(printStyleAlignElement == null) {
+    public static PrintStyleAlign newPrintStyleAlign(Element element) {
+        if(element == null) {
             return null;
         }
 
-        Location halign = PlacementUtil.getLocation(printStyleAlignElement.getAttribute("halign"));
-        Location valign = PlacementUtil.getLocation(printStyleAlignElement.getAttribute("valign"));
-        PrintStyle printStyle = newPrintStyle(printStyleAlignElement);
+        Location halign = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("halign"));
+        Location valign = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("valign"));
+        PrintStyle printStyle = newPrintStyle(element);
 
         if (halign == null && valign == null && printStyle == null) return null;
 

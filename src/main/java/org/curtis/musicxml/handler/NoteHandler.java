@@ -1,12 +1,12 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
@@ -95,7 +95,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "tie":
                     Tie tie = new Tie();
-                    tie.setType(PlacementUtil.getConnection(noteSubelement.getAttribute("type")));
+                    tie.setType((Connection) FactoryUtil.enumValue(Connection.class, noteSubelement.getAttribute("type")));
                     tie.setTimeOnly(noteSubelement.getAttribute("time-only"));
                     List<Tie> ties = note.getTies();
                     ties.add(tie);

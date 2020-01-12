@@ -1,10 +1,10 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
-import org.curtis.musicxml.handler.util.PlacementUtil;
 import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.articulation.Accent;
@@ -62,7 +62,7 @@ public class ArticulationHandler extends BaseHandler {
                     StrongAccent strongAccent = new StrongAccent();
                     PrintPlacement strongAccentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     strongAccent.setPrintPlacement(strongAccentPlacement);
-                    strongAccent.setType(PlacementUtil.getLocation(articulationsSubelement.getAttribute("type")));
+                    strongAccent.setType((Location)FactoryUtil.enumValue(Location.class, articulationsSubelement.getAttribute("type")));
                     articulation = strongAccent;
                     break;
                 case "staccato":
