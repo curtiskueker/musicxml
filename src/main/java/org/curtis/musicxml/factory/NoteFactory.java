@@ -1,6 +1,6 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.BeamType;

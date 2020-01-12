@@ -3,7 +3,7 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.factory.LinkFactory;
 import org.curtis.musicxml.factory.NoteFactory;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;

@@ -1,9 +1,6 @@
-package org.curtis.musicxml.handler.util;
+package org.curtis.musicxml.util;
 
-import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
-
-import java.math.BigDecimal;
 
 public class TypeUtil {
 

@@ -7,7 +7,7 @@ import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;

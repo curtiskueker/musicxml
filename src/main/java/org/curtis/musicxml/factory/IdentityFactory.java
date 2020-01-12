@@ -1,6 +1,6 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.Miscellaneous;
 import org.curtis.musicxml.identity.MiscellaneousField;

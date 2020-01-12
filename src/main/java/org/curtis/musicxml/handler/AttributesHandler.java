@@ -22,7 +22,7 @@ import org.curtis.musicxml.factory.AttributesFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.PartSymbol;
 import org.curtis.util.MathUtil;

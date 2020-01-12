@@ -63,7 +63,7 @@ import org.curtis.musicxml.direction.directiontype.percussion.Timpani;
 import org.curtis.musicxml.direction.directiontype.percussion.TipDirection;
 import org.curtis.musicxml.direction.directiontype.percussion.Wood;
 import org.curtis.musicxml.direction.directiontype.percussion.WoodType;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;

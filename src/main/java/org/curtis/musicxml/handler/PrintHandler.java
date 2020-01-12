@@ -5,7 +5,7 @@ import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;

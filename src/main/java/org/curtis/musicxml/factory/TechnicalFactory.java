@@ -1,7 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.Fingering;
 import org.curtis.musicxml.note.notation.technical.Fret;

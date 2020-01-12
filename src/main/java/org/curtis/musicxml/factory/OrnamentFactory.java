@@ -2,7 +2,7 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.DelayedTurn;

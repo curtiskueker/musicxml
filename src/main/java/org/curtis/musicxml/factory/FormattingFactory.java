@@ -23,7 +23,7 @@ import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.common.TextFormatting;
-import org.curtis.musicxml.handler.util.TypeUtil;
+import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.layout.PrintObjectStyleAlign;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
