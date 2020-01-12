@@ -3,7 +3,6 @@ package org.curtis.musicxml.factory;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.handler.util.TypeUtil;
 import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.util.MathUtil;
@@ -79,8 +78,8 @@ public class PlacementFactory {
     private static boolean validPositionValue(BigDecimal positionValue, String fieldName) {
         if (positionValue == null) return true;
 
-        if (MathUtil.largerThan(positionValue.abs(), TypeUtil.MAXIMUM_POSITION_VALUE)) {
-            System.err.println("Warning: " + fieldName + " value " + positionValue + " exceeds maximum allowed value " + TypeUtil.MAXIMUM_POSITION_VALUE + ".  Setting value to null.");
+        if (MathUtil.largerThan(positionValue.abs(), FactoryUtil.MAXIMUM_POSITION_VALUE)) {
+            System.err.println("Warning: " + fieldName + " value " + positionValue + " exceeds maximum allowed value " + FactoryUtil.MAXIMUM_POSITION_VALUE + ".  Setting value to null.");
             return false;
         }
 
