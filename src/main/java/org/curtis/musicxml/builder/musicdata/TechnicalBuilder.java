@@ -3,6 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.note.PlacementText;
+import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.notation.technical.Arrow;
 import org.curtis.musicxml.note.notation.technical.Bend;
 import org.curtis.musicxml.note.notation.technical.BendSound;
@@ -15,6 +16,8 @@ import org.curtis.musicxml.note.notation.technical.Fret;
 import org.curtis.musicxml.note.notation.technical.HammerOn;
 import org.curtis.musicxml.note.notation.technical.HammerOnPullOff;
 import org.curtis.musicxml.note.notation.technical.Handbell;
+import org.curtis.musicxml.note.notation.technical.HarmonClosed;
+import org.curtis.musicxml.note.notation.technical.HarmonMute;
 import org.curtis.musicxml.note.notation.technical.Harmonic;
 import org.curtis.musicxml.note.notation.technical.HarmonicPitch;
 import org.curtis.musicxml.note.notation.technical.HarmonicType;
@@ -176,7 +179,11 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildTap(Tap tap) {
-        buildPlacementText("tap", tap.getPlacementText());
+        PlacementText placementText = tap.getPlacementText();
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
+        attributes.put("hand", BuilderUtil.enumValue(tap.getTapHand()));
+        buildElementWithValueAndAttributes("tap", placementText.getValue(), attributes);
     }
 
     private void buildHeelToe(HeelToe heelToe) {
@@ -217,6 +224,19 @@ public class TechnicalBuilder extends MusicDataBuilder {
         attributes.putAll(FormattingBuilder.buildPrintStyle(handbell.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(handbell.getPlacement()));
         buildElementWithValueAndAttributes("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), attributes);
+    }
+
+    private void buildHarmonMute(HarmonMute harmonMute) {
+        buildOpenElement("harmon-mute");
+        PrintPlacement printPlacement = harmonMute.getPrintPlacement();
+        if (printPlacement != null) {
+            buildAttributes(FormattingBuilder.buildPrintStyle(printPlacement.getPrintStyle()));
+            buildAttribute("placement", printPlacement.getPlacement());
+        }
+        buildCloseElement();
+        HarmonClosed harmonClosed = harmonMute.getHarmonClosed();
+        buildElementWithValueAndAttribute("harmon-closed", BuilderUtil.enumValue(harmonClosed.getValue()), "location", BuilderUtil.enumValue(harmonClosed.getLocation()));
+        buildEndElement("harmon-mute");
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {

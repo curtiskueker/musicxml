@@ -12,6 +12,7 @@ import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
 import org.curtis.musicxml.note.notation.articulation.BreathMarkType;
 import org.curtis.musicxml.note.notation.articulation.Caesura;
+import org.curtis.musicxml.note.notation.articulation.CaesuraValue;
 import org.curtis.musicxml.note.notation.articulation.DetachedLegato;
 import org.curtis.musicxml.note.notation.articulation.Doit;
 import org.curtis.musicxml.note.notation.articulation.Falloff;
@@ -25,7 +26,6 @@ import org.curtis.musicxml.note.notation.articulation.Stress;
 import org.curtis.musicxml.note.notation.articulation.StrongAccent;
 import org.curtis.musicxml.note.notation.articulation.Tenuto;
 import org.curtis.musicxml.note.notation.articulation.Unstress;
-import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -125,20 +125,18 @@ public class ArticulationHandler extends BaseHandler {
                     break;
                 case "caesura":
                     Caesura caesura = new Caesura();
-                    PrintPlacement caesuraPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    caesura.setPrintPlacement(caesuraPlacement);
+                    caesura.setCaesuraValue((CaesuraValue)FactoryUtil.enumValue(CaesuraValue.class, XmlUtil.getElementText(articulationsSubelement)));
+                    caesura.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
                     articulation = caesura;
                     break;
                 case "stress":
                     Stress stress = new Stress();
-                    PrintPlacement stressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    stress.setPrintPlacement(stressPlacement);
+                    stress.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
                     articulation = stress;
                     break;
                 case "unstress":
                     Unstress unstress = new Unstress();
-                    PrintPlacement unstressPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    unstress.setPrintPlacement(unstressPlacement);
+                    unstress.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
                     articulation = unstress;
                     break;
                 case "other-articulation":

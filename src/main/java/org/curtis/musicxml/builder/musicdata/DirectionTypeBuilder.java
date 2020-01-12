@@ -23,6 +23,7 @@ import org.curtis.musicxml.direction.directiontype.PrincipalVoice;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Scordatura;
 import org.curtis.musicxml.direction.directiontype.Segno;
+import org.curtis.musicxml.direction.directiontype.StaffDivide;
 import org.curtis.musicxml.direction.directiontype.StringMute;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.Words;
@@ -82,6 +83,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         else if (directionType instanceof PrincipalVoice) buildPrincipalVoice((PrincipalVoice) directionType);
         else if (directionType instanceof AccordionRegistration) buildAccordionRegistration((AccordionRegistration) directionType);
         else if (directionType instanceof Percussion) buildPercussion((Percussion) directionType);
+        else if (directionType instanceof StaffDivide) buildStaffDivide((StaffDivide) directionType);
         else if (directionType instanceof OtherDirection) buildOtherDirection((OtherDirection) directionType);
 
         return stringBuilder;
@@ -139,7 +141,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildPedal(Pedal pedal) {
         Map<String, String> attributes = new HashMap<>();
-        attributes.put("type", BuilderUtil.enumValue(pedal.getType()));
+        attributes.put("type", BuilderUtil.enumValue(pedal.getPedalType()));
         attributes.put("line", BuilderUtil.yesOrNo(pedal.getLine()));
         attributes.put("sign", BuilderUtil.yesOrNo(pedal.getSign()));
         attributes.putAll(FormattingBuilder.buildPrintStyleAlign(pedal.getPrintStyleAlign()));
@@ -349,6 +351,13 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildOtherPercussion(OtherPercussion otherPercussion) {
         buildElementWithValue("other-percussion", otherPercussion.getValue());
+    }
+
+    private void buildStaffDivide(StaffDivide staffDivide) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("type", BuilderUtil.enumValue(staffDivide.getStaffDivideSymbol()));
+        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(staffDivide.getPrintStyleAlign()));
+        buildElementWithAttributes("staff-divide", attributes);
     }
 
     private void buildOtherDirection(OtherDirection otherDirection) {

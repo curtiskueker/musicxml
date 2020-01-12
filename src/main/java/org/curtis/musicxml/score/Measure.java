@@ -24,7 +24,9 @@ public class Measure extends OrderedItem {
     @Column(name = "measure_number")
     private String number;
     @Column
+    private String text;
     @Type(type="yes_no")
+    @Column
     private Boolean implicit;
     @Column(name = "non_controlling")
     @Type(type="yes_no")
@@ -49,6 +51,14 @@ public class Measure extends OrderedItem {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Boolean getImplicit() {

@@ -31,6 +31,10 @@ public class Appearance extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "appearance_id", nullable = false)
+    private List<Glyph> glyphs = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "appearance_id", nullable = false)
     private List<OtherAppearance> otherAppearances = new ArrayList<>();
 
     public Appearance() {
@@ -59,6 +63,14 @@ public class Appearance extends DatabaseItem {
 
     public void setDistances(List<Distance> distances) {
         this.distances = distances;
+    }
+
+    public List<Glyph> getGlyphs() {
+        return glyphs;
+    }
+
+    public void setGlyphs(List<Glyph> glyphs) {
+        this.glyphs = glyphs;
     }
 
     public List<OtherAppearance> getOtherAppearances() {

@@ -90,6 +90,7 @@
         <class>org.curtis.musicxml.direction.directiontype.Rehearsal</class>
         <class>org.curtis.musicxml.direction.directiontype.Scordatura</class>
         <class>org.curtis.musicxml.direction.directiontype.Segno</class>
+        <class>org.curtis.musicxml.direction.directiontype.StaffDivide</class>
         <class>org.curtis.musicxml.direction.directiontype.StringMute</class>
         <class>org.curtis.musicxml.direction.directiontype.Wedge</class>
         <class>org.curtis.musicxml.direction.directiontype.Words</class>
@@ -251,6 +252,7 @@
         <class>org.curtis.musicxml.note.notation.technical.HammerOn</class>
         <class>org.curtis.musicxml.note.notation.technical.Handbell</class>
         <class>org.curtis.musicxml.note.notation.technical.Harmonic</class>
+        <class>org.curtis.musicxml.note.notation.technical.HarmonMute</class>
         <class>org.curtis.musicxml.note.notation.technical.Heel</class>
         <class>org.curtis.musicxml.note.notation.technical.Hole</class>
         <class>org.curtis.musicxml.note.notation.technical.OpenString</class>

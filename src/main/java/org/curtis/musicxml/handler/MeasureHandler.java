@@ -26,6 +26,7 @@ public class MeasureHandler extends BaseHandler {
         if (DEBUG) System.err.println("Measure " + measureNumber);
         Measure measure = new Measure();
         measure.setNumber(measureNumber);
+        measure.setText(element.getAttribute("text"));
         measure.setImplicit(TypeUtil.getYesNo(element.getAttribute("implicit")));
         measure.setNonControlling(TypeUtil.getYesNo(element.getAttribute("non-controlling")));
         measure.setWidth(MathUtil.newBigDecimal(element.getAttribute("width")));

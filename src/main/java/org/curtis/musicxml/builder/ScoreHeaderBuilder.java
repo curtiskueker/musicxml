@@ -14,6 +14,7 @@ import org.curtis.musicxml.identity.encoding.Software;
 import org.curtis.musicxml.identity.encoding.Supports;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Distance;
+import org.curtis.musicxml.layout.Glyph;
 import org.curtis.musicxml.layout.LineWidth;
 import org.curtis.musicxml.layout.NoteSize;
 import org.curtis.musicxml.layout.OtherAppearance;
@@ -159,6 +160,9 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             }
             for (Distance distance : appearance.getDistances()) {
                 buildElementWithValueAndAttribute("distance", distance.getValue(), "type", BuilderUtil.requiredValue(distance.getType()));
+            }
+            for (Glyph glyph : appearance.getGlyphs()) {
+                buildElementWithValueAndAttribute("glyph", glyph.getValue(), "type", BuilderUtil.requiredValue(glyph.getType()));
             }
             for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", BuilderUtil.requiredValue(otherAppearance.getType()));
             buildEndElement("appearance");

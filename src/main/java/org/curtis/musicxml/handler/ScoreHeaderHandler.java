@@ -9,6 +9,7 @@ import org.curtis.musicxml.factory.LinkFactory;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Distance;
+import org.curtis.musicxml.layout.Glyph;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.LineWidth;
 import org.curtis.musicxml.layout.NoteSize;
@@ -108,6 +109,13 @@ public class ScoreHeaderHandler extends BaseHandler {
                                             distance.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
                                             distance.setType(appearanceSubelement.getAttribute("type"));
                                             distances.add(distance);
+                                            break;
+                                        case "glyph":
+                                            List<Glyph> glyphs = appearance.getGlyphs();
+                                            Glyph glyph = new Glyph();
+                                            glyph.setValue(XmlUtil.getElementText(appearanceSubelement));
+                                            glyph.setType(appearanceSubelement.getAttribute("type"));
+                                            glyphs.add(glyph);
                                             break;
                                         case "other-appearance":
                                             List<OtherAppearance> otherAppearances = appearance.getOtherAppearances();

@@ -1,8 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.PrintStyleAlign;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,47 +12,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("pedal")
-public class Pedal extends DirectionType {
+@DiscriminatorValue("staff divide")
+public class StaffDivide extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column(name = "pedal_type")
-    private PedalType pedalType;
-    @Column
-    @Type(type="yes_no")
-    private Boolean line;
-    @Column
-    @Type(type="yes_no")
-    private Boolean sign;
+    @Column(name = "staff_divide_symbol")
+    private StaffDivideSymbol staffDivideSymbol;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
 
-    public Pedal() {
+    public StaffDivide() {
 
     }
 
-    public PedalType getPedalType() {
-        return pedalType;
+    public StaffDivideSymbol getStaffDivideSymbol() {
+        return staffDivideSymbol;
     }
 
-    public void setPedalType(PedalType pedalType) {
-        this.pedalType = pedalType;
-    }
-
-    public Boolean getLine() {
-        return line;
-    }
-
-    public void setLine(Boolean line) {
-        this.line = line;
-    }
-
-    public Boolean getSign() {
-        return sign;
-    }
-
-    public void setSign(Boolean sign) {
-        this.sign = sign;
+    public void setStaffDivideSymbol(StaffDivideSymbol staffDivideSymbol) {
+        this.staffDivideSymbol = staffDivideSymbol;
     }
 
     public PrintStyleAlign getPrintStyleAlign() {

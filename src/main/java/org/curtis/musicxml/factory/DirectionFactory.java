@@ -22,11 +22,14 @@ import org.curtis.musicxml.direction.directiontype.OctaveShiftType;
 import org.curtis.musicxml.direction.directiontype.OtherDirection;
 import org.curtis.musicxml.direction.directiontype.Pedal;
 import org.curtis.musicxml.direction.directiontype.PedalTuning;
+import org.curtis.musicxml.direction.directiontype.PedalType;
 import org.curtis.musicxml.direction.directiontype.PrincipalVoice;
 import org.curtis.musicxml.direction.directiontype.PrincipalVoiceSymbol;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Scordatura;
 import org.curtis.musicxml.direction.directiontype.Segno;
+import org.curtis.musicxml.direction.directiontype.StaffDivide;
+import org.curtis.musicxml.direction.directiontype.StaffDivideSymbol;
 import org.curtis.musicxml.direction.directiontype.StringMute;
 import org.curtis.musicxml.direction.directiontype.StringMuteDirection;
 import org.curtis.musicxml.direction.directiontype.Wedge;
@@ -133,7 +136,7 @@ public class DirectionFactory {
                 return bracket;
             case "pedal":
                 Pedal pedal = new Pedal();
-                pedal.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+                pedal.setPedalType((PedalType) FactoryUtil.enumValue(PedalType.class, element.getAttribute("type")));
                 pedal.setLine(TypeUtil.getYesNo(element.getAttribute("line")));
                 pedal.setSign(TypeUtil.getYesNo(element.getAttribute("sign")));
                 pedal.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
@@ -218,6 +221,11 @@ public class DirectionFactory {
                 List<Element> percussionElements = XmlUtil.getChildElements(element);
                 if (percussionElements.isEmpty()) return null;
                 return newPercussion(percussionElements.get(0));
+            case "staff-divide":
+                StaffDivide staffDivide = new StaffDivide();
+                staffDivide.setStaffDivideSymbol((StaffDivideSymbol)FactoryUtil.enumValue(StaffDivideSymbol.class, element.getAttribute("type")));
+                staffDivide.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                return staffDivide;
             case "other-direction":
                 OtherDirection otherDirection = new OtherDirection();
                 otherDirection.setValue(XmlUtil.getElementText(element));

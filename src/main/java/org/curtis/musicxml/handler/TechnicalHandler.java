@@ -16,6 +16,10 @@ import org.curtis.musicxml.note.notation.technical.DownBow;
 import org.curtis.musicxml.note.notation.technical.Fingernails;
 import org.curtis.musicxml.note.notation.technical.Handbell;
 import org.curtis.musicxml.note.notation.technical.HandbellType;
+import org.curtis.musicxml.note.notation.technical.HarmonClosed;
+import org.curtis.musicxml.note.notation.technical.HarmonClosedLocation;
+import org.curtis.musicxml.note.notation.technical.HarmonClosedValue;
+import org.curtis.musicxml.note.notation.technical.HarmonMute;
 import org.curtis.musicxml.note.notation.technical.Harmonic;
 import org.curtis.musicxml.note.notation.technical.HarmonicPitch;
 import org.curtis.musicxml.note.notation.technical.HarmonicType;
@@ -28,6 +32,7 @@ import org.curtis.musicxml.note.notation.technical.Pluck;
 import org.curtis.musicxml.note.notation.technical.SnapPizzicato;
 import org.curtis.musicxml.note.notation.technical.Stopped;
 import org.curtis.musicxml.note.notation.technical.Tap;
+import org.curtis.musicxml.note.notation.technical.TapHand;
 import org.curtis.musicxml.note.notation.technical.Technical;
 import org.curtis.musicxml.note.notation.technical.ThumbPosition;
 import org.curtis.musicxml.note.notation.technical.TripleTongue;
@@ -153,17 +158,7 @@ public class TechnicalHandler extends BaseHandler {
                     Bend bend = new Bend();
                     bend.setBendAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(technicalElement, "bend-alter")));
                     List<Element> bendElements = XmlUtil.getChildElements(technicalElement);
-                    for (Element bendElement : bendElements) {
-                        String bendElementName = bendElement.getTagName();
-                        switch (bendElementName) {
-                            case "pre-bend":
-                                bend.setBendType(BendType.PRE_BEND);
-                                break;
-                            case "release":
-                                bend.setBendType(BendType.RELEASE);
-                                break;
-                        }
-                    }
+                    for (Element bendElement : bendElements) bend.setBendType((BendType)FactoryUtil.enumValue(BendType.class, bendElement.getTagName()));
                     bend.setWithBar(PlacementFactory.newPlacementText(technicalElement));
                     bend.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     bend.setBendSound(TechnicalFactory.newBendSound(technicalElement));
@@ -172,6 +167,7 @@ public class TechnicalHandler extends BaseHandler {
                 case "tap":
                     Tap tap = new Tap();
                     tap.setPlacementText(PlacementFactory.newPlacementText(technicalElement));
+                    tap.setTapHand((TapHand)FactoryUtil.enumValue(TapHand.class, technicalElement.getAttribute("hand")));
                     technical = tap;
                     break;
                 case "heel":
@@ -189,122 +185,17 @@ public class TechnicalHandler extends BaseHandler {
                     Hole hole = new Hole();
                     hole.setHoleType(XmlUtil.getChildElementText(technicalElement, "hole-type"));
                     Element holeClosedElement = XmlUtil.getChildElement(technicalElement, "hole-closed");
-                    String holeClosedType = XmlUtil.getElementText(holeClosedElement);
-                    switch (holeClosedType) {
-                        case "yes":
-                            hole.setHoleClosedType(HoleClosedType.YES);
-                            break;
-                        case "no":
-                            hole.setHoleClosedType(HoleClosedType.NO);
-                            break;
-                        case "half":
-                            hole.setHoleClosedType(HoleClosedType.HALF);
-                            break;
-                    }
-                    String holeClosedLocation = holeClosedElement.getAttribute("location");
-                    if (StringUtil.isNotEmpty(holeClosedLocation)) {
-                        switch (holeClosedLocation) {
-                            case "right":
-                                hole.setHoleClosedLocation(HoleClosedLocation.RIGHT);
-                                break;
-                            case "bottom":
-                                hole.setHoleClosedLocation(HoleClosedLocation.BOTTOM);
-                                break;
-                            case "left":
-                                hole.setHoleClosedLocation(HoleClosedLocation.LEFT);
-                                break;
-                            case "top":
-                                hole.setHoleClosedLocation(HoleClosedLocation.TOP);
-                                break;
-                        }
-                    }
+                    hole.setHoleClosedType((HoleClosedType)FactoryUtil.enumValue(HoleClosedType.class, XmlUtil.getElementText(holeClosedElement)));
+                    hole.setHoleClosedLocation((HoleClosedLocation)FactoryUtil.enumValue(HoleClosedLocation.class, holeClosedElement.getAttribute("location")));
                     hole.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     hole.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = hole;
                     break;
                 case "arrow":
                     Arrow arrow = new Arrow();
-                    String arrowDirection = XmlUtil.getChildElementText(technicalElement, "arrow-direction");
-                    if (StringUtil.isNotEmpty(arrowDirection)) {
-                        switch (arrowDirection) {
-                            case "left":
-                                arrow.setArrowDirection(ArrowDirection.LEFT);
-                                break;
-                            case "up":
-                                arrow.setArrowDirection(ArrowDirection.UP);
-                                break;
-                            case "right":
-                                arrow.setArrowDirection(ArrowDirection.RIGHT);
-                                break;
-                            case "down":
-                                arrow.setArrowDirection(ArrowDirection.DOWN);
-                                break;
-                            case "northwest":
-                                arrow.setArrowDirection(ArrowDirection.NORTHWEST);
-                                break;
-                            case "northeast":
-                                arrow.setArrowDirection(ArrowDirection.NORTHEAST);
-                                break;
-                            case "southeast":
-                                arrow.setArrowDirection(ArrowDirection.SOUTHEAST);
-                                break;
-                            case "southwest":
-                                arrow.setArrowDirection(ArrowDirection.SOUTHWEST);
-                                break;
-                            case "left right":
-                                arrow.setArrowDirection(ArrowDirection.LEFT_RIGHT);
-                                break;
-                            case "up down":
-                                arrow.setArrowDirection(ArrowDirection.UP_DOWN);
-                                break;
-                            case "northwest southeast":
-                                arrow.setArrowDirection(ArrowDirection.NORTHWEST_SOUTHEAST);
-                                break;
-                            case "northeast southwest":
-                                arrow.setArrowDirection(ArrowDirection.NORTHEAST_SOUTHWEST);
-                                break;
-                            case "other":
-                                arrow.setArrowDirection(ArrowDirection.OTHER);
-                                break;
-                        }
-                    }
-                    String arrowStyle = XmlUtil.getChildElementText(technicalElement, "arrow-style");
-                    if (StringUtil.isNotEmpty(arrowStyle)) {
-                        switch (arrowStyle) {
-                            case "single":
-                                arrow.setArrowStyle(ArrowStyle.SINGLE);
-                                break;
-                            case "double":
-                                arrow.setArrowStyle(ArrowStyle.DOUBLE);
-                                break;
-                            case "filled":
-                                arrow.setArrowStyle(ArrowStyle.FILLED);
-                                break;
-                            case "hollow":
-                                arrow.setArrowStyle(ArrowStyle.HOLLOW);
-                                break;
-                            case "paired":
-                                arrow.setArrowStyle(ArrowStyle.PAIRED);
-                                break;
-                            case "combined":
-                                arrow.setArrowStyle(ArrowStyle.COMBINED);
-                                break;
-                            case "other":
-                                arrow.setArrowStyle(ArrowStyle.OTHER);
-                                break;
-                        }
-                    }
-                    String circularArrow = XmlUtil.getChildElementText(technicalElement, "circular-arrow");
-                    if (StringUtil.isNotEmpty(circularArrow)) {
-                        switch (circularArrow) {
-                            case "clockwise":
-                                arrow.setCircularArrow(CircularArrow.CLOCKWISE);
-                                break;
-                            case "anticlockwise":
-                                arrow.setCircularArrow(CircularArrow.ANTICLOCKWISE);
-                                break;
-                        }
-                    }
+                    arrow.setArrowDirection((ArrowDirection)FactoryUtil.enumValue(ArrowDirection.class, XmlUtil.getChildElementText(technicalElement, "arrow-direction")));
+                    arrow.setArrowStyle((ArrowStyle)FactoryUtil.enumValue(ArrowStyle.class, XmlUtil.getChildElementText(technicalElement, "arrow-style")));
+                    arrow.setCircularArrow((CircularArrow)FactoryUtil.enumValue(CircularArrow.class, XmlUtil.getChildElementText(technicalElement, "circular-arrow")));
                     arrow.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     arrow.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = arrow;
@@ -316,6 +207,15 @@ public class TechnicalHandler extends BaseHandler {
                     handbell.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     handbell.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = handbell;
+                    break;
+                case "harmon-mute":
+                    HarmonMute harmonMute = new HarmonMute();
+                    Element harmonClosedElement = XmlUtil.getChildElement(technicalElement, "harmon-closed");
+                    HarmonClosed harmonClosed = new HarmonClosed();
+                    harmonClosed.setValue((HarmonClosedValue) FactoryUtil.enumValue(HarmonClosedValue.class, XmlUtil.getElementText(harmonClosedElement)));
+                    harmonClosed.setLocation((HarmonClosedLocation)FactoryUtil.enumValue(HarmonClosedLocation.class, harmonClosedElement.getAttribute("location")));
+                    harmonMute.setHarmonClosed(harmonClosed);
+                    technical = harmonMute;
                     break;
                 case "other-technical":
                     OtherTechnical otherTechnical = new OtherTechnical();

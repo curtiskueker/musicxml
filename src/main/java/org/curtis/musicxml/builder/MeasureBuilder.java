@@ -46,6 +46,7 @@ public class MeasureBuilder extends MusicDataBuilder {
         if (DEBUG) System.err.println("Measure " + measureNumber);
         buildOpenElement("measure");
         buildAttribute("number", BuilderUtil.requiredValue(measureNumber));
+        buildAttribute("text", measure.getText());
         buildAttribute("implicit", measure.getImplicit());
         buildAttribute("non-controlling", measure.getNonControlling());
         buildAttribute("width", measure.getWidth());
