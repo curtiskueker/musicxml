@@ -70,6 +70,7 @@ public class OrnamentHandler extends BaseHandler {
                     tremolo.setTremoloType((TremoloType) FactoryUtil.enumValue(TremoloType.class, ornamentElement.getAttribute("type")));
                     tremolo.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
                     tremolo.setPlacement(PlacementFactory.newPlacementLocation(ornamentElement));
+                    tremolo.setSmufl(ornamentElement.getAttribute("smufl"));
                     ornament = tremolo;
                     break;
                 case "other-ornament":

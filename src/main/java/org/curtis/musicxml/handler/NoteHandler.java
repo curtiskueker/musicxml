@@ -158,6 +158,7 @@ public class NoteHandler extends MusicDataHandler {
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
                     notehead.setFont(FormattingFactory.newFont(noteSubelement));
                     notehead.setColor(noteSubelement.getAttribute("color"));
+                    notehead.setSmufl(noteSubelement.getAttribute("smufl"));
                     note.setNotehead(notehead);
                     break;
                 case "notehead-text":

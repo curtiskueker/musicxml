@@ -140,6 +140,7 @@ public class NotationHandler extends BaseHandler {
                     otherNotation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
                     otherNotation.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
                     otherNotation.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
+                    otherNotation.setSmufl(notationsSubelement.getAttribute("smufl"));
                     notation = otherNotation;
                     break;
             }

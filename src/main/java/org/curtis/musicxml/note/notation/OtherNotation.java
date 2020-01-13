@@ -33,6 +33,8 @@ public class OtherNotation extends Notation {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
+    @Column
+    private String smufl;
 
     public OtherNotation() {
 
@@ -84,5 +86,13 @@ public class OtherNotation extends Notation {
 
     public void setPlacement(Location placement) {
         this.placement = placement;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

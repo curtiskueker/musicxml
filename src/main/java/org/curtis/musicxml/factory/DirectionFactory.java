@@ -231,6 +231,7 @@ public class DirectionFactory {
                 otherDirection.setValue(XmlUtil.getElementText(element));
                 otherDirection.setPrintObject(FormattingFactory.getPrintObject(element));
                 otherDirection.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                otherDirection.setSmufl(element.getAttribute("smufl"));
                 return otherDirection;
             default:
                 return null;

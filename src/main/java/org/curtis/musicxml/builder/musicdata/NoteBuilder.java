@@ -31,7 +31,6 @@ import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
 import org.curtis.musicxml.note.lyric.TextData;
-import org.curtis.musicxml.note.lyric.TextFontColor;
 import org.curtis.musicxml.note.notation.Notation;
 
 import java.util.HashMap;
@@ -104,8 +103,7 @@ public class NoteBuilder extends MusicDataBuilder {
         }
         Stem stem = note.getStem();
         if (stem != null) {
-            Map<String, String> stemAttributes = new HashMap<>();
-            stemAttributes.putAll(PlacementBuilder.buildPosition(stem.getPosition()));
+            Map<String, String> stemAttributes = new HashMap<>(PlacementBuilder.buildPosition(stem.getPosition()));
             stemAttributes.put("color", stem.getColor());
             buildElementWithValueAndAttributes("stem", stem.getType(), stemAttributes);
         }
@@ -118,6 +116,7 @@ public class NoteBuilder extends MusicDataBuilder {
             noteheadAttributes.put("parentheses", BuilderUtil.yesOrNo(notehead.getParentheses()));
             noteheadAttributes.putAll(FormattingBuilder.buildFont(notehead.getFont()));
             noteheadAttributes.put("color", notehead.getColor());
+            noteheadAttributes.put("smufl", notehead.getSmufl());
             buildElementWithValueAndAttributes("notehead", noteheadType, noteheadAttributes);
         }
         NoteheadText noteheadText = note.getNoteheadText();
@@ -220,16 +219,14 @@ public class NoteBuilder extends MusicDataBuilder {
             for (LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
                 Elision elision = lyricSyllable.getElision();
                 if (elision != null) {
-                    Map<String, String> elisionAttributes = new HashMap<>();
-                    elisionAttributes.putAll(FormattingBuilder.buildFont(elision.getFont()));
+                    Map<String, String> elisionAttributes = new HashMap<>(FormattingBuilder.buildFont(elision.getFont()));
                     elisionAttributes.put("color", elision.getColor());
                     elisionAttributes.put("smufl", elision.getSmufl());
                     buildElementWithValueAndAttributes("elision", elision.getValue(), elisionAttributes);
                 }
                 buildElementWithValue("syllabic", lyricSyllable.getSyllabic());
                 TextData lyricSyllableText = lyricSyllable.getText();
-                Map<String, String> textAttributes = new HashMap<>();
-                textAttributes.putAll(FormattingBuilder.buildFont(lyricSyllableText.getFont()));
+                Map<String, String> textAttributes = new HashMap<>(FormattingBuilder.buildFont(lyricSyllableText.getFont()));
                 textAttributes.put("color", lyricSyllableText.getColor());
                 textAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricSyllableText.getTextDecoration()));
                 textAttributes.put("rotation", BuilderUtil.stringValue(lyricSyllableText.getTextRotation()));

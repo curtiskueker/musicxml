@@ -8,6 +8,7 @@ import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Printout;
+import org.curtis.musicxml.common.SymbolFormatting;
 import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.layout.PrintObjectStyleAlign;
@@ -120,6 +121,22 @@ public class FormattingBuilder extends OutputBuilder {
         attributes.put("xml:space", textFormatting.getSpace());
         attributes.put("text-direction", BuilderUtil.enumValue(textFormatting.getTextDirection()));
         attributes.put("enclosure", BuilderUtil.enumValue(textFormatting.getEnclosure()));
+
+        return attributes;
+    }
+
+    public static Map<String, String> buildSymbolFormatting(SymbolFormatting symbolFormatting) {
+        Map<String, String> attributes = new HashMap<>();
+        if (symbolFormatting == null) return attributes;
+
+        attributes.put("justify", BuilderUtil.enumValue(symbolFormatting.getJustify()));
+        attributes.putAll(buildPrintStyleAlign(symbolFormatting.getPrintStyleAlign()));
+        attributes.putAll(buildTextDecoration(symbolFormatting.getTextDecoration()));
+        attributes.put("text-rotation", BuilderUtil.stringValue(symbolFormatting.getTextRotation()));
+        attributes.put("letter-spacing", symbolFormatting.getLetterSpacing());
+        attributes.put("line-height", symbolFormatting.getLineHeight());
+        attributes.put("text-direction", BuilderUtil.enumValue(symbolFormatting.getTextDirection()));
+        attributes.put("enclosure", BuilderUtil.enumValue(symbolFormatting.getEnclosure()));
 
         return attributes;
     }

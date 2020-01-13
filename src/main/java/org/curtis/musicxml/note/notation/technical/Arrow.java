@@ -30,6 +30,8 @@ public class Arrow extends Technical {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
+    @Column
+    private String smufl;
 
     public Arrow() {
 
@@ -73,5 +75,13 @@ public class Arrow extends Technical {
 
     public void setPlacement(Location placement) {
         this.placement = placement;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

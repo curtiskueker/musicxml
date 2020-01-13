@@ -212,6 +212,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
         buildOpenElement("arrow");
         buildAttributes(FormattingBuilder.buildPrintStyle(arrow.getPrintStyle()));
         buildAttribute("placement", arrow.getPlacement());
+        buildAttribute("smufl", arrow.getSmufl());
         buildCloseElement();
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
         buildElementWithValue("arrow-style", arrow.getArrowStyle());

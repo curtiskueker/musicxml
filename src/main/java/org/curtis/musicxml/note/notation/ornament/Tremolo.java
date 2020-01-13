@@ -26,6 +26,8 @@ public class Tremolo extends Ornament {
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
+    @Column
+    private String smufl;
 
     public Tremolo() {
 
@@ -61,5 +63,13 @@ public class Tremolo extends Ornament {
 
     public void setPlacement(Location placement) {
         this.placement = placement;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

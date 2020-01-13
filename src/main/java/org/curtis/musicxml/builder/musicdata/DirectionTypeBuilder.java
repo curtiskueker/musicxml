@@ -364,6 +364,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("print-object", BuilderUtil.yesOrNo(otherDirection.getPrintObject()));
         attributes.putAll(FormattingBuilder.buildPrintStyleAlign(otherDirection.getPrintStyleAlign()));
+        attributes.put("smufl", otherDirection.getSmufl());
         buildElementWithValueAndAttributes("other-direction", otherDirection.getValue(), attributes);
     }
 }

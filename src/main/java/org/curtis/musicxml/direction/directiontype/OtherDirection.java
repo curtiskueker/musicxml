@@ -21,6 +21,8 @@ public class OtherDirection extends DirectionType {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
+    @Column
+    private String smufl;
 
     public OtherDirection() {
 
@@ -48,5 +50,13 @@ public class OtherDirection extends DirectionType {
 
     public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
         this.printStyleAlign = printStyleAlign;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

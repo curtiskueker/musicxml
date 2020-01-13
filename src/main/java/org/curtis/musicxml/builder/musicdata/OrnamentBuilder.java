@@ -44,8 +44,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     private void buildPlacedTrillSound(PlacedTrillSound placedTrillSound) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(placedTrillSound.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placedTrillSound.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placedTrillSound.getPlacement()));
         attributes.putAll(buildTrillSound(placedTrillSound.getTrillSound()));
 
@@ -70,8 +69,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
         else if (horizontalTurn instanceof DelayedInvertedTurn) elementName = "delayed-inverted-turn";
         else return;
 
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(horizontalTurn.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(horizontalTurn.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(horizontalTurn.getPlacement()));
         attributes.putAll(buildTrillSound(horizontalTurn.getTrillSound()));
         attributes.put("slash", BuilderUtil.yesOrNo(horizontalTurn.getSlash()));
@@ -84,8 +82,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
         else if (abstractMordent instanceof InvertedMordent) elementName = "inverted-mordent";
         else return;
 
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(placedTrillSoundAttributes);
+        Map<String, String> attributes = new HashMap<>(placedTrillSoundAttributes);
         attributes.put("long", BuilderUtil.yesOrNo(abstractMordent.getLongMordent()));
         attributes.put("approach", BuilderUtil.enumValue(abstractMordent.getApproach()));
         attributes.put("departure", BuilderUtil.enumValue(abstractMordent.getDeparture()));
@@ -101,6 +98,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
         attributes.put("type", BuilderUtil.enumValue(tremolo.getTremoloType()));
         attributes.putAll(FormattingBuilder.buildPrintStyle(tremolo.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(tremolo.getPlacement()));
+        attributes.put("smufl", tremolo.getSmufl());
         buildElementWithValueAndAttributes("tremolo", tremolo.getTremoloMarks(), attributes);
     }
 

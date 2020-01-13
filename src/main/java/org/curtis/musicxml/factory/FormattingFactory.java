@@ -19,6 +19,7 @@ import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.StyleText;
+import org.curtis.musicxml.common.SymbolFormatting;
 import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.common.TextDecoration;
@@ -84,6 +85,34 @@ public class FormattingFactory {
         textFormatting.setEnclosure(enclosureShape);
 
         return textFormatting;
+    }
+
+    public static SymbolFormatting newSymbolFormatting(Element element) {
+        if (element == null) return null;
+
+        Location justify = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
+        PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
+        TextDecoration textDecoration = LyricFactory.newTextDecoration(element);
+        BigDecimal rotation = MathUtil.newBigDecimal(element.getAttribute("rotation"));
+        String letterSpacing = element.getAttribute("letter-spacing");
+        String lineHeight = element.getAttribute("line-height");
+        Location dir = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
+        EnclosureShape enclosureShape = newEnclosureShape(element);
+
+        if (justify == null && printStyleAlign == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
+                && StringUtil.isEmpty(lineHeight)  && dir == null && enclosureShape == null) return null;
+
+        SymbolFormatting symbolFormatting = new SymbolFormatting();
+        symbolFormatting.setJustify(justify);
+        symbolFormatting.setPrintStyleAlign(printStyleAlign);
+        symbolFormatting.setTextDecoration(textDecoration);
+        symbolFormatting.setTextRotation(rotation);
+        symbolFormatting.setLetterSpacing(letterSpacing);
+        symbolFormatting.setLineHeight(lineHeight);
+        symbolFormatting.setTextDirection(dir);
+        symbolFormatting.setEnclosure(enclosureShape);
+
+        return symbolFormatting;
     }
 
     public static StyleText newStyleText(Element element) {

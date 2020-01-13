@@ -30,6 +30,8 @@ public class Notehead extends DatabaseItem {
     private Font font;
     @Column
     private String color;
+    @Column
+    private String smufl;
 
     public Notehead() {
 
@@ -73,5 +75,13 @@ public class Notehead extends DatabaseItem {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }
