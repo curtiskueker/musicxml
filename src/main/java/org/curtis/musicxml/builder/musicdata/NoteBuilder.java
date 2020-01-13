@@ -52,12 +52,13 @@ public class NoteBuilder extends MusicDataBuilder {
         buildAttributes(FormattingBuilder.buildFont(note.getFont()));
         buildAttribute("color", note.getColor());
         buildAttributes(FormattingBuilder.buildPrintout(note.getPrintout()));
+        buildAttribute("print-leger", BuilderUtil.yesOrNo(note.getPrintLeger()));
         buildAttribute("dynamics", note.getDynamics());
         buildAttribute("end-dynamics", note.getEndDynamics());
         buildAttribute("attack", note.getAttack());
         buildAttribute("release", note.getRelease());
         buildAttribute("time-only", note.getTimeOnly());
-        buildAttribute("pizzicato",  note.getPizzicato());
+        buildAttribute("pizzicato",  BuilderUtil.yesOrNo(note.getPizzicato()));
         buildCloseElement();
         if (note.getCue()) buildElement("cue");
         Grace grace = note.getGrace();
@@ -93,6 +94,7 @@ public class NoteBuilder extends MusicDataBuilder {
             accidentalAttributes.put("editorial", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.putAll(FormattingBuilder.buildLevelDisplay(accidental.getLevelDisplay()));
             accidentalAttributes.putAll(FormattingBuilder.buildPrintStyle(accidental.getPrintStyle()));
+            accidentalAttributes.put("smufl", accidental.getSmufl());
             buildElementWithValueAndAttributes("accidental", accidental.getAccidentalType(), accidentalAttributes);
         }
         TimeModification timeModification = note.getTimeModification();
@@ -212,6 +214,7 @@ public class NoteBuilder extends MusicDataBuilder {
         buildAttribute("placement", lyric.getPlacement());
         buildAttribute("color", lyric.getColor());
         buildAttribute("print-object",  lyric.getPrintObject());
+        buildAttribute("time-only", lyric.getTimeOnly());
         buildCloseElement();
         LyricItem lyricItem = lyric.getLyricItem();
         if (lyricItem instanceof LyricText) {

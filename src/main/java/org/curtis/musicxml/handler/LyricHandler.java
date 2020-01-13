@@ -122,6 +122,7 @@ public class LyricHandler extends BaseHandler {
         lyric.setPlacement(PlacementFactory.newPlacementLocation(element));
         lyric.setColor(element.getAttribute("color"));
         lyric.setPrintObject(FormattingFactory.getPrintObject(element));
+        lyric.setTimeOnly(element.getAttribute("time-only"));
         lyrics.add(lyric);
     }
 }

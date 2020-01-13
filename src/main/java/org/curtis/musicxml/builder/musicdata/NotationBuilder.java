@@ -228,9 +228,10 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     private void buildAccidentalMark(AccidentalMark accidentalMark) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(accidentalMark.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(accidentalMark.getPrintStyle()));
+        attributes.putAll(FormattingBuilder.buildLevelDisplay(accidentalMark.getLevelDisplay()));
         attributes.put("placement", BuilderUtil.enumValue(accidentalMark.getPlacement()));
+        attributes.put("smufl", accidentalMark.getSmufl());
         buildElementWithValueAndAttributes("accidental-mark", accidentalMark.getAccidentalType(), attributes);
     }
 

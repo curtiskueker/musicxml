@@ -19,6 +19,8 @@ public class Pedal extends DirectionType {
     @Enumerated(EnumType.STRING)
     @Column(name = "pedal_type")
     private PedalType pedalType;
+    @Column(name = "pedal_number")
+    private Integer number;
     @Column
     @Type(type="yes_no")
     private Boolean line;
@@ -28,6 +30,9 @@ public class Pedal extends DirectionType {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_align_id")
     private PrintStyleAlign printStyleAlign;
+    @Column
+    @Type(type="yes_no")
+    private Boolean abbreviated;
 
     public Pedal() {
 
@@ -39,6 +44,14 @@ public class Pedal extends DirectionType {
 
     public void setPedalType(PedalType pedalType) {
         this.pedalType = pedalType;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public Boolean getLine() {
@@ -63,5 +76,13 @@ public class Pedal extends DirectionType {
 
     public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
         this.printStyleAlign = printStyleAlign;
+    }
+
+    public Boolean getAbbreviated() {
+        return abbreviated;
+    }
+
+    public void setAbbreviated(Boolean abbreviated) {
+        this.abbreviated = abbreviated;
     }
 }

@@ -106,6 +106,9 @@ public class Note extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "printout_id")
     private Printout printout;
+    @Column
+    @Type(type="yes_no")
+    private Boolean printLeger;
     @Column(precision = 12, scale = 4)
     private BigDecimal dynamics;
     @Column(name = "end_dynamics", precision = 12, scale = 4)
@@ -354,6 +357,14 @@ public class Note extends MusicData {
 
     public boolean isNotPrinted() {
         return (getPrintout() != null && !TypeUtil.getBooleanDefaultYes(getPrintout().getPrintObject())) || TypeUtil.getBoolean(getCue());
+    }
+
+    public Boolean getPrintLeger() {
+        return printLeger;
+    }
+
+    public void setPrintLeger(Boolean printLeger) {
+        this.printLeger = printLeger;
     }
 
     public BigDecimal getDynamics() {

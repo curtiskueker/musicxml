@@ -49,6 +49,7 @@ public class NoteHandler extends MusicDataHandler {
         note.setFont(FormattingFactory.newFont(element));
         note.setColor(element.getAttribute("color"));
         note.setPrintout(FormattingFactory.newPrintout(element));
+        note.setPrintLeger(TypeUtil.getYesNo(element.getAttribute("print-leger")));
         note.setDynamics(MathUtil.newBigDecimal(element.getAttribute("dynamics")));
         note.setEndDynamics(MathUtil.newBigDecimal(element.getAttribute("end-dynamics")));
         note.setAttack(MathUtil.newBigDecimal(element.getAttribute("attack")));
@@ -124,6 +125,7 @@ public class NoteHandler extends MusicDataHandler {
                     accidental.setEditorial(TypeUtil.getYesNo(noteSubelement.getAttribute("editorial")));
                     accidental.setLevelDisplay(FormattingFactory.newLevelDisplay(noteSubelement));
                     accidental.setPrintStyle(FormattingFactory.newPrintStyle(noteSubelement));
+                    accidental.setSmufl(noteSubelement.getAttribute("smufl"));
                     note.setAccidental(accidental);
                     break;
                 case "time-modification":

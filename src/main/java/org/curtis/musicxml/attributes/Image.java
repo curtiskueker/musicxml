@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("image")
@@ -20,6 +21,10 @@ public class Image extends DirectionType {
     private String source;
     @Column(name = "direction_type")
     private String type;
+    @Column(precision = 12, scale = 4)
+    private BigDecimal height;
+    @Column(precision = 12, scale = 4)
+    private BigDecimal width;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
@@ -48,6 +53,22 @@ public class Image extends DirectionType {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public BigDecimal getHeight() {
+        return height;
+    }
+
+    public void setHeight(BigDecimal height) {
+        this.height = height;
+    }
+
+    public BigDecimal getWidth() {
+        return width;
+    }
+
+    public void setWidth(BigDecimal width) {
+        this.width = width;
     }
 
     public Position getPosition() {

@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.note.AccidentalType;
@@ -20,11 +21,16 @@ public class AccidentalMark extends Notation {
     @Column(name = "accidental_type")
     private AccidentalType accidentalType;
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "level_display_id")
+    private LevelDisplay levelDisplay;
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
     @Enumerated(EnumType.STRING)
     @Column
     private Location placement;
+    @Column
+    private String smufl;
 
     public AccidentalMark() {
 
@@ -36,6 +42,14 @@ public class AccidentalMark extends Notation {
 
     public void setAccidentalType(AccidentalType accidentalType) {
         this.accidentalType = accidentalType;
+    }
+
+    public LevelDisplay getLevelDisplay() {
+        return levelDisplay;
+    }
+
+    public void setLevelDisplay(LevelDisplay levelDisplay) {
+        this.levelDisplay = levelDisplay;
     }
 
     public PrintStyle getPrintStyle() {
@@ -52,5 +66,13 @@ public class AccidentalMark extends Notation {
 
     public void setPlacement(Location placement) {
         this.placement = placement;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

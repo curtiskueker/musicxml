@@ -142,9 +142,11 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     private void buildPedal(Pedal pedal) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(pedal.getPedalType()));
+        attributes.put("number", BuilderUtil.stringValue(pedal.getNumber()));
         attributes.put("line", BuilderUtil.yesOrNo(pedal.getLine()));
         attributes.put("sign", BuilderUtil.yesOrNo(pedal.getSign()));
         attributes.putAll(FormattingBuilder.buildPrintStyleAlign(pedal.getPrintStyleAlign()));
+        attributes.put("abbreviated", BuilderUtil.yesOrNo(pedal.getAbbreviated()));
         buildElementWithAttributes("pedal", attributes);
     }
 

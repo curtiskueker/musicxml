@@ -137,9 +137,11 @@ public class DirectionFactory {
             case "pedal":
                 Pedal pedal = new Pedal();
                 pedal.setPedalType((PedalType) FactoryUtil.enumValue(PedalType.class, element.getAttribute("type")));
+                pedal.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 pedal.setLine(TypeUtil.getYesNo(element.getAttribute("line")));
                 pedal.setSign(TypeUtil.getYesNo(element.getAttribute("sign")));
                 pedal.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                pedal.setAbbreviated(TypeUtil.getYesNo(element.getAttribute("abbreviated")));
                 return pedal;
             case "metronome":
                 Element beatUnitElement = XmlUtil.getChildElement(element, "beat-unit");
@@ -476,6 +478,8 @@ public class DirectionFactory {
         Image image = new Image();
         image.setSource(element.getAttribute("source"));
         image.setType(element.getAttribute("type"));
+        image.setHeight(MathUtil.newBigDecimal(element.getAttribute("height")));
+        image.setWidth(MathUtil.newBigDecimal(element.getAttribute("width")));
         image.setPosition(PlacementFactory.newPosition(element));
         image.setHalign((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("halign")));
         image.setValignImage((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("valign")));

@@ -139,8 +139,10 @@ public class NotationFactory {
 
         AccidentalMark accidentalMark = new AccidentalMark();
         accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(element));
+        accidentalMark.setLevelDisplay(FormattingFactory.newLevelDisplay(element));
         accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(element));
         accidentalMark.setPlacement(PlacementFactory.newPlacementLocation(element));
+        accidentalMark.setSmufl(element.getAttribute("smufl"));
 
         return accidentalMark;
     }

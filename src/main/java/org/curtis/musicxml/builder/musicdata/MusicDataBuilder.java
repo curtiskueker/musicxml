@@ -76,16 +76,14 @@ public abstract class MusicDataBuilder extends BaseBuilder {
             return;
         }
 
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(placement.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placement.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placement.getPlacement()));
         if (StringUtil.isNotEmpty(attributeValue)) attributes.put(attributeName, attributeValue);
         buildElementWithAttributes(elementName, attributes);
     }
 
     protected void buildPlacementText(String elementName, PlacementText placementText) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
         buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
     }
@@ -104,8 +102,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     protected void buildStyleText(String elementName, StyleText styleText) {
         if (styleText ==  null) return;
 
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(styleText.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(styleText.getPrintStyle()));
         buildElementWithValueAndAttributes(elementName, styleText.getValue(), attributes);
     }
 
@@ -150,7 +147,9 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     protected void buildAccidentalText(AccidentalText accidentalText) {
         if (accidentalText == null) return;
 
-        buildElementWithValueAndAttributes("accidental-text", accidentalText.getAccidentalType(), FormattingBuilder.buildTextFormatting(accidentalText.getTextFormatting()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildTextFormatting(accidentalText.getTextFormatting()));
+        attributes.put("smufl", accidentalText.getSmufl());
+        buildElementWithValueAndAttributes("accidental-text", accidentalText.getAccidentalType(), attributes);
     }
 
     protected void buildText(Text text) {
@@ -237,6 +236,8 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("source", BuilderUtil.requiredValue(image.getSource()));
         attributes.put("type", BuilderUtil.requiredValue(image.getType()));
+        attributes.put("height", BuilderUtil.stringValue(image.getHeight()));
+        attributes.put("width", BuilderUtil.stringValue(image.getWidth()));
         attributes.putAll(PlacementBuilder.buildPosition(image.getPosition()));
         attributes.put("halign", BuilderUtil.enumValue(image.getHalign()));
         attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
@@ -304,15 +305,13 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     }
 
     protected void buildStringNumber(StringNumber stringNumber) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(stringNumber.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(stringNumber.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(stringNumber.getPlacement()));
         buildElementWithValueAndAttributes("string", stringNumber.getStringNumber(), attributes);
     }
 
     protected void buildFret(Fret fret) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildFont(fret.getFont()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildFont(fret.getFont()));
         attributes.put("color", fret.getColor());
         buildElementWithValueAndAttributes("fret", fret.getValue(), attributes);
     }

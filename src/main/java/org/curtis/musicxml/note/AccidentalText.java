@@ -21,6 +21,8 @@ public class AccidentalText extends Text {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_formatting_id")
     private TextFormatting textFormatting;
+    @Column
+    private String smufl;
 
     public AccidentalText() {
 
@@ -40,5 +42,13 @@ public class AccidentalText extends Text {
 
     public void setTextFormatting(TextFormatting textFormatting) {
         this.textFormatting = textFormatting;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

@@ -32,6 +32,8 @@ public class Accidental extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_style_id")
     private PrintStyle printStyle;
+    @Column
+    private String smufl;
 
     public Accidental() {
 
@@ -75,5 +77,13 @@ public class Accidental extends DatabaseItem {
 
     public void setPrintStyle(PrintStyle printStyle) {
         this.printStyle = printStyle;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

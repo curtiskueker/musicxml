@@ -52,6 +52,8 @@ public class Lyric extends DatabaseItem {
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
+    @Column(name = "time_only")
+    private String timeOnly;
     @Transient
     // used by lilypond
     private BigDecimal totalBeats;
@@ -152,6 +154,14 @@ public class Lyric extends DatabaseItem {
 
     public void setPrintObject(Boolean printObject) {
         this.printObject = printObject;
+    }
+
+    public String getTimeOnly() {
+        return timeOnly;
+    }
+
+    public void setTimeOnly(String timeOnly) {
+        this.timeOnly = timeOnly;
     }
 
     public BigDecimal getTotalBeats() {
