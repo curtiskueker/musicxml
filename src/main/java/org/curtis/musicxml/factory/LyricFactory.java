@@ -53,7 +53,8 @@ public class LyricFactory {
 
         Extend extend = new Extend();
         extend.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
-        extend.setPrintStyle(FormattingFactory.newPrintStyle(element));
+        extend.setPosition(PlacementFactory.newPosition(element));
+        extend.setColor(element.getAttribute("color"));
 
         return extend;
     }

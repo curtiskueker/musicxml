@@ -61,7 +61,8 @@ public abstract class MusicDataBuilder extends BaseBuilder {
 
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(extend.getType()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(extend.getPrintStyle()));
+        attributes.putAll(PlacementBuilder.buildPosition(extend.getPosition()));
+        attributes.put("color", extend.getColor());
         buildElementWithAttributes("extend", attributes);
     }
 

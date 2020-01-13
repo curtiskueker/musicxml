@@ -7,7 +7,6 @@ import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.LyricFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.note.lyric.Elision;
-import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
 import org.curtis.musicxml.note.lyric.Lyric;
@@ -87,10 +86,7 @@ public class LyricHandler extends BaseHandler {
                 lyricItem = lyricText;
                 break;
             case "extend":
-                Extend extend = new Extend();
-                extend.setType((Connection) FactoryUtil.enumValue(Connection.class, lyricItemElement.getAttribute("type")));
-                extend.setPrintStyle(FormattingFactory.newPrintStyle(lyricItemElement));
-                lyricItem = extend;
+                lyricItem = LyricFactory.newExtend(lyricItemElement);
                 break;
             case "laughing":
                 lyricItem = new Laughing();

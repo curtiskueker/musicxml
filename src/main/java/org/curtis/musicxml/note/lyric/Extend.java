@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.common.Position;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +19,10 @@ public class Extend extends LyricItem {
     @Column
     private Connection type;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "position_id")
+    private Position position;
+    @Column
+    private String color;
 
     public Extend() {
 
@@ -34,11 +36,19 @@ public class Extend extends LyricItem {
         this.type = type;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
