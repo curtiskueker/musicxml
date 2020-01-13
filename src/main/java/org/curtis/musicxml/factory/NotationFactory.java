@@ -188,12 +188,12 @@ public class NotationFactory {
         if (bezierOffset == null && bezierOffset2 == null && bezierX == null && bezierY == null && bezierX2 == null && bezierY2 == null) return null;
 
         Bezier bezier = new Bezier();
-        bezier.setBezierOffset(bezierOffset);
-        bezier.setBezierOffset2(bezierOffset2);
         bezier.setBezierX(bezierX);
         bezier.setBezierY(bezierY);
         bezier.setBezierX2(bezierX2);
         bezier.setBezierY2(bezierY2);
+        bezier.setBezierOffset(bezierOffset);
+        bezier.setBezierOffset2(bezierOffset2);
 
         return bezier;
     }

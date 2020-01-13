@@ -10,10 +10,6 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "bezier")
 public class Bezier extends DatabaseItem {
-    @Column(name = "bezier_offset", precision = 12, scale = 4)
-    private BigDecimal bezierOffset;
-    @Column(name = "bezier_offset2", precision = 12, scale = 4)
-    private BigDecimal bezierOffset2;
     @Column(name = "bezier_x", precision = 12, scale = 4)
     private BigDecimal bezierX;
     @Column(name = "bezier_y", precision = 12, scale = 4)
@@ -22,25 +18,13 @@ public class Bezier extends DatabaseItem {
     private BigDecimal bezierX2;
     @Column(name = "bezier_y2", precision = 12, scale = 4)
     private BigDecimal bezierY2;
+    @Column(name = "bezier_offset", precision = 12, scale = 4)
+    private BigDecimal bezierOffset;
+    @Column(name = "bezier_offset2", precision = 12, scale = 4)
+    private BigDecimal bezierOffset2;
 
     public Bezier() {
 
-    }
-
-    public BigDecimal getBezierOffset() {
-        return bezierOffset;
-    }
-
-    public void setBezierOffset(BigDecimal bezierOffset) {
-        this.bezierOffset = bezierOffset;
-    }
-
-    public BigDecimal getBezierOffset2() {
-        return bezierOffset2;
-    }
-
-    public void setBezierOffset2(BigDecimal bezierOffset2) {
-        this.bezierOffset2 = bezierOffset2;
     }
 
     public BigDecimal getBezierX() {
@@ -73,5 +57,21 @@ public class Bezier extends DatabaseItem {
 
     public void setBezierY2(BigDecimal bezierY2) {
         this.bezierY2 = bezierY2;
+    }
+
+    public BigDecimal getBezierOffset() {
+        return bezierOffset;
+    }
+
+    public void setBezierOffset(BigDecimal bezierOffset) {
+        this.bezierOffset = bezierOffset;
+    }
+
+    public BigDecimal getBezierOffset2() {
+        return bezierOffset2;
+    }
+
+    public void setBezierOffset2(BigDecimal bezierOffset2) {
+        this.bezierOffset2 = bezierOffset2;
     }
 }

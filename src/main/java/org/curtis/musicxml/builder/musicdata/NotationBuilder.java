@@ -92,12 +92,12 @@ public class NotationBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         if (bezier == null) return attributes;
 
-        attributes.put("bezier-offset", BuilderUtil.stringValue(bezier.getBezierOffset()));
-        attributes.put("bezier-offset2", BuilderUtil.stringValue(bezier.getBezierOffset2()));
         attributes.put("bezier-x", BuilderUtil.stringValue(bezier.getBezierX()));
         attributes.put("bezier-y", BuilderUtil.stringValue(bezier.getBezierY()));
         attributes.put("bezier-x2", BuilderUtil.stringValue(bezier.getBezierX2()));
         attributes.put("bezier-y2", BuilderUtil.stringValue(bezier.getBezierY2()));
+        attributes.put("bezier-offset", BuilderUtil.stringValue(bezier.getBezierOffset()));
+        attributes.put("bezier-offset2", BuilderUtil.stringValue(bezier.getBezierOffset2()));
 
         return attributes;
     }
