@@ -20,6 +20,7 @@ import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.CreditImage;
+import org.curtis.musicxml.score.CreditSymbol;
 import org.curtis.musicxml.score.CreditType;
 import org.curtis.musicxml.score.CreditWords;
 import org.curtis.musicxml.score.Defaults;
@@ -204,6 +205,22 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 }
                                 currentBookmarks.clear();
                                 if (creditWords.getCreditWords() != null) credit.getCreditDisplays().add(creditWords);
+                                break;
+                            case "credit-symbol":
+                                CreditSymbol creditSymbol = new CreditSymbol();
+                                creditSymbol.setSmufl(XmlUtil.getElementText(creditSubelement));
+                                creditSymbol.setSymbolFormatting(FormattingFactory.newSymbolFormatting(creditSubelement));
+                                for (Link creditWordsLink : currentLinks) {
+                                    creditWordsLink.setCreditDisplay(creditSymbol);
+                                    creditSymbol.getLinks().add(creditWordsLink);
+                                }
+                                currentLinks.clear();
+                                for (Bookmark creditWordsBookmark : currentBookmarks) {
+                                    creditWordsBookmark.setCreditDisplay(creditSymbol);
+                                    creditSymbol.getBookmarks().add(creditWordsBookmark);
+                                }
+                                currentBookmarks.clear();
+                                credit.getCreditDisplays().add(creditSymbol);
                                 break;
                         }
                     }

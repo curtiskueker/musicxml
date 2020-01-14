@@ -3,6 +3,7 @@ package org.curtis.musicxml.note.notation.technical;
 import org.curtis.musicxml.note.PrintPlacement;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,8 @@ public class Stopped extends Technical {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "print_placement_id")
     private PrintPlacement printPlacement;
+    @Column
+    private String smufl;
 
     public Stopped() {
 
@@ -25,5 +28,13 @@ public class Stopped extends Technical {
 
     public void setPrintPlacement(PrintPlacement printPlacement) {
         this.printPlacement = printPlacement;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

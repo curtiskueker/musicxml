@@ -142,6 +142,7 @@ public class ArticulationHandler extends BaseHandler {
                 case "other-articulation":
                     OtherArticulation otherArticulation = new OtherArticulation();
                     otherArticulation.setPlacementText(PlacementFactory.newPlacementText(articulationsSubelement));
+                    otherArticulation.setSmufl(articulationsSubelement.getAttribute("smufl"));
                     articulation = otherArticulation;
                     break;
             }

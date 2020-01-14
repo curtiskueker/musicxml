@@ -93,6 +93,7 @@
         <class>org.curtis.musicxml.direction.directiontype.Segno</class>
         <class>org.curtis.musicxml.direction.directiontype.StaffDivide</class>
         <class>org.curtis.musicxml.direction.directiontype.StringMute</class>
+        <class>org.curtis.musicxml.direction.directiontype.Symbol</class>
         <class>org.curtis.musicxml.direction.directiontype.Wedge</class>
         <class>org.curtis.musicxml.direction.directiontype.Words</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome</class>
@@ -273,6 +274,7 @@
         <class>org.curtis.musicxml.score.Credit</class>
         <class>org.curtis.musicxml.score.CreditImage</class>
         <class>org.curtis.musicxml.score.CreditDisplay</class>
+        <class>org.curtis.musicxml.score.CreditSymbol</class>
         <class>org.curtis.musicxml.score.CreditType</class>
         <class>org.curtis.musicxml.score.CreditWords</class>
         <class>org.curtis.musicxml.score.Defaults</class>

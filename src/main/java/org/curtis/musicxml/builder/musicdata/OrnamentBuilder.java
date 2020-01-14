@@ -103,6 +103,6 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     private void buildOtherOrnament(OtherOrnament otherOrnament) {
-        buildPlacementText("other-ornament", otherOrnament.getPlacementText());
+        buildOtherPlacementText("other-ornament", otherOrnament.getPlacementText(), otherOrnament.getSmufl());
     }
 }

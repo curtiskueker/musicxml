@@ -25,6 +25,7 @@ import org.curtis.musicxml.common.play.SemiPitched;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
+import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.PrintPlacement;
@@ -86,6 +87,13 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     protected void buildPlacementText(String elementName, PlacementText placementText) {
         Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
+        buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
+    }
+
+    protected void buildOtherPlacementText(String elementName, PlacementText placementText, String smufl) {
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
+        attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
+        attributes.put("smufl", smufl);
         buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
     }
 
@@ -303,6 +311,14 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         Map<String, String> codaAttributes = FormattingBuilder.buildPrintStyleAlign(coda.getPrintStyleAlign());
         codaAttributes.put("smufl", coda.getSmufl());
         buildElementWithOptionalAttributes("coda", codaAttributes);
+    }
+
+    protected void buildSegno(Segno segno) {
+        if (segno == null) return;
+
+        Map<String, String> attributes = FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign());
+        attributes.put("smufl", segno.getSmufl());
+        buildElementWithOptionalAttributes("segno", attributes);
     }
 
     protected void buildStringNumber(StringNumber stringNumber) {

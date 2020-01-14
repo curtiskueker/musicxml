@@ -25,6 +25,7 @@ import org.curtis.musicxml.direction.directiontype.Scordatura;
 import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.StaffDivide;
 import org.curtis.musicxml.direction.directiontype.StringMute;
+import org.curtis.musicxml.direction.directiontype.Symbol;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
@@ -65,6 +66,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         if (directionType instanceof Rehearsal) buildRehearsal((Rehearsal)directionType);
         else if (directionType instanceof Segno) buildSegno((Segno)directionType);
         else if (directionType instanceof Words) buildWords((Words)directionType);
+        else if (directionType instanceof Symbol) buildSymbol((Symbol)directionType);
         else if (directionType instanceof Coda) buildCoda((Coda) directionType);
         else if (directionType instanceof Wedge) buildWedge((Wedge) directionType);
         else if (directionType instanceof Dynamics) buildDynamics((Dynamics) directionType);
@@ -93,14 +95,12 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         if (rehearsal.getFormattedText() != null) buildFormattedText("rehearsal", rehearsal.getFormattedText());
     }
 
-    private void buildSegno(Segno segno) {
-        Map<String, String> segnoAttributes = new HashMap<>(FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign()));
-        segnoAttributes.put("smufl", segno.getSmufl());
-        buildElementWithOptionalAttributes("segno", segnoAttributes);
-    }
-
     private void buildWords(Words words) {
         if (words.getFormattedText() != null) buildFormattedText("words", words.getFormattedText());
+    }
+
+    private void buildSymbol(Symbol symbol) {
+        buildElementWithValueAndAttributes("symbol", symbol.getSmufl(), FormattingBuilder.buildSymbolFormatting(symbol.getSymbolFormatting()));
     }
 
     private void buildWedge(Wedge wedge) {
@@ -186,6 +186,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         for (MetronomeBeam metronomeBeam : metronomeNote.getMetronomeBeams()) {
             buildElementWithValueAndAttribute("metronome-beam", NoteBuilder.buildBeamType(metronomeBeam.getBeamType()), "number", metronomeBeam.getNumber());
         }
+        buildElementWithAttribute("metronome-tied", "type", BuilderUtil.enumValue(metronomeNote.getMetronomeTied()));
         MetronomeTuplet metronomeTuplet = metronomeNote.getMetronomeTuplet();
         if (metronomeTuplet != null) {
             buildOpenElement("metronome-tuplet");
@@ -352,7 +353,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildOtherPercussion(OtherPercussion otherPercussion) {
-        buildElementWithValue("other-percussion", otherPercussion.getValue());
+        buildElementWithValueAndAttribute("other-percussion", otherPercussion.getValue(), "smufl", otherPercussion.getSmufl());
     }
 
     private void buildStaffDivide(StaffDivide staffDivide) {

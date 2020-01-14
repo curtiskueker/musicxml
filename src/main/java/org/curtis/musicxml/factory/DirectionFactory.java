@@ -27,11 +27,11 @@ import org.curtis.musicxml.direction.directiontype.PrincipalVoice;
 import org.curtis.musicxml.direction.directiontype.PrincipalVoiceSymbol;
 import org.curtis.musicxml.direction.directiontype.Rehearsal;
 import org.curtis.musicxml.direction.directiontype.Scordatura;
-import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.StaffDivide;
 import org.curtis.musicxml.direction.directiontype.StaffDivideSymbol;
 import org.curtis.musicxml.direction.directiontype.StringMute;
 import org.curtis.musicxml.direction.directiontype.StringMuteDirection;
+import org.curtis.musicxml.direction.directiontype.Symbol;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
@@ -90,16 +90,18 @@ public class DirectionFactory {
                 rehearsal.setFormattedText(rehearsalFormattedText);
                 return rehearsal;
             case "segno":
-                Segno segno = new Segno();
-                segno.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
-                segno.setSmufl(element.getAttribute("smufl"));
-                return segno;
+                return NotationFactory.newSegno(element);
             case "words":
                 Words words = new Words();
                 FormattedText wordsFormattedText = FormattingFactory.newFormattedText(element);
                 if (wordsFormattedText == null) return null;
                 words.setFormattedText(wordsFormattedText);
                 return words;
+            case "symbol":
+                Symbol symbol = new Symbol();
+                symbol.setSmufl(XmlUtil.getElementText(element));
+                symbol.setSymbolFormatting(FormattingFactory.newSymbolFormatting(element));
+                return symbol;
             case "coda":
                 return NotationFactory.newCoda(element);
             case "wedge":
@@ -303,6 +305,9 @@ public class DirectionFactory {
                                 }
                                 metronomeBeams.add(metronomeBeam);
                                 break;
+                            case "metronome-tied":
+                                metronomeNote.setMetronomeTied((Connection)FactoryUtil.enumValue(Connection.class, metronomeNoteElement.getAttribute("type")));
+                                break;
                             case "metronome-tuplet":
                                 MetronomeTuplet metronomeTuplet = new MetronomeTuplet();
                                 metronomeTuplet.setTimeModification(NoteFactory.newTimeModification(metronomeNoteElement));
@@ -397,6 +402,7 @@ public class DirectionFactory {
             case "other-percussion":
                 OtherPercussion otherPercussion = new OtherPercussion();
                 otherPercussion.setValue(XmlUtil.getElementText(element));
+                otherPercussion.setSmufl(element.getAttribute("smufl"));
                 percussion = otherPercussion;
                 break;
         }

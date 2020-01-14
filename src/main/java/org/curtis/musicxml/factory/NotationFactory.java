@@ -5,6 +5,7 @@ import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.DynamicsType;
+import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.LineLength;
@@ -207,5 +208,14 @@ public class NotationFactory {
         coda.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
         coda.setSmufl(element.getAttribute("smufl"));
         return coda;
+    }
+
+    public static Segno newSegno(Element element) {
+        if (element == null) return null;
+
+        Segno segno = new Segno();
+        segno.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+        segno.setSmufl(element.getAttribute("smufl"));
+        return segno;
     }
 }

@@ -139,7 +139,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildStopped(Stopped stopped) {
-        buildPlacement("stopped", stopped.getPrintPlacement());
+        buildPlacementWithAttribute("stopped", stopped.getPrintPlacement(), "smufl", stopped.getSmufl());
     }
 
     private void buildSnapPizzicato(SnapPizzicato snapPizzicato) {
@@ -241,7 +241,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {
-        buildPlacementText("other-technical", otherTechnical.getPlacementText());
+        buildOtherPlacementText("other-technical", otherTechnical.getPlacementText(), otherTechnical.getSmufl());
     }
 
     public static Map<String, String> buildBendSound(BendSound bendSound) {

@@ -117,6 +117,6 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildOtherArticulation(OtherArticulation otherArticulation) {
-        buildPlacementText("other-articulation", otherArticulation.getPlacementText());
+        buildOtherPlacementText("other-articulation", otherArticulation.getPlacementText(), otherArticulation.getSmufl());
     }
 }

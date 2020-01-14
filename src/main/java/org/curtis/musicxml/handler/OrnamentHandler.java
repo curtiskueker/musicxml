@@ -76,6 +76,7 @@ public class OrnamentHandler extends BaseHandler {
                 case "other-ornament":
                     OtherOrnament otherOrnament = new OtherOrnament();
                     otherOrnament.setPlacementText(PlacementFactory.newPlacementText(ornamentElement));
+                    otherOrnament.setSmufl(ornamentElement.getAttribute("smufl"));
                     ornament = otherOrnament;
                     break;
             }

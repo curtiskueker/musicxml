@@ -2,8 +2,8 @@ package org.curtis.musicxml.barline;
 
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.direction.directiontype.Coda;
+import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
@@ -37,8 +37,8 @@ public class Barline extends MusicData {
     @JoinColumn(name = "wavy_line_id")
     private WavyLine wavyLine;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "segno_print_id")
-    private PrintStyleAlign segnoPrint;
+    @JoinColumn(name = "segno_id")
+    private Segno segnoPrint;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "coda_id")
     private Coda codaPrint;
@@ -90,11 +90,11 @@ public class Barline extends MusicData {
         this.wavyLine = wavyLine;
     }
 
-    public PrintStyleAlign getSegnoPrint() {
+    public Segno getSegnoPrint() {
         return segnoPrint;
     }
 
-    public void setSegnoPrint(PrintStyleAlign segnoPrint) {
+    public void setSegnoPrint(Segno segnoPrint) {
         this.segnoPrint = segnoPrint;
     }
 

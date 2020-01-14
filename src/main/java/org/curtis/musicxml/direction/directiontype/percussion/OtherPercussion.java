@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 public class OtherPercussion extends Percussion {
     @Column
     private String value;
+    @Column
+    private String smufl;
 
     public OtherPercussion() {
 
@@ -20,5 +22,13 @@ public class OtherPercussion extends Percussion {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

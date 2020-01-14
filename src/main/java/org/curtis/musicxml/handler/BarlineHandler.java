@@ -84,7 +84,7 @@ public class BarlineHandler extends MusicDataHandler {
                     barline.setWavyLine(OrnamentFactory.newWavyLine(barlineSubelement));
                     break;
                 case "segno":
-                    barline.setSegnoPrint(FormattingFactory.newPrintStyleAlign(barlineSubelement));
+                    barline.setSegnoPrint(NotationFactory.newSegno(barlineSubelement));
                     break;
                 case "coda":
                     barline.setCodaPrint(NotationFactory.newCoda(barlineSubelement));

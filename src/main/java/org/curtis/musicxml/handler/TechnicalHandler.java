@@ -135,6 +135,7 @@ public class TechnicalHandler extends BaseHandler {
                 case "stopped":
                     Stopped stopped = new Stopped();
                     stopped.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    stopped.setSmufl(technicalElement.getAttribute("smufl"));
                     technical = stopped;
                     break;
                 case "snap-pizzicato":
@@ -220,6 +221,7 @@ public class TechnicalHandler extends BaseHandler {
                 case "other-technical":
                     OtherTechnical otherTechnical = new OtherTechnical();
                     otherTechnical.setPlacementText(PlacementFactory.newPlacementText(technicalElement));
+                    otherTechnical.setSmufl(technicalElement.getAttribute("smufl"));
                     technical = otherTechnical;
                     break;
             }
