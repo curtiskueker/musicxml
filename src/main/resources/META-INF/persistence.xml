@@ -189,7 +189,6 @@
         <class>org.curtis.musicxml.note.lyric.LyricItem</class>
         <class>org.curtis.musicxml.note.lyric.LyricText</class>
         <class>org.curtis.musicxml.note.lyric.TextData</class>
-        <class>org.curtis.musicxml.note.lyric.TextFontColor</class>
         <class>org.curtis.musicxml.note.notation.AccidentalMark</class>
         <class>org.curtis.musicxml.note.notation.Arpeggiate</class>
         <class>org.curtis.musicxml.note.notation.Articulations</class>
