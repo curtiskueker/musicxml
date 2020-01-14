@@ -14,6 +14,10 @@ public class DynamicsMarking extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "dynamics_type")
     private DynamicsType dynamicsType;
+    @Column
+    private String value;
+    @Column
+    private String smufl;
 
     public DynamicsMarking() {
 
@@ -25,5 +29,21 @@ public class DynamicsMarking extends DatabaseItem {
 
     public void setDynamicsType(DynamicsType dynamicsType) {
         this.dynamicsType = dynamicsType;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getSmufl() {
+        return smufl;
+    }
+
+    public void setSmufl(String smufl) {
+        this.smufl = smufl;
     }
 }

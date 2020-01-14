@@ -24,5 +24,8 @@ public enum DynamicsType {
     SFZ,
     SFFZ,
     FZ,
+    N,
+    PF,
+    SFZP,
     OTHER_DYNAMICS
 }

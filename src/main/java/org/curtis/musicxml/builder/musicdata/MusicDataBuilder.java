@@ -300,7 +300,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         buildAttribute("enclosure", dynamics.getEnclosure());
         buildCloseElement();
         for (DynamicsMarking dynamicsMarking : dynamics.getMarkings()) {
-            buildElement(dynamicsMarking.getDynamicsType());
+            buildElementWithValueAndAttribute(BuilderUtil.enumValue(dynamicsMarking.getDynamicsType()), dynamicsMarking.getValue(), "smufl", dynamicsMarking.getSmufl());
         }
         buildEndElement("dynamics");
     }

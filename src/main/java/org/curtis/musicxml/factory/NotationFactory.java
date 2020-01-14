@@ -158,6 +158,8 @@ public class NotationFactory {
         for(Element dynamicsElement : dynamicsElements) {
             DynamicsMarking dynamicsMarking = new DynamicsMarking();
             dynamicsMarking.setDynamicsType((DynamicsType)FactoryUtil.enumValue(DynamicsType.class, dynamicsElement.getTagName()));
+            dynamicsMarking.setValue(XmlUtil.getElementText(dynamicsElement));
+            dynamicsMarking.setSmufl(dynamicsElement.getAttribute("smufl"));
             dynamicsMarkings.add(dynamicsMarking);
         }
 
