@@ -47,7 +47,9 @@ public class OrnamentHandler extends BaseHandler {
                     break;
                 case "trill-mark":
                 case "vertical-turn":
+                case "inverted-vertical-turn":
                 case "shake":
+                case "haydn":
                     ornament = OrnamentFactory.newPlacedTrillSound(ornamentElement);
                     break;
                 case "turn":

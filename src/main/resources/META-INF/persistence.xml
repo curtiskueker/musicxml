@@ -222,6 +222,7 @@
         <class>org.curtis.musicxml.note.notation.articulation.OtherArticulation</class>
         <class>org.curtis.musicxml.note.notation.articulation.Plop</class>
         <class>org.curtis.musicxml.note.notation.articulation.Scoop</class>
+        <class>org.curtis.musicxml.note.notation.articulation.SoftAccent</class>
         <class>org.curtis.musicxml.note.notation.articulation.Spiccato</class>
         <class>org.curtis.musicxml.note.notation.articulation.Staccatissimo</class>
         <class>org.curtis.musicxml.note.notation.articulation.Staccato</class>
@@ -231,8 +232,10 @@
         <class>org.curtis.musicxml.note.notation.articulation.Unstress</class>
         <class>org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn</class>
         <class>org.curtis.musicxml.note.notation.ornament.DelayedTurn</class>
+        <class>org.curtis.musicxml.note.notation.ornament.Haydn</class>
         <class>org.curtis.musicxml.note.notation.ornament.InvertedMordent</class>
         <class>org.curtis.musicxml.note.notation.ornament.InvertedTurn</class>
+        <class>org.curtis.musicxml.note.notation.ornament.InvertedVerticalTurn</class>
         <class>org.curtis.musicxml.note.notation.ornament.Mordent</class>
         <class>org.curtis.musicxml.note.notation.ornament.Ornament</class>
         <class>org.curtis.musicxml.note.notation.ornament.OtherOrnament</class>
@@ -247,21 +250,27 @@
         <class>org.curtis.musicxml.note.notation.technical.Arrow</class>
         <class>org.curtis.musicxml.note.notation.technical.Bend</class>
         <class>org.curtis.musicxml.note.notation.technical.BendSound</class>
+        <class>org.curtis.musicxml.note.notation.technical.BrassBend</class>
         <class>org.curtis.musicxml.note.notation.technical.DownBow</class>
         <class>org.curtis.musicxml.note.notation.technical.DoubleTongue</class>
         <class>org.curtis.musicxml.note.notation.technical.Fingering</class>
         <class>org.curtis.musicxml.note.notation.technical.Fingernails</class>
+        <class>org.curtis.musicxml.note.notation.technical.Flip</class>
         <class>org.curtis.musicxml.note.notation.technical.Fret</class>
+        <class>org.curtis.musicxml.note.notation.technical.Golpe</class>
+        <class>org.curtis.musicxml.note.notation.technical.HalfMuted</class>
         <class>org.curtis.musicxml.note.notation.technical.HammerOn</class>
         <class>org.curtis.musicxml.note.notation.technical.Handbell</class>
         <class>org.curtis.musicxml.note.notation.technical.Harmonic</class>
         <class>org.curtis.musicxml.note.notation.technical.HarmonMute</class>
         <class>org.curtis.musicxml.note.notation.technical.Heel</class>
         <class>org.curtis.musicxml.note.notation.technical.Hole</class>
+        <class>org.curtis.musicxml.note.notation.technical.Open</class>
         <class>org.curtis.musicxml.note.notation.technical.OpenString</class>
         <class>org.curtis.musicxml.note.notation.technical.OtherTechnical</class>
         <class>org.curtis.musicxml.note.notation.technical.Pluck</class>
         <class>org.curtis.musicxml.note.notation.technical.PullOff</class>
+        <class>org.curtis.musicxml.note.notation.technical.Smear</class>
         <class>org.curtis.musicxml.note.notation.technical.SnapPizzicato</class>
         <class>org.curtis.musicxml.note.notation.technical.Stopped</class>
         <class>org.curtis.musicxml.note.notation.technical.StringNumber</class>

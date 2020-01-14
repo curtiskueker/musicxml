@@ -12,6 +12,7 @@ import org.curtis.musicxml.note.notation.articulation.Falloff;
 import org.curtis.musicxml.note.notation.articulation.OtherArticulation;
 import org.curtis.musicxml.note.notation.articulation.Plop;
 import org.curtis.musicxml.note.notation.articulation.Scoop;
+import org.curtis.musicxml.note.notation.articulation.SoftAccent;
 import org.curtis.musicxml.note.notation.articulation.Spiccato;
 import org.curtis.musicxml.note.notation.articulation.Staccatissimo;
 import org.curtis.musicxml.note.notation.articulation.Staccato;
@@ -48,6 +49,7 @@ public class ArticulationBuilder extends MusicDataBuilder {
         else if (articulation instanceof Caesura) buildCaesura((Caesura)articulation);
         else if (articulation instanceof Stress) buildStress((Stress)articulation);
         else if (articulation instanceof Unstress) buildUnstress((Unstress)articulation);
+        else if (articulation instanceof SoftAccent) buildSoftAccent((SoftAccent)articulation);
         else if (articulation instanceof OtherArticulation) buildOtherArticulation((OtherArticulation)articulation);
 
         return stringBuilder;
@@ -98,8 +100,7 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildBreathMark(BreathMark breathMark) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(breathMark.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(breathMark.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(breathMark.getPlacement()));
         buildElementWithValueAndAttributes("breath-mark", breathMark.getBreathMarkValue(), attributes);
     }
@@ -114,6 +115,10 @@ public class ArticulationBuilder extends MusicDataBuilder {
 
     private void buildUnstress(Unstress unstress) {
         buildPlacement("unstress", unstress.getPrintPlacement());
+    }
+
+    private void buildSoftAccent(SoftAccent softAccent) {
+        buildPlacement("soft-accent", softAccent.getPrintPlacement());
     }
 
     private void buildOtherArticulation(OtherArticulation otherArticulation) {

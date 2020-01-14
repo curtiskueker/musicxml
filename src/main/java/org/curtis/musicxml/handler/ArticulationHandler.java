@@ -19,6 +19,7 @@ import org.curtis.musicxml.note.notation.articulation.Falloff;
 import org.curtis.musicxml.note.notation.articulation.OtherArticulation;
 import org.curtis.musicxml.note.notation.articulation.Plop;
 import org.curtis.musicxml.note.notation.articulation.Scoop;
+import org.curtis.musicxml.note.notation.articulation.SoftAccent;
 import org.curtis.musicxml.note.notation.articulation.Spiccato;
 import org.curtis.musicxml.note.notation.articulation.Staccatissimo;
 import org.curtis.musicxml.note.notation.articulation.Staccato;
@@ -138,6 +139,11 @@ public class ArticulationHandler extends BaseHandler {
                     Unstress unstress = new Unstress();
                     unstress.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
                     articulation = unstress;
+                    break;
+                case "soft-accent":
+                    SoftAccent softAccent = new SoftAccent();
+                    softAccent.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
+                    articulation = softAccent;
                     break;
                 case "other-articulation":
                     OtherArticulation otherArticulation = new OtherArticulation();

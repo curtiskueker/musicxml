@@ -5,9 +5,11 @@ import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
 import org.curtis.musicxml.note.notation.ornament.DelayedTurn;
+import org.curtis.musicxml.note.notation.ornament.Haydn;
 import org.curtis.musicxml.note.notation.ornament.HorizontalTurn;
 import org.curtis.musicxml.note.notation.ornament.InvertedMordent;
 import org.curtis.musicxml.note.notation.ornament.InvertedTurn;
+import org.curtis.musicxml.note.notation.ornament.InvertedVerticalTurn;
 import org.curtis.musicxml.note.notation.ornament.Mordent;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.OtherOrnament;
@@ -51,7 +53,9 @@ public class OrnamentBuilder extends MusicDataBuilder {
         String elementName;
         if (placedTrillSound instanceof TrillMark) elementName = "trill-mark";
         else if (placedTrillSound instanceof VerticalTurn) elementName = "vertical-turn";
+        else if (placedTrillSound instanceof InvertedVerticalTurn) elementName = "inverted-vertical-turn";
         else if (placedTrillSound instanceof Shake) elementName = "shake";
+        else if (placedTrillSound instanceof Haydn) elementName = "haydn";
         else if (placedTrillSound instanceof AbstractMordent) {
             buildAbstractMordent((AbstractMordent)placedTrillSound, attributes);
             return;

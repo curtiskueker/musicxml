@@ -2,6 +2,8 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.note.notation.ornament.Haydn;
+import org.curtis.musicxml.note.notation.ornament.InvertedVerticalTurn;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
@@ -56,6 +58,9 @@ public class OrnamentFactory {
             case "vertical-turn":
                 placedTrillSound = new VerticalTurn();
                 break;
+            case "inverted-vertical-turn":
+                placedTrillSound = new InvertedVerticalTurn();
+                break;
             case "shake":
                 placedTrillSound = new Shake();
                 break;
@@ -64,6 +69,9 @@ public class OrnamentFactory {
                 break;
             case "inverted-mordent":
                 placedTrillSound = new InvertedMordent();
+                break;
+            case "haydn":
+                placedTrillSound = new Haydn();
                 break;
             default:
                 return null;

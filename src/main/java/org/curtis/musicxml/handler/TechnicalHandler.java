@@ -10,10 +10,14 @@ import org.curtis.musicxml.note.notation.technical.ArrowDirection;
 import org.curtis.musicxml.note.notation.technical.ArrowStyle;
 import org.curtis.musicxml.note.notation.technical.Bend;
 import org.curtis.musicxml.note.notation.technical.BendType;
+import org.curtis.musicxml.note.notation.technical.BrassBend;
 import org.curtis.musicxml.note.notation.technical.CircularArrow;
 import org.curtis.musicxml.note.notation.technical.DoubleTongue;
 import org.curtis.musicxml.note.notation.technical.DownBow;
 import org.curtis.musicxml.note.notation.technical.Fingernails;
+import org.curtis.musicxml.note.notation.technical.Flip;
+import org.curtis.musicxml.note.notation.technical.Golpe;
+import org.curtis.musicxml.note.notation.technical.HalfMuted;
 import org.curtis.musicxml.note.notation.technical.Handbell;
 import org.curtis.musicxml.note.notation.technical.HandbellType;
 import org.curtis.musicxml.note.notation.technical.HarmonClosed;
@@ -26,9 +30,11 @@ import org.curtis.musicxml.note.notation.technical.HarmonicType;
 import org.curtis.musicxml.note.notation.technical.Hole;
 import org.curtis.musicxml.note.notation.technical.HoleClosedLocation;
 import org.curtis.musicxml.note.notation.technical.HoleClosedType;
+import org.curtis.musicxml.note.notation.technical.Open;
 import org.curtis.musicxml.note.notation.technical.OpenString;
 import org.curtis.musicxml.note.notation.technical.OtherTechnical;
 import org.curtis.musicxml.note.notation.technical.Pluck;
+import org.curtis.musicxml.note.notation.technical.Smear;
 import org.curtis.musicxml.note.notation.technical.SnapPizzicato;
 import org.curtis.musicxml.note.notation.technical.Stopped;
 import org.curtis.musicxml.note.notation.technical.Tap;
@@ -38,7 +44,6 @@ import org.curtis.musicxml.note.notation.technical.ThumbPosition;
 import org.curtis.musicxml.note.notation.technical.TripleTongue;
 import org.curtis.musicxml.note.notation.technical.UpBow;
 import org.curtis.util.MathUtil;
-import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -181,6 +186,38 @@ public class TechnicalHandler extends BaseHandler {
                     Fingernails fingernails = new Fingernails();
                     fingernails.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
                     technical = fingernails;
+                    break;
+                case "brass-bend":
+                    BrassBend brassBend = new BrassBend();
+                    brassBend.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    technical = brassBend;
+                    break;
+                case "flip":
+                    Flip flip = new Flip();
+                    flip.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    technical = flip;
+                    break;
+                case "smear":
+                    Smear smear = new Smear();
+                    smear.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    technical = smear;
+                    break;
+                case "open":
+                    Open open = new Open();
+                    open.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    open.setSmufl(technicalElement.getAttribute("smufl"));
+                    technical = open;
+                    break;
+                case "half-muted":
+                    HalfMuted halfMuted = new HalfMuted();
+                    halfMuted.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    halfMuted.setSmufl(technicalElement.getAttribute("smufl"));
+                    technical = halfMuted;
+                    break;
+                case "golpe":
+                    Golpe golpe = new Golpe();
+                    golpe.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    technical = golpe;
                     break;
                 case "hole":
                     Hole hole = new Hole();

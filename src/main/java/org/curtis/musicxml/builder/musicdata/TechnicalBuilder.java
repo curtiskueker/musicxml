@@ -8,11 +8,15 @@ import org.curtis.musicxml.note.notation.technical.Arrow;
 import org.curtis.musicxml.note.notation.technical.Bend;
 import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.BendType;
+import org.curtis.musicxml.note.notation.technical.BrassBend;
 import org.curtis.musicxml.note.notation.technical.DoubleTongue;
 import org.curtis.musicxml.note.notation.technical.DownBow;
 import org.curtis.musicxml.note.notation.technical.Fingering;
 import org.curtis.musicxml.note.notation.technical.Fingernails;
+import org.curtis.musicxml.note.notation.technical.Flip;
 import org.curtis.musicxml.note.notation.technical.Fret;
+import org.curtis.musicxml.note.notation.technical.Golpe;
+import org.curtis.musicxml.note.notation.technical.HalfMuted;
 import org.curtis.musicxml.note.notation.technical.HammerOn;
 import org.curtis.musicxml.note.notation.technical.HammerOnPullOff;
 import org.curtis.musicxml.note.notation.technical.Handbell;
@@ -24,9 +28,11 @@ import org.curtis.musicxml.note.notation.technical.HarmonicType;
 import org.curtis.musicxml.note.notation.technical.Heel;
 import org.curtis.musicxml.note.notation.technical.HeelToe;
 import org.curtis.musicxml.note.notation.technical.Hole;
+import org.curtis.musicxml.note.notation.technical.Open;
 import org.curtis.musicxml.note.notation.technical.OpenString;
 import org.curtis.musicxml.note.notation.technical.OtherTechnical;
 import org.curtis.musicxml.note.notation.technical.Pluck;
+import org.curtis.musicxml.note.notation.technical.Smear;
 import org.curtis.musicxml.note.notation.technical.SnapPizzicato;
 import org.curtis.musicxml.note.notation.technical.Stopped;
 import org.curtis.musicxml.note.notation.technical.StringNumber;
@@ -222,10 +228,29 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildHandbell(Handbell handbell) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(handbell.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(handbell.getPrintStyle()));
         attributes.put("placement", BuilderUtil.enumValue(handbell.getPlacement()));
         buildElementWithValueAndAttributes("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), attributes);
+    }
+
+    private void buildBrassBend(BrassBend brassBend) {
+        buildPlacement("brass-bend", brassBend.getPrintPlacement());
+    }
+
+    private void buildFlip(Flip flip) {
+        buildPlacement("flip", flip.getPrintPlacement());
+    }
+
+    private void buildSmear(Smear smear) {
+        buildPlacement("smear", smear.getPrintPlacement());
+    }
+
+    private void buildOpen(Open open) {
+        buildPlacementWithAttribute("open", open.getPrintPlacement(), "smufl", open.getSmufl());
+    }
+
+    private void buildHalfMuted(HalfMuted halfMuted) {
+        buildPlacementWithAttribute("half-muted", halfMuted.getPrintPlacement(), "smufl", halfMuted.getSmufl());
     }
 
     private void buildHarmonMute(HarmonMute harmonMute) {
@@ -239,6 +264,10 @@ public class TechnicalBuilder extends MusicDataBuilder {
         HarmonClosed harmonClosed = harmonMute.getHarmonClosed();
         buildElementWithValueAndAttribute("harmon-closed", BuilderUtil.enumValue(harmonClosed.getValue()), "location", BuilderUtil.enumValue(harmonClosed.getLocation()));
         buildEndElement("harmon-mute");
+    }
+
+    private void buildGolpe(Golpe golpe) {
+        buildPlacement("golpe", golpe.getPrintPlacement());
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {
