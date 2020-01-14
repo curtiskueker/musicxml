@@ -2,6 +2,7 @@ package org.curtis.musicxml.direction.directiontype.metronome;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,9 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("note metronome")
 public class NoteMetronome extends Metronome {
+    @Column
+    @Type(type="yes_no")
+    private Boolean metronomeArrows = false;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_metronome_1_id", nullable = false)
@@ -29,6 +33,14 @@ public class NoteMetronome extends Metronome {
 
     public NoteMetronome() {
 
+    }
+
+    public Boolean getMetronomeArrows() {
+        return metronomeArrows;
+    }
+
+    public void setMetronomeArrows(Boolean metronomeArrows) {
+        this.metronomeArrows = metronomeArrows;
     }
 
     public List<MetronomeNote> getMetronomeNotes1() {

@@ -30,8 +30,10 @@ import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatUnit;
+import org.curtis.musicxml.direction.directiontype.metronome.BeatUnitTied;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
+import org.curtis.musicxml.direction.directiontype.metronome.MetronomeMark;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet;
 import org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome;
@@ -50,7 +52,9 @@ import org.curtis.musicxml.direction.directiontype.percussion.Timpani;
 import org.curtis.musicxml.direction.directiontype.percussion.Wood;
 import org.curtis.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DirectionTypeBuilder extends MusicDataBuilder {
@@ -162,19 +166,32 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildBeatMetronome(BeatMetronome beatMetronome) {
-        buildBeatUnitWithDots(beatMetronome.getBeatUnit1());
-        PerMinute perMinute = beatMetronome.getPerMinute();
-        if (perMinute != null) buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
-        BeatUnit beatUnit2 = beatMetronome.getBeatUnit2();
-        if (beatUnit2 != null) buildBeatUnitWithDots(beatUnit2);
+        List<MetronomeMark> metronomeMarks = new ArrayList<>();
+        metronomeMarks.add(beatMetronome.getMetronomeMark1());
+        metronomeMarks.add(beatMetronome.getMetronomeMark2());
+        for (MetronomeMark metronomeMark : metronomeMarks) {
+            if (metronomeMark instanceof BeatUnit) {
+                BeatUnit beatUnit = (BeatUnit)metronomeMark;
+                buildBeatUnit(beatUnit);
+            } else if (metronomeMark instanceof PerMinute) {
+                PerMinute perMinute = (PerMinute)metronomeMark;
+                buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
+            }
+        }
     }
 
-    private void buildBeatUnitWithDots(BeatUnit beatUnit) {
+    private void buildBeatUnit(BeatUnit beatUnit) {
         buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit.getBeatUnit()));
         for (int beatUnitDots = 1; beatUnitDots <= beatUnit.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
+        for (BeatUnitTied beatUnitTied : beatUnit.getBeatUnitTieds()) {
+            buildStartElement("beat-unit-tied");
+            buildBeatUnit(beatUnitTied.getBeatUnit());
+            buildEndElement("beat-unit-tied");
+        }
     }
 
     private void buildNoteMetronome(NoteMetronome noteMetronome) {
+        if (noteMetronome.getMetronomeArrows()) buildElement("metronome-arrows");
         noteMetronome.getMetronomeNotes1().forEach(this::buildMetronomeNote);
         buildElementWithValue("metronome-relation", noteMetronome.getMetronomeRelation());
         noteMetronome.getMetronomeNotes2().forEach(this::buildMetronomeNote);

@@ -37,8 +37,10 @@ import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatUnit;
+import org.curtis.musicxml.direction.directiontype.metronome.BeatUnitTied;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
+import org.curtis.musicxml.direction.directiontype.metronome.MetronomeMark;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeTuplet;
 import org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome;
@@ -72,6 +74,7 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DirectionFactory {
@@ -245,32 +248,78 @@ public class DirectionFactory {
     private static BeatMetronome newBeatMetronome(Element element) {
         BeatMetronome beatMetronome = new BeatMetronome();
 
+        List<Element> metronomeMark1Elements = new ArrayList<>();
+        List<Element> metronomeMark2Elements = new ArrayList<>();
+
+        boolean list1Complete = false;
         for(Element beatElement : XmlUtil.getChildElements(element)) {
-            String beatElementName = beatElement.getTagName();
-            switch (beatElementName) {
+            if (list1Complete) {
+                metronomeMark2Elements.add(beatElement);
+                continue;
+            }
+
+            switch (beatElement.getTagName()) {
                 case "beat-unit":
-                    BeatUnit beatUnit = new BeatUnit();
-                    beatUnit.setBeatUnit(NoteFactory.newNoteTypeValue(beatElement));
-                    if(beatMetronome.getBeatUnit1() == null) beatMetronome.setBeatUnit1(beatUnit);
-                    else beatMetronome.setBeatUnit2(beatUnit);
-                    break;
-                case "beat-unit-dot":
-                    BeatUnit beatUnitDot = beatMetronome.getBeatUnit2();
-                    if(beatUnitDot == null) beatUnitDot = beatMetronome.getBeatUnit1();
-                    Integer beatUnitDots = beatUnitDot.getBeatUnitDots();
-                    beatUnitDots++;
-                    beatUnitDot.setBeatUnitDots(beatUnitDots);
+                    if (metronomeMark1Elements.isEmpty()) metronomeMark1Elements.add(beatElement);
+                    else {
+                        metronomeMark2Elements.add(beatElement);
+                        list1Complete = true;
+                    }
                     break;
                 case "per-minute":
-                    PerMinute perMinute = new PerMinute();
-                    perMinute.setPerMinute(XmlUtil.getElementText(beatElement));
-                    perMinute.setFont(FormattingFactory.newFont(beatElement));
-                    beatMetronome.setPerMinute(perMinute);
+                    metronomeMark2Elements.add(beatElement);
+                    list1Complete = true;
+                    break;
+                default:
+                    metronomeMark1Elements.add(beatElement);
                     break;
             }
         }
 
+        beatMetronome.setMetronomeMark1(newMetronomeMark(metronomeMark1Elements));
+        beatMetronome.setMetronomeMark2(newMetronomeMark(metronomeMark2Elements));
+
         return beatMetronome;
+    }
+
+    private static MetronomeMark newMetronomeMark(List<Element> elements) {
+        if (elements.isEmpty()) return null;
+
+        String metronomeMarkElementName = elements.get(0).getTagName();
+        if (metronomeMarkElementName.equals("beat-unit")) return newBeatUnit(elements);
+        else if (metronomeMarkElementName.equals("per-minute")) return newPerMinute(elements.get(0));
+        else return null;
+    }
+
+    private static BeatUnit newBeatUnit(List<Element> elements) {
+        BeatUnit beatUnit = new BeatUnit();
+        for(Element element : elements) {
+            String beatElementName = element.getTagName();
+            switch (beatElementName) {
+                case "beat-unit":
+                    break;
+                case "beat-unit-dot":
+                    Integer beatUnitDots = beatUnit.getBeatUnitDots();
+                    beatUnitDots++;
+                    beatUnit.setBeatUnitDots(beatUnitDots);
+                    break;
+                case "beat-unit-tied":
+                    BeatUnitTied beatUnitTied = new BeatUnitTied();
+                    beatUnitTied.setBeatUnit(newBeatUnit(XmlUtil.getChildElements(element)));
+                    beatUnit.getBeatUnitTieds().add(beatUnitTied);
+                    break;
+            }
+        }
+
+        return beatUnit;
+    }
+
+    private static PerMinute newPerMinute(Element element) {
+        PerMinute perMinute = new PerMinute();
+        perMinute.setPerMinute(XmlUtil.getElementText(element));
+        perMinute.setFont(FormattingFactory.newFont(element));
+
+        return perMinute;
     }
 
     private static NoteMetronome newNoteMetronome(Element element) {
@@ -321,6 +370,9 @@ public class DirectionFactory {
                     break;
                 case "metronome-relation":
                     noteMetronome.setMetronomeRelation(XmlUtil.getElementText(noteElement));
+                    break;
+                case "metronome-arrows":
+                    noteMetronome.setMetronomeArrows(true);
                     break;
             }
         }

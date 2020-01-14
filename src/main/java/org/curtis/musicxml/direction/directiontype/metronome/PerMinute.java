@@ -1,18 +1,17 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
-import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "per_minute")
-public class PerMinute extends DatabaseItem {
+@DiscriminatorValue("per minute")
+public class PerMinute extends MetronomeMark {
     @Column(name = "per_minute")
     private String perMinute;
     @OneToOne(cascade = CascadeType.ALL)
