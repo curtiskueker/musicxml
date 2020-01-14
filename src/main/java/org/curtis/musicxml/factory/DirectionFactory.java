@@ -214,6 +214,10 @@ public class DirectionFactory {
                 principalVoice.setSymbol((PrincipalVoiceSymbol)FactoryUtil.enumValue(PrincipalVoiceSymbol.class, element.getAttribute("symbol")));
                 principalVoice.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return principalVoice;
+            case "percussion":
+                List<Element> percussionElements = XmlUtil.getChildElements(element);
+                if (percussionElements.isEmpty()) return null;
+                return newPercussion(percussionElements.get(0));
             case "accordion-registration":
                 AccordionRegistration accordionRegistration = new AccordionRegistration();
                 accordionRegistration.setAccordionHigh(XmlUtil.hasChildElement(element, "accordion-high"));
@@ -221,10 +225,6 @@ public class DirectionFactory {
                 accordionRegistration.setAccordionLow(XmlUtil.hasChildElement(element, "accordion-low"));
                 accordionRegistration.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return accordionRegistration;
-            case "percussion":
-                List<Element> percussionElements = XmlUtil.getChildElements(element);
-                if (percussionElements.isEmpty()) return null;
-                return newPercussion(percussionElements.get(0));
             case "staff-divide":
                 StaffDivide staffDivide = new StaffDivide();
                 staffDivide.setStaffDivideSymbol((StaffDivideSymbol)FactoryUtil.enumValue(StaffDivideSymbol.class, element.getAttribute("type")));

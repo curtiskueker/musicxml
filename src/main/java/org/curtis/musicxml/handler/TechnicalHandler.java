@@ -196,6 +196,7 @@ public class TechnicalHandler extends BaseHandler {
                     Arrow arrow = new Arrow();
                     arrow.setArrowDirection((ArrowDirection)FactoryUtil.enumValue(ArrowDirection.class, XmlUtil.getChildElementText(technicalElement, "arrow-direction")));
                     arrow.setArrowStyle((ArrowStyle)FactoryUtil.enumValue(ArrowStyle.class, XmlUtil.getChildElementText(technicalElement, "arrow-style")));
+                    arrow.setArrowhead(XmlUtil.hasChildElement(technicalElement, "arrowhead"));
                     arrow.setCircularArrow((CircularArrow)FactoryUtil.enumValue(CircularArrow.class, XmlUtil.getChildElementText(technicalElement, "circular-arrow")));
                     arrow.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     arrow.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));

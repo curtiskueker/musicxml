@@ -2,6 +2,7 @@ package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.PrintStyle;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +22,9 @@ public class Arrow extends Technical {
     @Enumerated(EnumType.STRING)
     @Column(name = "arrow_style")
     private ArrowStyle arrowStyle;
+    @Column
+    @Type(type="yes_no")
+    private Boolean arrowhead = false;
     @Enumerated(EnumType.STRING)
     @Column(name = "circular_arrow")
     private CircularArrow circularArrow;
@@ -51,6 +55,14 @@ public class Arrow extends Technical {
 
     public void setArrowStyle(ArrowStyle arrowStyle) {
         this.arrowStyle = arrowStyle;
+    }
+
+    public Boolean getArrowhead() {
+        return arrowhead;
+    }
+
+    public void setArrowhead(Boolean arrowhead) {
+        this.arrowhead = arrowhead;
     }
 
     public CircularArrow getCircularArrow() {

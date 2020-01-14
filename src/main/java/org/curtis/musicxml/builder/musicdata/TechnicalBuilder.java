@@ -216,6 +216,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
         buildCloseElement();
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
         buildElementWithValue("arrow-style", arrow.getArrowStyle());
+        if (arrow.getArrowhead()) buildElement("arrowhead");
         buildElementWithValue("circular-arrow", arrow.getCircularArrow());
         buildEndElement("arrow");
     }
