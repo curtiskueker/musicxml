@@ -22,7 +22,7 @@ public class NoteFactory {
     }
 
     public static Step newStep(Element stepElement) {
-        return (Step)FactoryUtil.enumValue(Step.class, XmlUtil.getElementText(stepElement));
+        return FactoryUtil.enumValue(Step.class, XmlUtil.getElementText(stepElement));
     }
 
     public static NoteTypeValue newNoteTypeValue(Element noteTypeElement) {
@@ -46,7 +46,7 @@ public class NoteFactory {
                 noteTypeValue = "_" + noteTypeValue;
         }
 
-        return (NoteTypeValue)FactoryUtil.enumValue(NoteTypeValue.class, noteTypeValue);
+        return FactoryUtil.enumValue(NoteTypeValue.class, noteTypeValue);
     }
 
     public static AccidentalType newAccidentalType(Element accidentalElement) {
@@ -55,7 +55,7 @@ public class NoteFactory {
 
         }
 
-        return ((AccidentalType)FactoryUtil.enumValue(AccidentalType.class, XmlUtil.getElementText(accidentalElement)));
+        return (FactoryUtil.enumValue(AccidentalType.class, XmlUtil.getElementText(accidentalElement)));
     }
 
     public static AccidentalText newAccidentalText(Element element) {
@@ -72,7 +72,7 @@ public class NoteFactory {
     public static BeamType newBeamType(Element element) {
         if(element == null) return null;
 
-        return (BeamType)FactoryUtil.enumValue(BeamType.class, XmlUtil.getElementText(element));
+        return FactoryUtil.enumValue(BeamType.class, XmlUtil.getElementText(element));
     }
 
     public static TimeModification newTimeModification(Element element) {

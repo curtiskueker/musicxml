@@ -70,7 +70,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         rootAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(rootAlterElement)));
                         rootAlter.setPrintObject(FormattingFactory.getPrintObject(rootAlterElement));
                         rootAlter.setPrintStyle(FormattingFactory.newPrintStyle(rootAlterElement));
-                        rootAlter.setLocation((Location)FactoryUtil.enumValue(Location.class, rootAlterElement.getAttribute("location")));
+                        rootAlter.setLocation(FactoryUtil.enumValue(Location.class, rootAlterElement.getAttribute("location")));
                         root.setRootAlter(rootAlter);
                     }
                     harmonyChord = root;
@@ -83,116 +83,15 @@ public class HarmonyHandler extends MusicDataHandler {
                     break;
                 case "kind":
                     Kind kind = new Kind();
-                    String kindValue = XmlUtil.getElementText(harmonySubelement);
-                    switch (kindValue) {
-                        case "major":
-                            kind.setKindValue(KindValue.MAJOR);
-                            break;
-                        case "minor":
-                            kind.setKindValue(KindValue.MINOR);
-                            break;
-                        case "augmented":
-                            kind.setKindValue(KindValue.AUGMENTED);
-                            break;
-                        case "diminished":
-                            kind.setKindValue(KindValue.DIMINISHED);
-                            break;
-                        case "dominant":
-                            kind.setKindValue(KindValue.DOMINANT);
-                            break;
-                        case "major-seventh":
-                            kind.setKindValue(KindValue.MAJOR_SEVENTH);
-                            break;
-                        case "minor-seventh":
-                            kind.setKindValue(KindValue.MINOR_SEVENTH);
-                            break;
-                        case "diminished-seventh":
-                            kind.setKindValue(KindValue.DIMINISHED_SEVENTH);
-                            break;
-                        case "augmented-seventh":
-                            kind.setKindValue(KindValue.AUGMENTED_SEVENTH);
-                            break;
-                        case "half-diminished":
-                            kind.setKindValue(KindValue.HALF_DIMINISHED);
-                            break;
-                        case "major-minor":
-                            kind.setKindValue(KindValue.MAJOR_MINOR);
-                            break;
-                        case "major-sixth":
-                            kind.setKindValue(KindValue.MAJOR_SIXTH);
-                            break;
-                        case "minor-sixth":
-                            kind.setKindValue(KindValue.MINOR_SIXTH);
-                            break;
-                        case "dominant-ninth":
-                            kind.setKindValue(KindValue.DOMINANT_NINTH);
-                            break;
-                        case "major-ninth":
-                            kind.setKindValue(KindValue.MAJOR_NINTH);
-                            break;
-                        case "minor-ninth":
-                            kind.setKindValue(KindValue.MINOR_NINTH);
-                            break;
-                        case "dominant-11th":
-                            kind.setKindValue(KindValue.DOMINANT_11TH);
-                            break;
-                        case "major-11th":
-                            kind.setKindValue(KindValue.MAJOR_11TH);
-                            break;
-                        case "minor-11th":
-                            kind.setKindValue(KindValue.MINOR_11TH);
-                            break;
-                        case "dominant-13th":
-                            kind.setKindValue(KindValue.DOMINANT_13TH);
-                            break;
-                        case "major-13th":
-                            kind.setKindValue(KindValue.MAJOR_13TH);
-                            break;
-                        case "minor-13th":
-                            kind.setKindValue(KindValue.MINOR_13TH);
-                            break;
-                        case "suspended-second":
-                            kind.setKindValue(KindValue.SUSPENDED_SECOND);
-                            break;
-                        case "suspended-fourth":
-                            kind.setKindValue(KindValue.SUSPENDED_FOURTH);
-                            break;
-                        case "neopolitan":
-                            kind.setKindValue(KindValue.NEAPOLITAN);
-                            break;
-                        case "italian":
-                            kind.setKindValue(KindValue.ITALIAN);
-                            break;
-                        case "french":
-                            kind.setKindValue(KindValue.FRENCH);
-                            break;
-                        case "german":
-                            kind.setKindValue(KindValue.GERMAN);
-                            break;
-                        case "pedal":
-                            kind.setKindValue(KindValue.PEDAL);
-                            break;
-                        case "power":
-                            kind.setKindValue(KindValue.POWER);
-                            break;
-                        case "tristan":
-                            kind.setKindValue(KindValue.TRISTAN);
-                            break;
-                        case "other":
-                            kind.setKindValue(KindValue.OTHER);
-                            break;
-                        case "none":
-                            kind.setKindValue(KindValue.NONE);
-                            break;
-                    }
+                    kind.setKindValue(FactoryUtil.enumValue(KindValue.class, XmlUtil.getElementText(harmonySubelement)));
                     kind.setUseSymbols(TypeUtil.getYesNo(harmonySubelement.getAttribute("use-symbols")));
                     kind.setText(harmonySubelement.getAttribute("text"));
                     kind.setStackDegrees(TypeUtil.getYesNo(harmonySubelement.getAttribute("stack-degrees")));
                     kind.setParenthesesDegrees(TypeUtil.getYesNo(harmonySubelement.getAttribute("parentheses-degrees")));
                     kind.setBracketDegrees(TypeUtil.getYesNo(harmonySubelement.getAttribute("bracket-degrees")));
                     kind.setPrintStyle(FormattingFactory.newPrintStyle(harmonySubelement));
-                    kind.setHalign((Location)FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("halign")));
-                    kind.setValign((Location)FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("valign")));
+                    kind.setHalign(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("halign")));
+                    kind.setValign(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("valign")));
                     if (harmonyChord != null) harmonyChord.setKind(kind);
                     break;
                 case "inversion":
@@ -215,7 +114,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         bassAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(bassAlterElement)));
                         bassAlter.setPrintObject(FormattingFactory.getPrintObject(bassAlterElement));
                         bassAlter.setPrintStyle(FormattingFactory.newPrintStyle(bassAlterElement));
-                        bassAlter.setLocation((Location)FactoryUtil.enumValue(Location.class, bassAlterElement.getAttribute("location")));
+                        bassAlter.setLocation(FactoryUtil.enumValue(Location.class, bassAlterElement.getAttribute("location")));
                         bass.setBassAlter(bassAlter);
                     }
                     if (harmonyChord != null) harmonyChord.setBass(bass);
@@ -227,24 +126,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         Element degreeValueElement = XmlUtil.getChildElement(harmonySubelement, "degree-value");
                         DegreeValue degreeValue = new DegreeValue();
                         degreeValue.setValue(StringUtil.getInteger(XmlUtil.getElementText(degreeValueElement)));
-                        String degreeSymbolValue = degreeValueElement.getAttribute("symbol");
-                        switch (degreeSymbolValue) {
-                            case "major":
-                                degreeValue.setSymbol(DegreeSymbol.MAJOR);
-                                break;
-                            case "minor":
-                                degreeValue.setSymbol(DegreeSymbol.MINOR);
-                                break;
-                            case "augmented":
-                                degreeValue.setSymbol(DegreeSymbol.AUGMENTED);
-                                break;
-                            case "diminished":
-                                degreeValue.setSymbol(DegreeSymbol.DIMINISHED);
-                                break;
-                            case "half-diminished":
-                                degreeValue.setSymbol(DegreeSymbol.HALF_DIMINISHED);
-                                break;
-                        }
+                        degreeValue.setSymbol(FactoryUtil.enumValue(DegreeSymbol.class, degreeValueElement.getAttribute("symbol")));
                         degreeValue.setText(degreeValueElement.getAttribute("text"));
                         degreeValue.setPrintStyle(FormattingFactory.newPrintStyle(degreeValueElement));
                         degree.setDegreeValue(degreeValue);
@@ -256,18 +138,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         degree.setDegreeAlter(degreeAlter);
                         Element degreeTypeElement = XmlUtil.getChildElement(harmonySubelement, "degree-type");
                         DegreeType degreeType = new DegreeType();
-                        String degreeTypeValue = XmlUtil.getElementText(degreeTypeElement);
-                        switch (degreeTypeValue) {
-                            case "add":
-                                degreeType.setValue(DegreeTypeValue.ADD);
-                                break;
-                            case "alter":
-                                degreeType.setValue(DegreeTypeValue.ALTER);
-                                break;
-                            case "subtract":
-                                degreeType.setValue(DegreeTypeValue.SUBTRACT);
-                                break;
-                        }
+                        degreeType.setValue(FactoryUtil.enumValue(DegreeTypeValue.class, XmlUtil.getElementText(degreeTypeElement)));
                         degreeType.setText(degreeTypeElement.getAttribute("text"));
                         degreeType.setPrintStyle(FormattingFactory.newPrintStyle(degreeTypeElement));
                         degree.setDegreeType(degreeType);
@@ -281,7 +152,7 @@ public class HarmonyHandler extends MusicDataHandler {
                     frame.setFrameFrets(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "frame-frets")));
                     frame.setPosition(PlacementFactory.newPosition(harmonySubelement));
                     frame.setColor(harmonySubelement.getAttribute("color"));
-                    frame.setHalign((Location)FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("halign")));
+                    frame.setHalign(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("halign")));
                     frame.setHeight(MathUtil.newBigDecimal(harmonySubelement.getAttribute("height")));
                     frame.setWidth(MathUtil.newBigDecimal(harmonySubelement.getAttribute("width")));
                     frame.setUnplayed(harmonySubelement.getAttribute("unplayed"));
@@ -290,7 +161,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         FirstFret firstFret = new FirstFret();
                         firstFret.setValue(StringUtil.getInteger(XmlUtil.getElementText(firstFretElement)));
                         firstFret.setText(firstFretElement.getAttribute("text"));
-                        firstFret.setLocation((Location)FactoryUtil.enumValue(Location.class, firstFretElement.getAttribute("location")));
+                        firstFret.setLocation(FactoryUtil.enumValue(Location.class, firstFretElement.getAttribute("location")));
                         frame.setFirstFret(firstFret);
                     }
                     List<Element> frameNoteElements = XmlUtil.getChildElements(harmonySubelement, "frame-note");
@@ -303,7 +174,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         Element barreElement = XmlUtil.getChildElement(frameNoteElement, "barre");
                         if (barreElement != null) {
                             Barre barre = new Barre();
-                            barre.setType((Connection) FactoryUtil.enumValue(Connection.class, barreElement.getAttribute("type")));
+                            barre.setType(FactoryUtil.enumValue(Connection.class, barreElement.getAttribute("type")));
                             barre.setColor(barreElement.getAttribute("color"));
                             frameNote.setBarre(barre);
                         }
@@ -318,20 +189,7 @@ public class HarmonyHandler extends MusicDataHandler {
                     harmony.setStaff(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "staff")));
                     break;
             }
-            String harmonyType = element.getAttribute("type");
-            if(StringUtil.isNotEmpty(harmonyType)) {
-                switch (harmonyType) {
-                    case "explicit":
-                        harmony.setType(HarmonyType.EXPLICIT);
-                        break;
-                    case "implied":
-                        harmony.setType(HarmonyType.IMPLIED);
-                        break;
-                    case "alternate":
-                        harmony.setType(HarmonyType.ALTERNATE);
-                        break;
-                }
-            }
+            harmony.setType(FactoryUtil.enumValue(HarmonyType.class, element.getAttribute("type")));
             harmony.setPrintObject(FormattingFactory.getPrintObject(element));
             harmony.setPrintFrame(TypeUtil.getYesNo(element.getAttribute("print-frame")));
             harmony.setPrintStyle(FormattingFactory.newPrintStyle(element));

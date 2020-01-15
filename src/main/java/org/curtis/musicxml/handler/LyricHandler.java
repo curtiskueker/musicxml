@@ -70,7 +70,7 @@ public class LyricHandler extends BaseHandler {
                                 lyricSyllable.setElision(elision);
                                 break;
                             case "syllabic":
-                                lyricSyllable.setSyllabic((Connection) FactoryUtil.enumValue(Connection.class, XmlUtil.getElementText(textElement)));
+                                lyricSyllable.setSyllabic(FactoryUtil.enumValue(Connection.class, XmlUtil.getElementText(textElement)));
                                 break;
                             case "text":
                                 lyricSyllable.setText(LyricFactory.newTextData(textElement));
@@ -113,7 +113,7 @@ public class LyricHandler extends BaseHandler {
         lyric.setEditorial(FormattingFactory.newEditorial(element));
         lyric.setNumber(element.getAttribute("number"));
         lyric.setName(element.getAttribute("name"));
-        lyric.setJustify((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+        lyric.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
         lyric.setPosition(PlacementFactory.newPosition(element));
         lyric.setPlacement(PlacementFactory.newPlacementLocation(element));
         lyric.setColor(element.getAttribute("color"));

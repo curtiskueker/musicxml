@@ -69,7 +69,7 @@ public class OrnamentHandler extends BaseHandler {
                 case "tremolo":
                     Tremolo tremolo = new Tremolo();
                     tremolo.setTremoloMarks(StringUtil.getInteger(XmlUtil.getElementText(ornamentElement)));
-                    tremolo.setTremoloType((TremoloType) FactoryUtil.enumValue(TremoloType.class, ornamentElement.getAttribute("type")));
+                    tremolo.setTremoloType(FactoryUtil.enumValue(TremoloType.class, ornamentElement.getAttribute("type")));
                     tremolo.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
                     tremolo.setPlacement(PlacementFactory.newPlacementLocation(ornamentElement));
                     tremolo.setSmufl(ornamentElement.getAttribute("smufl"));

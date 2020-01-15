@@ -77,7 +77,7 @@ public class TechnicalFactory {
 
     private static void populateHammerOnPullOff(HammerOnPullOff hammerOnPullOff, Element element) {
         hammerOnPullOff.setValue(XmlUtil.getElementText(element));
-        hammerOnPullOff.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+        hammerOnPullOff.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         String numberLevel = element.getAttribute("number");
         if (StringUtil.isNotEmpty(numberLevel)) hammerOnPullOff.setNumber(StringUtil.getInteger(numberLevel));
         hammerOnPullOff.setPrintStyle(FormattingFactory.newPrintStyle(element));

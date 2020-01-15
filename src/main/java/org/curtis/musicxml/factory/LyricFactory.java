@@ -26,7 +26,7 @@ public class LyricFactory {
         textData.setTextRotation(MathUtil.newBigDecimal(element.getAttribute("rotation")));
         textData.setLetterSpacing(element.getAttribute("letter-spacing"));
         textData.setLang(element.getAttribute("xml:lang"));
-        textData.setTextDirection((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("dir")));
+        textData.setTextDirection(FactoryUtil.enumValue(Location.class, element.getAttribute("dir")));
 
         return textData;
     }
@@ -52,7 +52,7 @@ public class LyricFactory {
         if(element == null) return null;
 
         Extend extend = new Extend();
-        extend.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+        extend.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         extend.setPosition(PlacementFactory.newPosition(element));
         extend.setColor(element.getAttribute("color"));
 

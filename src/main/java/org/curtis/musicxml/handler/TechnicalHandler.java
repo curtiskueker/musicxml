@@ -164,7 +164,7 @@ public class TechnicalHandler extends BaseHandler {
                     Bend bend = new Bend();
                     bend.setBendAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(technicalElement, "bend-alter")));
                     List<Element> bendElements = XmlUtil.getChildElements(technicalElement);
-                    for (Element bendElement : bendElements) bend.setBendType((BendType)FactoryUtil.enumValue(BendType.class, bendElement.getTagName()));
+                    for (Element bendElement : bendElements) bend.setBendType(FactoryUtil.enumValue(BendType.class, bendElement.getTagName()));
                     bend.setWithBar(PlacementFactory.newPlacementText(technicalElement));
                     bend.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     bend.setBendSound(TechnicalFactory.newBendSound(technicalElement));
@@ -173,7 +173,7 @@ public class TechnicalHandler extends BaseHandler {
                 case "tap":
                     Tap tap = new Tap();
                     tap.setPlacementText(PlacementFactory.newPlacementText(technicalElement));
-                    tap.setTapHand((TapHand)FactoryUtil.enumValue(TapHand.class, technicalElement.getAttribute("hand")));
+                    tap.setTapHand(FactoryUtil.enumValue(TapHand.class, technicalElement.getAttribute("hand")));
                     technical = tap;
                     break;
                 case "heel":
@@ -223,18 +223,18 @@ public class TechnicalHandler extends BaseHandler {
                     Hole hole = new Hole();
                     hole.setHoleType(XmlUtil.getChildElementText(technicalElement, "hole-type"));
                     Element holeClosedElement = XmlUtil.getChildElement(technicalElement, "hole-closed");
-                    hole.setHoleClosedType((HoleClosedType)FactoryUtil.enumValue(HoleClosedType.class, XmlUtil.getElementText(holeClosedElement)));
-                    hole.setHoleClosedLocation((HoleClosedLocation)FactoryUtil.enumValue(HoleClosedLocation.class, holeClosedElement.getAttribute("location")));
+                    hole.setHoleClosedType(FactoryUtil.enumValue(HoleClosedType.class, XmlUtil.getElementText(holeClosedElement)));
+                    hole.setHoleClosedLocation(FactoryUtil.enumValue(HoleClosedLocation.class, holeClosedElement.getAttribute("location")));
                     hole.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     hole.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = hole;
                     break;
                 case "arrow":
                     Arrow arrow = new Arrow();
-                    arrow.setArrowDirection((ArrowDirection)FactoryUtil.enumValue(ArrowDirection.class, XmlUtil.getChildElementText(technicalElement, "arrow-direction")));
-                    arrow.setArrowStyle((ArrowStyle)FactoryUtil.enumValue(ArrowStyle.class, XmlUtil.getChildElementText(technicalElement, "arrow-style")));
+                    arrow.setArrowDirection(FactoryUtil.enumValue(ArrowDirection.class, XmlUtil.getChildElementText(technicalElement, "arrow-direction")));
+                    arrow.setArrowStyle(FactoryUtil.enumValue(ArrowStyle.class, XmlUtil.getChildElementText(technicalElement, "arrow-style")));
                     arrow.setArrowhead(XmlUtil.hasChildElement(technicalElement, "arrowhead"));
-                    arrow.setCircularArrow((CircularArrow)FactoryUtil.enumValue(CircularArrow.class, XmlUtil.getChildElementText(technicalElement, "circular-arrow")));
+                    arrow.setCircularArrow(FactoryUtil.enumValue(CircularArrow.class, XmlUtil.getChildElementText(technicalElement, "circular-arrow")));
                     arrow.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     arrow.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = arrow;
@@ -242,7 +242,7 @@ public class TechnicalHandler extends BaseHandler {
                 case "handbell":
                     Handbell handbell = new Handbell();
                     String handbellType = XmlUtil.getElementText(technicalElement);
-                    handbell.setHandbellType((HandbellType) FactoryUtil.enumValue(HandbellType.class, handbellType));
+                    handbell.setHandbellType(FactoryUtil.enumValue(HandbellType.class, handbellType));
                     handbell.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
                     handbell.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
                     technical = handbell;
@@ -251,8 +251,8 @@ public class TechnicalHandler extends BaseHandler {
                     HarmonMute harmonMute = new HarmonMute();
                     Element harmonClosedElement = XmlUtil.getChildElement(technicalElement, "harmon-closed");
                     HarmonClosed harmonClosed = new HarmonClosed();
-                    harmonClosed.setValue((HarmonClosedValue) FactoryUtil.enumValue(HarmonClosedValue.class, XmlUtil.getElementText(harmonClosedElement)));
-                    harmonClosed.setLocation((HarmonClosedLocation)FactoryUtil.enumValue(HarmonClosedLocation.class, harmonClosedElement.getAttribute("location")));
+                    harmonClosed.setValue(FactoryUtil.enumValue(HarmonClosedValue.class, XmlUtil.getElementText(harmonClosedElement)));
+                    harmonClosed.setLocation(FactoryUtil.enumValue(HarmonClosedLocation.class, harmonClosedElement.getAttribute("location")));
                     harmonMute.setHarmonClosed(harmonClosed);
                     technical = harmonMute;
                     break;

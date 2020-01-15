@@ -63,7 +63,7 @@ public class ArticulationHandler extends BaseHandler {
                     StrongAccent strongAccent = new StrongAccent();
                     PrintPlacement strongAccentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
                     strongAccent.setPrintPlacement(strongAccentPlacement);
-                    strongAccent.setType((Location)FactoryUtil.enumValue(Location.class, articulationsSubelement.getAttribute("type")));
+                    strongAccent.setType(FactoryUtil.enumValue(Location.class, articulationsSubelement.getAttribute("type")));
                     articulation = strongAccent;
                     break;
                 case "staccato":
@@ -119,14 +119,14 @@ public class ArticulationHandler extends BaseHandler {
                 case "breath-mark":
                     BreathMark breathMark = new BreathMark();
                     String breathMarkValue = XmlUtil.getElementText(articulationsSubelement);
-                    breathMark.setBreathMarkValue((BreathMarkType) FactoryUtil.enumValueWithEmptyValue(BreathMarkType.class, breathMarkValue));
+                    breathMark.setBreathMarkValue(FactoryUtil.enumValueWithEmptyValue(BreathMarkType.class, breathMarkValue));
                     breathMark.setPrintStyle(FormattingFactory.newPrintStyle(articulationsSubelement));
                     breathMark.setPlacement(PlacementFactory.newPlacementLocation(articulationsSubelement));
                     articulation = breathMark;
                     break;
                 case "caesura":
                     Caesura caesura = new Caesura();
-                    caesura.setCaesuraValue((CaesuraValue)FactoryUtil.enumValue(CaesuraValue.class, XmlUtil.getElementText(articulationsSubelement)));
+                    caesura.setCaesuraValue(FactoryUtil.enumValueWithEmptyValue(CaesuraValue.class, XmlUtil.getElementText(articulationsSubelement)));
                     caesura.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
                     articulation = caesura;
                     break;

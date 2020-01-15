@@ -39,7 +39,7 @@ public class PartListHandler extends BaseHandler {
             switch (elementName) {
                 case "part-group":
                     PartGroup partGroup = new PartGroup();
-                    partGroup.setType((Connection) FactoryUtil.enumValue(Connection.class, partListSubelement.getAttribute("type")));
+                    partGroup.setType(FactoryUtil.enumValue(Connection.class, partListSubelement.getAttribute("type")));
                     partGroup.setEditorial(FormattingFactory.newEditorial(partListSubelement));
                     partGroup.setNumber(partListSubelement.getAttribute("number"));
                     partGroup.setGroupName(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-name")));

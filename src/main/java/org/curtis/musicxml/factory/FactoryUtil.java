@@ -12,12 +12,12 @@ public class FactoryUtil {
 
     }
 
-    public static <T extends Enum<T>> Enum<T> enumValue(Class<T> enumType, String elementValue) {
+    public static <T extends Enum<T>> T enumValue(Class<T> enumType, String elementValue) {
         if (StringUtil.isEmpty(elementValue)) return null;
 
         String enumString = elementValue.toUpperCase().replace("-", "_").replace(" ", "_");
 
-        Enum<T> enumItem = null;
+        T enumItem = null;
         try {
             enumItem = Enum.valueOf(enumType, enumString);
         } catch (IllegalArgumentException e) {
@@ -27,7 +27,7 @@ public class FactoryUtil {
         return enumItem;
     }
 
-    public static <T extends Enum<T>> Enum<T> enumValueWithEmptyValue(Class<T> enumType, String elementValue) {
+    public static <T extends Enum<T>> T enumValueWithEmptyValue(Class<T> enumType, String elementValue) {
         if (StringUtil.isEmptyString(elementValue)) elementValue = "empty_value";
 
         return enumValue(enumType, elementValue);

@@ -47,7 +47,7 @@ public class LayoutFactory {
 
                         String marginType = pageMarginsElement.getAttribute("type");
                         if (StringUtil.isEmpty(marginType)) marginType = "both";
-                        MarginType marginTypeValue = (MarginType)FactoryUtil.enumValue(MarginType.class, marginType);
+                        MarginType marginTypeValue = FactoryUtil.enumValue(MarginType.class, marginType);
                         pageMargins.setType(marginTypeValue);
                         pageMargins.setMarginTypeKey(marginTypeValue);
 

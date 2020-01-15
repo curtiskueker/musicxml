@@ -34,7 +34,7 @@ public class PlacementFactory {
     public static Location newPlacementLocation(Element element) {
         if (element == null) return null;
 
-        return (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("placement"));
+        return FactoryUtil.enumValue(Location.class, element.getAttribute("placement"));
     }
 
     public static PlacementText newPlacementText(Element element) {

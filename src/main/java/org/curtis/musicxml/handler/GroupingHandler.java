@@ -26,7 +26,7 @@ public class GroupingHandler extends MusicDataHandler {
             feature.setType(featureElement.getAttribute("type"));
             grouping.getFeatures().add(feature);
         }
-        grouping.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+        grouping.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         String groupingNumber = element.getAttribute("number");
         if (StringUtil.isNotEmpty(groupingNumber)) grouping.setNumber(groupingNumber);
         grouping.setNumberOf(element.getAttribute("number-of"));

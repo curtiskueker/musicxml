@@ -96,7 +96,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "tie":
                     Tie tie = new Tie();
-                    tie.setType((Connection) FactoryUtil.enumValue(Connection.class, noteSubelement.getAttribute("type")));
+                    tie.setType(FactoryUtil.enumValue(Connection.class, noteSubelement.getAttribute("type")));
                     tie.setTimeOnly(noteSubelement.getAttribute("time-only"));
                     List<Tie> ties = note.getTies();
                     ties.add(tie);
@@ -133,20 +133,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "stem":
                     Stem stem = new Stem();
-                    switch (XmlUtil.getElementText(noteSubelement)) {
-                        case "down":
-                            stem.setType(StemType.DOWN);
-                            break;
-                        case "up":
-                            stem.setType(StemType.UP);
-                            break;
-                        case "double":
-                            stem.setType(StemType.DOUBLE);
-                            break;
-                        case "none":
-                            stem.setType(StemType.NONE);
-                            break;
-                    }
+                    stem.setType(FactoryUtil.enumValue(StemType.class, XmlUtil.getElementText(noteSubelement)));
                     stem.setPosition(PlacementFactory.newPosition(noteSubelement));
                     stem.setColor(noteSubelement.getAttribute("color"));
                     note.setStem(stem);
@@ -154,7 +141,7 @@ public class NoteHandler extends MusicDataHandler {
                 case "notehead":
                     Notehead notehead = new Notehead();
                     String noteheadType = XmlUtil.getElementText(noteSubelement);
-                    notehead.setType((NoteheadType) FactoryUtil.enumValue(NoteheadType.class, noteheadType));
+                    notehead.setType(FactoryUtil.enumValue(NoteheadType.class, noteheadType));
                     String filledNotehead = noteSubelement.getAttribute("filled");
                     notehead.setFilled(TypeUtil.getYesNo(filledNotehead));
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
@@ -184,20 +171,7 @@ public class NoteHandler extends MusicDataHandler {
                     beam.setType(NoteFactory.newBeamType(noteSubelement));
                     beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
                     beam.setRepeater(TypeUtil.getYesNo(noteSubelement.getAttribute("repeater")));
-                    String beamFan = noteSubelement.getAttribute("fan");
-                    if(StringUtil.isNotEmpty(beamFan)) {
-                        switch (beamFan) {
-                            case "accel":
-                                beam.setFan(BeamFan.ACCEL);
-                                break;
-                            case "rit":
-                                beam.setFan(BeamFan.RIT);
-                                break;
-                            case "none":
-                                beam.setFan(BeamFan.NONE);
-                                break;
-                        }
-                    }
+                    beam.setFan(FactoryUtil.enumValue(BeamFan.class, noteSubelement.getAttribute("fan")));
                     beam.setColor(noteSubelement.getAttribute("color"));
                     beams.add(beam);
                     break;

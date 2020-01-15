@@ -35,9 +35,9 @@ public class OrnamentFactory {
         if(element == null) return null;
 
         TrillSound trillSound = new TrillSound();
-        trillSound.setStartNote((StartNote)FactoryUtil.enumValue(StartNote.class, element.getAttribute("start-note")));
-        trillSound.setTrillStep((TrillStep)FactoryUtil.enumValue(TrillStep.class, element.getAttribute("trill-step")));
-        trillSound.setTwoNoteTurn((TwoNoteTurn)FactoryUtil.enumValue(TwoNoteTurn.class, element.getAttribute("two-note-turn")));
+        trillSound.setStartNote(FactoryUtil.enumValue(StartNote.class, element.getAttribute("start-note")));
+        trillSound.setTrillStep(FactoryUtil.enumValue(TrillStep.class, element.getAttribute("trill-step")));
+        trillSound.setTwoNoteTurn(FactoryUtil.enumValue(TwoNoteTurn.class, element.getAttribute("two-note-turn")));
         trillSound.setAccelerate(TypeUtil.getYesNo(element.getAttribute("accelerate")));
         trillSound.setBeats(MathUtil.newBigDecimal(element.getAttribute("beats")));
         trillSound.setSecondBeat(MathUtil.newBigDecimal(element.getAttribute("second-beat")));
@@ -94,8 +94,8 @@ public class OrnamentFactory {
 
         AbstractMordent abstractMordent = (AbstractMordent)placedTrillSound;
         abstractMordent.setLongMordent(TypeUtil.getYesNo(element.getAttribute("long")));
-        abstractMordent.setApproach((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("approach")));
-        abstractMordent.setDeparture((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("departure")));
+        abstractMordent.setApproach(FactoryUtil.enumValue(Location.class, element.getAttribute("approach")));
+        abstractMordent.setDeparture(FactoryUtil.enumValue(Location.class, element.getAttribute("departure")));
 
         return abstractMordent;
     }
@@ -134,7 +134,7 @@ public class OrnamentFactory {
         if(element == null) return null;
 
         WavyLine wavyLine = new WavyLine();
-        wavyLine.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+        wavyLine.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         wavyLine.setNumber(StringUtil.getInteger(element.getAttribute("number")));
         wavyLine.setPosition(PlacementFactory.newPosition(element));
         wavyLine.setPlacement(PlacementFactory.newPlacementLocation(element));

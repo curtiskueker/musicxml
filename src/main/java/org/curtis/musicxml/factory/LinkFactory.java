@@ -33,12 +33,12 @@ public class LinkFactory {
         linkAttributes.setHref(element.getAttribute("xlink:href"));
         linkAttributes.setRole(element.getAttribute("xlink:role"));
         linkAttributes.setTitle(element.getAttribute("xlink:title"));
-        linkAttributes.setShow((Show)FactoryUtil.enumValue(Show.class, element.getAttribute("xlink:show")));
+        linkAttributes.setShow(FactoryUtil.enumValue(Show.class, element.getAttribute("xlink:show")));
         String actuate = element.getAttribute("xlink:actuate");
         if (StringUtil.isNotEmpty(actuate)) {
             actuate = actuate.replace("onRequest", "on request");
             actuate = actuate.replace("onLoad", "on load");
-            linkAttributes.setActuate((Actuate)FactoryUtil.enumValue(Actuate.class, actuate));
+            linkAttributes.setActuate(FactoryUtil.enumValue(Actuate.class, actuate));
         }
 
         return linkAttributes;

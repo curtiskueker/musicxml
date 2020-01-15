@@ -109,7 +109,7 @@ public class DirectionFactory {
                 return NotationFactory.newCoda(element);
             case "wedge":
                 Wedge wedge = new Wedge();
-                wedge.setType((WedgeType)FactoryUtil.enumValue(WedgeType.class, element.getAttribute("type")));
+                wedge.setType(FactoryUtil.enumValue(WedgeType.class, element.getAttribute("type")));
                 wedge.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 wedge.setSpread(MathUtil.newBigDecimal(element.getAttribute("spread")));
                 wedge.setNiente(TypeUtil.getYesNo(element.getAttribute("niente")));
@@ -122,7 +122,7 @@ public class DirectionFactory {
                 return NotationFactory.newDynamics(element);
             case "dashes":
                 Dashes dashes = new Dashes();
-                dashes.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+                dashes.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 dashes.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 dashes.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
                 dashes.setPosition(PlacementFactory.newPosition(element));
@@ -130,9 +130,9 @@ public class DirectionFactory {
                 return dashes;
             case "bracket":
                 Bracket bracket = new Bracket();
-                bracket.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+                bracket.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 bracket.setNumber(StringUtil.getInteger(element.getAttribute("number")));
-                bracket.setLineEnd((LineEnd)FactoryUtil.enumValue(LineEnd.class, element.getAttribute("line-end")));
+                bracket.setLineEnd(FactoryUtil.enumValue(LineEnd.class, element.getAttribute("line-end")));
                 bracket.setEndLength(MathUtil.newBigDecimal(element.getAttribute("end-length")));
                 bracket.setLineType(NotationFactory.newLineType(element));
                 bracket.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
@@ -141,7 +141,7 @@ public class DirectionFactory {
                 return bracket;
             case "pedal":
                 Pedal pedal = new Pedal();
-                pedal.setPedalType((PedalType) FactoryUtil.enumValue(PedalType.class, element.getAttribute("type")));
+                pedal.setPedalType(FactoryUtil.enumValue(PedalType.class, element.getAttribute("type")));
                 pedal.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 pedal.setLine(TypeUtil.getYesNo(element.getAttribute("line")));
                 pedal.setSign(TypeUtil.getYesNo(element.getAttribute("sign")));
@@ -156,12 +156,12 @@ public class DirectionFactory {
                 else if(metronomeNoteElement != null) metronome = newNoteMetronome(element);
                 else return null;
                 metronome.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
-                metronome.setJustify((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+                metronome.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
                 metronome.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
                 return metronome;
             case "octave-shift":
                 OctaveShift octaveShift = new OctaveShift();
-                octaveShift.setType((OctaveShiftType)FactoryUtil.enumValue(OctaveShiftType.class, element.getAttribute("type")));
+                octaveShift.setType(FactoryUtil.enumValue(OctaveShiftType.class, element.getAttribute("type")));
                 octaveShift.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 Integer octaveShiftSize = StringUtil.getInteger(element.getAttribute("size"));
                 if (octaveShiftSize != null) {
@@ -195,7 +195,7 @@ public class DirectionFactory {
                 return eyeglasses;
             case "string-mute":
                 StringMute stringMute = new StringMute();
-                stringMute.setType((StringMuteDirection)FactoryUtil.enumValue(StringMuteDirection.class, element.getAttribute("type")));
+                stringMute.setType(FactoryUtil.enumValue(StringMuteDirection.class, element.getAttribute("type")));
                 stringMute.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return stringMute;
             case "scordatura":
@@ -213,8 +213,8 @@ public class DirectionFactory {
             case "principal-voice":
                 PrincipalVoice principalVoice = new PrincipalVoice();
                 principalVoice.setPrincipalVoice(XmlUtil.getElementText(element));
-                principalVoice.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
-                principalVoice.setSymbol((PrincipalVoiceSymbol)FactoryUtil.enumValue(PrincipalVoiceSymbol.class, element.getAttribute("symbol")));
+                principalVoice.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+                principalVoice.setSymbol(FactoryUtil.enumValue(PrincipalVoiceSymbol.class, element.getAttribute("symbol")));
                 principalVoice.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return principalVoice;
             case "percussion":
@@ -230,7 +230,7 @@ public class DirectionFactory {
                 return accordionRegistration;
             case "staff-divide":
                 StaffDivide staffDivide = new StaffDivide();
-                staffDivide.setStaffDivideSymbol((StaffDivideSymbol)FactoryUtil.enumValue(StaffDivideSymbol.class, element.getAttribute("type")));
+                staffDivide.setStaffDivideSymbol(FactoryUtil.enumValue(StaffDivideSymbol.class, element.getAttribute("type")));
                 staffDivide.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
                 return staffDivide;
             case "other-direction":
@@ -355,12 +355,12 @@ public class DirectionFactory {
                                 metronomeBeams.add(metronomeBeam);
                                 break;
                             case "metronome-tied":
-                                metronomeNote.setMetronomeTied((Connection)FactoryUtil.enumValue(Connection.class, metronomeNoteElement.getAttribute("type")));
+                                metronomeNote.setMetronomeTied(FactoryUtil.enumValue(Connection.class, metronomeNoteElement.getAttribute("type")));
                                 break;
                             case "metronome-tuplet":
                                 MetronomeTuplet metronomeTuplet = new MetronomeTuplet();
                                 metronomeTuplet.setTimeModification(NoteFactory.newTimeModification(metronomeNoteElement));
-                                metronomeTuplet.setType((Connection) FactoryUtil.enumValue(Connection.class, metronomeNoteElement.getAttribute("type")));
+                                metronomeTuplet.setType(FactoryUtil.enumValue(Connection.class, metronomeNoteElement.getAttribute("type")));
                                 metronomeTuplet.setBracket(TypeUtil.getYesNo(metronomeNoteElement.getAttribute("bracket")));
                                 metronomeTuplet.setShowNumber(NotationFactory.newShowTuplet(metronomeNoteElement.getAttribute("show-number")));
                                 metronomeNote.setMetronomeTuplet(metronomeTuplet);
@@ -399,34 +399,34 @@ public class DirectionFactory {
         switch (elementName) {
             case "glass":
                 Glass glass = new Glass();
-                glass.setType((GlassType)FactoryUtil.enumValue(GlassType.class, elementValue));
+                glass.setType(FactoryUtil.enumValue(GlassType.class, elementValue));
                 glass.setSmufl(element.getAttribute("smufl"));
                 percussion = glass;
                 break;
             case "metal":
                 Metal metal = new Metal();
-                metal.setType((MetalType)FactoryUtil.enumValue(MetalType.class, elementValue));
+                metal.setType(FactoryUtil.enumValue(MetalType.class, elementValue));
                 percussion = metal;
                 break;
             case "wood":
                 Wood wood = new Wood();
-                wood.setType((WoodType)FactoryUtil.enumValue(WoodType.class, elementValue));
+                wood.setType(FactoryUtil.enumValue(WoodType.class, elementValue));
                 percussion = wood;
                 break;
             case "pitched":
                 Pitched pitched = new Pitched();
-                pitched.setType((PitchedType)FactoryUtil.enumValue(PitchedType.class, elementValue));
+                pitched.setType(FactoryUtil.enumValue(PitchedType.class, elementValue));
                 pitched.setSmufl(element.getAttribute("smufl"));
                 percussion = pitched;
                 break;
             case "membrane":
                 Membrane membrane = new Membrane();
-                membrane.setType((MembraneType)FactoryUtil.enumValue(MembraneType.class, elementValue));
+                membrane.setType(FactoryUtil.enumValue(MembraneType.class, elementValue));
                 percussion = membrane;
                 break;
             case "effect":
                 Effect effect = new Effect();
-                effect.setType((EffectType)FactoryUtil.enumValue(EffectType.class, elementValue));
+                effect.setType(FactoryUtil.enumValue(EffectType.class, elementValue));
                 percussion = effect;
                 break;
             case "timpani":
@@ -434,21 +434,21 @@ public class DirectionFactory {
                 break;
             case "beater":
                 Beater beater = new Beater();
-                beater.setBeaterValue((BeaterValue)FactoryUtil.enumValue(BeaterValue.class, elementValue));
+                beater.setBeaterValue(FactoryUtil.enumValue(BeaterValue.class, elementValue));
                 beater.setTip(newTipDirection(element));
                 percussion = beater;
                 break;
             case "stick":
                 Stick stick = new Stick();
                 String stickType = XmlUtil.getChildElementText(element, "stick-type");
-                stick.setStickType((StickType)FactoryUtil.enumValue(StickType.class, stickType));
-                stick.setStickMaterial((StickMaterial)FactoryUtil.enumValue(StickMaterial.class, XmlUtil.getChildElementText(element, "stick-material")));
+                stick.setStickType(FactoryUtil.enumValue(StickType.class, stickType));
+                stick.setStickMaterial(FactoryUtil.enumValue(StickMaterial.class, XmlUtil.getChildElementText(element, "stick-material")));
                 stick.setTip(newTipDirection(element));
                 percussion = stick;
                 break;
             case "stick-location":
                 StickLocation stickLocation = new StickLocation();
-                stickLocation.setType((StickLocationType)FactoryUtil.enumValue(StickLocationType.class, elementValue));
+                stickLocation.setType(FactoryUtil.enumValue(StickLocationType.class, elementValue));
                 percussion = stickLocation;
                 break;
             case "other-percussion":
@@ -470,7 +470,7 @@ public class DirectionFactory {
     private static TipDirection newTipDirection(Element element) {
         if (element == null) return null;
 
-        return (TipDirection)FactoryUtil.enumValue(TipDirection.class, element.getAttribute("tip"));
+        return FactoryUtil.enumValue(TipDirection.class, element.getAttribute("tip"));
     }
 
     public static Sound newSound(Element element) {
@@ -539,8 +539,8 @@ public class DirectionFactory {
         image.setHeight(MathUtil.newBigDecimal(element.getAttribute("height")));
         image.setWidth(MathUtil.newBigDecimal(element.getAttribute("width")));
         image.setPosition(PlacementFactory.newPosition(element));
-        image.setHalign((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("halign")));
-        image.setValignImage((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("valign")));
+        image.setHalign(FactoryUtil.enumValue(Location.class, element.getAttribute("halign")));
+        image.setValignImage(FactoryUtil.enumValue(Location.class, element.getAttribute("valign")));
 
         return image;
     }

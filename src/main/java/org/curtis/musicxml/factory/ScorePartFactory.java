@@ -33,7 +33,7 @@ public class ScorePartFactory {
         GroupName groupName = new GroupName();
         groupName.setGroupName(XmlUtil.getElementText(element));
         groupName.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        groupName.setJustify((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+        groupName.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
 
         return groupName;
     }
@@ -61,7 +61,7 @@ public class ScorePartFactory {
         partName.setPartName(XmlUtil.getElementText(element));
         partName.setPartNamePrintStyle(FormattingFactory.newPrintStyle(element));
         partName.setPartNamePrintObject(FormattingFactory.getPrintObject(element));
-        partName.setPartNameJustify((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+        partName.setPartNameJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
 
         return partName;
     }
@@ -110,12 +110,12 @@ public class ScorePartFactory {
                     break;
                 case "mute":
                     Mute mute = new Mute();
-                    mute.setMuteType((MuteType)FactoryUtil.enumValue(MuteType.class, XmlUtil.getElementText(playSubelement)));
+                    mute.setMuteType(FactoryUtil.enumValue(MuteType.class, XmlUtil.getElementText(playSubelement)));
                     playType = mute;
                     break;
                 case "semi-pitched":
                     SemiPitched semiPitched = new SemiPitched();
-                    semiPitched.setSemiPitchedType((SemiPitchedType)FactoryUtil.enumValue(SemiPitchedType.class, XmlUtil.getElementText(playSubelement)));
+                    semiPitched.setSemiPitchedType(FactoryUtil.enumValue(SemiPitchedType.class, XmlUtil.getElementText(playSubelement)));
                     playType = semiPitched;
                     break;
                 case "other-play":

@@ -58,7 +58,7 @@ public class FormattingFactory {
     public static TextFormatting newTextFormatting(Element element) {
         if (element == null) return null;
 
-        Location justify = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
+        Location justify = FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
         PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
         TextDecoration textDecoration = LyricFactory.newTextDecoration(element);
         BigDecimal rotation = MathUtil.newBigDecimal(element.getAttribute("rotation"));
@@ -66,7 +66,7 @@ public class FormattingFactory {
         String lineHeight = element.getAttribute("line-height");
         String lang = element.getAttribute("xml:lang");
         String space = element.getAttribute("xml:space");
-        Location dir = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
+        Location dir = FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
         EnclosureShape enclosureShape = newEnclosureShape(element);
 
         if (justify == null && printStyleAlign == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
@@ -90,13 +90,13 @@ public class FormattingFactory {
     public static SymbolFormatting newSymbolFormatting(Element element) {
         if (element == null) return null;
 
-        Location justify = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
+        Location justify = FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
         PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
         TextDecoration textDecoration = LyricFactory.newTextDecoration(element);
         BigDecimal rotation = MathUtil.newBigDecimal(element.getAttribute("rotation"));
         String letterSpacing = element.getAttribute("letter-spacing");
         String lineHeight = element.getAttribute("line-height");
-        Location dir = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
+        Location dir = FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
         EnclosureShape enclosureShape = newEnclosureShape(element);
 
         if (justify == null && printStyleAlign == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
@@ -149,8 +149,8 @@ public class FormattingFactory {
             return null;
         }
 
-        Location halign = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("halign"));
-        Location valign = (Location)FactoryUtil.enumValue(Location.class, element.getAttribute("valign"));
+        Location halign = FactoryUtil.enumValue(Location.class, element.getAttribute("halign"));
+        Location valign = FactoryUtil.enumValue(Location.class, element.getAttribute("valign"));
         PrintStyle printStyle = newPrintStyle(element);
 
         if (halign == null && valign == null && printStyle == null) return null;
@@ -211,11 +211,11 @@ public class FormattingFactory {
 
         Font font = new Font();
         font.setFontFamily(fontFamily);
-        font.setFontStyle((FontStyle)FactoryUtil.enumValue(FontStyle.class, fontStyle));
+        font.setFontStyle(FactoryUtil.enumValue(FontStyle.class, fontStyle));
 
         if (StringUtil.isNotEmpty(fontSizeValue)) {
             FontSize fontSize = new FontSize();
-            CssFontSize cssFontSize = (CssFontSize)FactoryUtil.enumValue(CssFontSize.class, fontSizeValue);
+            CssFontSize cssFontSize = FactoryUtil.enumValue(CssFontSize.class, fontSizeValue);
 
             if (cssFontSize == null) {
                 BigDecimal fontSizeNumber = MathUtil.newBigDecimal(fontSizeValue);
@@ -225,7 +225,7 @@ public class FormattingFactory {
             font.setFontSize(fontSize);
         }
 
-        font.setFontWeight((FontWeight)FactoryUtil.enumValue(FontWeight.class, fontWeight));
+        font.setFontWeight(FactoryUtil.enumValue(FontWeight.class, fontWeight));
 
         return font;
     }
@@ -235,7 +235,7 @@ public class FormattingFactory {
             return null;
         }
 
-        return (SymbolSize)FactoryUtil.enumValue(SymbolSize.class, symbolSizeElement.getAttribute("size"));
+        return FactoryUtil.enumValue(SymbolSize.class, symbolSizeElement.getAttribute("size"));
     }
 
     public static DashedFormatting newDashedFormatting(Element dashedFormattingElement) {
@@ -281,7 +281,7 @@ public class FormattingFactory {
     public static EnclosureShape newEnclosureShape(Element element) {
         if(element == null) return null;
 
-        return (EnclosureShape)FactoryUtil.enumValue(EnclosureShape.class, element.getAttribute("enclosure"));
+        return FactoryUtil.enumValue(EnclosureShape.class, element.getAttribute("enclosure"));
     }
 
     public static Editorial newEditorial(Element element) {

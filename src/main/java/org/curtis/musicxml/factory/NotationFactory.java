@@ -45,7 +45,7 @@ public class NotationFactory {
         tuplet.setTupletActual(tupletActual);
         TupletPortion tupletNormal = newTupletPortion(XmlUtil.getChildElement(element, "tuplet-normal"));
         tuplet.setTupletNormal(tupletNormal);
-        tuplet.setType((Connection) FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
+        tuplet.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         tuplet.setNumber(StringUtil.getInteger(element.getAttribute("number")));
         tuplet.setBracket(TypeUtil.getYesNo(element.getAttribute("bracket")));
         tuplet.setShowNumber(newShowTuplet(element.getAttribute("show-number")));
@@ -95,15 +95,15 @@ public class NotationFactory {
     }
 
     public static ShowTuplet newShowTuplet(String showTupletValue) {
-        return (ShowTuplet)FactoryUtil.enumValue(ShowTuplet.class, showTupletValue);
+        return FactoryUtil.enumValue(ShowTuplet.class, showTupletValue);
     }
 
     public static Fermata newFermata(Element fermataElement) {
         if(fermataElement == null) return null;
 
         Fermata fermata = new Fermata();
-        fermata.setFermataShape((FermataShape)FactoryUtil.enumValueWithEmptyValue(FermataShape.class, XmlUtil.getElementText(fermataElement)));
-        fermata.setType((FermataType)FactoryUtil.enumValue(FermataType.class, fermataElement.getAttribute("type")));
+        fermata.setFermataShape(FactoryUtil.enumValueWithEmptyValue(FermataShape.class, XmlUtil.getElementText(fermataElement)));
+        fermata.setType(FactoryUtil.enumValue(FermataType.class, fermataElement.getAttribute("type")));
         fermata.setPrintStyle(FormattingFactory.newPrintStyle(fermataElement));
 
         return fermata;
@@ -115,7 +115,7 @@ public class NotationFactory {
         Line line = new Line();
         line.setLineShape(newLineShape(element));
         line.setLineType(newLineType(element));
-        line.setLineLength((LineLength)FactoryUtil.enumValue(LineLength.class, element.getAttribute("line-length")));
+        line.setLineLength(FactoryUtil.enumValue(LineLength.class, element.getAttribute("line-length")));
         line.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
         line.setPrintStyle(FormattingFactory.newPrintStyle(element));
         line.setPlacement(PlacementFactory.newPlacementLocation(element));
@@ -126,13 +126,13 @@ public class NotationFactory {
     private static LineShape newLineShape(Element lineShapeElement) {
         if(lineShapeElement == null) return null;
 
-        return (LineShape)FactoryUtil.enumValue(LineShape.class, lineShapeElement.getAttribute("line-shape"));
+        return FactoryUtil.enumValue(LineShape.class, lineShapeElement.getAttribute("line-shape"));
     }
 
     public static LineType newLineType(Element lineTypeElement) {
         if(lineTypeElement == null) return null;
 
-        return (LineType)FactoryUtil.enumValue(LineType.class, lineTypeElement.getAttribute("line-type"));
+        return FactoryUtil.enumValue(LineType.class, lineTypeElement.getAttribute("line-type"));
     }
 
     public static AccidentalMark newAccidentalMark(Element element) {
@@ -157,7 +157,7 @@ public class NotationFactory {
         List<DynamicsMarking> dynamicsMarkings = dynamics.getMarkings();
         for(Element dynamicsElement : dynamicsElements) {
             DynamicsMarking dynamicsMarking = new DynamicsMarking();
-            dynamicsMarking.setDynamicsType((DynamicsType)FactoryUtil.enumValue(DynamicsType.class, dynamicsElement.getTagName()));
+            dynamicsMarking.setDynamicsType(FactoryUtil.enumValue(DynamicsType.class, dynamicsElement.getTagName()));
             dynamicsMarking.setValue(XmlUtil.getElementText(dynamicsElement));
             dynamicsMarking.setSmufl(dynamicsElement.getAttribute("smufl"));
             dynamicsMarkings.add(dynamicsMarking);

@@ -46,7 +46,7 @@ public class AttributesFactory {
         if(cancelElement != null) {
             Cancel cancel = new Cancel();
             cancel.setFifths(StringUtil.getInteger(XmlUtil.getElementText(cancelElement)));
-            cancel.setLocation((CancelLocation)FactoryUtil.enumValue(CancelLocation.class, cancelElement.getAttribute("location")));
+            cancel.setLocation(FactoryUtil.enumValue(CancelLocation.class, cancelElement.getAttribute("location")));
             traditionalKey.setCancel(cancel);
         }
         traditionalKey.setFifths(StringUtil.getInteger(XmlUtil.getChildElementText(element, "fifths")));
@@ -113,7 +113,7 @@ public class AttributesFactory {
                     break;
                 case "interchangeable":
                     Interchangeable interchangeable = new Interchangeable();
-                    interchangeable.setTimeRelation((TimeRelation)FactoryUtil.enumValue(TimeRelation.class, XmlUtil.getChildElementText(timeSubelement, "time-relation")));
+                    interchangeable.setTimeRelation(FactoryUtil.enumValue(TimeRelation.class, XmlUtil.getChildElementText(timeSubelement, "time-relation")));
                     interchangeable.setTimeSignature(newTimeSignature(timeSubelement));
                     interchangeable.setSymbol(AttributesFactory.newTimeSymbol(timeSubelement));
                     interchangeable.setSeparator(AttributesFactory.newTimeSeparator(timeSubelement));
@@ -127,19 +127,19 @@ public class AttributesFactory {
     public static TimeSymbol newTimeSymbol(Element element) {
         if(element == null) return null;
 
-        return (TimeSymbol)FactoryUtil.enumValue(TimeSymbol.class, element.getAttribute("symbol"));
+        return FactoryUtil.enumValue(TimeSymbol.class, element.getAttribute("symbol"));
     }
 
     public static TimeSeparator newTimeSeparator(Element element) {
         if(element == null) return null;
 
-        return (TimeSeparator)FactoryUtil.enumValue(TimeSeparator.class, element.getAttribute("separator"));
+        return FactoryUtil.enumValue(TimeSeparator.class, element.getAttribute("separator"));
     }
 
     public static GroupSymbolType newGroupSymbolType(Element element) {
         if(element == null) return null;
 
-        return (GroupSymbolType)FactoryUtil.enumValue(GroupSymbolType.class, XmlUtil.getElementText(element));
+        return FactoryUtil.enumValue(GroupSymbolType.class, XmlUtil.getElementText(element));
     }
 
     public static Tuning newTuning(Element element) {

@@ -235,14 +235,14 @@ public class AttributesHandler extends MusicDataHandler {
                             case "measure-repeat":
                                 MeasureRepeat measureRepeat = new MeasureRepeat();
                                 measureRepeat.setValue(StringUtil.getInteger(XmlUtil.getElementText(measureStyleSubelement)));
-                                measureRepeat.setType((Connection) FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
+                                measureRepeat.setType(FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
                                 measureRepeat.setSlashes(StringUtil.getInteger(measureStyleSubelement.getAttribute("slashes")));
                                 measureStyle = measureRepeat;
                                 break;
                             case "beat-repeat":
                                 BeatRepeat beatRepeat = new BeatRepeat();
                                 beatRepeat.setSlashGroup(AttributesFactory.newSlashGroup(measureStyleSubelement));
-                                beatRepeat.setType((Connection) FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
+                                beatRepeat.setType(FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
                                 beatRepeat.setSlashes(StringUtil.getInteger(measureStyleSubelement.getAttribute("slashes")));
                                 beatRepeat.setUseDots(TypeUtil.getYesNo(measureStyleSubelement.getAttribute("use-dots")));
                                 measureStyle = beatRepeat;
@@ -250,7 +250,7 @@ public class AttributesHandler extends MusicDataHandler {
                             case "slash":
                                 Slash slash = new Slash();
                                 slash.setSlashGroup(AttributesFactory.newSlashGroup(measureStyleSubelement));
-                                slash.setType((Connection) FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
+                                slash.setType(FactoryUtil.enumValue(Connection.class, measureStyleSubelement.getAttribute("type")));
                                 slash.setUseDots(TypeUtil.getYesNo(measureStyleSubelement.getAttribute("use-dots")));
                                 slash.setUseStems(TypeUtil.getYesNo(measureStyleSubelement.getAttribute("use-stems")));
                                 measureStyle = slash;

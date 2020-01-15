@@ -101,7 +101,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                                             NoteSize noteSize = new NoteSize();
                                             noteSize.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
                                             String noteSizeType = appearanceSubelement.getAttribute("type");
-                                            noteSize.setType((NoteSizeType) FactoryUtil.enumValue(NoteSizeType.class, noteSizeType));
+                                            noteSize.setType(FactoryUtil.enumValue(NoteSizeType.class, noteSizeType));
                                             noteSizes.add(noteSize);
                                             break;
                                         case "distance":

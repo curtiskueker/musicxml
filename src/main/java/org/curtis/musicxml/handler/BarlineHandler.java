@@ -30,7 +30,7 @@ public class BarlineHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Barline barline = new Barline();
         barline.setEditorial(FormattingFactory.newEditorial(element));
-        barline.setLocation((Location)FactoryUtil.enumValue(Location.class, element.getAttribute("location")));
+        barline.setLocation(FactoryUtil.enumValue(Location.class, element.getAttribute("location")));
         barline.setSegno(element.getAttribute("segno"));
         barline.setCoda(element.getAttribute("coda"));
         barline.setDivisions(MathUtil.newBigDecimal(element.getAttribute("divisions")));
@@ -99,7 +99,7 @@ public class BarlineHandler extends MusicDataHandler {
                     Ending ending = new Ending();
                     ending.setValue(XmlUtil.getElementText(barlineSubelement));
                     ending.setNumber(barlineSubelement.getAttribute("number"));
-                    ending.setType((Connection) FactoryUtil.enumValue(Connection.class, barlineSubelement.getAttribute("type")));
+                    ending.setType(FactoryUtil.enumValue(Connection.class, barlineSubelement.getAttribute("type")));
                     ending.setPrintObject(FormattingFactory.getPrintObject(barlineSubelement));
                     ending.setPrintStyle(FormattingFactory.newPrintStyle(barlineSubelement));
                     ending.setEndLength(MathUtil.newBigDecimal(barlineSubelement.getAttribute("end-length")));
