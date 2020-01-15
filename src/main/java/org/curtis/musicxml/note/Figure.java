@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.note.lyric.Extend;
 
@@ -25,6 +26,9 @@ public class Figure extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "extend_id")
     private Extend extend;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "editorial_id")
+    private Editorial editorial;
 
     public Figure() {
 
@@ -60,5 +64,13 @@ public class Figure extends DatabaseItem {
 
     public void setExtend(Extend extend) {
         this.extend = extend;
+    }
+
+    public Editorial getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
     }
 }

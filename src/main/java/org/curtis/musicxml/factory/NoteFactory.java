@@ -99,6 +99,7 @@ public class NoteFactory {
             figure.setFigureNumber(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "figure-number")));
             figure.setSuffix(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "suffix")));
             figure.setExtend(LyricFactory.newExtend(XmlUtil.getChildElement(figureElement, "extend")));
+            figure.setEditorial(FormattingFactory.newEditorial(figureElement));
             figuredBass.getFigures().add(figure);
         }
         figuredBass.setDuration(MathUtil.newBigDecimal(XmlUtil.getChildElementText(element, "duration")));

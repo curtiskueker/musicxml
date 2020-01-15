@@ -13,6 +13,7 @@ import org.curtis.musicxml.attributes.key.NonTraditionalKey;
 import org.curtis.musicxml.attributes.key.NonTraditionalKeyType;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
 import org.curtis.musicxml.attributes.measure.BeatRepeat;
+import org.curtis.musicxml.attributes.measure.ExceptVoice;
 import org.curtis.musicxml.attributes.measure.MeasureRepeat;
 import org.curtis.musicxml.attributes.measure.MeasureStyle;
 import org.curtis.musicxml.attributes.measure.MultipleRest;
@@ -143,8 +144,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             buildEndElement("transpose");
         }
         for (Directive directive : attributes.getDirectives()) {
-            Map<String, String> directiveAttributes = new HashMap<>();
-            directiveAttributes.putAll(FormattingBuilder.buildPrintStyle(directive.getPrintStyle()));
+            Map<String, String> directiveAttributes = new HashMap<>(FormattingBuilder.buildPrintStyle(directive.getPrintStyle()));
             directiveAttributes.put("xml:lang", directive.getLang());
             buildElementWithValueAndAttributes("directive", directive.getValue(), directiveAttributes);
         }
@@ -240,5 +240,6 @@ public class AttributesBuilder extends MusicDataBuilder {
 
         buildElementWithValue("slash-type", BuilderUtil.noteTypeValue(slashGroup.getSlashType()));
         for (int dotCount = 1; dotCount <= slashGroup.getSlashDots(); dotCount++) buildElement("slash-dot");
+        for (ExceptVoice exceptVoice : slashGroup.getExceptVoices()) buildElementWithValue("except-voice", exceptVoice.getValue());
     }
 }

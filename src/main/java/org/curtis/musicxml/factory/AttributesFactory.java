@@ -7,6 +7,7 @@ import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.key.NonTraditionalKey;
 import org.curtis.musicxml.attributes.key.NonTraditionalKeyType;
 import org.curtis.musicxml.attributes.key.TraditionalKey;
+import org.curtis.musicxml.attributes.measure.ExceptVoice;
 import org.curtis.musicxml.attributes.measure.SlashGroup;
 import org.curtis.musicxml.attributes.time.Interchangeable;
 import org.curtis.musicxml.attributes.time.SenzaMisura;
@@ -162,6 +163,11 @@ public class AttributesFactory {
             Integer slashGroupDots = slashGroup.getSlashDots();
             slashGroupDots++;
             slashGroup.setSlashDots(slashGroupDots);
+        }
+        for (Element exceptVoiceElement : XmlUtil.getChildElements(element, "except-voice")) {
+            ExceptVoice exceptVoice = new ExceptVoice();
+            exceptVoice.setValue(XmlUtil.getElementText(exceptVoiceElement));
+            slashGroup.getExceptVoices().add(exceptVoice);
         }
 
         return slashGroup;

@@ -21,6 +21,7 @@
         <class>org.curtis.musicxml.attributes.key.NonTraditionalKeyType</class>
         <class>org.curtis.musicxml.attributes.key.TraditionalKey</class>
         <class>org.curtis.musicxml.attributes.measure.BeatRepeat</class>
+        <class>org.curtis.musicxml.attributes.measure.ExceptVoice</class>
         <class>org.curtis.musicxml.attributes.measure.MeasureRepeat</class>
         <class>org.curtis.musicxml.attributes.measure.MeasureStyle</class>
         <class>org.curtis.musicxml.attributes.measure.MultipleRest</class>

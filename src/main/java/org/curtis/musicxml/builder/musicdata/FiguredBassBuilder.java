@@ -25,6 +25,7 @@ public class FiguredBassBuilder extends MusicDataBuilder {
             buildStyleText("figure-number", figure.getFigureNumber());
             buildStyleText("suffix", figure.getSuffix());
             buildExtend(figure.getExtend());
+            buildEditorial(figure.getEditorial());
             buildEndElement("figure");
         }
         buildElementWithValue("duration", figuredBass.getDuration());
