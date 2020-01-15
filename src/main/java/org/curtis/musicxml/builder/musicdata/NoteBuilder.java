@@ -60,7 +60,6 @@ public class NoteBuilder extends MusicDataBuilder {
         buildAttribute("time-only", note.getTimeOnly());
         buildAttribute("pizzicato",  BuilderUtil.yesOrNo(note.getPizzicato()));
         buildCloseElement();
-        if (note.getCue()) buildElement("cue");
         Grace grace = note.getGrace();
         if (grace != null) {
             Map<String, String> graceAttributes = new HashMap<>();
@@ -70,6 +69,7 @@ public class NoteBuilder extends MusicDataBuilder {
             graceAttributes.put("slash", BuilderUtil.yesOrNo(grace.getSlash()));
             buildElementWithAttributes("grace", graceAttributes);
         }
+        if (note.getCue()) buildElement("cue");
         buildFullNote(note.getFullNote());
         if (grace == null) buildElementWithValue("duration", note.getDuration());
         for (Tie tie : note.getTies()) {
