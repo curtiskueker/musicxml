@@ -26,10 +26,4 @@ public class FactoryUtil {
 
         return enumItem;
     }
-
-    public static <T extends Enum<T>> T enumValueWithEmptyValue(Class<T> enumType, String elementValue) {
-        if (StringUtil.isEmptyString(elementValue)) elementValue = "empty_value";
-
-        return enumValue(enumType, elementValue);
-    }
 }

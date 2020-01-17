@@ -102,7 +102,7 @@ public class NotationFactory {
         if(fermataElement == null) return null;
 
         Fermata fermata = new Fermata();
-        fermata.setFermataShape(FactoryUtil.enumValueWithEmptyValue(FermataShape.class, XmlUtil.getElementText(fermataElement)));
+        fermata.setFermataShape(FactoryUtil.enumValue(FermataShape.class, XmlUtil.getElementText(fermataElement)));
         fermata.setType(FactoryUtil.enumValue(FermataType.class, fermataElement.getAttribute("type")));
         fermata.setPrintStyle(FormattingFactory.newPrintStyle(fermataElement));
 

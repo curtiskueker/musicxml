@@ -64,7 +64,7 @@ public class FormNode {
     public static final String SQL_OUTPUT_LOCATION = "sqlOutputLocation";
 
     public static final String DB_TEST_CONNECTION = "testDbConnection";
-    public static final String CREATE_DB_TABLES = "generateSchema";
+    public static final String CREATE_DB_TABLES = "createTables";
     public static final String GENERATE_SCHEMA = "generateSchema";
     public static final String CHOOSE_SCHEMA_LOCATION = "chooseSchemaLocationLink";
     public static final String SCHEMA_FILE_LOCATION = "schemaFileLocation";

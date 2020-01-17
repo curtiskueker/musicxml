@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "beat_unit_tied")
 public class BeatUnitTied extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "beat_unit_id")
+    @JoinColumn(name = "beat_unit_tied_parent_id")
     private BeatUnit beatUnit;
 
     public BeatUnitTied() {

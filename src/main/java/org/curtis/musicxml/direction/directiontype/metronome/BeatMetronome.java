@@ -5,13 +5,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @DiscriminatorValue("beat metronome")
 public class BeatMetronome extends Metronome {
-    private List<MetronomeMark> metronomeMarks = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "metronome_mark_1_id")
     private MetronomeMark metronomeMark1;

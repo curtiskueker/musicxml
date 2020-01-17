@@ -1,5 +1,7 @@
 package org.curtis.musicxml.common;
 
+import org.curtis.database.DatabaseItem;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +14,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "symbol_formatting")
-public class SymbolFormatting {
+public class SymbolFormatting extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private Location justify;

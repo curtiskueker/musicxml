@@ -17,7 +17,7 @@ public class DatabaseExec extends MusicXmlScript {
     }
 
     public void execute() throws MusicXmlException {
-        if (!isCreateDatabase() && !isTestDatabase() && !isGenerateSchema()) return;
+        if (!isCreateDatabase() && !isTestDatabase() && !isGenerateSchema()) throw new MusicXmlException("No option selected.");
 
         try {
             if (isCreateDatabase()) {

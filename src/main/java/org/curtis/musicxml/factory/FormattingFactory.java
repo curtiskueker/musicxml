@@ -219,6 +219,7 @@ public class FormattingFactory {
 
             if (cssFontSize == null) {
                 BigDecimal fontSizeNumber = MathUtil.newBigDecimal(fontSizeValue);
+                System.err.println("Using decimal font size " + fontSizeValue);
                 fontSize.setFontSize(fontSizeNumber);
             } else fontSize.setCssFontSize(cssFontSize);
 

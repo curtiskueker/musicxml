@@ -1,5 +1,6 @@
 package org.curtis.musicxml.note.lyric;
 
+import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Font;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "elision")
-public class Elision {
+public class Elision extends DatabaseItem {
     @Column
     private String value;
     @OneToOne(cascade = CascadeType.ALL)

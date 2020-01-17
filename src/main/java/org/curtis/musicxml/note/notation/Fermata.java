@@ -2,9 +2,11 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.converter.FermataShapeConverter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,8 +19,8 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue("fermata")
 public class Fermata extends Notation {
-    @Enumerated(EnumType.STRING)
     @Column(name = "fermata_shape")
+    @Convert(converter = FermataShapeConverter.class)
     private FermataShape fermataShape;
     @Enumerated(EnumType.STRING)
     @Column(name = "type_value")

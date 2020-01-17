@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 public class BuilderUtil {
     public static String REQUIRED_ATTRIBUTE = "REQUIRED_ATTRIBUTE";
+    public static String EMPTY_VALUE = "EMPTY_VALUE";
 
     private BuilderUtil() {
 
@@ -17,9 +18,8 @@ public class BuilderUtil {
         if (enumValue == null) return "";
 
         String value = enumValue.toString();
-        if(StringUtil.isEmpty(value)) return "";
-
-        if (value.equals("EMPTY_VALUE")) value = "";
+        if (StringUtil.isEmpty(value)) return "";
+        if (value.equals(EMPTY_VALUE)) return "";
 
         return value.toLowerCase().replace("_", "-");
     }
