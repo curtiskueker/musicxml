@@ -135,6 +135,9 @@
         <class>org.curtis.musicxml.direction.harmony.Root</class>
         <class>org.curtis.musicxml.direction.harmony.RootAlter</class>
         <class>org.curtis.musicxml.direction.harmony.RootStep</class>
+        <class>org.curtis.musicxml.display.Display</class>
+        <class>org.curtis.musicxml.display.Font</class>
+        <class>org.curtis.musicxml.display.Position</class>
         <class>org.curtis.musicxml.identity.Identification</class>
         <class>org.curtis.musicxml.identity.Miscellaneous</class>
         <class>org.curtis.musicxml.identity.MiscellaneousField</class>
