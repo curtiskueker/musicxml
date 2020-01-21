@@ -4,7 +4,7 @@ import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.NameDisplay;
-import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.common.play.Ipa;
 import org.curtis.musicxml.common.play.Mute;
 import org.curtis.musicxml.common.play.MuteType;
@@ -43,11 +43,8 @@ public class ScorePartFactory {
 
         NameDisplay nameDisplay = new NameDisplay();
         for(Element subelement : XmlUtil.getChildElements(element)) {
-            Text text = FormattingFactory.newText(subelement);
-            if (text != null) {
-                nameDisplay.getTextList().add(text);
-                text.setNameDisplay(nameDisplay);
-            }
+            TextDisplay text = FormattingFactory.newText(subelement);
+            if (text != null) nameDisplay.getTextList().add(text);
         }
         nameDisplay.setPrintObject(FormattingFactory.getPrintObject(element));
 

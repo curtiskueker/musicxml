@@ -1,7 +1,7 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
@@ -150,11 +150,8 @@ public class NoteHandler extends MusicDataHandler {
                     List<Element> noteheadTextSubelements = XmlUtil.getChildElements(noteSubelement);
                     NoteheadText noteheadText = new NoteheadText();
                     for(Element noteheadTextSubelement : noteheadTextSubelements) {
-                        Text text = FormattingFactory.newText(noteheadTextSubelement);
-                        if (text != null) {
-                            noteheadText.getTextList().add(text);
-                            text.setNoteheadText(noteheadText);
-                        }
+                        TextDisplay text = FormattingFactory.newText(noteheadTextSubelement);
+                        if (text != null) noteheadText.getTextList().add(text);
                     }
                     note.setNoteheadText(noteheadText);
                     break;

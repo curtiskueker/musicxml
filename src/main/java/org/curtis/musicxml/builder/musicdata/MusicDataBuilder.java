@@ -15,7 +15,7 @@ import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.common.StyleText;
-import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.common.play.Ipa;
 import org.curtis.musicxml.common.play.Mute;
 import org.curtis.musicxml.common.play.OtherPlay;
@@ -136,7 +136,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         buildElementWithValueAndAttributes("accidental-text", accidentalText.getAccidentalType(), attributes);
     }
 
-    protected void buildText(Text text) {
+    protected void buildText(TextDisplay text) {
         if (text == null) return;
 
         if (text instanceof DisplayText) {
@@ -153,9 +153,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         buildAttribute("print-object", nameDisplay.getPrintObject());
         buildCloseElement();
 
-        for (Text text : nameDisplay.getTextList()) {
-            buildText(text);
-        }
+        for (TextDisplay text : nameDisplay.getTextList()) buildText(text);
 
         buildEndElement(elementName);
     }

@@ -13,7 +13,7 @@ import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.common.SymbolFormatting;
 import org.curtis.musicxml.common.SymbolSize;
-import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.display.Display;
@@ -118,10 +118,10 @@ public class FormattingFactory {
         return styleText;
     }
 
-    public static Text newText(Element element) {
+    public static TextDisplay newText(Element element) {
         if (element == null) return null;
 
-        Text text = null;
+        TextDisplay text = null;
         String subelementName = element.getTagName();
         switch (subelementName) {
             case "display-text":

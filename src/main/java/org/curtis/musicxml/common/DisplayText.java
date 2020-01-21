@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("display_text")
-public class DisplayText extends Text {
+public class DisplayText extends TextDisplay {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_text_id")
     private FormattedText displayText;

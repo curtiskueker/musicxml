@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.common.TextFormatting;
 
 import javax.persistence.CascadeType;
@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("accidental_text")
-public class AccidentalText extends Text {
+public class AccidentalText extends TextDisplay {
     @Enumerated(EnumType.STRING)
     @Column(name = "accidental_type")
     private AccidentalType accidentalType;

@@ -3,7 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
-import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
@@ -116,12 +116,10 @@ public class NoteBuilder extends MusicDataBuilder {
         }
         NoteheadText noteheadText = note.getNoteheadText();
         if (noteheadText != null) {
-            List<Text> textList = noteheadText.getTextList();
+            List<TextDisplay> textList = noteheadText.getTextList();
             if (!textList.isEmpty()) {
                 buildStartElement("notehead-text");
-                for (Text text : textList) {
-                    buildText(text);
-                }
+                for (TextDisplay text : textList) buildText(text);
                 buildEndElement("notehead_text");
             }
         }

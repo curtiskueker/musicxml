@@ -21,7 +21,7 @@ public class NameDisplay extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "name_display_id")
-    private List<Text> textList = new ArrayList<>();
+    private List<TextDisplay> textList = new ArrayList<>();
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -30,11 +30,11 @@ public class NameDisplay extends DatabaseItem {
 
     }
 
-    public List<Text> getTextList() {
+    public List<TextDisplay> getTextList() {
         return textList;
     }
 
-    public void setTextList(List<Text> textList) {
+    public void setTextList(List<TextDisplay> textList) {
         this.textList = textList;
     }
 

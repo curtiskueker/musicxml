@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.common.TextDisplay;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -20,17 +20,17 @@ public class NoteheadText extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "notehead_text_id")
-    private List<Text> textList = new ArrayList<>();
+    private List<TextDisplay> textList = new ArrayList<>();
 
     public NoteheadText() {
 
     }
 
-    public List<Text> getTextList() {
+    public List<TextDisplay> getTextList() {
         return textList;
     }
 
-    public void setTextList(List<Text> textList) {
+    public void setTextList(List<TextDisplay> textList) {
         this.textList = textList;
     }
 }

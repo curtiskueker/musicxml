@@ -48,7 +48,7 @@
         <class>org.curtis.musicxml.common.Printout</class>
         <class>org.curtis.musicxml.common.StyleText</class>
         <class>org.curtis.musicxml.common.SymbolFormatting</class>
-        <class>org.curtis.musicxml.common.Text</class>
+        <class>org.curtis.musicxml.common.TextDisplay</class>
         <class>org.curtis.musicxml.common.TextDecoration</class>
         <class>org.curtis.musicxml.common.TextFormatting</class>
         <class>org.curtis.musicxml.common.XmlComment</class>
