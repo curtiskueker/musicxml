@@ -167,8 +167,8 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", BuilderUtil.requiredValue(otherAppearance.getType()));
             buildEndElement("appearance");
         }
-        buildElementWithAttributes("music-font", FormattingBuilder.buildFont(defaults.getMusicFont()));
-        buildElementWithAttributes("word-font", FormattingBuilder.buildFont(defaults.getWordFont()));
+        buildElementWithAttributes("music-font", DisplayBuilder.buildFont(defaults.getMusicFont()));
+        buildElementWithAttributes("word-font", DisplayBuilder.buildFont(defaults.getWordFont()));
         for (LyricFont lyricFont : defaults.getLyricFonts()) buildLyricFont(lyricFont);
         for (LyricLanguage lyricLanguage : defaults.getLyricLanguages()) buildLyricLanguage(lyricLanguage);
         buildEndElement("defaults");
@@ -180,7 +180,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("number", lyricFont.getNumber());
         attributes.put("name", lyricFont.getName());
-        attributes.putAll(FormattingBuilder.buildFont(lyricFont.getFont()));
+        attributes.putAll(DisplayBuilder.buildFont(lyricFont.getFont()));
         buildElementWithAttributes("lyric-font", attributes);
     }
 
@@ -243,17 +243,12 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         buildGroupName("group-abbreviation", partGroup.getGroupAbbreviation());
         buildNameDisplay("group-abbreviation-display", partGroup.getGroupAbbreviationDisplay());
         GroupSymbol groupSymbol = partGroup.getGroupSymbol();
-        if (groupSymbol != null) {
-            Map<String, String> groupSymbolAttributes = new HashMap<>();
-            groupSymbolAttributes.putAll(PlacementBuilder.buildPosition(groupSymbol.getPosition()));
-            groupSymbolAttributes.put("color", groupSymbol.getColor());
-            buildElementWithValueAndAttributes("group-symbol", groupSymbol.getGroupSymbolType(), groupSymbolAttributes);
-        }
+        if (groupSymbol != null) buildElementWithValueAndAttributes("group-symbol", groupSymbol.getGroupSymbolType(), DisplayBuilder.buildDisplay(groupSymbol.getDisplay()));
         GroupBarline groupBarline = partGroup.getGroupBarline();
         if (groupBarline != null) {
             String groupBarlineValue = BuilderUtil.enumValue(groupBarline.getGroupBarlineType());
             groupBarlineValue = groupBarlineValue.replace("mensurstrich", "Mensurstrich");
-            buildElementWithValueAndAttribute("group-barline", groupBarlineValue, "color", groupBarline.getColor());
+            buildElementWithValueAndAttribute("group-barline", groupBarlineValue, "color", groupBarline.getDisplay() == null ? null : groupBarline.getDisplay().getColor());
         }
         if (partGroup.getGroupTime()) buildElement("group-time");
         buildEditorial(partGroup.getEditorial());
@@ -263,8 +258,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
     private void buildGroupName(String elementName, GroupName groupName) {
         if (groupName == null) return;
 
-        Map<String, String> attributes = new HashMap<>();
-        attributes.putAll(FormattingBuilder.buildPrintStyle(groupName.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(groupName.getDisplay()));
         attributes.put("justify", BuilderUtil.enumValue(groupName.getJustify()));
         buildElementWithValueAndAttributes(elementName, groupName.getGroupName(), attributes);
     }
@@ -317,7 +311,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
 
         Map<String, String> attributes = new HashMap<>();
         attributes.put("print-object", BuilderUtil.yesOrNo(partName.getPartNamePrintObject()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(partName.getPartNamePrintStyle()));
+        attributes.putAll(DisplayBuilder.buildDisplay(partName.getDisplay()));
         attributes.put("justify", BuilderUtil.enumValue(partName.getPartNameJustify()));
         buildElementWithValueAndAttributes(elementName, partName.getPartName(), attributes);
     }

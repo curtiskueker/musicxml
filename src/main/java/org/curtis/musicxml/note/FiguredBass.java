@@ -1,8 +1,8 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.musicxml.common.Editorial;
-import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.Printout;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -33,8 +33,8 @@ public class FiguredBass extends MusicData {
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "printout_id")
     private Printout printout;
@@ -70,12 +70,12 @@ public class FiguredBass extends MusicData {
         this.editorial = editorial;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Printout getPrintout() {

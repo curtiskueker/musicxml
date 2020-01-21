@@ -2,7 +2,7 @@ package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.LineType;
 
 import javax.persistence.CascadeType;
@@ -35,10 +35,8 @@ public class Bracket extends DirectionType {
     @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @Column
-    private String color;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public Bracket() {
 
@@ -92,19 +90,11 @@ public class Bracket extends DirectionType {
         this.dashedFormatting = dashedFormatting;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

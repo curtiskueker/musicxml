@@ -1,8 +1,8 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,11 +26,8 @@ public class Image extends DirectionType {
     @Column(precision = 12, scale = 4)
     private BigDecimal width;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location halign;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Enumerated(EnumType.STRING)
     @Column(name = "valign_image")
     private Location valignImage;
@@ -71,20 +68,12 @@ public class Image extends DirectionType {
         this.width = width;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Location getHalign() {
-        return halign;
-    }
-
-    public void setHalign(Location halign) {
-        this.halign = halign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Location getValignImage() {

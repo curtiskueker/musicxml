@@ -1,7 +1,7 @@
 package org.curtis.musicxml.attributes.time;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -30,8 +30,8 @@ public abstract class Time extends DatabaseItem {
     @Column(name = "time_separator")
     private TimeSeparator separator;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -60,12 +60,12 @@ public abstract class Time extends DatabaseItem {
         this.separator = separator;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Boolean getPrintObject() {

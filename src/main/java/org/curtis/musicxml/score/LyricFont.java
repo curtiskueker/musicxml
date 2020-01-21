@@ -1,7 +1,7 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.display.Font;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

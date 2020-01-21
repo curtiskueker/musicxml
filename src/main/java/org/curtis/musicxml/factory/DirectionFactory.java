@@ -115,8 +115,7 @@ public class DirectionFactory {
                 wedge.setNiente(TypeUtil.getYesNo(element.getAttribute("niente")));
                 wedge.setLineType(NotationFactory.newLineType(element));
                 wedge.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
-                wedge.setPosition(PlacementFactory.newPosition(element));
-                wedge.setColor(element.getAttribute("color"));
+                wedge.setDisplay(DisplayFactory.newDisplay(element));
                 return wedge;
             case "dynamics":
                 return NotationFactory.newDynamics(element);
@@ -125,8 +124,7 @@ public class DirectionFactory {
                 dashes.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 dashes.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 dashes.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
-                dashes.setPosition(PlacementFactory.newPosition(element));
-                dashes.setColor(element.getAttribute("color"));
+                dashes.setDisplay(DisplayFactory.newDisplay(element));
                 return dashes;
             case "bracket":
                 Bracket bracket = new Bracket();
@@ -136,8 +134,7 @@ public class DirectionFactory {
                 bracket.setEndLength(MathUtil.newBigDecimal(element.getAttribute("end-length")));
                 bracket.setLineType(NotationFactory.newLineType(element));
                 bracket.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
-                bracket.setPosition(PlacementFactory.newPosition(element));
-                bracket.setColor(element.getAttribute("color"));
+                bracket.setDisplay(DisplayFactory.newDisplay(element));
                 return bracket;
             case "pedal":
                 Pedal pedal = new Pedal();
@@ -145,7 +142,7 @@ public class DirectionFactory {
                 pedal.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 pedal.setLine(TypeUtil.getYesNo(element.getAttribute("line")));
                 pedal.setSign(TypeUtil.getYesNo(element.getAttribute("sign")));
-                pedal.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                pedal.setDisplay(DisplayFactory.newDisplay(element));
                 pedal.setAbbreviated(TypeUtil.getYesNo(element.getAttribute("abbreviated")));
                 return pedal;
             case "metronome":
@@ -155,7 +152,7 @@ public class DirectionFactory {
                 if(beatUnitElement != null) metronome = newBeatMetronome(element);
                 else if(metronomeNoteElement != null) metronome = newNoteMetronome(element);
                 else return null;
-                metronome.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                metronome.setDisplay(DisplayFactory.newDisplay(element));
                 metronome.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
                 metronome.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
                 return metronome;
@@ -168,7 +165,7 @@ public class DirectionFactory {
                     octaveShift.setSize(octaveShiftSize);
                 }
                 octaveShift.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
-                octaveShift.setPrintStyle(FormattingFactory.newPrintStyle(element));
+                octaveShift.setDisplay(DisplayFactory.newDisplay(element));
                 return octaveShift;
             case "harp-pedals":
                 HarpPedals harpPedals = new HarpPedals();
@@ -179,24 +176,24 @@ public class DirectionFactory {
                     pedalTuning.setPedalAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pedalTuningElement, "pedal-alter")));
                     pedalTunings.add(pedalTuning);
                 }
-                harpPedals.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                harpPedals.setDisplay(DisplayFactory.newDisplay(element));
                 return harpPedals;
             case "damp":
                 Damp damp = new Damp();
-                damp.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                damp.setDisplay(DisplayFactory.newDisplay(element));
                 return damp;
             case "damp-all":
                 DampAll dampAll = new DampAll();
-                dampAll.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                dampAll.setDisplay(DisplayFactory.newDisplay(element));
                 return dampAll;
             case "eyeglasses":
                 Eyeglasses eyeglasses = new Eyeglasses();
-                eyeglasses.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                eyeglasses.setDisplay(DisplayFactory.newDisplay(element));
                 return eyeglasses;
             case "string-mute":
                 StringMute stringMute = new StringMute();
                 stringMute.setType(FactoryUtil.enumValue(StringMuteDirection.class, element.getAttribute("type")));
-                stringMute.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                stringMute.setDisplay(DisplayFactory.newDisplay(element));
                 return stringMute;
             case "scordatura":
                 Scordatura scordatura = new Scordatura();
@@ -215,7 +212,7 @@ public class DirectionFactory {
                 principalVoice.setPrincipalVoice(XmlUtil.getElementText(element));
                 principalVoice.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 principalVoice.setSymbol(FactoryUtil.enumValue(PrincipalVoiceSymbol.class, element.getAttribute("symbol")));
-                principalVoice.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                principalVoice.setDisplay(DisplayFactory.newDisplay(element));
                 return principalVoice;
             case "percussion":
                 List<Element> percussionElements = XmlUtil.getChildElements(element);
@@ -226,18 +223,18 @@ public class DirectionFactory {
                 accordionRegistration.setAccordionHigh(XmlUtil.hasChildElement(element, "accordion-high"));
                 accordionRegistration.setAccordionMiddle(StringUtil.getInteger(XmlUtil.getChildElementText(element, "accordion-middle")));
                 accordionRegistration.setAccordionLow(XmlUtil.hasChildElement(element, "accordion-low"));
-                accordionRegistration.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                accordionRegistration.setDisplay(DisplayFactory.newDisplay(element));
                 return accordionRegistration;
             case "staff-divide":
                 StaffDivide staffDivide = new StaffDivide();
                 staffDivide.setStaffDivideSymbol(FactoryUtil.enumValue(StaffDivideSymbol.class, element.getAttribute("type")));
-                staffDivide.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                staffDivide.setDisplay(DisplayFactory.newDisplay(element));
                 return staffDivide;
             case "other-direction":
                 OtherDirection otherDirection = new OtherDirection();
                 otherDirection.setValue(XmlUtil.getElementText(element));
                 otherDirection.setPrintObject(FormattingFactory.getPrintObject(element));
-                otherDirection.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+                otherDirection.setDisplay(DisplayFactory.newDisplay(element));
                 otherDirection.setSmufl(element.getAttribute("smufl"));
                 return otherDirection;
             default:
@@ -317,7 +314,7 @@ public class DirectionFactory {
     private static PerMinute newPerMinute(Element element) {
         PerMinute perMinute = new PerMinute();
         perMinute.setPerMinute(XmlUtil.getElementText(element));
-        perMinute.setFont(FormattingFactory.newFont(element));
+        perMinute.setDisplay(DisplayFactory.newDisplay(element));
 
         return perMinute;
     }
@@ -461,7 +458,7 @@ public class DirectionFactory {
 
         if (percussion == null) return null;
 
-        percussion.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+        percussion.setDisplay(DisplayFactory.newDisplay(element));
         percussion.setEnclosure(FormattingFactory.newEnclosureShape(element));
 
         return percussion;
@@ -538,8 +535,7 @@ public class DirectionFactory {
         image.setType(element.getAttribute("type"));
         image.setHeight(MathUtil.newBigDecimal(element.getAttribute("height")));
         image.setWidth(MathUtil.newBigDecimal(element.getAttribute("width")));
-        image.setPosition(PlacementFactory.newPosition(element));
-        image.setHalign(FactoryUtil.enumValue(Location.class, element.getAttribute("halign")));
+        image.setDisplay(DisplayFactory.newDisplay(element));
         image.setValignImage(FactoryUtil.enumValue(Location.class, element.getAttribute("valign")));
 
         return image;

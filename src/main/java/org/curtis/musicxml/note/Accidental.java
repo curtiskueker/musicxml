@@ -2,7 +2,7 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.LevelDisplay;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -30,8 +30,8 @@ public class Accidental extends DatabaseItem {
     @JoinColumn(name = "level_display_id")
     private LevelDisplay levelDisplay;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column
     private String smufl;
 
@@ -71,12 +71,12 @@ public class Accidental extends DatabaseItem {
         this.levelDisplay = levelDisplay;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public String getSmufl() {

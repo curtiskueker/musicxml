@@ -1,11 +1,10 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
-import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
-import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
@@ -55,45 +54,38 @@ public class ArticulationHandler extends BaseHandler {
             switch (articulationsSubelement.getTagName()) {
                 case "accent":
                     Accent accent = new Accent();
-                    PrintPlacement accentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    accent.setPrintPlacement(accentPlacement);
+                    accent.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = accent;
                     break;
                 case "strong-accent":
                     StrongAccent strongAccent = new StrongAccent();
-                    PrintPlacement strongAccentPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    strongAccent.setPrintPlacement(strongAccentPlacement);
+                    strongAccent.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     strongAccent.setType(FactoryUtil.enumValue(Location.class, articulationsSubelement.getAttribute("type")));
                     articulation = strongAccent;
                     break;
                 case "staccato":
                     Staccato staccato = new Staccato();
-                    PrintPlacement staccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    staccato.setPrintPlacement(staccatoPlacement);
+                    staccato.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = staccato;
                     break;
                 case "tenuto":
                     Tenuto tenuto = new Tenuto();
-                    PrintPlacement tenutoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    tenuto.setPrintPlacement(tenutoPlacement);
+                    tenuto.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = tenuto;
                     break;
                 case "detached-legato":
                     DetachedLegato detachedLegato = new DetachedLegato();
-                    PrintPlacement detachedLegatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    detachedLegato.setPrintPlacement(detachedLegatoPlacement);
+                    detachedLegato.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = detachedLegato;
                     break;
                 case "staccatissimo":
                     Staccatissimo staccatissimo = new Staccatissimo();
-                    PrintPlacement staccatissimoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    staccatissimo.setPrintPlacement(staccatissimoPlacement);
+                    staccatissimo.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = staccatissimo;
                     break;
                 case "spiccato":
                     Spiccato spiccato = new Spiccato();
-                    PrintPlacement spiccatoPlacement = PlacementFactory.newPlacement(articulationsSubelement);
-                    spiccato.setPrintPlacement(spiccatoPlacement);
+                    spiccato.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = spiccato;
                     break;
                 case "scoop":
@@ -120,29 +112,28 @@ public class ArticulationHandler extends BaseHandler {
                     BreathMark breathMark = new BreathMark();
                     String breathMarkValue = XmlUtil.getElementText(articulationsSubelement);
                     breathMark.setBreathMarkValue(FactoryUtil.enumValue(BreathMarkType.class, breathMarkValue));
-                    breathMark.setPrintStyle(FormattingFactory.newPrintStyle(articulationsSubelement));
-                    breathMark.setPlacement(PlacementFactory.newPlacementLocation(articulationsSubelement));
+                    breathMark.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = breathMark;
                     break;
                 case "caesura":
                     Caesura caesura = new Caesura();
                     caesura.setCaesuraValue(FactoryUtil.enumValue(CaesuraValue.class, XmlUtil.getElementText(articulationsSubelement)));
-                    caesura.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
+                    caesura.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = caesura;
                     break;
                 case "stress":
                     Stress stress = new Stress();
-                    stress.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
+                    stress.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = stress;
                     break;
                 case "unstress":
                     Unstress unstress = new Unstress();
-                    unstress.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
+                    unstress.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = unstress;
                     break;
                 case "soft-accent":
                     SoftAccent softAccent = new SoftAccent();
-                    softAccent.setPrintPlacement(PlacementFactory.newPlacement(articulationsSubelement));
+                    softAccent.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = softAccent;
                     break;
                 case "other-articulation":

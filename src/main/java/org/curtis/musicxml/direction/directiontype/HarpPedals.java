@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -22,8 +22,8 @@ public class HarpPedals extends DirectionType {
     @JoinColumn(name = "harp_pedals_id", nullable = false)
     private List<PedalTuning> pedalTunings = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public HarpPedals() {
 
@@ -37,11 +37,11 @@ public class HarpPedals extends DirectionType {
         this.pedalTunings = pedalTunings;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

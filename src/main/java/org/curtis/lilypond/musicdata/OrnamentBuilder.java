@@ -16,28 +16,28 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildTrillMark(TrillMark trillMark) {
-        append(PlacementBuildUtil.getPlacement(trillMark.getPlacement()));
+        append(PlacementBuildUtil.getPlacement(trillMark.getDisplay()));
         append("\\trill");
 
         return stringBuilder;
     }
 
     public StringBuilder buildTurn(Turn turn) {
-        append(PlacementBuildUtil.getPlacement(turn.getPlacement()));
+        append(PlacementBuildUtil.getPlacement(turn.getDisplay()));
         append("\\turn");
 
         return stringBuilder;
     }
 
     public StringBuilder buildInvertedTurn(InvertedTurn invertedTurn) {
-        append(PlacementBuildUtil.getPlacement(invertedTurn.getPlacement()));
+        append(PlacementBuildUtil.getPlacement(invertedTurn.getDisplay()));
         append("\\reverseturn");
 
         return stringBuilder;
     }
 
     public StringBuilder buildMordent(Mordent mordent) {
-        append(PlacementBuildUtil.getPlacement(mordent.getPlacement()));
+        append(PlacementBuildUtil.getPlacement(mordent.getDisplay()));
         append("\\mordent");
 
         return stringBuilder;
@@ -57,7 +57,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildInvertedMordent(InvertedMordent invertedMordent) {
-        append(PlacementBuildUtil.getPlacement(invertedMordent.getPlacement()));
+        append(PlacementBuildUtil.getPlacement(invertedMordent.getDisplay()));
         append("\\prall");
 
         return stringBuilder;

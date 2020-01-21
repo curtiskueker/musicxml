@@ -26,10 +26,10 @@ import org.curtis.musicxml.direction.harmony.Root;
 import org.curtis.musicxml.direction.harmony.RootAlter;
 import org.curtis.musicxml.direction.harmony.RootStep;
 import org.curtis.musicxml.factory.DirectionFactory;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
@@ -62,14 +62,14 @@ public class HarmonyHandler extends MusicDataHandler {
                     RootStep rootStep = new RootStep();
                     rootStep.setStep(NoteFactory.newStep(rootStepElement));
                     rootStep.setText(harmonySubelement.getAttribute("text"));
-                    rootStep.setPrintStyle(FormattingFactory.newPrintStyle(harmonySubelement));
+                    rootStep.setDisplay(DisplayFactory.newDisplay(harmonySubelement));
                     root.setRootStep(rootStep);
                     Element rootAlterElement = XmlUtil.getChildElement(harmonySubelement, "root-alter");
                     if(rootAlterElement != null) {
                         RootAlter rootAlter = new RootAlter();
                         rootAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(rootAlterElement)));
                         rootAlter.setPrintObject(FormattingFactory.getPrintObject(rootAlterElement));
-                        rootAlter.setPrintStyle(FormattingFactory.newPrintStyle(rootAlterElement));
+                        rootAlter.setDisplay(DisplayFactory.newDisplay(rootAlterElement));
                         rootAlter.setLocation(FactoryUtil.enumValue(Location.class, rootAlterElement.getAttribute("location")));
                         root.setRootAlter(rootAlter);
                     }
@@ -89,15 +89,13 @@ public class HarmonyHandler extends MusicDataHandler {
                     kind.setStackDegrees(TypeUtil.getYesNo(harmonySubelement.getAttribute("stack-degrees")));
                     kind.setParenthesesDegrees(TypeUtil.getYesNo(harmonySubelement.getAttribute("parentheses-degrees")));
                     kind.setBracketDegrees(TypeUtil.getYesNo(harmonySubelement.getAttribute("bracket-degrees")));
-                    kind.setPrintStyle(FormattingFactory.newPrintStyle(harmonySubelement));
-                    kind.setHalign(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("halign")));
-                    kind.setValign(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("valign")));
+                    kind.setDisplay(DisplayFactory.newDisplay(harmonySubelement));
                     if (harmonyChord != null) harmonyChord.setKind(kind);
                     break;
                 case "inversion":
                     Inversion inversion = new Inversion();
                     inversion.setValue(StringUtil.getInteger(XmlUtil.getElementText(harmonySubelement)));
-                    inversion.setPrintStyle(FormattingFactory.newPrintStyle(harmonySubelement));
+                    inversion.setDisplay(DisplayFactory.newDisplay(harmonySubelement));
                     if(harmonyChord != null) harmonyChord.setInversion(inversion);
                     break;
                 case "bass":
@@ -106,14 +104,14 @@ public class HarmonyHandler extends MusicDataHandler {
                     BassStep bassStep = new BassStep();
                     bassStep.setText(XmlUtil.getElementText(bassStepElement));
                     bassStep.setText(bassStepElement.getAttribute("text"));
-                    bassStep.setPrintStyle(FormattingFactory.newPrintStyle(bassStepElement));
+                    bassStep.setDisplay(DisplayFactory.newDisplay(bassStepElement));
                     bass.setBassStep(bassStep);
                     Element bassAlterElement = XmlUtil.getChildElement(harmonySubelement, "bass-alter");
                     if (bassAlterElement != null) {
                         BassAlter bassAlter = new BassAlter();
                         bassAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(bassAlterElement)));
                         bassAlter.setPrintObject(FormattingFactory.getPrintObject(bassAlterElement));
-                        bassAlter.setPrintStyle(FormattingFactory.newPrintStyle(bassAlterElement));
+                        bassAlter.setDisplay(DisplayFactory.newDisplay(bassAlterElement));
                         bassAlter.setLocation(FactoryUtil.enumValue(Location.class, bassAlterElement.getAttribute("location")));
                         bass.setBassAlter(bassAlter);
                     }
@@ -128,19 +126,19 @@ public class HarmonyHandler extends MusicDataHandler {
                         degreeValue.setValue(StringUtil.getInteger(XmlUtil.getElementText(degreeValueElement)));
                         degreeValue.setSymbol(FactoryUtil.enumValue(DegreeSymbol.class, degreeValueElement.getAttribute("symbol")));
                         degreeValue.setText(degreeValueElement.getAttribute("text"));
-                        degreeValue.setPrintStyle(FormattingFactory.newPrintStyle(degreeValueElement));
+                        degreeValue.setDisplay(DisplayFactory.newDisplay(degreeValueElement));
                         degree.setDegreeValue(degreeValue);
                         Element degreeAlterElement = XmlUtil.getChildElement(harmonySubelement, "degree-alter");
                         DegreeAlter degreeAlter = new DegreeAlter();
                         degreeAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(degreeAlterElement)));
-                        degreeAlter.setPrintStyle(FormattingFactory.newPrintStyle(degreeAlterElement));
+                        degreeAlter.setDisplay(DisplayFactory.newDisplay(degreeAlterElement));
                         degreeAlter.setPlusMinus(TypeUtil.getYesNo(degreeValueElement.getAttribute("plus-minus")));
                         degree.setDegreeAlter(degreeAlter);
                         Element degreeTypeElement = XmlUtil.getChildElement(harmonySubelement, "degree-type");
                         DegreeType degreeType = new DegreeType();
                         degreeType.setValue(FactoryUtil.enumValue(DegreeTypeValue.class, XmlUtil.getElementText(degreeTypeElement)));
                         degreeType.setText(degreeTypeElement.getAttribute("text"));
-                        degreeType.setPrintStyle(FormattingFactory.newPrintStyle(degreeTypeElement));
+                        degreeType.setDisplay(DisplayFactory.newDisplay(degreeTypeElement));
                         degree.setDegreeType(degreeType);
                         degree.setPrintObject(FormattingFactory.getPrintObject(degreeAlterElement));
                         degrees.add(degree);
@@ -150,9 +148,8 @@ public class HarmonyHandler extends MusicDataHandler {
                     Frame frame = new Frame();
                     frame.setFrameStrings(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "frame-strings")));
                     frame.setFrameFrets(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "frame-frets")));
-                    frame.setPosition(PlacementFactory.newPosition(harmonySubelement));
-                    frame.setColor(harmonySubelement.getAttribute("color"));
-                    frame.setHalign(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("halign")));
+                    frame.setDisplay(DisplayFactory.newDisplay(harmonySubelement));
+                    frame.setValignImage(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("valign")));
                     frame.setHeight(MathUtil.newBigDecimal(harmonySubelement.getAttribute("height")));
                     frame.setWidth(MathUtil.newBigDecimal(harmonySubelement.getAttribute("width")));
                     frame.setUnplayed(harmonySubelement.getAttribute("unplayed"));
@@ -175,7 +172,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         if (barreElement != null) {
                             Barre barre = new Barre();
                             barre.setType(FactoryUtil.enumValue(Connection.class, barreElement.getAttribute("type")));
-                            barre.setColor(barreElement.getAttribute("color"));
+                            barre.setDisplay(DisplayFactory.newDisplay(barreElement));
                             frameNote.setBarre(barre);
                         }
                         frameNotes.add(frameNote);
@@ -192,8 +189,7 @@ public class HarmonyHandler extends MusicDataHandler {
             harmony.setType(FactoryUtil.enumValue(HarmonyType.class, element.getAttribute("type")));
             harmony.setPrintObject(FormattingFactory.getPrintObject(element));
             harmony.setPrintFrame(TypeUtil.getYesNo(element.getAttribute("print-frame")));
-            harmony.setPrintStyle(FormattingFactory.newPrintStyle(element));
-            harmony.setPlacement(PlacementFactory.newPlacementLocation(element));
+            harmony.setDisplay(DisplayFactory.newDisplay(element));
         }
 
         if(harmonyChord != null) harmony.getHarmonyChords().add(harmonyChord);

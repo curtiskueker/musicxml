@@ -1,9 +1,8 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.note.PlacementText;
-import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.notation.technical.Arrow;
 import org.curtis.musicxml.note.notation.technical.Bend;
 import org.curtis.musicxml.note.notation.technical.BendSound;
@@ -78,23 +77,29 @@ public class TechnicalBuilder extends MusicDataBuilder {
         else if (technical instanceof Arrow) buildArrow((Arrow)technical);
         else if (technical instanceof Handbell) buildHandbell((Handbell)technical);
         else if (technical instanceof OtherTechnical) buildOtherTechnical((OtherTechnical)technical);
+        else if (technical instanceof BrassBend) buildBrassBend((BrassBend)technical);
+        else if (technical instanceof Flip) buildFlip((Flip)technical);
+        else if (technical instanceof Smear) buildSmear((Smear)technical);
+        else if (technical instanceof Open) buildOpen((Open)technical);
+        else if (technical instanceof HalfMuted) buildHalfMuted((HalfMuted)technical);
+        else if (technical instanceof HarmonMute) buildHarmonMute((HarmonMute)technical);
+        else if (technical instanceof Golpe) buildGolpe((Golpe)technical);
 
         return stringBuilder;
     }
 
     private void buildUpBow(UpBow upBow) {
-        buildPlacement("up-bow", upBow.getPrintPlacement());
+        buildElementWithAttributes("up-bow", DisplayBuilder.buildDisplay(upBow.getDisplay()));
     }
 
     private void buildDownBow(DownBow downBow) {
-        buildPlacement("down-bow", downBow.getPrintPlacement());
+        buildElementWithAttributes("down-bow", DisplayBuilder.buildDisplay(downBow.getDisplay()));
     }
 
     private void buildHarmonic(Harmonic harmonic) {
         buildOpenElement("harmonic");
         buildAttribute("print-object",  harmonic.getPrintObject());
-        buildAttributes(FormattingBuilder.buildPrintStyle(harmonic.getPrintStyle()));
-        buildAttribute("placement", harmonic.getPlacement());
+        buildAttributes(DisplayBuilder.buildDisplay(harmonic.getDisplay()));
         buildCloseElement();
         HarmonicType harmonicType = harmonic.getHarmonicType();
         if (harmonicType != null) {
@@ -125,11 +130,11 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildOpenString(OpenString openString) {
-        buildPlacement("down-bow", openString.getPrintPlacement());
+        buildElementWithAttributes("down-bow", DisplayBuilder.buildDisplay(openString.getDisplay()));
     }
 
     private void buildThumbPosition(ThumbPosition thumbPosition) {
-        buildPlacement("thumb-position", thumbPosition.getPrintPlacement());
+        buildElementWithAttributes("thumb-position", DisplayBuilder.buildDisplay(thumbPosition.getDisplay()));
     }
 
     private void buildPluck(Pluck pluck) {
@@ -137,19 +142,21 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildDoubleTongue(DoubleTongue doubleTongue) {
-        buildPlacement("double-tongue", doubleTongue.getPrintPlacement());
+        buildElementWithAttributes("double-tongue", DisplayBuilder.buildDisplay(doubleTongue.getDisplay()));
     }
 
     private void buildTripleTongue(TripleTongue tripleTongue) {
-        buildPlacement("triple-tongue", tripleTongue.getPrintPlacement());
+        buildElementWithAttributes("triple-tongue", DisplayBuilder.buildDisplay(tripleTongue.getDisplay()));
     }
 
     private void buildStopped(Stopped stopped) {
-        buildPlacementWithAttribute("stopped", stopped.getPrintPlacement(), "smufl", stopped.getSmufl());
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(stopped.getDisplay()));
+        attributes.put("smufl", stopped.getSmufl());
+        buildElementWithAttributes("stopped", attributes);
     }
 
     private void buildSnapPizzicato(SnapPizzicato snapPizzicato) {
-        buildPlacement("snap-pizzicato", snapPizzicato.getPrintPlacement());
+        buildElementWithAttributes("snap-pizzicato", DisplayBuilder.buildDisplay(snapPizzicato.getDisplay()));
     }
 
     private void buildHammerOnPullOf(HammerOnPullOff hammerOnPullOff) {
@@ -157,14 +164,13 @@ public class TechnicalBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(hammerOnPullOff.getType()));
         attributes.put("number", BuilderUtil.stringValue(hammerOnPullOff.getNumber()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(hammerOnPullOff.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(hammerOnPullOff.getPlacement()));
+        attributes.putAll(DisplayBuilder.buildDisplay(hammerOnPullOff.getDisplay()));
         buildElementWithValueAndAttributes(elementName, hammerOnPullOff.getValue(), attributes);
     }
 
     private void buildBend(Bend bend) {
         buildOpenElement("bend");
-        buildAttributes(FormattingBuilder.buildPrintStyle(bend.getPrintStyle()));
+        buildAttributes(DisplayBuilder.buildDisplay(bend.getDisplay()));
         buildAttributes(buildBendSound(bend.getBendSound()));
         buildCloseElement();
         buildElementWithValue("bend-alter", bend.getBendAlter());
@@ -186,25 +192,25 @@ public class TechnicalBuilder extends MusicDataBuilder {
 
     private void buildTap(Tap tap) {
         PlacementText placementText = tap.getPlacementText();
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(placementText.getDisplay()));
         attributes.put("hand", BuilderUtil.enumValue(tap.getTapHand()));
         buildElementWithValueAndAttributes("tap", placementText.getValue(), attributes);
     }
 
     private void buildHeelToe(HeelToe heelToe) {
         String elementName = heelToe instanceof Heel ? "heel" : "toe";
-        buildPlacementWithAttribute(elementName, heelToe.getPrintPlacement(), "substitution", BuilderUtil.yesOrNo(heelToe.getSubstitution()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(heelToe.getDisplay()));
+        attributes.put("substitution", BuilderUtil.yesOrNo(heelToe.getSubstitution()));
+        buildElementWithAttributes(elementName, attributes);
     }
 
     private void buildFingernails(Fingernails fingernails) {
-        buildPlacement("fingernails", fingernails.getPrintPlacement());
+        buildElementWithAttributes("fingernails", DisplayBuilder.buildDisplay(fingernails.getDisplay()));
     }
 
     private void buildHole(Hole hole) {
         buildOpenElement("hole");
-        buildAttributes(FormattingBuilder.buildPrintStyle(hole.getPrintStyle()));
-        buildAttribute("placement", hole.getPlacement());
+        buildAttributes(DisplayBuilder.buildDisplay(hole.getDisplay()));
         buildCloseElement();
         String holeType = hole.getHoleType();
         if (StringUtil.isNotEmpty(holeType)) buildElementWithValue("hole-type", holeType);
@@ -216,8 +222,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
 
     private void buildArrow(Arrow arrow) {
         buildOpenElement("arrow");
-        buildAttributes(FormattingBuilder.buildPrintStyle(arrow.getPrintStyle()));
-        buildAttribute("placement", arrow.getPlacement());
+        buildAttributes(DisplayBuilder.buildDisplay(arrow.getDisplay()));
         buildAttribute("smufl", arrow.getSmufl());
         buildCloseElement();
         buildElementWithValue("arrow-direction", BuilderUtil.enumValueWithSpaces(arrow.getArrowDirection()));
@@ -228,38 +233,36 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildHandbell(Handbell handbell) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(handbell.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(handbell.getPlacement()));
-        buildElementWithValueAndAttributes("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), attributes);
+        buildElementWithValueAndAttributes("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), DisplayBuilder.buildDisplay(handbell.getDisplay()));
     }
 
     private void buildBrassBend(BrassBend brassBend) {
-        buildPlacement("brass-bend", brassBend.getPrintPlacement());
+        buildElementWithAttributes("brass-bend", DisplayBuilder.buildDisplay(brassBend.getDisplay()));
     }
 
     private void buildFlip(Flip flip) {
-        buildPlacement("flip", flip.getPrintPlacement());
+        buildElementWithAttributes("flip", DisplayBuilder.buildDisplay(flip.getDisplay()));
     }
 
     private void buildSmear(Smear smear) {
-        buildPlacement("smear", smear.getPrintPlacement());
+        buildElementWithAttributes("smear", DisplayBuilder.buildDisplay(smear.getDisplay()));
     }
 
     private void buildOpen(Open open) {
-        buildPlacementWithAttribute("open", open.getPrintPlacement(), "smufl", open.getSmufl());
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(open.getDisplay()));
+        attributes.put("smufl", open.getSmufl());
+        buildElementWithAttributes("open", attributes);
     }
 
     private void buildHalfMuted(HalfMuted halfMuted) {
-        buildPlacementWithAttribute("half-muted", halfMuted.getPrintPlacement(), "smufl", halfMuted.getSmufl());
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(halfMuted.getDisplay()));
+        attributes.put("smufl", halfMuted.getSmufl());
+        buildElementWithAttributes("half-muted", attributes);
     }
 
     private void buildHarmonMute(HarmonMute harmonMute) {
         buildOpenElement("harmon-mute");
-        PrintPlacement printPlacement = harmonMute.getPrintPlacement();
-        if (printPlacement != null) {
-            buildAttributes(FormattingBuilder.buildPrintStyle(printPlacement.getPrintStyle()));
-            buildAttribute("placement", printPlacement.getPlacement());
-        }
+        buildAttributes(DisplayBuilder.buildDisplay(harmonMute.getDisplay()));
         buildCloseElement();
         HarmonClosed harmonClosed = harmonMute.getHarmonClosed();
         buildElementWithValueAndAttribute("harmon-closed", BuilderUtil.enumValue(harmonClosed.getValue()), "location", BuilderUtil.enumValue(harmonClosed.getLocation()));
@@ -267,7 +270,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildGolpe(Golpe golpe) {
-        buildPlacement("golpe", golpe.getPrintPlacement());
+        buildElementWithAttributes("golpe", DisplayBuilder.buildDisplay(golpe.getDisplay()));
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {

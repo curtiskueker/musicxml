@@ -51,8 +51,7 @@ public class NotationFactory {
         tuplet.setShowNumber(newShowTuplet(element.getAttribute("show-number")));
         tuplet.setShowType(newShowTuplet(element.getAttribute("show-type")));
         tuplet.setLineShape(newLineShape(element));
-        tuplet.setPosition(PlacementFactory.newPosition(element));
-        tuplet.setPlacement(PlacementFactory.newPlacementLocation(element));
+        tuplet.setDisplay(DisplayFactory.newDisplay(element));
 
         return tuplet;
     }
@@ -68,8 +67,7 @@ public class NotationFactory {
         if (tupletNumberElement != null) {
             TupletNumber tupletNumber = new TupletNumber();
             tupletNumber.setValue(StringUtil.getInteger(XmlUtil.getElementText(tupletNumberElement)));
-            tupletNumber.setFont(FormattingFactory.newFont(tupletNumberElement));
-            tupletNumber.setColor(tupletNumberElement.getAttribute("color"));
+            tupletNumber.setDisplay(DisplayFactory.newDisplay(tupletNumberElement));
             tupletPortion.setTupletNumber(tupletNumber);
         }
 
@@ -77,8 +75,7 @@ public class NotationFactory {
         if (tupletTypeElement != null) {
             TupletType tupletType = new TupletType();
             tupletType.setNoteTypeValue(NoteFactory.newNoteTypeValue(tupletTypeElement));
-            tupletType.setFont(FormattingFactory.newFont(tupletTypeElement));
-            tupletType.setColor(tupletTypeElement.getAttribute("color"));
+            tupletType.setDisplay(DisplayFactory.newDisplay(tupletTypeElement));
             tupletPortion.setTupletType(tupletType);
         }
 
@@ -86,8 +83,7 @@ public class NotationFactory {
         List<TupletDot> tupletDots = tupletPortion.getTupletDots();
         for(Element tupletDotElement : tupletDotElements) {
             TupletDot tupletDot = new TupletDot();
-            tupletDot.setFont(FormattingFactory.newFont(tupletDotElement));
-            tupletDot.setColor(tupletDotElement.getAttribute("color"));
+            tupletDot.setDisplay(DisplayFactory.newDisplay(tupletDotElement));
             tupletDots.add(tupletDot);
         }
 
@@ -98,13 +94,13 @@ public class NotationFactory {
         return FactoryUtil.enumValue(ShowTuplet.class, showTupletValue);
     }
 
-    public static Fermata newFermata(Element fermataElement) {
-        if(fermataElement == null) return null;
+    public static Fermata newFermata(Element element) {
+        if(element == null) return null;
 
         Fermata fermata = new Fermata();
-        fermata.setFermataShape(FactoryUtil.enumValue(FermataShape.class, XmlUtil.getElementText(fermataElement)));
-        fermata.setType(FactoryUtil.enumValue(FermataType.class, fermataElement.getAttribute("type")));
-        fermata.setPrintStyle(FormattingFactory.newPrintStyle(fermataElement));
+        fermata.setFermataShape(FactoryUtil.enumValue(FermataShape.class, XmlUtil.getElementText(element)));
+        fermata.setType(FactoryUtil.enumValue(FermataType.class, element.getAttribute("type")));
+        fermata.setDisplay(DisplayFactory.newDisplay(element));
 
         return fermata;
     }
@@ -117,8 +113,7 @@ public class NotationFactory {
         line.setLineType(newLineType(element));
         line.setLineLength(FactoryUtil.enumValue(LineLength.class, element.getAttribute("line-length")));
         line.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
-        line.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        line.setPlacement(PlacementFactory.newPlacementLocation(element));
+        line.setDisplay(DisplayFactory.newDisplay(element));
 
         return line;
     }
@@ -141,8 +136,7 @@ public class NotationFactory {
         AccidentalMark accidentalMark = new AccidentalMark();
         accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(element));
         accidentalMark.setLevelDisplay(FormattingFactory.newLevelDisplay(element));
-        accidentalMark.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        accidentalMark.setPlacement(PlacementFactory.newPlacementLocation(element));
+        accidentalMark.setDisplay(DisplayFactory.newDisplay(element));
         accidentalMark.setSmufl(element.getAttribute("smufl"));
 
         return accidentalMark;
@@ -163,8 +157,7 @@ public class NotationFactory {
             dynamicsMarkings.add(dynamicsMarking);
         }
 
-        dynamics.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
-        dynamics.setPlacement(PlacementFactory.newPlacementLocation(element));
+        dynamics.setDisplay(DisplayFactory.newDisplay(element));
         dynamics.setTextDecoration(LyricFactory.newTextDecoration(element));
         dynamics.setEnclosure(FormattingFactory.newEnclosureShape(element));
 
@@ -207,7 +200,7 @@ public class NotationFactory {
         if (element == null) return null;
 
         Coda coda = new Coda();
-        coda.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+        coda.setDisplay(DisplayFactory.newDisplay(element));
         coda.setSmufl(element.getAttribute("smufl"));
         return coda;
     }
@@ -216,7 +209,7 @@ public class NotationFactory {
         if (element == null) return null;
 
         Segno segno = new Segno();
-        segno.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(element));
+        segno.setDisplay(DisplayFactory.newDisplay(element));
         segno.setSmufl(element.getAttribute("smufl"));
         return segno;
     }

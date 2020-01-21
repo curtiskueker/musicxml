@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
-import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,8 +15,8 @@ public class PerMinute extends MetronomeMark {
     @Column(name = "per_minute")
     private String perMinute;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "font_id")
-    private Font font;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public PerMinute() {
 
@@ -30,11 +30,11 @@ public class PerMinute extends MetronomeMark {
         this.perMinute = perMinute;
     }
 
-    public Font getFont() {
-        return font;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setFont(Font font) {
-        this.font = font;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

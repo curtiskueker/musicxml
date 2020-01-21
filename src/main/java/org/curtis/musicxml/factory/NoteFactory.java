@@ -104,7 +104,7 @@ public class NoteFactory {
         }
         figuredBass.setDuration(MathUtil.newBigDecimal(XmlUtil.getChildElementText(element, "duration")));
         figuredBass.setEditorial(FormattingFactory.newEditorial(element));
-        figuredBass.setPrintStyle(FormattingFactory.newPrintStyle(element));
+        figuredBass.setDisplay(DisplayFactory.newDisplay(element));
         figuredBass.setPrintout(FormattingFactory.newPrintout(element));
         figuredBass.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
 

@@ -1,6 +1,7 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.factory.DirectionFactory;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
@@ -129,17 +130,17 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 }
                                 break;
                             case "music-font":
-                                defaults.setMusicFont(FormattingFactory.newFont(defaultsSubelement));
+                                defaults.setMusicFont(DisplayFactory.newFont(defaultsSubelement));
                                 break;
                             case "word-font":
-                                defaults.setWordFont(FormattingFactory.newFont(defaultsSubelement));
+                                defaults.setWordFont(DisplayFactory.newFont(defaultsSubelement));
                                 break;
                             case "lyric-font":
                                 List<LyricFont> lyricFonts = defaults.getLyricFonts();
                                 LyricFont lyricFont = new LyricFont();
                                 lyricFont.setNumber(defaultsSubelement.getAttribute("number"));
                                 lyricFont.setName(defaultsSubelement.getAttribute("name"));
-                                lyricFont.setFont(FormattingFactory.newFont(defaultsSubelement));
+                                lyricFont.setFont(DisplayFactory.newFont(defaultsSubelement));
                                 lyricFonts.add(lyricFont);
                                 break;
                             case "lyric-language":

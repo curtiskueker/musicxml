@@ -2,10 +2,10 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.LyricFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.note.lyric.Elision;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
@@ -64,8 +64,7 @@ public class LyricHandler extends BaseHandler {
                             case "elision":
                                 Elision elision = new Elision();
                                 elision.setValue(XmlUtil.getElementText(textElement));
-                                elision.setFont(FormattingFactory.newFont(textElement));
-                                elision.setColor(textElement.getAttribute("color"));
+                                elision.setDisplay(DisplayFactory.newDisplay(textElement));
                                 elision.setSmufl(textElement.getAttribute("smufl"));
                                 lyricSyllable.setElision(elision);
                                 break;
@@ -114,9 +113,7 @@ public class LyricHandler extends BaseHandler {
         lyric.setNumber(element.getAttribute("number"));
         lyric.setName(element.getAttribute("name"));
         lyric.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
-        lyric.setPosition(PlacementFactory.newPosition(element));
-        lyric.setPlacement(PlacementFactory.newPlacementLocation(element));
-        lyric.setColor(element.getAttribute("color"));
+        lyric.setDisplay(DisplayFactory.newDisplay(element));
         lyric.setPrintObject(FormattingFactory.getPrintObject(element));
         lyric.setTimeOnly(element.getAttribute("time-only"));
         lyrics.add(lyric);

@@ -32,7 +32,7 @@ public class ScorePartFactory {
 
         GroupName groupName = new GroupName();
         groupName.setGroupName(XmlUtil.getElementText(element));
-        groupName.setPrintStyle(FormattingFactory.newPrintStyle(element));
+        groupName.setDisplay(DisplayFactory.newDisplay(element));
         groupName.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
 
         return groupName;
@@ -59,7 +59,7 @@ public class ScorePartFactory {
 
         PartName partName = new PartName();
         partName.setPartName(XmlUtil.getElementText(element));
-        partName.setPartNamePrintStyle(FormattingFactory.newPrintStyle(element));
+        partName.setDisplay(DisplayFactory.newDisplay(element));
         partName.setPartNamePrintObject(FormattingFactory.getPrintObject(element));
         partName.setPartNameJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
 

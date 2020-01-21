@@ -1,7 +1,7 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,8 +16,8 @@ public class Directive extends DatabaseItem {
     @Column
     private String value;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column
     private String lang;
 
@@ -33,12 +33,12 @@ public class Directive extends DatabaseItem {
         this.value = value;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public String getLang() {

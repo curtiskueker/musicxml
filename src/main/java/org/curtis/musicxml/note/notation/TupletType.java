@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.NoteTypeValue;
 
 import javax.persistence.CascadeType;
@@ -20,10 +20,8 @@ public class TupletType extends DatabaseItem {
     @Column(name = "note_type_value")
     private NoteTypeValue noteTypeValue;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "font_id")
-    private Font font;
-    @Column
-    private String color;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public TupletType() {
 
@@ -37,19 +35,11 @@ public class TupletType extends DatabaseItem {
         this.noteTypeValue = noteTypeValue;
     }
 
-    public Font getFont() {
-        return font;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

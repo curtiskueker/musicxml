@@ -2,10 +2,10 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.notation.Arpeggiate;
@@ -46,11 +46,9 @@ public class NotationHandler extends BaseHandler {
                     tied.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     tied.setLineType(NotationFactory.newLineType(notationsSubelement));
                     tied.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    tied.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    tied.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
+                    tied.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     tied.setOrientation(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("orientation")));
                     tied.setBezier(NotationFactory.newBezier(notationsSubelement));
-                    tied.setColor(notationsSubelement.getAttribute("color"));
                     notation = tied;
                     break;
                 case "slur":
@@ -59,11 +57,9 @@ public class NotationHandler extends BaseHandler {
                     slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slur.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slur.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    slur.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    slur.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
+                    slur.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     slur.setOrientation(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("orientation")));
                     slur.setBezier(NotationFactory.newBezier(notationsSubelement));
-                    slur.setColor(notationsSubelement.getAttribute("color"));
                     notation = slur;
                     break;
                 case "tuplet":
@@ -76,7 +72,7 @@ public class NotationHandler extends BaseHandler {
                     glissando.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     glissando.setLineType(NotationFactory.newLineType(notationsSubelement));
                     glissando.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    glissando.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
+                    glissando.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = glissando;
                     break;
                 case "slide":
@@ -86,7 +82,7 @@ public class NotationHandler extends BaseHandler {
                     slide.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slide.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slide.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    slide.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
+                    slide.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     slide.setBendSound(TechnicalFactory.newBendSound(notationsSubelement));
                     notation = slide;
                     break;
@@ -115,18 +111,14 @@ public class NotationHandler extends BaseHandler {
                     Arpeggiate arpeggiate = new Arpeggiate();
                     arpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     arpeggiate.setDirection(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("direction")));
-                    arpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    arpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
-                    arpeggiate.setColor(notationsSubelement.getAttribute("color"));
+                    arpeggiate.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = arpeggiate;
                     break;
                 case "non-arpeggiate":
                     NonArpeggiate nonArpeggiate = new NonArpeggiate();
                     nonArpeggiate.setType(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("type")));
                     nonArpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
-                    nonArpeggiate.setPosition(PlacementFactory.newPosition(notationsSubelement));
-                    nonArpeggiate.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
-                    nonArpeggiate.setColor(notationsSubelement.getAttribute("color"));
+                    nonArpeggiate.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = nonArpeggiate;
                     break;
                 case "accidental-mark":
@@ -138,8 +130,7 @@ public class NotationHandler extends BaseHandler {
                     otherNotation.setType(FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
                     otherNotation.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     otherNotation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
-                    otherNotation.setPrintStyle(FormattingFactory.newPrintStyle(notationsSubelement));
-                    otherNotation.setPlacement(PlacementFactory.newPlacementLocation(notationsSubelement));
+                    otherNotation.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     otherNotation.setSmufl(notationsSubelement.getAttribute("smufl"));
                     notation = otherNotation;
                     break;

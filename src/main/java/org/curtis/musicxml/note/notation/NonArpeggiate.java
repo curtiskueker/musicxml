@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,13 +21,8 @@ public class NonArpeggiate extends Notation {
     @Column(name = "notation_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
-    @Column
-    private String color;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public NonArpeggiate() {
 
@@ -49,27 +44,11 @@ public class NonArpeggiate extends Notation {
         this.number = number;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Location getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Location placement) {
-        this.placement = placement;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

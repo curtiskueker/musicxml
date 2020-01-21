@@ -1,7 +1,7 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.display.Font;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.Scaling;

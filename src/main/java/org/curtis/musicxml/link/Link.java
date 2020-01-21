@@ -1,6 +1,6 @@
 package org.curtis.musicxml.link;
 
-import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.score.CreditDisplay;
 import org.curtis.musicxml.score.MusicData;
 
@@ -24,8 +24,8 @@ public class Link extends MusicData {
     @JoinColumn(name = "element_position_id")
     private ElementPosition elementPosition;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @ManyToOne
     @JoinColumn(name = "credit_display_id")
     private CreditDisplay creditDisplay;
@@ -58,12 +58,12 @@ public class Link extends MusicData {
         this.elementPosition = elementPosition;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public CreditDisplay getCreditDisplay() {

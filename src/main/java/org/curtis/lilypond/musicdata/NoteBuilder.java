@@ -9,10 +9,11 @@ import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
+import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Placement;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Chord;
@@ -442,7 +443,7 @@ public class NoteBuilder extends MusicDataBuilder {
                 directionType = directionTypeIterator.next();
                 String directionTypeBuild = new MusicDataBuilder(directionType).build().toString();
                 if (StringUtil.isNotEmpty(directionTypeBuild)) {
-                    append(PlacementBuildUtil.getPlacement(direction.getPlacement()));
+                    append(PlacementBuildUtil.getPlacement(direction.getDisplay()));
                     append(directionTypeBuild);
                     append(" ");
                 }
@@ -611,10 +612,14 @@ public class NoteBuilder extends MusicDataBuilder {
             append (" \\once \\override TupletBracket.bracket-visibility = ##f");
         }
 
-        if(startTuplet.getPlacement() == Location.ABOVE) {
-            append(" \\tupletUp");
-        } else if(startTuplet.getPlacement() == Location.BELOW) {
-            append(" \\tupletDown");
+        Display startTupletDisplay = startTuplet.getDisplay();
+        if (startTupletDisplay != null) {
+            Placement startTupletPlacement = startTupletDisplay.getPlacement();
+            if(startTupletPlacement == Placement.ABOVE) {
+                append(" \\tupletUp");
+            } else if(startTupletPlacement == Placement.BELOW) {
+                append(" \\tupletDown");
+            }
         }
 
         append(" \\tuplet");

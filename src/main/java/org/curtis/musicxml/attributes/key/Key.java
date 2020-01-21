@@ -1,7 +1,7 @@
 package org.curtis.musicxml.attributes.key;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
@@ -32,8 +32,8 @@ public abstract class Key extends DatabaseItem {
     @Column(name = "key_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -54,12 +54,12 @@ public abstract class Key extends DatabaseItem {
         this.number = number;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Boolean getPrintObject() {

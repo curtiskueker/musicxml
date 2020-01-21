@@ -1,6 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.direction.MeasureNumberingType;
 import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.layout.MeasureLayout;
@@ -30,7 +30,7 @@ public class PrintBuilder extends MusicDataBuilder {
             buildEndElement("measure-layout");
         }
         MeasureNumberingType measureNumberingValue = print.getMeasureNumberingValue();
-        if (measureNumberingValue != null) buildElementWithValueAndAttributes("measure-numbering", measureNumberingValue, FormattingBuilder.buildPrintStyleAlign(print.getPrintStyleAlign()));
+        if (measureNumberingValue != null) buildElementWithValueAndAttributes("measure-numbering", measureNumberingValue, DisplayBuilder.buildDisplay(print.getMeasureNumberingDisplay()));
         buildNameDisplay("part-name-display", print.getPartNameDisplay());
         buildNameDisplay("part-abbreviation-display", print.getPartAbbreviationDisplay());
         buildEndElement("print");

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.note.notation.ornament.AbstractMordent;
 import org.curtis.musicxml.note.notation.ornament.DelayedInvertedTurn;
@@ -46,8 +46,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     private void buildPlacedTrillSound(PlacedTrillSound placedTrillSound) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placedTrillSound.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(placedTrillSound.getPlacement()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(placedTrillSound.getDisplay()));
         attributes.putAll(buildTrillSound(placedTrillSound.getTrillSound()));
 
         String elementName;
@@ -73,8 +72,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
         else if (horizontalTurn instanceof DelayedInvertedTurn) elementName = "delayed-inverted-turn";
         else return;
 
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(horizontalTurn.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(horizontalTurn.getPlacement()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(horizontalTurn.getDisplay()));
         attributes.putAll(buildTrillSound(horizontalTurn.getTrillSound()));
         attributes.put("slash", BuilderUtil.yesOrNo(horizontalTurn.getSlash()));
         buildElementWithAttributes(elementName, attributes);
@@ -94,14 +92,13 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     private void buildSchleifer(Schleifer schleifer) {
-        buildPlacement("schleifer", schleifer.getPrintPlacement());
+        buildElementWithAttributes("schleifer", DisplayBuilder.buildDisplay(schleifer.getDisplay()));
     }
 
     private void buildTremolo(Tremolo tremolo) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(tremolo.getTremoloType()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(tremolo.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(tremolo.getPlacement()));
+        attributes.putAll(DisplayBuilder.buildDisplay(tremolo.getDisplay()));
         attributes.put("smufl", tremolo.getSmufl());
         buildElementWithValueAndAttributes("tremolo", tremolo.getTremoloMarks(), attributes);
     }

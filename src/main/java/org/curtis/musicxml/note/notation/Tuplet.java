@@ -1,8 +1,7 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.LineShape;
 import org.hibernate.annotations.Type;
 
@@ -42,11 +41,8 @@ public class Tuplet extends Notation {
     @Column(name = "line_shape")
     private LineShape lineShape;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public Tuplet() {
 
@@ -116,19 +112,11 @@ public class Tuplet extends Notation {
         this.lineShape = lineShape;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Location getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Location placement) {
-        this.placement = placement;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

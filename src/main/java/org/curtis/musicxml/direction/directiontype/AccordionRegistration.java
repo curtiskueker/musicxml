@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -22,8 +22,8 @@ public class AccordionRegistration extends DirectionType {
     @Type(type="yes_no")
     private Boolean accordionLow;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public AccordionRegistration() {
 
@@ -53,11 +53,11 @@ public class AccordionRegistration extends DirectionType {
         this.accordionLow = accordionLow;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

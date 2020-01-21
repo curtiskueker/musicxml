@@ -1,5 +1,6 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
@@ -73,12 +74,12 @@ public class TechnicalHandler extends BaseHandler {
             switch (technicalElementName) {
                 case "up-bow":
                     UpBow upBow = new UpBow();
-                    upBow.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    upBow.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = upBow;
                     break;
                 case "down-bow":
                     DownBow downBow = new DownBow();
-                    downBow.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    downBow.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = downBow;
                     break;
                 case "harmonic":
@@ -105,18 +106,17 @@ public class TechnicalHandler extends BaseHandler {
                         }
                     }
                     harmonic.setPrintObject(FormattingFactory.getPrintObject(technicalElement));
-                    harmonic.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
-                    harmonic.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
+                    harmonic.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = harmonic;
                     break;
                 case "open-string":
                     OpenString openString = new OpenString();
-                    openString.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    openString.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = openString;
                     break;
                 case "thumb-position":
                     ThumbPosition thumbPosition = new ThumbPosition();
-                    thumbPosition.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    thumbPosition.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = thumbPosition;
                     break;
                 case "fingering":
@@ -129,23 +129,23 @@ public class TechnicalHandler extends BaseHandler {
                     break;
                 case "double-tongue":
                     DoubleTongue doubleTongue = new DoubleTongue();
-                    doubleTongue.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    doubleTongue.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = doubleTongue;
                     break;
                 case "triple-tongue":
                     TripleTongue tripleTongue = new TripleTongue();
-                    tripleTongue.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    tripleTongue.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = tripleTongue;
                     break;
                 case "stopped":
                     Stopped stopped = new Stopped();
-                    stopped.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    stopped.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     stopped.setSmufl(technicalElement.getAttribute("smufl"));
                     technical = stopped;
                     break;
                 case "snap-pizzicato":
                     SnapPizzicato snapPizzicato = new SnapPizzicato();
-                    snapPizzicato.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    snapPizzicato.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = snapPizzicato;
                     break;
                 case "fret":
@@ -166,7 +166,7 @@ public class TechnicalHandler extends BaseHandler {
                     List<Element> bendElements = XmlUtil.getChildElements(technicalElement);
                     for (Element bendElement : bendElements) bend.setBendType(FactoryUtil.enumValue(BendType.class, bendElement.getTagName()));
                     bend.setWithBar(PlacementFactory.newPlacementText(technicalElement));
-                    bend.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
+                    bend.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     bend.setBendSound(TechnicalFactory.newBendSound(technicalElement));
                     technical = bend;
                     break;
@@ -184,39 +184,39 @@ public class TechnicalHandler extends BaseHandler {
                     break;
                 case "fingernails":
                     Fingernails fingernails = new Fingernails();
-                    fingernails.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    fingernails.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = fingernails;
                     break;
                 case "brass-bend":
                     BrassBend brassBend = new BrassBend();
-                    brassBend.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    brassBend.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = brassBend;
                     break;
                 case "flip":
                     Flip flip = new Flip();
-                    flip.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    flip.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = flip;
                     break;
                 case "smear":
                     Smear smear = new Smear();
-                    smear.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    smear.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = smear;
                     break;
                 case "open":
                     Open open = new Open();
-                    open.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    open.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     open.setSmufl(technicalElement.getAttribute("smufl"));
                     technical = open;
                     break;
                 case "half-muted":
                     HalfMuted halfMuted = new HalfMuted();
-                    halfMuted.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    halfMuted.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     halfMuted.setSmufl(technicalElement.getAttribute("smufl"));
                     technical = halfMuted;
                     break;
                 case "golpe":
                     Golpe golpe = new Golpe();
-                    golpe.setPrintPlacement(PlacementFactory.newPlacement(technicalElement));
+                    golpe.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = golpe;
                     break;
                 case "hole":
@@ -225,8 +225,7 @@ public class TechnicalHandler extends BaseHandler {
                     Element holeClosedElement = XmlUtil.getChildElement(technicalElement, "hole-closed");
                     hole.setHoleClosedType(FactoryUtil.enumValue(HoleClosedType.class, XmlUtil.getElementText(holeClosedElement)));
                     hole.setHoleClosedLocation(FactoryUtil.enumValue(HoleClosedLocation.class, holeClosedElement.getAttribute("location")));
-                    hole.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
-                    hole.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
+                    hole.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = hole;
                     break;
                 case "arrow":
@@ -235,16 +234,14 @@ public class TechnicalHandler extends BaseHandler {
                     arrow.setArrowStyle(FactoryUtil.enumValue(ArrowStyle.class, XmlUtil.getChildElementText(technicalElement, "arrow-style")));
                     arrow.setArrowhead(XmlUtil.hasChildElement(technicalElement, "arrowhead"));
                     arrow.setCircularArrow(FactoryUtil.enumValue(CircularArrow.class, XmlUtil.getChildElementText(technicalElement, "circular-arrow")));
-                    arrow.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
-                    arrow.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
+                    arrow.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = arrow;
                     break;
                 case "handbell":
                     Handbell handbell = new Handbell();
                     String handbellType = XmlUtil.getElementText(technicalElement);
                     handbell.setHandbellType(FactoryUtil.enumValue(HandbellType.class, handbellType));
-                    handbell.setPrintStyle(FormattingFactory.newPrintStyle(technicalElement));
-                    handbell.setPlacement(PlacementFactory.newPlacementLocation(technicalElement));
+                    handbell.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = handbell;
                     break;
                 case "harmon-mute":
@@ -254,6 +251,7 @@ public class TechnicalHandler extends BaseHandler {
                     harmonClosed.setValue(FactoryUtil.enumValue(HarmonClosedValue.class, XmlUtil.getElementText(harmonClosedElement)));
                     harmonClosed.setLocation(FactoryUtil.enumValue(HarmonClosedLocation.class, harmonClosedElement.getAttribute("location")));
                     harmonMute.setHarmonClosed(harmonClosed);
+                    harmonMute.setDisplay(DisplayFactory.newDisplay(technicalElement));
                     technical = harmonMute;
                     break;
                 case "other-technical":

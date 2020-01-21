@@ -1,7 +1,6 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.barline.BarStyle;
-import org.curtis.musicxml.barline.BarStyleColor;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
@@ -9,6 +8,7 @@ import org.curtis.musicxml.barline.RepeatDirection;
 import org.curtis.musicxml.barline.Winged;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
@@ -40,45 +40,8 @@ public class BarlineHandler extends MusicDataHandler {
             String barlineSubelementName = barlineSubelement.getTagName();
             switch (barlineSubelementName) {
                 case "bar-style":
-                    BarStyleColor barStyleColor = new BarStyleColor();
-                    String barStyle = XmlUtil.getElementText(barlineSubelement);
-                    switch (barStyle) {
-                        case "regular":
-                            barStyleColor.setBarStyle(BarStyle.REGULAR);
-                            break;
-                        case "dotted":
-                            barStyleColor.setBarStyle(BarStyle.DOTTED);
-                            break;
-                        case "dashed":
-                            barStyleColor.setBarStyle(BarStyle.DASHED);
-                            break;
-                        case "heavy":
-                            barStyleColor.setBarStyle(BarStyle.HEAVY);
-                            break;
-                        case "light-light":
-                            barStyleColor.setBarStyle(BarStyle.LIGHT_LIGHT);
-                            break;
-                        case "light-heavy":
-                            barStyleColor.setBarStyle(BarStyle.LIGHT_HEAVY);
-                            break;
-                        case "heavy-light":
-                            barStyleColor.setBarStyle(BarStyle.HEAVY_LIGHT);
-                            break;
-                        case "heavy-heavy":
-                            barStyleColor.setBarStyle(BarStyle.HEAVY_HEAVY);
-                            break;
-                        case "tick":
-                            barStyleColor.setBarStyle(BarStyle.TICK);
-                            break;
-                        case "short":
-                            barStyleColor.setBarStyle(BarStyle.SHORT);
-                            break;
-                        case "none":
-                            barStyleColor.setBarStyle(BarStyle.NONE);
-                            break;
-                    }
-                    barStyleColor.setColor(barlineSubelement.getAttribute("color"));
-                    barline.setBarStyle(barStyleColor);
+                    barline.setBarStyle(FactoryUtil.enumValue(BarStyle.class, XmlUtil.getElementText(barlineSubelement)));
+                    barline.setDisplay(DisplayFactory.newDisplay(barlineSubelement));
                     break;
                 case "wavy-line":
                     barline.setWavyLine(OrnamentFactory.newWavyLine(barlineSubelement));
@@ -101,7 +64,7 @@ public class BarlineHandler extends MusicDataHandler {
                     ending.setNumber(barlineSubelement.getAttribute("number"));
                     ending.setType(FactoryUtil.enumValue(Connection.class, barlineSubelement.getAttribute("type")));
                     ending.setPrintObject(FormattingFactory.getPrintObject(barlineSubelement));
-                    ending.setPrintStyle(FormattingFactory.newPrintStyle(barlineSubelement));
+                    ending.setDisplay(DisplayFactory.newDisplay(barlineSubelement));
                     ending.setEndLength(MathUtil.newBigDecimal(barlineSubelement.getAttribute("end-length")));
                     ending.setTextX(MathUtil.newBigDecimal(barlineSubelement.getAttribute("text-x")));
                     ending.setTextY(MathUtil.newBigDecimal(barlineSubelement.getAttribute("text-y")));

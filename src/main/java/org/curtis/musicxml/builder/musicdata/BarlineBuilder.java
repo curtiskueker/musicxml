@@ -1,11 +1,12 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.barline.BarStyleColor;
+import org.curtis.musicxml.barline.BarStyle;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
-import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.notation.Fermata;
 
 import java.util.HashMap;
@@ -27,9 +28,11 @@ public class BarlineBuilder extends MusicDataBuilder {
         buildAttribute("coda", barline.getCoda());
         buildAttribute("divisions", barline.getDivisions());
         buildCloseElement();
-        BarStyleColor barStyleColor = barline.getBarStyle();
-        if (barStyleColor != null) {
-            buildElementWithValueAndAttribute("bar-style", barStyleColor.getBarStyle(), "color", barStyleColor.getColor());
+        BarStyle barStyle = barline.getBarStyle();
+        if (barStyle != null) {
+            Display barlineDisplay = barline.getDisplay();
+            String barlineColor = barlineDisplay == null ? "" : barlineDisplay.getColor();
+            buildElementWithValueAndAttribute("bar-style", barStyle, "color", barlineColor);
         }
         buildEditorial(barline.getEditorial());
         buildWavyLine(barline.getWavyLine());
@@ -42,7 +45,7 @@ public class BarlineBuilder extends MusicDataBuilder {
             attributes.put("number", BuilderUtil.requiredValue(ending.getNumber()));
             attributes.put("type", BuilderUtil.enumValue(ending.getType()));
             attributes.put("print-object", BuilderUtil.yesOrNo(ending.getPrintObject()));
-            attributes.putAll(FormattingBuilder.buildPrintStyle(ending.getPrintStyle()));
+            attributes.putAll(DisplayBuilder.buildDisplay(ending.getDisplay()));
             attributes.put("end-length", BuilderUtil.stringValue(ending.getEndLength()));
             attributes.put("text-x", BuilderUtil.stringValue(ending.getTextX()));
             attributes.put("text-y", BuilderUtil.stringValue(ending.getTextY()));

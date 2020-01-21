@@ -1,7 +1,8 @@
 package org.curtis.musicxml.direction;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
+import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Placement;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -11,8 +12,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -38,9 +37,9 @@ public class Direction extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sound_id")
     private Sound sound;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column
     @Type(type="yes_no")
     private Boolean directive;
@@ -89,12 +88,17 @@ public class Direction extends MusicData {
         this.sound = sound;
     }
 
-    public Location getPlacement() {
-        return placement;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPlacement(Location placement) {
-        this.placement = placement;
+    public void setDisplay(Display display) {
+        this.display = display;
+    }
+
+    public Placement getPlacement() {
+        if (display == null) return null;
+        return display.getPlacement();
     }
 
     public Boolean getDirective() {

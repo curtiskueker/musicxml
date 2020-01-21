@@ -1,10 +1,7 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.TypeUtil;
-import org.curtis.musicxml.common.Font;
 import org.curtis.musicxml.common.FormattedText;
-import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dashes;
@@ -18,6 +15,8 @@ import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
+import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Font;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
@@ -160,32 +159,34 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
         value = value.replaceAll("[^\\x00-\\x7F]", "");
 
         TextFormatting textFormatting = formattedText.getTextFormatting();
-        PrintStyleAlign printStyleAlign = textFormatting == null ? null : textFormatting.getPrintStyleAlign();
-        PrintStyle printStyle = printStyleAlign == null ? null : printStyleAlign.getPrintStyle();
-        Font font = printStyle == null ? null : printStyle.getFont();
-        if (font != null) {
-            append("\\markup { ");
+        Display display = textFormatting.getDisplay();
+        Font font = null;
+        if (display != null) {
+            font = display.getFont();
+            if (font != null) {
+                append("\\markup { ");
 
-            if(font.getFontStyle() != null) {
-                switch (font.getFontStyle()) {
-                    case ITALIC:
-                        append("\\italic ");
-                        break;
+                if (font.getFontStyle() != null) {
+                    switch (font.getFontStyle()) {
+                        case ITALIC:
+                            append("\\italic ");
+                            break;
+                    }
                 }
-            }
-            if(font.getFontWeight() != null) {
-                switch (font.getFontWeight()) {
-                    case BOLD:
-                        append("\\bold ");
-                        break;
+                if (font.getFontWeight() != null) {
+                    switch (font.getFontWeight()) {
+                        case BOLD:
+                            append("\\bold ");
+                            break;
+                    }
                 }
-            }
-            if (font.getFontSize() != null) {
-                BigDecimal fontSize = font.getFontSize().getFontSize();
-                if (MathUtil.isPositive(fontSize)) {
-                    append("\\abs-fontsize #");
-                    append(MathUtil.truncate(fontSize));
-                    append(" ");
+                if (font.getNonNumericFontSize() != null) {
+                    BigDecimal fontSize = font.getNumericFontSize();
+                    if (MathUtil.isPositive(fontSize)) {
+                        append("\\abs-fontsize #");
+                        append(MathUtil.truncate(fontSize));
+                        append(" ");
+                    }
                 }
             }
         }

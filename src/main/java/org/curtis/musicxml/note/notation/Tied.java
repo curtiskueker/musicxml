@@ -2,7 +2,7 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.LineType;
 
 import javax.persistence.CascadeType;
@@ -30,19 +30,14 @@ public class Tied extends Notation {
     @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Enumerated(EnumType.STRING)
     @Column
     private Location orientation;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bezier_id")
     private Bezier bezier;
-    @Column
-    private String color;
     // used by lilypond
     @Transient
     private boolean unterminated = false;
@@ -86,20 +81,12 @@ public class Tied extends Notation {
         this.dashedFormatting = dashedFormatting;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Location getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Location placement) {
-        this.placement = placement;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Location getOrientation() {
@@ -116,14 +103,6 @@ public class Tied extends Notation {
 
     public void setBezier(Bezier bezier) {
         this.bezier = bezier;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public boolean isUnterminated() {

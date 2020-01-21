@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,8 +26,8 @@ public class OctaveShift extends DirectionType {
     @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public OctaveShift() {
 
@@ -65,11 +65,11 @@ public class OctaveShift extends DirectionType {
         this.dashedFormatting = dashedFormatting;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

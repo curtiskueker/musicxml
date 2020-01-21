@@ -1,8 +1,8 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.converter.FermataShapeConverter;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,8 +26,8 @@ public class Fermata extends Notation {
     @Column(name = "type_value")
     private FermataType type;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @ManyToOne
     @JoinColumn(name = "barline_id")
     private Barline barline;
@@ -54,12 +54,12 @@ public class Fermata extends Notation {
         this.type = type;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Barline getBarline() {

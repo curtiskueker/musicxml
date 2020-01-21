@@ -2,11 +2,10 @@ package org.curtis.musicxml.note;
 
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.EditorialVoice;
-import org.curtis.musicxml.common.Font;
-import org.curtis.musicxml.common.Position;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.direction.Direction;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.Slur;
@@ -96,13 +95,8 @@ public class Note extends MusicData {
     @JoinColumn(name = "play_id")
     private Play play;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "font_id")
-    private Font font;
-    @Column
-    private String color;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "printout_id")
     private Printout printout;
@@ -323,28 +317,12 @@ public class Note extends MusicData {
         this.play = play;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Font getFont() {
-        return font;
-    }
-
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Printout getPrintout() {

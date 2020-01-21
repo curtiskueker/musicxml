@@ -1,8 +1,8 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.attributes.Image;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.direction.directiontype.Accord;
 import org.curtis.musicxml.direction.directiontype.AccordionRegistration;
@@ -115,8 +115,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         attributes.put("niente", BuilderUtil.yesOrNo(wedge.getNiente()));
         attributes.put("line-type", BuilderUtil.enumValue(wedge.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(wedge.getDashedFormatting()));
-        attributes.putAll(PlacementBuilder.buildPosition(wedge.getPosition()));
-        attributes.put("color", wedge.getColor());
+        attributes.putAll(DisplayBuilder.buildDisplay(wedge.getDisplay()));
         buildElementWithAttributes("wedge", attributes);
     }
 
@@ -125,8 +124,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         attributes.put("type", BuilderUtil.enumValue(dashes.getType()));
         attributes.put("number", BuilderUtil.stringValue(dashes.getNumber()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(dashes.getDashedFormatting()));
-        attributes.putAll(PlacementBuilder.buildPosition(dashes.getPosition()));
-        attributes.put("color", dashes.getColor());
+        attributes.putAll(DisplayBuilder.buildDisplay(dashes.getDisplay()));
         buildElementWithAttributes("dashes", attributes);
     }
 
@@ -138,8 +136,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         attributes.put("end-length", BuilderUtil.stringValue(bracket.getEndLength()));
         attributes.put("line-type", BuilderUtil.enumValue(bracket.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(bracket.getDashedFormatting()));
-        attributes.putAll(PlacementBuilder.buildPosition(bracket.getPosition()));
-        attributes.put("color", bracket.getColor());
+        attributes.putAll(DisplayBuilder.buildDisplay(bracket.getDisplay()));
         buildElementWithAttributes("bracket", attributes);
     }
 
@@ -149,14 +146,14 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         attributes.put("number", BuilderUtil.stringValue(pedal.getNumber()));
         attributes.put("line", BuilderUtil.yesOrNo(pedal.getLine()));
         attributes.put("sign", BuilderUtil.yesOrNo(pedal.getSign()));
-        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(pedal.getPrintStyleAlign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(pedal.getDisplay()));
         attributes.put("abbreviated", BuilderUtil.yesOrNo(pedal.getAbbreviated()));
         buildElementWithAttributes("pedal", attributes);
     }
 
     private void buildMetronome(Metronome metronome) {
         buildOpenElement("metronome");
-        buildAttributes(FormattingBuilder.buildPrintStyleAlign(metronome.getPrintStyleAlign()));
+        buildAttributes(DisplayBuilder.buildDisplay(metronome.getDisplay()));
         buildAttribute("justify", metronome.getJustify());
         buildAttribute("parentheses", metronome.getParentheses());
         buildCloseElement();
@@ -175,7 +172,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
                 buildBeatUnit(beatUnit);
             } else if (metronomeMark instanceof PerMinute) {
                 PerMinute perMinute = (PerMinute)metronomeMark;
-                buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), FormattingBuilder.buildFont(perMinute.getFont()));
+                buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), DisplayBuilder.buildDisplay(perMinute.getDisplay()));
             }
         }
     }
@@ -222,13 +219,13 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         attributes.put("number", BuilderUtil.stringValue(octaveShift.getNumber()));
         attributes.put("size", BuilderUtil.stringValue(octaveShift.getSize()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(octaveShift.getDashedFormatting()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(octaveShift.getPrintStyle()));
+        attributes.putAll(DisplayBuilder.buildDisplay(octaveShift.getDisplay()));
         buildElementWithAttributes("octave-shift", attributes);
     }
 
     private void buildHarpPedals(HarpPedals harpPedals) {
         buildOpenElement("harp-pedals");
-        buildAttributes(FormattingBuilder.buildPrintStyleAlign(harpPedals.getPrintStyleAlign()));
+        buildAttributes(DisplayBuilder.buildDisplay(harpPedals.getDisplay()));
         buildCloseElement();
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
             buildStartElement("pedal-tuning");
@@ -240,21 +237,21 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildDamp(Damp damp) {
-        buildElementWithOptionalAttributes("damp", FormattingBuilder.buildPrintStyleAlign(damp.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("damp", DisplayBuilder.buildDisplay(damp.getDisplay()));
     }
 
     private void buildDampAll(DampAll dampAll) {
-        buildElementWithOptionalAttributes("damp-all", FormattingBuilder.buildPrintStyleAlign(dampAll.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("damp-all", DisplayBuilder.buildDisplay(dampAll.getDisplay()));
     }
 
     private void buildEyeglasses(Eyeglasses eyeglasses) {
-        buildElementWithOptionalAttributes("eyeglasses", FormattingBuilder.buildPrintStyleAlign(eyeglasses.getPrintStyleAlign()));
+        buildElementWithOptionalAttributes("eyeglasses", DisplayBuilder.buildDisplay(eyeglasses.getDisplay()));
     }
 
     private void buildStringMute(StringMute stringMute) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(stringMute.getType()));
-        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(stringMute.getPrintStyleAlign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(stringMute.getDisplay()));
         buildElementWithAttributes("string-mute", attributes);
     }
 
@@ -277,13 +274,13 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         symbol = symbol.replace("hauptstimme", "Hauptstimme");
         symbol = symbol.replace("nebenstimme", "Nebenstimme");
         attributes.put("symbol", symbol);
-        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(principalVoice.getPrintStyleAlign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(principalVoice.getDisplay()));
         buildElementWithValueAndAttributes("principal-voice", principalVoice.getPrincipalVoice(), attributes);
     }
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {
         buildOpenElement("accordion-registration");
-        buildAttributes(FormattingBuilder.buildPrintStyleAlign(accordionRegistration.getPrintStyleAlign()));
+        buildAttributes(DisplayBuilder.buildDisplay(accordionRegistration.getDisplay()));
         buildCloseElement();
         if (accordionRegistration.getAccordionHigh()) buildElement("accordion-high");
         buildElementWithValue("accordion-middle", accordionRegistration.getAccordionMiddle());
@@ -293,7 +290,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildPercussion(Percussion percussion) {
         buildOpenElement("percussion");
-        buildAttributes(FormattingBuilder.buildPrintStyleAlign(percussion.getPrintStyleAlign()));
+        buildAttributes(DisplayBuilder.buildDisplay(percussion.getDisplay()));
         buildAttribute("enclosure", percussion.getEnclosure());
         buildCloseElement();
         if (percussion instanceof Glass) buildGlass((Glass)percussion);
@@ -376,14 +373,14 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     private void buildStaffDivide(StaffDivide staffDivide) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(staffDivide.getStaffDivideSymbol()));
-        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(staffDivide.getPrintStyleAlign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(staffDivide.getDisplay()));
         buildElementWithAttributes("staff-divide", attributes);
     }
 
     private void buildOtherDirection(OtherDirection otherDirection) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("print-object", BuilderUtil.yesOrNo(otherDirection.getPrintObject()));
-        attributes.putAll(FormattingBuilder.buildPrintStyleAlign(otherDirection.getPrintStyleAlign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(otherDirection.getDisplay()));
         attributes.put("smufl", otherDirection.getSmufl());
         buildElementWithValueAndAttributes("other-direction", otherDirection.getValue(), attributes);
     }

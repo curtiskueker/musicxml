@@ -1,45 +1,19 @@
 package org.curtis.musicxml.builder;
 
-import org.curtis.musicxml.common.CssFontSize;
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.common.Font;
-import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.LevelDisplay;
-import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.SymbolFormatting;
 import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.common.TextFormatting;
-import org.curtis.musicxml.layout.PrintObjectStyleAlign;
+import org.curtis.musicxml.layout.SystemDivider;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FormattingBuilder extends OutputBuilder {
     private FormattingBuilder() {
 
-    }
-
-    public static Map<String, String> buildFont(Font font) {
-        Map<String, String> attributes = new HashMap<>();
-        if (font == null) return attributes;
-
-        attributes.put("font-family", font.getFontFamily());
-        attributes.put("font-style", BuilderUtil.enumValue(font.getFontStyle()));
-        FontSize fontSize = font.getFontSize();
-        if (fontSize != null) {
-            BigDecimal fontSizeValue = fontSize.getFontSize();
-            if (fontSizeValue != null) attributes.put("font-size", BuilderUtil.stringValue(fontSizeValue));
-            else {
-                CssFontSize cssFontSize = fontSize.getCssFontSize();
-                if (cssFontSize != null) attributes.put("font-size", BuilderUtil.enumValue(cssFontSize));
-            }
-        }
-        attributes.put("font-weight", BuilderUtil.enumValue(font.getFontWeight()));
-
-        return attributes;
     }
 
     public static Map<String, String> buildTextDecoration(TextDecoration textDecoration) {
@@ -53,34 +27,12 @@ public class FormattingBuilder extends OutputBuilder {
         return attributes;
     }
 
-    public static Map<String, String> buildPrintStyle(PrintStyle printStyle) {
+    public static Map<String, String> buildSystemDivider(SystemDivider systemDivider) {
         Map<String, String> attributes = new HashMap<>();
-        if (printStyle == null) return attributes;
+        if (systemDivider == null) return attributes;
 
-        attributes.putAll(PlacementBuilder.buildPosition(printStyle.getPosition()));
-        attributes.putAll(buildFont(printStyle.getFont()));
-        attributes.put("color", printStyle.getColor());
-
-        return attributes;
-    }
-
-    public static Map<String, String> buildPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        Map<String, String> attributes = new HashMap<>();
-        if (printStyleAlign == null) return attributes;
-
-        attributes.putAll(buildPrintStyle(printStyleAlign.getPrintStyle()));
-        attributes.put("halign", BuilderUtil.enumValue(printStyleAlign.getHalign()));
-        attributes.put("valign", BuilderUtil.enumValue(printStyleAlign.getValign()));
-
-        return attributes;
-    }
-
-    public static Map<String, String> buildPrintObjectStyleAlign(PrintObjectStyleAlign printObjectStyleAlign) {
-        Map<String, String> attributes = new HashMap<>();
-        if (printObjectStyleAlign == null) return attributes;
-
-        attributes.put("print-object", BuilderUtil.yesOrNo(printObjectStyleAlign.getPrintObject()));
-        attributes.putAll(buildPrintStyleAlign(printObjectStyleAlign.getPrintStyleAlign()));
+        attributes.put("print-object", BuilderUtil.yesOrNo(systemDivider.getPrintObject()));
+        attributes.putAll(DisplayBuilder.buildDisplay(systemDivider.getDisplay()));
 
         return attributes;
     }
@@ -112,7 +64,7 @@ public class FormattingBuilder extends OutputBuilder {
         if (textFormatting == null) return attributes;
 
         attributes.put("justify", BuilderUtil.enumValue(textFormatting.getJustify()));
-        attributes.putAll(buildPrintStyleAlign(textFormatting.getPrintStyleAlign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(textFormatting.getDisplay()));
         attributes.putAll(buildTextDecoration(textFormatting.getTextDecoration()));
         attributes.put("text-rotation", BuilderUtil.stringValue(textFormatting.getTextRotation()));
         attributes.put("letter-spacing", textFormatting.getLetterSpacing());
@@ -130,7 +82,7 @@ public class FormattingBuilder extends OutputBuilder {
         if (symbolFormatting == null) return attributes;
 
         attributes.put("justify", BuilderUtil.enumValue(symbolFormatting.getJustify()));
-        attributes.putAll(buildPrintStyleAlign(symbolFormatting.getPrintStyleAlign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(symbolFormatting.getDisplay()));
         attributes.putAll(buildTextDecoration(symbolFormatting.getTextDecoration()));
         attributes.put("text-rotation", BuilderUtil.stringValue(symbolFormatting.getTextRotation()));
         attributes.put("letter-spacing", symbolFormatting.getLetterSpacing());

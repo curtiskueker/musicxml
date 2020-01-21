@@ -1,9 +1,8 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.EnclosureShape;
-import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextDecoration;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -28,11 +27,8 @@ public class Dynamics extends DirectionType {
     @JoinColumn(name = "dynamics_id", nullable = false)
     private List<DynamicsMarking> markings = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
@@ -52,20 +48,12 @@ public class Dynamics extends DirectionType {
         this.markings = markings;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
-    }
-
-    public Location getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Location placement) {
-        this.placement = placement;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public TextDecoration getTextDecoration() {

@@ -1,5 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.note.Figure;
 import org.curtis.musicxml.note.FiguredBass;
@@ -15,7 +16,7 @@ public class FiguredBassBuilder extends MusicDataBuilder {
         if (figuredBass == null) return stringBuilder;
 
         buildOpenElement("figured-bass");
-        buildAttributes(FormattingBuilder.buildPrintStyle(figuredBass.getPrintStyle()));
+        buildAttributes(DisplayBuilder.buildDisplay(figuredBass.getDisplay()));
         buildAttributes(FormattingBuilder.buildPrintout(figuredBass.getPrintout()));
         buildAttribute("parentheses",  figuredBass.getParentheses());
         buildCloseElement();

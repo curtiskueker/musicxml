@@ -2,11 +2,15 @@ package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.display.Display;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +19,9 @@ public class Barre extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;
-    @Column
-    private String color;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public Barre() {
 
@@ -30,11 +35,11 @@ public class Barre extends DatabaseItem {
         this.type = type;
     }
 
-    public String getColor() {
-        return color;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

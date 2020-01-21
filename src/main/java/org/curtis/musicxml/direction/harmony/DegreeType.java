@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,8 +21,8 @@ public class DegreeType extends DatabaseItem {
     @Column
     private String text;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public DegreeType() {
 
@@ -44,11 +44,11 @@ public class DegreeType extends DatabaseItem {
         this.text = text;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

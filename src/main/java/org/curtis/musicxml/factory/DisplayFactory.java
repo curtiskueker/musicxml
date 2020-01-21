@@ -51,10 +51,10 @@ public class DisplayFactory {
         BigDecimal relativeX = MathUtil.newBigDecimal(element.getAttribute("relative-x"));
         BigDecimal relativeY = MathUtil.newBigDecimal(element.getAttribute("relative-y"));
 
-        if (!validPositionValue(defaultX, "default-x")) defaultX = null;
-        if (!validPositionValue(defaultY, "default-y")) defaultY = null;
-        if (!validPositionValue(relativeX, "relative-x")) relativeX = null;
-        if (!validPositionValue(relativeY, "relative-y")) relativeY = null;
+        if (invalidPositionValue(defaultX, "default-x")) defaultX = null;
+        if (invalidPositionValue(defaultY, "default-y")) defaultY = null;
+        if (invalidPositionValue(relativeX, "relative-x")) relativeX = null;
+        if (invalidPositionValue(relativeY, "relative-y")) relativeY = null;
 
         if (defaultX == null && defaultY == null && relativeX == null && relativeY == null) return null;
 
@@ -68,7 +68,7 @@ public class DisplayFactory {
         return position;
     }
 
-    private static boolean validPositionValue(BigDecimal positionValue, String fieldName) {
+    private static boolean invalidPositionValue(BigDecimal positionValue, String fieldName) {
         if (positionValue == null) return true;
 
         if (MathUtil.largerThan(positionValue.abs(), FactoryUtil.MAXIMUM_POSITION_VALUE)) {
@@ -79,7 +79,7 @@ public class DisplayFactory {
         return true;
     }
 
-    private static Font newFont(Element element) {
+    public static Font newFont(Element element) {
         if(element == null) return null;
 
         String fontFamily = element.getAttribute("font-family");
@@ -114,5 +114,13 @@ public class DisplayFactory {
             System.err.println("Invalid font size " + fontSize);
             return null;
         } else return fontSize;
+    }
+
+    public static Display newDisplayPlacement(Display display, Placement placement){
+        if (display == null) display = new Display();
+
+        display.setPlacement(placement);
+
+        return display;
     }
 }

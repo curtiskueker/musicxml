@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -18,8 +18,8 @@ public class DegreeAlter extends DatabaseItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal semitones;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column(name = "plus_minus")
     @Type(type="yes_no")
     private Boolean plusMinus;
@@ -36,12 +36,12 @@ public class DegreeAlter extends DatabaseItem {
         this.semitones = semitones;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Boolean getPlusMinus() {

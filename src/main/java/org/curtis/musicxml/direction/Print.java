@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.NameDisplay;
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
@@ -30,8 +30,8 @@ public class Print extends MusicData {
     @Column(name = "measure_numbering_value")
     private MeasureNumberingType measureNumberingValue;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display measureNumberingDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "part_name_display_id")
     private NameDisplay partNameDisplay;
@@ -79,12 +79,12 @@ public class Print extends MusicData {
         this.measureNumberingValue = measureNumberingValue;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getMeasureNumberingDisplay() {
+        return measureNumberingDisplay;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setMeasureNumberingDisplay(Display measureNumberingDisplay) {
+        this.measureNumberingDisplay = measureNumberingDisplay;
     }
 
     public NameDisplay getPartNameDisplay() {

@@ -2,16 +2,12 @@ package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.barline.BarStyle;
-import org.curtis.musicxml.barline.BarStyleColor;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.barline.RepeatDirection;
 
 public class BarlineBuilder extends MusicDataBuilder {
     public StringBuilder buildBarline(Barline barline) throws BuildException {
-        BarStyleColor barStyleColor = barline.getBarStyle();
-        if(barStyleColor == null) return stringBuilder;
-
         Repeat repeat = barline.getRepeat();
         RepeatDirection repeatDirection = repeat == null ? null : repeat.getDirection();
 
@@ -22,7 +18,7 @@ public class BarlineBuilder extends MusicDataBuilder {
         }
 
         // bar style
-        BarStyle barStyle = barStyleColor.getBarStyle();
+        BarStyle barStyle = barline.getBarStyle();
         if(barStyle != null) {
             switch (barStyle) {
                 case DOTTED:

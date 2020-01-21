@@ -17,7 +17,10 @@ public class BuilderUtil {
     public static String enumValue(Enum enumValue) {
         if (enumValue == null) return "";
 
-        String value = enumValue.toString();
+        return enumValue(enumValue.toString());
+    }
+
+    public static String enumValue(String value) {
         if (StringUtil.isEmpty(value)) return "";
         if (value.equals(EMPTY_VALUE)) return "";
 

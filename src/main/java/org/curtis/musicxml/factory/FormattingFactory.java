@@ -1,22 +1,14 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.common.CssFontSize;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.DisplayText;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.EditorialVoice;
 import org.curtis.musicxml.common.EnclosureShape;
-import org.curtis.musicxml.common.Font;
-import org.curtis.musicxml.common.FontSize;
-import org.curtis.musicxml.common.FontStyle;
-import org.curtis.musicxml.common.FontWeight;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
-import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.common.SymbolFormatting;
@@ -24,8 +16,9 @@ import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.common.TextDecoration;
 import org.curtis.musicxml.common.TextFormatting;
+import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.layout.SystemDivider;
 import org.curtis.musicxml.util.TypeUtil;
-import org.curtis.musicxml.layout.PrintObjectStyleAlign;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
@@ -59,7 +52,7 @@ public class FormattingFactory {
         if (element == null) return null;
 
         Location justify = FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
-        PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
+        Display display = DisplayFactory.newDisplay(element);
         TextDecoration textDecoration = LyricFactory.newTextDecoration(element);
         BigDecimal rotation = MathUtil.newBigDecimal(element.getAttribute("rotation"));
         String letterSpacing = element.getAttribute("letter-spacing");
@@ -69,12 +62,12 @@ public class FormattingFactory {
         Location dir = FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
         EnclosureShape enclosureShape = newEnclosureShape(element);
 
-        if (justify == null && printStyleAlign == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
+        if (justify == null && display == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
                 && StringUtil.isEmpty(lineHeight) && StringUtil.isEmpty(lang) && StringUtil.isEmpty(space) && dir == null && enclosureShape == null) return null;
 
         TextFormatting textFormatting = new TextFormatting();
         textFormatting.setJustify(justify);
-        textFormatting.setPrintStyleAlign(printStyleAlign);
+        textFormatting.setDisplay(display);
         textFormatting.setTextDecoration(textDecoration);
         textFormatting.setTextRotation(rotation);
         textFormatting.setLetterSpacing(letterSpacing);
@@ -91,7 +84,7 @@ public class FormattingFactory {
         if (element == null) return null;
 
         Location justify = FactoryUtil.enumValue(Location.class, element.getAttribute("justify"));
-        PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
+        Display display = DisplayFactory.newDisplay(element);
         TextDecoration textDecoration = LyricFactory.newTextDecoration(element);
         BigDecimal rotation = MathUtil.newBigDecimal(element.getAttribute("rotation"));
         String letterSpacing = element.getAttribute("letter-spacing");
@@ -99,12 +92,12 @@ public class FormattingFactory {
         Location dir = FactoryUtil.enumValue(Location.class, element.getAttribute("dir"));
         EnclosureShape enclosureShape = newEnclosureShape(element);
 
-        if (justify == null && printStyleAlign == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
+        if (justify == null && display == null && textDecoration == null && rotation == null && StringUtil.isEmpty(letterSpacing)
                 && StringUtil.isEmpty(lineHeight)  && dir == null && enclosureShape == null) return null;
 
         SymbolFormatting symbolFormatting = new SymbolFormatting();
         symbolFormatting.setJustify(justify);
-        symbolFormatting.setPrintStyleAlign(printStyleAlign);
+        symbolFormatting.setDisplay(display);
         symbolFormatting.setTextDecoration(textDecoration);
         symbolFormatting.setTextRotation(rotation);
         symbolFormatting.setLetterSpacing(letterSpacing);
@@ -120,7 +113,7 @@ public class FormattingFactory {
 
         StyleText styleText = new StyleText();
         styleText.setValue(XmlUtil.getElementText(element));
-        styleText.setPrintStyle(newPrintStyle(element));
+        styleText.setDisplay(DisplayFactory.newDisplay(element));
 
         return styleText;
     }
@@ -144,91 +137,19 @@ public class FormattingFactory {
         return text;
     }
 
-    public static PrintStyleAlign newPrintStyleAlign(Element element) {
-        if(element == null) {
-            return null;
-        }
-
-        Location halign = FactoryUtil.enumValue(Location.class, element.getAttribute("halign"));
-        Location valign = FactoryUtil.enumValue(Location.class, element.getAttribute("valign"));
-        PrintStyle printStyle = newPrintStyle(element);
-
-        if (halign == null && valign == null && printStyle == null) return null;
-
-        PrintStyleAlign printStyleAlign = new PrintStyleAlign();
-        printStyleAlign.setHalign(halign);
-        printStyleAlign.setValign(valign);
-        printStyleAlign.setPrintStyle(printStyle);
-
-        return printStyleAlign;
-    }
-
-    public static PrintStyle newPrintStyle(Element printStyleElement) {
-        if(printStyleElement == null) {
-            return null;
-        }
-
-        Position position = PlacementFactory.newPosition(printStyleElement);
-        Font font = newFont(printStyleElement);
-        String color = printStyleElement.getAttribute("color");
-
-        if (position == null && font == null && StringUtil.isEmpty(color)) return null;
-
-        PrintStyle printStyle = new PrintStyle();
-        printStyle.setPosition(position);
-        printStyle.setFont(font);
-        printStyle.setColor(color);
-
-        return printStyle;
-    }
-
-    public static PrintObjectStyleAlign newPrintObjectStyleAlign(Element element) {
+    public static SystemDivider newSystemDivider(Element element) {
         if(element == null) return null;
 
         Boolean printObject = getPrintObject(element);
-        PrintStyleAlign printStyleAlign = newPrintStyleAlign(element);
+        Display display = DisplayFactory.newDisplay(element);
 
-        if (printObject == null && printStyleAlign == null) return null;
+        if (printObject == null && display == null) return null;
 
-        PrintObjectStyleAlign printObjectStyleAlign = new PrintObjectStyleAlign();
-        printObjectStyleAlign.setPrintObject(printObject);
-        printObjectStyleAlign.setPrintStyleAlign(printStyleAlign);
+        SystemDivider systemDivider = new SystemDivider();
+        systemDivider.setPrintObject(printObject);
+        systemDivider.setDisplay(display);
 
-        return printObjectStyleAlign;
-    }
-
-    public static Font newFont(Element fontElement) {
-        if(fontElement == null) {
-            return null;
-        }
-
-        String fontFamily = fontElement.getAttribute("font-family");
-        String fontStyle = fontElement.getAttribute("font-style");
-        String fontSizeValue = fontElement.getAttribute("font-size");
-        String fontWeight = fontElement.getAttribute("font-weight");
-
-        if (StringUtil.isEmpty(fontFamily) && StringUtil.isEmpty(fontStyle) && StringUtil.isEmpty(fontSizeValue) && StringUtil.isEmpty(fontWeight)) return null;
-
-        Font font = new Font();
-        font.setFontFamily(fontFamily);
-        font.setFontStyle(FactoryUtil.enumValue(FontStyle.class, fontStyle));
-
-        if (StringUtil.isNotEmpty(fontSizeValue)) {
-            FontSize fontSize = new FontSize();
-            CssFontSize cssFontSize = FactoryUtil.enumValue(CssFontSize.class, fontSizeValue);
-
-            if (cssFontSize == null) {
-                BigDecimal fontSizeNumber = MathUtil.newBigDecimal(fontSizeValue);
-                System.err.println("Using decimal font size " + fontSizeValue);
-                fontSize.setFontSize(fontSizeNumber);
-            } else fontSize.setCssFontSize(cssFontSize);
-
-            font.setFontSize(fontSize);
-        }
-
-        font.setFontWeight(FactoryUtil.enumValue(FontWeight.class, fontWeight));
-
-        return font;
+        return systemDivider;
     }
 
     public static SymbolSize newSymbolSize(Element symbolSizeElement) {

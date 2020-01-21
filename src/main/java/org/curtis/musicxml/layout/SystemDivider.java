@@ -1,7 +1,7 @@
 package org.curtis.musicxml.layout;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -12,16 +12,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "print_object_style_align")
-public class PrintObjectStyleAlign extends DatabaseItem {
+@Table(name = "system_divider")
+public class SystemDivider extends DatabaseItem {
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
-    public PrintObjectStyleAlign() {
+    public SystemDivider() {
 
     }
 
@@ -33,11 +33,11 @@ public class PrintObjectStyleAlign extends DatabaseItem {
         this.printObject = printObject;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

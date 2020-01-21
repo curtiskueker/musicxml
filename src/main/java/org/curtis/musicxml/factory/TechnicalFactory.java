@@ -29,8 +29,7 @@ public class TechnicalFactory {
         fingering.setValue(XmlUtil.getElementText(element));
         fingering.setSubstitution(TypeUtil.getYesNo(element.getAttribute("substitution")));
         fingering.setAlternate(TypeUtil.getYesNo(element.getAttribute("alternate")));
-        fingering.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        fingering.setPlacement(PlacementFactory.newPlacementLocation(element));
+        fingering.setDisplay(DisplayFactory.newDisplay(element));
 
         return fingering;
     }
@@ -40,8 +39,7 @@ public class TechnicalFactory {
 
         Fret fret = new Fret();
         fret.setValue(StringUtil.getInteger(XmlUtil.getElementText(element)));
-        fret.setFont(FormattingFactory.newFont(element));
-        fret.setColor(element.getAttribute("color"));
+        fret.setDisplay(DisplayFactory.newDisplay(element));
 
         return fret;
     }
@@ -51,8 +49,7 @@ public class TechnicalFactory {
 
         StringNumber stringNumber = new StringNumber();
         stringNumber.setStringNumber(StringUtil.getInteger(XmlUtil.getElementText(element)));
-        stringNumber.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        stringNumber.setPlacement(PlacementFactory.newPlacementLocation(element));
+        stringNumber.setDisplay(DisplayFactory.newDisplay(element));
 
         return stringNumber;
     }
@@ -80,8 +77,7 @@ public class TechnicalFactory {
         hammerOnPullOff.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         String numberLevel = element.getAttribute("number");
         if (StringUtil.isNotEmpty(numberLevel)) hammerOnPullOff.setNumber(StringUtil.getInteger(numberLevel));
-        hammerOnPullOff.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        hammerOnPullOff.setPlacement(PlacementFactory.newPlacementLocation(element));
+        hammerOnPullOff.setDisplay(DisplayFactory.newDisplay(element));
     }
 
     public static BendSound newBendSound(Element element) {
@@ -115,7 +111,7 @@ public class TechnicalFactory {
     }
 
     private static void populateHeelToe(HeelToe heelToe, Element element) {
-        heelToe.setPrintPlacement(PlacementFactory.newPlacement(element));
+        heelToe.setDisplay(DisplayFactory.newDisplay(element));
         heelToe.setSubstitution(TypeUtil.getYesNo(element.getAttribute("substitution")));
     }
 }

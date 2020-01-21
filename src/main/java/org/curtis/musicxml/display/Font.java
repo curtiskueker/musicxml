@@ -1,15 +1,18 @@
 package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.builder.BuilderUtil;
+import org.curtis.util.MathUtil;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "display_font")
+@Table(name = "font")
 public class Font extends DatabaseItem {
     @Column(name = "font_family")
     private String fontFamily;
@@ -48,6 +51,20 @@ public class Font extends DatabaseItem {
 
     public void setFontSize(String fontSize) {
         this.fontSize = fontSize;
+    }
+
+    public BigDecimal getNumericFontSize() {
+        if (fontSize == null) return null;
+
+        try {
+            return MathUtil.newBigDecimal(fontSize);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String getNonNumericFontSize() {
+        return BuilderUtil.enumValue(fontSize);
     }
 
     public FontWeight getFontWeight() {

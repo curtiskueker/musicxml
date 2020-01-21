@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,8 +13,8 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("coda")
 public class Coda extends DirectionType {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column
     private String smufl;
 
@@ -22,12 +22,12 @@ public class Coda extends DirectionType {
 
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public String getSmufl() {

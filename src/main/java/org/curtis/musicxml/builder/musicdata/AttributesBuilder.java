@@ -24,8 +24,8 @@ import org.curtis.musicxml.attributes.time.SenzaMisura;
 import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.attributes.time.TimeSignature;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.score.PartSymbol;
 
@@ -48,7 +48,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         for (Key key : attributes.getKeys()) {
             buildOpenElement("key");
             buildAttribute("number", key.getNumber());
-            buildAttributes(FormattingBuilder.buildPrintStyle(key.getPrintStyle()));
+            buildAttributes(DisplayBuilder.buildDisplay(key.getDisplay()));
             buildAttribute("print-object", key.getPrintObject());
             buildCloseElement();
             if (key instanceof TraditionalKey) buildTraditionalKey((TraditionalKey)key);
@@ -66,7 +66,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             buildAttribute("number", time.getNumber());
             buildAttribute("symbol", time.getSymbol());
             buildAttribute("separator", time.getSeparator());
-            buildAttributes(FormattingBuilder.buildPrintStyleAlign(time.getPrintStyleAlign()));
+            buildAttributes(DisplayBuilder.buildDisplay(time.getDisplay()));
             buildAttribute("print-object", time.getPrintObject());
             buildCloseElement();
             if (time instanceof TimeSignature) buildTimeSignature((TimeSignature)time);
@@ -79,8 +79,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             Map<String, String> partSymbolAttributes = new HashMap<>();
             partSymbolAttributes.put("top-staff", BuilderUtil.stringValue(partSymbol.getTopStaff()));
             partSymbolAttributes.put("bottom-staff", BuilderUtil.stringValue(partSymbol.getBottomStaff()));
-            partSymbolAttributes.putAll(PlacementBuilder.buildPosition(partSymbol.getPosition()));
-            partSymbolAttributes.put("color", partSymbol.getColor());
+            partSymbolAttributes.putAll(DisplayBuilder.buildDisplay(partSymbol.getDisplay()));
             buildElementWithValueAndAttributes("part-symbol", partSymbol.getGroupSymbolType(), partSymbolAttributes);
         }
         buildElementWithValue("instruments", attributes.getInstruments());
@@ -90,7 +89,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             buildAttribute("additional", clef.getAdditional());
             buildAttribute("after-barline", clef.getAfterBarline());
             buildAttribute("size", clef.getSize());
-            buildAttributes(FormattingBuilder.buildPrintStyle(clef.getPrintStyle()));
+            buildAttributes(DisplayBuilder.buildDisplay(clef.getDisplay()));
             buildAttribute("print-object", clef.getPrintObject());
             buildCloseElement();
             String clefSign = BuilderUtil.enumValue(clef.getSign());
@@ -144,15 +143,14 @@ public class AttributesBuilder extends MusicDataBuilder {
             buildEndElement("transpose");
         }
         for (Directive directive : attributes.getDirectives()) {
-            Map<String, String> directiveAttributes = new HashMap<>(FormattingBuilder.buildPrintStyle(directive.getPrintStyle()));
+            Map<String, String> directiveAttributes = new HashMap<>(DisplayBuilder.buildDisplay(directive.getDisplay()));
             directiveAttributes.put("xml:lang", directive.getLang());
             buildElementWithValueAndAttributes("directive", directive.getValue(), directiveAttributes);
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             buildOpenElement("measure-style");
             buildAttribute("number", measureStyle.getNumber());
-            buildAttributes(FormattingBuilder.buildFont(measureStyle.getFont()));
-            buildAttribute("color", measureStyle.getColor());
+            buildAttributes(DisplayBuilder.buildDisplay(measureStyle.getDisplay()));
             buildCloseElement();
             if (measureStyle instanceof MultipleRest) {
                 MultipleRest multipleRest = (MultipleRest)measureStyle;

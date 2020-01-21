@@ -1,6 +1,7 @@
 package org.curtis.lilypond.util;
 
-import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Placement;
 import org.curtis.util.StringUtil;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ public class PlacementBuildUtil {
 
     }
 
-    public static String getPlacement(Location placement) {
-        if(placement == null) {
-            return "";
-        }
+    public static String getPlacement(Display display) {
+        if (display == null) return "";
+        Placement placement = display.getPlacement();
+        if(placement == null) return "";
 
         switch (placement) {
             case ABOVE:
@@ -33,15 +34,15 @@ public class PlacementBuildUtil {
         }
     }
 
-    public static String getPlacementDefaultAbove(Location placement) {
-        String placementValue = getPlacement(placement);
+    public static String getPlacementDefaultAbove(Display display) {
+        String placementValue = getPlacement(display);
         return StringUtil.isEmpty(placementValue) ? "^" : placementValue;
     }
 
     // Skips placement of objects where placement is ignored in DirectionBuilder
-    public static String getPlacement(Location placement, String className) {
+    public static String getPlacement(Display display, String className) {
         if(NON_PLACED_OBJECTS.contains(className)) return "";
 
-        return getPlacement(placement);
+        return getPlacement(display);
     }
 }

@@ -19,7 +19,7 @@ public class XLinkBuilder extends OutputBuilder {
         xLinkBuilder.append(XLinkBuilder.buildLinkAttributes(link.getLinkAttributes()));
         xLinkBuilder.buildAttribute("name", link.getName());
         xLinkBuilder.append(XLinkBuilder.buildElementPosition(link.getElementPosition()));
-        xLinkBuilder.buildAttributes(PlacementBuilder.buildPosition(link.getPosition()));
+        xLinkBuilder.buildAttributes(DisplayBuilder.buildDisplay(link.getDisplay()));
         xLinkBuilder.buildEndElement("link");
 
         return xLinkBuilder.stringBuilder.toString();

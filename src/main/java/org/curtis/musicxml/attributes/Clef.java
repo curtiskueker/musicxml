@@ -1,8 +1,8 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.common.SymbolSize;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -36,8 +36,8 @@ public class Clef extends DatabaseItem {
     @Type(type="yes_no")
     private Boolean afterBarline;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -102,12 +102,12 @@ public class Clef extends DatabaseItem {
         this.afterBarline = afterBarline;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Boolean getPrintObject() {

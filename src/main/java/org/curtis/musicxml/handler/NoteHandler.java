@@ -2,10 +2,10 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Text;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
@@ -44,10 +44,8 @@ public class NoteHandler extends MusicDataHandler {
         Note note = new Note();
         FullNote fullNote = new FullNote();
 
-        note.setPosition(PlacementFactory.newPosition(element));
+        note.setDisplay(DisplayFactory.newDisplay(element));
         note.setEditorialVoice(FormattingFactory.newEditorialVoice(element));
-        note.setFont(FormattingFactory.newFont(element));
-        note.setColor(element.getAttribute("color"));
         note.setPrintout(FormattingFactory.newPrintout(element));
         note.setPrintLeger(TypeUtil.getYesNo(element.getAttribute("print-leger")));
         note.setDynamics(MathUtil.newBigDecimal(element.getAttribute("dynamics")));
@@ -115,7 +113,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "dot":
                     Dot dot = new Dot();
-                    dot.setPrintPlacement(PlacementFactory.newPlacement(noteSubelement));
+                    dot.setDisplay(DisplayFactory.newDisplay(noteSubelement));
                     note.getDots().add(dot);
                     break;
                 case "accidental":
@@ -124,7 +122,7 @@ public class NoteHandler extends MusicDataHandler {
                     accidental.setCautionary(TypeUtil.getYesNo(noteSubelement.getAttribute("cautionary")));
                     accidental.setEditorial(TypeUtil.getYesNo(noteSubelement.getAttribute("editorial")));
                     accidental.setLevelDisplay(FormattingFactory.newLevelDisplay(noteSubelement));
-                    accidental.setPrintStyle(FormattingFactory.newPrintStyle(noteSubelement));
+                    accidental.setDisplay(DisplayFactory.newDisplay(noteSubelement));
                     accidental.setSmufl(noteSubelement.getAttribute("smufl"));
                     note.setAccidental(accidental);
                     break;
@@ -134,8 +132,7 @@ public class NoteHandler extends MusicDataHandler {
                 case "stem":
                     Stem stem = new Stem();
                     stem.setType(FactoryUtil.enumValue(StemType.class, XmlUtil.getElementText(noteSubelement)));
-                    stem.setPosition(PlacementFactory.newPosition(noteSubelement));
-                    stem.setColor(noteSubelement.getAttribute("color"));
+                    stem.setDisplay(DisplayFactory.newDisplay(noteSubelement));
                     note.setStem(stem);
                     break;
                 case "notehead":
@@ -145,8 +142,7 @@ public class NoteHandler extends MusicDataHandler {
                     String filledNotehead = noteSubelement.getAttribute("filled");
                     notehead.setFilled(TypeUtil.getYesNo(filledNotehead));
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
-                    notehead.setFont(FormattingFactory.newFont(noteSubelement));
-                    notehead.setColor(noteSubelement.getAttribute("color"));
+                    notehead.setDisplay(DisplayFactory.newDisplay(noteSubelement));
                     notehead.setSmufl(noteSubelement.getAttribute("smufl"));
                     note.setNotehead(notehead);
                     break;
@@ -172,7 +168,7 @@ public class NoteHandler extends MusicDataHandler {
                     beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
                     beam.setRepeater(TypeUtil.getYesNo(noteSubelement.getAttribute("repeater")));
                     beam.setFan(FactoryUtil.enumValue(BeamFan.class, noteSubelement.getAttribute("fan")));
-                    beam.setColor(noteSubelement.getAttribute("color"));
+                    beam.setDisplay(DisplayFactory.newDisplay(noteSubelement));
                     beams.add(beam);
                     break;
                 case "notations":

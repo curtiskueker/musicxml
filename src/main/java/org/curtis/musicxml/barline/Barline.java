@@ -4,6 +4,7 @@ import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Segno;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.score.MusicData;
@@ -27,9 +28,12 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("barline")
 public class Barline extends MusicData {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bar_style")
+    private BarStyle barStyle;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bar_style_id")
-    private BarStyleColor barStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
@@ -66,12 +70,20 @@ public class Barline extends MusicData {
 
     }
 
-    public BarStyleColor getBarStyle() {
+    public BarStyle getBarStyle() {
         return barStyle;
     }
 
-    public void setBarStyle(BarStyleColor barStyle) {
+    public void setBarStyle(BarStyle barStyle) {
         this.barStyle = barStyle;
+    }
+
+    public Display getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Editorial getEditorial() {

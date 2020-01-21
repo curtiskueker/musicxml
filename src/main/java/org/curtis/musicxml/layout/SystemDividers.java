@@ -13,28 +13,28 @@ import javax.persistence.Table;
 public class SystemDividers extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "left_divider_id")
-    private PrintObjectStyleAlign leftDivider;
+    private SystemDivider leftDivider;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "right_divider_id")
-    private PrintObjectStyleAlign rightDivider;
+    private SystemDivider rightDivider;
 
     public SystemDividers() {
 
     }
 
-    public PrintObjectStyleAlign getLeftDivider() {
+    public SystemDivider getLeftDivider() {
         return leftDivider;
     }
 
-    public void setLeftDivider(PrintObjectStyleAlign leftDivider) {
+    public void setLeftDivider(SystemDivider leftDivider) {
         this.leftDivider = leftDivider;
     }
 
-    public PrintObjectStyleAlign getRightDivider() {
+    public SystemDivider getRightDivider() {
         return rightDivider;
     }
 
-    public void setRightDivider(PrintObjectStyleAlign rightDivider) {
+    public void setRightDivider(SystemDivider rightDivider) {
         this.rightDivider = rightDivider;
     }
 }

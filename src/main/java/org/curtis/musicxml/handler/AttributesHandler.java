@@ -19,9 +19,9 @@ import org.curtis.musicxml.attributes.measure.Slash;
 import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.factory.AttributesFactory;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.PartSymbol;
@@ -52,7 +52,7 @@ public class AttributesHandler extends MusicDataHandler {
                     List<Key> keys = attributes.getKeys();
                     Key key = AttributesFactory.newKey(attributeSubelement);
                     key.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
-                    key.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
+                    key.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                     key.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     List<Element> keyOctaveElements = XmlUtil.getChildElements(attributeSubelement, "key-octave");
                     for (Element keyOctaveElement : keyOctaveElements) {
@@ -70,7 +70,7 @@ public class AttributesHandler extends MusicDataHandler {
                     time.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                     time.setSymbol(AttributesFactory.newTimeSymbol(attributeSubelement));
                     time.setSeparator(AttributesFactory.newTimeSeparator(attributeSubelement));
-                    time.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(attributeSubelement));
+                    time.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                     time.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     timeList.add(time);
                     break;
@@ -82,8 +82,7 @@ public class AttributesHandler extends MusicDataHandler {
                     partSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(attributeSubelement));
                     partSymbol.setTopStaff(StringUtil.getInteger(attributeSubelement.getAttribute("top-staff")));
                     partSymbol.setBottomStaff(StringUtil.getInteger(attributeSubelement.getAttribute("bottom-staff")));
-                    partSymbol.setPosition(PlacementFactory.newPosition(attributeSubelement));
-                    partSymbol.setColor(attributeSubelement.getAttribute("color"));
+                    partSymbol.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                     attributes.setPartSymbol(partSymbol);
                     break;
                 case "instruments":
@@ -125,7 +124,7 @@ public class AttributesHandler extends MusicDataHandler {
                     clef.setAdditional(TypeUtil.getYesNo(attributeSubelement.getAttribute("additional")));
                     clef.setSize(FormattingFactory.newSymbolSize(attributeSubelement));
                     clef.setAfterBarline(TypeUtil.getYesNo(attributeSubelement.getAttribute("after-barline")));
-                    clef.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
+                    clef.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                     clef.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     attributes.getClefs().add(clef);
                     break;
@@ -216,7 +215,7 @@ public class AttributesHandler extends MusicDataHandler {
                 case "directive":
                     Directive directive = new Directive();
                     directive.setValue(XmlUtil.getElementText(attributeSubelement));
-                    directive.setPrintStyle(FormattingFactory.newPrintStyle(attributeSubelement));
+                    directive.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                     directive.setLang(attributeSubelement.getAttribute("xml:lang"));
                     break;
                 case "measure-style":
@@ -259,8 +258,7 @@ public class AttributesHandler extends MusicDataHandler {
                     }
                     if(measureStyle != null) {
                         measureStyle.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
-                        measureStyle.setFont(FormattingFactory.newFont(attributeSubelement));
-                        measureStyle.setColor(attributeSubelement.getAttribute("color"));
+                        measureStyle.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                         measureStyles.add(measureStyle);
                     }
                     break;

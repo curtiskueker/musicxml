@@ -69,8 +69,8 @@ public class LayoutFactory {
                     Element systemDividersElement = XmlUtil.getChildElement(layoutSubelement, "system-dividers");
                     if(systemDividersElement != null) {
                         SystemDividers systemDividers = new SystemDividers();
-                        systemDividers.setLeftDivider(FormattingFactory.newPrintObjectStyleAlign(XmlUtil.getChildElement(layoutSubelement, "left-divider")));
-                        systemDividers.setRightDivider(FormattingFactory.newPrintObjectStyleAlign(XmlUtil.getChildElement(layoutSubelement, "right-divider")));
+                        systemDividers.setLeftDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(layoutSubelement, "left-divider")));
+                        systemDividers.setRightDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(layoutSubelement, "right-divider")));
                         systemLayout.setSystemDividers(systemDividers);
                     }
                     layout.setSystemLayout(systemLayout);

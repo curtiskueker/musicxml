@@ -3,8 +3,8 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.attributes.Tuning;
 import org.curtis.musicxml.builder.BaseBuilder;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.DisplayText;
 import org.curtis.musicxml.common.Editorial;
@@ -28,7 +28,6 @@ import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Line;
-import org.curtis.musicxml.note.PrintPlacement;
 import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.lyric.Extend;
@@ -38,7 +37,6 @@ import org.curtis.musicxml.note.notation.ornament.WavyLine;
 import org.curtis.musicxml.note.notation.technical.Fingering;
 import org.curtis.musicxml.note.notation.technical.Fret;
 import org.curtis.musicxml.note.notation.technical.StringNumber;
-import org.curtis.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,37 +60,16 @@ public abstract class MusicDataBuilder extends BaseBuilder {
 
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(extend.getType()));
-        attributes.putAll(PlacementBuilder.buildPosition(extend.getPosition()));
-        attributes.put("color", extend.getColor());
+        attributes.putAll(DisplayBuilder.buildDisplay(extend.getDisplay()));
         buildElementWithAttributes("extend", attributes);
     }
 
-    protected void buildPlacement(String elementName, PrintPlacement placement) {
-        buildPlacementWithAttribute(elementName, placement, "", "");
-    }
-
-    protected void buildPlacementWithAttribute(String elementName, PrintPlacement placement, String attributeName, String attributeValue) {
-        if (placement == null) {
-            if (StringUtil.isEmpty(attributeValue)) buildElement(elementName);
-            else buildElementWithAttribute(elementName, attributeName, attributeValue);
-            return;
-        }
-
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placement.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(placement.getPlacement()));
-        if (StringUtil.isNotEmpty(attributeValue)) attributes.put(attributeName, attributeValue);
-        buildElementWithAttributes(elementName, attributes);
-    }
-
     protected void buildPlacementText(String elementName, PlacementText placementText) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
-        buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
+        buildElementWithValueAndAttributes(elementName, placementText.getValue(), DisplayBuilder.buildDisplay(placementText.getDisplay()));
     }
 
     protected void buildOtherPlacementText(String elementName, PlacementText placementText, String smufl) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(placementText.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(placementText.getPlacement()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(placementText.getDisplay()));
         attributes.put("smufl", smufl);
         buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
     }
@@ -103,16 +80,14 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("line-type", BuilderUtil.enumValue(line.getLineType()));
         attributes.put("line-length", BuilderUtil.enumValue(line.getLineLength()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(line.getDashedFormatting()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(line.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(line.getPlacement()));
+        attributes.putAll(DisplayBuilder.buildDisplay(line.getDisplay()));
         buildElementWithAttributes(elementName, attributes);
     }
 
     protected void buildStyleText(String elementName, StyleText styleText) {
         if (styleText ==  null) return;
 
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(styleText.getPrintStyle()));
-        buildElementWithValueAndAttributes(elementName, styleText.getValue(), attributes);
+        buildElementWithValueAndAttributes(elementName, styleText.getValue(), DisplayBuilder.buildDisplay(styleText.getDisplay()));
     }
 
     protected void buildEditorial(Editorial editorial) {
@@ -247,8 +222,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.requiredValue(image.getType()));
         attributes.put("height", BuilderUtil.stringValue(image.getHeight()));
         attributes.put("width", BuilderUtil.stringValue(image.getWidth()));
-        attributes.putAll(PlacementBuilder.buildPosition(image.getPosition()));
-        attributes.put("halign", BuilderUtil.enumValue(image.getHalign()));
+        attributes.putAll(DisplayBuilder.buildDisplay(image.getDisplay()));
         attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
         buildElementWithAttributes("image", attributes);
     }
@@ -259,9 +233,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(wavyLine.getType()));
         attributes.put("number", BuilderUtil.stringValue(wavyLine.getNumber()));
-        attributes.putAll(PlacementBuilder.buildPosition(wavyLine.getPosition()));
-        attributes.put("placement", BuilderUtil.enumValue(wavyLine.getPlacement()));
-        attributes.put("color", wavyLine.getColor());
+        attributes.putAll(DisplayBuilder.buildDisplay(wavyLine.getDisplay()));
         attributes.putAll(buildTrillSound(wavyLine.getTrillSound()));
         buildElementWithAttributes("wavy-line", attributes);
     }
@@ -286,7 +258,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
 
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(fermata.getType()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(fermata.getPrintStyle()));
+        attributes.putAll(DisplayBuilder.buildDisplay(fermata.getDisplay()));
         buildElementWithValueAndAttributes("fermata", fermata.getFermataShape(), attributes);
     }
 
@@ -294,8 +266,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         if (dynamics == null) return;
 
         buildOpenElement("dynamics");
-        buildAttributes(FormattingBuilder.buildPrintStyleAlign(dynamics.getPrintStyleAlign()));
-        buildAttribute("placement", dynamics.getPlacement());
+        buildAttributes(DisplayBuilder.buildDisplay(dynamics.getDisplay()));
         buildAttributes(FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()));
         buildAttribute("enclosure", dynamics.getEnclosure());
         buildCloseElement();
@@ -308,37 +279,33 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     protected void buildCoda(Coda coda) {
         if (coda == null) return;
 
-        Map<String, String> codaAttributes = FormattingBuilder.buildPrintStyleAlign(coda.getPrintStyleAlign());
-        codaAttributes.put("smufl", coda.getSmufl());
-        buildElementWithOptionalAttributes("coda", codaAttributes);
+        Map<String, String> attributes = DisplayBuilder.buildDisplay(coda.getDisplay());
+        attributes.put("smufl", coda.getSmufl());
+        buildElementWithOptionalAttributes("coda", attributes);
     }
 
     protected void buildSegno(Segno segno) {
         if (segno == null) return;
 
-        Map<String, String> attributes = FormattingBuilder.buildPrintStyleAlign(segno.getPrintStyleAlign());
+        Map<String, String> attributes = DisplayBuilder.buildDisplay(segno.getDisplay());
         attributes.put("smufl", segno.getSmufl());
         buildElementWithOptionalAttributes("segno", attributes);
     }
 
     protected void buildStringNumber(StringNumber stringNumber) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(stringNumber.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(stringNumber.getPlacement()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(stringNumber.getDisplay()));
         buildElementWithValueAndAttributes("string", stringNumber.getStringNumber(), attributes);
     }
 
     protected void buildFret(Fret fret) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildFont(fret.getFont()));
-        attributes.put("color", fret.getColor());
-        buildElementWithValueAndAttributes("fret", fret.getValue(), attributes);
+        buildElementWithValueAndAttributes("fret", fret.getValue(), DisplayBuilder.buildDisplay(fret.getDisplay()));
     }
 
     protected void buildFingering(Fingering fingering) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("substitution", BuilderUtil.yesOrNo(fingering.getSubstitution()));
         attributes.put("alternate", BuilderUtil.yesOrNo(fingering.getAlternate()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(fingering.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(fingering.getPlacement()));
+        attributes.putAll(DisplayBuilder.buildDisplay(fingering.getDisplay()));
         buildElementWithValueAndAttributes("fingering", fingering.getValue(), attributes);
     }
 }

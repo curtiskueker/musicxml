@@ -31,21 +31,6 @@ public class OrnamentFactory {
 
     }
 
-    public static TrillSound newTrillSound(Element element) {
-        if(element == null) return null;
-
-        TrillSound trillSound = new TrillSound();
-        trillSound.setStartNote(FactoryUtil.enumValue(StartNote.class, element.getAttribute("start-note")));
-        trillSound.setTrillStep(FactoryUtil.enumValue(TrillStep.class, element.getAttribute("trill-step")));
-        trillSound.setTwoNoteTurn(FactoryUtil.enumValue(TwoNoteTurn.class, element.getAttribute("two-note-turn")));
-        trillSound.setAccelerate(TypeUtil.getYesNo(element.getAttribute("accelerate")));
-        trillSound.setBeats(MathUtil.newBigDecimal(element.getAttribute("beats")));
-        trillSound.setSecondBeat(MathUtil.newBigDecimal(element.getAttribute("second-beat")));
-        trillSound.setLastBeat(MathUtil.newBigDecimal(element.getAttribute("last-beat")));
-
-        return trillSound;
-    }
-
     public static PlacedTrillSound newPlacedTrillSound(Element element) {
         if(element == null) return null;
 
@@ -77,8 +62,7 @@ public class OrnamentFactory {
                 return null;
         }
 
-        placedTrillSound.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        placedTrillSound.setPlacement(PlacementFactory.newPlacementLocation(element));
+        placedTrillSound.setDisplay(DisplayFactory.newDisplay(element));
         placedTrillSound.setTrillSound(newTrillSound(element));
 
         return placedTrillSound;
@@ -122,8 +106,7 @@ public class OrnamentFactory {
                 return null;
         }
 
-        horizontalTurn.setPrintStyle(FormattingFactory.newPrintStyle(element));
-        horizontalTurn.setPlacement(PlacementFactory.newPlacementLocation(element));
+        horizontalTurn.setDisplay(DisplayFactory.newDisplay(element));
         horizontalTurn.setTrillSound(newTrillSound(element));
         horizontalTurn.setSlash(TypeUtil.getYesNo(element.getAttribute("slash")));
 
@@ -136,11 +119,24 @@ public class OrnamentFactory {
         WavyLine wavyLine = new WavyLine();
         wavyLine.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         wavyLine.setNumber(StringUtil.getInteger(element.getAttribute("number")));
-        wavyLine.setPosition(PlacementFactory.newPosition(element));
-        wavyLine.setPlacement(PlacementFactory.newPlacementLocation(element));
-        wavyLine.setColor(element.getAttribute("color"));
+        wavyLine.setDisplay(DisplayFactory.newDisplay(element));
         wavyLine.setTrillSound(OrnamentFactory.newTrillSound(element));
 
         return wavyLine;
+    }
+
+    private static TrillSound newTrillSound(Element element) {
+        if(element == null) return null;
+
+        TrillSound trillSound = new TrillSound();
+        trillSound.setStartNote(FactoryUtil.enumValue(StartNote.class, element.getAttribute("start-note")));
+        trillSound.setTrillStep(FactoryUtil.enumValue(TrillStep.class, element.getAttribute("trill-step")));
+        trillSound.setTwoNoteTurn(FactoryUtil.enumValue(TwoNoteTurn.class, element.getAttribute("two-note-turn")));
+        trillSound.setAccelerate(TypeUtil.getYesNo(element.getAttribute("accelerate")));
+        trillSound.setBeats(MathUtil.newBigDecimal(element.getAttribute("beats")));
+        trillSound.setSecondBeat(MathUtil.newBigDecimal(element.getAttribute("second-beat")));
+        trillSound.setLastBeat(MathUtil.newBigDecimal(element.getAttribute("last-beat")));
+
+        return trillSound;
     }
 }

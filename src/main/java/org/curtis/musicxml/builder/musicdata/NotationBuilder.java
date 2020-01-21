@@ -1,7 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.Arpeggiate;
@@ -66,11 +66,9 @@ public class NotationBuilder extends MusicDataBuilder {
         attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(tied.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(tied.getDashedFormatting()));
-        attributes.putAll(PlacementBuilder.buildPosition(tied.getPosition()));
-        attributes.put("placement", BuilderUtil.enumValue(tied.getPlacement()));
+        attributes.putAll(DisplayBuilder.buildDisplay(tied.getDisplay()));
         attributes.put("orientation", BuilderUtil.enumValue(tied.getOrientation()));
         attributes.putAll(buildBezier(tied.getBezier()));
-        attributes.put("color", tied.getColor());
         buildElementWithAttributes("tied", attributes);
     }
 
@@ -80,11 +78,9 @@ public class NotationBuilder extends MusicDataBuilder {
         attributes.put("number", BuilderUtil.stringValue(slur.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(slur.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(slur.getDashedFormatting()));
-        attributes.putAll(PlacementBuilder.buildPosition(slur.getPosition()));
-        attributes.put("placement", BuilderUtil.enumValue(slur.getPlacement()));
+        attributes.putAll(DisplayBuilder.buildDisplay(slur.getDisplay()));
         attributes.put("orientation", BuilderUtil.enumValue(slur.getOrientation()));
         attributes.putAll(buildBezier(slur.getBezier()));
-        attributes.put("color", slur.getColor());
         buildElementWithAttributes("slur", attributes);
     }
 
@@ -110,8 +106,7 @@ public class NotationBuilder extends MusicDataBuilder {
         buildAttribute("show-number", tuplet.getShowNumber());
         buildAttribute("show-type", tuplet.getShowType());
         buildAttribute("line-shape", tuplet.getLineShape());
-        buildAttributes(PlacementBuilder.buildPosition(tuplet.getPosition()));
-        buildAttribute("placement", tuplet.getPlacement());
+        buildAttributes(DisplayBuilder.buildDisplay(tuplet.getDisplay()));
         buildCloseElement();
         TupletPortion tupletActual = tuplet.getTupletActual();
         if (tupletActual != null) {
@@ -130,25 +125,10 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildTupletPortion(TupletPortion tupletPortion) {
         TupletNumber tupletNumber = tupletPortion.getTupletNumber();
-        if (tupletNumber != null) {
-            Map<String, String> tupletNumberAttributes = new HashMap<>();
-            tupletNumberAttributes.putAll(FormattingBuilder.buildFont(tupletNumber.getFont()));
-            tupletNumberAttributes.put("color", tupletNumber.getColor());
-            buildElementWithValueAndAttributes("tuplet-number", tupletNumber.getValue(), tupletNumberAttributes);
-        }
+        if (tupletNumber != null) buildElementWithValueAndAttributes("tuplet-number", tupletNumber.getValue(), DisplayBuilder.buildDisplay(tupletNumber.getDisplay()));
         TupletType tupletType = tupletPortion.getTupletType();
-        if (tupletType != null) {
-            Map<String, String> tupletTypeAttributes = new HashMap<>();
-            tupletTypeAttributes.putAll(FormattingBuilder.buildFont(tupletType.getFont()));
-            tupletTypeAttributes.put("color", tupletType.getColor());
-            buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()), tupletTypeAttributes);
-        }
-        for (TupletDot tupletDot : tupletPortion.getTupletDots()) {
-            Map<String, String> tupletDotAttributes = new HashMap<>();
-            tupletDotAttributes.putAll(FormattingBuilder.buildFont(tupletDot.getFont()));
-            tupletDotAttributes.put("color", tupletDot.getColor());
-            buildElementWithAttributes("tuplet-dot", tupletDotAttributes);
-        }
+        if (tupletType != null) buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()), DisplayBuilder.buildDisplay(tupletType.getDisplay()));
+        for (TupletDot tupletDot : tupletPortion.getTupletDots()) buildElementWithAttributes("tuplet-dot", DisplayBuilder.buildDisplay(tupletDot.getDisplay()));
     }
 
     private void buildGlissando(Glissando glissando) {
@@ -157,7 +137,7 @@ public class NotationBuilder extends MusicDataBuilder {
         attributes.put("number", BuilderUtil.stringValue(glissando.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(glissando.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(glissando.getDashedFormatting()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(glissando.getPrintStyle()));
+        attributes.putAll(DisplayBuilder.buildDisplay(glissando.getDisplay()));
         buildElementWithValueAndAttributes("glissando", glissando.getValue(), attributes);
     }
 
@@ -167,7 +147,7 @@ public class NotationBuilder extends MusicDataBuilder {
         attributes.put("number", BuilderUtil.stringValue(slide.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(slide.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(slide.getDashedFormatting()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(slide.getPrintStyle()));
+        attributes.putAll(DisplayBuilder.buildDisplay(slide.getDisplay()));
         attributes.putAll(TechnicalBuilder.buildBendSound(slide.getBendSound()));
         buildElementWithValueAndAttributes("slide", slide.getValue(), attributes);
     }
@@ -211,9 +191,7 @@ public class NotationBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("number", BuilderUtil.stringValue(arpeggiate.getNumber()));
         attributes.put("direction", BuilderUtil.enumValue(arpeggiate.getDirection()));
-        attributes.putAll(PlacementBuilder.buildPosition(arpeggiate.getPosition()));
-        attributes.put("placement", BuilderUtil.enumValue(arpeggiate.getPlacement()));
-        attributes.put("color", arpeggiate.getColor());
+        attributes.putAll(DisplayBuilder.buildDisplay(arpeggiate.getDisplay()));
         buildElementWithAttributes("arpeggiate", attributes);
     }
 
@@ -221,16 +199,13 @@ public class NotationBuilder extends MusicDataBuilder {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("type", BuilderUtil.enumValue(nonArpeggiate.getType()));
         attributes.put("number", BuilderUtil.stringValue(nonArpeggiate.getNumber()));
-        attributes.putAll(PlacementBuilder.buildPosition(nonArpeggiate.getPosition()));
-        attributes.put("placement", BuilderUtil.enumValue(nonArpeggiate.getPlacement()));
-        attributes.put("color", nonArpeggiate.getColor());
+        attributes.putAll(DisplayBuilder.buildDisplay(nonArpeggiate.getDisplay()));
         buildElementWithAttributes("non-arpeggiate", attributes);
     }
 
     private void buildAccidentalMark(AccidentalMark accidentalMark) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(accidentalMark.getPrintStyle()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(accidentalMark.getDisplay()));
         attributes.putAll(FormattingBuilder.buildLevelDisplay(accidentalMark.getLevelDisplay()));
-        attributes.put("placement", BuilderUtil.enumValue(accidentalMark.getPlacement()));
         attributes.put("smufl", accidentalMark.getSmufl());
         buildElementWithValueAndAttributes("accidental-mark", accidentalMark.getAccidentalType(), attributes);
     }
@@ -240,8 +215,7 @@ public class NotationBuilder extends MusicDataBuilder {
         attributes.put("type", BuilderUtil.enumValue(otherNotation.getType()));
         attributes.put("number", BuilderUtil.stringValue(otherNotation.getNumber()));
         attributes.put("print-object", BuilderUtil.yesOrNo(otherNotation.getPrintObject()));
-        attributes.putAll(FormattingBuilder.buildPrintStyle(otherNotation.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(otherNotation.getPlacement()));
+        attributes.putAll(DisplayBuilder.buildDisplay(otherNotation.getDisplay()));
         buildElementWithValueAndAttributes("other-notation", otherNotation.getValue(), attributes);
     }
 }

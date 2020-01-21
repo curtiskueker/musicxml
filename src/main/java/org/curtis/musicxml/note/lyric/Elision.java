@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Font;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,10 +16,8 @@ public class Elision extends DatabaseItem {
     @Column
     private String value;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "font_id")
-    private Font font;
-    @Column
-    private String color;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column
     private String smufl;
 
@@ -35,20 +33,12 @@ public class Elision extends DatabaseItem {
         this.value = value;
     }
 
-    public Font getFont() {
-        return font;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public String getSmufl() {

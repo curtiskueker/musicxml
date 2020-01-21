@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,11 +25,8 @@ public class Hole extends Technical {
     @Column(name = "hole_shape")
     private String holeShape;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public Hole() {
 
@@ -68,19 +64,11 @@ public class Hole extends Technical {
         this.holeShape = holeShape;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
-    }
-
-    public Location getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Location placement) {
-        this.placement = placement;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

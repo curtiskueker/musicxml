@@ -1,6 +1,6 @@
 package org.curtis.musicxml.builder.musicdata;
 
-import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
@@ -56,31 +56,33 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildAccent(Accent accent) {
-        buildPlacement("accent", accent.getPrintPlacement());
+        buildElementWithAttributes("accent", DisplayBuilder.buildDisplay(accent.getDisplay()));
     }
 
     private void buildStrongAccent(StrongAccent strongAccent) {
-        buildPlacementWithAttribute("strong-accent", strongAccent.getPrintPlacement(), "type", BuilderUtil.enumValue(strongAccent.getType()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(strongAccent.getDisplay()));
+        attributes.put("type", BuilderUtil.enumValue(strongAccent.getType()));
+        buildElementWithAttributes("strong-accent", attributes);
     }
 
     private void buildStaccato(Staccato staccato) {
-        buildPlacement("staccato", staccato.getPrintPlacement());
+        buildElementWithAttributes("staccato", DisplayBuilder.buildDisplay(staccato.getDisplay()));
     }
 
     private void buildTenuto(Tenuto tenuto) {
-        buildPlacement("tenuto", tenuto.getPrintPlacement());
+        buildElementWithAttributes("tenuto", DisplayBuilder.buildDisplay(tenuto.getDisplay()));
     }
 
     private void buildDetachedLegato(DetachedLegato detachedLegato) {
-        buildPlacement("detached-legato", detachedLegato.getPrintPlacement());
+        buildElementWithAttributes("detached-legato", DisplayBuilder.buildDisplay(detachedLegato.getDisplay()));
     }
 
     private void buildStaccatissimo(Staccatissimo staccatissimo) {
-        buildPlacement("staccatissimo", staccatissimo.getPrintPlacement());
+        buildElementWithAttributes("staccatissimo", DisplayBuilder.buildDisplay(staccatissimo.getDisplay()));
     }
 
     private void buildSpiccato(Spiccato spiccato) {
-        buildPlacement("spiccato", spiccato.getPrintPlacement());
+        buildElementWithAttributes("spiccato", DisplayBuilder.buildDisplay(spiccato.getDisplay()));
     }
 
     private void buildScoop(Scoop scoop) {
@@ -100,25 +102,23 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildBreathMark(BreathMark breathMark) {
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildPrintStyle(breathMark.getPrintStyle()));
-        attributes.put("placement", BuilderUtil.enumValue(breathMark.getPlacement()));
-        buildElementWithValueAndAttributes("breath-mark", breathMark.getBreathMarkValue(), attributes);
+        buildElementWithValueAndAttributes("breath-mark", breathMark.getBreathMarkValue(), DisplayBuilder.buildDisplay(breathMark.getDisplay()));
     }
 
     private void buildCaesura(Caesura caesura) {
-        buildPlacement("caesura", caesura.getPrintPlacement());
+        buildElementWithAttributes("caesura", DisplayBuilder.buildDisplay(caesura.getDisplay()));
     }
 
     private void buildStress(Stress stress) {
-        buildPlacement("stress", stress.getPrintPlacement());
+        buildElementWithAttributes("stress", DisplayBuilder.buildDisplay(stress.getDisplay()));
     }
 
     private void buildUnstress(Unstress unstress) {
-        buildPlacement("unstress", unstress.getPrintPlacement());
+        buildElementWithAttributes("unstress", DisplayBuilder.buildDisplay(unstress.getDisplay()));
     }
 
     private void buildSoftAccent(SoftAccent softAccent) {
-        buildPlacement("soft-accent", softAccent.getPrintPlacement());
+        buildElementWithAttributes("soft-accent", DisplayBuilder.buildDisplay(softAccent.getDisplay()));
     }
 
     private void buildOtherArticulation(OtherArticulation otherArticulation) {

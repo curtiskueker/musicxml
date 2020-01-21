@@ -1,13 +1,11 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.musicxml.common.Font;
-import org.curtis.musicxml.common.FontSize;
 import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.PrintStyle;
-import org.curtis.musicxml.common.PrintStyleAlign;
 import org.curtis.musicxml.common.TextFormatting;
+import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Font;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.layout.MarginType;
@@ -164,20 +162,16 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
 
                     append(" { ");
 
-                    PrintStyleAlign printStyleAlign = textFormatting == null ? null : textFormatting.getPrintStyleAlign();
-                    if (printStyleAlign != null) {
-                        PrintStyle printStyle = printStyleAlign.getPrintStyle();
-                        if (printStyle != null) {
-                            Font font = printStyle.getFont();
+                    if (textFormatting != null && textFormatting.getDisplay() != null) {
+                        Display textFormattingDisplay = textFormatting.getDisplay();
+                        if (textFormattingDisplay != null) {
+                            Font font = textFormattingDisplay.getFont();
                             if (font != null) {
-                                FontSize fontSize = font.getFontSize();
-                                if (fontSize != null) {
-                                    BigDecimal fontSizeValue = fontSize.getFontSize();
-                                    if(fontSizeValue != null) {
-                                        append("\\abs-fontsize #");
-                                        append(MathUtil.truncate(fontSizeValue));
-                                        append(" ");
-                                    }
+                                BigDecimal numericFontSize = font.getNumericFontSize();
+                                if (numericFontSize != null) {
+                                    append("\\abs-fontsize #");
+                                    append(MathUtil.truncate(numericFontSize));
+                                    append(" ");
                                 }
                             }
                         }

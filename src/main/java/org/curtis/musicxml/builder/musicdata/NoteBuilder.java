@@ -1,7 +1,7 @@
 package org.curtis.musicxml.builder.musicdata;
 
+import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
-import org.curtis.musicxml.builder.PlacementBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.Text;
 import org.curtis.musicxml.note.Accidental;
@@ -48,9 +48,7 @@ public class NoteBuilder extends MusicDataBuilder {
         if (note == null) return stringBuilder;
 
         buildOpenElement("note");
-        buildAttributes(PlacementBuilder.buildPosition(note.getPosition()));
-        buildAttributes(FormattingBuilder.buildFont(note.getFont()));
-        buildAttribute("color", note.getColor());
+        buildAttributes(DisplayBuilder.buildDisplay(note.getDisplay()));
         buildAttributes(FormattingBuilder.buildPrintout(note.getPrintout()));
         buildAttribute("print-leger", BuilderUtil.yesOrNo(note.getPrintLeger()));
         buildAttribute("dynamics", note.getDynamics());
@@ -85,7 +83,7 @@ public class NoteBuilder extends MusicDataBuilder {
             buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", noteType.getSize());
         }
         for (Dot dot : note.getDots()) {
-            buildPlacement("dot", dot.getPrintPlacement());
+            buildElementWithAttributes("dot", DisplayBuilder.buildDisplay(dot.getDisplay()));
         }
         Accidental accidental = note.getAccidental();
         if (accidental != null) {
@@ -93,7 +91,7 @@ public class NoteBuilder extends MusicDataBuilder {
             accidentalAttributes.put("cautionary", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.put("editorial", BuilderUtil.yesOrNo(accidental.getCautionary()));
             accidentalAttributes.putAll(FormattingBuilder.buildLevelDisplay(accidental.getLevelDisplay()));
-            accidentalAttributes.putAll(FormattingBuilder.buildPrintStyle(accidental.getPrintStyle()));
+            accidentalAttributes.putAll(DisplayBuilder.buildDisplay(accidental.getDisplay()));
             accidentalAttributes.put("smufl", accidental.getSmufl());
             buildElementWithValueAndAttributes("accidental", accidental.getAccidentalType(), accidentalAttributes);
         }
@@ -104,11 +102,7 @@ public class NoteBuilder extends MusicDataBuilder {
             buildEndElement("time-modification");
         }
         Stem stem = note.getStem();
-        if (stem != null) {
-            Map<String, String> stemAttributes = new HashMap<>(PlacementBuilder.buildPosition(stem.getPosition()));
-            stemAttributes.put("color", stem.getColor());
-            buildElementWithValueAndAttributes("stem", stem.getType(), stemAttributes);
-        }
+        if (stem != null) buildElementWithValueAndAttributes("stem", stem.getType(), DisplayBuilder.buildDisplay(stem.getDisplay()));
         Notehead notehead = note.getNotehead();
         if (notehead != null) {
             String noteheadType = BuilderUtil.enumValueWithSpaces(notehead.getType());
@@ -116,8 +110,7 @@ public class NoteBuilder extends MusicDataBuilder {
             Map<String, String> noteheadAttributes = new HashMap<>();
             noteheadAttributes.put("filled", BuilderUtil.yesOrNo(notehead.getFilled()));
             noteheadAttributes.put("parentheses", BuilderUtil.yesOrNo(notehead.getParentheses()));
-            noteheadAttributes.putAll(FormattingBuilder.buildFont(notehead.getFont()));
-            noteheadAttributes.put("color", notehead.getColor());
+            noteheadAttributes.putAll(DisplayBuilder.buildDisplay(notehead.getDisplay()));
             noteheadAttributes.put("smufl", notehead.getSmufl());
             buildElementWithValueAndAttributes("notehead", noteheadType, noteheadAttributes);
         }
@@ -140,7 +133,7 @@ public class NoteBuilder extends MusicDataBuilder {
                 beamAttributes.put("number", BuilderUtil.stringValue(beam.getNumber()));
                 beamAttributes.put("repeater", BuilderUtil.yesOrNo(beam.getRepeater()));
                 beamAttributes.put("fan", BuilderUtil.enumValue(beam.getFan()));
-                beamAttributes.put("color", beam.getColor());
+                beamAttributes.put("color", beam.getDisplay() == null ? null : beam.getDisplay().getColor());
                 buildElementWithValueAndAttributes("beam", buildBeamType(beam.getType()), beamAttributes);
             }
         }
@@ -210,9 +203,7 @@ public class NoteBuilder extends MusicDataBuilder {
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
         buildAttribute("justify", lyric.getJustify());
-        buildAttributes(PlacementBuilder.buildPosition(lyric.getPosition()));
-        buildAttribute("placement", lyric.getPlacement());
-        buildAttribute("color", lyric.getColor());
+        buildAttributes(DisplayBuilder.buildDisplay(lyric.getDisplay()));
         buildAttribute("print-object",  lyric.getPrintObject());
         buildAttribute("time-only", lyric.getTimeOnly());
         buildCloseElement();
@@ -222,15 +213,13 @@ public class NoteBuilder extends MusicDataBuilder {
             for (LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
                 Elision elision = lyricSyllable.getElision();
                 if (elision != null) {
-                    Map<String, String> elisionAttributes = new HashMap<>(FormattingBuilder.buildFont(elision.getFont()));
-                    elisionAttributes.put("color", elision.getColor());
+                    Map<String, String> elisionAttributes = new HashMap<>(DisplayBuilder.buildDisplay(elision.getDisplay()));
                     elisionAttributes.put("smufl", elision.getSmufl());
                     buildElementWithValueAndAttributes("elision", elision.getValue(), elisionAttributes);
                 }
                 buildElementWithValue("syllabic", lyricSyllable.getSyllabic());
                 TextData lyricSyllableText = lyricSyllable.getText();
-                Map<String, String> textAttributes = new HashMap<>(FormattingBuilder.buildFont(lyricSyllableText.getFont()));
-                textAttributes.put("color", lyricSyllableText.getColor());
+                Map<String, String> textAttributes = new HashMap<>(DisplayBuilder.buildDisplay(lyricSyllableText.getDisplay()));
                 textAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricSyllableText.getTextDecoration()));
                 textAttributes.put("rotation", BuilderUtil.stringValue(lyricSyllableText.getTextRotation()));
                 textAttributes.put("letter-spacing", lyricSyllableText.getLetterSpacing());

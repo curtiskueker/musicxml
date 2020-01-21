@@ -1,9 +1,8 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.musicxml.common.Editorial;
-import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.PrintStyle;
 import org.curtis.musicxml.direction.DirectionOffset;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -52,11 +51,8 @@ public class Harmony extends MusicData {
     @Type(type="yes_no")
     private Boolean printFrame;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Transient
     // used by lilypond
     private BigDecimal totalBeats;
@@ -129,20 +125,12 @@ public class Harmony extends MusicData {
         this.printFrame = printFrame;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
-    }
-
-    public Location getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Location placement) {
-        this.placement = placement;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public BigDecimal getTotalBeats() {

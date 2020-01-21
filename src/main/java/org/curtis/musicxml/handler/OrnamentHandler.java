@@ -1,7 +1,7 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
-import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
 import org.curtis.musicxml.factory.PlacementFactory;
@@ -63,15 +63,14 @@ public class OrnamentHandler extends BaseHandler {
                     break;
                 case "schleifer":
                     Schleifer schleifer = new Schleifer();
-                    schleifer.setPrintPlacement(PlacementFactory.newPlacement(ornamentElement));
+                    schleifer.setDisplay(DisplayFactory.newDisplay(ornamentElement));
                     ornament = schleifer;
                     break;
                 case "tremolo":
                     Tremolo tremolo = new Tremolo();
                     tremolo.setTremoloMarks(StringUtil.getInteger(XmlUtil.getElementText(ornamentElement)));
                     tremolo.setTremoloType(FactoryUtil.enumValue(TremoloType.class, ornamentElement.getAttribute("type")));
-                    tremolo.setPrintStyle(FormattingFactory.newPrintStyle(ornamentElement));
-                    tremolo.setPlacement(PlacementFactory.newPlacementLocation(ornamentElement));
+                    tremolo.setDisplay(DisplayFactory.newDisplay(ornamentElement));
                     tremolo.setSmufl(ornamentElement.getAttribute("smufl"));
                     ornament = tremolo;
                     break;

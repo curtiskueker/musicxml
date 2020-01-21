@@ -56,8 +56,8 @@ public class LayoutBuilder extends OutputBuilder {
             SystemDividers systemDividers = systemLayout.getSystemDividers();
             if (systemDividers != null) {
                 layoutBuilder.buildStartElement("system-dividers");
-                layoutBuilder.buildElementWithAttributes("left-divider", FormattingBuilder.buildPrintObjectStyleAlign(systemDividers.getLeftDivider()));
-                layoutBuilder.buildElementWithAttributes("right-divider", FormattingBuilder.buildPrintObjectStyleAlign(systemDividers.getRightDivider()));
+                layoutBuilder.buildElementWithAttributes("left-divider", FormattingBuilder.buildSystemDivider(systemDividers.getLeftDivider()));
+                layoutBuilder.buildElementWithAttributes("right-divider", FormattingBuilder.buildSystemDivider(systemDividers.getRightDivider()));
                 layoutBuilder.buildEndElement("system-dividers");
             }
             layoutBuilder.buildEndElement("system-layout");

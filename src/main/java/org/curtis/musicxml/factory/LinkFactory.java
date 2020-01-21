@@ -21,7 +21,7 @@ public class LinkFactory {
         link.setLinkAttributes(newLinkAttributes(element));
         link.setName(element.getAttribute("name"));
         link.setElementPosition(newElementPosition(element));
-        link.setPosition(PlacementFactory.newPosition(element));
+        link.setDisplay(DisplayFactory.newDisplay(element));
 
         return link;
     }

@@ -2,7 +2,7 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.notation.technical.BendSound;
 
@@ -32,8 +32,8 @@ public class Slide extends Notation {
     @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bend_sound_id")
     private BendSound bendSound;
@@ -82,12 +82,12 @@ public class Slide extends Notation {
         this.dashedFormatting = dashedFormatting;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public BendSound getBendSound() {

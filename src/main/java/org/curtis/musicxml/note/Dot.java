@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,18 +13,18 @@ import javax.persistence.Table;
 @Table(name = "dot")
 public class Dot extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_placement_id")
-    private PrintPlacement printPlacement;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public Dot() {
 
     }
 
-    public PrintPlacement getPrintPlacement() {
-        return printPlacement;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintPlacement(PrintPlacement printPlacement) {
-        this.printPlacement = printPlacement;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

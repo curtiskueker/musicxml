@@ -20,8 +20,7 @@ public class LyricFactory {
 
         TextData textData = new TextData();
         textData.setValue(XmlUtil.getElementText(element));
-        textData.setFont(FormattingFactory.newFont(element));
-        textData.setColor(element.getAttribute("color"));
+        textData.setDisplay(DisplayFactory.newDisplay(element));
         textData.setTextDecoration(newTextDecoration(element));
         textData.setTextRotation(MathUtil.newBigDecimal(element.getAttribute("rotation")));
         textData.setLetterSpacing(element.getAttribute("letter-spacing"));
@@ -53,8 +52,7 @@ public class LyricFactory {
 
         Extend extend = new Extend();
         extend.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
-        extend.setPosition(PlacementFactory.newPosition(element));
-        extend.setColor(element.getAttribute("color"));
+        extend.setDisplay(DisplayFactory.newDisplay(element));
 
         return extend;
     }

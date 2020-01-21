@@ -2,7 +2,7 @@ package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -20,8 +20,8 @@ public class PartName extends DatabaseItem {
     @Column(name = "part_name")
     private String partName;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "part_name_print_style_id")
-    private PrintStyle partNamePrintStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column(name = "part_name_print_object")
     @Type(type="yes_no")
     private Boolean partNamePrintObject;
@@ -41,12 +41,12 @@ public class PartName extends DatabaseItem {
         this.partName = partName;
     }
 
-    public PrintStyle getPartNamePrintStyle() {
-        return partNamePrintStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPartNamePrintStyle(PrintStyle partNamePrintStyle) {
-        this.partNamePrintStyle = partNamePrintStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Boolean getPartNamePrintObject() {

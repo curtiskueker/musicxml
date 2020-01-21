@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -19,8 +19,8 @@ public class OtherDirection extends DirectionType {
     @Type(type="yes_no")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column
     private String smufl;
 
@@ -44,12 +44,12 @@ public class OtherDirection extends DirectionType {
         this.printObject = printObject;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public String getSmufl() {

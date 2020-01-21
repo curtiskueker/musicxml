@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.PrintStyleAlign;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,8 +24,8 @@ public class PrincipalVoice extends DirectionType {
     @Column
     private PrincipalVoiceSymbol symbol;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public PrincipalVoice() {
 
@@ -55,11 +55,11 @@ public class PrincipalVoice extends DirectionType {
         this.symbol = symbol;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

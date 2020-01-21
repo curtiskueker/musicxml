@@ -2,10 +2,10 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.factory.AttributesFactory;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.score.GroupBarline;
 import org.curtis.musicxml.score.GroupBarlineType;
@@ -50,8 +50,7 @@ public class PartListHandler extends BaseHandler {
                     if (groupSymbolElement != null) {
                         GroupSymbol groupSymbol = new GroupSymbol();
                         groupSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(groupSymbolElement));
-                        groupSymbol.setPosition(PlacementFactory.newPosition(groupSymbolElement));
-                        groupSymbol.setColor(groupSymbolElement.getAttribute("color"));
+                        groupSymbol.setDisplay(DisplayFactory.newDisplay(groupSymbolElement));
                         partGroup.setGroupSymbol(groupSymbol);
                     }
                     Element groupBarlineElement = XmlUtil.getChildElement(partListSubelement, "group-barline");
@@ -69,7 +68,7 @@ public class PartListHandler extends BaseHandler {
                                 groupBarline.setGroupBarlineType(GroupBarlineType.MENSURSTRICH);
                                 break;
                         }
-                        groupBarline.setColor(groupBarlineElement.getAttribute("color"));
+                        groupBarline.setDisplay(DisplayFactory.newDisplay(partListSubelement));
                         partGroup.setGroupBarline(groupBarline);
                     }
                     partGroup.setGroupTime(XmlUtil.hasChildElement(partListSubelement, "group-time"));

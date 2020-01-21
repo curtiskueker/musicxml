@@ -2,7 +2,7 @@ package org.curtis.musicxml.barline;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.PrintStyle;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -29,8 +29,8 @@ public class Ending extends DatabaseItem {
     @Type(type="yes_no")
     private Boolean printObject;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_id")
-    private PrintStyle printStyle;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column(name = "end_length", precision = 12, scale = 4)
     private BigDecimal endLength;
     @Column(name = "text_x", precision = 12, scale = 4)
@@ -74,12 +74,12 @@ public class Ending extends DatabaseItem {
         this.printObject = printObject;
     }
 
-    public PrintStyle getPrintStyle() {
-        return printStyle;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyle(PrintStyle printStyle) {
-        this.printStyle = printStyle;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public BigDecimal getEndLength() {

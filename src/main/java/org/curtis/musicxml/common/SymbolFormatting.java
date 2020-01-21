@@ -1,6 +1,7 @@
 package org.curtis.musicxml.common;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +20,8 @@ public class SymbolFormatting extends DatabaseItem {
     @Column
     private Location justify;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_style_align_id")
-    private PrintStyleAlign printStyleAlign;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
@@ -49,12 +50,12 @@ public class SymbolFormatting extends DatabaseItem {
         this.justify = justify;
     }
 
-    public PrintStyleAlign getPrintStyleAlign() {
-        return printStyleAlign;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintStyleAlign(PrintStyleAlign printStyleAlign) {
-        this.printStyleAlign = printStyleAlign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public TextDecoration getTextDecoration() {

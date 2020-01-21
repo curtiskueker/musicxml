@@ -2,7 +2,7 @@ package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -35,13 +35,8 @@ public class Frame extends DatabaseItem {
     @JoinColumn(name = "frame_id", nullable = false)
     private List<FrameNote> frameNotes = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @Column
-    private String color;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location halign;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Enumerated(EnumType.STRING)
     @Column(name = "valign_image")
     private Location valignImage;
@@ -88,28 +83,12 @@ public class Frame extends DatabaseItem {
         this.frameNotes = frameNotes;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public Location getHalign() {
-        return halign;
-    }
-
-    public void setHalign(Location halign) {
-        this.halign = halign;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Location getValignImage() {

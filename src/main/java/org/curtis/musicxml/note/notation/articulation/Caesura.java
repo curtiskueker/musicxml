@@ -1,15 +1,13 @@
 package org.curtis.musicxml.note.notation.articulation;
 
 import org.curtis.musicxml.converter.CaesuraValueConverter;
-import org.curtis.musicxml.note.PrintPlacement;
+import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -20,8 +18,8 @@ public class Caesura extends Articulation {
     @Convert(converter = CaesuraValueConverter.class)
     private CaesuraValue caesuraValue;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "print_placement_id")
-    private PrintPlacement printPlacement;
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public Caesura() {
 
@@ -35,11 +33,11 @@ public class Caesura extends Articulation {
         this.caesuraValue = caesuraValue;
     }
 
-    public PrintPlacement getPrintPlacement() {
-        return printPlacement;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPrintPlacement(PrintPlacement printPlacement) {
-        this.printPlacement = printPlacement;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

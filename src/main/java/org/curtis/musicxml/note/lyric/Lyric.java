@@ -3,7 +3,7 @@ package org.curtis.musicxml.note.lyric;
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Editorial;
 import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.Position;
+import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.hibernate.annotations.Type;
@@ -42,13 +42,8 @@ public class Lyric extends DatabaseItem {
     @Column
     private Location justify;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Location placement;
-    @Column
-    private String color;
+    @JoinColumn(name = "display_id")
+    private Display display;
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -124,28 +119,12 @@ public class Lyric extends DatabaseItem {
         this.justify = justify;
     }
 
-    public Position getPosition() {
-        return position;
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Location getPlacement() {
-        return placement;
-    }
-
-    public void setPlacement(Location placement) {
-        this.placement = placement;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 
     public Boolean getPrintObject() {

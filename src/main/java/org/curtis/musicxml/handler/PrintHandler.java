@@ -2,7 +2,7 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.direction.MeasureNumberingType;
 import org.curtis.musicxml.direction.Print;
-import org.curtis.musicxml.factory.FormattingFactory;
+import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.util.TypeUtil;
@@ -43,7 +43,7 @@ public class PrintHandler extends MusicDataHandler {
                     print.setMeasureNumberingValue(MeasureNumberingType.SYSTEM);
                     break;
             }
-            print.setPrintStyleAlign(FormattingFactory.newPrintStyleAlign(measureNumberingElement));
+            print.setMeasureNumberingDisplay(DisplayFactory.newDisplay(measureNumberingElement));
         }
         print.setPartNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-name-display")));
         print.setPartAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-abbreviation-display")));
