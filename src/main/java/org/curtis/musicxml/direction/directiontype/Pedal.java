@@ -1,16 +1,12 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("pedal")
@@ -26,9 +22,6 @@ public class Pedal extends DirectionType {
     @Column
     @Type(type="yes_no")
     private Boolean sign;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
     @Column
     @Type(type="yes_no")
     private Boolean abbreviated;
@@ -67,14 +60,6 @@ public class Pedal extends DirectionType {
 
     public void setSign(Boolean sign) {
         this.sign = sign;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public Boolean getAbbreviated() {

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "display_position")
+@Table(name = "position")
 public class Position extends DatabaseItem {
     @Column(name = "default_x", precision = 12, scale = 4)
     private BigDecimal defaultX;

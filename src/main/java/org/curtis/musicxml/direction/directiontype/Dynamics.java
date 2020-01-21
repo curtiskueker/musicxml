@@ -2,7 +2,6 @@ package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.EnclosureShape;
 import org.curtis.musicxml.common.TextDecoration;
-import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -27,9 +26,6 @@ public class Dynamics extends DirectionType {
     @JoinColumn(name = "dynamics_id", nullable = false)
     private List<DynamicsMarking> markings = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
-    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_decoration_id")
     private TextDecoration textDecoration;
     @Enumerated(EnumType.STRING)
@@ -46,14 +42,6 @@ public class Dynamics extends DirectionType {
 
     public void setMarkings(List<DynamicsMarking> markings) {
         this.markings = markings;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public TextDecoration getTextDecoration() {
