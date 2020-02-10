@@ -1,4 +1,4 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.display;
 
 public enum EnclosureShape {
     RECTANGLE,

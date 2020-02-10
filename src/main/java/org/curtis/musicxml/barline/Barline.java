@@ -1,6 +1,6 @@
 package org.curtis.musicxml.barline;
 
-import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Segno;

@@ -4,13 +4,14 @@ import org.curtis.lilypond.exception.BuildException;
 import org.curtis.lilypond.exception.DurationException;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
-import org.curtis.musicxml.note.lyric.TextData;
+import org.curtis.musicxml.note.lyric.LyricTextData;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
@@ -51,9 +52,10 @@ public class LyricBuilder extends MusicDataBuilder {
         if(lyricItem instanceof LyricText) {
             LyricText lyricText = (LyricText)lyricItem;
             for(LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
-                TextData textData = lyricSyllable.getText();
+                LyricTextData lyricTextData = lyricSyllable.getText();
                 append("\"");
-                append(textData.getValue());
+                TextFormat lyricTextFormat = lyricTextData.getTextFormat();
+                if (lyricTextFormat != null) append(lyricTextFormat.getValue());
                 append("\"");
 
                 append(totalBeatRepresentation);

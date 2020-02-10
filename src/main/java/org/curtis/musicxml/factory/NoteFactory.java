@@ -63,7 +63,7 @@ public class NoteFactory {
 
         AccidentalText accidentalText = new AccidentalText();
         accidentalText.setAccidentalType(NoteFactory.newAccidentalType(element));
-        accidentalText.setTextFormatting(FormattingFactory.newTextFormatting(element));
+        DisplayFactory.setFormattedDisplay(accidentalText, element);
         accidentalText.setSmufl(element.getAttribute("smufl"));
 
         return accidentalText;

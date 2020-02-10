@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.note.notation.Notation;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;

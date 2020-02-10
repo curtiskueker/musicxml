@@ -3,6 +3,7 @@ package org.curtis.lilypond.part;
 import org.curtis.lilypond.LilypondBuilder;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.attributes.Attributes;
+import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.lyric.Humming;
 import org.curtis.musicxml.note.lyric.Laughing;
@@ -10,7 +11,7 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
-import org.curtis.musicxml.note.lyric.TextData;
+import org.curtis.musicxml.note.lyric.LyricTextData;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
@@ -58,8 +59,11 @@ public class PartBuilder extends LilypondBuilder {
                         if (lyricItem instanceof LyricText) {
                             LyricText lyricText = (LyricText)lyricItem;
                             for (LyricSyllable lyricSyllable : lyricText.getLyricSyllables()) {
-                                TextData textData = lyricSyllable.getText();
-                                if (textData != null && StringUtil.isNotEmpty(textData.getValue())) return true;
+                                LyricTextData lyricTextData = lyricSyllable.getText();
+                                if (lyricTextData != null) {
+                                    TextFormat lyricTextFormat = lyricTextData.getTextFormat();
+                                    if (lyricTextFormat != null && StringUtil.isNotEmpty(lyricTextFormat.getValue())) return true;
+                                }
                             }
                         }
                     }

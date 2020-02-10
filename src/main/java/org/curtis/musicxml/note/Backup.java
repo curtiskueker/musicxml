@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.score.MusicData;
 
 import javax.persistence.CascadeType;

@@ -51,7 +51,7 @@ public class DirectionBuilder extends MusicDataBuilder {
         append(buildOffset(direction.getOffset()));
         EditorialVoiceDirection editorialVoiceDirection = direction.getEditorialVoiceDirection();
         if (editorialVoiceDirection != null) {
-            buildFormattedText("footnote", editorialVoiceDirection.getFootnote());
+            buildFormattedDisplay("footnote", editorialVoiceDirection.getFootnote());
             buildLevel(editorialVoiceDirection.getLevel());
             buildElementWithValue("voice", editorialVoiceDirection.getVoice());
         }

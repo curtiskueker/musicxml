@@ -1,11 +1,10 @@
 package org.curtis.lilypond;
 
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.musicxml.common.FormattedText;
-import org.curtis.musicxml.common.Location;
-import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Font;
+import org.curtis.musicxml.display.Justify;
+import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.layout.MarginType;
@@ -142,10 +141,9 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
             for (CreditDisplay creditDisplay : creditDisplays) {
                 if (creditDisplay instanceof CreditWords) {
                     CreditWords creditWords = (CreditWords)creditDisplay;
-                    FormattedText creditWord = creditWords.getCreditWords();
-                    if (creditWord == null) continue;
-                    TextFormatting textFormatting = creditWord.getTextFormatting();
-                    Location justify = textFormatting == null ? null : textFormatting.getJustify();
+                    TextFormat creditWordsTextFormat = creditWords.getTextFormat();
+                    if (creditWordsTextFormat == null) continue;
+                    Justify justify = creditWordsTextFormat.getJustify();
                     if (justify != null) {
                         switch (justify) {
                             case LEFT:
@@ -162,23 +160,21 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
 
                     append(" { ");
 
-                    if (textFormatting != null && textFormatting.getDisplay() != null) {
-                        Display textFormattingDisplay = textFormatting.getDisplay();
-                        if (textFormattingDisplay != null) {
-                            Font font = textFormattingDisplay.getFont();
-                            if (font != null) {
-                                BigDecimal numericFontSize = font.getNumericFontSize();
-                                if (numericFontSize != null) {
-                                    append("\\abs-fontsize #");
-                                    append(MathUtil.truncate(numericFontSize));
-                                    append(" ");
-                                }
+                    Display creditWordsDisplay = creditWords.getDisplay();
+                    if (creditWordsDisplay != null) {
+                        Font font = creditWordsDisplay.getFont();
+                        if (font != null) {
+                            BigDecimal numericFontSize = font.getNumericFontSize();
+                            if (numericFontSize != null) {
+                                append("\\abs-fontsize #");
+                                append(MathUtil.truncate(numericFontSize));
+                                append(" ");
                             }
                         }
                     }
 
                     append("\"");
-                    append(StringUtil.nullToString(creditWord.getValue()));
+                    append(StringUtil.nullToString(creditWordsTextFormat.getValue()));
                     appendLine("\" }");
                 }
             }

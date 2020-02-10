@@ -25,6 +25,7 @@ import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.score.Credit;
 import org.curtis.musicxml.score.CreditDisplay;
 import org.curtis.musicxml.score.CreditImage;
+import org.curtis.musicxml.score.CreditSymbol;
 import org.curtis.musicxml.score.CreditType;
 import org.curtis.musicxml.score.CreditWords;
 import org.curtis.musicxml.score.Defaults;
@@ -217,7 +218,10 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                 buildImage(creditImage.getImage());
             } else if (creditDisplay instanceof CreditWords) {
                 CreditWords creditWords = (CreditWords)creditDisplay;
-                buildFormattedText("credit-words", creditWords.getCreditWords());
+                buildFormattedDisplay("credit-words", creditWords.getDisplay(), creditWords.getTextFormat());
+            } else if (creditDisplay instanceof CreditSymbol) {
+                CreditSymbol creditSymbol = (CreditSymbol)creditDisplay;
+                buildFormattedDisplay("credit-symbol", creditSymbol);
             }
         }
         buildEndElement("credit");

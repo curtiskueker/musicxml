@@ -96,15 +96,15 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildRehearsal(Rehearsal rehearsal) {
-        if (rehearsal.getFormattedText() != null) buildFormattedText("rehearsal", rehearsal.getFormattedText());
+        buildFormattedDisplay("rehearsal", rehearsal.getDisplay(), rehearsal.getTextFormat());
     }
 
     private void buildWords(Words words) {
-        if (words.getFormattedText() != null) buildFormattedText("words", words.getFormattedText());
+        buildFormattedDisplay("words", words.getDisplay(), words.getTextFormat());
     }
 
     private void buildSymbol(Symbol symbol) {
-        buildElementWithValueAndAttributes("symbol", symbol.getSmufl(), FormattingBuilder.buildSymbolFormatting(symbol.getSymbolFormatting()));
+        buildFormattedDisplay("symbol", symbol.getDisplay(), symbol.getTextFormat());
     }
 
     private void buildWedge(Wedge wedge) {

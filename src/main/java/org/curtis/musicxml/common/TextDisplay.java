@@ -1,6 +1,6 @@
 package org.curtis.musicxml.common;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.display.FormattedDisplay;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -12,5 +12,5 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "text_display")
 @DiscriminatorColumn(name = "text_type")
-public abstract class TextDisplay extends DatabaseItem {
+public abstract class TextDisplay extends FormattedDisplay {
 }

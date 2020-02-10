@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.display.FormattedDisplay;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.hibernate.annotations.Fetch;
@@ -22,7 +22,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "credit_display")
 @DiscriminatorColumn(name = "credit_display_type")
-public abstract class CreditDisplay extends DatabaseItem {
+public abstract class CreditDisplay extends FormattedDisplay {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "credit_display_id")

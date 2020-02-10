@@ -1,8 +1,6 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.TypeUtil;
-import org.curtis.musicxml.common.FormattedText;
-import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dashes;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
@@ -17,6 +15,7 @@ import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Font;
+import org.curtis.musicxml.display.TextFormat;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
 
@@ -30,7 +29,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
 
     public StringBuilder buildRehearsal(Rehearsal rehearsal) {
         append("\\mark ");
-        formattedTextBuild(rehearsal.getFormattedText());
+        formattedDisplayBuild(rehearsal.getDisplay(), rehearsal.getTextFormat());
 
         return stringBuilder;
     }
@@ -43,7 +42,7 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
 
     public StringBuilder buildWords(Words words) {
         if (words.isTextMark()) append("\\mark ");
-        formattedTextBuild(words.getFormattedText());
+        formattedDisplayBuild(words.getDisplay(), words.getTextFormat());
 
         return stringBuilder;
     }
@@ -150,16 +149,14 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private void formattedTextBuild(FormattedText formattedText) {
-        if (formattedText == null) return;
+    private void formattedDisplayBuild(Display display, TextFormat textFormat) {
+        if (textFormat == null) return;
 
-        String value = formattedText.getValue();
+        String value = textFormat.getValue();
         if (StringUtil.isEmpty(value)) return;
 
         value = value.replaceAll("[^\\x00-\\x7F]", "");
 
-        TextFormatting textFormatting = formattedText.getTextFormatting();
-        Display display = textFormatting.getDisplay();
         Font font = null;
         if (display != null) {
             font = display.getFont();

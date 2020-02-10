@@ -30,7 +30,6 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
-import org.curtis.musicxml.note.lyric.TextData;
 import org.curtis.musicxml.note.notation.Notation;
 
 import java.util.HashMap;
@@ -216,14 +215,7 @@ public class NoteBuilder extends MusicDataBuilder {
                     buildElementWithValueAndAttributes("elision", elision.getValue(), elisionAttributes);
                 }
                 buildElementWithValue("syllabic", lyricSyllable.getSyllabic());
-                TextData lyricSyllableText = lyricSyllable.getText();
-                Map<String, String> textAttributes = new HashMap<>(DisplayBuilder.buildDisplay(lyricSyllableText.getDisplay()));
-                textAttributes.putAll(FormattingBuilder.buildTextDecoration(lyricSyllableText.getTextDecoration()));
-                textAttributes.put("rotation", BuilderUtil.stringValue(lyricSyllableText.getTextRotation()));
-                textAttributes.put("letter-spacing", lyricSyllableText.getLetterSpacing());
-                textAttributes.put("xml:lang", lyricSyllableText.getLang());
-                textAttributes.put("dir", BuilderUtil.enumValue(lyricSyllableText.getTextDirection()));
-                buildElementWithValueAndAttributes("text", lyricSyllableText.getValue(), textAttributes);
+                buildFormattedDisplay("text", lyricSyllable.getText());
             }
             buildExtend(lyricText.getExtend());
         }

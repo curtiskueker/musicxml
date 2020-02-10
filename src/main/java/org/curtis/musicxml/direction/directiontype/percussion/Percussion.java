@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
-import org.curtis.musicxml.common.EnclosureShape;
+import org.curtis.musicxml.display.EnclosureShape;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 
 import javax.persistence.Column;

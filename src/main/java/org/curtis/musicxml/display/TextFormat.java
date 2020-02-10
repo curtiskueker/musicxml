@@ -1,30 +1,28 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.display.Display;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "text_formatting")
-public class TextFormatting extends DatabaseItem {
+@Table(name = "text_format")
+public class TextFormat extends DatabaseItem {
+    @Column
+    private String value;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location justify;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "text_decoration_id")
-    private TextDecoration textDecoration;
+    private Justify justify;
+    @Column
+    private Integer underline;
+    @Column
+    private Integer overline;
+    @Column(name = "line_through")
+    private Integer lineThrough;
     @Column(name = "text_rotation", precision = 12, scale = 4)
     private BigDecimal textRotation;
     @Column(name = "letter_spacing")
@@ -37,37 +35,53 @@ public class TextFormatting extends DatabaseItem {
     private String space;
     @Enumerated(EnumType.STRING)
     @Column(name = "text_direction")
-    private Location textDirection;
+    private TextDirection textDirection;
     @Enumerated(EnumType.STRING)
     @Column
     private EnclosureShape enclosure;
 
-    public TextFormatting() {
+    public TextFormat() {
 
     }
 
-    public Location getJustify() {
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Justify getJustify() {
         return justify;
     }
 
-    public void setJustify(Location justify) {
+    public void setJustify(Justify justify) {
         this.justify = justify;
     }
 
-    public Display getDisplay() {
-        return display;
+    public Integer getUnderline() {
+        return underline;
     }
 
-    public void setDisplay(Display display) {
-        this.display = display;
+    public void setUnderline(Integer underline) {
+        this.underline = underline;
     }
 
-    public TextDecoration getTextDecoration() {
-        return textDecoration;
+    public Integer getOverline() {
+        return overline;
     }
 
-    public void setTextDecoration(TextDecoration textDecoration) {
-        this.textDecoration = textDecoration;
+    public void setOverline(Integer overline) {
+        this.overline = overline;
+    }
+
+    public Integer getLineThrough() {
+        return lineThrough;
+    }
+
+    public void setLineThrough(Integer lineThrough) {
+        this.lineThrough = lineThrough;
     }
 
     public BigDecimal getTextRotation() {
@@ -110,11 +124,11 @@ public class TextFormatting extends DatabaseItem {
         this.space = space;
     }
 
-    public Location getTextDirection() {
+    public TextDirection getTextDirection() {
         return textDirection;
     }
 
-    public void setTextDirection(Location textDirection) {
+    public void setTextDirection(TextDirection textDirection) {
         this.textDirection = textDirection;
     }
 

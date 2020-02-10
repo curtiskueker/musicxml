@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Editorial;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.note.lyric.Extend;
 

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.display.TextFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -13,8 +13,8 @@ import javax.persistence.Transient;
 @DiscriminatorValue("words")
 public class Words extends DirectionType {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "formatted_text_id")
-    private FormattedText formattedText;
+    @JoinColumn(name = "text_format_id")
+    private TextFormat textFormat;
     @Transient
     // used by lilypond
     private boolean textMark = false;
@@ -23,12 +23,12 @@ public class Words extends DirectionType {
 
     }
 
-    public FormattedText getFormattedText() {
-        return formattedText;
+    public TextFormat getTextFormat() {
+        return textFormat;
     }
 
-    public void setFormattedText(FormattedText formattedText) {
-        this.formattedText = formattedText;
+    public void setTextFormat(TextFormat textFormat) {
+        this.textFormat = textFormat;
     }
 
     public boolean isTextMark() {

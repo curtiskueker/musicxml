@@ -158,8 +158,7 @@ public class NotationFactory {
         }
 
         dynamics.setDisplay(DisplayFactory.newDisplay(element));
-        dynamics.setTextDecoration(LyricFactory.newTextDecoration(element));
-        dynamics.setEnclosure(FormattingFactory.newEnclosureShape(element));
+        dynamics.setTextFormat(TextFormatFactory.newTextFormat(element));
 
         return dynamics;
     }

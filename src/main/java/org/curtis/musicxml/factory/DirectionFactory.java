@@ -2,7 +2,6 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.FormattedText;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.Sound;
@@ -89,9 +88,7 @@ public class DirectionFactory {
         switch (element.getTagName()) {
             case "rehearsal":
                 Rehearsal rehearsal = new Rehearsal();
-                FormattedText rehearsalFormattedText = FormattingFactory.newFormattedText(element);
-                if (rehearsalFormattedText == null) return null;
-                rehearsal.setFormattedText(rehearsalFormattedText);
+                rehearsal.setTextFormat(TextFormatFactory.newTextFormat(element));
                 directionType = rehearsal;
                 break;
             case "segno":
@@ -99,15 +96,13 @@ public class DirectionFactory {
                 break;
             case "words":
                 Words words = new Words();
-                FormattedText wordsFormattedText = FormattingFactory.newFormattedText(element);
-                if (wordsFormattedText == null) return null;
-                words.setFormattedText(wordsFormattedText);
+                words.setTextFormat(TextFormatFactory.newTextFormat(element));
                 directionType = words;
                 break;
             case "symbol":
                 Symbol symbol = new Symbol();
-                symbol.setSmufl(XmlUtil.getElementText(element));
-                symbol.setSymbolFormatting(FormattingFactory.newSymbolFormatting(element));
+                symbol.setDisplay(DisplayFactory.newDisplay(element));
+                symbol.setTextFormat(TextFormatFactory.newTextFormat(element));
                 directionType = symbol;
                 break;
             case "coda":

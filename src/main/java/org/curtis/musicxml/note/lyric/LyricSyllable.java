@@ -23,7 +23,7 @@ public class LyricSyllable extends DatabaseItem {
     private Connection syllabic;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_data_id")
-    private TextData text;
+    private LyricTextData text;
 
     public LyricSyllable() {
 
@@ -45,11 +45,11 @@ public class LyricSyllable extends DatabaseItem {
         this.syllabic = syllabic;
     }
 
-    public TextData getText() {
+    public LyricTextData getText() {
         return text;
     }
 
-    public void setText(TextData text) {
+    public void setText(LyricTextData text) {
         this.text = text;
     }
 }

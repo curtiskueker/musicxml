@@ -3,10 +3,8 @@ package org.curtis.musicxml.builder;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Printout;
-import org.curtis.musicxml.common.SymbolFormatting;
-import org.curtis.musicxml.common.TextDecoration;
-import org.curtis.musicxml.common.TextFormatting;
 import org.curtis.musicxml.layout.SystemDivider;
+import org.curtis.musicxml.display.TextFormat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,17 +12,6 @@ import java.util.Map;
 public class FormattingBuilder extends OutputBuilder {
     private FormattingBuilder() {
 
-    }
-
-    public static Map<String, String> buildTextDecoration(TextDecoration textDecoration) {
-        Map<String, String> attributes = new HashMap<>();
-        if (textDecoration == null) return attributes;
-
-        attributes.put("underline", BuilderUtil.stringValue(textDecoration.getUnderline()));
-        attributes.put("overline", BuilderUtil.stringValue(textDecoration.getOverline()));
-        attributes.put("line-through", BuilderUtil.stringValue(textDecoration.getLineThrough()));
-
-        return attributes;
     }
 
     public static Map<String, String> buildSystemDivider(SystemDivider systemDivider) {
@@ -59,36 +46,21 @@ public class FormattingBuilder extends OutputBuilder {
         return attributes;
     }
 
-    public static Map<String, String> buildTextFormatting(TextFormatting textFormatting) {
+    public static Map<String, String> buildTextFormat(TextFormat textFormat) {
         Map<String, String> attributes = new HashMap<>();
-        if (textFormatting == null) return attributes;
+        if (textFormat == null) return attributes;
 
-        attributes.put("justify", BuilderUtil.enumValue(textFormatting.getJustify()));
-        attributes.putAll(DisplayBuilder.buildDisplay(textFormatting.getDisplay()));
-        attributes.putAll(buildTextDecoration(textFormatting.getTextDecoration()));
-        attributes.put("text-rotation", BuilderUtil.stringValue(textFormatting.getTextRotation()));
-        attributes.put("letter-spacing", textFormatting.getLetterSpacing());
-        attributes.put("line-height", textFormatting.getLineHeight());
-        attributes.put("xml:lang", textFormatting.getLang());
-        attributes.put("xml:space", textFormatting.getSpace());
-        attributes.put("text-direction", BuilderUtil.enumValue(textFormatting.getTextDirection()));
-        attributes.put("enclosure", BuilderUtil.enumValue(textFormatting.getEnclosure()));
-
-        return attributes;
-    }
-
-    public static Map<String, String> buildSymbolFormatting(SymbolFormatting symbolFormatting) {
-        Map<String, String> attributes = new HashMap<>();
-        if (symbolFormatting == null) return attributes;
-
-        attributes.put("justify", BuilderUtil.enumValue(symbolFormatting.getJustify()));
-        attributes.putAll(DisplayBuilder.buildDisplay(symbolFormatting.getDisplay()));
-        attributes.putAll(buildTextDecoration(symbolFormatting.getTextDecoration()));
-        attributes.put("text-rotation", BuilderUtil.stringValue(symbolFormatting.getTextRotation()));
-        attributes.put("letter-spacing", symbolFormatting.getLetterSpacing());
-        attributes.put("line-height", symbolFormatting.getLineHeight());
-        attributes.put("text-direction", BuilderUtil.enumValue(symbolFormatting.getTextDirection()));
-        attributes.put("enclosure", BuilderUtil.enumValue(symbolFormatting.getEnclosure()));
+        attributes.put("justify", BuilderUtil.enumValue(textFormat.getJustify()));
+        attributes.put("underline", BuilderUtil.stringValue(textFormat.getUnderline()));
+        attributes.put("overline", BuilderUtil.stringValue(textFormat.getOverline()));
+        attributes.put("line-through", BuilderUtil.stringValue(textFormat.getLineThrough()));
+        attributes.put("text-rotation", BuilderUtil.stringValue(textFormat.getTextRotation()));
+        attributes.put("letter-spacing", textFormat.getLetterSpacing());
+        attributes.put("line-height", textFormat.getLineHeight());
+        attributes.put("xml:lang", textFormat.getLang());
+        attributes.put("xml:space", textFormat.getSpace());
+        attributes.put("text-direction", BuilderUtil.enumValue(textFormat.getTextDirection()));
+        attributes.put("enclosure", BuilderUtil.enumValue(textFormat.getEnclosure()));
 
         return attributes;
     }

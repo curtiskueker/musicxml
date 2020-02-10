@@ -13,7 +13,7 @@ import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.EditorialVoice;
+import org.curtis.musicxml.display.EditorialVoice;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.EditorialVoiceDirection;

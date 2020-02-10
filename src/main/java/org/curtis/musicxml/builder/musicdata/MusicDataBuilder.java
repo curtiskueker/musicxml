@@ -7,9 +7,9 @@ import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.DisplayText;
-import org.curtis.musicxml.common.Editorial;
-import org.curtis.musicxml.common.EditorialVoice;
-import org.curtis.musicxml.common.FormattedText;
+import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Editorial;
+import org.curtis.musicxml.display.EditorialVoice;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
@@ -26,6 +26,8 @@ import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
 import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.Segno;
+import org.curtis.musicxml.display.FormattedDisplay;
+import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.PlacementText;
@@ -93,22 +95,35 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     protected void buildEditorial(Editorial editorial) {
         if (editorial == null) return;
 
-        buildFormattedText("footnote", editorial.getFootnote());
+        buildFormattedDisplay("footnote", editorial.getFootnote());
         buildLevel(editorial.getLevel());
     }
 
     protected void buildEditorialVoice(EditorialVoice editorialVoice) {
         if (editorialVoice == null) return;
 
-        buildFormattedText("footnote", editorialVoice.getFootnote());
+        buildFormattedDisplay("footnote", editorialVoice.getFootnote());
         buildLevel(editorialVoice.getLevel());
         buildElementWithValue("voice", editorialVoice.getVoice());
     }
 
-    protected void buildFormattedText(String elementName, FormattedText formattedText) {
-        if (formattedText == null) return;
+    protected void buildFormattedDisplay(String elementName, FormattedDisplay formattedDisplay) {
+        if (formattedDisplay == null) return;
 
-        buildElementWithValueAndAttributes(elementName, formattedText.getValue(), FormattingBuilder.buildTextFormatting(formattedText.getTextFormatting()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(formattedDisplay.getDisplay()));
+        TextFormat textFormat = formattedDisplay.getTextFormat();
+        if (textFormat != null) {
+            attributes.putAll(FormattingBuilder.buildTextFormat(textFormat));
+            buildElementWithValueAndAttributes(elementName, textFormat.getValue(), attributes);
+        } else buildElementWithAttributes(elementName, attributes);
+    }
+
+    protected void buildFormattedDisplay(String elementName, Display display, TextFormat textFormat) {
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(display));
+        if (textFormat != null) {
+            attributes.putAll(FormattingBuilder.buildTextFormat(textFormat));
+            buildElementWithValueAndAttributes(elementName, textFormat.getValue(), attributes);
+        } else buildElementWithAttributes(elementName, attributes);
     }
 
     protected void buildLevel(Level level) {
@@ -131,18 +146,19 @@ public abstract class MusicDataBuilder extends BaseBuilder {
     protected void buildAccidentalText(AccidentalText accidentalText) {
         if (accidentalText == null) return;
 
-        Map<String, String> attributes = new HashMap<>(FormattingBuilder.buildTextFormatting(accidentalText.getTextFormatting()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(accidentalText.getDisplay()));
+        attributes.putAll(FormattingBuilder.buildTextFormat(accidentalText.getTextFormat()));
         attributes.put("smufl", accidentalText.getSmufl());
         buildElementWithValueAndAttributes("accidental-text", accidentalText.getAccidentalType(), attributes);
     }
 
-    protected void buildText(TextDisplay text) {
-        if (text == null) return;
+    protected void buildText(TextDisplay textDisplay) {
+        if (textDisplay == null) return;
 
-        if (text instanceof DisplayText) {
-            buildFormattedText("display-text", ((DisplayText)text).getDisplayText());
-        } else if (text instanceof AccidentalText) {
-            buildAccidentalText(((AccidentalText)text));
+        if (textDisplay instanceof DisplayText) {
+            buildFormattedDisplay("display-text", textDisplay);
+        } else if (textDisplay instanceof AccidentalText) {
+            buildAccidentalText(((AccidentalText)textDisplay));
         }
     }
 
@@ -265,8 +281,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
 
         buildOpenElement("dynamics");
         buildAttributes(DisplayBuilder.buildDisplay(dynamics.getDisplay()));
-        buildAttributes(FormattingBuilder.buildTextDecoration(dynamics.getTextDecoration()));
-        buildAttribute("enclosure", dynamics.getEnclosure());
+        buildAttributes(FormattingBuilder.buildTextFormat(dynamics.getTextFormat()));
         buildCloseElement();
         for (DynamicsMarking dynamicsMarking : dynamics.getMarkings()) {
             buildElementWithValueAndAttribute(BuilderUtil.enumValue(dynamicsMarking.getDynamicsType()), dynamicsMarking.getValue(), "smufl", dynamicsMarking.getSmufl());

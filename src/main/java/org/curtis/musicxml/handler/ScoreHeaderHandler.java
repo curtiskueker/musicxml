@@ -1,12 +1,13 @@
 package org.curtis.musicxml.handler;
 
+import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
-import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.factory.LinkFactory;
+import org.curtis.musicxml.factory.TextFormatFactory;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Distance;
@@ -194,7 +195,9 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 break;
                             case "credit-words":
                                 CreditWords creditWords = new CreditWords();
-                                creditWords.setCreditWords(FormattingFactory.newFormattedText(creditSubelement));
+                                TextFormat creditTextFormat = TextFormatFactory.newTextFormat(creditSubelement);
+                                if (creditTextFormat == null) break;
+                                creditWords.setTextFormat(creditTextFormat);
                                 for (Link creditWordsLink : currentLinks) {
                                     creditWordsLink.setCreditDisplay(creditWords);
                                     creditWords.getLinks().add(creditWordsLink);
@@ -205,12 +208,11 @@ public class ScoreHeaderHandler extends BaseHandler {
                                     creditWords.getBookmarks().add(creditWordsBookmark);
                                 }
                                 currentBookmarks.clear();
-                                if (creditWords.getCreditWords() != null) credit.getCreditDisplays().add(creditWords);
+                                credit.getCreditDisplays().add(creditWords);
                                 break;
                             case "credit-symbol":
                                 CreditSymbol creditSymbol = new CreditSymbol();
-                                creditSymbol.setSmufl(XmlUtil.getElementText(creditSubelement));
-                                creditSymbol.setSymbolFormatting(FormattingFactory.newSymbolFormatting(creditSubelement));
+                                DisplayFactory.setFormattedDisplay(creditSymbol, element);
                                 for (Link creditWordsLink : currentLinks) {
                                     creditWordsLink.setCreditDisplay(creditSymbol);
                                     creditSymbol.getLinks().add(creditWordsLink);

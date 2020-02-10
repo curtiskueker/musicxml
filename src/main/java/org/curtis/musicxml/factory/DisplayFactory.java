@@ -5,6 +5,8 @@ import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Font;
 import org.curtis.musicxml.display.FontStyle;
 import org.curtis.musicxml.display.FontWeight;
+import org.curtis.musicxml.display.Footnote;
+import org.curtis.musicxml.display.FormattedDisplay;
 import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.display.Placement;
 import org.curtis.musicxml.display.Position;
@@ -116,11 +118,23 @@ public class DisplayFactory {
         } else return fontSize;
     }
 
-    public static Display newDisplayPlacement(Display display, Placement placement){
+    public static void setFormattedDisplay(FormattedDisplay formattedDisplay, Element element) {
+        formattedDisplay.setDisplay(newDisplay(element));
+        formattedDisplay.setTextFormat(TextFormatFactory.newTextFormat(element));
+    }
+
+    public static void setDisplayPlacement(Display display, Placement placement){
         if (display == null) display = new Display();
 
         display.setPlacement(placement);
+    }
 
-        return display;
+    public static Footnote newFootnote(Element element) {
+        if (element == null) return null;
+
+        Footnote footnote = new Footnote();
+        setFormattedDisplay(footnote, element);
+
+        return footnote;
     }
 }

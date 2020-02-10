@@ -7,7 +7,6 @@ import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FormattingFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.StringUtil;
@@ -25,7 +24,7 @@ public class DirectionHandler extends MusicDataHandler {
         Direction direction = new Direction();
 
         EditorialVoiceDirection editorialVoiceDirection = new EditorialVoiceDirection();
-        editorialVoiceDirection.setFootnote(FormattingFactory.newFormattedText(XmlUtil.getChildElement(element, "footnote")));
+        editorialVoiceDirection.setFootnote(DisplayFactory.newFootnote(XmlUtil.getChildElement(element, "footnote")));
         editorialVoiceDirection.setLevel(FormattingFactory.newLevel(XmlUtil.getChildElement(element, "level")));
         editorialVoiceDirection.setVoice(XmlUtil.getChildElementText(element, "voice"));
         direction.setEditorialVoiceDirection(editorialVoiceDirection);
