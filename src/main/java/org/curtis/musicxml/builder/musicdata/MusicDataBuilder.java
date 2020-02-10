@@ -9,7 +9,6 @@ import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.DisplayText;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.display.EditorialVoice;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
@@ -97,14 +96,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
 
         buildFormattedDisplay("footnote", editorial.getFootnote());
         buildLevel(editorial.getLevel());
-    }
-
-    protected void buildEditorialVoice(EditorialVoice editorialVoice) {
-        if (editorialVoice == null) return;
-
-        buildFormattedDisplay("footnote", editorialVoice.getFootnote());
-        buildLevel(editorialVoice.getLevel());
-        buildElementWithValue("voice", editorialVoice.getVoice());
+        buildElementWithValue("voice", editorial.getVoice());
     }
 
     protected void buildFormattedDisplay(String elementName, FormattedDisplay formattedDisplay) {

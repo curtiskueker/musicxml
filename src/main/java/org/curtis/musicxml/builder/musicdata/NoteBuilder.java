@@ -76,7 +76,7 @@ public class NoteBuilder extends MusicDataBuilder {
             buildElementWithAttributes("tie", tieAttributes);
         }
         buildElementWithAttribute("instrument", "id", note.getInstrument());
-        buildEditorialVoice(note.getEditorialVoice());
+        buildEditorial(note.getEditorial());
         NoteType noteType = note.getType();
         if (noteType != null) {
             buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", noteType.getSize());

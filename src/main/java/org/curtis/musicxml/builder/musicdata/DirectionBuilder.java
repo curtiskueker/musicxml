@@ -1,10 +1,10 @@
 package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.direction.Direction;
-import org.curtis.musicxml.direction.EditorialVoiceDirection;
 import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
+import org.curtis.musicxml.display.Editorial;
 
 import java.util.List;
 
@@ -49,11 +49,11 @@ public class DirectionBuilder extends MusicDataBuilder {
         }
 
         append(buildOffset(direction.getOffset()));
-        EditorialVoiceDirection editorialVoiceDirection = direction.getEditorialVoiceDirection();
-        if (editorialVoiceDirection != null) {
-            buildFormattedDisplay("footnote", editorialVoiceDirection.getFootnote());
-            buildLevel(editorialVoiceDirection.getLevel());
-            buildElementWithValue("voice", editorialVoiceDirection.getVoice());
+        Editorial editorial = direction.getEditorial();
+        if (editorial != null) {
+            buildFormattedDisplay("footnote", editorial.getFootnote());
+            buildLevel(editorial.getLevel());
+            buildElementWithValue("voice", editorial.getVoice());
         }
         buildElementWithValue("staff", direction.getStaff());
         SoundBuilder soundBuilder = new SoundBuilder(direction.getSound());

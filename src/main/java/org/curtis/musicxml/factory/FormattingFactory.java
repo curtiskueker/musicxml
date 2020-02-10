@@ -3,7 +3,6 @@ package org.curtis.musicxml.factory;
 import org.curtis.musicxml.common.DashedFormatting;
 import org.curtis.musicxml.common.DisplayText;
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.display.EditorialVoice;
 import org.curtis.musicxml.display.EnclosureShape;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.LevelDisplay;
@@ -130,34 +129,19 @@ public class FormattingFactory {
 
         Footnote footnote = DisplayFactory.newFootnote(XmlUtil.getChildElement(element, "footnote"));
         Level level = newLevel(XmlUtil.getChildElement(element, "level"));
-
-        if (footnote == null && level == null) return null;
-
-        Editorial editorial = new Editorial();
-        editorial.setFootnote(footnote);
-        editorial.setLevel(level);
-
-        return editorial;
-    }
-
-    public static EditorialVoice newEditorialVoice(Element element) {
-        if (element == null) return null;
-
-        Footnote footnote = DisplayFactory.newFootnote(XmlUtil.getChildElement(element, "footnote"));
-        Level level = newLevel(XmlUtil.getChildElement(element, "level"));
         String voice = XmlUtil.getChildElementText(element, "voice");
 
         if (footnote == null && level == null && StringUtil.isEmpty(voice)) return null;
 
-        EditorialVoice editorialVoice = new EditorialVoice();
-        editorialVoice.setFootnote(footnote);
-        editorialVoice.setLevel(level);
-        editorialVoice.setVoice(voice);
+        Editorial editorial = new Editorial();
+        editorial.setFootnote(footnote);
+        editorial.setLevel(level);
+        editorial.setVoice(voice);
 
-        return editorialVoice;
+        return editorial;
     }
 
-    public static Level newLevel(Element element) {
+    private static Level newLevel(Element element) {
         if (element == null) return null;
 
         Level level = new Level();

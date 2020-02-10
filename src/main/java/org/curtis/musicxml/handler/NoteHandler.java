@@ -45,7 +45,7 @@ public class NoteHandler extends MusicDataHandler {
         FullNote fullNote = new FullNote();
 
         note.setDisplay(DisplayFactory.newDisplay(element));
-        note.setEditorialVoice(FormattingFactory.newEditorialVoice(element));
+        note.setEditorial(FormattingFactory.newEditorial(element));
         note.setPrintout(FormattingFactory.newPrintout(element));
         note.setPrintLeger(TypeUtil.getYesNo(element.getAttribute("print-leger")));
         note.setDynamics(MathUtil.newBigDecimal(element.getAttribute("dynamics")));

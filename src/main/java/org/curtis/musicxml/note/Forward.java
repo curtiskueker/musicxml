@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.musicxml.display.EditorialVoice;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.score.MusicData;
 
 import javax.persistence.CascadeType;
@@ -17,8 +17,8 @@ public class Forward extends MusicData {
     @Column(precision = 12, scale = 4)
     private BigDecimal duration;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "editorial_voice_id")
-    private EditorialVoice editorialVoice;
+    @JoinColumn(name = "editorial_id")
+    private Editorial editorial;
     @Column
     private Integer staff;
 
@@ -34,12 +34,12 @@ public class Forward extends MusicData {
         this.duration = duration;
     }
 
-    public EditorialVoice getEditorialVoice() {
-        return editorialVoice;
+    public Editorial getEditorial() {
+        return editorial;
     }
 
-    public void setEditorialVoice(EditorialVoice editorialVoice) {
-        this.editorialVoice = editorialVoice;
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
     }
 
     public Integer getStaff() {

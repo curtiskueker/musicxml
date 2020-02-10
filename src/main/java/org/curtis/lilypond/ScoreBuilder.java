@@ -122,7 +122,7 @@ public class ScoreBuilder extends LilypondBuilder {
                     hasHarmony = true;
                 } else if (musicData instanceof Note && staves > 1) {
                     Note note = (Note)musicData;
-                    String partVoice = partId + "/" + note.getEditorialVoice().getVoice();
+                    String partVoice = partId + "/" + note.getEditorial().getVoice();
                     primaryVoiceStaves.computeIfAbsent(partVoice, k -> note.getStaff());
                 }
             }
@@ -236,7 +236,7 @@ public class ScoreBuilder extends LilypondBuilder {
                     currentStaff = staff;
                 } else if(musicData instanceof Note) {
                     Note note = (Note)musicData;
-                    String voice = note.getEditorialVoice().getVoice();
+                    String voice = note.getEditorial().getVoice();
                     Integer noteStaff = note.getStaff();
                     if(noteStaff == null || noteStaff < 1 || noteStaff > staves) {
                         throw new BuildException("Invalid staff number in note");

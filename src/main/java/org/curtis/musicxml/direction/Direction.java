@@ -2,6 +2,7 @@ package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.display.Placement;
 import org.curtis.musicxml.score.MusicData;
 import org.hibernate.annotations.Fetch;
@@ -30,8 +31,8 @@ public class Direction extends MusicData {
     @JoinColumn(name = "offset_id")
     private DirectionOffset offset;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "editorial_voice_direction_id")
-    private EditorialVoiceDirection editorialVoiceDirection;
+    @JoinColumn(name = "editorial_id")
+    private Editorial editorial;
     @Column
     private Integer staff;
     @OneToOne(cascade = CascadeType.ALL)
@@ -64,12 +65,12 @@ public class Direction extends MusicData {
         this.offset = offset;
     }
 
-    public EditorialVoiceDirection getEditorialVoiceDirection() {
-        return editorialVoiceDirection;
+    public Editorial getEditorial() {
+        return editorial;
     }
 
-    public void setEditorialVoiceDirection(EditorialVoiceDirection editorialVoiceDirection) {
-        this.editorialVoiceDirection = editorialVoiceDirection;
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
     }
 
     public Integer getStaff() {

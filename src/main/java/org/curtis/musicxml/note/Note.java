@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.lilypond.util.TypeUtil;
-import org.curtis.musicxml.display.EditorialVoice;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.direction.Direction;
@@ -53,8 +53,8 @@ public class Note extends MusicData {
     @Column
     private String instrument;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "editorial_voice_id")
-    private EditorialVoice editorialVoice = new EditorialVoice();
+    @JoinColumn(name = "editorial_id")
+    private Editorial editorial;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id")
     private NoteType type;
@@ -179,12 +179,12 @@ public class Note extends MusicData {
         this.instrument = instrument;
     }
 
-    public EditorialVoice getEditorialVoice() {
-        return editorialVoice;
+    public Editorial getEditorial() {
+        return editorial;
     }
 
-    public void setEditorialVoice(EditorialVoice editorialVoice) {
-        this.editorialVoice = editorialVoice;
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
     }
 
     public NoteType getType() {

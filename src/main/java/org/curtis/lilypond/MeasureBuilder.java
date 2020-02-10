@@ -13,10 +13,9 @@ import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.display.EditorialVoice;
+import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
-import org.curtis.musicxml.direction.EditorialVoiceDirection;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.OctaveShift;
@@ -157,7 +156,7 @@ public class MeasureBuilder extends LilypondBuilder {
                 currentNote = (Note)musicData;
                 BigDecimal currentNoteDuration = currentNote.getDuration();
                 FullNote fullNote = currentNote.getFullNote();
-                String currentNoteVoice = currentNote.getEditorialVoice().getVoice();
+                String currentNoteVoice = currentNote.getEditorial().getVoice();
                 if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
                 Connection chordType = fullNote.getChordType();
@@ -233,9 +232,9 @@ public class MeasureBuilder extends LilypondBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
-                EditorialVoiceDirection editorialVoiceDirection = direction.getEditorialVoiceDirection();
-                if (StringUtil.isEmpty(editorialVoiceDirection.getVoice())) editorialVoiceDirection.setVoice(defaultVoice);
-                if (isCurrentVoice(editorialVoiceDirection.getVoice())) {
+                Editorial editorial = direction.getEditorial();
+                if (StringUtil.isEmpty(editorial.getVoice())) editorial.setVoice(defaultVoice);
+                if (isCurrentVoice(editorial.getVoice())) {
                     DirectionBuilder.setDirectionDefaults(direction);
                     if (deferredDirection(direction)) {
                         currentDirections.add(direction);
@@ -459,16 +458,16 @@ public class MeasureBuilder extends LilypondBuilder {
     private void setCurrentVoice(MusicData musicData) {
         if (musicData instanceof Note) {
             Note note = (Note)musicData;
-            EditorialVoice editorialVoice = note.getEditorialVoice();
-            if (editorialVoice != null) {
-                String musicDataVoice = editorialVoice.getVoice();
+            Editorial editorial = note.getEditorial();
+            if (editorial != null) {
+                String musicDataVoice = editorial.getVoice();
                 if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
             }
         } else if (musicData instanceof Forward) {
             Forward forward = (Forward)musicData;
-            EditorialVoice editorialVoice = forward.getEditorialVoice();
-            if (editorialVoice != null) {
-                String musicDataVoice = editorialVoice.getVoice();
+            Editorial editorial = forward.getEditorial();
+            if (editorial != null) {
+                String musicDataVoice = editorial.getVoice();
                 if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
             }
         } else if (musicData instanceof Chord) {

@@ -37,7 +37,6 @@
         <class>org.curtis.musicxml.barline.Repeat</class>
         <class>org.curtis.musicxml.common.DashedFormatting</class>
         <class>org.curtis.musicxml.common.DisplayText</class>
-        <class>org.curtis.musicxml.display.EditorialVoice</class>
         <class>org.curtis.musicxml.common.Level</class>
         <class>org.curtis.musicxml.common.LevelDisplay</class>
         <class>org.curtis.musicxml.common.MidiDevice</class>
@@ -54,7 +53,6 @@
         <class>org.curtis.musicxml.common.play.PlayType</class>
         <class>org.curtis.musicxml.common.play.SemiPitched</class>
         <class>org.curtis.musicxml.direction.Direction</class>
-        <class>org.curtis.musicxml.direction.EditorialVoiceDirection</class>
         <class>org.curtis.musicxml.direction.Feature</class>
         <class>org.curtis.musicxml.direction.Grouping</class>
         <class>org.curtis.musicxml.direction.DirectionOffset</class>
