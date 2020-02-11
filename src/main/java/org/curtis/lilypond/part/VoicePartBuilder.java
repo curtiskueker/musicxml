@@ -9,6 +9,7 @@ import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
@@ -200,11 +201,11 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     // chord type
                     if (previousNote != null) {
                         if (fullNote.isChord() && !previousNote.getFullNote().isChord()) {
-                            previousNote.getFullNote().setChordType(Connection.START);
+                            previousNote.getFullNote().setChordType(OrderedGroup.FIRST);
                         } else if (fullNote.isChord() && previousNote.getFullNote().isChord()) {
-                            previousNote.getFullNote().setChordType(Connection.CONTINUE);
+                            previousNote.getFullNote().setChordType(OrderedGroup.MIDDLE);
                         } else if (!fullNote.isChord() && previousNote.getFullNote().isChord()) {
-                            previousNote.getFullNote().setChordType(Connection.STOP);
+                            previousNote.getFullNote().setChordType(OrderedGroup.LAST);
                         }
                     }
                     // tuplet type
@@ -214,21 +215,21 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         switch (tupletType) {
                             case START:
                                 if (tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Previous tuplet not stopped.  Output may be unpredictable");
-                                measureBuilder.setTupletType(note, Connection.START);
+                                measureBuilder.setNoteTuplet(note, OrderedGroup.FIRST);
                                 tupletsOn.put(voice, true);
                                 break;
                             case STOP:
                                 if (!tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) displayMeasureMessage(measure, "WARNING: Tuplet not started.  Output may be unpredictable");
-                                measureBuilder.setTupletType(note, Connection.STOP);
+                                measureBuilder.setNoteTuplet(note, OrderedGroup.LAST);
                                 tupletsOn.put(voice, false);
                                 break;
                         }
-                    } else if (note.getFullNote().isChord() && previousNote.getFullNote().getChordType() != null && measureBuilder.getTupletType(previousNote) == Connection.STOP) {
+                    } else if (note.getFullNote().isChord() && previousNote.getFullNote().getChordType() != null && measureBuilder.getNoteTuplet(previousNote) == OrderedGroup.LAST) {
                         // adjust end tuplet on chords
-                        measureBuilder.setTupletType(previousNote, Connection.CONTINUE);
-                        measureBuilder.setTupletType(note, Connection.STOP);
+                        measureBuilder.setNoteTuplet(previousNote, OrderedGroup.MIDDLE);
+                        measureBuilder.setNoteTuplet(note, OrderedGroup.LAST);
                     } else if (tupletsOn.computeIfAbsent(voice, voiceTuplet -> false)) {
-                        measureBuilder.setTupletType(note, Connection.CONTINUE);
+                        measureBuilder.setNoteTuplet(note, OrderedGroup.MIDDLE);
                     }
 
                     for (Beam beam : note.getBeams()) {
@@ -269,13 +270,13 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 currentRepeatStartBlockMeasureBuilder.setRepeatBlock(startRepeatBlock);
 
                                 if (currentRepeatStartBlockMeasureBuilder.getMeasure().getNumber().equals(previousMeasureBuilder.getMeasure().getNumber())) {
-                                    startRepeatBlock.setConnectionType(Connection.SINGLE);
+                                    startRepeatBlock.setLocationInBlock(OrderedGroup.SINGLETON);
                                 } else{
-                                    startRepeatBlock.setConnectionType(Connection.START);
+                                    startRepeatBlock.setLocationInBlock(OrderedGroup.FIRST);
 
                                     if (currentRepeatEndBlockMeasureBuilder == null) {
                                         RepeatBlock endRepeatBlock = new RepeatBlock();
-                                        endRepeatBlock.setConnectionType(Connection.STOP);
+                                        endRepeatBlock.setLocationInBlock(OrderedGroup.LAST);
                                         endRepeatBlock.setRepeatBlockType(RepeatBlockType.MAIN);
                                         endRepeatBlock.setEndingCount(currentEndingCount);
                                         previousMeasureBuilder.setRepeatBlock(endRepeatBlock);
@@ -285,7 +286,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
                                 RepeatBlock currentRepeatBlock = new RepeatBlock();
                                 currentRepeatBlock.setRepeatBlockType(RepeatBlockType.ENDING);
-                                currentRepeatBlock.setConnectionType(Connection.START);
+                                currentRepeatBlock.setLocationInBlock(OrderedGroup.FIRST);
                                 currentRepeatBlock.setEndingNumber(currentEndingCount);
                                 measureBuilder.setRepeatBlock(currentRepeatBlock);
                                 currentEndingBlocks.add(currentRepeatBlock);
@@ -309,12 +310,12 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 if (currentRepeatBlock == null || currentRepeatBlock.getRepeatBlockType() != RepeatBlockType.ENDING) {
                                     currentRepeatBlock = new RepeatBlock();
                                     currentRepeatBlock.setRepeatBlockType(RepeatBlockType.ENDING);
-                                    currentRepeatBlock.setConnectionType(Connection.STOP);
+                                    currentRepeatBlock.setLocationInBlock(OrderedGroup.LAST);
                                     currentRepeatBlock.setEndingNumber(currentEndingCount);
                                     measureBuilder.setRepeatBlock(currentRepeatBlock);
                                     currentEndingBlocks.add(currentRepeatBlock);
                                 } else {
-                                    currentRepeatBlock.setConnectionType(Connection.SINGLE);
+                                    currentRepeatBlock.setLocationInBlock(OrderedGroup.SINGLETON);
                                 }
                                 currentEndingBlocks.forEach(repeatBlock -> repeatBlock.setEndingCount(currentEndingCount));
                                 currentRepeatStartBlockMeasureBuilder.getRepeatBlock().setEndingCount(currentEndingCount);
@@ -376,7 +377,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
             // close last chord note at end of measure
             if (previousNote != null && previousNote.getFullNote().isChord()) {
-                previousNote.getFullNote().setChordType(Connection.STOP);
+                previousNote.getFullNote().setChordType(OrderedGroup.LAST);
             }
 
             if (previousMeasureBuilder != null && !hasEnding && isEndingRepeatBlock(previousMeasureBuilder) && isEndRepeatBlock(previousMeasureBuilder)) {
@@ -423,12 +424,12 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
     private boolean isStartRepeatBlock(MeasureBuilder measureBuilder) {
         RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
-        return repeatBlock != null && (repeatBlock.getConnectionType() == Connection.START || repeatBlock.getConnectionType() == Connection.SINGLE);
+        return repeatBlock != null && (repeatBlock.getLocationInBlock() == OrderedGroup.FIRST || repeatBlock.getLocationInBlock() == OrderedGroup.SINGLETON);
     }
 
     private boolean isEndRepeatBlock(MeasureBuilder measureBuilder) {
         RepeatBlock repeatBlock = measureBuilder.getRepeatBlock();
-        return repeatBlock != null && (repeatBlock.getConnectionType() == Connection.STOP || repeatBlock.getConnectionType() == Connection.DISCONTINUE || repeatBlock.getConnectionType() == Connection.SINGLE);
+        return repeatBlock != null && (repeatBlock.getLocationInBlock() == OrderedGroup.LAST || repeatBlock.getLocationInBlock() == OrderedGroup.SINGLETON);
     }
 
     private boolean isMainRepeatBlock(MeasureBuilder measureBuilder) {
@@ -447,7 +448,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
     private boolean currentEndingBlockStarted() {
         RepeatBlock currentEndingBlock = getCurrentEndingBlock();
-        return currentEndingBlock != null && currentEndingBlock.getConnectionType() == Connection.START;
+        return currentEndingBlock != null && currentEndingBlock.getLocationInBlock() == OrderedGroup.FIRST;
     }
 
     private void processTies(List<Note> tiedFromNoteList, List<Note> tiedToNoteList, Note currentNote) {

@@ -12,6 +12,7 @@ import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
 import org.curtis.musicxml.note.lyric.LyricTextData;
+import org.curtis.musicxml.note.lyric.Syllabic;
 import org.curtis.util.MathUtil;
 
 import java.math.BigDecimal;
@@ -60,7 +61,7 @@ public class LyricBuilder extends MusicDataBuilder {
 
                 append(totalBeatRepresentation);
 
-                Connection syllabic = lyricSyllable.getSyllabic();
+                Syllabic syllabic = lyricSyllable.getSyllabic();
                 if(syllabic != null) {
                     switch (syllabic) {
                         case BEGIN:

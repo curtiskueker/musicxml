@@ -9,6 +9,7 @@ import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
@@ -283,14 +284,14 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private StringBuilder startGraceBuild() {
         if (note.isGraceNote()) {
-            if (note.getGrace().getGraceType() == Connection.START || note.getGrace().getGraceType() == Connection.SINGLE) {
+            if (note.getGrace().getGraceType() == OrderedGroup.FIRST || note.getGrace().getGraceType() == OrderedGroup.SINGLETON) {
                 if(TypeUtil.getBoolean(note.getGrace().getSlash())) {
                     append("\\slashedGrace ");
                 } else {
                     append("\\grace ");
                 }
             }
-            if(note.getGrace().getGraceType() == Connection.START) {
+            if(note.getGrace().getGraceType() == OrderedGroup.FIRST) {
                 append("{ ");
             }
         }
@@ -299,7 +300,7 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder finishGraceBuild() {
-        if(note.isGraceNote() && note.getGrace().getGraceType() == Connection.STOP) {
+        if(note.isGraceNote() && note.getGrace().getGraceType() == OrderedGroup.LAST) {
             append(" }");
         }
 
@@ -500,8 +501,8 @@ public class NoteBuilder extends MusicDataBuilder {
         for (NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
             Note note = noteBuilder.getNote();
-            Connection chordType = note.getFullNote().getChordType();
-            if (chordType == Connection.START || chordType == Connection.SINGLE) {
+            OrderedGroup chordType = note.getFullNote().getChordType();
+            if (chordType == OrderedGroup.FIRST || chordType == OrderedGroup.SINGLETON) {
                 append(noteBuilder.preNoteBuild().toString());
             }
         }
@@ -520,8 +521,8 @@ public class NoteBuilder extends MusicDataBuilder {
         for (NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
             Note note = noteBuilder.getNote();
-            Connection chordType = note.getFullNote().getChordType();
-            if (chordType == Connection.SINGLE || chordType == Connection.STOP) {
+            OrderedGroup chordType = note.getFullNote().getChordType();
+            if (chordType == OrderedGroup.SINGLETON || chordType == OrderedGroup.LAST) {
                 append(noteBuilder.noteDurationBuild().toString());
             }
         }
@@ -553,8 +554,8 @@ public class NoteBuilder extends MusicDataBuilder {
             for (NoteBuilder noteBuilder : noteBuilders) {
                 noteBuilder.clear();
                 Note note = noteBuilder.getNote();
-                Connection chordType = note.getFullNote().getChordType();
-                if (chordType == Connection.START || chordType == Connection.SINGLE) {
+                OrderedGroup chordType = note.getFullNote().getChordType();
+                if (chordType == OrderedGroup.FIRST || chordType == OrderedGroup.SINGLETON) {
                     noteBuilder.getDirections().clear();
                     noteBuilder.getDirections().addAll(directions);
                     append(noteBuilder.directionBuild().toString());

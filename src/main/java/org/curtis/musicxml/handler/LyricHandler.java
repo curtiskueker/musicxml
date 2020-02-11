@@ -1,6 +1,5 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
@@ -13,6 +12,7 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
+import org.curtis.musicxml.note.lyric.Syllabic;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
@@ -69,7 +69,7 @@ public class LyricHandler extends BaseHandler {
                                 lyricSyllable.setElision(elision);
                                 break;
                             case "syllabic":
-                                lyricSyllable.setSyllabic(FactoryUtil.enumValue(Connection.class, XmlUtil.getElementText(textElement)));
+                                lyricSyllable.setSyllabic(FactoryUtil.enumValue(Syllabic.class, XmlUtil.getElementText(textElement)));
                                 break;
                             case "text":
                                 lyricSyllable.setText(LyricFactory.newTextData(textElement));

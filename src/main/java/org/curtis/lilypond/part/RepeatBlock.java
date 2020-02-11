@@ -1,10 +1,10 @@
 package org.curtis.lilypond.part;
 
-import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.OrderedGroup;
 
 public class RepeatBlock {
     private RepeatBlockType repeatBlockType;
-    private Connection connectionType;
+    private OrderedGroup locationInBlock;
     private Integer endingCount = 0;
     private Integer endingNumber = 0;
 
@@ -20,12 +20,12 @@ public class RepeatBlock {
         this.repeatBlockType = repeatBlockType;
     }
 
-    public Connection getConnectionType() {
-        return connectionType;
+    public OrderedGroup getLocationInBlock() {
+        return locationInBlock;
     }
 
-    public void setConnectionType(Connection connectionType) {
-        this.connectionType = connectionType;
+    public void setLocationInBlock(OrderedGroup locationInBlock) {
+        this.locationInBlock = locationInBlock;
     }
 
     public Integer getEndingCount() {

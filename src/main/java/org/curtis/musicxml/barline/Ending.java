@@ -24,7 +24,7 @@ public class Ending extends DatabaseItem {
     private String number;
     @Enumerated(EnumType.STRING)
     @Column(name = "ending_type")
-    private Connection type;
+    private EndingType type;
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -58,11 +58,11 @@ public class Ending extends DatabaseItem {
         this.number = number;
     }
 
-    public Connection getType() {
+    public EndingType getType() {
         return type;
     }
 
-    public void setType(Connection type) {
+    public void setType(EndingType type) {
         this.type = type;
     }
 

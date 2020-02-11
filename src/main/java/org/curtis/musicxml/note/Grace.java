@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.OrderedGroup;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ public class Grace extends DatabaseItem {
     private Boolean slash;
     @Transient
     // used by lilypond
-    private Connection graceType;
+    private OrderedGroup graceType;
 
     public Grace() {
 
@@ -62,11 +62,11 @@ public class Grace extends DatabaseItem {
         this.slash = slash;
     }
 
-    public Connection getGraceType() {
+    public OrderedGroup getGraceType() {
         return graceType;
     }
 
-    public void setGraceType(Connection graceType) {
+    public void setGraceType(OrderedGroup graceType) {
         this.graceType = graceType;
     }
 }

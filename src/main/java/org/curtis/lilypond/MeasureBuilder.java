@@ -12,7 +12,7 @@ import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
@@ -67,7 +67,7 @@ public class MeasureBuilder extends LilypondBuilder {
     private boolean isFirstMeasure = false;
     private boolean isLastMeasure = false;
     private RepeatBlock repeatBlock;
-    private Map<Note, Connection> tupletTypes = new HashMap<>();
+    private Map<Note, OrderedGroup> noteTuplets = new HashMap<>();
     private boolean hasStartRepeat = false;
     private boolean hasEndRepeat = false;
 
@@ -111,12 +111,12 @@ public class MeasureBuilder extends LilypondBuilder {
         this.repeatBlock = repeatBlock;
     }
 
-    public void setTupletType(Note note, Connection connection) {
-        tupletTypes.put(note, connection);
+    public OrderedGroup getNoteTuplet(Note note) {
+        return noteTuplets.get(note);
     }
 
-    public Connection getTupletType(Note note) {
-        return tupletTypes.get(note);
+    public void setNoteTuplet(Note note, OrderedGroup orderedGroup) {
+        noteTuplets.put(note, orderedGroup);
     }
 
     public boolean isHasStartRepeat() {
@@ -159,7 +159,7 @@ public class MeasureBuilder extends LilypondBuilder {
                 String currentNoteVoice = currentNote.getEditorial().getVoice();
                 if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
-                Connection chordType = fullNote.getChordType();
+                OrderedGroup chordType = fullNote.getChordType();
                 if (!isChordNote(currentNote)) {
                     measureDuration = MathUtil.add(measureDuration, currentNoteDuration);
                     if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNoteDuration);
@@ -172,20 +172,20 @@ public class MeasureBuilder extends LilypondBuilder {
                 }
 
                 // chords and tuplets
-                Connection tupletType = getTupletType(currentNote);
+                OrderedGroup tupletType = getNoteTuplet(currentNote);
                 lastTuplet = null;
                 if (chordType != null || tupletType != null) {
                     if (chordType != null) {
                         switch (chordType) {
-                            case START:
+                            case FIRST:
                                 currentChord = new Chord();
                                 currentChord.setVoice(currentNoteVoice);
-                            case CONTINUE:
+                            case MIDDLE:
                                 currentChord.getNotes().add(currentNote);
                                 break;
-                            case STOP:
+                            case LAST:
                                 transferDirections();
-                                if (tupletType == Connection.STOP || tupletType == Connection.CONTINUE) {
+                                if (tupletType == OrderedGroup.LAST || tupletType == OrderedGroup.MIDDLE) {
                                     currentTuplet.getMusicDataList().add(currentChord);
                                 } else {
                                     musicDataBuilder = addToDataBuilders(currentChord);
@@ -197,13 +197,13 @@ public class MeasureBuilder extends LilypondBuilder {
 
                     if (tupletType != null) {
                         switch (tupletType) {
-                            case START:
+                            case FIRST:
                                 currentTuplet = new TupletNotes();
                                 currentTuplet.setVoice(currentNoteVoice);
-                            case CONTINUE:
+                            case MIDDLE:
                                 if (chordType == null) transferDirections();
                                 break;
-                            case STOP:
+                            case LAST:
                                 if (chordType == null) transferDirections();
                                 musicDataBuilder = addToDataBuilders(currentTuplet);
                                 lastTuplet = currentTuplet;
@@ -218,11 +218,11 @@ public class MeasureBuilder extends LilypondBuilder {
                 // grace notes
                 if (currentNote.isGraceNote()) {
                     if(previousNote == null || !previousNote.isGraceNote()) {
-                        currentNote.getGrace().setGraceType(Connection.START);
+                        currentNote.getGrace().setGraceType(OrderedGroup.FIRST);
                     } else {
-                        currentNote.getGrace().setGraceType(Connection.STOP);
-                        if(previousNote.getGrace().getGraceType() == Connection.STOP) {
-                            previousNote.getGrace().setGraceType(Connection.CONTINUE);
+                        currentNote.getGrace().setGraceType(OrderedGroup.LAST);
+                        if(previousNote.getGrace().getGraceType() == OrderedGroup.LAST) {
+                            previousNote.getGrace().setGraceType(OrderedGroup.MIDDLE);
                         }
                     }
                 } else {
@@ -390,10 +390,10 @@ public class MeasureBuilder extends LilypondBuilder {
 
     private void closeGraceNote() {
         if(previousNote != null && previousNote.isGraceNote()) {
-            if(previousNote.getGrace().getGraceType() == Connection.START) {
-                previousNote.getGrace().setGraceType(Connection.SINGLE);
+            if(previousNote.getGrace().getGraceType() == OrderedGroup.FIRST) {
+                previousNote.getGrace().setGraceType(OrderedGroup.SINGLETON);
             } else {
-                previousNote.getGrace().setGraceType(Connection.STOP);
+                previousNote.getGrace().setGraceType(OrderedGroup.LAST);
             }
         }
     }
@@ -490,9 +490,9 @@ public class MeasureBuilder extends LilypondBuilder {
     }
 
     private boolean isChordNote(Note note) {
-        Connection chordType = note.getFullNote().getChordType();
+        OrderedGroup chordType = note.getFullNote().getChordType();
 
-        return chordType != null && chordType != Connection.START;
+        return chordType != null && chordType != OrderedGroup.LAST;
     }
 
     private void transferDirections() {

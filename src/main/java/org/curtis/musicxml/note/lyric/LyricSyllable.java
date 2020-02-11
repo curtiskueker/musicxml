@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Connection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +19,7 @@ public class LyricSyllable extends DatabaseItem {
     private Elision elision;
     @Enumerated(EnumType.STRING)
     @Column
-    private Connection syllabic;
+    private Syllabic syllabic;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "text_data_id")
     private LyricTextData text;
@@ -37,11 +36,11 @@ public class LyricSyllable extends DatabaseItem {
         this.elision = elision;
     }
 
-    public Connection getSyllabic() {
+    public Syllabic getSyllabic() {
         return syllabic;
     }
 
-    public void setSyllabic(Connection syllabic) {
+    public void setSyllabic(Syllabic syllabic) {
         this.syllabic = syllabic;
     }
 

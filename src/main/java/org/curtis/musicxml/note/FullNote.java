@@ -2,6 +2,7 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.OrderedGroup;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ public class FullNote extends DatabaseItem {
     private FullNoteType fullNoteType;
     @Transient
     // used by lilypond
-    private Connection chordType;
+    private OrderedGroup chordType;
 
     public Boolean isChord() {
         return chord;
@@ -41,11 +42,11 @@ public class FullNote extends DatabaseItem {
         this.fullNoteType = fullNoteType;
     }
 
-    public Connection getChordType() {
+    public OrderedGroup getChordType() {
         return chordType;
     }
 
-    public void setChordType(Connection chordType) {
+    public void setChordType(OrderedGroup chordType) {
         this.chordType = chordType;
     }
 }
