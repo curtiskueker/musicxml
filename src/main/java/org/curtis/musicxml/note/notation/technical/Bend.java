@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.PlacementText;
 
 import javax.persistence.CascadeType;
@@ -24,9 +23,6 @@ public class Bend extends Technical {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "with_bar_id")
     private PlacementText withBar;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bend_sound_id")
     private BendSound bendSound;
@@ -57,14 +53,6 @@ public class Bend extends Technical {
 
     public void setWithBar(PlacementText withBar) {
         this.withBar = withBar;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public BendSound getBendSound() {

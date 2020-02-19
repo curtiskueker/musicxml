@@ -1,16 +1,12 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("harmonic")
@@ -24,9 +20,6 @@ public class Harmonic extends Technical {
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
 
     public Harmonic() {
 
@@ -54,13 +47,5 @@ public class Harmonic extends Technical {
 
     public void setPrintObject(Boolean printObject) {
         this.printObject = printObject;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 }

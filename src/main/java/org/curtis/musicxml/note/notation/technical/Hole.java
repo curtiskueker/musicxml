@@ -1,15 +1,10 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.display.Display;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("hole")
@@ -24,9 +19,6 @@ public class Hole extends Technical {
     private HoleClosedLocation holeClosedLocation;
     @Column(name = "hole_shape")
     private String holeShape;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
 
     public Hole() {
 
@@ -62,13 +54,5 @@ public class Hole extends Technical {
 
     public void setHoleShape(String holeShape) {
         this.holeShape = holeShape;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 }

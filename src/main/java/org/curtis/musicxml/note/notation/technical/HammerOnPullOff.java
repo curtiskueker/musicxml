@@ -1,15 +1,11 @@
 package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.display.Display;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 
 @MappedSuperclass
 public abstract class HammerOnPullOff extends Technical {
@@ -20,9 +16,6 @@ public abstract class HammerOnPullOff extends Technical {
     private Connection type;
     @Column(name = "notation_number")
     private Integer number = 1;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
 
     public String getValue() {
         return value;
@@ -46,13 +39,5 @@ public abstract class HammerOnPullOff extends Technical {
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 }

@@ -77,7 +77,6 @@ public class TechnicalFactory {
         hammerOnPullOff.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         String numberLevel = element.getAttribute("number");
         if (StringUtil.isNotEmpty(numberLevel)) hammerOnPullOff.setNumber(StringUtil.getInteger(numberLevel));
-        hammerOnPullOff.setDisplay(DisplayFactory.newDisplay(element));
     }
 
     public static BendSound newBendSound(Element element) {
@@ -111,7 +110,6 @@ public class TechnicalFactory {
     }
 
     private static void populateHeelToe(HeelToe heelToe, Element element) {
-        heelToe.setDisplay(DisplayFactory.newDisplay(element));
         heelToe.setSubstitution(TypeUtil.getYesNo(element.getAttribute("substitution")));
     }
 }

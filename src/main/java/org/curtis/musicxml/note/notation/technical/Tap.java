@@ -1,22 +1,16 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.note.PlacementText;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("tap")
 public class Tap extends Technical {
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "placement_text_id")
-    private PlacementText placementText;
+    @Column
+    private String value;
     @Enumerated(EnumType.STRING)
     @Column(name = "tap_hand")
     private TapHand tapHand;
@@ -25,12 +19,12 @@ public class Tap extends Technical {
 
     }
 
-    public PlacementText getPlacementText() {
-        return placementText;
+    public String getValue() {
+        return value;
     }
 
-    public void setPlacementText(PlacementText placementText) {
-        this.placementText = placementText;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public TapHand getTapHand() {

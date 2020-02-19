@@ -138,7 +138,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildPluck(Pluck pluck) {
-        buildPlacementText("pluck", pluck.getPlacementText());
+        buildElementWithValueAndAttributes("pluck", pluck.getValue(), DisplayBuilder.buildDisplay(pluck.getDisplay()));
     }
 
     private void buildDoubleTongue(DoubleTongue doubleTongue) {
@@ -186,15 +186,14 @@ public class TechnicalBuilder extends MusicDataBuilder {
             }
         }
         PlacementText withBar = bend.getWithBar();
-        if (withBar != null) buildPlacementText("with-bar", withBar);
+        if (withBar != null) buildElementWithValueAndAttributes("with-bar", withBar.getValue(), DisplayBuilder.buildDisplay(withBar.getDisplay()));
         buildEndElement("bend");
     }
 
     private void buildTap(Tap tap) {
-        PlacementText placementText = tap.getPlacementText();
-        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(placementText.getDisplay()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(tap.getDisplay()));
         attributes.put("hand", BuilderUtil.enumValue(tap.getTapHand()));
-        buildElementWithValueAndAttributes("tap", placementText.getValue(), attributes);
+        buildElementWithValueAndAttributes("tap", tap.getValue(), attributes);
     }
 
     private void buildHeelToe(HeelToe heelToe) {
@@ -274,7 +273,9 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {
-        buildOtherPlacementText("other-technical", otherTechnical.getPlacementText(), otherTechnical.getSmufl());
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(otherTechnical.getDisplay()));
+        attributes.put("smufl", otherTechnical.getSmufl());
+        buildElementWithValueAndAttributes("other-technical", otherTechnical.getValue(), attributes);
     }
 
     public static Map<String, String> buildBendSound(BendSound bendSound) {

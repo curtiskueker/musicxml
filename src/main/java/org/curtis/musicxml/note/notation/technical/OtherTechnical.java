@@ -1,20 +1,14 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import org.curtis.musicxml.note.PlacementText;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("other technical")
 public class OtherTechnical extends Technical {
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "placement_text_id")
-    private PlacementText placementText;
+    @Column
+    private String value;
     @Column
     private String smufl;
 
@@ -22,12 +16,12 @@ public class OtherTechnical extends Technical {
 
     }
 
-    public PlacementText getPlacementText() {
-        return placementText;
+    public String getValue() {
+        return value;
     }
 
-    public void setPlacementText(PlacementText placementText) {
-        this.placementText = placementText;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getSmufl() {

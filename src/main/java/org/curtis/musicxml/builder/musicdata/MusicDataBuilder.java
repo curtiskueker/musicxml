@@ -65,10 +65,6 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         buildElementWithAttributes("extend", attributes);
     }
 
-    protected void buildPlacementText(String elementName, PlacementText placementText) {
-        buildElementWithValueAndAttributes(elementName, placementText.getValue(), DisplayBuilder.buildDisplay(placementText.getDisplay()));
-    }
-
     protected void buildOtherPlacementText(String elementName, PlacementText placementText, String smufl) {
         Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(placementText.getDisplay()));
         attributes.put("smufl", smufl);
