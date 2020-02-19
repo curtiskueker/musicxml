@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.notation.articulation;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.SymbolDirection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +20,7 @@ public class StrongAccent extends Articulation {
     private Display display;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location type = Location.UP;
+    private SymbolDirection type = SymbolDirection.UP;
 
     public StrongAccent() {
 
@@ -34,11 +34,11 @@ public class StrongAccent extends Articulation {
         this.display = display;
     }
 
-    public Location getType() {
+    public SymbolDirection getType() {
         return type;
     }
 
-    public void setType(Location type) {
+    public void setType(SymbolDirection type) {
         this.type = type;
     }
 }

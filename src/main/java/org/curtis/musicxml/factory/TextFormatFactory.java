@@ -1,7 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.display.EnclosureShape;
-import org.curtis.musicxml.display.Justify;
+import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.display.TextDirection;
 import org.curtis.musicxml.display.TextFormat;
 import org.curtis.util.MathUtil;
@@ -19,7 +19,7 @@ public class TextFormatFactory {
     public static TextFormat newTextFormat(Element element) {
         if (element == null) return null;
 
-        Justify justify = FactoryUtil.enumValue(Justify.class, element.getAttribute("justify"));
+        Halign justify = FactoryUtil.enumValue(Halign.class, element.getAttribute("justify"));
         Integer underline = StringUtil.getInteger(element.getAttribute("underline"));
         Integer overline = StringUtil.getInteger(element.getAttribute("overline"));
         Integer lineThrough = StringUtil.getInteger(element.getAttribute("line-through"));

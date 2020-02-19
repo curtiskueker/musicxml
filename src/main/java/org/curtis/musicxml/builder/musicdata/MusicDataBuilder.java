@@ -229,7 +229,6 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("height", BuilderUtil.stringValue(image.getHeight()));
         attributes.put("width", BuilderUtil.stringValue(image.getWidth()));
         attributes.putAll(DisplayBuilder.buildDisplay(image.getDisplay()));
-        attributes.put("valign", BuilderUtil.enumValue(image.getValignImage()));
         buildElementWithAttributes("image", attributes);
     }
 

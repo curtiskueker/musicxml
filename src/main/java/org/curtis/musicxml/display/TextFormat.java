@@ -16,7 +16,7 @@ public class TextFormat extends DatabaseItem {
     private String value;
     @Enumerated(EnumType.STRING)
     @Column
-    private Justify justify;
+    private Halign justify;
     @Column
     private Integer underline;
     @Column
@@ -52,11 +52,11 @@ public class TextFormat extends DatabaseItem {
         this.value = value;
     }
 
-    public Justify getJustify() {
+    public Halign getJustify() {
         return justify;
     }
 
-    public void setJustify(Justify justify) {
+    public void setJustify(Halign justify) {
         this.justify = justify;
     }
 

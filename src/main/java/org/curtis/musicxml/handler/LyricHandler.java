@@ -1,6 +1,6 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
@@ -112,7 +112,7 @@ public class LyricHandler extends BaseHandler {
         lyric.setEditorial(FormattingFactory.newEditorial(element));
         lyric.setNumber(element.getAttribute("number"));
         lyric.setName(element.getAttribute("name"));
-        lyric.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+        lyric.setJustify(FactoryUtil.enumValue(Halign.class, element.getAttribute("justify")));
         lyric.setDisplay(DisplayFactory.newDisplay(element));
         lyric.setPrintObject(FormattingFactory.getPrintObject(element));
         lyric.setTimeOnly(element.getAttribute("time-only"));

@@ -1,8 +1,8 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Halign;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ public class GroupName extends DatabaseItem {
     private Display display;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location justify;
+    private Halign justify;
 
     public GroupName() {
 
@@ -45,11 +45,11 @@ public class GroupName extends DatabaseItem {
         this.display = display;
     }
 
-    public Location getJustify() {
+    public Halign getJustify() {
         return justify;
     }
 
-    public void setJustify(Location justify) {
+    public void setJustify(Halign justify) {
         this.justify = justify;
     }
 }

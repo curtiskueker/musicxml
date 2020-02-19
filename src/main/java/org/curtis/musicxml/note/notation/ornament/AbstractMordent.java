@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.notation.ornament;
 
-import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.display.Placement;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -15,10 +15,10 @@ public abstract class AbstractMordent extends PlacedTrillSound {
     private Boolean longMordent;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location approach;
+    private Placement approach;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location departure;
+    private Placement departure;
 
     public Boolean getLongMordent() {
         return longMordent;
@@ -28,19 +28,19 @@ public abstract class AbstractMordent extends PlacedTrillSound {
         this.longMordent = longMordent;
     }
 
-    public Location getApproach() {
+    public Placement getApproach() {
         return approach;
     }
 
-    public void setApproach(Location approach) {
+    public void setApproach(Placement approach) {
         this.approach = approach;
     }
 
-    public Location getDeparture() {
+    public Placement getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Location departure) {
+    public void setDeparture(Placement departure) {
         this.departure = departure;
     }
 }

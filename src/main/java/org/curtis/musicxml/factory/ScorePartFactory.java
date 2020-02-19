@@ -1,6 +1,5 @@
 package org.curtis.musicxml.factory;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.NameDisplay;
@@ -13,6 +12,7 @@ import org.curtis.musicxml.common.play.Play;
 import org.curtis.musicxml.common.play.PlayType;
 import org.curtis.musicxml.common.play.SemiPitchedType;
 import org.curtis.musicxml.common.play.SemiPitched;
+import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.score.GroupName;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.util.MathUtil;
@@ -33,7 +33,7 @@ public class ScorePartFactory {
         GroupName groupName = new GroupName();
         groupName.setGroupName(XmlUtil.getElementText(element));
         groupName.setDisplay(DisplayFactory.newDisplay(element));
-        groupName.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+        groupName.setJustify(FactoryUtil.enumValue(Halign.class, element.getAttribute("justify")));
 
         return groupName;
     }
@@ -57,8 +57,8 @@ public class ScorePartFactory {
         PartName partName = new PartName();
         partName.setPartName(XmlUtil.getElementText(element));
         partName.setDisplay(DisplayFactory.newDisplay(element));
-        partName.setPartNamePrintObject(FormattingFactory.getPrintObject(element));
-        partName.setPartNameJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+        partName.setPrintObject(FormattingFactory.getPrintObject(element));
+        partName.setJustify(FactoryUtil.enumValue(Halign.class, element.getAttribute("justify")));
 
         return partName;
     }

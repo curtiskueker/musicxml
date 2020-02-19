@@ -1,7 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -9,8 +8,6 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -37,9 +34,6 @@ public class Frame extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "valign_image")
-    private Location valignImage;
     @Column(precision = 12, scale = 4)
     private BigDecimal height;
     @Column(precision = 12, scale = 4)
@@ -89,14 +83,6 @@ public class Frame extends DatabaseItem {
 
     public void setDisplay(Display display) {
         this.display = display;
-    }
-
-    public Location getValignImage() {
-        return valignImage;
-    }
-
-    public void setValignImage(Location valignImage) {
-        this.valignImage = valignImage;
     }
 
     public BigDecimal getHeight() {

@@ -3,7 +3,7 @@ package org.curtis.lilypond;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Font;
-import org.curtis.musicxml.display.Justify;
+import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.TypedText;
@@ -143,7 +143,7 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
                     CreditWords creditWords = (CreditWords)creditDisplay;
                     TextFormat creditWordsTextFormat = creditWords.getTextFormat();
                     if (creditWordsTextFormat == null) continue;
-                    Justify justify = creditWordsTextFormat.getJustify();
+                    Halign justify = creditWordsTextFormat.getJustify();
                     if (justify != null) {
                         switch (justify) {
                             case LEFT:

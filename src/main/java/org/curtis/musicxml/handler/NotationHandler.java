@@ -1,7 +1,9 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.display.Orientation;
+import org.curtis.musicxml.display.SymbolDirection;
+import org.curtis.musicxml.display.Valign;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
@@ -47,7 +49,7 @@ public class NotationHandler extends BaseHandler {
                     tied.setLineType(NotationFactory.newLineType(notationsSubelement));
                     tied.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     tied.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
-                    tied.setOrientation(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("orientation")));
+                    tied.setOrientation(FactoryUtil.enumValue(Orientation.class, notationsSubelement.getAttribute("orientation")));
                     tied.setBezier(NotationFactory.newBezier(notationsSubelement));
                     notation = tied;
                     break;
@@ -58,7 +60,7 @@ public class NotationHandler extends BaseHandler {
                     slur.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slur.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
                     slur.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
-                    slur.setOrientation(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("orientation")));
+                    slur.setOrientation(FactoryUtil.enumValue(Orientation.class, notationsSubelement.getAttribute("orientation")));
                     slur.setBezier(NotationFactory.newBezier(notationsSubelement));
                     notation = slur;
                     break;
@@ -110,13 +112,13 @@ public class NotationHandler extends BaseHandler {
                 case "arpeggiate":
                     Arpeggiate arpeggiate = new Arpeggiate();
                     arpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
-                    arpeggiate.setDirection(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("direction")));
+                    arpeggiate.setDirection(FactoryUtil.enumValue(SymbolDirection.class, notationsSubelement.getAttribute("direction")));
                     arpeggiate.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = arpeggiate;
                     break;
                 case "non-arpeggiate":
                     NonArpeggiate nonArpeggiate = new NonArpeggiate();
-                    nonArpeggiate.setType(FactoryUtil.enumValue(Location.class, notationsSubelement.getAttribute("type")));
+                    nonArpeggiate.setType(FactoryUtil.enumValue(Valign.class, notationsSubelement.getAttribute("type")));
                     nonArpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     nonArpeggiate.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = nonArpeggiate;

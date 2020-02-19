@@ -1,7 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.display.Placement;
 import org.curtis.musicxml.note.notation.ornament.Haydn;
 import org.curtis.musicxml.note.notation.ornament.InvertedVerticalTurn;
 import org.curtis.musicxml.util.TypeUtil;
@@ -78,8 +78,8 @@ public class OrnamentFactory {
 
         AbstractMordent abstractMordent = (AbstractMordent)placedTrillSound;
         abstractMordent.setLongMordent(TypeUtil.getYesNo(element.getAttribute("long")));
-        abstractMordent.setApproach(FactoryUtil.enumValue(Location.class, element.getAttribute("approach")));
-        abstractMordent.setDeparture(FactoryUtil.enumValue(Location.class, element.getAttribute("departure")));
+        abstractMordent.setApproach(FactoryUtil.enumValue(Placement.class, element.getAttribute("approach")));
+        abstractMordent.setDeparture(FactoryUtil.enumValue(Placement.class, element.getAttribute("departure")));
 
         return abstractMordent;
     }

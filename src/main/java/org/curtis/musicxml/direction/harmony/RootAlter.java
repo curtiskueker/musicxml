@@ -1,8 +1,8 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Halign;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -28,7 +28,7 @@ public class RootAlter extends DatabaseItem {
     private Display display;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location location;
+    private Halign location;
 
     public RootAlter() {
 
@@ -58,11 +58,11 @@ public class RootAlter extends DatabaseItem {
         this.display = display;
     }
 
-    public Location getLocation() {
+    public Halign getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(Halign location) {
         this.location = location;
     }
 }

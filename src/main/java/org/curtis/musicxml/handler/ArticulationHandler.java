@@ -1,6 +1,6 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.common.Location;
+import org.curtis.musicxml.display.SymbolDirection;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.NotationFactory;
@@ -60,7 +60,7 @@ public class ArticulationHandler extends BaseHandler {
                 case "strong-accent":
                     StrongAccent strongAccent = new StrongAccent();
                     strongAccent.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    strongAccent.setType(FactoryUtil.enumValue(Location.class, articulationsSubelement.getAttribute("type")));
+                    strongAccent.setType(FactoryUtil.enumValue(SymbolDirection.class, articulationsSubelement.getAttribute("type")));
                     articulation = strongAccent;
                     break;
                 case "staccato":

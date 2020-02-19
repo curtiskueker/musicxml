@@ -1,8 +1,8 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Orientation;
 import org.curtis.musicxml.note.LineType;
 
 import javax.persistence.CascadeType;
@@ -34,7 +34,7 @@ public class Tied extends Notation {
     private Display display;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location orientation;
+    private Orientation orientation;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bezier_id")
     private Bezier bezier;
@@ -89,11 +89,11 @@ public class Tied extends Notation {
         this.display = display;
     }
 
-    public Location getOrientation() {
+    public Orientation getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(Location orientation) {
+    public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 

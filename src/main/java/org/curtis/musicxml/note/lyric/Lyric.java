@@ -2,8 +2,8 @@ package org.curtis.musicxml.note.lyric;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.hibernate.annotations.Type;
@@ -40,7 +40,7 @@ public class Lyric extends DatabaseItem {
     private String name;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location justify;
+    private Halign justify;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
@@ -111,11 +111,11 @@ public class Lyric extends DatabaseItem {
         this.name = name;
     }
 
-    public Location getJustify() {
+    public Halign getJustify() {
         return justify;
     }
 
-    public void setJustify(Location justify) {
+    public void setJustify(Halign justify) {
         this.justify = justify;
     }
 

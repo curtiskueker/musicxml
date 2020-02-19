@@ -2,7 +2,6 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.attributes.Image;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.direction.Sound;
 import org.curtis.musicxml.direction.SoundMidi;
@@ -67,6 +66,7 @@ import org.curtis.musicxml.direction.directiontype.percussion.Timpani;
 import org.curtis.musicxml.direction.directiontype.percussion.TipDirection;
 import org.curtis.musicxml.direction.directiontype.percussion.Wood;
 import org.curtis.musicxml.direction.directiontype.percussion.WoodType;
+import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -154,7 +154,7 @@ public class DirectionFactory {
                 if(beatUnitElement != null) metronome = newBeatMetronome(element);
                 else if(metronomeNoteElement != null) metronome = newNoteMetronome(element);
                 else return null;
-                metronome.setJustify(FactoryUtil.enumValue(Location.class, element.getAttribute("justify")));
+                metronome.setJustify(FactoryUtil.enumValue(Halign.class, element.getAttribute("justify")));
                 metronome.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
                 directionType = metronome;
                 break;
@@ -539,7 +539,6 @@ public class DirectionFactory {
         image.setHeight(MathUtil.newBigDecimal(element.getAttribute("height")));
         image.setWidth(MathUtil.newBigDecimal(element.getAttribute("width")));
         image.setDisplay(DisplayFactory.newDisplay(element));
-        image.setValignImage(FactoryUtil.enumValue(Location.class, element.getAttribute("valign")));
 
         return image;
     }

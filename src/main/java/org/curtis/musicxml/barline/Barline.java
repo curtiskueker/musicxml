@@ -1,7 +1,6 @@
 package org.curtis.musicxml.barline;
 
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.display.Display;
@@ -58,7 +57,7 @@ public class Barline extends MusicData {
     private Repeat repeat;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location location;
+    private BarlineLocation location;
     @Column
     private String segno;
     @Column
@@ -142,11 +141,11 @@ public class Barline extends MusicData {
         this.repeat = repeat;
     }
 
-    public Location getLocation() {
+    public BarlineLocation getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(BarlineLocation location) {
         this.location = location;
     }
 

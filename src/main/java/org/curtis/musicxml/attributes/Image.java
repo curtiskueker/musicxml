@@ -1,13 +1,14 @@
 package org.curtis.musicxml.attributes;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
+import org.curtis.musicxml.display.Display;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 @Entity
@@ -21,9 +22,9 @@ public class Image extends DirectionType {
     private BigDecimal height;
     @Column(precision = 12, scale = 4)
     private BigDecimal width;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "valign_image")
-    private Location valignImage;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "display_id")
+    private Display display;
 
     public Image() {
 
@@ -61,11 +62,13 @@ public class Image extends DirectionType {
         this.width = width;
     }
 
-    public Location getValignImage() {
-        return valignImage;
+    @Override
+    public Display getDisplay() {
+        return display;
     }
 
-    public void setValignImage(Location valignImage) {
-        this.valignImage = valignImage;
+    @Override
+    public void setDisplay(Display display) {
+        this.display = display;
     }
 }

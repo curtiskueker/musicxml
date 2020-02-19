@@ -1,7 +1,6 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.harmony.Barre;
 import org.curtis.musicxml.direction.harmony.Bass;
 import org.curtis.musicxml.direction.harmony.BassAlter;
@@ -25,6 +24,7 @@ import org.curtis.musicxml.direction.harmony.KindValue;
 import org.curtis.musicxml.direction.harmony.Root;
 import org.curtis.musicxml.direction.harmony.RootAlter;
 import org.curtis.musicxml.direction.harmony.RootStep;
+import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.factory.DirectionFactory;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
@@ -70,7 +70,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         rootAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(rootAlterElement)));
                         rootAlter.setPrintObject(FormattingFactory.getPrintObject(rootAlterElement));
                         rootAlter.setDisplay(DisplayFactory.newDisplay(rootAlterElement));
-                        rootAlter.setLocation(FactoryUtil.enumValue(Location.class, rootAlterElement.getAttribute("location")));
+                        rootAlter.setLocation(FactoryUtil.enumValue(Halign.class, rootAlterElement.getAttribute("location")));
                         root.setRootAlter(rootAlter);
                     }
                     harmonyChord = root;
@@ -112,7 +112,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         bassAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(bassAlterElement)));
                         bassAlter.setPrintObject(FormattingFactory.getPrintObject(bassAlterElement));
                         bassAlter.setDisplay(DisplayFactory.newDisplay(bassAlterElement));
-                        bassAlter.setLocation(FactoryUtil.enumValue(Location.class, bassAlterElement.getAttribute("location")));
+                        bassAlter.setLocation(FactoryUtil.enumValue(Halign.class, bassAlterElement.getAttribute("location")));
                         bass.setBassAlter(bassAlter);
                     }
                     if (harmonyChord != null) harmonyChord.setBass(bass);
@@ -149,7 +149,6 @@ public class HarmonyHandler extends MusicDataHandler {
                     frame.setFrameStrings(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "frame-strings")));
                     frame.setFrameFrets(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "frame-frets")));
                     frame.setDisplay(DisplayFactory.newDisplay(harmonySubelement));
-                    frame.setValignImage(FactoryUtil.enumValue(Location.class, harmonySubelement.getAttribute("valign")));
                     frame.setHeight(MathUtil.newBigDecimal(harmonySubelement.getAttribute("height")));
                     frame.setWidth(MathUtil.newBigDecimal(harmonySubelement.getAttribute("width")));
                     frame.setUnplayed(harmonySubelement.getAttribute("unplayed"));
@@ -158,7 +157,7 @@ public class HarmonyHandler extends MusicDataHandler {
                         FirstFret firstFret = new FirstFret();
                         firstFret.setValue(StringUtil.getInteger(XmlUtil.getElementText(firstFretElement)));
                         firstFret.setText(firstFretElement.getAttribute("text"));
-                        firstFret.setLocation(FactoryUtil.enumValue(Location.class, firstFretElement.getAttribute("location")));
+                        firstFret.setLocation(FactoryUtil.enumValue(Halign.class, firstFretElement.getAttribute("location")));
                         frame.setFirstFret(firstFret);
                     }
                     List<Element> frameNoteElements = XmlUtil.getChildElements(harmonySubelement, "frame-note");

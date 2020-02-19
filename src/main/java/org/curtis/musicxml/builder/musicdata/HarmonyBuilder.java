@@ -103,7 +103,6 @@ public class HarmonyBuilder extends MusicDataBuilder {
         if (frame != null) {
             buildOpenElement("frame");
             buildAttributes(DisplayBuilder.buildDisplay(frame.getDisplay()));
-            buildAttribute("valign", frame.getValignImage());
             buildAttribute("height", frame.getHeight());
             buildAttribute("width", frame.getWidth());
             buildAttribute("unplayed", frame.getUnplayed());

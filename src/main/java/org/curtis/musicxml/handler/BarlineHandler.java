@@ -2,12 +2,12 @@ package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.barline.BarStyle;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.barline.BarlineLocation;
 import org.curtis.musicxml.barline.Ending;
 import org.curtis.musicxml.barline.EndingType;
 import org.curtis.musicxml.barline.Repeat;
 import org.curtis.musicxml.barline.RepeatDirection;
 import org.curtis.musicxml.barline.Winged;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
@@ -30,7 +30,7 @@ public class BarlineHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Barline barline = new Barline();
         barline.setEditorial(FormattingFactory.newEditorial(element));
-        barline.setLocation(FactoryUtil.enumValue(Location.class, element.getAttribute("location")));
+        barline.setLocation(FactoryUtil.enumValue(BarlineLocation.class, element.getAttribute("location")));
         barline.setSegno(element.getAttribute("segno"));
         barline.setCoda(element.getAttribute("coda"));
         barline.setDivisions(MathUtil.newBigDecimal(element.getAttribute("divisions")));

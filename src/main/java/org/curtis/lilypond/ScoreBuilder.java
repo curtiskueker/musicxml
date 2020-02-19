@@ -163,14 +163,14 @@ public class ScoreBuilder extends LilypondBuilder {
         appendStartSection("\\with {");
 
         PartName partName = scorePart.getPartName();
-        if (TypeUtil.getBooleanDefaultYes(partName.getPartNamePrintObject())) {
+        if (TypeUtil.getBooleanDefaultYes(partName.getPrintObject())) {
             append("instrumentName = #\"");
             append(partName.getPartName());
             appendLine("\"");
         }
 
         PartName partAbbreviation = scorePart.getPartAbbreviation();
-        if (partAbbreviation != null && TypeUtil.getBooleanDefaultYes(partAbbreviation.getPartNamePrintObject())) {
+        if (partAbbreviation != null && TypeUtil.getBooleanDefaultYes(partAbbreviation.getPrintObject())) {
             append("shortInstrumentName = #\"");
             append(partAbbreviation.getPartName());
             appendLine("\"");
@@ -189,14 +189,14 @@ public class ScoreBuilder extends LilypondBuilder {
 
         String partId = scorePart.getScorePartId();
         PartName partName = scorePart.getPartName();
-        if (TypeUtil.getBooleanDefaultYes(partName.getPartNamePrintObject())) {
+        if (TypeUtil.getBooleanDefaultYes(partName.getPrintObject())) {
             append("\\set GrandStaff.instrumentName = #\"");
             append(partName.getPartName());
             appendLine("\"");
         }
 
         PartName partAbbreviation = scorePart.getPartAbbreviation();
-        if (partAbbreviation != null && TypeUtil.getBooleanDefaultYes(partAbbreviation.getPartNamePrintObject())) {
+        if (partAbbreviation != null && TypeUtil.getBooleanDefaultYes(partAbbreviation.getPrintObject())) {
             append("\\set GrandStaff.shortInstrumentName = #\"");
             append(partAbbreviation.getPartName());
             appendLine("\"");

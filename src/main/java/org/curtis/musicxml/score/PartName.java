@@ -1,8 +1,8 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Halign;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -22,12 +22,12 @@ public class PartName extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
-    @Column(name = "part_name_print_object")
+    @Column(name = "print_object")
     @Type(type="yes_no")
-    private Boolean partNamePrintObject;
+    private Boolean printObject;
     @Enumerated(EnumType.STRING)
-    @Column(name = "part_name_justify")
-    private Location partNameJustify;
+    @Column
+    private Halign justify;
 
     public PartName() {
 
@@ -49,19 +49,19 @@ public class PartName extends DatabaseItem {
         this.display = display;
     }
 
-    public Boolean getPartNamePrintObject() {
-        return partNamePrintObject;
+    public Boolean getPrintObject() {
+        return printObject;
     }
 
-    public void setPartNamePrintObject(Boolean partNamePrintObject) {
-        this.partNamePrintObject = partNamePrintObject;
+    public void setPrintObject(Boolean printObject) {
+        this.printObject = printObject;
     }
 
-    public Location getPartNameJustify() {
-        return partNameJustify;
+    public Halign getJustify() {
+        return justify;
     }
 
-    public void setPartNameJustify(Location partNameJustify) {
-        this.partNameJustify = partNameJustify;
+    public void setJustify(Halign justify) {
+        this.justify = justify;
     }
 }

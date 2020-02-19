@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.notation;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.Valign;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 public class NonArpeggiate extends Notation {
     @Enumerated(EnumType.STRING)
     @Column(name = "type_value")
-    private Location type;
+    private Valign type;
     @Column(name = "notation_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)
@@ -28,11 +28,11 @@ public class NonArpeggiate extends Notation {
 
     }
 
-    public Location getType() {
+    public Valign getType() {
         return type;
     }
 
-    public void setType(Location type) {
+    public void setType(Valign type) {
         this.type = type;
     }
 

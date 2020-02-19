@@ -12,9 +12,9 @@ import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.barline.BarlineLocation;
 import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
@@ -246,10 +246,10 @@ public class MeasureBuilder extends LilypondBuilder {
                 continue;
             } else if(musicData instanceof Barline) {
                 lastTuplet = null;
-                // hold on the final barline until the very end
+                // hold onto the final barline until the very end
                 Barline barline = (Barline)musicData;
-                Location barlineLocation = barline.getLocation();
-                if (barlineLocation == null || barlineLocation == Location.RIGHT) {
+                BarlineLocation barlineLocation = barline.getLocation();
+                if (barlineLocation == null || barlineLocation == BarlineLocation.RIGHT) {
                     currentBarline = barline;
                     continue;
                 }

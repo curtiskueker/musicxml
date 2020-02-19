@@ -314,9 +314,9 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         if (partName == null) return;
 
         Map<String, String> attributes = new HashMap<>();
-        attributes.put("print-object", BuilderUtil.yesOrNo(partName.getPartNamePrintObject()));
+        attributes.put("print-object", BuilderUtil.yesOrNo(partName.getPrintObject()));
         attributes.putAll(DisplayBuilder.buildDisplay(partName.getDisplay()));
-        attributes.put("justify", BuilderUtil.enumValue(partName.getPartNameJustify()));
+        attributes.put("justify", BuilderUtil.enumValue(partName.getJustify()));
         buildElementWithValueAndAttributes(elementName, partName.getPartName(), attributes);
     }
 

@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note.notation;
 
-import org.curtis.musicxml.common.Location;
 import org.curtis.musicxml.display.Display;
+import org.curtis.musicxml.display.SymbolDirection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +19,7 @@ public class Arpeggiate extends Notation {
     private Integer number;
     @Enumerated(EnumType.STRING)
     @Column
-    private Location direction;
+    private SymbolDirection direction;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
@@ -36,11 +36,11 @@ public class Arpeggiate extends Notation {
         this.number = number;
     }
 
-    public Location getDirection() {
+    public SymbolDirection getDirection() {
         return direction;
     }
 
-    public void setDirection(Location direction) {
+    public void setDirection(SymbolDirection direction) {
         this.direction = direction;
     }
 
