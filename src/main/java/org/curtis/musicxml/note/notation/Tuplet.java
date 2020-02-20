@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.LineShape;
 import org.hibernate.annotations.Type;
 
@@ -40,9 +39,6 @@ public class Tuplet extends Notation {
     @Enumerated(EnumType.STRING)
     @Column(name = "line_shape")
     private LineShape lineShape;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
 
     public Tuplet() {
 
@@ -110,13 +106,5 @@ public class Tuplet extends Notation {
 
     public void setLineShape(LineShape lineShape) {
         this.lineShape = lineShape;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 }

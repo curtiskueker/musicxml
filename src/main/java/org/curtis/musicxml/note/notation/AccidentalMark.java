@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.LevelDisplay;
-import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.AccidentalType;
 
 import javax.persistence.CascadeType;
@@ -22,9 +21,6 @@ public class AccidentalMark extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "level_display_id")
     private LevelDisplay levelDisplay;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
     @Column
     private String smufl;
 
@@ -46,14 +42,6 @@ public class AccidentalMark extends Notation {
 
     public void setLevelDisplay(LevelDisplay levelDisplay) {
         this.levelDisplay = levelDisplay;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public String getSmufl() {

@@ -2,9 +2,7 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.converter.FermataShapeConverter;
-import org.curtis.musicxml.display.Display;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
@@ -25,9 +23,6 @@ public class Fermata extends Notation {
     @Enumerated(EnumType.STRING)
     @Column(name = "type_value")
     private FermataType type;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
     @ManyToOne
     @JoinColumn(name = "barline_id")
     private Barline barline;
@@ -52,14 +47,6 @@ public class Fermata extends Notation {
 
     public void setType(FermataType type) {
         this.type = type;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public Barline getBarline() {

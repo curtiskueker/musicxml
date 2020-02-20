@@ -51,7 +51,6 @@ public class NotationFactory {
         tuplet.setShowNumber(newShowTuplet(element.getAttribute("show-number")));
         tuplet.setShowType(newShowTuplet(element.getAttribute("show-type")));
         tuplet.setLineShape(newLineShape(element));
-        tuplet.setDisplay(DisplayFactory.newDisplay(element));
 
         return tuplet;
     }

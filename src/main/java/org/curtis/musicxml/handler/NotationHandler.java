@@ -48,7 +48,6 @@ public class NotationHandler extends BaseHandler {
                     tied.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     tied.setLineType(NotationFactory.newLineType(notationsSubelement));
                     tied.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    tied.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     tied.setOrientation(FactoryUtil.enumValue(Orientation.class, notationsSubelement.getAttribute("orientation")));
                     tied.setBezier(NotationFactory.newBezier(notationsSubelement));
                     notation = tied;
@@ -59,7 +58,6 @@ public class NotationHandler extends BaseHandler {
                     slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slur.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slur.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    slur.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     slur.setOrientation(FactoryUtil.enumValue(Orientation.class, notationsSubelement.getAttribute("orientation")));
                     slur.setBezier(NotationFactory.newBezier(notationsSubelement));
                     notation = slur;
@@ -74,7 +72,6 @@ public class NotationHandler extends BaseHandler {
                     glissando.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     glissando.setLineType(NotationFactory.newLineType(notationsSubelement));
                     glissando.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    glissando.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = glissando;
                     break;
                 case "slide":
@@ -84,7 +81,6 @@ public class NotationHandler extends BaseHandler {
                     slide.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slide.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slide.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
-                    slide.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     slide.setBendSound(TechnicalFactory.newBendSound(notationsSubelement));
                     notation = slide;
                     break;
@@ -113,14 +109,12 @@ public class NotationHandler extends BaseHandler {
                     Arpeggiate arpeggiate = new Arpeggiate();
                     arpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     arpeggiate.setDirection(FactoryUtil.enumValue(SymbolDirection.class, notationsSubelement.getAttribute("direction")));
-                    arpeggiate.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = arpeggiate;
                     break;
                 case "non-arpeggiate":
                     NonArpeggiate nonArpeggiate = new NonArpeggiate();
                     nonArpeggiate.setType(FactoryUtil.enumValue(Valign.class, notationsSubelement.getAttribute("type")));
                     nonArpeggiate.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
-                    nonArpeggiate.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     notation = nonArpeggiate;
                     break;
                 case "accidental-mark":
@@ -132,12 +126,12 @@ public class NotationHandler extends BaseHandler {
                     otherNotation.setType(FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
                     otherNotation.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     otherNotation.setPrintObject(FormattingFactory.getPrintObject(notationsSubelement));
-                    otherNotation.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                     otherNotation.setSmufl(notationsSubelement.getAttribute("smufl"));
                     notation = otherNotation;
                     break;
             }
             if (notation != null) {
+                notation.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                 notationList.add(notation);
                 notation.setNotations(notations);
             }

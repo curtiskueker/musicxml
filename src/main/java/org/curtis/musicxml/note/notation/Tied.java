@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Orientation;
 import org.curtis.musicxml.note.LineType;
 
@@ -29,9 +28,6 @@ public class Tied extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
     @Enumerated(EnumType.STRING)
     @Column
     private Orientation orientation;
@@ -79,14 +75,6 @@ public class Tied extends Notation {
 
     public void setDashedFormatting(DashedFormatting dashedFormatting) {
         this.dashedFormatting = dashedFormatting;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public Orientation getOrientation() {
