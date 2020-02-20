@@ -71,16 +71,6 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
     }
 
-    protected void buildLine(String elementName, Line line) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put("line-shape", BuilderUtil.enumValue(line.getLineShape()));
-        attributes.put("line-type", BuilderUtil.enumValue(line.getLineType()));
-        attributes.put("line-length", BuilderUtil.enumValue(line.getLineLength()));
-        attributes.putAll(FormattingBuilder.buildDashedFormatting(line.getDashedFormatting()));
-        attributes.putAll(DisplayBuilder.buildDisplay(line.getDisplay()));
-        buildElementWithAttributes(elementName, attributes);
-    }
-
     protected void buildStyleText(String elementName, StyleText styleText) {
         if (styleText ==  null) return;
 

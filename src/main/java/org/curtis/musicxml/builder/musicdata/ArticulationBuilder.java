@@ -2,6 +2,8 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
+import org.curtis.musicxml.builder.FormattingBuilder;
+import org.curtis.musicxml.note.Line;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
@@ -9,6 +11,7 @@ import org.curtis.musicxml.note.notation.articulation.Caesura;
 import org.curtis.musicxml.note.notation.articulation.DetachedLegato;
 import org.curtis.musicxml.note.notation.articulation.Doit;
 import org.curtis.musicxml.note.notation.articulation.Falloff;
+import org.curtis.musicxml.note.notation.articulation.LinedArticulation;
 import org.curtis.musicxml.note.notation.articulation.OtherArticulation;
 import org.curtis.musicxml.note.notation.articulation.Plop;
 import org.curtis.musicxml.note.notation.articulation.Scoop;
@@ -86,19 +89,19 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildScoop(Scoop scoop) {
-        buildLine("scoop", scoop.getLine());
+        buildLinedArticulation("scoop", scoop);
     }
 
     private void buildPlop(Plop plop) {
-        buildLine("plop", plop.getLine());
+        buildLinedArticulation("plop", plop);
     }
 
     private void buildDoit(Doit doit) {
-        buildLine("doit", doit.getLine());
+        buildLinedArticulation("doit", doit);
     }
 
     private void buildFalloff(Falloff falloff) {
-        buildLine("falloff", falloff.getLine());
+        buildLinedArticulation("falloff", falloff);
     }
 
     private void buildBreathMark(BreathMark breathMark) {
@@ -122,6 +125,19 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildOtherArticulation(OtherArticulation otherArticulation) {
-        buildOtherPlacementText("other-articulation", otherArticulation.getPlacementText(), otherArticulation.getSmufl());
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(otherArticulation.getDisplay()));
+        attributes.put("smufl", otherArticulation.getSmufl());
+        buildElementWithValueAndAttributes("other-articulation", otherArticulation.getValue(), attributes);
+    }
+
+    private void buildLinedArticulation(String elementName, LinedArticulation linedArticulation) {
+        Map<String, String> attributes = new HashMap<>();
+        Line line = linedArticulation.getLine();
+        attributes.put("line-shape", BuilderUtil.enumValue(line.getLineShape()));
+        attributes.put("line-type", BuilderUtil.enumValue(line.getLineType()));
+        attributes.put("line-length", BuilderUtil.enumValue(line.getLineLength()));
+        attributes.putAll(FormattingBuilder.buildDashedFormatting(line.getDashedFormatting()));
+        attributes.putAll(DisplayBuilder.buildDisplay(linedArticulation.getDisplay()));
+        buildElementWithAttributes(elementName, attributes);
     }
 }

@@ -113,7 +113,6 @@ public class NotationFactory {
         line.setLineType(newLineType(element));
         line.setLineLength(FactoryUtil.enumValue(LineLength.class, element.getAttribute("line-length")));
         line.setDashedFormatting(FormattingFactory.newDashedFormatting(element));
-        line.setDisplay(DisplayFactory.newDisplay(element));
 
         return line;
     }

@@ -4,7 +4,6 @@ import org.curtis.musicxml.display.SymbolDirection;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.NotationFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.note.notation.Articulations;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
@@ -53,40 +52,27 @@ public class ArticulationHandler extends BaseHandler {
             Articulation articulation = null;
             switch (articulationsSubelement.getTagName()) {
                 case "accent":
-                    Accent accent = new Accent();
-                    accent.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = accent;
+                    articulation = new Accent();
                     break;
                 case "strong-accent":
                     StrongAccent strongAccent = new StrongAccent();
-                    strongAccent.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     strongAccent.setType(FactoryUtil.enumValue(SymbolDirection.class, articulationsSubelement.getAttribute("type")));
                     articulation = strongAccent;
                     break;
                 case "staccato":
-                    Staccato staccato = new Staccato();
-                    staccato.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = staccato;
+                    articulation = new Staccato();
                     break;
                 case "tenuto":
-                    Tenuto tenuto = new Tenuto();
-                    tenuto.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = tenuto;
+                    articulation = new Tenuto();
                     break;
                 case "detached-legato":
-                    DetachedLegato detachedLegato = new DetachedLegato();
-                    detachedLegato.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = detachedLegato;
+                    articulation = new DetachedLegato();
                     break;
                 case "staccatissimo":
-                    Staccatissimo staccatissimo = new Staccatissimo();
-                    staccatissimo.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = staccatissimo;
+                    articulation = new Staccatissimo();
                     break;
                 case "spiccato":
-                    Spiccato spiccato = new Spiccato();
-                    spiccato.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = spiccato;
+                    articulation = new Spiccato();
                     break;
                 case "scoop":
                     Scoop scoop = new Scoop();
@@ -112,38 +98,33 @@ public class ArticulationHandler extends BaseHandler {
                     BreathMark breathMark = new BreathMark();
                     String breathMarkValue = XmlUtil.getElementText(articulationsSubelement);
                     breathMark.setBreathMarkValue(FactoryUtil.enumValue(BreathMarkType.class, breathMarkValue));
-                    breathMark.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = breathMark;
                     break;
                 case "caesura":
                     Caesura caesura = new Caesura();
                     caesura.setCaesuraValue(FactoryUtil.enumValue(CaesuraValue.class, XmlUtil.getElementText(articulationsSubelement)));
-                    caesura.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
                     articulation = caesura;
                     break;
                 case "stress":
-                    Stress stress = new Stress();
-                    stress.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = stress;
+                    articulation = new Stress();
                     break;
                 case "unstress":
-                    Unstress unstress = new Unstress();
-                    unstress.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = unstress;
+                    articulation = new Unstress();
                     break;
                 case "soft-accent":
-                    SoftAccent softAccent = new SoftAccent();
-                    softAccent.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
-                    articulation = softAccent;
+                    articulation = new SoftAccent();
                     break;
                 case "other-articulation":
                     OtherArticulation otherArticulation = new OtherArticulation();
-                    otherArticulation.setPlacementText(PlacementFactory.newPlacementText(articulationsSubelement));
+                    otherArticulation.setValue(XmlUtil.getElementText(articulationsSubelement));
                     otherArticulation.setSmufl(articulationsSubelement.getAttribute("smufl"));
                     articulation = otherArticulation;
                     break;
             }
-            if (articulation != null) articulations.getArticulationList().add(articulation);
+            if (articulation != null) {
+                articulation.setDisplay(DisplayFactory.newDisplay(articulationsSubelement));
+                articulations.getArticulationList().add(articulation);
+            }
         }
     }
 }
