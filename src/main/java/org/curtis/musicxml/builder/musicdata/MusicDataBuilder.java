@@ -28,8 +28,6 @@ import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.display.FormattedDisplay;
 import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.note.AccidentalText;
-import org.curtis.musicxml.note.Line;
-import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.notation.Fermata;
@@ -63,12 +61,6 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(extend.getType()));
         attributes.putAll(DisplayBuilder.buildDisplay(extend.getDisplay()));
         buildElementWithAttributes("extend", attributes);
-    }
-
-    protected void buildOtherPlacementText(String elementName, PlacementText placementText, String smufl) {
-        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(placementText.getDisplay()));
-        attributes.put("smufl", smufl);
-        buildElementWithValueAndAttributes(elementName, placementText.getValue(), attributes);
     }
 
     protected void buildStyleText(String elementName, StyleText styleText) {

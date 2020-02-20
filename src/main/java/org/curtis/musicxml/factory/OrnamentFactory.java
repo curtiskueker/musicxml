@@ -62,7 +62,6 @@ public class OrnamentFactory {
                 return null;
         }
 
-        placedTrillSound.setDisplay(DisplayFactory.newDisplay(element));
         placedTrillSound.setTrillSound(newTrillSound(element));
 
         return placedTrillSound;
@@ -106,7 +105,6 @@ public class OrnamentFactory {
                 return null;
         }
 
-        horizontalTurn.setDisplay(DisplayFactory.newDisplay(element));
         horizontalTurn.setTrillSound(newTrillSound(element));
         horizontalTurn.setSlash(TypeUtil.getYesNo(element.getAttribute("slash")));
 
@@ -119,7 +117,6 @@ public class OrnamentFactory {
         WavyLine wavyLine = new WavyLine();
         wavyLine.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
         wavyLine.setNumber(StringUtil.getInteger(element.getAttribute("number")));
-        wavyLine.setDisplay(DisplayFactory.newDisplay(element));
         wavyLine.setTrillSound(OrnamentFactory.newTrillSound(element));
 
         return wavyLine;

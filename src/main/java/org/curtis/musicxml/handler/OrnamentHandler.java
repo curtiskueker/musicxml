@@ -4,7 +4,6 @@ import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.note.notation.AccidentalMark;
 import org.curtis.musicxml.note.notation.OrnamentAccidental;
 import org.curtis.musicxml.note.notation.Ornaments;
@@ -62,26 +61,24 @@ public class OrnamentHandler extends BaseHandler {
                     ornament = OrnamentFactory.newWavyLine(ornamentElement);
                     break;
                 case "schleifer":
-                    Schleifer schleifer = new Schleifer();
-                    schleifer.setDisplay(DisplayFactory.newDisplay(ornamentElement));
-                    ornament = schleifer;
+                    ornament = new Schleifer();
                     break;
                 case "tremolo":
                     Tremolo tremolo = new Tremolo();
                     tremolo.setTremoloMarks(StringUtil.getInteger(XmlUtil.getElementText(ornamentElement)));
                     tremolo.setTremoloType(FactoryUtil.enumValue(TremoloType.class, ornamentElement.getAttribute("type")));
-                    tremolo.setDisplay(DisplayFactory.newDisplay(ornamentElement));
                     tremolo.setSmufl(ornamentElement.getAttribute("smufl"));
                     ornament = tremolo;
                     break;
                 case "other-ornament":
                     OtherOrnament otherOrnament = new OtherOrnament();
-                    otherOrnament.setPlacementText(PlacementFactory.newPlacementText(ornamentElement));
+                    otherOrnament.setValue(XmlUtil.getElementText(ornamentElement));
                     otherOrnament.setSmufl(ornamentElement.getAttribute("smufl"));
                     ornament = otherOrnament;
                     break;
             }
             if (ornament != null) {
+                ornament.setDisplay(DisplayFactory.newDisplay(ornamentElement));
                 ornaments.getOrnaments().add(ornament);
                 ornament.setOrnaments(ornaments);
             }

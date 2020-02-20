@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +19,6 @@ public class WavyLine extends Ornament {
     private Connection type;
     @Column(name = "wavy_line_number")
     private Integer number;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trill_sound_id")
     private TrillSound trillSound;
@@ -45,14 +41,6 @@ public class WavyLine extends Ornament {
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 
     public TrillSound getTrillSound() {

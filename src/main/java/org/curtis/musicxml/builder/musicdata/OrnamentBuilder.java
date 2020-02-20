@@ -104,6 +104,8 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     private void buildOtherOrnament(OtherOrnament otherOrnament) {
-        buildOtherPlacementText("other-ornament", otherOrnament.getPlacementText(), otherOrnament.getSmufl());
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(otherOrnament.getDisplay()));
+        attributes.put("smufl", otherOrnament.getSmufl());
+        buildElementWithValueAndAttributes("other-ornament", otherOrnament.getValue(), attributes);
     }
 }

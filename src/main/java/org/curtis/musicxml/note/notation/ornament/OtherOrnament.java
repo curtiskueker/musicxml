@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 @Entity
 @DiscriminatorValue("other ornament")
 public class OtherOrnament extends Ornament {
+    @Column
+    private String value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "placement_text_id")
     private PlacementText placementText;
@@ -20,6 +22,14 @@ public class OtherOrnament extends Ornament {
 
     public OtherOrnament() {
 
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public PlacementText getPlacementText() {

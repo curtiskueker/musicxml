@@ -1,6 +1,5 @@
 package org.curtis.musicxml.note.notation.ornament;
 
-import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -12,22 +11,11 @@ import javax.persistence.OneToOne;
 @MappedSuperclass
 public abstract class HorizontalTurn extends Ornament {
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
-    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trill_sound_id")
     private TrillSound trillSound;
     @Column
     @Type(type="yes_no")
     private Boolean slash;
-
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
-    }
 
     public TrillSound getTrillSound() {
         return trillSound;
