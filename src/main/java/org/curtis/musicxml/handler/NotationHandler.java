@@ -34,6 +34,7 @@ public class NotationHandler extends BaseHandler {
 
     public void handle(Element element) {
         Notations notations = new Notations();
+        notations.setElementId(element.getAttribute("id"));
         notations.setEditorial(FormattingFactory.newEditorial(element));
         notations.setPrintObject(FormattingFactory.getPrintObject(element));
 
@@ -131,6 +132,7 @@ public class NotationHandler extends BaseHandler {
                     break;
             }
             if (notation != null) {
+                notation.setElementId(notationsSubelement.getAttribute("id"));
                 notation.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                 notationList.add(notation);
                 notation.setNotations(notations);

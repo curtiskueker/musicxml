@@ -18,6 +18,7 @@ public class GroupingHandler extends MusicDataHandler {
 
     public MusicData handle(Element element) {
         Grouping grouping = new Grouping();
+        grouping.setElementId(element.getAttribute("id"));
 
         List<Element> featureElements = XmlUtil.getChildElements(element, "feature");
         for (Element featureElement : featureElements) {

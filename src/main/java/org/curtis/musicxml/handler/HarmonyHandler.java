@@ -48,6 +48,7 @@ public class HarmonyHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Harmony harmony = new Harmony();
 
+        harmony.setElementId(element.getAttribute("id"));
         harmony.setEditorial(FormattingFactory.newEditorial(element));
 
         List<Element> harmonySubelements = XmlUtil.getChildElements(element);
@@ -146,6 +147,7 @@ public class HarmonyHandler extends MusicDataHandler {
                     break;
                 case "frame":
                     Frame frame = new Frame();
+                    frame.setElementId(harmonySubelement.getAttribute("id"));
                     frame.setFrameStrings(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "frame-strings")));
                     frame.setFrameFrets(StringUtil.getInteger(XmlUtil.getChildElementText(harmonySubelement, "frame-frets")));
                     frame.setDisplay(DisplayFactory.newDisplay(harmonySubelement));

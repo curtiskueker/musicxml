@@ -241,7 +241,10 @@ public class DirectionFactory {
                 break;
         }
 
-        if (directionType != null) directionType.setDisplay(DisplayFactory.newDisplay(element));
+        if (directionType != null) {
+            directionType.setElementId(element.getAttribute("id"));
+            directionType.setDisplay(DisplayFactory.newDisplay(element));
+        }
 
         return directionType;
     }
@@ -477,6 +480,7 @@ public class DirectionFactory {
         if (element == null) return null;
 
         Sound sound = new Sound();
+        sound.setElementId(element.getAttribute("id"));
         sound.setOffset(newOffset(XmlUtil.getChildElement(element, "offset")));
         sound.setTempo(MathUtil.newBigDecimal(element.getAttribute("tempo")));
         sound.setDynamics(MathUtil.newBigDecimal(element.getAttribute("dynamics")));

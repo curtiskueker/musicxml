@@ -158,6 +158,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                 case "credit":
                     List<Credit> credits = scoreHeader.getCredits();
                     Credit credit = new Credit();
+                    credit.setElementId(subelement.getAttribute("id"));
                     credit.setPage(StringUtil.getInteger(subelement.getAttribute("page")));
                     List<Element> creditSubelements = XmlUtil.getChildElements(subelement);
                     List<Link> currentLinks = new ArrayList<>();
@@ -180,6 +181,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 break;
                             case "credit-image":
                                 CreditImage creditImage = new CreditImage();
+                                creditImage.setElementId(creditSubelement.getAttribute("id"));
                                 creditImage.setImage(DirectionFactory.newImage(creditSubelement));
                                 for (Link imageLink : currentLinks) {
                                     imageLink.setCreditDisplay(creditImage);
@@ -195,6 +197,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 break;
                             case "credit-words":
                                 CreditWords creditWords = new CreditWords();
+                                creditWords.setElementId(creditSubelement.getAttribute("id"));
                                 TextFormat creditTextFormat = TextFormatFactory.newTextFormat(creditSubelement);
                                 if (creditTextFormat == null) break;
                                 creditWords.setTextFormat(creditTextFormat);
@@ -212,6 +215,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 break;
                             case "credit-symbol":
                                 CreditSymbol creditSymbol = new CreditSymbol();
+                                creditSymbol.setElementId(creditSubelement.getAttribute("id"));
                                 DisplayFactory.setFormattedDisplay(creditSymbol, element);
                                 for (Link creditWordsLink : currentLinks) {
                                     creditWordsLink.setCreditDisplay(creditSymbol);

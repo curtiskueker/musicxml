@@ -29,6 +29,7 @@ public class BarlineHandler extends MusicDataHandler {
 
     public MusicData handle(Element element) {
         Barline barline = new Barline();
+        barline.setElementId(element.getAttribute("id"));
         barline.setEditorial(FormattingFactory.newEditorial(element));
         barline.setLocation(FactoryUtil.enumValue(BarlineLocation.class, element.getAttribute("location")));
         barline.setSegno(element.getAttribute("segno"));
@@ -72,36 +73,9 @@ public class BarlineHandler extends MusicDataHandler {
                     break;
                 case "repeat":
                     Repeat repeat = new Repeat();
-                    String repeatDirection = barlineSubelement.getAttribute("direction");
-                    switch (repeatDirection) {
-                        case "backward":
-                            repeat.setDirection(RepeatDirection.BACKWARD);
-                            break;
-                        case "forward":
-                            repeat.setDirection(RepeatDirection.FORWARD);
-                            break;
-                    }
+                    repeat.setDirection(FactoryUtil.enumValue(RepeatDirection.class, barlineSubelement.getAttribute("direction")));
                     repeat.setTimes(StringUtil.getInteger(barlineSubelement.getAttribute("times")));
-                    String winged = barlineSubelement.getAttribute("winged");
-                    if(StringUtil.isNotEmpty(winged)) {
-                        switch (winged) {
-                            case "none":
-                                repeat.setWinged(Winged.NONE);
-                                break;
-                            case "straight":
-                                repeat.setWinged(Winged.STRAIGHT);
-                                break;
-                            case "curved":
-                                repeat.setWinged(Winged.CURVED);
-                                break;
-                            case "double-straight":
-                                repeat.setWinged(Winged.DOUBLE_STRAIGHT);
-                                break;
-                            case "double-curved":
-                                repeat.setWinged(Winged.DOUBLE_CURVED);
-                                break;
-                        }
-                    }
+                    repeat.setWinged(FactoryUtil.enumValue(Winged.class, barlineSubelement.getAttribute("winged")));
                     barline.setRepeat(repeat);
                     break;
             }

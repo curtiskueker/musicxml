@@ -22,6 +22,7 @@ public class DirectionHandler extends MusicDataHandler {
     public MusicData handle(Element element) {
         Direction direction = new Direction();
 
+        direction.setElementId(element.getAttribute("id"));
         direction.setEditorial(FormattingFactory.newEditorial(element));
         direction.setDisplay(DisplayFactory.newDisplay(element));
         direction.setDirective(TypeUtil.getYesNo(element.getAttribute("directive")));
@@ -32,6 +33,7 @@ public class DirectionHandler extends MusicDataHandler {
             switch (directionElementName) {
                 case "direction-type":
                     DirectionTypeList directionTypeList = new DirectionTypeList();
+                    directionTypeList.setElementId(directionSubelement.getAttribute("id"));
                     List<DirectionType> directionTypes = directionTypeList.getDirectionTypes();
                     List<Element> directionTypeSubelements = XmlUtil.getChildElements(directionSubelement);
                     for(Element directionTypeSubelement : directionTypeSubelements) {

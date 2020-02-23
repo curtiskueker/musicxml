@@ -3,6 +3,7 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.direction.MeasureNumberingType;
 import org.curtis.musicxml.direction.Print;
 import org.curtis.musicxml.factory.DisplayFactory;
+import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.util.TypeUtil;
@@ -21,6 +22,7 @@ public class PrintHandler extends MusicDataHandler {
 
     public MusicData handle(Element element) {
         Print print = new Print();
+        print.setElementId(element.getAttribute("id"));
         Layout layout = LayoutFactory.newLayout(element);
 
         Element measureLayoutElement = XmlUtil.getChildElement(element, "measure-layout");
@@ -30,21 +32,8 @@ public class PrintHandler extends MusicDataHandler {
             print.setMeasureLayout(measureLayout);
         }
         Element measureNumberingElement = XmlUtil.getChildElement(element, "measure-numbering");
-        if (measureNumberingElement != null) {
-            String measureNumberingValue = XmlUtil.getElementText(measureNumberingElement);
-            switch (measureNumberingValue) {
-                case "none":
-                    print.setMeasureNumberingValue(MeasureNumberingType.NONE);
-                    break;
-                case "measure":
-                    print.setMeasureNumberingValue(MeasureNumberingType.MEASURE);
-                    break;
-                case "system":
-                    print.setMeasureNumberingValue(MeasureNumberingType.SYSTEM);
-                    break;
-            }
-            print.setMeasureNumberingDisplay(DisplayFactory.newDisplay(measureNumberingElement));
-        }
+        print.setMeasureNumberingValue(FactoryUtil.enumValue(MeasureNumberingType.class, XmlUtil.getElementText(measureNumberingElement)));
+        print.setMeasureNumberingDisplay(DisplayFactory.newDisplay(measureNumberingElement));
         print.setPartNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-name-display")));
         print.setPartAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-abbreviation-display")));
 

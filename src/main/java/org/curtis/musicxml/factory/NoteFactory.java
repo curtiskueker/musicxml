@@ -102,6 +102,7 @@ public class NoteFactory {
             figure.setEditorial(FormattingFactory.newEditorial(figureElement));
             figuredBass.getFigures().add(figure);
         }
+        figuredBass.setElementId(element.getAttribute("id"));
         figuredBass.setDuration(MathUtil.newBigDecimal(XmlUtil.getChildElementText(element, "duration")));
         figuredBass.setEditorial(FormattingFactory.newEditorial(element));
         figuredBass.setDisplay(DisplayFactory.newDisplay(element));

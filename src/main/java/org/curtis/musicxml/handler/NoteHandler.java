@@ -44,6 +44,7 @@ public class NoteHandler extends MusicDataHandler {
         Note note = new Note();
         FullNote fullNote = new FullNote();
 
+        note.setElementId(element.getAttribute("id"));
         note.setDisplay(DisplayFactory.newDisplay(element));
         note.setEditorial(FormattingFactory.newEditorial(element));
         note.setPrintout(FormattingFactory.newPrintout(element));
@@ -161,6 +162,7 @@ public class NoteHandler extends MusicDataHandler {
                 case "beam":
                     List<Beam> beams = note.getBeams();
                     Beam beam = new Beam();
+                    beam.setElementId(noteSubelement.getAttribute("id"));
                     beam.setType(NoteFactory.newBeamType(noteSubelement));
                     beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
                     beam.setRepeater(TypeUtil.getYesNo(noteSubelement.getAttribute("repeater")));

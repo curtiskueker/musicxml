@@ -51,6 +51,7 @@ public class AttributesHandler extends MusicDataHandler {
                 case "key":
                     List<Key> keys = attributes.getKeys();
                     Key key = AttributesFactory.newKey(attributeSubelement);
+                    key.setElementId(attributeSubelement.getAttribute("id"));
                     key.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                     key.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                     key.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
@@ -67,6 +68,7 @@ public class AttributesHandler extends MusicDataHandler {
                 case "time":
                     List<Time> timeList = attributes.getTimeList();
                     Time time = AttributesFactory.newTime(attributeSubelement);
+                    time.setElementId(attributeSubelement.getAttribute("id"));
                     time.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                     time.setSymbol(AttributesFactory.newTimeSymbol(attributeSubelement));
                     time.setSeparator(AttributesFactory.newTimeSeparator(attributeSubelement));
@@ -90,34 +92,8 @@ public class AttributesHandler extends MusicDataHandler {
                     break;
                 case "clef":
                     Clef clef = new Clef();
-                    String sign = XmlUtil.getChildElementText(attributeSubelement, "sign");
-                    ClefSign clefSign;
-                    switch (sign) {
-                        case "G":
-                            clefSign = ClefSign.G;
-                            break;
-                        case "F":
-                            clefSign = ClefSign.F;
-                            break;
-                        case "C":
-                            clefSign = ClefSign.C;
-                            break;
-                        case "percussion":
-                            clefSign = ClefSign.PERCUSSION;
-                            break;
-                        case "TAB":
-                            clefSign = ClefSign.TAB;
-                            break;
-                        case "jianpu":
-                            clefSign = ClefSign.JIANPU;
-                            break;
-                        case "none":
-                            clefSign = ClefSign.NONE;
-                            break;
-                        default:
-                            clefSign = null;
-                    }
-                    clef.setSign(clefSign);
+                    clef.setElementId(attributeSubelement.getAttribute("id"));
+                    clef.setSign(FactoryUtil.enumValue(ClefSign.class, XmlUtil.getChildElementText(attributeSubelement, "sign")));
                     clef.setLine(StringUtil.getInteger(XmlUtil.getChildElementText(attributeSubelement, "line")));
                     clef.setClefOctaveChange(StringUtil.getInteger(XmlUtil.getChildElementText(attributeSubelement, "clef-octave-change")));
                     clef.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
@@ -136,24 +112,7 @@ public class AttributesHandler extends MusicDataHandler {
                         String staffDefaultsSubelementName = staffDetailsSubelement.getTagName();
                         switch (staffDefaultsSubelementName) {
                             case "staff-type":
-                                String staffType = XmlUtil.getElementText(staffDetailsSubelement);
-                                switch (staffType) {
-                                    case "ossia":
-                                        staffDetails.setStaffType(StaffType.OSSIA);
-                                        break;
-                                    case "cue":
-                                        staffDetails.setStaffType(StaffType.CUE);
-                                        break;
-                                    case "editorial":
-                                        staffDetails.setStaffType(StaffType.EDITORIAL);
-                                        break;
-                                    case "regular":
-                                        staffDetails.setStaffType(StaffType.REGULAR);
-                                        break;
-                                    case "alternate":
-                                        staffDetails.setStaffType(StaffType.ALTERNATE);
-                                        break;
-                                }
+                                staffDetails.setStaffType(FactoryUtil.enumValue(StaffType.class, XmlUtil.getElementText(staffDetailsSubelement)));
                                 break;
                             case "staff-lines":
                                 staffDetails.setStaffLines(StringUtil.getInteger(XmlUtil.getElementText(staffDetailsSubelement)));
@@ -173,17 +132,7 @@ public class AttributesHandler extends MusicDataHandler {
                         }
                     }
                     staffDetails.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
-                    String showFrets = attributeSubelement.getAttribute("show-frets");
-                    if(StringUtil.isNotEmpty(showFrets)) {
-                        switch (showFrets) {
-                            case "numbers":
-                                staffDetails.setShowFrets(ShowFrets.NUMBERS);
-                                break;
-                            case "letters":
-                                staffDetails.setShowFrets(ShowFrets.LETTERS);
-                                break;
-                        }
-                    }
+                    staffDetails.setShowFrets(FactoryUtil.enumValue(ShowFrets.class, attributeSubelement.getAttribute("show-frets")));
                     staffDetails.setPrintObject(FormattingFactory.getPrintObject(attributeSubelement));
                     staffDetails.setPrintSpacing(TypeUtil.getYesNo(attributeSubelement.getAttribute("print-spacing")));
                     staffDetailsList.add(staffDetails);
@@ -191,6 +140,7 @@ public class AttributesHandler extends MusicDataHandler {
                 case "transpose":
                     List<Transpose> transpositions = attributes.getTranspositions();
                     Transpose transpose = new Transpose();
+                    transpose.setElementId(attributeSubelement.getAttribute("id"));
                     List<Element> transposeSubelements = XmlUtil.getChildElements(attributeSubelement);
                     for(Element transposeSubelement : transposeSubelements) {
                         String transposeSubelementName = transposeSubelement.getTagName();
@@ -257,6 +207,7 @@ public class AttributesHandler extends MusicDataHandler {
                         }
                     }
                     if(measureStyle != null) {
+                        measureStyle.setElementId(attributeSubelement.getAttribute("id"));
                         measureStyle.setNumber(StringUtil.getInteger(attributeSubelement.getAttribute("number")));
                         measureStyle.setDisplay(DisplayFactory.newDisplay(attributeSubelement));
                         measureStyles.add(measureStyle);

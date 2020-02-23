@@ -109,6 +109,7 @@ public class LyricHandler extends BaseHandler {
             }
         }
 
+        lyric.setElementId(element.getAttribute("id"));
         lyric.setEditorial(FormattingFactory.newEditorial(element));
         lyric.setNumber(element.getAttribute("number"));
         lyric.setName(element.getAttribute("name"));
