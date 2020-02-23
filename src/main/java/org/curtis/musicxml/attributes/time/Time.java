@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.time;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "time")
 @DiscriminatorColumn(name = "time_type")
-public abstract class Time extends DatabaseItem {
+public abstract class Time extends DatabaseElement {
     @Column(name = "time_number")
     private Integer number;
     @Enumerated(EnumType.STRING)

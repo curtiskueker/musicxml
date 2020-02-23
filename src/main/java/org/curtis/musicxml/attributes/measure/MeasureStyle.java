@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.measure;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "measure_style")
 @DiscriminatorColumn(name = "measure_style_type")
-public abstract class MeasureStyle extends DatabaseItem {
+public abstract class MeasureStyle extends DatabaseElement {
     @Column(name = "measure_style_number")
     private Integer number;
     @OneToOne(cascade = CascadeType.ALL)

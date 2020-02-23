@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.key;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -24,7 +24,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "key_signature")
 @DiscriminatorColumn(name = "key_type")
-public abstract class Key extends DatabaseItem {
+public abstract class Key extends DatabaseElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "key_id", nullable = false)

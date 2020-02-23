@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
@@ -19,7 +19,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "direction_type")
 @DiscriminatorColumn(name = "direction_type_type")
-public abstract class DirectionType extends DatabaseItem {
+public abstract class DirectionType extends DatabaseElement {
     public static List<String> MULTIPLE_DIRECTION_TYPES = Arrays.asList("Dynamics", "Wedge");
     @ManyToOne
     @JoinColumn(name = "direction_type_list_id")

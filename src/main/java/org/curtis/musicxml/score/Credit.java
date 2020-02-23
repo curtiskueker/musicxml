@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "credit")
-public class Credit extends DatabaseItem {
+public class Credit extends DatabaseElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "credit_id", nullable = false)

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "clef")
-public class Clef extends DatabaseItem {
+public class Clef extends DatabaseElement {
     @Enumerated(EnumType.STRING)
     @Column
     private ClefSign sign;

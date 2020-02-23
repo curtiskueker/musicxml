@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction;
 
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("sound")
-public class Sound extends MusicData {
+public class Sound extends MusicDataElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "sound_id", nullable = false)

@@ -12,7 +12,7 @@ import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.Tied;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.ornament.Tremolo;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.curtis.util.MathUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("note")
-public class Note extends MusicData {
+public class Note extends MusicDataElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grace_id")
     private Grace grace;

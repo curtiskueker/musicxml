@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.note.notation.Notation;
 import org.hibernate.annotations.Fetch;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "notations")
-public class Notations extends DatabaseItem {
+public class Notations extends DatabaseElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;

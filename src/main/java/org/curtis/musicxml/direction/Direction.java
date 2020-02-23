@@ -4,7 +4,7 @@ import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.display.Placement;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("direction")
-public class Direction extends MusicData {
+public class Direction extends MusicDataElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "direction_id")

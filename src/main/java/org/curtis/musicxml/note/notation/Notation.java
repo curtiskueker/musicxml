@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.Notations;
 
@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "notation")
 @DiscriminatorColumn(name = "notation_type")
-public abstract class Notation extends DatabaseItem {
+public abstract class Notation extends DatabaseElement {
     @ManyToOne
     @JoinColumn(name = "notations_id")
     private Notations notations;

@@ -4,7 +4,7 @@ import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MeasureLayout;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("print")
-public class Print extends MusicData {
+public class Print extends MusicDataElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "layout_id")
     private Layout layout;

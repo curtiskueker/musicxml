@@ -3,7 +3,7 @@ package org.curtis.musicxml.note;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.display.Display;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("figured bass")
-public class FiguredBass extends MusicData {
+public class FiguredBass extends MusicDataElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "figured_bass_id", nullable = false)

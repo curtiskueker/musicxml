@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "beam")
-public class Beam extends DatabaseItem {
+public class Beam extends DatabaseElement {
     @Enumerated(EnumType.STRING)
     @Column
     private BeamType type;

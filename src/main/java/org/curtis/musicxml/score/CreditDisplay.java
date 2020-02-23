@@ -7,6 +7,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,6 +32,8 @@ public abstract class CreditDisplay extends FormattedDisplay {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "credit_display_id")
     private List<Bookmark> bookmarks = new ArrayList<>();
+    @Column(name = "element_id")
+    private String elementId;
 
     public CreditDisplay() {
 
@@ -50,5 +53,13 @@ public abstract class CreditDisplay extends FormattedDisplay {
 
     public void setBookmarks(List<Bookmark> bookmarks) {
         this.bookmarks = bookmarks;
+    }
+
+    public String getElementId() {
+        return elementId;
+    }
+
+    public void setElementId(String elementId) {
+        this.elementId = elementId;
     }
 }

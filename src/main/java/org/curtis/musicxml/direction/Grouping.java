@@ -1,7 +1,7 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("grouping")
-public class Grouping extends MusicData {
+public class Grouping extends MusicDataElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "grouping_id", nullable = false)

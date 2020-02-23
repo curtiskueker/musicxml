@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.lyric;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Halign;
@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "lyric")
-public class Lyric extends DatabaseItem {
+public class Lyric extends DatabaseElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lyric_item_id")
     private LyricItem lyricItem;

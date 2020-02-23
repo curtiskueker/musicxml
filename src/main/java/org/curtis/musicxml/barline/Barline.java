@@ -6,7 +6,7 @@ import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.ornament.WavyLine;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -26,7 +26,7 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("barline")
-public class Barline extends MusicData {
+public class Barline extends MusicDataElement {
     @Enumerated(EnumType.STRING)
     @Column(name = "bar_style")
     private BarStyle barStyle;

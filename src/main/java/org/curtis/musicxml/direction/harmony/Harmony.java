@@ -3,7 +3,7 @@ package org.curtis.musicxml.direction.harmony;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.display.Display;
-import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
@@ -25,7 +25,7 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("harmony")
-public class Harmony extends MusicData {
+public class Harmony extends MusicDataElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "harmony_id", nullable = false)

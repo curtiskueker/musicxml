@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.direction.Direction;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "direction_type_list")
-public class DirectionTypeList extends DatabaseItem {
+public class DirectionTypeList extends DatabaseElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "direction_type_list_id")

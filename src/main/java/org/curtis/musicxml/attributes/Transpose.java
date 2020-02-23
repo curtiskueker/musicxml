@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "transpose")
-public class Transpose extends DatabaseItem {
+public class Transpose extends DatabaseElement {
     @Column
     private Integer diatonic;
     @Column(precision = 12, scale = 4)

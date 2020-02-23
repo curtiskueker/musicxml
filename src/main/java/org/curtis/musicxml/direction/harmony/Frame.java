@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.DatabaseElement;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "frame")
-public class Frame extends DatabaseItem {
+public class Frame extends DatabaseElement {
     @Column(name = "frame_strings")
     private Integer frameStrings;
     @Column(name = "frame_frets")

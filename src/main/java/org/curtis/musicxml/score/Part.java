@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.OrderedItem;
+import org.curtis.database.OrderedElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "part")
-public class Part extends OrderedItem {
+public class Part extends OrderedElement {
     @Column(name = "part_id")
     private String partId;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
