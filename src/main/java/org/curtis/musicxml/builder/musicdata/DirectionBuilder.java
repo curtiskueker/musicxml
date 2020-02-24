@@ -21,6 +21,7 @@ public class DirectionBuilder extends MusicDataBuilder {
         if (direction == null) return stringBuilder;
 
         buildOpenElement("direction");
+        buildAttribute("id", direction.getElementId());
         buildAttribute("placement", direction.getPlacement());
         buildAttribute("directive", direction.getDirective());
         buildCloseElement();
@@ -38,7 +39,9 @@ public class DirectionBuilder extends MusicDataBuilder {
             }
             if (directionTypeStringBuilder.length() > 0) {
                 hasDirectionTypeContent = true;
-                buildStartElement("direction-type");
+                buildOpenElement("direction-type");
+                buildAttribute("id", directionTypeList.getElementId());
+                buildCloseElement();
                 append(directionTypeStringBuilder.toString());
                 buildEndElement("direction-type");
             }

@@ -16,6 +16,7 @@ public class PrintBuilder extends MusicDataBuilder {
         if (print == null) return stringBuilder;
 
         buildOpenElement("print");
+        buildAttribute("id", print.getElementId());
         buildAttribute("staff-spacing", print.getStaffSpacing());
         buildAttribute("new-system",  print.getNewSystem());
         buildAttribute("new-page",  print.getNewPage());

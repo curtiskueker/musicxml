@@ -16,6 +16,7 @@ public class FiguredBassBuilder extends MusicDataBuilder {
         if (figuredBass == null) return stringBuilder;
 
         buildOpenElement("figured-bass");
+        buildAttribute("id", figuredBass.getElementId());
         buildAttributes(DisplayBuilder.buildDisplay(figuredBass.getDisplay()));
         buildAttributes(FormattingBuilder.buildPrintout(figuredBass.getPrintout()));
         buildAttribute("parentheses",  figuredBass.getParentheses());

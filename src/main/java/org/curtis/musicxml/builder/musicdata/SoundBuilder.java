@@ -14,6 +14,7 @@ public class SoundBuilder extends MusicDataBuilder {
         if (sound == null) return stringBuilder;
 
         buildOpenElement("sound");
+        buildAttribute("id", sound.getElementId());
         buildAttribute("tempo", sound.getTempo());
         buildAttribute("dynamics", sound.getDynamics());
         buildAttribute("dacapo",  sound.getDacapo());

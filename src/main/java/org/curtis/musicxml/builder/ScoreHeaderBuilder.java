@@ -201,6 +201,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         if (credit.getCreditDisplays().isEmpty()) return;
 
         buildOpenElement("credit");
+        buildAttribute("id", credit.getElementId());
         buildAttribute("page", credit.getPage());
         buildCloseElement();
         for (CreditType creditType : credit.getCreditTypes()) {
@@ -215,13 +216,13 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             }
             if (creditDisplay instanceof CreditImage) {
                 CreditImage creditImage = (CreditImage)creditDisplay;
-                buildImage(creditImage.getImage());
+                buildImage("credit-image", creditImage.getImage());
             } else if (creditDisplay instanceof CreditWords) {
                 CreditWords creditWords = (CreditWords)creditDisplay;
-                buildFormattedDisplay("credit-words", creditWords.getDisplay(), creditWords.getTextFormat());
+                buildFormattedDisplayElement("credit-words", creditWords.getElementId(), creditWords.getDisplay(), creditWords.getTextFormat());
             } else if (creditDisplay instanceof CreditSymbol) {
                 CreditSymbol creditSymbol = (CreditSymbol)creditDisplay;
-                buildFormattedDisplay("credit-symbol", creditSymbol);
+                buildFormattedDisplayElement("credit-symbol", creditSymbol.getElementId(), creditSymbol.getDisplay(), creditSymbol.getTextFormat());
             }
         }
         buildEndElement("credit");

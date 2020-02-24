@@ -88,8 +88,9 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         } else buildElementWithAttributes(elementName, attributes);
     }
 
-    protected void buildFormattedDisplay(String elementName, Display display, TextFormat textFormat) {
+    protected void buildFormattedDisplayElement(String elementName, String elementId, Display display, TextFormat textFormat) {
         Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(display));
+        attributes.put("id", elementId);
         if (textFormat != null) {
             attributes.putAll(FormattingBuilder.buildTextFormat(textFormat));
             buildElementWithValueAndAttributes(elementName, textFormat.getValue(), attributes);
@@ -198,16 +199,17 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         buildEndElement("play");
     }
 
-    protected void buildImage(Image image) {
+    protected void buildImage(String elementName, Image image) {
         if (image == null) return;
 
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", image.getElementId());
         attributes.put("source", BuilderUtil.requiredValue(image.getSource()));
         attributes.put("type", BuilderUtil.requiredValue(image.getType()));
         attributes.put("height", BuilderUtil.stringValue(image.getHeight()));
         attributes.put("width", BuilderUtil.stringValue(image.getWidth()));
         attributes.putAll(DisplayBuilder.buildDisplay(image.getDisplay()));
-        buildElementWithAttributes("image", attributes);
+        buildElementWithAttributes(elementName, attributes);
     }
 
     protected void buildWavyLine(WavyLine wavyLine) {
@@ -249,6 +251,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         if (dynamics == null) return;
 
         buildOpenElement("dynamics");
+        buildAttribute("id", dynamics.getElementId());
         buildAttributes(DisplayBuilder.buildDisplay(dynamics.getDisplay()));
         buildAttributes(FormattingBuilder.buildTextFormat(dynamics.getTextFormat()));
         buildCloseElement();

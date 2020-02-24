@@ -34,6 +34,7 @@ public class HarmonyBuilder extends MusicDataBuilder {
 
     public StringBuilder build() {
         buildOpenElement("harmony");
+        buildAttribute("id", harmony.getElementId());
         buildAttribute("type", harmony.getType());
         buildAttribute("print-object",  harmony.getPrintObject());
         buildAttribute("print-frame",  harmony.getPrintFrame());
@@ -102,6 +103,7 @@ public class HarmonyBuilder extends MusicDataBuilder {
         Frame frame = harmony.getFrame();
         if (frame != null) {
             buildOpenElement("frame");
+            buildAttribute("id", frame.getElementId());
             buildAttributes(DisplayBuilder.buildDisplay(frame.getDisplay()));
             buildAttribute("height", frame.getHeight());
             buildAttribute("width", frame.getWidth());

@@ -47,6 +47,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         if (divisions !=  null) buildElementWithValue("divisions", divisions);
         for (Key key : attributes.getKeys()) {
             buildOpenElement("key");
+            buildAttribute("id", key.getElementId());
             buildAttribute("number", key.getNumber());
             buildAttributes(DisplayBuilder.buildDisplay(key.getDisplay()));
             buildAttribute("print-object", key.getPrintObject());
@@ -63,6 +64,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         }
         for (Time time : attributes.getTimeList()) {
             buildOpenElement("time");
+            buildAttribute("id", time.getElementId());
             buildAttribute("number", time.getNumber());
             buildAttribute("symbol", time.getSymbol());
             buildAttribute("separator", time.getSeparator());
@@ -85,6 +87,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {
             buildOpenElement("clef");
+            buildAttribute("id", clef.getElementId());
             buildAttribute("number", clef.getNumber());
             buildAttribute("additional", clef.getAdditional());
             buildAttribute("after-barline", clef.getAfterBarline());
@@ -134,6 +137,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         }
         for (Transpose transpose : attributes.getTranspositions()) {
             buildOpenElement("transpose");
+            buildAttribute("id", transpose.getElementId());
             buildAttribute("number", transpose.getNumber());
             buildCloseElement();
             buildElementWithValue("diatonic", transpose.getDiatonic());
@@ -149,6 +153,7 @@ public class AttributesBuilder extends MusicDataBuilder {
         }
         for (MeasureStyle measureStyle : attributes.getMeasureStyles()) {
             buildOpenElement("measure-style");
+            buildAttribute("id", measureStyle.getElementId());
             buildAttribute("number", measureStyle.getNumber());
             buildAttributes(DisplayBuilder.buildDisplay(measureStyle.getDisplay()));
             buildCloseElement();

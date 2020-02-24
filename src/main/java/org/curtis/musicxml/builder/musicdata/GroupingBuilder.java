@@ -15,6 +15,7 @@ public class GroupingBuilder extends MusicDataBuilder {
         if (grouping == null) return stringBuilder;
 
         buildOpenElement("grouping");
+        buildAttribute("id", grouping.getElementId());
         buildAttribute("type", BuilderUtil.enumValue(grouping.getType()));
         buildAttribute("number", grouping.getNumber());
         buildAttribute("number-of", grouping.getNumberOf());

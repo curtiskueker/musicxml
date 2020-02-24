@@ -62,6 +62,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildTied(Tied tied) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", tied.getElementId());
         attributes.put("type", BuilderUtil.enumValue(tied.getTiedType()));
         attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(tied.getLineType()));
@@ -74,6 +75,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildSlur(Slur slur) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", slur.getElementId());
         attributes.put("type", BuilderUtil.enumValue(slur.getConnectionType()));
         attributes.put("number", BuilderUtil.stringValue(slur.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(slur.getLineType()));
@@ -100,6 +102,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildTuplet(Tuplet tuplet) {
         buildOpenElement("tuplet");
+        buildAttribute("id", tuplet.getElementId());
         buildAttribute("type", BuilderUtil.enumValue(tuplet.getType()));
         buildAttribute("number", tuplet.getNumber());
         buildAttribute("bracket",  tuplet.getBracket());
@@ -133,6 +136,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildGlissando(Glissando glissando) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", glissando.getElementId());
         attributes.put("type", BuilderUtil.enumValue(glissando.getType()));
         attributes.put("number", BuilderUtil.stringValue(glissando.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(glissando.getLineType()));
@@ -143,6 +147,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildSlide(Slide slide) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", slide.getElementId());
         attributes.put("type", BuilderUtil.enumValue(slide.getType()));
         attributes.put("number", BuilderUtil.stringValue(slide.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(slide.getLineType()));
@@ -153,7 +158,9 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     private void buildOrnaments(Ornaments ornaments) {
-        buildStartElement("ornaments");
+        buildOpenElement("ornaments");
+        buildAttribute("id", ornaments.getElementId());
+        buildCloseElement();
         List<Ornament> ornamentList = ornaments.getOrnaments();
         for (Ornament ornament : ornamentList) {
             OrnamentBuilder ornamentBuilder = new OrnamentBuilder(ornament);
@@ -166,7 +173,9 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     private void buildTechnicals(Technicals technicals) {
-        buildStartElement("technical");
+        buildOpenElement("technical");
+        buildAttribute("id", technicals.getElementId());
+        buildCloseElement();
         for (Technical technical : technicals.getTechnicals()) {
             TechnicalBuilder technicalBuilder = new TechnicalBuilder(technical);
             append(technicalBuilder.build().toString());
@@ -175,7 +184,9 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     private void buildArticulations(Articulations articulations) {
-        buildStartElement("articulations");
+        buildOpenElement("articulations");
+        buildAttribute("id", articulations.getElementId());
+        buildCloseElement();
         for (Articulation articulation : articulations.getArticulationList()) {
             ArticulationBuilder articulationBuilder = new ArticulationBuilder(articulation);
             append(articulationBuilder.build().toString());
@@ -189,6 +200,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildArpeggiate(Arpeggiate arpeggiate) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", arpeggiate.getElementId());
         attributes.put("number", BuilderUtil.stringValue(arpeggiate.getNumber()));
         attributes.put("direction", BuilderUtil.enumValue(arpeggiate.getDirection()));
         attributes.putAll(DisplayBuilder.buildDisplay(arpeggiate.getDisplay()));
@@ -197,6 +209,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildNonArpeggiate(NonArpeggiate nonArpeggiate) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", nonArpeggiate.getElementId());
         attributes.put("type", BuilderUtil.enumValue(nonArpeggiate.getType()));
         attributes.put("number", BuilderUtil.stringValue(nonArpeggiate.getNumber()));
         attributes.putAll(DisplayBuilder.buildDisplay(nonArpeggiate.getDisplay()));
@@ -205,6 +218,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildAccidentalMark(AccidentalMark accidentalMark) {
         Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(accidentalMark.getDisplay()));
+        attributes.put("id", accidentalMark.getElementId());
         attributes.putAll(FormattingBuilder.buildLevelDisplay(accidentalMark.getLevelDisplay()));
         attributes.put("smufl", accidentalMark.getSmufl());
         buildElementWithValueAndAttributes("accidental-mark", accidentalMark.getAccidentalType(), attributes);
@@ -212,6 +226,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     private void buildOtherNotation(OtherNotation otherNotation) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", otherNotation.getElementId());
         attributes.put("type", BuilderUtil.enumValue(otherNotation.getType()));
         attributes.put("number", BuilderUtil.stringValue(otherNotation.getNumber()));
         attributes.put("print-object", BuilderUtil.yesOrNo(otherNotation.getPrintObject()));

@@ -47,6 +47,7 @@ public class NoteBuilder extends MusicDataBuilder {
         if (note == null) return stringBuilder;
 
         buildOpenElement("note");
+        buildAttribute("id", note.getElementId());
         buildAttributes(DisplayBuilder.buildDisplay(note.getDisplay()));
         buildAttributes(FormattingBuilder.buildPrintout(note.getPrintout()));
         buildAttribute("print-leger", BuilderUtil.yesOrNo(note.getPrintLeger()));
@@ -127,6 +128,7 @@ public class NoteBuilder extends MusicDataBuilder {
         if (!beams.isEmpty()) {
             for (Beam beam : beams) {
                 Map<String, String> beamAttributes = new HashMap<>();
+                beamAttributes.put("id", beam.getElementId());
                 beamAttributes.put("number", BuilderUtil.stringValue(beam.getNumber()));
                 beamAttributes.put("repeater", BuilderUtil.yesOrNo(beam.getRepeater()));
                 beamAttributes.put("fan", BuilderUtil.enumValue(beam.getFan()));
@@ -185,6 +187,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private void buildNotations(Notations notations) {
         buildOpenElement("notations");
+        buildAttribute("id", notations.getElementId());
         buildAttribute("print-object",  notations.getPrintObject());
         buildCloseElement();
         buildEditorial(notations.getEditorial());
@@ -197,6 +200,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private void buildLyric(Lyric lyric) {
         buildOpenElement("lyric");
+        buildAttribute("id", lyric.getElementId());
         buildAttribute("number", lyric.getNumber());
         buildAttribute("name", lyric.getName());
         buildAttribute("justify", lyric.getJustify());

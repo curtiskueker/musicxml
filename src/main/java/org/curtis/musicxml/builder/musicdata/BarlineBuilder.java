@@ -23,6 +23,7 @@ public class BarlineBuilder extends MusicDataBuilder {
         if (barline == null) return stringBuilder;
 
         buildOpenElement("barline");
+        buildAttribute("id", barline.getElementId());
         buildAttribute("location", barline.getLocation());
         buildAttribute("segno", barline.getSegno());
         buildAttribute("coda", barline.getCoda());

@@ -85,7 +85,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         else if (directionType instanceof Eyeglasses) buildEyeglasses((Eyeglasses) directionType);
         else if (directionType instanceof StringMute) buildStringMute((StringMute) directionType);
         else if (directionType instanceof Scordatura) buildScordatura((Scordatura) directionType);
-        else if (directionType instanceof Image) buildImage((Image) directionType);
+        else if (directionType instanceof Image) buildImage("image", (Image) directionType);
         else if (directionType instanceof PrincipalVoice) buildPrincipalVoice((PrincipalVoice) directionType);
         else if (directionType instanceof AccordionRegistration) buildAccordionRegistration((AccordionRegistration) directionType);
         else if (directionType instanceof Percussion) buildPercussion((Percussion) directionType);
@@ -96,19 +96,20 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildRehearsal(Rehearsal rehearsal) {
-        buildFormattedDisplay("rehearsal", rehearsal.getDisplay(), rehearsal.getTextFormat());
+        buildFormattedDisplayElement("rehearsal", rehearsal.getElementId(), rehearsal.getDisplay(), rehearsal.getTextFormat());
     }
 
     private void buildWords(Words words) {
-        buildFormattedDisplay("words", words.getDisplay(), words.getTextFormat());
+        buildFormattedDisplayElement("words", words.getElementId(), words.getDisplay(), words.getTextFormat());
     }
 
     private void buildSymbol(Symbol symbol) {
-        buildFormattedDisplay("symbol", symbol.getDisplay(), symbol.getTextFormat());
+        buildFormattedDisplayElement("symbol", symbol.getElementId(), symbol.getDisplay(), symbol.getTextFormat());
     }
 
     private void buildWedge(Wedge wedge) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", wedge.getElementId());
         attributes.put("type", BuilderUtil.enumValue(wedge.getType()));
         attributes.put("number", BuilderUtil.stringValue(wedge.getNumber()));
         attributes.put("spread", BuilderUtil.stringValue(wedge.getSpread()));
@@ -121,6 +122,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildDashes(Dashes dashes) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", dashes.getElementId());
         attributes.put("type", BuilderUtil.enumValue(dashes.getType()));
         attributes.put("number", BuilderUtil.stringValue(dashes.getNumber()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(dashes.getDashedFormatting()));
@@ -130,6 +132,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildBracket(Bracket bracket) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", bracket.getElementId());
         attributes.put("type", BuilderUtil.enumValue(bracket.getType()));
         attributes.put("number", BuilderUtil.stringValue(bracket.getNumber()));
         attributes.put("line-end", BuilderUtil.enumValue(bracket.getLineEnd()));
@@ -142,6 +145,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildPedal(Pedal pedal) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", pedal.getElementId());
         attributes.put("type", BuilderUtil.enumValue(pedal.getPedalType()));
         attributes.put("number", BuilderUtil.stringValue(pedal.getNumber()));
         attributes.put("line", BuilderUtil.yesOrNo(pedal.getLine()));
@@ -153,6 +157,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildMetronome(Metronome metronome) {
         buildOpenElement("metronome");
+        buildAttribute("id", metronome.getElementId());
         buildAttributes(DisplayBuilder.buildDisplay(metronome.getDisplay()));
         buildAttribute("justify", metronome.getJustify());
         buildAttribute("parentheses", metronome.getParentheses());
@@ -215,6 +220,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildOctaveShift(OctaveShift octaveShift) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", octaveShift.getElementId());
         attributes.put("type", BuilderUtil.enumValue(octaveShift.getType()));
         attributes.put("number", BuilderUtil.stringValue(octaveShift.getNumber()));
         attributes.put("size", BuilderUtil.stringValue(octaveShift.getSize()));
@@ -225,6 +231,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildHarpPedals(HarpPedals harpPedals) {
         buildOpenElement("harp-pedals");
+        buildAttribute("id", harpPedals.getElementId());
         buildAttributes(DisplayBuilder.buildDisplay(harpPedals.getDisplay()));
         buildCloseElement();
         for (PedalTuning pedalTuning : harpPedals.getPedalTunings()) {
@@ -237,26 +244,35 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildDamp(Damp damp) {
-        buildElementWithOptionalAttributes("damp", DisplayBuilder.buildDisplay(damp.getDisplay()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(damp.getDisplay()));
+        attributes.put("id", damp.getElementId());
+        buildElementWithOptionalAttributes("damp", attributes);
     }
 
     private void buildDampAll(DampAll dampAll) {
-        buildElementWithOptionalAttributes("damp-all", DisplayBuilder.buildDisplay(dampAll.getDisplay()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(dampAll.getDisplay()));
+        attributes.put("id", dampAll.getElementId());
+        buildElementWithOptionalAttributes("damp-all", attributes);
     }
 
     private void buildEyeglasses(Eyeglasses eyeglasses) {
-        buildElementWithOptionalAttributes("eyeglasses", DisplayBuilder.buildDisplay(eyeglasses.getDisplay()));
+        Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(eyeglasses.getDisplay()));
+        attributes.put("id", eyeglasses.getElementId());
+        buildElementWithOptionalAttributes("eyeglasses", attributes);
     }
 
     private void buildStringMute(StringMute stringMute) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", stringMute.getElementId());
         attributes.put("type", BuilderUtil.enumValue(stringMute.getType()));
         attributes.putAll(DisplayBuilder.buildDisplay(stringMute.getDisplay()));
         buildElementWithAttributes("string-mute", attributes);
     }
 
     private void buildScordatura(Scordatura scordatura) {
-        buildStartElement("scordatura");
+        buildOpenElement("scordatura");
+        buildAttribute("id", scordatura.getElementId());
+        buildCloseElement();
         for (Accord accord : scordatura.getAccords()) {
             buildOpenElement("accord");
             buildAttribute("string", accord.getString());
@@ -269,6 +285,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildPrincipalVoice(PrincipalVoice principalVoice) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", principalVoice.getElementId());
         attributes.put("type", BuilderUtil.enumValue(principalVoice.getType()));
         String symbol = BuilderUtil.enumValue(principalVoice.getSymbol());
         symbol = symbol.replace("hauptstimme", "Hauptstimme");
@@ -280,6 +297,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {
         buildOpenElement("accordion-registration");
+        buildAttribute("id", accordionRegistration.getElementId());
         buildAttributes(DisplayBuilder.buildDisplay(accordionRegistration.getDisplay()));
         buildCloseElement();
         if (accordionRegistration.getAccordionHigh()) buildElement("accordion-high");
@@ -290,6 +308,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildPercussion(Percussion percussion) {
         buildOpenElement("percussion");
+        buildAttribute("id", percussion.getElementId());
         buildAttributes(DisplayBuilder.buildDisplay(percussion.getDisplay()));
         buildAttribute("enclosure", percussion.getEnclosure());
         buildCloseElement();
@@ -372,6 +391,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildStaffDivide(StaffDivide staffDivide) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", staffDivide.getElementId());
         attributes.put("type", BuilderUtil.enumValue(staffDivide.getStaffDivideSymbol()));
         attributes.putAll(DisplayBuilder.buildDisplay(staffDivide.getDisplay()));
         buildElementWithAttributes("staff-divide", attributes);
@@ -379,6 +399,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
 
     private void buildOtherDirection(OtherDirection otherDirection) {
         Map<String, String> attributes = new HashMap<>();
+        attributes.put("id", otherDirection.getElementId());
         attributes.put("print-object", BuilderUtil.yesOrNo(otherDirection.getPrintObject()));
         attributes.putAll(DisplayBuilder.buildDisplay(otherDirection.getDisplay()));
         attributes.put("smufl", otherDirection.getSmufl());
