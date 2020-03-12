@@ -30,6 +30,7 @@ import org.curtis.musicxml.note.lyric.Lyric;
 import org.curtis.musicxml.note.lyric.LyricItem;
 import org.curtis.musicxml.note.lyric.LyricSyllable;
 import org.curtis.musicxml.note.lyric.LyricText;
+import org.curtis.musicxml.note.lyric.LyricTextData;
 import org.curtis.musicxml.note.notation.Notation;
 
 import java.util.HashMap;
@@ -219,7 +220,9 @@ public class NoteBuilder extends MusicDataBuilder {
                     buildElementWithValueAndAttributes("elision", elision.getValue(), elisionAttributes);
                 }
                 buildElementWithValue("syllabic", lyricSyllable.getSyllabic());
-                buildFormattedDisplay("text", lyricSyllable.getText());
+                LyricTextData lyricTextData = lyricSyllable.getText();
+                if (lyricTextData == null) buildElement("text");
+                else buildFormattedDisplay("text", lyricSyllable.getText());
             }
             buildExtend(lyricText.getExtend());
         }

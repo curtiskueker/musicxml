@@ -16,6 +16,8 @@ public class LyricFactory {
         LyricTextData lyricTextData = new LyricTextData();
         DisplayFactory.setFormattedDisplay(lyricTextData, element);
 
+        if (lyricTextData.getDisplay() == null && lyricTextData.getTextFormat() == null) return null;
+
         return lyricTextData;
     }
 

@@ -71,14 +71,14 @@ public class DisplayFactory {
     }
 
     private static boolean invalidPositionValue(BigDecimal positionValue, String fieldName) {
-        if (positionValue == null) return true;
+        if (positionValue == null) return false;
 
         if (MathUtil.largerThan(positionValue.abs(), FactoryUtil.MAXIMUM_POSITION_VALUE)) {
             System.err.println("Warning: " + fieldName + " value " + positionValue + " exceeds maximum allowed value " + FactoryUtil.MAXIMUM_POSITION_VALUE + ".  Setting value to null.");
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public static Font newFont(Element element) {

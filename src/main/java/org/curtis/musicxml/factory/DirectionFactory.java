@@ -301,6 +301,7 @@ public class DirectionFactory {
             String beatElementName = element.getTagName();
             switch (beatElementName) {
                 case "beat-unit":
+                    beatUnit.setBeatUnit(NoteFactory.newNoteTypeValue(element));
                     break;
                 case "beat-unit-dot":
                     Integer beatUnitDots = beatUnit.getBeatUnitDots();
