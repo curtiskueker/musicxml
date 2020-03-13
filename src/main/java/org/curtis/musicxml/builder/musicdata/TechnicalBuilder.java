@@ -89,11 +89,11 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildUpBow(UpBow upBow) {
-        buildElementWithAttributes("up-bow", DisplayBuilder.buildDisplay(upBow.getDisplay()));
+        buildElementWithOptionalAttributes("up-bow", DisplayBuilder.buildDisplay(upBow.getDisplay()));
     }
 
     private void buildDownBow(DownBow downBow) {
-        buildElementWithAttributes("down-bow", DisplayBuilder.buildDisplay(downBow.getDisplay()));
+        buildElementWithOptionalAttributes("down-bow", DisplayBuilder.buildDisplay(downBow.getDisplay()));
     }
 
     private void buildHarmonic(Harmonic harmonic) {
@@ -130,11 +130,11 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildOpenString(OpenString openString) {
-        buildElementWithAttributes("down-bow", DisplayBuilder.buildDisplay(openString.getDisplay()));
+        buildElementWithOptionalAttributes("down-bow", DisplayBuilder.buildDisplay(openString.getDisplay()));
     }
 
     private void buildThumbPosition(ThumbPosition thumbPosition) {
-        buildElementWithAttributes("thumb-position", DisplayBuilder.buildDisplay(thumbPosition.getDisplay()));
+        buildElementWithOptionalAttributes("thumb-position", DisplayBuilder.buildDisplay(thumbPosition.getDisplay()));
     }
 
     private void buildPluck(Pluck pluck) {
@@ -142,21 +142,21 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildDoubleTongue(DoubleTongue doubleTongue) {
-        buildElementWithAttributes("double-tongue", DisplayBuilder.buildDisplay(doubleTongue.getDisplay()));
+        buildElementWithOptionalAttributes("double-tongue", DisplayBuilder.buildDisplay(doubleTongue.getDisplay()));
     }
 
     private void buildTripleTongue(TripleTongue tripleTongue) {
-        buildElementWithAttributes("triple-tongue", DisplayBuilder.buildDisplay(tripleTongue.getDisplay()));
+        buildElementWithOptionalAttributes("triple-tongue", DisplayBuilder.buildDisplay(tripleTongue.getDisplay()));
     }
 
     private void buildStopped(Stopped stopped) {
         Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(stopped.getDisplay()));
         attributes.put("smufl", stopped.getSmufl());
-        buildElementWithAttributes("stopped", attributes);
+        buildElementWithOptionalAttributes("stopped", attributes);
     }
 
     private void buildSnapPizzicato(SnapPizzicato snapPizzicato) {
-        buildElementWithAttributes("snap-pizzicato", DisplayBuilder.buildDisplay(snapPizzicato.getDisplay()));
+        buildElementWithOptionalAttributes("snap-pizzicato", DisplayBuilder.buildDisplay(snapPizzicato.getDisplay()));
     }
 
     private void buildHammerOnPullOf(HammerOnPullOff hammerOnPullOff) {
@@ -204,7 +204,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildFingernails(Fingernails fingernails) {
-        buildElementWithAttributes("fingernails", DisplayBuilder.buildDisplay(fingernails.getDisplay()));
+        buildElementWithOptionalAttributes("fingernails", DisplayBuilder.buildDisplay(fingernails.getDisplay()));
     }
 
     private void buildHole(Hole hole) {
@@ -236,27 +236,27 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildBrassBend(BrassBend brassBend) {
-        buildElementWithAttributes("brass-bend", DisplayBuilder.buildDisplay(brassBend.getDisplay()));
+        buildElementWithOptionalAttributes("brass-bend", DisplayBuilder.buildDisplay(brassBend.getDisplay()));
     }
 
     private void buildFlip(Flip flip) {
-        buildElementWithAttributes("flip", DisplayBuilder.buildDisplay(flip.getDisplay()));
+        buildElementWithOptionalAttributes("flip", DisplayBuilder.buildDisplay(flip.getDisplay()));
     }
 
     private void buildSmear(Smear smear) {
-        buildElementWithAttributes("smear", DisplayBuilder.buildDisplay(smear.getDisplay()));
+        buildElementWithOptionalAttributes("smear", DisplayBuilder.buildDisplay(smear.getDisplay()));
     }
 
     private void buildOpen(Open open) {
         Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(open.getDisplay()));
         attributes.put("smufl", open.getSmufl());
-        buildElementWithAttributes("open", attributes);
+        buildElementWithOptionalAttributes("open", attributes);
     }
 
     private void buildHalfMuted(HalfMuted halfMuted) {
         Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(halfMuted.getDisplay()));
         attributes.put("smufl", halfMuted.getSmufl());
-        buildElementWithAttributes("half-muted", attributes);
+        buildElementWithOptionalAttributes("half-muted", attributes);
     }
 
     private void buildHarmonMute(HarmonMute harmonMute) {
@@ -269,7 +269,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildGolpe(Golpe golpe) {
-        buildElementWithAttributes("golpe", DisplayBuilder.buildDisplay(golpe.getDisplay()));
+        buildElementWithOptionalAttributes("golpe", DisplayBuilder.buildDisplay(golpe.getDisplay()));
     }
 
     private void buildOtherTechnical(OtherTechnical otherTechnical) {

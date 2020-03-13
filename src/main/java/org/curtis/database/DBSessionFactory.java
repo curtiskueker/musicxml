@@ -101,6 +101,7 @@ public class DBSessionFactory {
 
             String protocolConnector = databaseType.equals(DBConstants.DATABASE_ORACLE) ? ":thin:@" : "://";
             String url = "jdbc:" + databaseType + protocolConnector + dbServer + "/" + databaseName;
+            if (databaseType.equals(DBConstants.DATABASE_MYSQL)) url += "?serverTimezone=UTC";
 
             jpaProperties.put("hibernate.connection.url", url);
             jpaProperties.put("hibernate.connection.username", name);

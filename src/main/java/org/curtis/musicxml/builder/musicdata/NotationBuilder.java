@@ -131,7 +131,7 @@ public class NotationBuilder extends MusicDataBuilder {
         if (tupletNumber != null) buildElementWithValueAndAttributes("tuplet-number", tupletNumber.getValue(), DisplayBuilder.buildDisplay(tupletNumber.getDisplay()));
         TupletType tupletType = tupletPortion.getTupletType();
         if (tupletType != null) buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()), DisplayBuilder.buildDisplay(tupletType.getDisplay()));
-        for (TupletDot tupletDot : tupletPortion.getTupletDots()) buildElementWithAttributes("tuplet-dot", DisplayBuilder.buildDisplay(tupletDot.getDisplay()));
+        for (TupletDot tupletDot : tupletPortion.getTupletDots()) buildElementWithOptionalAttributes("tuplet-dot", DisplayBuilder.buildDisplay(tupletDot.getDisplay()));
     }
 
     private void buildGlissando(Glissando glissando) {

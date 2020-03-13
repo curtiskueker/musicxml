@@ -59,33 +59,33 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildAccent(Accent accent) {
-        buildElementWithAttributes("accent", DisplayBuilder.buildDisplay(accent.getDisplay()));
+        buildElementWithOptionalAttributes("accent", DisplayBuilder.buildDisplay(accent.getDisplay()));
     }
 
     private void buildStrongAccent(StrongAccent strongAccent) {
         Map<String, String> attributes = new HashMap<>(DisplayBuilder.buildDisplay(strongAccent.getDisplay()));
         attributes.put("type", BuilderUtil.enumValue(strongAccent.getType()));
-        buildElementWithAttributes("strong-accent", attributes);
+        buildElementWithOptionalAttributes("strong-accent", attributes);
     }
 
     private void buildStaccato(Staccato staccato) {
-        buildElementWithAttributes("staccato", DisplayBuilder.buildDisplay(staccato.getDisplay()));
+        buildElementWithOptionalAttributes("staccato", DisplayBuilder.buildDisplay(staccato.getDisplay()));
     }
 
     private void buildTenuto(Tenuto tenuto) {
-        buildElementWithAttributes("tenuto", DisplayBuilder.buildDisplay(tenuto.getDisplay()));
+        buildElementWithOptionalAttributes("tenuto", DisplayBuilder.buildDisplay(tenuto.getDisplay()));
     }
 
     private void buildDetachedLegato(DetachedLegato detachedLegato) {
-        buildElementWithAttributes("detached-legato", DisplayBuilder.buildDisplay(detachedLegato.getDisplay()));
+        buildElementWithOptionalAttributes("detached-legato", DisplayBuilder.buildDisplay(detachedLegato.getDisplay()));
     }
 
     private void buildStaccatissimo(Staccatissimo staccatissimo) {
-        buildElementWithAttributes("staccatissimo", DisplayBuilder.buildDisplay(staccatissimo.getDisplay()));
+        buildElementWithOptionalAttributes("staccatissimo", DisplayBuilder.buildDisplay(staccatissimo.getDisplay()));
     }
 
     private void buildSpiccato(Spiccato spiccato) {
-        buildElementWithAttributes("spiccato", DisplayBuilder.buildDisplay(spiccato.getDisplay()));
+        buildElementWithOptionalAttributes("spiccato", DisplayBuilder.buildDisplay(spiccato.getDisplay()));
     }
 
     private void buildScoop(Scoop scoop) {
@@ -109,19 +109,19 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildCaesura(Caesura caesura) {
-        buildElementWithAttributes("caesura", DisplayBuilder.buildDisplay(caesura.getDisplay()));
+        buildElementWithOptionalAttributes("caesura", DisplayBuilder.buildDisplay(caesura.getDisplay()));
     }
 
     private void buildStress(Stress stress) {
-        buildElementWithAttributes("stress", DisplayBuilder.buildDisplay(stress.getDisplay()));
+        buildElementWithOptionalAttributes("stress", DisplayBuilder.buildDisplay(stress.getDisplay()));
     }
 
     private void buildUnstress(Unstress unstress) {
-        buildElementWithAttributes("unstress", DisplayBuilder.buildDisplay(unstress.getDisplay()));
+        buildElementWithOptionalAttributes("unstress", DisplayBuilder.buildDisplay(unstress.getDisplay()));
     }
 
     private void buildSoftAccent(SoftAccent softAccent) {
-        buildElementWithAttributes("soft-accent", DisplayBuilder.buildDisplay(softAccent.getDisplay()));
+        buildElementWithOptionalAttributes("soft-accent", DisplayBuilder.buildDisplay(softAccent.getDisplay()));
     }
 
     private void buildOtherArticulation(OtherArticulation otherArticulation) {
@@ -138,6 +138,6 @@ public class ArticulationBuilder extends MusicDataBuilder {
         attributes.put("line-length", BuilderUtil.enumValue(line.getLineLength()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(line.getDashedFormatting()));
         attributes.putAll(DisplayBuilder.buildDisplay(linedArticulation.getDisplay()));
-        buildElementWithAttributes(elementName, attributes);
+        buildElementWithOptionalAttributes(elementName, attributes);
     }
 }

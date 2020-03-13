@@ -183,6 +183,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 CreditImage creditImage = new CreditImage();
                                 creditImage.setElementId(creditSubelement.getAttribute("id"));
                                 creditImage.setImage(DirectionFactory.newImage(creditSubelement));
+                                DisplayFactory.setFormattedDisplay(creditImage, creditSubelement);
                                 for (Link imageLink : currentLinks) {
                                     imageLink.setCreditDisplay(creditImage);
                                     creditImage.getLinks().add(imageLink);
@@ -198,7 +199,8 @@ public class ScoreHeaderHandler extends BaseHandler {
                             case "credit-words":
                                 CreditWords creditWords = new CreditWords();
                                 creditWords.setElementId(creditSubelement.getAttribute("id"));
-                                TextFormat creditTextFormat = TextFormatFactory.newTextFormat(creditSubelement);
+                                DisplayFactory.setFormattedDisplay(creditWords, creditSubelement);
+                                TextFormat creditTextFormat = creditWords.getTextFormat();
                                 if (creditTextFormat == null) break;
                                 creditWords.setTextFormat(creditTextFormat);
                                 for (Link creditWordsLink : currentLinks) {
@@ -216,7 +218,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                             case "credit-symbol":
                                 CreditSymbol creditSymbol = new CreditSymbol();
                                 creditSymbol.setElementId(creditSubelement.getAttribute("id"));
-                                DisplayFactory.setFormattedDisplay(creditSymbol, element);
+                                DisplayFactory.setFormattedDisplay(creditSymbol, creditSubelement);
                                 for (Link creditWordsLink : currentLinks) {
                                     creditWordsLink.setCreditDisplay(creditSymbol);
                                     creditSymbol.getLinks().add(creditWordsLink);

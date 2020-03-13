@@ -153,14 +153,18 @@ public abstract class OutputBuilder {
         buildCloseEmptyElement();
     }
 
-    protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, String attributeValue) {
-        if (StringUtil.isEmpty(elementValue) && StringUtil.isEmpty(attributeValue)) return;
-
+    protected void buildElementWithOptionalValueAndAttribute(String elementName, String elementValue, String attributeName, String attributeValue) {
         buildOpenElement(elementName);
         buildAttribute(attributeName, attributeValue);
         append(">");
         buildElementValue(elementValue);
         buildEndElement(elementName);
+    }
+
+    protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, String attributeValue) {
+        if (StringUtil.isEmpty(elementValue) && StringUtil.isEmpty(attributeValue)) return;
+
+        buildElementWithOptionalValueAndAttribute(elementName, elementValue, attributeName, attributeValue);
     }
 
     protected void buildElementWithValueAndAttribute(String elementName, String elementValue, String attributeName, Integer attributeValue) {

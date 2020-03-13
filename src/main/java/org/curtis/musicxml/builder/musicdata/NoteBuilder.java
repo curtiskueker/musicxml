@@ -84,7 +84,7 @@ public class NoteBuilder extends MusicDataBuilder {
             buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", noteType.getSize());
         }
         for (Dot dot : note.getDots()) {
-            buildElementWithAttributes("dot", DisplayBuilder.buildDisplay(dot.getDisplay()));
+            buildElementWithOptionalAttributes("dot", DisplayBuilder.buildDisplay(dot.getDisplay()));
         }
         Accidental accidental = note.getAccidental();
         if (accidental != null) {
