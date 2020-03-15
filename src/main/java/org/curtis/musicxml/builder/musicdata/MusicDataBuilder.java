@@ -74,7 +74,6 @@ public abstract class MusicDataBuilder extends BaseBuilder {
 
         buildFormattedDisplay("footnote", editorial.getFootnote());
         buildLevel(editorial.getLevel());
-        buildElementWithValue("voice", editorial.getVoice());
     }
 
     protected void buildFormattedDisplay(String elementName, FormattedDisplay formattedDisplay) {

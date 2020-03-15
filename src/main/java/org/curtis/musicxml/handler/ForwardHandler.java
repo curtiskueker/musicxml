@@ -18,6 +18,7 @@ public class ForwardHandler extends MusicDataHandler {
 
         forward.setDuration(MathUtil.newBigDecimal(XmlUtil.getChildElementText(element, "duration")));
         forward.setEditorial(FormattingFactory.newEditorial(element));
+        forward.setVoice(XmlUtil.getChildElementText(element, "voice"));
         forward.setStaff(StringUtil.getInteger(XmlUtil.getChildElementText(element, "staff")));
 
         return forward;

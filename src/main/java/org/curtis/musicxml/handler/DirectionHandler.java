@@ -24,6 +24,7 @@ public class DirectionHandler extends MusicDataHandler {
 
         direction.setElementId(element.getAttribute("id"));
         direction.setEditorial(FormattingFactory.newEditorial(element));
+        direction.setVoice(XmlUtil.getChildElementText(element, "voice"));
         direction.setDisplay(DisplayFactory.newDisplay(element));
         direction.setDirective(TypeUtil.getYesNo(element.getAttribute("directive")));
 

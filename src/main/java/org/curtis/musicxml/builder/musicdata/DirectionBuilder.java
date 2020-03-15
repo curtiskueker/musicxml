@@ -56,8 +56,8 @@ public class DirectionBuilder extends MusicDataBuilder {
         if (editorial != null) {
             buildFormattedDisplay("footnote", editorial.getFootnote());
             buildLevel(editorial.getLevel());
-            buildElementWithValue("voice", editorial.getVoice());
         }
+        buildElementWithValue("voice", direction.getVoice());
         buildElementWithValue("staff", direction.getStaff());
         SoundBuilder soundBuilder = new SoundBuilder(direction.getSound());
         append(soundBuilder.build().toString());

@@ -34,6 +34,8 @@ public class Direction extends MusicDataElement {
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Column
+    private String voice;
+    @Column
     private Integer staff;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sound_id")
@@ -71,6 +73,14 @@ public class Direction extends MusicDataElement {
 
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
+    }
+
+    public String getVoice() {
+        return voice;
+    }
+
+    public void setVoice(String voice) {
+        this.voice = voice;
     }
 
     public Integer getStaff() {

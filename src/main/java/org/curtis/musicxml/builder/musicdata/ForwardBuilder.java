@@ -15,6 +15,7 @@ public class ForwardBuilder extends MusicDataBuilder {
         buildStartElement("forward");
         buildElementWithValue("duration", forward.getDuration());
         buildEditorial(forward.getEditorial());
+        buildElementWithValue("voice", forward.getVoice());
         buildElementWithValue("staff", forward.getStaff());
         buildEndElement("forward");
 

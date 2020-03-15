@@ -14,7 +14,6 @@ import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.BarlineLocation;
 import org.curtis.musicxml.common.OrderedGroup;
-import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
@@ -156,7 +155,7 @@ public class MeasureBuilder extends LilypondBuilder {
                 currentNote = (Note)musicData;
                 BigDecimal currentNoteDuration = currentNote.getDuration();
                 FullNote fullNote = currentNote.getFullNote();
-                String currentNoteVoice = currentNote.getEditorial().getVoice();
+                String currentNoteVoice = currentNote.getVoice();
                 if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
                 OrderedGroup chordType = fullNote.getChordType();
@@ -232,9 +231,9 @@ public class MeasureBuilder extends LilypondBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
-                Editorial editorial = direction.getEditorial();
-                if (StringUtil.isEmpty(editorial.getVoice())) editorial.setVoice(defaultVoice);
-                if (isCurrentVoice(editorial.getVoice())) {
+                String voice = direction.getVoice();
+                if (StringUtil.isEmpty(voice)) direction.setVoice(defaultVoice);
+                if (isCurrentVoice(voice)) {
                     DirectionBuilder.setDirectionDefaults(direction);
                     if (deferredDirection(direction)) {
                         currentDirections.add(direction);
@@ -458,18 +457,12 @@ public class MeasureBuilder extends LilypondBuilder {
     private void setCurrentVoice(MusicData musicData) {
         if (musicData instanceof Note) {
             Note note = (Note)musicData;
-            Editorial editorial = note.getEditorial();
-            if (editorial != null) {
-                String musicDataVoice = editorial.getVoice();
-                if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
-            }
+            String musicDataVoice = note.getVoice();
+            if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
         } else if (musicData instanceof Forward) {
             Forward forward = (Forward)musicData;
-            Editorial editorial = forward.getEditorial();
-            if (editorial != null) {
-                String musicDataVoice = editorial.getVoice();
-                if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
-            }
+            String musicDataVoice = forward.getVoice();
+            if(StringUtil.isNotEmpty(musicDataVoice)) currentVoice = musicDataVoice;
         } else if (musicData instanceof Chord) {
             Chord chord = (Chord)musicData;
             currentVoice = chord.getVoice();

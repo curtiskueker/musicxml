@@ -98,7 +98,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     Note note = (Note) musicData;
                     FullNote fullNote = note.getFullNote();
 
-                    String voice = note.getEditorial().getVoice();
+                    String voice = note.getVoice();
                     if (StringUtil.isNotEmpty(voice)) measureVoices.add(voice);
 
                     List<Note> tiedFromNoteList = tiedFromNotes.computeIfAbsent(voice, noteVoice -> new ArrayList<>());

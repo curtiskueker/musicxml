@@ -55,6 +55,8 @@ public class Note extends MusicDataElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
+    @Column
+    private String voice;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id")
     private NoteType type;
@@ -185,6 +187,14 @@ public class Note extends MusicDataElement {
 
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
+    }
+
+    public String getVoice() {
+        return voice;
+    }
+
+    public void setVoice(String voice) {
+        this.voice = voice;
     }
 
     public NoteType getType() {

@@ -129,14 +129,12 @@ public class FormattingFactory {
 
         Footnote footnote = DisplayFactory.newFootnote(XmlUtil.getChildElement(element, "footnote"));
         Level level = newLevel(XmlUtil.getChildElement(element, "level"));
-        String voice = XmlUtil.getChildElementText(element, "voice");
 
-        if (footnote == null && level == null && StringUtil.isEmpty(voice)) return null;
+        if (footnote == null && level == null) return null;
 
         Editorial editorial = new Editorial();
         editorial.setFootnote(footnote);
         editorial.setLevel(level);
-        editorial.setVoice(voice);
 
         return editorial;
     }
