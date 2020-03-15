@@ -22,10 +22,18 @@ public class DirectionBuilder extends MusicDataBuilder {
     public StringBuilder buildDirection(Direction direction) throws BuildException {
         for (DirectionTypeList directionTypeList : direction.getDirectionTypeLists()) {
             for(DirectionType directionType : directionTypeList.getDirectionTypes()) {
+                // Require placement for some direction types
+                boolean requirePlacement = false;
+                if (directionType instanceof Words) {
+                    Words words = (Words)directionType;
+                    if (!words.isTextMark()) requirePlacement = true;
+                }
+
                 MusicDataBuilder musicDataBuilder = new MusicDataBuilder(directionType);
                 String musicDataResults = musicDataBuilder.build().toString();
                 if(!musicDataResults.isEmpty()) {
-                    if (!TypeUtil.getBoolean(direction.getDirective())) append(PlacementBuildUtil.getPlacement(direction.getDisplay(), directionType.getClass().getSimpleName()));
+                    if (requirePlacement) append(PlacementBuildUtil.getPlacementDefaultAbove(direction.getDisplay()));
+                    else if (!TypeUtil.getBoolean(direction.getDirective())) append(PlacementBuildUtil.getPlacement(direction.getDisplay(), directionType.getClass().getSimpleName()));
                     append(musicDataResults);
                 }
             }

@@ -231,9 +231,8 @@ public class MeasureBuilder extends LilypondBuilder {
                 previousNote = currentNote;
             } else if(musicData instanceof Direction) {
                 Direction direction = (Direction)musicData;
-                String voice = direction.getVoice();
-                if (StringUtil.isEmpty(voice)) direction.setVoice(defaultVoice);
-                if (isCurrentVoice(voice)) {
+                if (StringUtil.isEmpty(direction.getVoice())) direction.setVoice(defaultVoice);
+                if (isCurrentVoice(direction.getVoice())) {
                     DirectionBuilder.setDirectionDefaults(direction);
                     if (deferredDirection(direction)) {
                         currentDirections.add(direction);
