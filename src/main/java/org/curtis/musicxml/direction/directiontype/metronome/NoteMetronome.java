@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("note metronome")
 public class NoteMetronome extends Metronome {
-    @Column
+    @Column(name = "metronome_arrows")
     @Type(type="yes_no")
     private Boolean metronomeArrows = false;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
