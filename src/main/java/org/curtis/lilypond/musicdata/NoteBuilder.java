@@ -13,6 +13,7 @@ import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
+import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Placement;
 import org.curtis.musicxml.note.Beam;
@@ -442,6 +443,8 @@ public class NoteBuilder extends MusicDataBuilder {
                     }
                 }
                 directionType = directionTypeIterator.next();
+                // if split direction type is Words, set it as a text mark
+                if (directionType instanceof Words) ((Words)directionType).setTextMark(true);
                 String directionTypeBuild = new MusicDataBuilder(directionType).build().toString();
                 if (StringUtil.isNotEmpty(directionTypeBuild)) {
                     append(PlacementBuildUtil.getPlacement(direction.getDisplay()));
