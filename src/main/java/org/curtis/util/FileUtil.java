@@ -41,7 +41,11 @@ public class FileUtil {
         File file = new File(filename);
         FileWriter fileWriter = null;
 
-        file.getParentFile().mkdir();
+        try {
+            file.getParentFile().mkdir();
+        } catch (Exception e) {
+            // ignore attempt to create directory, if it fails
+        }
 
         try {
             if (!file.exists()) {

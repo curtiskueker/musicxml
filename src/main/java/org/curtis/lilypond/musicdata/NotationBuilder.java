@@ -34,6 +34,9 @@ public class NotationBuilder extends MusicDataBuilder {
                 append(PlacementBuildUtil.getPlacement(tied.getDisplay()));
                 append("~");
                 break;
+            case LET_RING:
+                append("\\laissezVibrer");
+                break;
         }
 
         return stringBuilder;

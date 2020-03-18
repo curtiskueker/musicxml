@@ -42,6 +42,8 @@ import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.ShowTuplet;
 import org.curtis.musicxml.note.notation.Slur;
 import org.curtis.musicxml.note.notation.SlurType;
+import org.curtis.musicxml.note.notation.Tied;
+import org.curtis.musicxml.note.notation.TiedType;
 import org.curtis.musicxml.note.notation.Tuplet;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
@@ -53,7 +55,6 @@ import org.curtis.util.StringUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -309,8 +310,8 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder notationsBuild(List<Notations> notationsList) throws BuildException {
-        Set<String> nonDuplicatedNotations = new HashSet<>(Arrays.asList("Tied"));
-        Set<String> executedNotations = new HashSet<>();
+        // Tied executed only once, unless it's a let-ring
+        boolean tiedExecuted = false;
         for(Notations notations : notationsList) {
             if (!TypeUtil.getBooleanDefaultYes(notations.getPrintObject())) continue;
 
@@ -345,11 +346,13 @@ public class NoteBuilder extends MusicDataBuilder {
                     }
                 }
 
-                String notationsClass = notation.getClass().getSimpleName();
-                if (nonDuplicatedNotations.contains(notationsClass) && executedNotations.contains(notationsClass)) continue;
+                boolean isExecutableTiedNotation = notation instanceof Tied && ((Tied)notation).getTiedType() != TiedType.LET_RING;
+                if (isExecutableTiedNotation && tiedExecuted) continue;
+
                 MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);
                 append(musicDataBuilder.build().toString());
-                executedNotations.add(notationsClass);
+
+                if(isExecutableTiedNotation) tiedExecuted = true;
             }
         }
 
