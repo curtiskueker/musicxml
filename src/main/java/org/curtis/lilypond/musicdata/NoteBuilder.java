@@ -9,6 +9,7 @@ import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
@@ -16,6 +17,7 @@ import org.curtis.musicxml.direction.directiontype.DirectionTypeList;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Placement;
+import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Chord;
@@ -126,6 +128,12 @@ public class NoteBuilder extends MusicDataBuilder {
             append(NoteUtil.getAlter(pitch.getAlter()));
 
             pitchOctaveBuild(pitch.getOctave());
+
+            Accidental accidental = note.getAccidental();
+            if (accidental != null) {
+                LevelDisplay accidentalLevelDisplay = accidental.getLevelDisplay();
+                if (accidentalLevelDisplay != null && TypeUtil.getBoolean(accidentalLevelDisplay.getParentheses())) append("?");
+            }
         } else if (fullNoteType instanceof Unpitched) {
             Unpitched unpitched = (Unpitched)fullNoteType;
             append(NoteUtil.getStep(unpitched.getDisplayStep()));

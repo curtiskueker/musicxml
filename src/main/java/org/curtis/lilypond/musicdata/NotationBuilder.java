@@ -116,6 +116,7 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildAccidentalMark(AccidentalMark accidentalMark) {
+        // NOTE: placeholder implementation
         AccidentalType accidentalType = accidentalMark.getAccidentalType();
         if (accidentalType == null) return stringBuilder;
 
