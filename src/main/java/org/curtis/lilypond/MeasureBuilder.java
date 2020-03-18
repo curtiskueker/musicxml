@@ -139,8 +139,14 @@ public class MeasureBuilder extends LilypondBuilder {
 
         CURRENT_MEASURE_NUMBER = measure.getNumber();
 
-        displayMeasure();
+        printMeasureNumber();
         if (DEBUG) System.err.println("Measure " + measure.getNumber());
+
+        if (StringUtil.isNotEmpty(measure.getText())) {
+            append("\\mark \"");
+            append(measure.getText());
+            append("\" ");
+        }
 
         setWholeMeasureDuration();
         boolean hasValidVoiceDuration = true;
@@ -543,7 +549,7 @@ public class MeasureBuilder extends LilypondBuilder {
 
     private void appendWholeMeasureSpacerRepresentation() {
         clear();
-        displayMeasure();
+        printMeasureNumber();
 
         try {
             for (MusicDataBuilder musicDataBuilder : musicDataBuilders) {
@@ -557,7 +563,7 @@ public class MeasureBuilder extends LilypondBuilder {
         }
     }
 
-    private void displayMeasure() {
+    private void printMeasureNumber() {
         append("% measure ");
         appendLine(CURRENT_MEASURE_NUMBER);
     }

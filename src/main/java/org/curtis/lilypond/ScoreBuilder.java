@@ -282,8 +282,10 @@ public class ScoreBuilder extends LilypondBuilder {
                 }
             }
 
+            // copy measure data over to measure copy
             for(Measure staffMeasure : staffMeasures) {
                 staffMeasure.setNumber(measure.getNumber());
+                staffMeasure.setText(measure.getText());
                 staffMeasure.setImplicit(measure.getImplicit());
                 staffMeasure.setNonControlling(measure.getNonControlling());
                 staffMeasure.setWidth(measure.getWidth());
