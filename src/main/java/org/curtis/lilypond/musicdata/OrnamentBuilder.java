@@ -64,14 +64,17 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildTremolo(Tremolo tremolo) {
-        Integer tremoloMarks = tremolo.getTremoloMarks();
-        if(tremoloMarks != null) {
             switch (tremolo.getTremoloType()) {
                 case SINGLE:
-                    append(":");
-                    append(MathUtil.truncate(MathUtil.multiply(MathUtil.exp(MathUtil.newBigDecimal(2), tremoloMarks), MathUtil.newBigDecimal(4))));
+                    Integer tremoloMarks = tremolo.getTremoloMarks();
+                    if(tremoloMarks != null) {
+                        append(":");
+                        append(MathUtil.truncate(MathUtil.multiply(MathUtil.exp(MathUtil.newBigDecimal(2), tremoloMarks), MathUtil.newBigDecimal(4))));
+                    }
                     break;
-            }
+                case UNMEASURED:
+                    append(":32");
+                    break;
         }
 
         return stringBuilder;
