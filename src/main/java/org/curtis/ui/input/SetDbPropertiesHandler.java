@@ -30,6 +30,7 @@ public class SetDbPropertiesHandler extends InputHandler {
 
         DatabaseExec databaseExec = new DatabaseExec();
         databaseExec.setTestDatabase(taskInitializer.isSelected("testDatabase"));
+        databaseExec.setResetDbProperties(true);
 
         SetDbProperties setDbProperties = new SetDbProperties();
         setDbProperties.setSetProperties(setProperties);

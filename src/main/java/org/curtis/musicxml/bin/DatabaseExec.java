@@ -10,6 +10,7 @@ public class DatabaseExec extends MusicXmlScript {
     private boolean testDatabase;
     private boolean createDatabase;
     private boolean generateSchema;
+    private boolean resetDbProperties = false;
     private String errorMessage;
 
     public DatabaseExec() {
@@ -17,7 +18,7 @@ public class DatabaseExec extends MusicXmlScript {
     }
 
     public void execute() throws MusicXmlException {
-        if (!isCreateDatabase() && !isTestDatabase() && !isGenerateSchema()) throw new MusicXmlException("No option selected.");
+        if (!isCreateDatabase() && !isTestDatabase() && !isGenerateSchema() && !isResetDbProperties()) throw new MusicXmlException("No option selected.");
 
         try {
             if (isCreateDatabase()) {
@@ -74,6 +75,14 @@ public class DatabaseExec extends MusicXmlScript {
 
     public void setGenerateSchema(boolean generateSchema) {
         this.generateSchema = generateSchema;
+    }
+
+    public boolean isResetDbProperties() {
+        return resetDbProperties;
+    }
+
+    public void setResetDbProperties(boolean resetDbProperties) {
+        this.resetDbProperties = resetDbProperties;
     }
 
     public static void main(String[] args) {
