@@ -1,6 +1,7 @@
 package org.curtis.lilypond.musicdata;
 
 import org.curtis.lilypond.util.TypeUtil;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Dashes;
 import org.curtis.musicxml.direction.directiontype.Dynamics;
@@ -75,37 +76,19 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
 
     public StringBuilder buildDynamics(Dynamics dynamics) {
         List<DynamicsMarking> dynamicsMarkings = dynamics.getMarkings();
+        if (dynamicsMarkings.isEmpty()) return stringBuilder;
+
+        StringBuilder dynamicsBuilder = new StringBuilder();
         for(DynamicsMarking dynamicsMarking : dynamicsMarkings) {
-            switch (dynamicsMarking.getDynamicsType()) {
-                case P:
-                    append("\\p");
-                    break;
-                case PP:
-                    append("\\pp");
-                    break;
-                case F:
-                    append("\\f");
-                    break;
-                case FF:
-                    append("\\ff");
-                    break;
-                case MP:
-                    append("\\mp");
-                    break;
-                case MF:
-                    append("\\mf");
-                    break;
-                case SF:
-                    append("\\sf");
-                    break;
-                case FP:
-                    append("\\fp");
-                    break;
-                case FZ:
-                    append("\\fz");
-                    break;
-            }
+            String markingValue = BuilderUtil.enumValue(dynamicsMarking.getDynamicsType());
+            if (markingValue.equals("other-dynamics")) dynamicsBuilder.append(dynamicsMarking.getValue());
+            else dynamicsBuilder.append(markingValue);
         }
+
+        if (dynamicsBuilder.length() == 0) return stringBuilder;
+
+        append("\\");
+        append(dynamicsBuilder.toString());
 
         return stringBuilder;
     }
