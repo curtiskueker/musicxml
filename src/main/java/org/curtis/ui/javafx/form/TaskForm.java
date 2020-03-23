@@ -222,16 +222,16 @@ public class TaskForm {
         textField.setText(file.getAbsolutePath());
     }
 
-    public void setChooseFileLocationInTextField(String textFieldName, String extensionLabel, String extensionFilter) {
+    public void setChooseFileLocationInTextField(String textFieldName, String extensionLabel, String ... extensionFilters) {
         FileChooser fileChooser = new FileChooser();
-        if (StringUtil.isNotEmpty(extensionFilter)) {
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(extensionLabel, extensionFilter);
+        if (extensionFilters.length > 0) {
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(extensionLabel, extensionFilters);
             fileChooser.getExtensionFilters().add(extFilter);
         }
         File file = fileChooser.showSaveDialog(getStage());
         if(file != null){
-            TextField schemaFileLocation = getTextField(textFieldName);
-            schemaFileLocation.setText(file.getAbsolutePath());
+            TextField fileLocation = getTextField(textFieldName);
+            fileLocation.setText(file.getAbsolutePath());
         }
     }
 

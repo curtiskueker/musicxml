@@ -111,7 +111,7 @@ public class TasksController {
 
     @FXML
     private void chooseMusicXmlToFile() {
-        taskForm.setChooseFileLocationInTextField(FormNode.MUSICXML_TO_FILE, "XML Files (*.xml)", "*.xml");
+        taskForm.setChooseFileLocationInTextField(FormNode.MUSICXML_TO_FILE, "Music XML Files (*.xml*, *.musicxml, *.mxl)", "*.xml*", "*.musicxml", "*.mxl");
     }
 
     @FXML
@@ -121,7 +121,7 @@ public class TasksController {
 
     @FXML
     private void choosePdfToFile() {
-        taskForm.setChooseFileLocationInTextField(FormNode.PDF_TO_FILE, "No extension", "");
+        taskForm.setChooseFileLocationInTextField(FormNode.PDF_TO_FILE, "No extension");
     }
 
     @FXML
