@@ -1,12 +1,13 @@
-create sequence hibernate_sequence start 1 increment 1;
+create sequence native start 1 increment 1;
 
     create table accidental (
        id int4 not null,
         accidental_type varchar(255),
         cautionary char(1),
         editorial char(1),
+        smufl varchar(255),
+        display_id int4,
         level_display_id int4,
-        print_style_id int4,
         primary key (id)
     );
 
@@ -27,20 +28,13 @@ create sequence hibernate_sequence start 1 increment 1;
        articulation_type varchar(31) not null,
         id int4 not null,
         breath_mark_value varchar(255),
-        placement varchar(255),
+        caesura_value varchar(255),
         type varchar(255),
-        print_style_id int4,
-        print_placement_id int4,
+        smufl varchar(255),
+        value varchar(255),
+        display_id int4,
         line_id int4,
-        placement_text_id int4,
         articulations_id int4 not null,
-        primary key (id)
-    );
-
-    create table bar_style_color (
-       id int4 not null,
-        bar_style varchar(255),
-        color varchar(255),
         primary key (id)
     );
 
@@ -54,8 +48,8 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table barre (
        id int4 not null,
-        color varchar(255),
         type varchar(255),
+        display_id int4,
         primary key (id)
     );
 
@@ -71,7 +65,7 @@ create sequence hibernate_sequence start 1 increment 1;
         location varchar(255),
         print_object char(1),
         semitones numeric(12, 4),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -79,25 +73,26 @@ create sequence hibernate_sequence start 1 increment 1;
        id int4 not null,
         step varchar(255),
         text varchar(255),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
     create table beam (
        id int4 not null,
-        color varchar(255),
+        element_id varchar(255),
         fan varchar(255),
         beam_number int4,
         repeater char(1),
         type varchar(255),
+        display_id int4,
         note_id int4 not null,
         primary key (id)
     );
 
-    create table beat_unit (
+    create table beat_unit_tied (
        id int4 not null,
-        beat_unit varchar(255),
-        beat_unit_dots int4,
+        beat_unit_tied_parent_id int4,
+        beat_unit_parent_id int4 not null,
         primary key (id)
     );
 
@@ -130,6 +125,7 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table clef (
        id int4 not null,
+        element_id varchar(255),
         additional char(1),
         after_barline char(1),
         clef_octave_change int4,
@@ -138,13 +134,14 @@ create sequence hibernate_sequence start 1 increment 1;
         print_object char(1),
         sign varchar(255),
         symbol_size varchar(255),
-        print_style_id int4,
+        display_id int4,
         attributes_id int4 not null,
         primary key (id)
     );
 
     create table credit (
        id int4 not null,
+        element_id varchar(255),
         page int4,
         score_header_id int4 not null,
         primary key (id)
@@ -153,7 +150,9 @@ create sequence hibernate_sequence start 1 increment 1;
     create table credit_display (
        credit_display_type varchar(31) not null,
         id int4 not null,
-        formatted_text_id int4,
+        element_id varchar(255),
+        display_id int4,
+        text_format_id int4,
         image_id int4,
         credit_id int4 not null,
         primary key (id)
@@ -197,7 +196,7 @@ create sequence hibernate_sequence start 1 increment 1;
        id int4 not null,
         plus_minus char(1),
         semitones numeric(12, 4),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -205,7 +204,7 @@ create sequence hibernate_sequence start 1 increment 1;
        id int4 not null,
         text varchar(255),
         value varchar(255),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -214,7 +213,7 @@ create sequence hibernate_sequence start 1 increment 1;
         symbol varchar(255),
         text varchar(255),
         value int4,
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -228,51 +227,53 @@ create sequence hibernate_sequence start 1 increment 1;
     create table direction_type (
        direction_type_type varchar(31) not null,
         id int4 not null,
+        element_id varchar(255),
         enclosure varchar(255),
         direction_type varchar(255),
         accordion_high char(1),
         accordion_low char(1),
         accordion_middle int4,
-        color varchar(255),
         line_type varchar(255),
         niente char(1),
         direction_type_number int4,
         spread numeric(12, 4),
+        smufl varchar(255),
         value varchar(255),
+        abbreviated char(1),
         line char(1),
+        pedal_number int4,
+        pedal_type varchar(255),
         sign char(1),
-        halign varchar(255),
+        height numeric(12, 4),
         source varchar(255),
-        valign_image varchar(255),
+        width numeric(12, 4),
         beater_value varchar(255),
         tip varchar(255),
         justify varchar(255),
         parentheses char(1),
+        metronome_arrows char(1),
         metronome_relation varchar(255),
         principal_voice varchar(255),
         symbol varchar(255),
-        placement varchar(255),
         print_object char(1),
         stick_material varchar(255),
         stick_type varchar(255),
         end_length numeric(12, 4),
         line_end varchar(255),
         direction_type_size int4,
+        staff_divide_symbol varchar(255),
         direction_type_list_id int4,
-        print_style_align_id int4,
-        formatted_text_id int4,
+        display_id int4,
+        text_format_id int4,
         dashed_formatting_id int4,
-        position_id int4,
-        text_decoration_id int4,
-        print_style_id int4,
-        beat_unit_1_id int4,
-        beat_unit_2_id int4,
-        per_minute_id int4,
+        metronome_mark_1_id int4,
+        metronome_mark_2_id int4,
         primary key (id)
     );
 
     create table direction_type_list (
        id int4 not null,
+        element_id varchar(255),
         direction_id int4,
         primary key (id)
     );
@@ -281,8 +282,19 @@ create sequence hibernate_sequence start 1 increment 1;
        id int4 not null,
         lang varchar(255),
         value varchar(255),
-        print_style_id int4,
+        display_id int4,
         attributes_id int4 not null,
+        primary key (id)
+    );
+
+    create table display (
+       id int4 not null,
+        color varchar(255),
+        halign varchar(255),
+        placement varchar(255),
+        valign varchar(255),
+        font_id int4,
+        position_id int4,
         primary key (id)
     );
 
@@ -296,7 +308,7 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table dot (
        id int4 not null,
-        print_placement_id int4,
+        display_id int4,
         note_id int4 not null,
         primary key (id)
     );
@@ -304,6 +316,8 @@ create sequence hibernate_sequence start 1 increment 1;
     create table dynamics_marking (
        id int4 not null,
         dynamics_type varchar(255),
+        smufl varchar(255),
+        value varchar(255),
         dynamics_id int4 not null,
         primary key (id)
     );
@@ -323,26 +337,18 @@ create sequence hibernate_sequence start 1 increment 1;
         primary key (id)
     );
 
-    create table editorial_voice (
-       id int4 not null,
-        voice varchar(255),
-        footnote_id int4,
-        level_id int4,
-        primary key (id)
-    );
-
-    create table editorial_voice_direction (
-       id int4 not null,
-        voice varchar(255),
-        footnote_id int4,
-        level_id int4,
-        primary key (id)
-    );
-
     create table element_position (
        id int4 not null,
         element varchar(255),
         position int4,
+        primary key (id)
+    );
+
+    create table elision (
+       id int4 not null,
+        smufl varchar(255),
+        value varchar(255),
+        display_id int4,
         primary key (id)
     );
 
@@ -370,7 +376,14 @@ create sequence hibernate_sequence start 1 increment 1;
         text_y numeric(12, 4),
         ending_type varchar(255),
         value varchar(255),
-        print_style_id int4,
+        display_id int4,
+        primary key (id)
+    );
+
+    create table except_voice (
+       id int4 not null,
+        value varchar(255),
+        slash_group_id int4,
         primary key (id)
     );
 
@@ -384,6 +397,7 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table figure (
        id int4 not null,
+        editorial_id int4,
         extend_id int4,
         figure_number_id int4,
         prefix_id int4,
@@ -403,38 +417,29 @@ create sequence hibernate_sequence start 1 increment 1;
     create table font (
        id int4 not null,
         font_family varchar(255),
+        font_size varchar(255),
         font_style varchar(255),
         font_weight varchar(255),
-        font_size_id int4,
         primary key (id)
     );
 
-    create table font_size (
+    create table footnote (
        id int4 not null,
-        css_font_size varchar(255),
-        font_size numeric(12, 4),
-        primary key (id)
-    );
-
-    create table formatted_text (
-       id int4 not null,
-        value text,
-        text_formatting_id int4,
+        display_id int4,
+        text_format_id int4,
         primary key (id)
     );
 
     create table frame (
        id int4 not null,
-        color varchar(255),
+        element_id varchar(255),
         frame_frets int4,
         frame_strings int4,
-        halign varchar(255),
         height numeric(12, 4),
         unplayed varchar(255),
-        valign_image varchar(255),
         width numeric(12, 4),
+        display_id int4,
         first_fret_id int4,
-        position_id int4,
         primary key (id)
     );
 
@@ -467,6 +472,14 @@ create sequence hibernate_sequence start 1 increment 1;
         primary key (id)
     );
 
+    create table glyph (
+       id int4 not null,
+        type varchar(255),
+        value varchar(255),
+        appearance_id int4 not null,
+        primary key (id)
+    );
+
     create table grace (
        id int4 not null,
         make_time numeric(12, 4),
@@ -478,8 +491,8 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table group_barline (
        id int4 not null,
-        color varchar(255),
         group_barline_type varchar(255),
+        display_id int4,
         primary key (id)
     );
 
@@ -487,15 +500,21 @@ create sequence hibernate_sequence start 1 increment 1;
        id int4 not null,
         group_name varchar(255),
         justify varchar(255),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
     create table group_symbol (
        id int4 not null,
-        color varchar(255),
         group_symbol_type varchar(255),
-        position_id int4,
+        display_id int4,
+        primary key (id)
+    );
+
+    create table harmon_closed (
+       id int4 not null,
+        location varchar(255),
+        value varchar(255),
         primary key (id)
     );
 
@@ -538,7 +557,7 @@ create sequence hibernate_sequence start 1 increment 1;
     create table inversion (
        id int4 not null,
         value int4,
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -554,11 +573,12 @@ create sequence hibernate_sequence start 1 increment 1;
     create table key_signature (
        key_type varchar(31) not null,
         id int4 not null,
+        element_id varchar(255),
         key_number int4,
         print_object char(1),
         fifths int4,
         key_mode varchar(255),
-        print_style_id int4,
+        display_id int4,
         cancel_id int4,
         attributes_id int4 not null,
         primary key (id)
@@ -567,14 +587,12 @@ create sequence hibernate_sequence start 1 increment 1;
     create table kind (
        id int4 not null,
         bracket_degrees char(1),
-        halign varchar(255),
         kind_value varchar(255),
         parentheses_degrees char(1),
         stack_degrees char(1),
         text varchar(255),
         use_symbols char(1),
-        valign varchar(255),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -595,11 +613,10 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table line (
        id int4 not null,
+        line_length varchar(255),
         line_shape varchar(255),
         line_type varchar(255),
-        placement varchar(255),
         dashed_formatting_id int4,
-        print_style_id int4,
         primary key (id)
     );
 
@@ -624,17 +641,17 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table lyric (
        id int4 not null,
-        color varchar(255),
+        element_id varchar(255),
         end_line char(1),
         end_paragraph char(1),
         justify varchar(255),
         name varchar(255),
         lyric_number varchar(255),
-        placement varchar(255),
         print_object char(1),
+        time_only varchar(255),
+        display_id int4,
         editorial_id int4,
         lyric_item_id int4,
-        position_id int4,
         note_id int4 not null,
         primary key (id)
     );
@@ -652,7 +669,7 @@ create sequence hibernate_sequence start 1 increment 1;
        lyric_item_type varchar(31) not null,
         id int4 not null,
         type varchar(255),
-        print_style_id int4,
+        display_id int4,
         extend_id int4,
         primary key (id)
     );
@@ -669,9 +686,16 @@ create sequence hibernate_sequence start 1 increment 1;
     create table lyric_syllable (
        id int4 not null,
         syllabic varchar(255),
-        lyric_elision_id int4,
+        elision_id int4,
         text_data_id int4,
         lyric_text_id int4 not null,
+        primary key (id)
+    );
+
+    create table lyric_text_data (
+       id int4 not null,
+        display_id int4,
+        text_format_id int4,
         primary key (id)
     );
 
@@ -687,9 +711,11 @@ create sequence hibernate_sequence start 1 increment 1;
     create table measure (
        id int4 not null,
         ordering int4,
+        element_id varchar(255),
         implicit char(1),
         non_controlling char(1),
         measure_number varchar(255),
+        text varchar(255),
         width numeric(12, 4),
         part_id int4 not null,
         primary key (id)
@@ -704,7 +730,7 @@ create sequence hibernate_sequence start 1 increment 1;
     create table measure_style (
        measure_style_type varchar(31) not null,
         id int4 not null,
-        color varchar(255),
+        element_id varchar(255),
         measure_style_number int4,
         use_symbols char(1),
         value int4,
@@ -712,7 +738,7 @@ create sequence hibernate_sequence start 1 increment 1;
         use_dots char(1),
         use_stems char(1),
         slashes int4,
-        font_id int4,
+        display_id int4,
         slash_group_id int4,
         attributes_id int4 not null,
         primary key (id)
@@ -726,9 +752,20 @@ create sequence hibernate_sequence start 1 increment 1;
         primary key (id)
     );
 
+    create table metronome_mark (
+       metronome_mark_type varchar(31) not null,
+        id int4 not null,
+        per_minute varchar(255),
+        beat_unit varchar(255),
+        beat_unit_dots int4,
+        display_id int4,
+        primary key (id)
+    );
+
     create table metronome_note (
        id int4 not null,
         metronome_dots int4,
+        metronome_tied varchar(255),
         metronome_type varchar(255),
         metronome_tuplet_id int4,
         note_metronome_2_id int4 not null,
@@ -758,7 +795,7 @@ create sequence hibernate_sequence start 1 increment 1;
         elevation numeric(12, 4),
         midi_bank int4,
         midi_channel int4,
-        midi_instrumentj_id varchar(255),
+        midi_instrument_id varchar(255),
         midi_name varchar(255),
         midi_program int4,
         midi_unpitched int4,
@@ -785,6 +822,7 @@ create sequence hibernate_sequence start 1 increment 1;
         id int4 not null,
         ordering int4,
         duration numeric(12, 4),
+        element_id varchar(255),
         coda varchar(255),
         dacapo char(1),
         dalsegno varchar(255),
@@ -805,11 +843,11 @@ create sequence hibernate_sequence start 1 increment 1;
         parentheses char(1),
         instruments int4,
         staves int4,
-        placement varchar(255),
         print_frame char(1),
         print_object char(1),
         staff int4,
         type varchar(255),
+        bar_style varchar(255),
         location varchar(255),
         blank_page int4,
         measure_numbering_value varchar(255),
@@ -821,38 +859,34 @@ create sequence hibernate_sequence start 1 increment 1;
         number_of varchar(255),
         bookmark_id varchar(255),
         name varchar(255),
+        voice varchar(255),
         attack_length numeric(12, 4),
-        color varchar(255),
         cue char(1),
         end_dynamics numeric(12, 4),
         instrument varchar(255),
+        printLeger char(1),
         release_length numeric(12, 4),
         directive char(1),
         measure_id int4,
         editorial_id int4,
         offset_id int4,
-        print_style_id int4,
+        display_id int4,
         printout_id int4,
         part_symbol_id int4,
         frame_id int4,
-        bar_style_id int4,
-        coda_print_id int4,
+        coda_id int4,
         ending_id int4,
         repeat_id int4,
-        segno_print_id int4,
+        segno_id int4,
         wavy_line_id int4,
         layout_id int4,
         measure_layout_id int4,
         part_abbreviation_display_id int4,
         part_name_display_id int4,
-        print_style_align_id int4,
         credit_display_id int4,
         element_position_id int4,
-        editorial_voice_id int4,
         link_attributes_id int4,
-        position_id int4,
         accidental_id int4,
-        font_id int4,
         full_note_id int4,
         grace_id int4,
         notehead_id int4,
@@ -861,7 +895,6 @@ create sequence hibernate_sequence start 1 increment 1;
         stem_id int4,
         time_modification_id int4,
         type_id int4,
-        editorial_voice_direction_id int4,
         sound_id int4,
         primary key (id)
     );
@@ -875,6 +908,7 @@ create sequence hibernate_sequence start 1 increment 1;
     create table non_traditional_key_type (
        id int4 not null,
         key_accidental varchar(255),
+        key_accidental_smufl varchar(255),
         key_alter numeric(12, 4),
         key_step varchar(255),
         non_traditional_key_id int4 not null,
@@ -884,11 +918,11 @@ create sequence hibernate_sequence start 1 increment 1;
     create table notation (
        notation_type varchar(31) not null,
         id int4 not null,
-        color varchar(255),
+        element_id varchar(255),
         notation_number int4,
-        placement varchar(255),
         type_value varchar(255),
         print_object char(1),
+        smufl varchar(255),
         value varchar(255),
         line_type varchar(255),
         connection_type varchar(255),
@@ -899,10 +933,10 @@ create sequence hibernate_sequence start 1 increment 1;
         line_shape varchar(255),
         show_number varchar(255),
         show_type varchar(255),
+        tied_type varchar(255),
         accidental_type varchar(255),
+        display_id int4,
         notations_id int4,
-        position_id int4,
-        print_style_id int4,
         dashed_formatting_id int4,
         bezier_id int4,
         bend_sound_id int4,
@@ -910,11 +944,13 @@ create sequence hibernate_sequence start 1 increment 1;
         tuplet_actual_id int4,
         tuplet_normal_id int4,
         dynamics_id int4,
+        level_display_id int4,
         primary key (id)
     );
 
     create table notations (
        id int4 not null,
+        element_id varchar(255),
         print_object char(1),
         editorial_id int4,
         note_id int4 not null,
@@ -938,11 +974,11 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table notehead (
        id int4 not null,
-        color varchar(255),
         filled char(1),
         parentheses char(1),
+        smufl varchar(255),
         type varchar(255),
-        font_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -954,21 +990,20 @@ create sequence hibernate_sequence start 1 increment 1;
     create table ornament (
        ornament_type varchar(31) not null,
         id int4 not null,
-        placement varchar(255),
+        smufl varchar(255),
+        value varchar(255),
         slash char(1),
-        color varchar(255),
         wavy_line_number int4,
         connection_type varchar(255),
         tremolo_marks int4,
+        tremolo_type varchar(255),
         approach varchar(255),
         departure varchar(255),
         long_mordent char(1),
+        display_id int4,
         ornaments_id int4,
         placement_text_id int4,
-        print_style_id int4,
         trill_sound_id int4,
-        position_id int4,
-        print_placement_id int4,
         primary key (id)
     );
 
@@ -1006,6 +1041,7 @@ create sequence hibernate_sequence start 1 increment 1;
     create table part (
        id int4 not null,
         ordering int4,
+        element_id varchar(255),
         part_id varchar(255),
         score_id int4 not null,
         primary key (id)
@@ -1015,6 +1051,7 @@ create sequence hibernate_sequence start 1 increment 1;
        part_item_type varchar(31) not null,
         id int4 not null,
         ordering int4,
+        element_id varchar(255),
         group_time char(1),
         part_group_number varchar(255),
         part_group_type varchar(255),
@@ -1042,20 +1079,19 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table part_name (
        id int4 not null,
+        justify varchar(255),
         part_name varchar(255),
-        part_name_justify varchar(255),
-        part_name_print_object char(1),
-        part_name_print_style_id int4,
+        print_object char(1),
+        display_id int4,
         primary key (id)
     );
 
     create table part_symbol (
        id int4 not null,
         bottom_staff int4,
-        color varchar(255),
         group_symbol_type varchar(255),
         top_staff int4,
-        position_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -1067,18 +1103,10 @@ create sequence hibernate_sequence start 1 increment 1;
         primary key (id)
     );
 
-    create table per_minute (
-       id int4 not null,
-        per_minute varchar(255),
-        font_id int4,
-        primary key (id)
-    );
-
     create table placement_text (
        id int4 not null,
-        placement varchar(255),
         value varchar(255),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -1106,36 +1134,6 @@ create sequence hibernate_sequence start 1 increment 1;
         primary key (id)
     );
 
-    create table print_object_style_align (
-       id int4 not null,
-        print_object char(1),
-        print_style_align_id int4,
-        primary key (id)
-    );
-
-    create table print_placement (
-       id int4 not null,
-        placement varchar(255),
-        print_style_id int4,
-        primary key (id)
-    );
-
-    create table print_style (
-       id int4 not null,
-        color varchar(255),
-        font_id int4,
-        position_id int4,
-        primary key (id)
-    );
-
-    create table print_style_align (
-       id int4 not null,
-        halign varchar(255),
-        valign varchar(255),
-        print_style_id int4,
-        primary key (id)
-    );
-
     create table printout (
        id int4 not null,
         print_dot char(1),
@@ -1150,7 +1148,7 @@ create sequence hibernate_sequence start 1 increment 1;
         location varchar(255),
         print_object char(1),
         semitones numeric(12, 4),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -1158,7 +1156,7 @@ create sequence hibernate_sequence start 1 increment 1;
        id int4 not null,
         step varchar(255),
         text varchar(255),
-        print_style_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -1263,16 +1261,22 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table stem (
        id int4 not null,
-        color varchar(255),
         type varchar(255),
-        position_id int4,
+        display_id int4,
         primary key (id)
     );
 
     create table style_text (
        id int4 not null,
         value varchar(255),
-        print_style_id int4,
+        display_id int4,
+        primary key (id)
+    );
+
+    create table system_divider (
+       id int4 not null,
+        print_object char(1),
+        display_id int4,
         primary key (id)
     );
 
@@ -1296,55 +1300,33 @@ create sequence hibernate_sequence start 1 increment 1;
     create table technical (
        technical_type varchar(31) not null,
         id int4 not null,
-        placement varchar(255),
         string_number int4,
         alternate char(1),
         substitution char(1),
         value varchar(255),
         notation_number int4,
         notation_type varchar(255),
-        color varchar(255),
+        smufl varchar(255),
         arrow_direction varchar(255),
         arrow_style varchar(255),
+        arrowhead char(1),
         circular_arrow varchar(255),
         hole_closed_location varchar(255),
         hole_close_type varchar(255),
         hole_shape varchar(255),
         hole_type varchar(255),
+        tap_hand varchar(255),
         bend_alter numeric(12, 4),
         bend_type varchar(255),
         handbell_type varchar(255),
         harmonic_pitch varchar(255),
         harmonic_type varchar(255),
         print_object char(1),
+        display_id int4,
         technicals_id int4,
-        print_style_id int4,
-        print_placement_id int4,
-        font_id int4,
-        placement_text_id int4,
+        harmon_closed_id int4,
         bend_sound_id int4,
         with_bar_id int4,
-        primary key (id)
-    );
-
-    create table text_data (
-       id int4 not null,
-        color varchar(255),
-        lang varchar(255),
-        letter_spacing varchar(255),
-        text_direction varchar(255),
-        text_rotation numeric(12, 4),
-        value varchar(255),
-        font_id int4,
-        text_decoration_id int4,
-        primary key (id)
-    );
-
-    create table text_decoration (
-       id int4 not null,
-        line_through int4,
-        overline int4,
-        underline int4,
         primary key (id)
     );
 
@@ -1352,38 +1334,28 @@ create sequence hibernate_sequence start 1 increment 1;
        text_type varchar(31) not null,
         id int4 not null,
         accidental_type varchar(255),
-        name_display_id int4,
+        smufl varchar(255),
+        display_id int4,
+        text_format_id int4,
         notehead_text_id int4,
-        text_formatting_id int4,
-        display_text_id int4,
+        name_display_id int4,
         primary key (id)
     );
 
-    create table text_font_color (
-       id int4 not null,
-        color varchar(255),
-        lang varchar(255),
-        letter_spacing varchar(255),
-        text_direction varchar(255),
-        text_rotation numeric(12, 4),
-        value varchar(255),
-        font_id int4,
-        text_decoration_id int4,
-        primary key (id)
-    );
-
-    create table text_formatting (
+    create table text_format (
        id int4 not null,
         enclosure varchar(255),
         justify varchar(255),
         lang varchar(255),
         letter_spacing varchar(255),
         line_height varchar(255),
+        line_through int4,
+        overline int4,
         space varchar(255),
         text_direction varchar(255),
         text_rotation numeric(12, 4),
-        print_style_align_id int4,
-        text_decoration_id int4,
+        underline int4,
+        value varchar(255),
         primary key (id)
     );
 
@@ -1398,12 +1370,13 @@ create sequence hibernate_sequence start 1 increment 1;
     create table time (
        time_type varchar(31) not null,
         id int4 not null,
+        element_id varchar(255),
         time_number int4,
         print_object char(1),
         time_separator varchar(255),
         symbol varchar(255),
         value varchar(255),
-        print_style_align_id int4,
+        display_id int4,
         interchangeable_id int4,
         attributes_id int4 not null,
         primary key (id)
@@ -1428,6 +1401,7 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table transpose (
        id int4 not null,
+        element_id varchar(255),
         chromatic numeric(12, 4),
         diatonic int4,
         doubled char(1),
@@ -1459,17 +1433,15 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table tuplet_dot (
        id int4 not null,
-        color varchar(255),
-        font_id int4,
+        display_id int4,
         tuplet_portion_id int4 not null,
         primary key (id)
     );
 
     create table tuplet_number (
        id int4 not null,
-        color varchar(255),
         value int4,
-        font_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -1482,9 +1454,8 @@ create sequence hibernate_sequence start 1 increment 1;
 
     create table tuplet_type (
        id int4 not null,
-        color varchar(255),
         note_type_value varchar(255),
-        font_id int4,
+        display_id int4,
         primary key (id)
     );
 
@@ -1527,14 +1498,14 @@ create sequence hibernate_sequence start 1 increment 1;
        add constraint UK3ux9w0rpfpqrljat6wimun1fr unique (score_name);
 
     alter table accidental 
+       add constraint FKog7p17vaochq32sjs8bjxv1v4 
+       foreign key (display_id) 
+       references display;
+
+    alter table accidental 
        add constraint FKf1brlbu5kohjtiexhuaj1uv1j 
        foreign key (level_display_id) 
        references level_display;
-
-    alter table accidental 
-       add constraint FKhvmx4yrlfgkjklrhf79jpnfox 
-       foreign key (print_style_id) 
-       references print_style;
 
     alter table accord 
        add constraint FKmallx8sq3vhlhproso60l144t 
@@ -1547,14 +1518,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references direction_type;
 
     alter table articulation 
-       add constraint FKb9visq0pvneglobry068cm9vu 
-       foreign key (print_style_id) 
-       references print_style;
-
-    alter table articulation 
-       add constraint FKllg0e2dchtefge59cy0l0y0j2 
-       foreign key (print_placement_id) 
-       references print_placement;
+       add constraint FKnn2i78j4t94y2sch4dxc9bj4x 
+       foreign key (display_id) 
+       references display;
 
     alter table articulation 
        add constraint FK30m8vy3kinx56q1w2xbmp3bty 
@@ -1562,14 +1528,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references line;
 
     alter table articulation 
-       add constraint FKr6q7jr7cjrtg1eunx02nu9kre 
-       foreign key (placement_text_id) 
-       references placement_text;
-
-    alter table articulation 
        add constraint FK1emxxnei3prqc823q15gt5ccp 
        foreign key (articulations_id) 
        references notation;
+
+    alter table barre 
+       add constraint FKfympa43emgp0kyy1qqbrtqnow 
+       foreign key (display_id) 
+       references display;
 
     alter table bass 
        add constraint FK89b8ei38psnad41dlrveugi8i 
@@ -1582,24 +1548,39 @@ create sequence hibernate_sequence start 1 increment 1;
        references bass_step;
 
     alter table bass_alter 
-       add constraint FKpp4rcwtmq1wrlkx5tfk3vwu8t 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FK2ty4w07l9qp4tse2qqdf2u68s 
+       foreign key (display_id) 
+       references display;
 
     alter table bass_step 
-       add constraint FKsiahssnx0jfnglcjp1yl7q66c 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKptfr45ox5vrmlw4pa2vbf2apu 
+       foreign key (display_id) 
+       references display;
+
+    alter table beam 
+       add constraint FK3r7dqpis0rakfenlmnbtdvs4 
+       foreign key (display_id) 
+       references display;
 
     alter table beam 
        add constraint FKbirfijk9ipkvby7y04lbehl9i 
        foreign key (note_id) 
        references music_data;
 
+    alter table beat_unit_tied 
+       add constraint FKbjm8lcptks4j06iky0ur8u15e 
+       foreign key (beat_unit_tied_parent_id) 
+       references metronome_mark;
+
+    alter table beat_unit_tied 
+       add constraint FK5pl5jidyehnc0ca9999sky4hk 
+       foreign key (beat_unit_parent_id) 
+       references metronome_mark;
+
     alter table clef 
-       add constraint FK641n5bcx7pl7ts54jp85xym4b 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKa378tnca4yd6yylyai6yl86uf 
+       foreign key (display_id) 
+       references display;
 
     alter table clef 
        add constraint FKi3ndwd0j6jwnc9b4bs9qrhra8 
@@ -1612,9 +1593,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references score_header;
 
     alter table credit_display 
-       add constraint FKfmotqq7ogiktuy0bgq1y5c2wt 
-       foreign key (formatted_text_id) 
-       references formatted_text;
+       add constraint FKlyds4j445i0ws1sv85ocihbmp 
+       foreign key (display_id) 
+       references display;
+
+    alter table credit_display 
+       add constraint FKlc9mqx1m5cix2cr4vt6p1at09 
+       foreign key (text_format_id) 
+       references text_format;
 
     alter table credit_display 
        add constraint FKmglmu9us8bs64gvpcg1o713v1 
@@ -1677,19 +1663,19 @@ create sequence hibernate_sequence start 1 increment 1;
        references harmony_chord;
 
     alter table degree_alter 
-       add constraint FKjn6riw3p0qfmbhjsxr4rjsn92 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKln9u0gr6hmcmb9tp1e401v7gq 
+       foreign key (display_id) 
+       references display;
 
     alter table degree_type 
-       add constraint FK9cvlxqwv12nortu2rhfsgefmp 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKt02dg5fdo8fu2fcmy42216mnb 
+       foreign key (display_id) 
+       references display;
 
     alter table degree_value 
-       add constraint FKpteiuibun6oegnhwkc6bab13s 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKhddv8q1fky1rcpq7b78200yd2 
+       foreign key (display_id) 
+       references display;
 
     alter table direction_type 
        add constraint FKg4bem6dw87egwlbf56tdtr3ae 
@@ -1697,14 +1683,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references direction_type_list;
 
     alter table direction_type 
-       add constraint FKdh2w4ljp8adbmh0wamigdoik5 
-       foreign key (print_style_align_id) 
-       references print_style_align;
+       add constraint FK77ibcdkbyqisesln0qu89w1k9 
+       foreign key (display_id) 
+       references display;
 
     alter table direction_type 
-       add constraint FK1hh0df63x5pucje0dcc3baxmk 
-       foreign key (formatted_text_id) 
-       references formatted_text;
+       add constraint FK8aw4acynt9n77ipwwgwppdp9s 
+       foreign key (text_format_id) 
+       references text_format;
 
     alter table direction_type 
        add constraint FKgxses1obcssr9l23473nifsgy 
@@ -1712,34 +1698,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references dashed_formatting;
 
     alter table direction_type 
-       add constraint FKn5f9n6k1d27reulja1lsk0tvj 
-       foreign key (position_id) 
-       references position;
+       add constraint FKsxbv146gynnqnw6nab75n1ba9 
+       foreign key (metronome_mark_1_id) 
+       references metronome_mark;
 
     alter table direction_type 
-       add constraint FK5rxl70mdfr2xjhjnvya78c4s9 
-       foreign key (text_decoration_id) 
-       references text_decoration;
-
-    alter table direction_type 
-       add constraint FK3gxkoia4ng1lhvkb0y8n69afa 
-       foreign key (print_style_id) 
-       references print_style;
-
-    alter table direction_type 
-       add constraint FKh064c4w60nigcc34qthbh5c33 
-       foreign key (beat_unit_1_id) 
-       references beat_unit;
-
-    alter table direction_type 
-       add constraint FKgxbebd1i9oygindubiojvhl4i 
-       foreign key (beat_unit_2_id) 
-       references beat_unit;
-
-    alter table direction_type 
-       add constraint FK8cyqpdh5f7xrf4bhnos93eee4 
-       foreign key (per_minute_id) 
-       references per_minute;
+       add constraint FKesly754x1a2cyws3u2mrwmrym 
+       foreign key (metronome_mark_2_id) 
+       references metronome_mark;
 
     alter table direction_type_list 
        add constraint FKblbd4ond4mhyu4o5cd0blqrsm 
@@ -1747,14 +1713,24 @@ create sequence hibernate_sequence start 1 increment 1;
        references music_data;
 
     alter table directive 
-       add constraint FKk8ns3fcpr5d516lnprp9o06hd 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKolp4d7yqveg72d8nhbmp3kx8r 
+       foreign key (display_id) 
+       references display;
 
     alter table directive 
        add constraint FK7ksvq9gvmn531kkcf9yodu3be 
        foreign key (attributes_id) 
        references music_data;
+
+    alter table display 
+       add constraint FKojhuhxyhklq2hjisna3o24n1v 
+       foreign key (font_id) 
+       references font;
+
+    alter table display 
+       add constraint FK2107b5khj7dpia54m5mlscu2h 
+       foreign key (position_id) 
+       references position;
 
     alter table distance 
        add constraint FKh7upf2u0uver0s5p0wbtug9y 
@@ -1762,9 +1738,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references appearance;
 
     alter table dot 
-       add constraint FKhts3e4hthb42jy6kwav33yqyn 
-       foreign key (print_placement_id) 
-       references print_placement;
+       add constraint FKj1btpaoyc9nvstpp5k8f06lj8 
+       foreign key (display_id) 
+       references display;
 
     alter table dot 
        add constraint FKinehtcky1m5rv5wexupjmixs 
@@ -1777,9 +1753,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references direction_type;
 
     alter table editorial 
-       add constraint FK80idprxv3qcwtyg2yvegdreea 
+       add constraint FKgd6ji3ihwlf2njs9w5gl6b550 
        foreign key (footnote_id) 
-       references formatted_text;
+       references footnote;
 
     alter table editorial 
        add constraint FK1l4jxj9yu15r99y7n5tmpe483 
@@ -1791,25 +1767,10 @@ create sequence hibernate_sequence start 1 increment 1;
        foreign key (level_display_id) 
        references level_display;
 
-    alter table editorial_voice 
-       add constraint FK1ustnq8hd3952fjhxmrwjoix0 
-       foreign key (footnote_id) 
-       references formatted_text;
-
-    alter table editorial_voice 
-       add constraint FKmx001y259a2irc105bkrk5uaw 
-       foreign key (level_id) 
-       references editorial_level;
-
-    alter table editorial_voice_direction 
-       add constraint FKcm3f38qna2foj87kxxm2y0icg 
-       foreign key (footnote_id) 
-       references formatted_text;
-
-    alter table editorial_voice_direction 
-       add constraint FKsfpp3tusg9kpih4vvmci6lc4i 
-       foreign key (level_id) 
-       references editorial_level;
+    alter table elision 
+       add constraint FKm7ixjbc10372o8tbtxfyp7dec 
+       foreign key (display_id) 
+       references display;
 
     alter table encoding 
        add constraint FK8l5bbf29jxhcjw32xffoh6lqe 
@@ -1822,14 +1783,24 @@ create sequence hibernate_sequence start 1 increment 1;
        references identification;
 
     alter table ending 
-       add constraint FKkonmj86oig30fhaao3drtsm7u 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FK9my78uy851yr2gddl0ihwrj21 
+       foreign key (display_id) 
+       references display;
+
+    alter table except_voice 
+       add constraint FKnm4i9hxd6b7xb19cqiywqya2e 
+       foreign key (slash_group_id) 
+       references slash_group;
 
     alter table feature 
        add constraint FKmul6tobnvi4eghf76th7h3mdq 
        foreign key (grouping_id) 
        references music_data;
+
+    alter table figure 
+       add constraint FK3t1vsii1hkcl4ool8vfnkwtug 
+       foreign key (editorial_id) 
+       references editorial;
 
     alter table figure 
        add constraint FK24qvk8c7i5mwab6x26eqsh4a7 
@@ -1856,25 +1827,25 @@ create sequence hibernate_sequence start 1 increment 1;
        foreign key (figured_bass_id) 
        references music_data;
 
-    alter table font 
-       add constraint FKcm9ljstral5kgbygy0ljqq8sk 
-       foreign key (font_size_id) 
-       references font_size;
+    alter table footnote 
+       add constraint FKojw33aa3lklit05wgqekf3yxw 
+       foreign key (display_id) 
+       references display;
 
-    alter table formatted_text 
-       add constraint FKno6nplbyevs8p1csp145pfcby 
-       foreign key (text_formatting_id) 
-       references text_formatting;
+    alter table footnote 
+       add constraint FKo822s5f1w4n3alf5oe205qbnj 
+       foreign key (text_format_id) 
+       references text_format;
+
+    alter table frame 
+       add constraint FKg86hx52tr4n9nbl5bxjnqyw00 
+       foreign key (display_id) 
+       references display;
 
     alter table frame 
        add constraint FKbu912vqnib5jvntkcd275bsb7 
        foreign key (first_fret_id) 
        references first_fret;
-
-    alter table frame 
-       add constraint FKch3k2c0mdjgk7g8ce25n2o1xw 
-       foreign key (position_id) 
-       references position;
 
     alter table frame_note 
        add constraint FKc2bu06jqrnpjaks3lpxhwfkwf 
@@ -1906,15 +1877,25 @@ create sequence hibernate_sequence start 1 increment 1;
        foreign key (full_note_type_id) 
        references full_note_type;
 
+    alter table glyph 
+       add constraint FKo1nificvy6udwyn1oaws82a55 
+       foreign key (appearance_id) 
+       references appearance;
+
+    alter table group_barline 
+       add constraint FKfig7m4m884wx19gesoojlgtg3 
+       foreign key (display_id) 
+       references display;
+
     alter table group_name 
-       add constraint FKgklulvowae4d6pkxq8ia8d6dx 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKdpc0x3kr0ntfsiqe03eiia154 
+       foreign key (display_id) 
+       references display;
 
     alter table group_symbol 
-       add constraint FKjf3mb2qdawomkmetttl00n0ws 
-       foreign key (position_id) 
-       references position;
+       add constraint FK3vsrxsapgrc630v5w13nrv739 
+       foreign key (display_id) 
+       references display;
 
     alter table harmony_chord 
        add constraint FK29a3948b7puxtfjiwexeku67t 
@@ -1962,9 +1943,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references time;
 
     alter table inversion 
-       add constraint FKms7b0og13lb4di6abm1dvg5nx 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FK8wmswbqbiahcr1tbssadhs3d6 
+       foreign key (display_id) 
+       references display;
 
     alter table key_octave 
        add constraint FKkt0hsurbjdyb1x6jjdfj3j9h6 
@@ -1972,9 +1953,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references key_signature;
 
     alter table key_signature 
-       add constraint FKd7tumy231x2kcgyodblg3a6du 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKcbiju7t2tfmedojiu5hgnoup4 
+       foreign key (display_id) 
+       references display;
 
     alter table key_signature 
        add constraint FK82qm60fbbgff6m3dn8txr0dko 
@@ -1987,9 +1968,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references music_data;
 
     alter table kind 
-       add constraint FKm66mw2xl9mqj912bx7q3xhjtf 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKbqjf1wkdh2ki6thj3fvqivpv 
+       foreign key (display_id) 
+       references display;
 
     alter table layout 
        add constraint FK552vkgbeaq1y95tslmngsb7yi 
@@ -2006,15 +1987,15 @@ create sequence hibernate_sequence start 1 increment 1;
        foreign key (dashed_formatting_id) 
        references dashed_formatting;
 
-    alter table line 
-       add constraint FKeuni9nyggd7jbfrr98vkssogu 
-       foreign key (print_style_id) 
-       references print_style;
-
     alter table line_width 
        add constraint FKolk6o737efsh34fe1lbl3646t 
        foreign key (appearance_id) 
        references appearance;
+
+    alter table lyric 
+       add constraint FK3wlvu2d93tldinxvxu9omcly2 
+       foreign key (display_id) 
+       references display;
 
     alter table lyric 
        add constraint FKjyeuo5oulnpb4hiid8deb75ot 
@@ -2025,11 +2006,6 @@ create sequence hibernate_sequence start 1 increment 1;
        add constraint FKog91nc853a53gcxgbvoqaji70 
        foreign key (lyric_item_id) 
        references lyric_item;
-
-    alter table lyric 
-       add constraint FKpasbsn08ubag7mv6cakyq1k2k 
-       foreign key (position_id) 
-       references position;
 
     alter table lyric 
        add constraint FK4pb1ar6j9e34u8qgcjq5nsroq 
@@ -2047,9 +2023,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references defaults;
 
     alter table lyric_item 
-       add constraint FK9a3ar7es2i15r02cc0tgagrva 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FK6gdrh9hd83f38euwdfx1nggul 
+       foreign key (display_id) 
+       references display;
 
     alter table lyric_item 
        add constraint FKbjmewleq4j31k1dtppbtcp4dh 
@@ -2062,19 +2038,29 @@ create sequence hibernate_sequence start 1 increment 1;
        references defaults;
 
     alter table lyric_syllable 
-       add constraint FKnbj8a56ent8xvel21vse6qou0 
-       foreign key (lyric_elision_id) 
-       references text_font_color;
+       add constraint FKlmk9aphu2dxt9l8h0c4wkgrso 
+       foreign key (elision_id) 
+       references elision;
 
     alter table lyric_syllable 
-       add constraint FKkqawno7vu5e2hpebgmkvbwme3 
+       add constraint FKc431ui8rpt5kwsckw8p0y80yc 
        foreign key (text_data_id) 
-       references text_data;
+       references lyric_text_data;
 
     alter table lyric_syllable 
        add constraint FK25xj1xbkynu8c87129s2qodt7 
        foreign key (lyric_text_id) 
        references lyric_item;
+
+    alter table lyric_text_data 
+       add constraint FKmc2stvngctieoh7j6k407j70v 
+       foreign key (display_id) 
+       references display;
+
+    alter table lyric_text_data 
+       add constraint FKfw1oy1qgsq3mk72oitwh18r4v 
+       foreign key (text_format_id) 
+       references text_format;
 
     alter table measure 
        add constraint FK7okawlbg5nyqon30ll7uavx28 
@@ -2082,9 +2068,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references part;
 
     alter table measure_style 
-       add constraint FKan3i4e80tqacry684lwp4fvhf 
-       foreign key (font_id) 
-       references font;
+       add constraint FKj3lm680yi0h9ikyq1w4uljq1v 
+       foreign key (display_id) 
+       references display;
 
     alter table measure_style 
        add constraint FKbj6cxo895qbe3hj8h5xwls7t 
@@ -2100,6 +2086,11 @@ create sequence hibernate_sequence start 1 increment 1;
        add constraint FK7da67iuei7y91g3n7nkd97q9 
        foreign key (metronome_note_id) 
        references metronome_note;
+
+    alter table metronome_mark 
+       add constraint FKqfv6oplc70lkwvhimrio2f5vi 
+       foreign key (display_id) 
+       references display;
 
     alter table metronome_note 
        add constraint FK40x0x8qv6ynww6qot6dhgss 
@@ -2142,9 +2133,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references direction_offset;
 
     alter table music_data 
-       add constraint FK1glg24qa65ycutycdd0skqrkb 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKk94ghor1mdy12w2m5eis6g1vj 
+       foreign key (display_id) 
+       references display;
 
     alter table music_data 
        add constraint FKevg7nxdah1nb082n9dl1bivw2 
@@ -2162,14 +2153,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references frame;
 
     alter table music_data 
-       add constraint FK90kvf49b2hf9ohcxlbmjo9tcj 
-       foreign key (bar_style_id) 
-       references bar_style_color;
-
-    alter table music_data 
-       add constraint FKq9plxquyjpdjmgxlfrxtjajub 
-       foreign key (coda_print_id) 
-       references print_style_align;
+       add constraint FK74wouy3pwlsp1e3l1rpjs4wer 
+       foreign key (coda_id) 
+       references direction_type;
 
     alter table music_data 
        add constraint FK6nxn99o8j8pik2kry92d4xs60 
@@ -2182,9 +2168,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references barline_repeat;
 
     alter table music_data 
-       add constraint FKhh4obibkl94v8mlpgfh81ts4k 
-       foreign key (segno_print_id) 
-       references print_style_align;
+       add constraint FKsdkthf201p0rbpcgkt00k0efe 
+       foreign key (segno_id) 
+       references direction_type;
 
     alter table music_data 
        add constraint FKig1bj9flp7ebecbgfe2jq8f9c 
@@ -2212,11 +2198,6 @@ create sequence hibernate_sequence start 1 increment 1;
        references name_display;
 
     alter table music_data 
-       add constraint FKntp0ktd4hfsrs8912th1qhefu 
-       foreign key (print_style_align_id) 
-       references print_style_align;
-
-    alter table music_data 
        add constraint FKowu22dl3y19shmrdmjxok999l 
        foreign key (credit_display_id) 
        references credit_display;
@@ -2227,29 +2208,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references element_position;
 
     alter table music_data 
-       add constraint FKhw4wtp4400eh1bn1dwsxce4wm 
-       foreign key (editorial_voice_id) 
-       references editorial_voice;
-
-    alter table music_data 
        add constraint FK8l5ctbd1hibellcrcge7oob41 
        foreign key (link_attributes_id) 
        references link_attributes;
 
     alter table music_data 
-       add constraint FKl0qlgpfjb0jha1nexwaps1q79 
-       foreign key (position_id) 
-       references position;
-
-    alter table music_data 
        add constraint FKrbocaap3axrypmkiowm32k1pu 
        foreign key (accidental_id) 
        references accidental;
-
-    alter table music_data 
-       add constraint FKgpicksq8yhmln32p4k3ujfaxm 
-       foreign key (font_id) 
-       references font;
 
     alter table music_data 
        add constraint FKbr7vqgo6v4vt89fc0g38m427r 
@@ -2292,11 +2258,6 @@ create sequence hibernate_sequence start 1 increment 1;
        references note_type;
 
     alter table music_data 
-       add constraint FK2i08pgrm0rx7tou1rl64m86h9 
-       foreign key (editorial_voice_direction_id) 
-       references editorial_voice_direction;
-
-    alter table music_data 
        add constraint FKex8und0d9f4odkobxomoq7ia4 
        foreign key (sound_id) 
        references music_data;
@@ -2307,19 +2268,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references key_signature;
 
     alter table notation 
+       add constraint FK5j2otsml2aexns8nkdp708hys 
+       foreign key (display_id) 
+       references display;
+
+    alter table notation 
        add constraint FK5r5gx0kjtp620dora5pb9b4bf 
        foreign key (notations_id) 
        references notations;
-
-    alter table notation 
-       add constraint FKhw3gdh6pej7kc22xvudakk9xf 
-       foreign key (position_id) 
-       references position;
-
-    alter table notation 
-       add constraint FK36e6fcoa8ttpfy0b4vq2vlqoi 
-       foreign key (print_style_id) 
-       references print_style;
 
     alter table notation 
        add constraint FKmikst8yb146tli0w558f0goly 
@@ -2356,6 +2312,11 @@ create sequence hibernate_sequence start 1 increment 1;
        foreign key (dynamics_id) 
        references direction_type;
 
+    alter table notation 
+       add constraint FKtna2ume78xg3ua7mnvb4r2my0 
+       foreign key (level_display_id) 
+       references level_display;
+
     alter table notations 
        add constraint FKg6a7ep34rh5lufsyo8ajv34nk 
        foreign key (editorial_id) 
@@ -2372,9 +2333,14 @@ create sequence hibernate_sequence start 1 increment 1;
        references appearance;
 
     alter table notehead 
-       add constraint FKpkifmgv81yf7xav93tpvccvya 
-       foreign key (font_id) 
-       references font;
+       add constraint FKr01qgxcl50q2q6jlxpr70msij 
+       foreign key (display_id) 
+       references display;
+
+    alter table ornament 
+       add constraint FK2yyq8ugyye0en8tmbswevkylp 
+       foreign key (display_id) 
+       references display;
 
     alter table ornament 
        add constraint FKnmqa6fuo6igfi4jv79gh6dwxs 
@@ -2387,24 +2353,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references placement_text;
 
     alter table ornament 
-       add constraint FK11qmo7gioqgwq94c8876lgajb 
-       foreign key (print_style_id) 
-       references print_style;
-
-    alter table ornament 
        add constraint FKicpik38a8cvj0yg8ke41uth0n 
        foreign key (trill_sound_id) 
        references trill_sound;
-
-    alter table ornament 
-       add constraint FKltibfgn7t6c6qp46ro378p7o1 
-       foreign key (position_id) 
-       references position;
-
-    alter table ornament 
-       add constraint FKc6m3dofqqgb86xwql4u3d88j 
-       foreign key (print_placement_id) 
-       references print_placement;
 
     alter table ornament_accidental 
        add constraint FKqtdjoc60gbgmlnwclvq7buffj 
@@ -2502,69 +2453,39 @@ create sequence hibernate_sequence start 1 increment 1;
        references part_list;
 
     alter table part_name 
-       add constraint FKk9w82qcy4l6bcwpbwohkhmtg5 
-       foreign key (part_name_print_style_id) 
-       references print_style;
+       add constraint FK8w6uv4o5fbjq94cjtmr2r3ey6 
+       foreign key (display_id) 
+       references display;
 
     alter table part_symbol 
-       add constraint FK28ea4fghgnp1wxdp88ro9ufd0 
-       foreign key (position_id) 
-       references position;
+       add constraint FKlbmkyd7lwrme1ij4f1oa7cm6v 
+       foreign key (display_id) 
+       references display;
 
     alter table pedal_tuning 
        add constraint FKkvm1vni5oi78rbwmadfpcymb8 
        foreign key (harp_pedals_id) 
        references direction_type;
 
-    alter table per_minute 
-       add constraint FKtmhu8smc4fg2l2wvb2d6p3q1s 
-       foreign key (font_id) 
-       references font;
-
     alter table placement_text 
-       add constraint FKqd2x7uux6uwq2dsfrt4tvtt4l 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FK9rjj7nwpivoe3h1dy647ekgiw 
+       foreign key (display_id) 
+       references display;
 
     alter table play_type 
        add constraint FKlqyvck4o1sx2npdvpvi2cr0iq 
        foreign key (play_id) 
        references play;
 
-    alter table print_object_style_align 
-       add constraint FKemcmcj4t3ac5godq388m91gl6 
-       foreign key (print_style_align_id) 
-       references print_style_align;
-
-    alter table print_placement 
-       add constraint FKbcrmiafklcnq8mnbjpmgrqiom 
-       foreign key (print_style_id) 
-       references print_style;
-
-    alter table print_style 
-       add constraint FKg994nyn3c4wd9xn00qm7wdr7q 
-       foreign key (font_id) 
-       references font;
-
-    alter table print_style 
-       add constraint FK74tp99ldhfbp6b1uahk55tg2c 
-       foreign key (position_id) 
-       references position;
-
-    alter table print_style_align 
-       add constraint FK88wnduf1il60ole2a5agiu91t 
-       foreign key (print_style_id) 
-       references print_style;
-
     alter table root_alter 
-       add constraint FKma2bv9wu07wrfouuoeft7tmul 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKpe18eow0hfasmtm48jnbb71dm 
+       foreign key (display_id) 
+       references display;
 
     alter table root_step 
-       add constraint FK9yripfxgsgrtfm27br0aonfc7 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKkpn77a163f8k4cg1ckvfmxdnq 
+       foreign key (display_id) 
+       references display;
 
     alter table score 
        add constraint FKibymmlpensin2h24pto4i98l0 
@@ -2667,24 +2588,29 @@ create sequence hibernate_sequence start 1 increment 1;
        references staff_details;
 
     alter table stem 
-       add constraint FKe4y9aepsj1abjlglped2fepyn 
-       foreign key (position_id) 
-       references position;
+       add constraint FKo8qmj3omyxak4f1olkmp2ifba 
+       foreign key (display_id) 
+       references display;
 
     alter table style_text 
-       add constraint FKkrfn8pxu2pgqiudyof137yedr 
-       foreign key (print_style_id) 
-       references print_style;
+       add constraint FKck74ubo69ygoe7d4milqjlbpj 
+       foreign key (display_id) 
+       references display;
+
+    alter table system_divider 
+       add constraint FK6dqjq9npjicmhrnrs1aqyb8eu 
+       foreign key (display_id) 
+       references display;
 
     alter table system_dividers 
-       add constraint FKs4snu7ps4ci8gc5xqmgwh95je 
+       add constraint FKr3lmv8t3a4lohruqmpx2uohps 
        foreign key (left_divider_id) 
-       references print_object_style_align;
+       references system_divider;
 
     alter table system_dividers 
-       add constraint FKkg34yq81yeow6wevtew79gse9 
+       add constraint FKllkl0vvbn97n4p7ud0blfi17i 
        foreign key (right_divider_id) 
-       references print_object_style_align;
+       references system_divider;
 
     alter table system_layout 
        add constraint FKoum2iw0o827holjk4avmetxpt 
@@ -2692,29 +2618,19 @@ create sequence hibernate_sequence start 1 increment 1;
        references system_dividers;
 
     alter table technical 
+       add constraint FK47clxoexh6shyk117acm8bnan 
+       foreign key (display_id) 
+       references display;
+
+    alter table technical 
        add constraint FKk1p1j3espd2ej3cfk81elx7qd 
        foreign key (technicals_id) 
        references notation;
 
     alter table technical 
-       add constraint FK8weangm16x6rrxt3327f9ehny 
-       foreign key (print_style_id) 
-       references print_style;
-
-    alter table technical 
-       add constraint FKhn8ttuf8hqy1b3mvb5ngjl0bd 
-       foreign key (print_placement_id) 
-       references print_placement;
-
-    alter table technical 
-       add constraint FK8x6phe95o7ktbmu6wfkp3van0 
-       foreign key (font_id) 
-       references font;
-
-    alter table technical 
-       add constraint FKnycbnsdcafannuju6bri39xgm 
-       foreign key (placement_text_id) 
-       references placement_text;
+       add constraint FKba4ghcyirr73ueblh3hmenkk9 
+       foreign key (harmon_closed_id) 
+       references harmon_closed;
 
     alter table technical 
        add constraint FKk2qoca6rp76q8da4xyyk8mpug 
@@ -2726,20 +2642,15 @@ create sequence hibernate_sequence start 1 increment 1;
        foreign key (with_bar_id) 
        references placement_text;
 
-    alter table text_data 
-       add constraint FKe2m2pkl4m1lac5b4ufglvllb2 
-       foreign key (font_id) 
-       references font;
-
-    alter table text_data 
-       add constraint FK32ns7tu4ejkkyvir13v9n9m7d 
-       foreign key (text_decoration_id) 
-       references text_decoration;
+    alter table text_display 
+       add constraint FK35uy6rwu1j5poqmgoo0ft68vl 
+       foreign key (display_id) 
+       references display;
 
     alter table text_display 
-       add constraint FKewbqxuv4t3j4je18bc13ni6je 
-       foreign key (name_display_id) 
-       references name_display;
+       add constraint FKiv1yjuhytayvijhq3px65i9e6 
+       foreign key (text_format_id) 
+       references text_format;
 
     alter table text_display 
        add constraint FKgcm9yg2bcd4ubd3a5dyxef50v 
@@ -2747,34 +2658,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references notehead_text;
 
     alter table text_display 
-       add constraint FKa9mybrb3rf4nona3w4a85kxxw 
-       foreign key (text_formatting_id) 
-       references text_formatting;
-
-    alter table text_display 
-       add constraint FKa83jcmmr893rnm7fu0m79hspa 
-       foreign key (display_text_id) 
-       references formatted_text;
-
-    alter table text_font_color 
-       add constraint FK9s816v01lg2rqcy1l4ad8pyk1 
-       foreign key (font_id) 
-       references font;
-
-    alter table text_font_color 
-       add constraint FK1x9nxgxcdytcwfy2yim5sl4rg 
-       foreign key (text_decoration_id) 
-       references text_decoration;
-
-    alter table text_formatting 
-       add constraint FKkf85m66nv1fx2xqcf28atirb5 
-       foreign key (print_style_align_id) 
-       references print_style_align;
-
-    alter table text_formatting 
-       add constraint FKhdstyqjscdf2v55ewtksqrtx8 
-       foreign key (text_decoration_id) 
-       references text_decoration;
+       add constraint FKewbqxuv4t3j4je18bc13ni6je 
+       foreign key (name_display_id) 
+       references name_display;
 
     alter table tie 
        add constraint FKj5k6akoif382o12wegpt952g9 
@@ -2782,9 +2668,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references music_data;
 
     alter table time 
-       add constraint FKgcs6ifoohhwyyyb0ryyfucbkv 
-       foreign key (print_style_align_id) 
-       references print_style_align;
+       add constraint FK41fs0r29g8fwdacunpung5jsg 
+       foreign key (display_id) 
+       references display;
 
     alter table time 
        add constraint FK287pjbbbjekxggqk4c9n72oyr 
@@ -2807,9 +2693,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references music_data;
 
     alter table tuplet_dot 
-       add constraint FKkyjpq6x9qk0gn8js5g6jbyur5 
-       foreign key (font_id) 
-       references font;
+       add constraint FKhfuiuu221ljpaisx7x9tmi33 
+       foreign key (display_id) 
+       references display;
 
     alter table tuplet_dot 
        add constraint FK17shk9waf0d00k9f69xprvof8 
@@ -2817,9 +2703,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references tuplet_portion;
 
     alter table tuplet_number 
-       add constraint FK3m5v7rsxy5wifp2sxnkugtpp4 
-       foreign key (font_id) 
-       references font;
+       add constraint FKh2p1yjera7mawbronu39jqjop 
+       foreign key (display_id) 
+       references display;
 
     alter table tuplet_portion 
        add constraint FK7vx5g52oawiuajlnkhv6atbyc 
@@ -2832,9 +2718,9 @@ create sequence hibernate_sequence start 1 increment 1;
        references tuplet_type;
 
     alter table tuplet_type 
-       add constraint FK47yv2u1ovwoiuw4jwr9hxoevp 
-       foreign key (font_id) 
-       references font;
+       add constraint FK9rxhpn2trkuhy5i5s2yp9ogdy 
+       foreign key (display_id) 
+       references display;
 
     alter table typed_text 
        add constraint FKkug2adi648rr488ym15018bg8 

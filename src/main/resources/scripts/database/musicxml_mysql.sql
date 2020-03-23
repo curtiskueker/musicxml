@@ -4,8 +4,9 @@
         accidental_type varchar(255),
         cautionary char(1),
         editorial char(1),
+        smufl varchar(255),
+        display_id integer,
         level_display_id integer,
-        print_style_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -26,20 +27,13 @@
        articulation_type varchar(31) not null,
         id integer not null auto_increment,
         breath_mark_value varchar(255),
-        placement varchar(255),
+        caesura_value varchar(255),
         type varchar(255),
-        print_style_id integer,
-        print_placement_id integer,
+        smufl varchar(255),
+        value varchar(255),
+        display_id integer,
         line_id integer,
-        placement_text_id integer,
         articulations_id integer not null,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table bar_style_color (
-       id integer not null auto_increment,
-        bar_style varchar(255),
-        color varchar(255),
         primary key (id)
     ) engine=MyISAM;
 
@@ -53,8 +47,8 @@
 
     create table barre (
        id integer not null auto_increment,
-        color varchar(255),
         type varchar(255),
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -70,7 +64,7 @@
         location varchar(255),
         print_object char(1),
         semitones decimal(12,4),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -78,25 +72,26 @@
        id integer not null auto_increment,
         step varchar(255),
         text varchar(255),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table beam (
        id integer not null auto_increment,
-        color varchar(255),
+        element_id varchar(255),
         fan varchar(255),
         beam_number integer,
         repeater char(1),
         type varchar(255),
+        display_id integer,
         note_id integer not null,
         primary key (id)
     ) engine=MyISAM;
 
-    create table beat_unit (
+    create table beat_unit_tied (
        id integer not null auto_increment,
-        beat_unit varchar(255),
-        beat_unit_dots integer,
+        beat_unit_tied_parent_id integer,
+        beat_unit_parent_id integer not null,
         primary key (id)
     ) engine=MyISAM;
 
@@ -129,6 +124,7 @@
 
     create table clef (
        id integer not null auto_increment,
+        element_id varchar(255),
         additional char(1),
         after_barline char(1),
         clef_octave_change integer,
@@ -137,13 +133,14 @@
         print_object char(1),
         sign varchar(255),
         symbol_size varchar(255),
-        print_style_id integer,
+        display_id integer,
         attributes_id integer not null,
         primary key (id)
     ) engine=MyISAM;
 
     create table credit (
        id integer not null auto_increment,
+        element_id varchar(255),
         page integer,
         score_header_id integer not null,
         primary key (id)
@@ -152,7 +149,9 @@
     create table credit_display (
        credit_display_type varchar(31) not null,
         id integer not null auto_increment,
-        formatted_text_id integer,
+        element_id varchar(255),
+        display_id integer,
+        text_format_id integer,
         image_id integer,
         credit_id integer not null,
         primary key (id)
@@ -196,7 +195,7 @@
        id integer not null auto_increment,
         plus_minus char(1),
         semitones decimal(12,4),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -204,7 +203,7 @@
        id integer not null auto_increment,
         text varchar(255),
         value varchar(255),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -213,7 +212,7 @@
         symbol varchar(255),
         text varchar(255),
         value integer,
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -227,51 +226,53 @@
     create table direction_type (
        direction_type_type varchar(31) not null,
         id integer not null auto_increment,
+        element_id varchar(255),
         enclosure varchar(255),
         direction_type varchar(255),
         accordion_high char(1),
         accordion_low char(1),
         accordion_middle integer,
-        color varchar(255),
         line_type varchar(255),
         niente char(1),
         direction_type_number integer,
         spread decimal(12,4),
+        smufl varchar(255),
         value varchar(255),
+        abbreviated char(1),
         line char(1),
+        pedal_number integer,
+        pedal_type varchar(255),
         sign char(1),
-        halign varchar(255),
+        height decimal(12,4),
         source varchar(255),
-        valign_image varchar(255),
+        width decimal(12,4),
         beater_value varchar(255),
         tip varchar(255),
         justify varchar(255),
         parentheses char(1),
+        metronome_arrows char(1),
         metronome_relation varchar(255),
         principal_voice varchar(255),
         symbol varchar(255),
-        placement varchar(255),
         print_object char(1),
         stick_material varchar(255),
         stick_type varchar(255),
         end_length decimal(12,4),
         line_end varchar(255),
         direction_type_size integer,
+        staff_divide_symbol varchar(255),
         direction_type_list_id integer,
-        print_style_align_id integer,
-        formatted_text_id integer,
+        display_id integer,
+        text_format_id integer,
         dashed_formatting_id integer,
-        position_id integer,
-        text_decoration_id integer,
-        print_style_id integer,
-        beat_unit_1_id integer,
-        beat_unit_2_id integer,
-        per_minute_id integer,
+        metronome_mark_1_id integer,
+        metronome_mark_2_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table direction_type_list (
        id integer not null auto_increment,
+        element_id varchar(255),
         direction_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -280,8 +281,19 @@
        id integer not null auto_increment,
         lang varchar(255),
         value varchar(255),
-        print_style_id integer,
+        display_id integer,
         attributes_id integer not null,
+        primary key (id)
+    ) engine=MyISAM;
+
+    create table display (
+       id integer not null auto_increment,
+        color varchar(255),
+        halign varchar(255),
+        placement varchar(255),
+        valign varchar(255),
+        font_id integer,
+        position_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -295,7 +307,7 @@
 
     create table dot (
        id integer not null auto_increment,
-        print_placement_id integer,
+        display_id integer,
         note_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -303,6 +315,8 @@
     create table dynamics_marking (
        id integer not null auto_increment,
         dynamics_type varchar(255),
+        smufl varchar(255),
+        value varchar(255),
         dynamics_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -322,26 +336,18 @@
         primary key (id)
     ) engine=MyISAM;
 
-    create table editorial_voice (
-       id integer not null auto_increment,
-        voice varchar(255),
-        footnote_id integer,
-        level_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table editorial_voice_direction (
-       id integer not null auto_increment,
-        voice varchar(255),
-        footnote_id integer,
-        level_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
     create table element_position (
        id integer not null auto_increment,
         element varchar(255),
         position integer,
+        primary key (id)
+    ) engine=MyISAM;
+
+    create table elision (
+       id integer not null auto_increment,
+        smufl varchar(255),
+        value varchar(255),
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -369,7 +375,14 @@
         text_y decimal(12,4),
         ending_type varchar(255),
         value varchar(255),
-        print_style_id integer,
+        display_id integer,
+        primary key (id)
+    ) engine=MyISAM;
+
+    create table except_voice (
+       id integer not null auto_increment,
+        value varchar(255),
+        slash_group_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -383,6 +396,7 @@
 
     create table figure (
        id integer not null auto_increment,
+        editorial_id integer,
         extend_id integer,
         figure_number_id integer,
         prefix_id integer,
@@ -402,38 +416,29 @@
     create table font (
        id integer not null auto_increment,
         font_family varchar(255),
+        font_size varchar(255),
         font_style varchar(255),
         font_weight varchar(255),
-        font_size_id integer,
         primary key (id)
     ) engine=MyISAM;
 
-    create table font_size (
+    create table footnote (
        id integer not null auto_increment,
-        css_font_size varchar(255),
-        font_size decimal(12,4),
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table formatted_text (
-       id integer not null auto_increment,
-        value longtext,
-        text_formatting_id integer,
+        display_id integer,
+        text_format_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table frame (
        id integer not null auto_increment,
-        color varchar(255),
+        element_id varchar(255),
         frame_frets integer,
         frame_strings integer,
-        halign varchar(255),
         height decimal(12,4),
         unplayed varchar(255),
-        valign_image varchar(255),
         width decimal(12,4),
+        display_id integer,
         first_fret_id integer,
-        position_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -466,6 +471,14 @@
         primary key (id)
     ) engine=MyISAM;
 
+    create table glyph (
+       id integer not null auto_increment,
+        type varchar(255),
+        value varchar(255),
+        appearance_id integer not null,
+        primary key (id)
+    ) engine=MyISAM;
+
     create table grace (
        id integer not null auto_increment,
         make_time decimal(12,4),
@@ -477,8 +490,8 @@
 
     create table group_barline (
        id integer not null auto_increment,
-        color varchar(255),
         group_barline_type varchar(255),
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -486,15 +499,21 @@
        id integer not null auto_increment,
         group_name varchar(255),
         justify varchar(255),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table group_symbol (
        id integer not null auto_increment,
-        color varchar(255),
         group_symbol_type varchar(255),
-        position_id integer,
+        display_id integer,
+        primary key (id)
+    ) engine=MyISAM;
+
+    create table harmon_closed (
+       id integer not null auto_increment,
+        location varchar(255),
+        value varchar(255),
         primary key (id)
     ) engine=MyISAM;
 
@@ -537,7 +556,7 @@
     create table inversion (
        id integer not null auto_increment,
         value integer,
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -553,11 +572,12 @@
     create table key_signature (
        key_type varchar(31) not null,
         id integer not null auto_increment,
+        element_id varchar(255),
         key_number integer,
         print_object char(1),
         fifths integer,
         key_mode varchar(255),
-        print_style_id integer,
+        display_id integer,
         cancel_id integer,
         attributes_id integer not null,
         primary key (id)
@@ -566,14 +586,12 @@
     create table kind (
        id integer not null auto_increment,
         bracket_degrees char(1),
-        halign varchar(255),
         kind_value varchar(255),
         parentheses_degrees char(1),
         stack_degrees char(1),
         text varchar(255),
         use_symbols char(1),
-        valign varchar(255),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -594,11 +612,10 @@
 
     create table line (
        id integer not null auto_increment,
+        line_length varchar(255),
         line_shape varchar(255),
         line_type varchar(255),
-        placement varchar(255),
         dashed_formatting_id integer,
-        print_style_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -623,17 +640,17 @@
 
     create table lyric (
        id integer not null auto_increment,
-        color varchar(255),
+        element_id varchar(255),
         end_line char(1),
         end_paragraph char(1),
         justify varchar(255),
         name varchar(255),
         lyric_number varchar(255),
-        placement varchar(255),
         print_object char(1),
+        time_only varchar(255),
+        display_id integer,
         editorial_id integer,
         lyric_item_id integer,
-        position_id integer,
         note_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -651,7 +668,7 @@
        lyric_item_type varchar(31) not null,
         id integer not null auto_increment,
         type varchar(255),
-        print_style_id integer,
+        display_id integer,
         extend_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -668,9 +685,16 @@
     create table lyric_syllable (
        id integer not null auto_increment,
         syllabic varchar(255),
-        lyric_elision_id integer,
+        elision_id integer,
         text_data_id integer,
         lyric_text_id integer not null,
+        primary key (id)
+    ) engine=MyISAM;
+
+    create table lyric_text_data (
+       id integer not null auto_increment,
+        display_id integer,
+        text_format_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -686,9 +710,11 @@
     create table measure (
        id integer not null auto_increment,
         ordering integer,
+        element_id varchar(255),
         implicit char(1),
         non_controlling char(1),
         measure_number varchar(255),
+        text varchar(255),
         width decimal(12,4),
         part_id integer not null,
         primary key (id)
@@ -703,7 +729,7 @@
     create table measure_style (
        measure_style_type varchar(31) not null,
         id integer not null auto_increment,
-        color varchar(255),
+        element_id varchar(255),
         measure_style_number integer,
         use_symbols char(1),
         value integer,
@@ -711,7 +737,7 @@
         use_dots char(1),
         use_stems char(1),
         slashes integer,
-        font_id integer,
+        display_id integer,
         slash_group_id integer,
         attributes_id integer not null,
         primary key (id)
@@ -725,9 +751,20 @@
         primary key (id)
     ) engine=MyISAM;
 
+    create table metronome_mark (
+       metronome_mark_type varchar(31) not null,
+        id integer not null auto_increment,
+        per_minute varchar(255),
+        beat_unit varchar(255),
+        beat_unit_dots integer,
+        display_id integer,
+        primary key (id)
+    ) engine=MyISAM;
+
     create table metronome_note (
        id integer not null auto_increment,
         metronome_dots integer,
+        metronome_tied varchar(255),
         metronome_type varchar(255),
         metronome_tuplet_id integer,
         note_metronome_2_id integer not null,
@@ -757,7 +794,7 @@
         elevation decimal(12,4),
         midi_bank integer,
         midi_channel integer,
-        midi_instrumentj_id varchar(255),
+        midi_instrument_id varchar(255),
         midi_name varchar(255),
         midi_program integer,
         midi_unpitched integer,
@@ -784,6 +821,7 @@
         id integer not null auto_increment,
         ordering integer,
         duration decimal(12,4),
+        element_id varchar(255),
         coda varchar(255),
         dacapo char(1),
         dalsegno varchar(255),
@@ -804,11 +842,11 @@
         parentheses char(1),
         instruments integer,
         staves integer,
-        placement varchar(255),
         print_frame char(1),
         print_object char(1),
         staff integer,
         type varchar(255),
+        bar_style varchar(255),
         location varchar(255),
         blank_page integer,
         measure_numbering_value varchar(255),
@@ -820,38 +858,34 @@
         number_of varchar(255),
         bookmark_id varchar(255),
         name varchar(255),
+        voice varchar(255),
         attack_length decimal(12,4),
-        color varchar(255),
         cue char(1),
         end_dynamics decimal(12,4),
         instrument varchar(255),
+        printLeger char(1),
         release_length decimal(12,4),
         directive char(1),
         measure_id integer,
         editorial_id integer,
         offset_id integer,
-        print_style_id integer,
+        display_id integer,
         printout_id integer,
         part_symbol_id integer,
         frame_id integer,
-        bar_style_id integer,
-        coda_print_id integer,
+        coda_id integer,
         ending_id integer,
         repeat_id integer,
-        segno_print_id integer,
+        segno_id integer,
         wavy_line_id integer,
         layout_id integer,
         measure_layout_id integer,
         part_abbreviation_display_id integer,
         part_name_display_id integer,
-        print_style_align_id integer,
         credit_display_id integer,
         element_position_id integer,
-        editorial_voice_id integer,
         link_attributes_id integer,
-        position_id integer,
         accidental_id integer,
-        font_id integer,
         full_note_id integer,
         grace_id integer,
         notehead_id integer,
@@ -860,7 +894,6 @@
         stem_id integer,
         time_modification_id integer,
         type_id integer,
-        editorial_voice_direction_id integer,
         sound_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -874,6 +907,7 @@
     create table non_traditional_key_type (
        id integer not null auto_increment,
         key_accidental varchar(255),
+        key_accidental_smufl varchar(255),
         key_alter decimal(12,4),
         key_step varchar(255),
         non_traditional_key_id integer not null,
@@ -883,11 +917,11 @@
     create table notation (
        notation_type varchar(31) not null,
         id integer not null auto_increment,
-        color varchar(255),
+        element_id varchar(255),
         notation_number integer,
-        placement varchar(255),
         type_value varchar(255),
         print_object char(1),
+        smufl varchar(255),
         value varchar(255),
         line_type varchar(255),
         connection_type varchar(255),
@@ -898,10 +932,10 @@
         line_shape varchar(255),
         show_number varchar(255),
         show_type varchar(255),
+        tied_type varchar(255),
         accidental_type varchar(255),
+        display_id integer,
         notations_id integer,
-        position_id integer,
-        print_style_id integer,
         dashed_formatting_id integer,
         bezier_id integer,
         bend_sound_id integer,
@@ -909,11 +943,13 @@
         tuplet_actual_id integer,
         tuplet_normal_id integer,
         dynamics_id integer,
+        level_display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table notations (
        id integer not null auto_increment,
+        element_id varchar(255),
         print_object char(1),
         editorial_id integer,
         note_id integer not null,
@@ -937,11 +973,11 @@
 
     create table notehead (
        id integer not null auto_increment,
-        color varchar(255),
         filled char(1),
         parentheses char(1),
+        smufl varchar(255),
         type varchar(255),
-        font_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -953,21 +989,20 @@
     create table ornament (
        ornament_type varchar(31) not null,
         id integer not null auto_increment,
-        placement varchar(255),
+        smufl varchar(255),
+        value varchar(255),
         slash char(1),
-        color varchar(255),
         wavy_line_number integer,
         connection_type varchar(255),
         tremolo_marks integer,
+        tremolo_type varchar(255),
         approach varchar(255),
         departure varchar(255),
         long_mordent char(1),
+        display_id integer,
         ornaments_id integer,
         placement_text_id integer,
-        print_style_id integer,
         trill_sound_id integer,
-        position_id integer,
-        print_placement_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1005,6 +1040,7 @@
     create table part (
        id integer not null auto_increment,
         ordering integer,
+        element_id varchar(255),
         part_id varchar(255),
         score_id integer not null,
         primary key (id)
@@ -1014,6 +1050,7 @@
        part_item_type varchar(31) not null,
         id integer not null auto_increment,
         ordering integer,
+        element_id varchar(255),
         group_time char(1),
         part_group_number varchar(255),
         part_group_type varchar(255),
@@ -1041,20 +1078,19 @@
 
     create table part_name (
        id integer not null auto_increment,
+        justify varchar(255),
         part_name varchar(255),
-        part_name_justify varchar(255),
-        part_name_print_object char(1),
-        part_name_print_style_id integer,
+        print_object char(1),
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table part_symbol (
        id integer not null auto_increment,
         bottom_staff integer,
-        color varchar(255),
         group_symbol_type varchar(255),
         top_staff integer,
-        position_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1066,18 +1102,10 @@
         primary key (id)
     ) engine=MyISAM;
 
-    create table per_minute (
-       id integer not null auto_increment,
-        per_minute varchar(255),
-        font_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
     create table placement_text (
        id integer not null auto_increment,
-        placement varchar(255),
         value varchar(255),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1105,36 +1133,6 @@
         primary key (id)
     ) engine=MyISAM;
 
-    create table print_object_style_align (
-       id integer not null auto_increment,
-        print_object char(1),
-        print_style_align_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table print_placement (
-       id integer not null auto_increment,
-        placement varchar(255),
-        print_style_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table print_style (
-       id integer not null auto_increment,
-        color varchar(255),
-        font_id integer,
-        position_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table print_style_align (
-       id integer not null auto_increment,
-        halign varchar(255),
-        valign varchar(255),
-        print_style_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
     create table printout (
        id integer not null auto_increment,
         print_dot char(1),
@@ -1149,7 +1147,7 @@
         location varchar(255),
         print_object char(1),
         semitones decimal(12,4),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1157,7 +1155,7 @@
        id integer not null auto_increment,
         step varchar(255),
         text varchar(255),
-        print_style_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1262,16 +1260,22 @@
 
     create table stem (
        id integer not null auto_increment,
-        color varchar(255),
         type varchar(255),
-        position_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table style_text (
        id integer not null auto_increment,
         value varchar(255),
-        print_style_id integer,
+        display_id integer,
+        primary key (id)
+    ) engine=MyISAM;
+
+    create table system_divider (
+       id integer not null auto_increment,
+        print_object char(1),
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1295,55 +1299,33 @@
     create table technical (
        technical_type varchar(31) not null,
         id integer not null auto_increment,
-        placement varchar(255),
         string_number integer,
         alternate char(1),
         substitution char(1),
         value varchar(255),
         notation_number integer,
         notation_type varchar(255),
-        color varchar(255),
+        smufl varchar(255),
         arrow_direction varchar(255),
         arrow_style varchar(255),
+        arrowhead char(1),
         circular_arrow varchar(255),
         hole_closed_location varchar(255),
         hole_close_type varchar(255),
         hole_shape varchar(255),
         hole_type varchar(255),
+        tap_hand varchar(255),
         bend_alter decimal(12,4),
         bend_type varchar(255),
         handbell_type varchar(255),
         harmonic_pitch varchar(255),
         harmonic_type varchar(255),
         print_object char(1),
+        display_id integer,
         technicals_id integer,
-        print_style_id integer,
-        print_placement_id integer,
-        font_id integer,
-        placement_text_id integer,
+        harmon_closed_id integer,
         bend_sound_id integer,
         with_bar_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table text_data (
-       id integer not null auto_increment,
-        color varchar(255),
-        lang varchar(255),
-        letter_spacing varchar(255),
-        text_direction varchar(255),
-        text_rotation decimal(12,4),
-        value varchar(255),
-        font_id integer,
-        text_decoration_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table text_decoration (
-       id integer not null auto_increment,
-        line_through integer,
-        overline integer,
-        underline integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1351,38 +1333,28 @@
        text_type varchar(31) not null,
         id integer not null auto_increment,
         accidental_type varchar(255),
-        name_display_id integer,
+        smufl varchar(255),
+        display_id integer,
+        text_format_id integer,
         notehead_text_id integer,
-        text_formatting_id integer,
-        display_text_id integer,
+        name_display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
-    create table text_font_color (
-       id integer not null auto_increment,
-        color varchar(255),
-        lang varchar(255),
-        letter_spacing varchar(255),
-        text_direction varchar(255),
-        text_rotation decimal(12,4),
-        value varchar(255),
-        font_id integer,
-        text_decoration_id integer,
-        primary key (id)
-    ) engine=MyISAM;
-
-    create table text_formatting (
+    create table text_format (
        id integer not null auto_increment,
         enclosure varchar(255),
         justify varchar(255),
         lang varchar(255),
         letter_spacing varchar(255),
         line_height varchar(255),
+        line_through integer,
+        overline integer,
         space varchar(255),
         text_direction varchar(255),
         text_rotation decimal(12,4),
-        print_style_align_id integer,
-        text_decoration_id integer,
+        underline integer,
+        value varchar(255),
         primary key (id)
     ) engine=MyISAM;
 
@@ -1397,12 +1369,13 @@
     create table time (
        time_type varchar(31) not null,
         id integer not null auto_increment,
+        element_id varchar(255),
         time_number integer,
         print_object char(1),
         time_separator varchar(255),
         symbol varchar(255),
         value varchar(255),
-        print_style_align_id integer,
+        display_id integer,
         interchangeable_id integer,
         attributes_id integer not null,
         primary key (id)
@@ -1427,6 +1400,7 @@
 
     create table transpose (
        id integer not null auto_increment,
+        element_id varchar(255),
         chromatic decimal(12,4),
         diatonic integer,
         doubled char(1),
@@ -1458,17 +1432,15 @@
 
     create table tuplet_dot (
        id integer not null auto_increment,
-        color varchar(255),
-        font_id integer,
+        display_id integer,
         tuplet_portion_id integer not null,
         primary key (id)
     ) engine=MyISAM;
 
     create table tuplet_number (
        id integer not null auto_increment,
-        color varchar(255),
         value integer,
-        font_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1481,9 +1453,8 @@
 
     create table tuplet_type (
        id integer not null auto_increment,
-        color varchar(255),
         note_type_value varchar(255),
-        font_id integer,
+        display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -1526,14 +1497,14 @@
        add constraint UK3ux9w0rpfpqrljat6wimun1fr unique (score_name);
 
     alter table accidental 
+       add constraint FKog7p17vaochq32sjs8bjxv1v4 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table accidental 
        add constraint FKf1brlbu5kohjtiexhuaj1uv1j 
        foreign key (level_display_id) 
        references level_display (id);
-
-    alter table accidental 
-       add constraint FKhvmx4yrlfgkjklrhf79jpnfox 
-       foreign key (print_style_id) 
-       references print_style (id);
 
     alter table accord 
        add constraint FKmallx8sq3vhlhproso60l144t 
@@ -1546,14 +1517,9 @@
        references direction_type (id);
 
     alter table articulation 
-       add constraint FKb9visq0pvneglobry068cm9vu 
-       foreign key (print_style_id) 
-       references print_style (id);
-
-    alter table articulation 
-       add constraint FKllg0e2dchtefge59cy0l0y0j2 
-       foreign key (print_placement_id) 
-       references print_placement (id);
+       add constraint FKnn2i78j4t94y2sch4dxc9bj4x 
+       foreign key (display_id) 
+       references display (id);
 
     alter table articulation 
        add constraint FK30m8vy3kinx56q1w2xbmp3bty 
@@ -1561,14 +1527,14 @@
        references line (id);
 
     alter table articulation 
-       add constraint FKr6q7jr7cjrtg1eunx02nu9kre 
-       foreign key (placement_text_id) 
-       references placement_text (id);
-
-    alter table articulation 
        add constraint FK1emxxnei3prqc823q15gt5ccp 
        foreign key (articulations_id) 
        references notation (id);
+
+    alter table barre 
+       add constraint FKfympa43emgp0kyy1qqbrtqnow 
+       foreign key (display_id) 
+       references display (id);
 
     alter table bass 
        add constraint FK89b8ei38psnad41dlrveugi8i 
@@ -1581,24 +1547,39 @@
        references bass_step (id);
 
     alter table bass_alter 
-       add constraint FKpp4rcwtmq1wrlkx5tfk3vwu8t 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FK2ty4w07l9qp4tse2qqdf2u68s 
+       foreign key (display_id) 
+       references display (id);
 
     alter table bass_step 
-       add constraint FKsiahssnx0jfnglcjp1yl7q66c 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKptfr45ox5vrmlw4pa2vbf2apu 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table beam 
+       add constraint FK3r7dqpis0rakfenlmnbtdvs4 
+       foreign key (display_id) 
+       references display (id);
 
     alter table beam 
        add constraint FKbirfijk9ipkvby7y04lbehl9i 
        foreign key (note_id) 
        references music_data (id);
 
+    alter table beat_unit_tied 
+       add constraint FKbjm8lcptks4j06iky0ur8u15e 
+       foreign key (beat_unit_tied_parent_id) 
+       references metronome_mark (id);
+
+    alter table beat_unit_tied 
+       add constraint FK5pl5jidyehnc0ca9999sky4hk 
+       foreign key (beat_unit_parent_id) 
+       references metronome_mark (id);
+
     alter table clef 
-       add constraint FK641n5bcx7pl7ts54jp85xym4b 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKa378tnca4yd6yylyai6yl86uf 
+       foreign key (display_id) 
+       references display (id);
 
     alter table clef 
        add constraint FKi3ndwd0j6jwnc9b4bs9qrhra8 
@@ -1611,9 +1592,14 @@
        references score_header (id);
 
     alter table credit_display 
-       add constraint FKfmotqq7ogiktuy0bgq1y5c2wt 
-       foreign key (formatted_text_id) 
-       references formatted_text (id);
+       add constraint FKlyds4j445i0ws1sv85ocihbmp 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table credit_display 
+       add constraint FKlc9mqx1m5cix2cr4vt6p1at09 
+       foreign key (text_format_id) 
+       references text_format (id);
 
     alter table credit_display 
        add constraint FKmglmu9us8bs64gvpcg1o713v1 
@@ -1676,19 +1662,19 @@
        references harmony_chord (id);
 
     alter table degree_alter 
-       add constraint FKjn6riw3p0qfmbhjsxr4rjsn92 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKln9u0gr6hmcmb9tp1e401v7gq 
+       foreign key (display_id) 
+       references display (id);
 
     alter table degree_type 
-       add constraint FK9cvlxqwv12nortu2rhfsgefmp 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKt02dg5fdo8fu2fcmy42216mnb 
+       foreign key (display_id) 
+       references display (id);
 
     alter table degree_value 
-       add constraint FKpteiuibun6oegnhwkc6bab13s 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKhddv8q1fky1rcpq7b78200yd2 
+       foreign key (display_id) 
+       references display (id);
 
     alter table direction_type 
        add constraint FKg4bem6dw87egwlbf56tdtr3ae 
@@ -1696,14 +1682,14 @@
        references direction_type_list (id);
 
     alter table direction_type 
-       add constraint FKdh2w4ljp8adbmh0wamigdoik5 
-       foreign key (print_style_align_id) 
-       references print_style_align (id);
+       add constraint FK77ibcdkbyqisesln0qu89w1k9 
+       foreign key (display_id) 
+       references display (id);
 
     alter table direction_type 
-       add constraint FK1hh0df63x5pucje0dcc3baxmk 
-       foreign key (formatted_text_id) 
-       references formatted_text (id);
+       add constraint FK8aw4acynt9n77ipwwgwppdp9s 
+       foreign key (text_format_id) 
+       references text_format (id);
 
     alter table direction_type 
        add constraint FKgxses1obcssr9l23473nifsgy 
@@ -1711,34 +1697,14 @@
        references dashed_formatting (id);
 
     alter table direction_type 
-       add constraint FKn5f9n6k1d27reulja1lsk0tvj 
-       foreign key (position_id) 
-       references position (id);
+       add constraint FKsxbv146gynnqnw6nab75n1ba9 
+       foreign key (metronome_mark_1_id) 
+       references metronome_mark (id);
 
     alter table direction_type 
-       add constraint FK5rxl70mdfr2xjhjnvya78c4s9 
-       foreign key (text_decoration_id) 
-       references text_decoration (id);
-
-    alter table direction_type 
-       add constraint FK3gxkoia4ng1lhvkb0y8n69afa 
-       foreign key (print_style_id) 
-       references print_style (id);
-
-    alter table direction_type 
-       add constraint FKh064c4w60nigcc34qthbh5c33 
-       foreign key (beat_unit_1_id) 
-       references beat_unit (id);
-
-    alter table direction_type 
-       add constraint FKgxbebd1i9oygindubiojvhl4i 
-       foreign key (beat_unit_2_id) 
-       references beat_unit (id);
-
-    alter table direction_type 
-       add constraint FK8cyqpdh5f7xrf4bhnos93eee4 
-       foreign key (per_minute_id) 
-       references per_minute (id);
+       add constraint FKesly754x1a2cyws3u2mrwmrym 
+       foreign key (metronome_mark_2_id) 
+       references metronome_mark (id);
 
     alter table direction_type_list 
        add constraint FKblbd4ond4mhyu4o5cd0blqrsm 
@@ -1746,14 +1712,24 @@
        references music_data (id);
 
     alter table directive 
-       add constraint FKk8ns3fcpr5d516lnprp9o06hd 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKolp4d7yqveg72d8nhbmp3kx8r 
+       foreign key (display_id) 
+       references display (id);
 
     alter table directive 
        add constraint FK7ksvq9gvmn531kkcf9yodu3be 
        foreign key (attributes_id) 
        references music_data (id);
+
+    alter table display 
+       add constraint FKojhuhxyhklq2hjisna3o24n1v 
+       foreign key (font_id) 
+       references font (id);
+
+    alter table display 
+       add constraint FK2107b5khj7dpia54m5mlscu2h 
+       foreign key (position_id) 
+       references position (id);
 
     alter table distance 
        add constraint FKh7upf2u0uver0s5p0wbtug9y 
@@ -1761,9 +1737,9 @@
        references appearance (id);
 
     alter table dot 
-       add constraint FKhts3e4hthb42jy6kwav33yqyn 
-       foreign key (print_placement_id) 
-       references print_placement (id);
+       add constraint FKj1btpaoyc9nvstpp5k8f06lj8 
+       foreign key (display_id) 
+       references display (id);
 
     alter table dot 
        add constraint FKinehtcky1m5rv5wexupjmixs 
@@ -1776,9 +1752,9 @@
        references direction_type (id);
 
     alter table editorial 
-       add constraint FK80idprxv3qcwtyg2yvegdreea 
+       add constraint FKgd6ji3ihwlf2njs9w5gl6b550 
        foreign key (footnote_id) 
-       references formatted_text (id);
+       references footnote (id);
 
     alter table editorial 
        add constraint FK1l4jxj9yu15r99y7n5tmpe483 
@@ -1790,25 +1766,10 @@
        foreign key (level_display_id) 
        references level_display (id);
 
-    alter table editorial_voice 
-       add constraint FK1ustnq8hd3952fjhxmrwjoix0 
-       foreign key (footnote_id) 
-       references formatted_text (id);
-
-    alter table editorial_voice 
-       add constraint FKmx001y259a2irc105bkrk5uaw 
-       foreign key (level_id) 
-       references editorial_level (id);
-
-    alter table editorial_voice_direction 
-       add constraint FKcm3f38qna2foj87kxxm2y0icg 
-       foreign key (footnote_id) 
-       references formatted_text (id);
-
-    alter table editorial_voice_direction 
-       add constraint FKsfpp3tusg9kpih4vvmci6lc4i 
-       foreign key (level_id) 
-       references editorial_level (id);
+    alter table elision 
+       add constraint FKm7ixjbc10372o8tbtxfyp7dec 
+       foreign key (display_id) 
+       references display (id);
 
     alter table encoding 
        add constraint FK8l5bbf29jxhcjw32xffoh6lqe 
@@ -1821,14 +1782,24 @@
        references identification (id);
 
     alter table ending 
-       add constraint FKkonmj86oig30fhaao3drtsm7u 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FK9my78uy851yr2gddl0ihwrj21 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table except_voice 
+       add constraint FKnm4i9hxd6b7xb19cqiywqya2e 
+       foreign key (slash_group_id) 
+       references slash_group (id);
 
     alter table feature 
        add constraint FKmul6tobnvi4eghf76th7h3mdq 
        foreign key (grouping_id) 
        references music_data (id);
+
+    alter table figure 
+       add constraint FK3t1vsii1hkcl4ool8vfnkwtug 
+       foreign key (editorial_id) 
+       references editorial (id);
 
     alter table figure 
        add constraint FK24qvk8c7i5mwab6x26eqsh4a7 
@@ -1855,25 +1826,25 @@
        foreign key (figured_bass_id) 
        references music_data (id);
 
-    alter table font 
-       add constraint FKcm9ljstral5kgbygy0ljqq8sk 
-       foreign key (font_size_id) 
-       references font_size (id);
+    alter table footnote 
+       add constraint FKojw33aa3lklit05wgqekf3yxw 
+       foreign key (display_id) 
+       references display (id);
 
-    alter table formatted_text 
-       add constraint FKno6nplbyevs8p1csp145pfcby 
-       foreign key (text_formatting_id) 
-       references text_formatting (id);
+    alter table footnote 
+       add constraint FKo822s5f1w4n3alf5oe205qbnj 
+       foreign key (text_format_id) 
+       references text_format (id);
+
+    alter table frame 
+       add constraint FKg86hx52tr4n9nbl5bxjnqyw00 
+       foreign key (display_id) 
+       references display (id);
 
     alter table frame 
        add constraint FKbu912vqnib5jvntkcd275bsb7 
        foreign key (first_fret_id) 
        references first_fret (id);
-
-    alter table frame 
-       add constraint FKch3k2c0mdjgk7g8ce25n2o1xw 
-       foreign key (position_id) 
-       references position (id);
 
     alter table frame_note 
        add constraint FKc2bu06jqrnpjaks3lpxhwfkwf 
@@ -1905,15 +1876,25 @@
        foreign key (full_note_type_id) 
        references full_note_type (id);
 
+    alter table glyph 
+       add constraint FKo1nificvy6udwyn1oaws82a55 
+       foreign key (appearance_id) 
+       references appearance (id);
+
+    alter table group_barline 
+       add constraint FKfig7m4m884wx19gesoojlgtg3 
+       foreign key (display_id) 
+       references display (id);
+
     alter table group_name 
-       add constraint FKgklulvowae4d6pkxq8ia8d6dx 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKdpc0x3kr0ntfsiqe03eiia154 
+       foreign key (display_id) 
+       references display (id);
 
     alter table group_symbol 
-       add constraint FKjf3mb2qdawomkmetttl00n0ws 
-       foreign key (position_id) 
-       references position (id);
+       add constraint FK3vsrxsapgrc630v5w13nrv739 
+       foreign key (display_id) 
+       references display (id);
 
     alter table harmony_chord 
        add constraint FK29a3948b7puxtfjiwexeku67t 
@@ -1961,9 +1942,9 @@
        references time (id);
 
     alter table inversion 
-       add constraint FKms7b0og13lb4di6abm1dvg5nx 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FK8wmswbqbiahcr1tbssadhs3d6 
+       foreign key (display_id) 
+       references display (id);
 
     alter table key_octave 
        add constraint FKkt0hsurbjdyb1x6jjdfj3j9h6 
@@ -1971,9 +1952,9 @@
        references key_signature (id);
 
     alter table key_signature 
-       add constraint FKd7tumy231x2kcgyodblg3a6du 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKcbiju7t2tfmedojiu5hgnoup4 
+       foreign key (display_id) 
+       references display (id);
 
     alter table key_signature 
        add constraint FK82qm60fbbgff6m3dn8txr0dko 
@@ -1986,9 +1967,9 @@
        references music_data (id);
 
     alter table kind 
-       add constraint FKm66mw2xl9mqj912bx7q3xhjtf 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKbqjf1wkdh2ki6thj3fvqivpv 
+       foreign key (display_id) 
+       references display (id);
 
     alter table layout 
        add constraint FK552vkgbeaq1y95tslmngsb7yi 
@@ -2005,15 +1986,15 @@
        foreign key (dashed_formatting_id) 
        references dashed_formatting (id);
 
-    alter table line 
-       add constraint FKeuni9nyggd7jbfrr98vkssogu 
-       foreign key (print_style_id) 
-       references print_style (id);
-
     alter table line_width 
        add constraint FKolk6o737efsh34fe1lbl3646t 
        foreign key (appearance_id) 
        references appearance (id);
+
+    alter table lyric 
+       add constraint FK3wlvu2d93tldinxvxu9omcly2 
+       foreign key (display_id) 
+       references display (id);
 
     alter table lyric 
        add constraint FKjyeuo5oulnpb4hiid8deb75ot 
@@ -2024,11 +2005,6 @@
        add constraint FKog91nc853a53gcxgbvoqaji70 
        foreign key (lyric_item_id) 
        references lyric_item (id);
-
-    alter table lyric 
-       add constraint FKpasbsn08ubag7mv6cakyq1k2k 
-       foreign key (position_id) 
-       references position (id);
 
     alter table lyric 
        add constraint FK4pb1ar6j9e34u8qgcjq5nsroq 
@@ -2046,9 +2022,9 @@
        references defaults (id);
 
     alter table lyric_item 
-       add constraint FK9a3ar7es2i15r02cc0tgagrva 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FK6gdrh9hd83f38euwdfx1nggul 
+       foreign key (display_id) 
+       references display (id);
 
     alter table lyric_item 
        add constraint FKbjmewleq4j31k1dtppbtcp4dh 
@@ -2061,19 +2037,29 @@
        references defaults (id);
 
     alter table lyric_syllable 
-       add constraint FKnbj8a56ent8xvel21vse6qou0 
-       foreign key (lyric_elision_id) 
-       references text_font_color (id);
+       add constraint FKlmk9aphu2dxt9l8h0c4wkgrso 
+       foreign key (elision_id) 
+       references elision (id);
 
     alter table lyric_syllable 
-       add constraint FKkqawno7vu5e2hpebgmkvbwme3 
+       add constraint FKc431ui8rpt5kwsckw8p0y80yc 
        foreign key (text_data_id) 
-       references text_data (id);
+       references lyric_text_data (id);
 
     alter table lyric_syllable 
        add constraint FK25xj1xbkynu8c87129s2qodt7 
        foreign key (lyric_text_id) 
        references lyric_item (id);
+
+    alter table lyric_text_data 
+       add constraint FKmc2stvngctieoh7j6k407j70v 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table lyric_text_data 
+       add constraint FKfw1oy1qgsq3mk72oitwh18r4v 
+       foreign key (text_format_id) 
+       references text_format (id);
 
     alter table measure 
        add constraint FK7okawlbg5nyqon30ll7uavx28 
@@ -2081,9 +2067,9 @@
        references part (id);
 
     alter table measure_style 
-       add constraint FKan3i4e80tqacry684lwp4fvhf 
-       foreign key (font_id) 
-       references font (id);
+       add constraint FKj3lm680yi0h9ikyq1w4uljq1v 
+       foreign key (display_id) 
+       references display (id);
 
     alter table measure_style 
        add constraint FKbj6cxo895qbe3hj8h5xwls7t 
@@ -2099,6 +2085,11 @@
        add constraint FK7da67iuei7y91g3n7nkd97q9 
        foreign key (metronome_note_id) 
        references metronome_note (id);
+
+    alter table metronome_mark 
+       add constraint FKqfv6oplc70lkwvhimrio2f5vi 
+       foreign key (display_id) 
+       references display (id);
 
     alter table metronome_note 
        add constraint FK40x0x8qv6ynww6qot6dhgss 
@@ -2141,9 +2132,9 @@
        references direction_offset (id);
 
     alter table music_data 
-       add constraint FK1glg24qa65ycutycdd0skqrkb 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKk94ghor1mdy12w2m5eis6g1vj 
+       foreign key (display_id) 
+       references display (id);
 
     alter table music_data 
        add constraint FKevg7nxdah1nb082n9dl1bivw2 
@@ -2161,14 +2152,9 @@
        references frame (id);
 
     alter table music_data 
-       add constraint FK90kvf49b2hf9ohcxlbmjo9tcj 
-       foreign key (bar_style_id) 
-       references bar_style_color (id);
-
-    alter table music_data 
-       add constraint FKq9plxquyjpdjmgxlfrxtjajub 
-       foreign key (coda_print_id) 
-       references print_style_align (id);
+       add constraint FK74wouy3pwlsp1e3l1rpjs4wer 
+       foreign key (coda_id) 
+       references direction_type (id);
 
     alter table music_data 
        add constraint FK6nxn99o8j8pik2kry92d4xs60 
@@ -2181,9 +2167,9 @@
        references barline_repeat (id);
 
     alter table music_data 
-       add constraint FKhh4obibkl94v8mlpgfh81ts4k 
-       foreign key (segno_print_id) 
-       references print_style_align (id);
+       add constraint FKsdkthf201p0rbpcgkt00k0efe 
+       foreign key (segno_id) 
+       references direction_type (id);
 
     alter table music_data 
        add constraint FKig1bj9flp7ebecbgfe2jq8f9c 
@@ -2211,11 +2197,6 @@
        references name_display (id);
 
     alter table music_data 
-       add constraint FKntp0ktd4hfsrs8912th1qhefu 
-       foreign key (print_style_align_id) 
-       references print_style_align (id);
-
-    alter table music_data 
        add constraint FKowu22dl3y19shmrdmjxok999l 
        foreign key (credit_display_id) 
        references credit_display (id);
@@ -2226,29 +2207,14 @@
        references element_position (id);
 
     alter table music_data 
-       add constraint FKhw4wtp4400eh1bn1dwsxce4wm 
-       foreign key (editorial_voice_id) 
-       references editorial_voice (id);
-
-    alter table music_data 
        add constraint FK8l5ctbd1hibellcrcge7oob41 
        foreign key (link_attributes_id) 
        references link_attributes (id);
 
     alter table music_data 
-       add constraint FKl0qlgpfjb0jha1nexwaps1q79 
-       foreign key (position_id) 
-       references position (id);
-
-    alter table music_data 
        add constraint FKrbocaap3axrypmkiowm32k1pu 
        foreign key (accidental_id) 
        references accidental (id);
-
-    alter table music_data 
-       add constraint FKgpicksq8yhmln32p4k3ujfaxm 
-       foreign key (font_id) 
-       references font (id);
 
     alter table music_data 
        add constraint FKbr7vqgo6v4vt89fc0g38m427r 
@@ -2291,11 +2257,6 @@
        references note_type (id);
 
     alter table music_data 
-       add constraint FK2i08pgrm0rx7tou1rl64m86h9 
-       foreign key (editorial_voice_direction_id) 
-       references editorial_voice_direction (id);
-
-    alter table music_data 
        add constraint FKex8und0d9f4odkobxomoq7ia4 
        foreign key (sound_id) 
        references music_data (id);
@@ -2306,19 +2267,14 @@
        references key_signature (id);
 
     alter table notation 
+       add constraint FK5j2otsml2aexns8nkdp708hys 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table notation 
        add constraint FK5r5gx0kjtp620dora5pb9b4bf 
        foreign key (notations_id) 
        references notations (id);
-
-    alter table notation 
-       add constraint FKhw3gdh6pej7kc22xvudakk9xf 
-       foreign key (position_id) 
-       references position (id);
-
-    alter table notation 
-       add constraint FK36e6fcoa8ttpfy0b4vq2vlqoi 
-       foreign key (print_style_id) 
-       references print_style (id);
 
     alter table notation 
        add constraint FKmikst8yb146tli0w558f0goly 
@@ -2355,6 +2311,11 @@
        foreign key (dynamics_id) 
        references direction_type (id);
 
+    alter table notation 
+       add constraint FKtna2ume78xg3ua7mnvb4r2my0 
+       foreign key (level_display_id) 
+       references level_display (id);
+
     alter table notations 
        add constraint FKg6a7ep34rh5lufsyo8ajv34nk 
        foreign key (editorial_id) 
@@ -2371,9 +2332,14 @@
        references appearance (id);
 
     alter table notehead 
-       add constraint FKpkifmgv81yf7xav93tpvccvya 
-       foreign key (font_id) 
-       references font (id);
+       add constraint FKr01qgxcl50q2q6jlxpr70msij 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table ornament 
+       add constraint FK2yyq8ugyye0en8tmbswevkylp 
+       foreign key (display_id) 
+       references display (id);
 
     alter table ornament 
        add constraint FKnmqa6fuo6igfi4jv79gh6dwxs 
@@ -2386,24 +2352,9 @@
        references placement_text (id);
 
     alter table ornament 
-       add constraint FK11qmo7gioqgwq94c8876lgajb 
-       foreign key (print_style_id) 
-       references print_style (id);
-
-    alter table ornament 
        add constraint FKicpik38a8cvj0yg8ke41uth0n 
        foreign key (trill_sound_id) 
        references trill_sound (id);
-
-    alter table ornament 
-       add constraint FKltibfgn7t6c6qp46ro378p7o1 
-       foreign key (position_id) 
-       references position (id);
-
-    alter table ornament 
-       add constraint FKc6m3dofqqgb86xwql4u3d88j 
-       foreign key (print_placement_id) 
-       references print_placement (id);
 
     alter table ornament_accidental 
        add constraint FKqtdjoc60gbgmlnwclvq7buffj 
@@ -2501,69 +2452,39 @@
        references part_list (id);
 
     alter table part_name 
-       add constraint FKk9w82qcy4l6bcwpbwohkhmtg5 
-       foreign key (part_name_print_style_id) 
-       references print_style (id);
+       add constraint FK8w6uv4o5fbjq94cjtmr2r3ey6 
+       foreign key (display_id) 
+       references display (id);
 
     alter table part_symbol 
-       add constraint FK28ea4fghgnp1wxdp88ro9ufd0 
-       foreign key (position_id) 
-       references position (id);
+       add constraint FKlbmkyd7lwrme1ij4f1oa7cm6v 
+       foreign key (display_id) 
+       references display (id);
 
     alter table pedal_tuning 
        add constraint FKkvm1vni5oi78rbwmadfpcymb8 
        foreign key (harp_pedals_id) 
        references direction_type (id);
 
-    alter table per_minute 
-       add constraint FKtmhu8smc4fg2l2wvb2d6p3q1s 
-       foreign key (font_id) 
-       references font (id);
-
     alter table placement_text 
-       add constraint FKqd2x7uux6uwq2dsfrt4tvtt4l 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FK9rjj7nwpivoe3h1dy647ekgiw 
+       foreign key (display_id) 
+       references display (id);
 
     alter table play_type 
        add constraint FKlqyvck4o1sx2npdvpvi2cr0iq 
        foreign key (play_id) 
        references play (id);
 
-    alter table print_object_style_align 
-       add constraint FKemcmcj4t3ac5godq388m91gl6 
-       foreign key (print_style_align_id) 
-       references print_style_align (id);
-
-    alter table print_placement 
-       add constraint FKbcrmiafklcnq8mnbjpmgrqiom 
-       foreign key (print_style_id) 
-       references print_style (id);
-
-    alter table print_style 
-       add constraint FKg994nyn3c4wd9xn00qm7wdr7q 
-       foreign key (font_id) 
-       references font (id);
-
-    alter table print_style 
-       add constraint FK74tp99ldhfbp6b1uahk55tg2c 
-       foreign key (position_id) 
-       references position (id);
-
-    alter table print_style_align 
-       add constraint FK88wnduf1il60ole2a5agiu91t 
-       foreign key (print_style_id) 
-       references print_style (id);
-
     alter table root_alter 
-       add constraint FKma2bv9wu07wrfouuoeft7tmul 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKpe18eow0hfasmtm48jnbb71dm 
+       foreign key (display_id) 
+       references display (id);
 
     alter table root_step 
-       add constraint FK9yripfxgsgrtfm27br0aonfc7 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKkpn77a163f8k4cg1ckvfmxdnq 
+       foreign key (display_id) 
+       references display (id);
 
     alter table score 
        add constraint FKibymmlpensin2h24pto4i98l0 
@@ -2666,24 +2587,29 @@
        references staff_details (id);
 
     alter table stem 
-       add constraint FKe4y9aepsj1abjlglped2fepyn 
-       foreign key (position_id) 
-       references position (id);
+       add constraint FKo8qmj3omyxak4f1olkmp2ifba 
+       foreign key (display_id) 
+       references display (id);
 
     alter table style_text 
-       add constraint FKkrfn8pxu2pgqiudyof137yedr 
-       foreign key (print_style_id) 
-       references print_style (id);
+       add constraint FKck74ubo69ygoe7d4milqjlbpj 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table system_divider 
+       add constraint FK6dqjq9npjicmhrnrs1aqyb8eu 
+       foreign key (display_id) 
+       references display (id);
 
     alter table system_dividers 
-       add constraint FKs4snu7ps4ci8gc5xqmgwh95je 
+       add constraint FKr3lmv8t3a4lohruqmpx2uohps 
        foreign key (left_divider_id) 
-       references print_object_style_align (id);
+       references system_divider (id);
 
     alter table system_dividers 
-       add constraint FKkg34yq81yeow6wevtew79gse9 
+       add constraint FKllkl0vvbn97n4p7ud0blfi17i 
        foreign key (right_divider_id) 
-       references print_object_style_align (id);
+       references system_divider (id);
 
     alter table system_layout 
        add constraint FKoum2iw0o827holjk4avmetxpt 
@@ -2691,29 +2617,19 @@
        references system_dividers (id);
 
     alter table technical 
+       add constraint FK47clxoexh6shyk117acm8bnan 
+       foreign key (display_id) 
+       references display (id);
+
+    alter table technical 
        add constraint FKk1p1j3espd2ej3cfk81elx7qd 
        foreign key (technicals_id) 
        references notation (id);
 
     alter table technical 
-       add constraint FK8weangm16x6rrxt3327f9ehny 
-       foreign key (print_style_id) 
-       references print_style (id);
-
-    alter table technical 
-       add constraint FKhn8ttuf8hqy1b3mvb5ngjl0bd 
-       foreign key (print_placement_id) 
-       references print_placement (id);
-
-    alter table technical 
-       add constraint FK8x6phe95o7ktbmu6wfkp3van0 
-       foreign key (font_id) 
-       references font (id);
-
-    alter table technical 
-       add constraint FKnycbnsdcafannuju6bri39xgm 
-       foreign key (placement_text_id) 
-       references placement_text (id);
+       add constraint FKba4ghcyirr73ueblh3hmenkk9 
+       foreign key (harmon_closed_id) 
+       references harmon_closed (id);
 
     alter table technical 
        add constraint FKk2qoca6rp76q8da4xyyk8mpug 
@@ -2725,20 +2641,15 @@
        foreign key (with_bar_id) 
        references placement_text (id);
 
-    alter table text_data 
-       add constraint FKe2m2pkl4m1lac5b4ufglvllb2 
-       foreign key (font_id) 
-       references font (id);
-
-    alter table text_data 
-       add constraint FK32ns7tu4ejkkyvir13v9n9m7d 
-       foreign key (text_decoration_id) 
-       references text_decoration (id);
+    alter table text_display 
+       add constraint FK35uy6rwu1j5poqmgoo0ft68vl 
+       foreign key (display_id) 
+       references display (id);
 
     alter table text_display 
-       add constraint FKewbqxuv4t3j4je18bc13ni6je 
-       foreign key (name_display_id) 
-       references name_display (id);
+       add constraint FKiv1yjuhytayvijhq3px65i9e6 
+       foreign key (text_format_id) 
+       references text_format (id);
 
     alter table text_display 
        add constraint FKgcm9yg2bcd4ubd3a5dyxef50v 
@@ -2746,34 +2657,9 @@
        references notehead_text (id);
 
     alter table text_display 
-       add constraint FKa9mybrb3rf4nona3w4a85kxxw 
-       foreign key (text_formatting_id) 
-       references text_formatting (id);
-
-    alter table text_display 
-       add constraint FKa83jcmmr893rnm7fu0m79hspa 
-       foreign key (display_text_id) 
-       references formatted_text (id);
-
-    alter table text_font_color 
-       add constraint FK9s816v01lg2rqcy1l4ad8pyk1 
-       foreign key (font_id) 
-       references font (id);
-
-    alter table text_font_color 
-       add constraint FK1x9nxgxcdytcwfy2yim5sl4rg 
-       foreign key (text_decoration_id) 
-       references text_decoration (id);
-
-    alter table text_formatting 
-       add constraint FKkf85m66nv1fx2xqcf28atirb5 
-       foreign key (print_style_align_id) 
-       references print_style_align (id);
-
-    alter table text_formatting 
-       add constraint FKhdstyqjscdf2v55ewtksqrtx8 
-       foreign key (text_decoration_id) 
-       references text_decoration (id);
+       add constraint FKewbqxuv4t3j4je18bc13ni6je 
+       foreign key (name_display_id) 
+       references name_display (id);
 
     alter table tie 
        add constraint FKj5k6akoif382o12wegpt952g9 
@@ -2781,9 +2667,9 @@
        references music_data (id);
 
     alter table time 
-       add constraint FKgcs6ifoohhwyyyb0ryyfucbkv 
-       foreign key (print_style_align_id) 
-       references print_style_align (id);
+       add constraint FK41fs0r29g8fwdacunpung5jsg 
+       foreign key (display_id) 
+       references display (id);
 
     alter table time 
        add constraint FK287pjbbbjekxggqk4c9n72oyr 
@@ -2806,9 +2692,9 @@
        references music_data (id);
 
     alter table tuplet_dot 
-       add constraint FKkyjpq6x9qk0gn8js5g6jbyur5 
-       foreign key (font_id) 
-       references font (id);
+       add constraint FKhfuiuu221ljpaisx7x9tmi33 
+       foreign key (display_id) 
+       references display (id);
 
     alter table tuplet_dot 
        add constraint FK17shk9waf0d00k9f69xprvof8 
@@ -2816,9 +2702,9 @@
        references tuplet_portion (id);
 
     alter table tuplet_number 
-       add constraint FK3m5v7rsxy5wifp2sxnkugtpp4 
-       foreign key (font_id) 
-       references font (id);
+       add constraint FKh2p1yjera7mawbronu39jqjop 
+       foreign key (display_id) 
+       references display (id);
 
     alter table tuplet_portion 
        add constraint FK7vx5g52oawiuajlnkhv6atbyc 
@@ -2831,9 +2717,9 @@
        references tuplet_type (id);
 
     alter table tuplet_type 
-       add constraint FK47yv2u1ovwoiuw4jwr9hxoevp 
-       foreign key (font_id) 
-       references font (id);
+       add constraint FK9rxhpn2trkuhy5i5s2yp9ogdy 
+       foreign key (display_id) 
+       references display (id);
 
     alter table typed_text 
        add constraint FKkug2adi648rr488ym15018bg8 
