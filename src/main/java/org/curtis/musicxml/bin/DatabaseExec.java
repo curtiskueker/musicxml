@@ -34,7 +34,9 @@ public class DatabaseExec extends MusicXmlScript {
                 errorMessage = "Database schema file not generated: " + getOutputFile();
             }
 
-            MusicXmlUtil.getNewDbTransaction();
+            if (isCreateDatabase() || isTestDatabase() || isGenerateSchema()) {
+                MusicXmlUtil.getNewDbTransaction();
+            }
 
             if (isCreateDatabase()) {
                 DBSessionFactory.createDb();
