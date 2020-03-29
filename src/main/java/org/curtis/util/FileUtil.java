@@ -102,4 +102,8 @@ public class FileUtil {
     public static String getFileExtension(String filename) {
         return StringUtil.isEmpty(filename) ? "" : filename.substring(filename.lastIndexOf(".") + 1);
     }
+
+    public static boolean isXmlFileExtension(String filename) {
+        return getFileExtension(filename).equals("xml") || getFileExtension(filename).equals("musicxml");
+    }
 }

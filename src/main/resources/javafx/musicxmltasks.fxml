@@ -146,7 +146,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Hyperlink fx:id="musicXmlToFileLink" onAction="#chooseMusicXmlToFile" text="Choose MusicXML Output Filename (.xml)">
+                                                        <Hyperlink fx:id="musicXmlToFileLink" onAction="#chooseMusicXmlToFile" text="Choose MusicXML Output Filename">
                                                             <padding>
                                                                 <Insets left="10.0" />
                                                             </padding>
@@ -154,6 +154,14 @@
                                                                 <Insets top="10.0" />
                                                             </VBox.margin>
                                                         </Hyperlink>
+                                          <Label fx:id="musicXmlToTypeLabel" text="(.xml, .musicxml, or .mxl)">
+                                             <padding>
+                                                <Insets left="10.0" top="3.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
                                                         <TextField fx:id="musicXmlToFile" maxWidth="250.0" prefWidth="250.0">
                                                             <VBox.margin>
                                                                 <Insets left="10.0" top="10.0" />
@@ -176,11 +184,19 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Label fx:id="scoreNameToLabel" text="Score Name (default is filename):">
+                                                        <Label fx:id="scoreNameToLabel" text="Score Name:">
                                                             <padding>
                                                                 <Insets left="10.0" top="12.0" />
                                                             </padding>
                                                         </Label>
+                                          <Label fx:id="dbToTypeLabel" text="(default is filename)">
+                                             <padding>
+                                                <Insets left="10.0" top="3.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
                                                         <TextField fx:id="scoreNameTo" maxWidth="250.0" prefWidth="250.0">
                                                             <VBox.margin>
                                                                 <Insets left="10.0" top="10.0" />
@@ -203,7 +219,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Hyperlink fx:id="lyToFileLink" onAction="#chooseLyToFile" text="Choose Lilypond Output Filename (.ly)">
+                                                        <Hyperlink fx:id="lyToFileLink" onAction="#chooseLyToFile" text="Choose Lilypond Output Filename">
                                                             <padding>
                                                                 <Insets left="10.0" />
                                                             </padding>
@@ -211,6 +227,14 @@
                                                                 <Insets top="10.0" />
                                                             </VBox.margin>
                                                         </Hyperlink>
+                                          <Label fx:id="lyToTypeLabel" text="(.ly)">
+                                             <padding>
+                                                <Insets left="10.0" top="3.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
                                                         <TextField fx:id="lyToFile" maxWidth="250.0" prefWidth="250.0">
                                                             <VBox.margin>
                                                                 <Insets left="10.0" top="10.0" />
@@ -241,6 +265,14 @@
                                                                 <Insets top="10.0" />
                                                             </VBox.margin>
                                                         </Hyperlink>
+                                          <Label fx:id="pdfToTypeLabel" text="(no file extension)">
+                                             <padding>
+                                                <Insets left="10.0" top="3.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
                                                         <TextField fx:id="pdfToFile" maxWidth="250.0" prefWidth="250.0">
                                                             <VBox.margin>
                                                                 <Insets left="10.0" top="10.0" />

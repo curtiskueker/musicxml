@@ -43,7 +43,7 @@ public class CompressedXmlUtil {
             String xmlFilename = null;
             for (Element rootfileElement : rootfileElements) {
                 String filename = rootfileElement.getAttribute(FULL_PATH_ATTRIBUTE);
-                if (FileUtil.getFileExtension(filename).equals("xml")) {
+                if (FileUtil.isXmlFileExtension(filename)) {
                     xmlFilename = filename;
                     break;
                 }
