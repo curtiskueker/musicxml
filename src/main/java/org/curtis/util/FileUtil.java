@@ -98,4 +98,8 @@ public class FileUtil {
     public static String getTempFilename(String extension) {
         return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "." + extension;
     }
+
+    public static String getFileExtension(String filename) {
+        return StringUtil.isEmpty(filename) ? "" : filename.substring(filename.lastIndexOf(".") + 1);
+    }
 }

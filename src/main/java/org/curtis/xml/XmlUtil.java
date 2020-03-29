@@ -1,5 +1,6 @@
 package org.curtis.xml;
 
+import org.curtis.exception.FileException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,6 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +44,27 @@ public class XmlUtil {
     }
 
     public static Document fileToDocument(File xmlFile) throws XmlException {
-        if (xmlFile == null) {
-            throw new XmlException("Invalid file");
+        if (xmlFile == null) throw new XmlException("Invalid file");
+
+        if (CompressedXmlUtil.isCompressedFile(xmlFile.getName())) {
+            try {
+                return CompressedXmlUtil.getCompressedDocument(xmlFile);
+            } catch (FileException e) {
+                throw new XmlException(e.getMessage());
+            }
         }
 
-        // Read file as an xml document
+        try {
+            return stringToDocument(readXmlToString(new FileReader(xmlFile)));
+        } catch (IOException e) {
+            throw new XmlException(e.getMessage());
+        }
+    }
+
+    public static String readXmlToString(Reader reader) throws XmlException {
         StringBuilder xmlStringBuilder = new StringBuilder();
 
         try {
-            FileReader reader = new FileReader(xmlFile);
             int ch;
             boolean inProlog = true;
             while ((ch = reader.read()) != -1) {
@@ -63,7 +77,7 @@ public class XmlUtil {
             throw new XmlException(e.getMessage());
         }
 
-        return stringToDocument(xmlStringBuilder.toString());
+        return xmlStringBuilder.toString();
     }
 
     public static String elementToString(Element element) throws XmlException {
