@@ -28,6 +28,7 @@ public class ConvertInitializer extends JavafxTaskInitializer {
             case TaskConstants.CONVERSION_TYPE_MUSICXML:
                 nodeMap.put("outputFile", taskForm.getNode(FormNode.MUSICXML_TO_FILE));
                 nodeMap.put("skipComments", taskForm.getNode(FormNode.SKIP_COMMENTS));
+                nodeMap.put("zippedFile", taskForm.getNode(FormNode.MUSICXML_TO_ZIPPED_FILE));
                 break;
             case TaskConstants.CONVERSION_TYPE_DATABASE:
                 nodeMap.put("scoreName", taskForm.getNode(FormNode.SCORE_NAME_TO));

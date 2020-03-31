@@ -1,6 +1,5 @@
 package org.curtis.xml;
 
-import org.curtis.exception.FileException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -46,16 +45,9 @@ public class XmlUtil {
     public static Document fileToDocument(File xmlFile) throws XmlException {
         if (xmlFile == null) throw new XmlException("Invalid file");
 
-        if (CompressedXmlUtil.isCompressedFile(xmlFile.getName())) {
-            try {
-                return CompressedXmlUtil.getCompressedDocument(xmlFile);
-            } catch (FileException e) {
-                throw new XmlException(e.getMessage());
-            }
-        }
-
         try {
-            return stringToDocument(readXmlToString(new FileReader(xmlFile)));
+            if (CompressedXmlUtil.isCompressedFile(xmlFile.getName())) return CompressedXmlUtil.getCompressedDocument(xmlFile);
+            else return stringToDocument(readXmlToString(new FileReader(xmlFile)));
         } catch (IOException e) {
             throw new XmlException(e.getMessage());
         }

@@ -15,6 +15,7 @@ public class ToMusicXmlInput extends ConversionInput {
         String outputFile = taskInitializer.getText("outputFile");
         if (StringUtil.isNotEmpty(outputDirectoryName)) musicXmlScript.setOutputFile(outputDirectoryName + "/" + outputFile);
         else if (StringUtil.isNotEmpty(outputFile)) musicXmlScript.setOutputFile(outputFile);
+        musicXmlScript.setZippedFile(taskInitializer.getText("zippedFile"));
         musicXmlScript.setSkipComments(taskInitializer.isSelected("skipComments"));
     }
 }

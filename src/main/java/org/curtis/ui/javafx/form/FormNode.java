@@ -5,6 +5,7 @@ public class FormNode {
     public static final String DB_FROM_BOX = "dbFromBox";
     public static final String LY_FROM_BOX = "lyFromBox";
     public static final String MUSICXML_TO_BOX = "musicXmlToBox";
+    public static final String MUSICXML_TO_ZIPPED_BOX = "musicXmlToZippedBox";
     public static final String DB_TO_BOX = "dbToBox";
     public static final String LY_TO_BOX = "lyToBox";
     public static final String PDF_TO_BOX = "pdfToBox";
@@ -25,6 +26,7 @@ public class FormNode {
     public static final String LY_FROM_FILE = "lyFromFile";
 
     public static final String MUSICXML_TO_FILE = "musicXmlToFile";
+    public static final String MUSICXML_TO_ZIPPED_FILE = "musicXmlToZippedFile";
     public static final String LY_TO_FILE = "lyToFile";
     public static final String PDF_TO_FILE = "pdfToFile";
 

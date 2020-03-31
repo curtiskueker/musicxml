@@ -12,6 +12,7 @@ import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
+import org.curtis.ui.javafx.listener.MusicXmlToFileListener;
 import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
@@ -58,6 +59,8 @@ public class ConvertFormHandler extends FormHandler {
         taskForm.setSelectList(FormNode.CONVERT_FROM_LIST, FROM_SELECTIONS.stream().map(Pair::getKey).collect(Collectors.toList()));
         ComboBox<String> convertToList = taskForm.getSelectList(FormNode.CONVERT_TO_LIST);
         convertToList.getItems().clear();
+
+        listenerSetup();
 
         showFromBox("");
         showToBox("");
@@ -152,5 +155,9 @@ public class ConvertFormHandler extends FormHandler {
 
     private Button getDeleteButton() {
         return (Button)taskForm.getNode(FormNode.EXECUTE_DELETE_BUTTON);
+    }
+
+    private void listenerSetup() {
+        taskForm.getTextField(FormNode.MUSICXML_TO_FILE).textProperty().addListener(new MusicXmlToFileListener(taskForm));
     }
 }

@@ -15,6 +15,7 @@ import org.curtis.properties.PropertiesConstants;
 import org.curtis.properties.PropertyException;
 import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
+import org.curtis.xml.CompressedXmlUtil;
 import org.curtis.xml.SchemaValidator;
 import org.curtis.xml.XmlException;
 import org.curtis.xml.XmlUtil;
@@ -38,6 +39,7 @@ public abstract class MusicXmlScript {
     private String inputFile;
     private String scoreName;
     private Boolean skipComments = false;
+    private String zippedFile;
     private Boolean openPdf = false;
 
     private static final int COMMENTS_THRESHOLD = 250;
@@ -80,6 +82,14 @@ public abstract class MusicXmlScript {
 
     public void setSkipComments(Boolean skipComments) {
         this.skipComments = skipComments;
+    }
+
+    public String getZippedFile() {
+        return zippedFile;
+    }
+
+    public void setZippedFile(String zippedFile) {
+        this.zippedFile = zippedFile;
     }
 
     public Boolean getOpenPdf() {
@@ -193,7 +203,8 @@ public abstract class MusicXmlScript {
     protected void outputResultsToFile(String results) throws MusicXmlException {
         System.err.println("Creating Output File...");
         try {
-            FileUtil.stringToFile(results, getOutputFile());
+            if (CompressedXmlUtil.isCompressedFile(getOutputFile())) CompressedXmlUtil.saveCompressedFile(getOutputFile(), getZippedFile(), results);
+            else FileUtil.stringToFile(results, getOutputFile());
         } catch (FileException e) {
             throw new MusicXmlException(e.getMessage());
         }
