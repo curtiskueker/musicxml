@@ -16,6 +16,8 @@ import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Font;
+import org.curtis.musicxml.display.FontStyle;
+import org.curtis.musicxml.display.FontWeight;
 import org.curtis.musicxml.display.TextFormat;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -146,20 +148,8 @@ public class DirectiontypeBuilder extends MusicDataBuilder {
             if (font != null) {
                 append("\\markup { ");
 
-                if (font.getFontStyle() != null) {
-                    switch (font.getFontStyle()) {
-                        case ITALIC:
-                            append("\\italic ");
-                            break;
-                    }
-                }
-                if (font.getFontWeight() != null) {
-                    switch (font.getFontWeight()) {
-                        case BOLD:
-                            append("\\bold ");
-                            break;
-                    }
-                }
+                if (font.getFontStyle() != null && font.getFontStyle() == FontStyle.ITALIC) append("\\italic ");
+                if (font.getFontWeight() != null && font.getFontWeight() == FontWeight.BOLD) append("\\bold ");
                 if (font.getNonNumericFontSize() != null) {
                     BigDecimal fontSize = font.getNumericFontSize();
                     if (MathUtil.isPositive(fontSize)) {

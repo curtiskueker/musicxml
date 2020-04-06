@@ -1,7 +1,6 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.OrderedGroup;
 import org.hibernate.annotations.Type;
 

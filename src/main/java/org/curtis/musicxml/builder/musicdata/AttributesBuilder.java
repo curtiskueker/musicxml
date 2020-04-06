@@ -25,7 +25,6 @@ import org.curtis.musicxml.attributes.time.Time;
 import org.curtis.musicxml.attributes.time.TimeSignature;
 import org.curtis.musicxml.attributes.time.TimeSignatureType;
 import org.curtis.musicxml.builder.DisplayBuilder;
-import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.score.PartSymbol;
 

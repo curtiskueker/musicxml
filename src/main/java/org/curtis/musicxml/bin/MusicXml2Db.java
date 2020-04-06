@@ -20,7 +20,7 @@ import java.io.File;
 
 public class MusicXml2Db extends MusicXmlScript {
     public void execute() throws MusicXmlException {
-        File inputFile = null;
+        File inputFile;
         try {
             inputFile = FileUtil.openFile(getInputFile());
         } catch (FileException e) {

@@ -63,11 +63,7 @@ public class TaskHandler {
                         }
                         break;
                     case TaskConstants.CONVERSION_TYPE_LILYPOND:
-                        switch (convertToSelection) {
-                            case TaskConstants.CONVERSION_TYPE_PDF:
-                                inputHandler = new Ly2PdfHandler();
-                                break;
-                        }
+                        if (TaskConstants.CONVERSION_TYPE_PDF.equals(convertToSelection)) inputHandler = new Ly2PdfHandler();
                         break;
                 }
                 break;

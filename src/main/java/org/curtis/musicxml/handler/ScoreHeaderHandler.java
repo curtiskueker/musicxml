@@ -7,7 +7,6 @@ import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.factory.LinkFactory;
-import org.curtis.musicxml.factory.TextFormatFactory;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Distance;

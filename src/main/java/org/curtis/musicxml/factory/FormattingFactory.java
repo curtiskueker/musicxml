@@ -15,7 +15,6 @@ import org.curtis.musicxml.display.Footnote;
 import org.curtis.musicxml.layout.SystemDivider;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.util.MathUtil;
-import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 

@@ -4,7 +4,6 @@ import org.curtis.ui.swing.component.ComponentFactory;
 import org.curtis.ui.swing.component.ConstraintsFactory;
 import org.curtis.ui.swing.input.PanelRow;
 import org.curtis.ui.swing.input.InputRow;
-import org.curtis.ui.task.TaskConstants;
 import org.curtis.util.StringUtil;
 
 import javax.swing.JButton;

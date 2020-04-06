@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("encoding")
+@DiscriminatorValue("encoder")
 public class Encoder extends Encoding {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "encoder_id")

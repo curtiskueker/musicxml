@@ -76,7 +76,7 @@ public class TechnicalHandler extends BaseHandler {
                     technical = new UpBow();
                     break;
                 case "down-bow":
-                    technical = new DownBow();;
+                    technical = new DownBow();
                     break;
                 case "harmonic":
                     Harmonic harmonic = new Harmonic();

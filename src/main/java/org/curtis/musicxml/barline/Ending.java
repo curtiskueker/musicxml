@@ -1,7 +1,6 @@
 package org.curtis.musicxml.barline;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
