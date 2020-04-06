@@ -161,6 +161,6 @@ public class HarmonyBuilder extends MusicDataBuilder {
     }
 
     private void buildFunction(Function function) {
-        buildStyleText("function", function.getFunction());
+        buildElementWithValueAndAttributes("function", function.getValue(), DisplayBuilder.buildDisplay(function.getDisplay()));
     }
 }

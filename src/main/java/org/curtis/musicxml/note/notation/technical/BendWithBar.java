@@ -1,4 +1,4 @@
-package org.curtis.musicxml.note;
+package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.display.Display;
@@ -11,15 +11,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "placement_text")
-public class PlacementText extends DatabaseItem {
+@Table(name = "bend_with_bar")
+public class BendWithBar extends DatabaseItem {
     @Column
     private String value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
 
-    public PlacementText() {
+    public BendWithBar() {
 
     }
 

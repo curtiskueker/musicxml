@@ -3,7 +3,6 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
-import org.curtis.musicxml.factory.PlacementFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
 import org.curtis.musicxml.note.notation.Technicals;
 import org.curtis.musicxml.note.notation.technical.Arrow;
@@ -149,7 +148,7 @@ public class TechnicalHandler extends BaseHandler {
                     bend.setBendAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(technicalElement, "bend-alter")));
                     List<Element> bendElements = XmlUtil.getChildElements(technicalElement);
                     for (Element bendElement : bendElements) bend.setBendType(FactoryUtil.enumValue(BendType.class, bendElement.getTagName()));
-                    bend.setWithBar(PlacementFactory.newPlacementText(technicalElement));
+                    bend.setWithBar(TechnicalFactory.newBendWithBar(XmlUtil.getChildElement(technicalElement, "with-bar")));
                     bend.setBendSound(TechnicalFactory.newBendSound(technicalElement));
                     technical = bend;
                     break;

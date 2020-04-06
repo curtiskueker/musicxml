@@ -43,7 +43,6 @@
         <class>org.curtis.musicxml.common.MidiInstrument</class>
         <class>org.curtis.musicxml.common.NameDisplay</class>
         <class>org.curtis.musicxml.common.Printout</class>
-        <class>org.curtis.musicxml.common.StyleText</class>
         <class>org.curtis.musicxml.common.TextDisplay</class>
         <class>org.curtis.musicxml.common.XmlComment</class>
         <class>org.curtis.musicxml.common.play.Ipa</class>
@@ -161,7 +160,9 @@
         <class>org.curtis.musicxml.note.Backup</class>
         <class>org.curtis.musicxml.note.Beam</class>
         <class>org.curtis.musicxml.note.Dot</class>
+        <class>org.curtis.musicxml.note.Figure</class>
         <class>org.curtis.musicxml.note.FiguredBass</class>
+        <class>org.curtis.musicxml.note.FigurePart</class>
         <class>org.curtis.musicxml.note.Forward</class>
         <class>org.curtis.musicxml.note.FullNote</class>
         <class>org.curtis.musicxml.note.FullNoteType</class>
@@ -172,7 +173,6 @@
         <class>org.curtis.musicxml.note.NoteheadText</class>
         <class>org.curtis.musicxml.note.NoteType</class>
         <class>org.curtis.musicxml.note.Pitch</class>
-        <class>org.curtis.musicxml.note.PlacementText</class>
         <class>org.curtis.musicxml.note.Rest</class>
         <class>org.curtis.musicxml.note.Tie</class>
         <class>org.curtis.musicxml.note.TimeModification</class>
@@ -243,6 +243,7 @@
         <class>org.curtis.musicxml.note.notation.technical.Arrow</class>
         <class>org.curtis.musicxml.note.notation.technical.Bend</class>
         <class>org.curtis.musicxml.note.notation.technical.BendSound</class>
+        <class>org.curtis.musicxml.note.notation.technical.BendWithBar</class>
         <class>org.curtis.musicxml.note.notation.technical.BrassBend</class>
         <class>org.curtis.musicxml.note.notation.technical.DownBow</class>
         <class>org.curtis.musicxml.note.notation.technical.DoubleTongue</class>

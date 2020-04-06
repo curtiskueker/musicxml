@@ -2,7 +2,6 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.note.lyric.Extend;
 
 import javax.persistence.CascadeType;
@@ -16,13 +15,13 @@ import javax.persistence.Table;
 public class Figure extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "prefix_id")
-    private StyleText prefix;
+    private FigurePart prefix;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "figure_number_id")
-    private StyleText figureNumber;
+    private FigurePart figureNumber;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "suffix_id")
-    private StyleText suffix;
+    private FigurePart suffix;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "extend_id")
     private Extend extend;
@@ -34,27 +33,27 @@ public class Figure extends DatabaseItem {
 
     }
 
-    public StyleText getPrefix() {
+    public FigurePart getPrefix() {
         return prefix;
     }
 
-    public void setPrefix(StyleText prefix) {
+    public void setPrefix(FigurePart prefix) {
         this.prefix = prefix;
     }
 
-    public StyleText getFigureNumber() {
+    public FigurePart getFigureNumber() {
         return figureNumber;
     }
 
-    public void setFigureNumber(StyleText figureNumber) {
+    public void setFigureNumber(FigurePart figureNumber) {
         this.figureNumber = figureNumber;
     }
 
-    public StyleText getSuffix() {
+    public FigurePart getSuffix() {
         return suffix;
     }
 
-    public void setSuffix(StyleText suffix) {
+    public void setSuffix(FigurePart suffix) {
         this.suffix = suffix;
     }
 

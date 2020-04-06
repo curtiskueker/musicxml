@@ -7,7 +7,6 @@ import org.curtis.musicxml.display.EnclosureShape;
 import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.LevelDisplay;
 import org.curtis.musicxml.common.Printout;
-import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.display.Display;
@@ -23,16 +22,6 @@ import java.math.BigDecimal;
 public class FormattingFactory {
     private FormattingFactory() {
 
-    }
-
-    public static StyleText newStyleText(Element element) {
-        if (element == null) return null;
-
-        StyleText styleText = new StyleText();
-        styleText.setValue(XmlUtil.getElementText(element));
-        styleText.setDisplay(DisplayFactory.newDisplay(element));
-
-        return styleText;
     }
 
     public static TextDisplay newText(Element element) {

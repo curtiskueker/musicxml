@@ -1,6 +1,7 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.note.notation.technical.BendWithBar;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.Fingering;
@@ -89,6 +90,16 @@ public class TechnicalFactory {
         bendSound.setLastBeat(MathUtil.newBigDecimal(element.getAttribute("last-beat")));
 
         return bendSound;
+    }
+
+    public static BendWithBar newBendWithBar(Element element) {
+        if (element == null) return null;
+
+        BendWithBar bendWithBar = new BendWithBar();
+        bendWithBar.setValue(XmlUtil.getElementText(element));
+        bendWithBar.setDisplay(DisplayFactory.newDisplay(element));
+
+        return bendWithBar;
     }
 
     public static Heel newHeel(Element element) {

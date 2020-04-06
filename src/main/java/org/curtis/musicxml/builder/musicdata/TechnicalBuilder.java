@@ -2,11 +2,11 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
-import org.curtis.musicxml.note.PlacementText;
 import org.curtis.musicxml.note.notation.technical.Arrow;
 import org.curtis.musicxml.note.notation.technical.Bend;
 import org.curtis.musicxml.note.notation.technical.BendSound;
 import org.curtis.musicxml.note.notation.technical.BendType;
+import org.curtis.musicxml.note.notation.technical.BendWithBar;
 import org.curtis.musicxml.note.notation.technical.BrassBend;
 import org.curtis.musicxml.note.notation.technical.DoubleTongue;
 import org.curtis.musicxml.note.notation.technical.DownBow;
@@ -185,7 +185,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
                     break;
             }
         }
-        PlacementText withBar = bend.getWithBar();
+        BendWithBar withBar = bend.getWithBar();
         if (withBar != null) buildElementWithValueAndAttributes("with-bar", withBar.getValue(), DisplayBuilder.buildDisplay(withBar.getDisplay()));
         buildEndElement("bend");
     }

@@ -1,4 +1,4 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.display.Display;
@@ -11,15 +11,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "style_text")
-public class StyleText extends DatabaseItem {
+@Table(name = "figure_part")
+public class FigurePart extends DatabaseItem {
     @Column
     private String value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
 
-    public StyleText() {
+    public FigurePart() {
 
     }
 

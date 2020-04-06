@@ -1,5 +1,6 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.note.FigurePart;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.AccidentalText;
 import org.curtis.musicxml.note.AccidentalType;
@@ -95,9 +96,9 @@ public class NoteFactory {
         List<Element> figureElements = XmlUtil.getChildElements(element, "figure");
         for (Element figureElement : figureElements) {
             Figure figure = new Figure();
-            figure.setPrefix(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "prefix")));
-            figure.setFigureNumber(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "figure-number")));
-            figure.setSuffix(FormattingFactory.newStyleText(XmlUtil.getChildElement(figureElement, "suffix")));
+            figure.setPrefix(newFigurePart(XmlUtil.getChildElement(figureElement, "prefix")));
+            figure.setFigureNumber(newFigurePart(XmlUtil.getChildElement(figureElement, "figure-number")));
+            figure.setSuffix(newFigurePart(XmlUtil.getChildElement(figureElement, "suffix")));
             figure.setExtend(LyricFactory.newExtend(XmlUtil.getChildElement(figureElement, "extend")));
             figure.setEditorial(FormattingFactory.newEditorial(figureElement));
             figuredBass.getFigures().add(figure);
@@ -110,5 +111,16 @@ public class NoteFactory {
         figuredBass.setParentheses(TypeUtil.getYesNo(element.getAttribute("parentheses")));
 
         return figuredBass;
+    }
+
+    private static FigurePart newFigurePart(Element element) {
+        if (element == null) return null;
+
+        FigurePart figurePart = new FigurePart();
+        figurePart.setValue(XmlUtil.getElementText(element));
+        figurePart.setDisplay(DisplayFactory.newDisplay(element));
+
+        return figurePart;
+
     }
 }

@@ -3,6 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.note.Figure;
+import org.curtis.musicxml.note.FigurePart;
 import org.curtis.musicxml.note.FiguredBass;
 
 public class FiguredBassBuilder extends MusicDataBuilder {
@@ -23,9 +24,9 @@ public class FiguredBassBuilder extends MusicDataBuilder {
         buildCloseElement();
         for (Figure figure : figuredBass.getFigures()) {
             buildStartElement("figure");
-            buildStyleText("prefix", figure.getPrefix());
-            buildStyleText("figure-number", figure.getFigureNumber());
-            buildStyleText("suffix", figure.getSuffix());
+            buildFigurePart("prefix", figure.getPrefix());
+            buildFigurePart("figure-number", figure.getFigureNumber());
+            buildFigurePart("suffix", figure.getSuffix());
             buildExtend(figure.getExtend());
             buildEditorial(figure.getEditorial());
             buildEndElement("figure");
@@ -35,5 +36,11 @@ public class FiguredBassBuilder extends MusicDataBuilder {
         buildEndElement("figured-bass");
 
         return stringBuilder;
+    }
+
+    private void buildFigurePart(String elementName, FigurePart figurePart) {
+        if (figurePart == null) return;
+
+        buildElementWithValueAndAttributes(elementName, figurePart.getValue(), DisplayBuilder.buildDisplay(figurePart.getDisplay()));
     }
 }

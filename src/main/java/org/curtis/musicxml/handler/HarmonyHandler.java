@@ -79,7 +79,8 @@ public class HarmonyHandler extends MusicDataHandler {
                 case "function":
                     if(harmonyChord != null) harmony.getHarmonyChords().add(harmonyChord);
                     Function function = new Function();
-                    function.setFunction(FormattingFactory.newStyleText(harmonySubelement));
+                    function.setValue(XmlUtil.getElementText(harmonySubelement));
+                    function.setDisplay(DisplayFactory.newDisplay(harmonySubelement));
                     harmonyChord = function;
                     break;
                 case "kind":

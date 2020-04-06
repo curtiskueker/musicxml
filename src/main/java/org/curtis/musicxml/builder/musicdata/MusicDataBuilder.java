@@ -13,7 +13,6 @@ import org.curtis.musicxml.common.Level;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.NameDisplay;
-import org.curtis.musicxml.common.StyleText;
 import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.common.play.Ipa;
 import org.curtis.musicxml.common.play.Mute;
@@ -61,12 +60,6 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         attributes.put("type", BuilderUtil.enumValue(extend.getType()));
         attributes.putAll(DisplayBuilder.buildDisplay(extend.getDisplay()));
         buildElementWithAttributes("extend", attributes);
-    }
-
-    protected void buildStyleText(String elementName, StyleText styleText) {
-        if (styleText ==  null) return;
-
-        buildElementWithValueAndAttributes(elementName, styleText.getValue(), DisplayBuilder.buildDisplay(styleText.getDisplay()));
     }
 
     protected void buildEditorial(Editorial editorial) {
