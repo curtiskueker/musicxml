@@ -1,6 +1,6 @@
 package org.curtis.musicxml.identity.encoding;
 
-import org.curtis.musicxml.identity.TypedText;
+import org.curtis.musicxml.identity.IdentificationType;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -13,17 +13,17 @@ import javax.persistence.OneToOne;
 public class Encoder extends Encoding {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "encoder_id")
-    private TypedText encoder;
+    private IdentificationType identificationType;
 
     public Encoder() {
 
     }
 
-    public TypedText getEncoder() {
-        return encoder;
+    public IdentificationType getIdentificationType() {
+        return identificationType;
     }
 
-    public void setEncoder(TypedText encoder) {
-        this.encoder = encoder;
+    public void setIdentificationType(IdentificationType identificationType) {
+        this.identificationType = identificationType;
     }
 }

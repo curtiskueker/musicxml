@@ -15,28 +15,21 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "identification")
 public class Identification extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "creator_id")
-    private List<TypedText> creators = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "rights_id")
-    private List<TypedText> rightsList = new ArrayList<>();
+    @JoinColumn(name = "identification_id")
+    private List<IdentificationType> identificationTypes = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "identification_id", nullable = false)
     private List<Encoding> encodings = new ArrayList<>();
     @Column
     private String source;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "relation_id")
-    private List<TypedText> relations = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "miscellaneous_id")
     private Miscellaneous miscellaneous;
@@ -45,20 +38,24 @@ public class Identification extends DatabaseItem {
 
     }
 
-    public List<TypedText> getCreators() {
-        return creators;
+    public List<IdentificationType> getIdentificationTypes() {
+        return identificationTypes;
     }
 
-    public void setCreators(List<TypedText> creators) {
-        this.creators = creators;
+    public void setIdentificationTypes(List<IdentificationType> identificationTypes) {
+        this.identificationTypes = identificationTypes;
     }
 
-    public List<TypedText> getRightsList() {
-        return rightsList;
+    public List<IdentificationType> getCreators() {
+        return getIdentificationTypes().stream().filter(idType -> idType.getIdName().equals("creator")).collect(Collectors.toList());
     }
 
-    public void setRightsList(List<TypedText> rightsList) {
-        this.rightsList = rightsList;
+    public List<IdentificationType> getRightsList() {
+        return getIdentificationTypes().stream().filter(idType -> idType.getIdName().equals("rights")).collect(Collectors.toList());
+    }
+
+    public List<IdentificationType> getRelations() {
+        return getIdentificationTypes().stream().filter(idType -> idType.getIdName().equals("relation")).collect(Collectors.toList());
     }
 
     public List<Encoding> getEncodings() {
@@ -75,14 +72,6 @@ public class Identification extends DatabaseItem {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public List<TypedText> getRelations() {
-        return relations;
-    }
-
-    public void setRelations(List<TypedText> relations) {
-        this.relations = relations;
     }
 
     public Miscellaneous getMiscellaneous() {

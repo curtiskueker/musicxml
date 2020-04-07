@@ -6,7 +6,7 @@ import org.curtis.musicxml.display.Font;
 import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.identity.Identification;
-import org.curtis.musicxml.identity.TypedText;
+import org.curtis.musicxml.identity.IdentificationType;
 import org.curtis.musicxml.layout.MarginType;
 import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
@@ -55,24 +55,24 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
         // assign values
         Identification identification = scoreHeader.getIdentification();
         if (identification != null) {
-            for (TypedText creator : identification.getCreators()) {
-                switch (creator.getType()) {
+            for (IdentificationType creator : identification.getCreators()) {
+                switch (creator.getIdType()) {
                     case "lyricist":
-                        poet = creator.getValue();
+                        poet = creator.getIdValue();
                         break;
                     case "composer":
-                        composer = creator.getValue();
+                        composer = creator.getIdValue();
                         break;
                     case "arranger":
-                        arranger = creator.getValue();
+                        arranger = creator.getIdValue();
                         break;
                 }
             }
-            for (TypedText rights : identification.getRightsList()) {
+            for (IdentificationType rights : identification.getRightsList()) {
                 if (StringUtil.isNotEmpty(copyright)) copyright += "\n";
-                String rightsType = rights.getType();
+                String rightsType = rights.getIdType();
                 if (StringUtil.isNotEmpty(rightsType)) copyright += rightsType + ": ";
-                copyright += rights.getValue();
+                copyright += rights.getIdValue();
             }
         }
 

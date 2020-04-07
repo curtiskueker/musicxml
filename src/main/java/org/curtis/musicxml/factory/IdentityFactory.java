@@ -1,10 +1,10 @@
 package org.curtis.musicxml.factory;
 
+import org.curtis.musicxml.identity.IdentificationType;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.Miscellaneous;
 import org.curtis.musicxml.identity.MiscellaneousField;
-import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.identity.encoding.Encoder;
 import org.curtis.musicxml.identity.encoding.Encoding;
 import org.curtis.musicxml.identity.encoding.EncodingDate;
@@ -31,16 +31,9 @@ public class IdentityFactory {
             String identificationSubelementName = identificationSubelement.getTagName();
             switch (identificationSubelementName) {
                 case "creator":
-                    List<TypedText> creators = identification.getCreators();
-                    TypedText creator = newTypedText(identificationSubelement);
-                    creators.add(creator);
-                    creator.setCreator(identification);
-                    break;
                 case "rights":
-                    List<TypedText> rightsList = identification.getRightsList();
-                    TypedText rights = newTypedText(identificationSubelement);
-                    rightsList.add(rights);
-                    rights.setRights(identification);
+                case "relation":
+                    identification.getIdentificationTypes().add(newIdentificationType(identificationSubelementName, identificationSubelement));
                     break;
                 case "encoding":
                     List<Element> encodingSubelements = XmlUtil.getChildElements(identificationSubelement);
@@ -54,8 +47,7 @@ public class IdentityFactory {
                                 break;
                             case "encoder":
                                 Encoder encoder = new Encoder();
-                                encoder.setEncoder(newTypedText(encodingSubelement));
-                                encodings.add(encoder);
+                                encoder.setIdentificationType(newIdentificationType(encodingSubelement.getTagName(), encodingSubelement));
                                 break;
                             case "software":
                                 Software software = new Software();
@@ -81,12 +73,6 @@ public class IdentityFactory {
                 case "source":
                     identification.setSource(XmlUtil.getElementText(identificationSubelement));
                     break;
-                case "relation":
-                    List<TypedText> relations = identification.getRelations();
-                    TypedText relation = newTypedText(identificationSubelement);
-                    relations.add(relation);
-                    relation.setRelation(identification);
-                    break;
                 case "miscellaneous":
                     Miscellaneous miscellaneous = new Miscellaneous();
                     List<MiscellaneousField> miscellaneousFields = miscellaneous.getMiscellaneousFields();
@@ -105,11 +91,12 @@ public class IdentityFactory {
         return identification;
     }
 
-    private static TypedText newTypedText(Element element) {
-        TypedText typedText = new TypedText();
-        typedText.setType(element.getAttribute("type"));
-        typedText.setValue(XmlUtil.getElementText(element));
+    private static IdentificationType newIdentificationType(String identificationName, Element element) {
+        IdentificationType identificationType = new IdentificationType();
+        identificationType.setIdName(identificationName);
+        identificationType.setIdType(element.getAttribute("type"));
+        identificationType.setIdValue(XmlUtil.getElementText(element));
 
-        return typedText;
+        return identificationType;
     }
 }

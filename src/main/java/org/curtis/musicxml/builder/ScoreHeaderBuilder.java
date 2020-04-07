@@ -3,9 +3,9 @@ package org.curtis.musicxml.builder;
 import org.curtis.musicxml.builder.musicdata.LayoutBuilder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.identity.Identification;
+import org.curtis.musicxml.identity.IdentificationType;
 import org.curtis.musicxml.identity.Miscellaneous;
 import org.curtis.musicxml.identity.MiscellaneousField;
-import org.curtis.musicxml.identity.TypedText;
 import org.curtis.musicxml.identity.encoding.Encoder;
 import org.curtis.musicxml.identity.encoding.Encoding;
 import org.curtis.musicxml.identity.encoding.EncodingDate;
@@ -91,8 +91,8 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         if (identification == null) return;
 
         buildStartElement("identification");
-        for (TypedText creator : identification.getCreators()) buildTypedText(creator, "creator");
-        for (TypedText rights : identification.getRightsList()) buildTypedText(rights, "rights");
+        for (IdentificationType creator : identification.getCreators()) buildIdentificationType(creator);
+        for (IdentificationType rights : identification.getRightsList()) buildIdentificationType(rights);
         List<Encoding> encodings = identification.getEncodings();
         if (!encodings.isEmpty()) {
             buildStartElement("encoding");
@@ -103,7 +103,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
                 }
                 else if (encoding instanceof Encoder) {
                     Encoder encoder = (Encoder)encoding;
-                    buildTypedText(encoder.getEncoder(), "encoder");
+                    buildIdentificationType(encoder.getIdentificationType());
                 }
                 if (encoding instanceof Software) {
                     Software software = (Software)encoding;
@@ -125,7 +125,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             }
             buildEndElement("encoding");
             buildElementWithValue("source", identification.getSource());
-            for (TypedText relation : identification.getRelations()) buildTypedText(relation, "relation");
+            for (IdentificationType relation : identification.getRelations()) buildIdentificationType(relation);
             Miscellaneous miscellaneous = identification.getMiscellaneous();
             if (miscellaneous != null) {
                 buildStartElement("miscellaneous");
@@ -321,9 +321,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         buildElementWithValueAndAttributes(elementName, partName.getPartName(), attributes);
     }
 
-    private void buildTypedText(TypedText typedText, String elementName) {
-        if (typedText == null) return;
-
-        buildElementWithValueAndAttribute(elementName, typedText.getValue(), "type", typedText.getType());
+    private void buildIdentificationType(IdentificationType identificationType) {
+        buildElementWithValueAndAttribute(identificationType.getIdName(), identificationType.getIdValue(), "type", identificationType.getIdType());
     }
 }
