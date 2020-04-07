@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +29,10 @@ public class Identification extends DatabaseItem {
     private List<Encoding> encodings = new ArrayList<>();
     @Column
     private String source;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "miscellaneous_id")
-    private Miscellaneous miscellaneous;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "identification_id", nullable = false)
+    private List<Miscellaneous> miscellaneousList = new ArrayList<>();
 
     public Identification() {
 
@@ -74,11 +74,11 @@ public class Identification extends DatabaseItem {
         this.source = source;
     }
 
-    public Miscellaneous getMiscellaneous() {
-        return miscellaneous;
+    public List<Miscellaneous> getMiscellaneousList() {
+        return miscellaneousList;
     }
 
-    public void setMiscellaneous(Miscellaneous miscellaneous) {
-        this.miscellaneous = miscellaneous;
+    public void setMiscellaneousList(List<Miscellaneous> miscellaneousList) {
+        this.miscellaneousList = miscellaneousList;
     }
 }

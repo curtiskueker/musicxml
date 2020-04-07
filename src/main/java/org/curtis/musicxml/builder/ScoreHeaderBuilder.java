@@ -5,7 +5,6 @@ import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.IdentificationType;
 import org.curtis.musicxml.identity.Miscellaneous;
-import org.curtis.musicxml.identity.MiscellaneousField;
 import org.curtis.musicxml.identity.encoding.Encoder;
 import org.curtis.musicxml.identity.encoding.Encoding;
 import org.curtis.musicxml.identity.encoding.EncodingDate;
@@ -126,10 +125,10 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             buildEndElement("encoding");
             buildElementWithValue("source", identification.getSource());
             for (IdentificationType relation : identification.getRelations()) buildIdentificationType(relation);
-            Miscellaneous miscellaneous = identification.getMiscellaneous();
-            if (miscellaneous != null) {
+            List<Miscellaneous> miscellaneousList = identification.getMiscellaneousList();
+            if (!miscellaneousList.isEmpty()) {
                 buildStartElement("miscellaneous");
-                for (MiscellaneousField miscellaneousField : miscellaneous.getMiscellaneousFields()) buildElementWithValueAndAttribute("miscellaneous-field", miscellaneousField.getValue(), "name", BuilderUtil.requiredValue(miscellaneousField.getName()));
+                for (Miscellaneous miscellaneous : miscellaneousList) buildElementWithValueAndAttribute("miscellaneous-field", miscellaneous.getValue(), "name", BuilderUtil.requiredValue(miscellaneous.getName()));
                 buildEndElement("miscellaneous");
             }
         }

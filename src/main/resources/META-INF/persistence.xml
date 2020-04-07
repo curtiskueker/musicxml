@@ -129,7 +129,6 @@
         <class>org.curtis.musicxml.display.Position</class>
         <class>org.curtis.musicxml.identity.Identification</class>
         <class>org.curtis.musicxml.identity.Miscellaneous</class>
-        <class>org.curtis.musicxml.identity.MiscellaneousField</class>
         <class>org.curtis.musicxml.identity.encoding.Encoder</class>
         <class>org.curtis.musicxml.identity.encoding.Encoding</class>
         <class>org.curtis.musicxml.identity.encoding.EncodingDate</class>

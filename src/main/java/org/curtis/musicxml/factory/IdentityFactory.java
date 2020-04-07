@@ -4,7 +4,6 @@ import org.curtis.musicxml.identity.IdentificationType;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.Miscellaneous;
-import org.curtis.musicxml.identity.MiscellaneousField;
 import org.curtis.musicxml.identity.encoding.Encoder;
 import org.curtis.musicxml.identity.encoding.Encoding;
 import org.curtis.musicxml.identity.encoding.EncodingDate;
@@ -74,16 +73,13 @@ public class IdentityFactory {
                     identification.setSource(XmlUtil.getElementText(identificationSubelement));
                     break;
                 case "miscellaneous":
-                    Miscellaneous miscellaneous = new Miscellaneous();
-                    List<MiscellaneousField> miscellaneousFields = miscellaneous.getMiscellaneousFields();
                     List<Element> miscellaneousFieldElements = XmlUtil.getChildElements(identificationSubelement, "miscellaneous-field");
                     for(Element miscellaneousFieldElement: miscellaneousFieldElements) {
-                        MiscellaneousField miscellaneousField = new MiscellaneousField();
-                        miscellaneousField.setValue(XmlUtil.getElementText(miscellaneousFieldElement));
-                        miscellaneousField.setName(miscellaneousFieldElement.getAttribute("name"));
-                        miscellaneousFields.add(miscellaneousField);
+                        Miscellaneous miscellaneous = new Miscellaneous();
+                        miscellaneous.setValue(XmlUtil.getElementText(miscellaneousFieldElement));
+                        miscellaneous.setName(miscellaneousFieldElement.getAttribute("name"));
+                        identification.getMiscellaneousList().add(miscellaneous);
                     }
-                    identification.setMiscellaneous(miscellaneous);
                     break;
             }
         }
