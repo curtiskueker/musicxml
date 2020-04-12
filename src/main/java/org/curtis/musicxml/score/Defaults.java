@@ -4,12 +4,12 @@ import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.display.Font;
 import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Layout;
-import org.curtis.musicxml.layout.Scaling;
 import org.curtis.util.MathUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -23,9 +23,10 @@ import java.util.List;
 @Entity
 @Table(name = "defaults")
 public class Defaults extends DatabaseItem {
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "defaults_id")
-    private Scaling scaling;
+    @Column(name = "scaling_millimeters", precision = 12, scale = 4)
+    private BigDecimal scalingMillimeters;
+    @Column(name = "scaling_tenths", precision = 12, scale = 4)
+    private BigDecimal scalingTenths;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "layout_id")
     private Layout layout;
@@ -51,12 +52,24 @@ public class Defaults extends DatabaseItem {
 
     }
 
-    public Scaling getScaling() {
-        return scaling;
+    public BigDecimal getScalingMillimeters() {
+        return scalingMillimeters;
     }
 
-    public void setScaling(Scaling scaling) {
-        this.scaling = scaling;
+    public void setScalingMillimeters(BigDecimal scalingMillimeters) {
+        this.scalingMillimeters = scalingMillimeters;
+    }
+
+    public BigDecimal getScalingTenths() {
+        return scalingTenths;
+    }
+
+    public void setScalingTenths(BigDecimal scalingTenths) {
+        this.scalingTenths = scalingTenths;
+    }
+
+    public boolean hasScaling() {
+        return getScalingMillimeters() != null && getScalingTenths() != null;
     }
 
     public Layout getLayout() {
@@ -108,9 +121,9 @@ public class Defaults extends DatabaseItem {
     }
 
     private BigDecimal getScalingValue() {
-        if(scaling == null) return MathUtil.ZERO;
+        if(!hasScaling()) return MathUtil.ZERO;
 
-        return MathUtil.divide(getScaling().getMillimeters(), getScaling().getTenths());
+        return MathUtil.divide(getScalingMillimeters(), getScalingTenths());
     }
 
     public BigDecimal getMillimeters(BigDecimal scaledValue) {

@@ -17,7 +17,6 @@ import org.curtis.musicxml.layout.Glyph;
 import org.curtis.musicxml.layout.LineWidth;
 import org.curtis.musicxml.layout.NoteSize;
 import org.curtis.musicxml.layout.OtherAppearance;
-import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.link.LinkAttributes;
@@ -141,11 +140,10 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
 
         if (defaults == null) return;
         buildStartElement("defaults");
-        Scaling scaling = defaults.getScaling();
-        if (scaling != null) {
+        if (defaults.hasScaling()) {
             buildStartElement("scaling");
-            buildElementWithValue("millimeters", scaling.getMillimeters());
-            buildElementWithValue("tenths", scaling.getTenths());
+            buildElementWithValue("millimeters", defaults.getScalingMillimeters());
+            buildElementWithValue("tenths", defaults.getScalingTenths());
             buildEndElement("scaling");
         }
         append(LayoutBuilder.buildLayout(defaults.getLayout()));

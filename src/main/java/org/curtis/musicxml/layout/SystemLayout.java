@@ -22,8 +22,11 @@ public class SystemLayout extends DatabaseItem {
     @Column(name = "top_system_distance", precision = 12, scale = 4)
     private BigDecimal topSystemDistance;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "system_dividers_id")
-    private SystemDividers systemDividers;
+    @JoinColumn(name = "left_system_divider_id")
+    private SystemDivider leftSystemDivider;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "right_system_divider_id")
+    private SystemDivider rightSystemDivider;
 
     public SystemLayout() {
 
@@ -61,11 +64,23 @@ public class SystemLayout extends DatabaseItem {
         this.topSystemDistance = topSystemDistance;
     }
 
-    public SystemDividers getSystemDividers() {
-        return systemDividers;
+    public SystemDivider getLeftSystemDivider() {
+        return leftSystemDivider;
     }
 
-    public void setSystemDividers(SystemDividers systemDividers) {
-        this.systemDividers = systemDividers;
+    public void setLeftSystemDivider(SystemDivider leftSystemDivider) {
+        this.leftSystemDivider = leftSystemDivider;
+    }
+
+    public SystemDivider getRightSystemDivider() {
+        return rightSystemDivider;
+    }
+
+    public void setRightSystemDivider(SystemDivider rightSystemDivider) {
+        this.rightSystemDivider = rightSystemDivider;
+    }
+
+    public boolean hasSystemDividers() {
+        return leftSystemDivider != null && rightSystemDivider != null;
     }
 }

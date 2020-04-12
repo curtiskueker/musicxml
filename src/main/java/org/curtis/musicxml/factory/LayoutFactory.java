@@ -2,11 +2,9 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.layout.MarginType;
-import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.layout.StaffLayout;
-import org.curtis.musicxml.layout.SystemDividers;
 import org.curtis.musicxml.layout.SystemLayout;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -37,13 +35,10 @@ public class LayoutFactory {
                     Map<MarginType, PageMargins> pageMarginsMap = pageLayout.getPageMargins();
                     for(Element pageMarginsElement : pageMarginsElements) {
                         PageMargins pageMargins = new PageMargins();
-
-                        Margins margins = new Margins();
-                        margins.setLeftMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "left-margin")));
-                        margins.setRightMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "right-margin")));
-                        margins.setTopMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "top-margin")));
-                        margins.setBottomMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "bottom-margin")));
-                        pageMargins.setMargins(margins);
+                        pageMargins.setLeftMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "left-margin")));
+                        pageMargins.setRightMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "right-margin")));
+                        pageMargins.setTopMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "top-margin")));
+                        pageMargins.setBottomMargin(MathUtil.newBigDecimal(XmlUtil.getChildElementText(pageMarginsElement, "bottom-margin")));
 
                         String marginType = pageMarginsElement.getAttribute("type");
                         if (StringUtil.isEmpty(marginType)) marginType = "both";
@@ -67,13 +62,8 @@ public class LayoutFactory {
                     systemLayout.setTopSystemDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(layoutSubelement, "top-system-distance")));
 
                     Element systemDividersElement = XmlUtil.getChildElement(layoutSubelement, "system-dividers");
-                    if(systemDividersElement != null) {
-                        SystemDividers systemDividers = new SystemDividers();
-                        systemDividers.setLeftDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(layoutSubelement, "left-divider")));
-                        systemDividers.setRightDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(layoutSubelement, "right-divider")));
-                        systemLayout.setSystemDividers(systemDividers);
-                    }
-                    layout.setSystemLayout(systemLayout);
+                    systemLayout.setLeftSystemDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(systemDividersElement, "left-divider")));
+                    systemLayout.setRightSystemDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(systemDividersElement, "right-divider")));
                     break;
                 case "staff-layout":
                     List<StaffLayout> staffLayouts = layout.getStaffLayouts();

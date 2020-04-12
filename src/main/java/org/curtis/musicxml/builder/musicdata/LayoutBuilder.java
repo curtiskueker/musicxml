@@ -3,11 +3,9 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.OutputBuilder;
 import org.curtis.musicxml.layout.Layout;
-import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.layout.StaffLayout;
-import org.curtis.musicxml.layout.SystemDividers;
 import org.curtis.musicxml.layout.SystemLayout;
 
 import java.math.BigDecimal;
@@ -31,11 +29,10 @@ public class LayoutBuilder extends OutputBuilder {
                 layoutBuilder.buildOpenElement("page-margins");
                 layoutBuilder.buildAttribute("type", pageMargins.getType());
                 layoutBuilder.buildCloseElement();
-                Margins margins = pageMargins.getMargins();
-                layoutBuilder.buildElementWithValue("left-margin", margins.getLeftMargin());
-                layoutBuilder.buildElementWithValue("right-margin", margins.getRightMargin());
-                layoutBuilder.buildElementWithValue("top-margin", margins.getTopMargin());
-                layoutBuilder.buildElementWithValue("bottom-margin", margins.getBottomMargin());
+                layoutBuilder.buildElementWithValue("left-margin", pageMargins.getLeftMargin());
+                layoutBuilder.buildElementWithValue("right-margin", pageMargins.getRightMargin());
+                layoutBuilder.buildElementWithValue("top-margin", pageMargins.getTopMargin());
+                layoutBuilder.buildElementWithValue("bottom-margin", pageMargins.getBottomMargin());
                 layoutBuilder.buildEndElement("page-margins");
             }
             layoutBuilder.buildEndElement("page-layout");
@@ -53,11 +50,10 @@ public class LayoutBuilder extends OutputBuilder {
             }
             layoutBuilder.buildElementWithValue("system-distance", systemLayout.getSystemDistance());
             layoutBuilder.buildElementWithValue("top-system-distance", systemLayout.getTopSystemDistance());
-            SystemDividers systemDividers = systemLayout.getSystemDividers();
-            if (systemDividers != null) {
+            if (systemLayout.hasSystemDividers()) {
                 layoutBuilder.buildStartElement("system-dividers");
-                layoutBuilder.buildElementWithAttributes("left-divider", FormattingBuilder.buildSystemDivider(systemDividers.getLeftDivider()));
-                layoutBuilder.buildElementWithAttributes("right-divider", FormattingBuilder.buildSystemDivider(systemDividers.getRightDivider()));
+                layoutBuilder.buildElementWithAttributes("left-divider", FormattingBuilder.buildSystemDivider(systemLayout.getLeftSystemDivider()));
+                layoutBuilder.buildElementWithAttributes("right-divider", FormattingBuilder.buildSystemDivider(systemLayout.getRightSystemDivider()));
                 layoutBuilder.buildEndElement("system-dividers");
             }
             layoutBuilder.buildEndElement("system-layout");

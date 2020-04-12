@@ -16,7 +16,6 @@ import org.curtis.musicxml.layout.LineWidth;
 import org.curtis.musicxml.layout.NoteSize;
 import org.curtis.musicxml.layout.NoteSizeType;
 import org.curtis.musicxml.layout.OtherAppearance;
-import org.curtis.musicxml.layout.Scaling;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.score.Credit;
@@ -78,10 +77,8 @@ public class ScoreHeaderHandler extends BaseHandler {
                         String defaultsSubelementName = defaultsSubelement.getTagName();
                         switch (defaultsSubelementName) {
                             case "scaling":
-                                Scaling scaling = new Scaling();
-                                scaling.setMillimeters(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "millimeters")));
-                                scaling.setTenths(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "tenths")));
-                                defaults.setScaling(scaling);
+                                defaults.setScalingMillimeters(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "millimeters")));
+                                defaults.setScalingTenths(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "tenths")));
                                 break;
                             case "appearance":
                                 Appearance appearance = new Appearance();

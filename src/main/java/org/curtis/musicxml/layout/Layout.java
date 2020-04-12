@@ -21,7 +21,7 @@ public class Layout extends DatabaseItem {
     @JoinColumn(name = "page_layout_id")
     private PageLayout pageLayout;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "systemm_layout_id")
+    @JoinColumn(name = "system_layout_id")
     private SystemLayout systemLayout;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

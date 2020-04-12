@@ -8,7 +8,6 @@ import org.curtis.musicxml.display.TextFormat;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.identity.IdentificationType;
 import org.curtis.musicxml.layout.MarginType;
-import org.curtis.musicxml.layout.Margins;
 import org.curtis.musicxml.layout.PageLayout;
 import org.curtis.musicxml.layout.PageMargins;
 import org.curtis.musicxml.score.CreditDisplay;
@@ -77,10 +76,10 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
         }
 
         Defaults defaults = scoreHeader.getDefaults();
-        if(defaults != null && defaults.getScaling() != null) {
+        if(defaults != null && defaults.hasScaling()) {
             appendStartSection("\\paper {");
 
-            PageLayout pageLayout = scoreHeader.getDefaults().getLayout().getPageLayout();
+            PageLayout pageLayout = defaults.getLayout().getPageLayout();
             BigDecimal pageHeight = pageLayout.getPageHeight();
             BigDecimal pageWidth = pageLayout.getPageWidth();
             if(MathUtil.isPositive(pageHeight)) {
@@ -96,25 +95,23 @@ public class ScoreHeaderBuilder extends LilypondBuilder {
             PageMargins alternatePageMargins = pageMarginsMap.get(MarginType.ODD);
             PageMargins fixedPageMargins = pageMarginsMap.get(MarginType.BOTH);
             if(alternatePageMargins != null) {
-                Margins alternateMargins = alternatePageMargins.getMargins();
                 append("top-margin = ");
-                appendLine(defaults.getMillimeters(alternateMargins.getTopMargin()));
+                appendLine(defaults.getMillimeters(alternatePageMargins.getTopMargin()));
                 append("bottom-margin = ");
-                appendLine(defaults.getMillimeters(alternateMargins.getBottomMargin()));
+                appendLine(defaults.getMillimeters(alternatePageMargins.getBottomMargin()));
                 append("inner-margin = ");
-                appendLine(defaults.getMillimeters(alternateMargins.getLeftMargin()));
+                appendLine(defaults.getMillimeters(alternatePageMargins.getLeftMargin()));
                 append("outer-margin = ");
-                appendLine(defaults.getMillimeters(alternateMargins.getRightMargin()));
+                appendLine(defaults.getMillimeters(alternatePageMargins.getRightMargin()));
             } else if(fixedPageMargins != null) {
-                Margins fixedMargins = fixedPageMargins.getMargins();
                 append("top-margin = ");
-                appendLine(defaults.getMillimeters(fixedMargins.getTopMargin()));
+                appendLine(defaults.getMillimeters(fixedPageMargins.getTopMargin()));
                 append("bottom-margin = ");
-                appendLine(defaults.getMillimeters(fixedMargins.getBottomMargin()));
+                appendLine(defaults.getMillimeters(fixedPageMargins.getBottomMargin()));
                 append("left-margin = ");
-                appendLine(defaults.getMillimeters(fixedMargins.getLeftMargin()));
+                appendLine(defaults.getMillimeters(fixedPageMargins.getLeftMargin()));
                 append("right-margin = ");
-                appendLine(defaults.getMillimeters(fixedMargins.getRightMargin()));
+                appendLine(defaults.getMillimeters(fixedPageMargins.getRightMargin()));
             }
 
             appendEndSection("}");
