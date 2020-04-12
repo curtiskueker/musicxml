@@ -43,7 +43,7 @@ public class ScorePartFactory {
 
         NameDisplay nameDisplay = new NameDisplay();
         for(Element subelement : XmlUtil.getChildElements(element)) {
-            TextDisplay text = FormattingFactory.newText(subelement);
+            TextDisplay text = FormattingFactory.newTextDisplay(subelement);
             if (text != null) nameDisplay.getTextList().add(text);
         }
         nameDisplay.setPrintObject(FormattingFactory.getPrintObject(element));

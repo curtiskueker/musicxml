@@ -11,6 +11,6 @@ import javax.persistence.Table;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "text_display")
-@DiscriminatorColumn(name = "text_type")
+@DiscriminatorColumn(name = "text_display_type")
 public abstract class TextDisplay extends FormattedDisplay {
 }

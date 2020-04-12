@@ -152,7 +152,7 @@ public class NoteHandler extends MusicDataHandler {
                     List<Element> noteheadTextSubelements = XmlUtil.getChildElements(noteSubelement);
                     NoteheadText noteheadText = new NoteheadText();
                     for(Element noteheadTextSubelement : noteheadTextSubelements) {
-                        TextDisplay text = FormattingFactory.newText(noteheadTextSubelement);
+                        TextDisplay text = FormattingFactory.newTextDisplay(noteheadTextSubelement);
                         if (text != null) noteheadText.getTextList().add(text);
                     }
                     note.setNoteheadText(noteheadText);

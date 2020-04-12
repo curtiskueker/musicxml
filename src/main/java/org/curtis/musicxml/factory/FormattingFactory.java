@@ -24,7 +24,7 @@ public class FormattingFactory {
 
     }
 
-    public static TextDisplay newText(Element element) {
+    public static TextDisplay newTextDisplay(Element element) {
         if (element == null) return null;
 
         TextDisplay text = null;
