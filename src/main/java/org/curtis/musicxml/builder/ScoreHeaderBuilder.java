@@ -11,7 +11,6 @@ import org.curtis.musicxml.identity.encoding.EncodingDate;
 import org.curtis.musicxml.identity.encoding.EncodingDescription;
 import org.curtis.musicxml.identity.encoding.Software;
 import org.curtis.musicxml.identity.encoding.Supports;
-import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Distance;
 import org.curtis.musicxml.layout.Glyph;
 import org.curtis.musicxml.layout.LineWidth;
@@ -147,22 +146,21 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
             buildEndElement("scaling");
         }
         append(LayoutBuilder.buildLayout(defaults.getLayout()));
-        Appearance appearance = defaults.getAppearance();
-        if (appearance != null) {
+        if (defaults.hasAppearance()) {
             buildStartElement("appearance");
-            for (LineWidth lineWidth : appearance.getLineWidths()) {
+            for (LineWidth lineWidth : defaults.getLineWidths()) {
                 buildElementWithValueAndAttribute("line-width", lineWidth.getValue(), "type", BuilderUtil.requiredValue(lineWidth.getLineWidthType()));
             }
-            for (NoteSize noteSize : appearance.getNoteSizes()) {
+            for (NoteSize noteSize : defaults.getNoteSizes()) {
                 buildElementWithValueAndAttribute("note-size", noteSize.getValue(), "type", BuilderUtil.enumValue(noteSize.getType()));
             }
-            for (Distance distance : appearance.getDistances()) {
+            for (Distance distance : defaults.getDistances()) {
                 buildElementWithValueAndAttribute("distance", distance.getValue(), "type", BuilderUtil.requiredValue(distance.getType()));
             }
-            for (Glyph glyph : appearance.getGlyphs()) {
+            for (Glyph glyph : defaults.getGlyphs()) {
                 buildElementWithValueAndAttribute("glyph", glyph.getValue(), "type", BuilderUtil.requiredValue(glyph.getType()));
             }
-            for (OtherAppearance otherAppearance : appearance.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", BuilderUtil.requiredValue(otherAppearance.getType()));
+            for (OtherAppearance otherAppearance : defaults.getOtherAppearances()) buildElementWithValueAndAttribute("other-appearance", otherAppearance.getValue(), "type", BuilderUtil.requiredValue(otherAppearance.getType()));
             buildEndElement("appearance");
         }
         buildElementWithAttributes("music-font", DisplayBuilder.buildFont(defaults.getMusicFont()));

@@ -135,7 +135,6 @@
         <class>org.curtis.musicxml.identity.encoding.EncodingDescription</class>
         <class>org.curtis.musicxml.identity.encoding.Software</class>
         <class>org.curtis.musicxml.identity.encoding.Supports</class>
-        <class>org.curtis.musicxml.layout.Appearance</class>
         <class>org.curtis.musicxml.layout.Distance</class>
         <class>org.curtis.musicxml.layout.Layout</class>
         <class>org.curtis.musicxml.layout.LineWidth</class>

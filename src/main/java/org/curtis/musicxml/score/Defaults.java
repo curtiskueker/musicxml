@@ -2,8 +2,12 @@ package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.display.Font;
-import org.curtis.musicxml.layout.Appearance;
+import org.curtis.musicxml.layout.Distance;
+import org.curtis.musicxml.layout.Glyph;
 import org.curtis.musicxml.layout.Layout;
+import org.curtis.musicxml.layout.LineWidth;
+import org.curtis.musicxml.layout.NoteSize;
+import org.curtis.musicxml.layout.OtherAppearance;
 import org.curtis.util.MathUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -30,9 +34,26 @@ public class Defaults extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "layout_id")
     private Layout layout;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "appearance_id")
-    private Appearance appearance;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "defaults_id", nullable = false)
+    private List<LineWidth> lineWidths = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "defaults_id", nullable = false)
+    private List<NoteSize> noteSizes = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "defaults_id", nullable = false)
+    private List<Distance> distances = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "defaults_id", nullable = false)
+    private List<Glyph> glyphs = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "defaults_id", nullable = false)
+    private List<OtherAppearance> otherAppearances = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "music_font_id")
     private Font musicFont;
@@ -80,12 +101,48 @@ public class Defaults extends DatabaseItem {
         this.layout = layout;
     }
 
-    public Appearance getAppearance() {
-        return appearance;
+    public boolean hasAppearance() {
+        return !getLineWidths().isEmpty() || !getNoteSizes().isEmpty() || !getDistances().isEmpty() || !getGlyphs().isEmpty() || !getOtherAppearances().isEmpty();
     }
 
-    public void setAppearance(Appearance appearance) {
-        this.appearance = appearance;
+    public List<LineWidth> getLineWidths() {
+        return lineWidths;
+    }
+
+    public void setLineWidths(List<LineWidth> lineWidths) {
+        this.lineWidths = lineWidths;
+    }
+
+    public List<NoteSize> getNoteSizes() {
+        return noteSizes;
+    }
+
+    public void setNoteSizes(List<NoteSize> noteSizes) {
+        this.noteSizes = noteSizes;
+    }
+
+    public List<Distance> getDistances() {
+        return distances;
+    }
+
+    public void setDistances(List<Distance> distances) {
+        this.distances = distances;
+    }
+
+    public List<Glyph> getGlyphs() {
+        return glyphs;
+    }
+
+    public void setGlyphs(List<Glyph> glyphs) {
+        this.glyphs = glyphs;
+    }
+
+    public List<OtherAppearance> getOtherAppearances() {
+        return otherAppearances;
+    }
+
+    public void setOtherAppearances(List<OtherAppearance> otherAppearances) {
+        this.otherAppearances = otherAppearances;
     }
 
     public Font getMusicFont() {

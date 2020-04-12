@@ -8,7 +8,6 @@ import org.curtis.musicxml.factory.IdentityFactory;
 import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.factory.LinkFactory;
 import org.curtis.musicxml.identity.Identification;
-import org.curtis.musicxml.layout.Appearance;
 import org.curtis.musicxml.layout.Distance;
 import org.curtis.musicxml.layout.Glyph;
 import org.curtis.musicxml.layout.Layout;
@@ -81,21 +80,19 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 defaults.setScalingTenths(MathUtil.newBigDecimal(XmlUtil.getChildElementText(defaultsSubelement, "tenths")));
                                 break;
                             case "appearance":
-                                Appearance appearance = new Appearance();
-                                defaults.setAppearance(appearance);
                                 List<Element> appearanceSubelements = XmlUtil.getChildElements(defaultsSubelement);
                                 for(Element appearanceSubelement : appearanceSubelements) {
                                     String appearanceSubelementName = appearanceSubelement.getTagName();
                                     switch (appearanceSubelementName) {
                                         case "line-width":
-                                            List<LineWidth> lineWidths = appearance.getLineWidths();
+                                            List<LineWidth> lineWidths = defaults.getLineWidths();
                                             LineWidth lineWidth = new LineWidth();
                                             lineWidth.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
                                             lineWidth.setLineWidthType(appearanceSubelement.getAttribute("type"));
                                             lineWidths.add(lineWidth);
                                             break;
                                         case "note-size":
-                                            List<NoteSize> noteSizes = appearance.getNoteSizes();
+                                            List<NoteSize> noteSizes = defaults.getNoteSizes();
                                             NoteSize noteSize = new NoteSize();
                                             noteSize.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
                                             String noteSizeType = appearanceSubelement.getAttribute("type");
@@ -103,21 +100,21 @@ public class ScoreHeaderHandler extends BaseHandler {
                                             noteSizes.add(noteSize);
                                             break;
                                         case "distance":
-                                            List<Distance> distances = appearance.getDistances();
+                                            List<Distance> distances = defaults.getDistances();
                                             Distance distance = new Distance();
                                             distance.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
                                             distance.setType(appearanceSubelement.getAttribute("type"));
                                             distances.add(distance);
                                             break;
                                         case "glyph":
-                                            List<Glyph> glyphs = appearance.getGlyphs();
+                                            List<Glyph> glyphs = defaults.getGlyphs();
                                             Glyph glyph = new Glyph();
                                             glyph.setValue(XmlUtil.getElementText(appearanceSubelement));
                                             glyph.setType(appearanceSubelement.getAttribute("type"));
                                             glyphs.add(glyph);
                                             break;
                                         case "other-appearance":
-                                            List<OtherAppearance> otherAppearances = appearance.getOtherAppearances();
+                                            List<OtherAppearance> otherAppearances = defaults.getOtherAppearances();
                                             OtherAppearance otherAppearance = new OtherAppearance();
                                             otherAppearance.setValue(XmlUtil.getElementText(appearanceSubelement));
                                             otherAppearance.setType(appearanceSubelement.getAttribute("type"));
