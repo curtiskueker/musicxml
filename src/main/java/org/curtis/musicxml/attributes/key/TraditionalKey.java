@@ -1,18 +1,19 @@
 package org.curtis.musicxml.attributes.key;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("traditional key")
 public class TraditionalKey extends Key {
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cancel_id")
-    private Cancel cancel;
+    @Column(name = "cancel_fifths")
+    private Integer cancelFifths;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "cancel_location")
+    private CancelLocation cancelLocation;
     @Column
     private Integer fifths;
     @Column(name = "key_mode")
@@ -22,12 +23,24 @@ public class TraditionalKey extends Key {
 
     }
 
-    public Cancel getCancel() {
-        return cancel;
+    public Integer getCancelFifths() {
+        return cancelFifths;
     }
 
-    public void setCancel(Cancel cancel) {
-        this.cancel = cancel;
+    public void setCancelFifths(Integer cancelFifths) {
+        this.cancelFifths = cancelFifths;
+    }
+
+    public CancelLocation getCancelLocation() {
+        return cancelLocation;
+    }
+
+    public void setCancelLocation(CancelLocation cancelLocation) {
+        this.cancelLocation = cancelLocation;
+    }
+
+    public boolean hasCancel() {
+        return cancelFifths != null;
     }
 
     public Integer getFifths() {

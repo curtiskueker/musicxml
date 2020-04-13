@@ -17,7 +17,7 @@ import java.util.List;
 public class NonTraditionalKey extends Key {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "non_traditional_key_id", nullable = false)
+    @JoinColumn(name = "key_id", nullable = false)
     private List<NonTraditionalKeyType> nonTraditionalKeyList = new ArrayList<>();
 
     public NonTraditionalKey() {

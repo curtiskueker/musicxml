@@ -1,7 +1,6 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.attributes.Tuning;
-import org.curtis.musicxml.attributes.key.Cancel;
 import org.curtis.musicxml.attributes.key.CancelLocation;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.key.NonTraditionalKey;
@@ -23,6 +22,7 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AttributesFactory {
@@ -44,10 +44,8 @@ public class AttributesFactory {
         TraditionalKey traditionalKey = new TraditionalKey();
         Element cancelElement = XmlUtil.getChildElement(element, "cancel");
         if(cancelElement != null) {
-            Cancel cancel = new Cancel();
-            cancel.setFifths(StringUtil.getInteger(XmlUtil.getElementText(cancelElement)));
-            cancel.setLocation(FactoryUtil.enumValue(CancelLocation.class, cancelElement.getAttribute("location")));
-            traditionalKey.setCancel(cancel);
+            traditionalKey.setCancelFifths(StringUtil.getInteger(XmlUtil.getElementText(cancelElement)));
+            traditionalKey.setCancelLocation(FactoryUtil.enumValue(CancelLocation.class, cancelElement.getAttribute("location")));
         }
         traditionalKey.setFifths(StringUtil.getInteger(XmlUtil.getChildElementText(element, "fifths")));
         traditionalKey.setMode(XmlUtil.getChildElementText(element, "mode"));
@@ -97,31 +95,40 @@ public class AttributesFactory {
 
     private static TimeSignature newTimeSignature(Element element) {
         TimeSignature timeSignature = new TimeSignature();
-        List<TimeSignatureType> timeSignatureList = timeSignature.getTimeSignatureList();
-        List<Element> timeSubelements = XmlUtil.getChildElements(element);
-        TimeSignatureType timeSignatureType = new TimeSignatureType();
-        for(Element timeSubelement : timeSubelements) {
-            String timeSubelementName = timeSubelement.getTagName();
-            switch (timeSubelementName) {
-                case "beats":
-                    timeSignatureType = new TimeSignatureType();
-                    timeSignatureList.add(timeSignatureType);
-                    timeSignatureType.setBeats(XmlUtil.getElementText(timeSubelement));
-                    break;
-                case "beat-type":
-                    timeSignatureType.setBeatType(XmlUtil.getElementText(timeSubelement));
-                    break;
-                case "interchangeable":
-                    Interchangeable interchangeable = new Interchangeable();
-                    interchangeable.setTimeRelation(FactoryUtil.enumValue(TimeRelation.class, XmlUtil.getChildElementText(timeSubelement, "time-relation")));
-                    interchangeable.setTimeSignature(newTimeSignature(timeSubelement));
-                    interchangeable.setSymbol(AttributesFactory.newTimeSymbol(timeSubelement));
-                    interchangeable.setSeparator(AttributesFactory.newTimeSeparator(timeSubelement));
-                    break;
-            }
+        timeSignature.setTimeSignatureList(newTimeSignatureTypes(element));
+        Element interchangeableElement = XmlUtil.getChildElement(element, "interchangeable");
+        if (interchangeableElement != null) {
+            Interchangeable interchangeable = new Interchangeable();
+            interchangeable.setTimeRelation(FactoryUtil.enumValue(TimeRelation.class, XmlUtil.getChildElementText(interchangeableElement, "time-relation")));
+            interchangeable.setTimeSignature(newTimeSignature(interchangeableElement));
+            interchangeable.setSymbol(AttributesFactory.newTimeSymbol(interchangeableElement));
+            interchangeable.setSeparator(AttributesFactory.newTimeSeparator(interchangeableElement));
+            timeSignature.setInterchangeable(interchangeable);
         }
 
         return timeSignature;
+    }
+
+    private static List<TimeSignatureType> newTimeSignatureTypes(Element element) {
+        List<TimeSignatureType> timeSignatureTypes = new ArrayList<>();
+
+        List<Element> beatsElements = XmlUtil.getChildElements(element, "beats");
+        List<Element> beatTypeElements = XmlUtil.getChildElements(element, "beat-type");
+
+        if (beatsElements.isEmpty() || beatTypeElements.isEmpty()) return timeSignatureTypes;
+        if (beatsElements.size() != beatTypeElements.size()) return timeSignatureTypes;
+
+        for(int elementIndex = 0; elementIndex < beatsElements.size(); elementIndex++) {
+            Element beatElement = beatsElements.get(elementIndex);
+            Element beatTypeElement = beatTypeElements.get(elementIndex);
+
+            TimeSignatureType timeSignatureType = new TimeSignatureType();
+            timeSignatureType.setBeats(XmlUtil.getElementText(beatElement));
+            timeSignatureType.setBeatType(XmlUtil.getElementText(beatTypeElement));
+            timeSignatureTypes.add(timeSignatureType);
+        }
+
+        return timeSignatureTypes;
     }
 
     public static TimeSymbol newTimeSymbol(Element element) {

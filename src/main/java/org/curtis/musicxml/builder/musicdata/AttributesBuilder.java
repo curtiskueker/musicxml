@@ -6,7 +6,6 @@ import org.curtis.musicxml.attributes.Directive;
 import org.curtis.musicxml.attributes.StaffDetails;
 import org.curtis.musicxml.attributes.StaffTuning;
 import org.curtis.musicxml.attributes.Transpose;
-import org.curtis.musicxml.attributes.key.Cancel;
 import org.curtis.musicxml.attributes.key.Key;
 import org.curtis.musicxml.attributes.key.KeyOctave;
 import org.curtis.musicxml.attributes.key.NonTraditionalKey;
@@ -195,8 +194,7 @@ public class AttributesBuilder extends MusicDataBuilder {
     }
 
     private void buildTraditionalKey(TraditionalKey traditionalKey) {
-        Cancel cancel = traditionalKey.getCancel();
-        if (cancel != null) buildElementWithValueAndAttribute("cancel", cancel.getFifths(), "location", cancel.getLocation());
+        if (traditionalKey.hasCancel()) buildElementWithValueAndAttribute("cancel", traditionalKey.getCancelFifths(), "location", traditionalKey.getCancelLocation());
         buildElementWithValue("fifths", traditionalKey.getFifths());
         buildElementWithValue("mode", traditionalKey.getMode());
     }
