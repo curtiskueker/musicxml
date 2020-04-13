@@ -9,7 +9,7 @@ import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
-import org.curtis.musicxml.score.PartItem;
+import org.curtis.musicxml.score.PartListItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
@@ -48,8 +48,8 @@ public class MusicXml2Db extends MusicXmlScript {
 
             System.err.println("Creating database record...");
             Integer partItemOrdering = 1;
-            for (PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
-                partItem.setOrdering(partItemOrdering);
+            for (PartListItem partListItem : score.getScoreHeader().getPartListItems()) {
+                partListItem.setOrdering(partItemOrdering);
                 partItemOrdering++;
             }
 

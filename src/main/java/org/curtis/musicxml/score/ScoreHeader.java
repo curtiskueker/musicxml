@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,11 @@ public class ScoreHeader extends DatabaseItem {
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "score_header_id", nullable = false)
     private List<Credit> credits = new ArrayList<>();
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "part_list_id")
-    private PartList partList = new PartList();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinColumn(name = "score_header_id", nullable = false)
+    @OrderBy("ordering")
+    private List<PartListItem> partListItems = new ArrayList<>();
 
     public ScoreHeader() {
 
@@ -92,11 +95,11 @@ public class ScoreHeader extends DatabaseItem {
         this.credits = credits;
     }
 
-    public PartList getPartList() {
-        return partList;
+    public List<PartListItem> getPartListItems() {
+        return partListItems;
     }
 
-    public void setPartList(PartList partList) {
-        this.partList = partList;
+    public void setPartListItems(List<PartListItem> partListItems) {
+        this.partListItems = partListItems;
     }
 }

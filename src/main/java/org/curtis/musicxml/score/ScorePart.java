@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("score part")
-public class ScorePart extends PartItem {
+public class ScorePart extends PartListItem {
     @Column(name = "score_part_id")
     private String scorePartId;
     @OneToOne(cascade = CascadeType.ALL)
@@ -39,15 +39,15 @@ public class ScorePart extends PartItem {
     private NameDisplay partAbbreviationDisplay;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "score_part_id", nullable = false)
+    @JoinColumn(name = "part_list_item_id", nullable = false)
     private List<ScorePartGroup> groups = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "score_part_id", nullable = false)
+    @JoinColumn(name = "part_list_item_id", nullable = false)
     private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "score_part_id", nullable = false)
+    @JoinColumn(name = "part_list_item_id", nullable = false)
     private List<ScorePartMidi> scorePartMidis = new ArrayList<>();
 
     public ScorePart() {

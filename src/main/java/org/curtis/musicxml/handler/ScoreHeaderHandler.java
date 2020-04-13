@@ -25,7 +25,7 @@ import org.curtis.musicxml.score.CreditWords;
 import org.curtis.musicxml.score.Defaults;
 import org.curtis.musicxml.score.LyricFont;
 import org.curtis.musicxml.score.LyricLanguage;
-import org.curtis.musicxml.score.PartList;
+import org.curtis.musicxml.score.PartListItem;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.Work;
 import org.curtis.util.MathUtil;
@@ -229,8 +229,8 @@ public class ScoreHeaderHandler extends BaseHandler {
                     if (!credit.getCreditDisplays().isEmpty()) credits.add(credit);
                     break;
                 case "part-list":
-                    PartList partList = scoreHeader.getPartList();
-                    PartListHandler partListHandler = new PartListHandler(partList);
+                    List<PartListItem> partListItems = scoreHeader.getPartListItems();
+                    PartListHandler partListHandler = new PartListHandler(partListItems);
                     partListHandler.handle(subelement);
                     break;
             }

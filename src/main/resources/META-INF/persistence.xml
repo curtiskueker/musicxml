@@ -286,8 +286,7 @@
         <class>org.curtis.musicxml.score.MusicData</class>
         <class>org.curtis.musicxml.score.Part</class>
         <class>org.curtis.musicxml.score.PartGroup</class>
-        <class>org.curtis.musicxml.score.PartItem</class>
-        <class>org.curtis.musicxml.score.PartList</class>
+        <class>org.curtis.musicxml.score.PartListItem</class>
         <class>org.curtis.musicxml.score.PartName</class>
         <class>org.curtis.musicxml.score.PartSymbol</class>
         <class>org.curtis.musicxml.score.Score</class>

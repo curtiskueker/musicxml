@@ -32,8 +32,7 @@ import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.LyricFont;
 import org.curtis.musicxml.score.LyricLanguage;
 import org.curtis.musicxml.score.PartGroup;
-import org.curtis.musicxml.score.PartItem;
-import org.curtis.musicxml.score.PartList;
+import org.curtis.musicxml.score.PartListItem;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.ScoreHeader;
 import org.curtis.musicxml.score.ScorePart;
@@ -224,11 +223,13 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
     }
 
     private void buildPartList() {
+        List<PartListItem> partListItems = scoreHeader.getPartListItems();
+        if (partListItems.isEmpty()) return;
+
         buildStartElement("part-list");
-        PartList partList = scoreHeader.getPartList();
-        for (PartItem partItem : partList.getPartItems()) {
-            if (partItem instanceof PartGroup) buildPartGroup((PartGroup)partItem);
-            else if (partItem instanceof ScorePart) buildScorePart((ScorePart)partItem);
+        for (PartListItem partListItem : partListItems) {
+            if (partListItem instanceof PartGroup) buildPartGroup((PartGroup)partListItem);
+            else if (partListItem instanceof ScorePart) buildScorePart((ScorePart)partListItem);
         }
         buildEndElement("part-list");
     }

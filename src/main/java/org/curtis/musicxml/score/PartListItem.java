@@ -10,8 +10,8 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name = "part_item")
-@DiscriminatorColumn(name = "part_item_type")
-public abstract class PartItem extends OrderedElement {
+@Table(name = "part_list_item")
+@DiscriminatorColumn(name = "part_list_item_type")
+public abstract class PartListItem extends OrderedElement {
 
 }

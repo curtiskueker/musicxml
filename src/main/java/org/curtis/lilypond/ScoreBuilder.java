@@ -19,7 +19,7 @@ import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.PartGroup;
-import org.curtis.musicxml.score.PartItem;
+import org.curtis.musicxml.score.PartListItem;
 import org.curtis.musicxml.score.PartName;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
@@ -51,28 +51,28 @@ public class ScoreBuilder extends LilypondBuilder {
         appendStartSection("\\score {");
         appendStartSection("<<");
 
-        List<PartItem> partItems = score.getScoreHeader().getPartList().getPartItems();
-        if(partItems.isEmpty()) {
+        List<PartListItem> partListItems = score.getScoreHeader().getPartListItems();
+        if(partListItems.isEmpty()) {
             throw new BuildException("Score header part list not found");
         }
 
-        boolean scorePartFirst = partItems.get(0) instanceof ScorePart;
+        boolean scorePartFirst = partListItems.get(0) instanceof ScorePart;
 
         if(scorePartFirst) {
             appendStartSection("<<");
         }
 
-        for (PartItem partItem : partItems) {
-            if(partItem instanceof PartGroup) {
-                PartGroup partGroup = (PartGroup)partItem;
+        for (PartListItem partListItem : partListItems) {
+            if(partListItem instanceof PartGroup) {
+                PartGroup partGroup = (PartGroup)partListItem;
                 Connection partGroupType = partGroup.getType();
                 if (partGroupType == Connection.START) {
                     appendStartSection("\\new StaffGroup <<");
                 } else if (partGroupType == Connection.STOP) {
                     appendEndSection(">>");
                 }
-            } else if(partItem instanceof ScorePart) {
-                ScorePart scorePart = (ScorePart)partItem;
+            } else if(partListItem instanceof ScorePart) {
+                ScorePart scorePart = (ScorePart)partListItem;
                 appendStartSection("<<");
                 buildPart(scorePart);
                 appendEndSection(">>");

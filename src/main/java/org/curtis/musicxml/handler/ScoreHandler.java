@@ -1,6 +1,6 @@
 package org.curtis.musicxml.handler;
 
-import org.curtis.musicxml.score.PartItem;
+import org.curtis.musicxml.score.PartListItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.util.StringUtil;
@@ -29,9 +29,9 @@ public class ScoreHandler extends BaseHandler {
 
         // handle the parts
         List<Element> partElements = XmlUtil.getChildElements(element, "part");
-        for(PartItem partItem : score.getScoreHeader().getPartList().getPartItems()) {
-            if(partItem instanceof ScorePart) {
-                ScorePart scorePart = (ScorePart) partItem;
+        for(PartListItem partListItem : score.getScoreHeader().getPartListItems()) {
+            if(partListItem instanceof ScorePart) {
+                ScorePart scorePart = (ScorePart) partListItem;
                 String partId = scorePart.getScorePartId();
                 for (Element partElement : partElements) {
                     if (partId.equals(partElement.getAttribute("id"))) {

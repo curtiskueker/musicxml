@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("part group")
-public class PartGroup extends PartItem {
+public class PartGroup extends PartListItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_name_id")
     private GroupName groupName;

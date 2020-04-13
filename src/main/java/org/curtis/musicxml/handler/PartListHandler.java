@@ -11,7 +11,7 @@ import org.curtis.musicxml.score.GroupBarline;
 import org.curtis.musicxml.score.GroupBarlineType;
 import org.curtis.musicxml.score.GroupSymbol;
 import org.curtis.musicxml.score.PartGroup;
-import org.curtis.musicxml.score.PartList;
+import org.curtis.musicxml.score.PartListItem;
 import org.curtis.musicxml.score.ScorePartMidi;
 import org.curtis.musicxml.score.ScorePart;
 import org.curtis.musicxml.score.ScorePartGroup;
@@ -26,10 +26,10 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 public class PartListHandler extends BaseHandler {
-    private PartList partList;
+    private List<PartListItem> partListItems;
 
-    public PartListHandler(PartList partList) {
-        this.partList = partList;
+    public PartListHandler(List<PartListItem> partListItems) {
+        this.partListItems = partListItems;
     }
 
     public void handle(Element element) {
@@ -72,7 +72,7 @@ public class PartListHandler extends BaseHandler {
                         partGroup.setGroupBarline(groupBarline);
                     }
                     partGroup.setGroupTime(XmlUtil.hasChildElement(partListSubelement, "group-time"));
-                    partList.getPartItems().add(partGroup);
+                    partListItems.add(partGroup);
                     break;
                 case "score-part":
                     ScorePart scorePart = new ScorePart();
@@ -119,7 +119,7 @@ public class PartListHandler extends BaseHandler {
                     for(Element midiInstrumentElement : midiInstrumentElements) {
                         handleScorePartMidi(scorePart, midiInstrumentElement.getAttribute("id"), null, midiInstrumentElement);
                     }
-                    partList.getPartItems().add(scorePart);
+                    partListItems.add(scorePart);
                     break;
             }
         }
