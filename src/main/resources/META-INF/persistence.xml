@@ -146,7 +146,6 @@
         <class>org.curtis.musicxml.layout.SystemDivider</class>
         <class>org.curtis.musicxml.layout.SystemLayout</class>
         <class>org.curtis.musicxml.link.Bookmark</class>
-        <class>org.curtis.musicxml.link.ElementPosition</class>
         <class>org.curtis.musicxml.link.Link</class>
         <class>org.curtis.musicxml.link.LinkAttributes</class>
         <class>org.curtis.musicxml.note.Accidental</class>

@@ -2,7 +2,6 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.link.Actuate;
 import org.curtis.musicxml.link.Bookmark;
-import org.curtis.musicxml.link.ElementPosition;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.link.Show;
@@ -20,7 +19,8 @@ public class LinkFactory {
         Link link = new Link();
         link.setLinkAttributes(newLinkAttributes(element));
         link.setName(element.getAttribute("name"));
-        link.setElementPosition(newElementPosition(element));
+        link.setElement(element.getAttribute("element"));
+        link.setPosition(StringUtil.getInteger(element.getAttribute("position")));
         link.setDisplay(DisplayFactory.newDisplay(element));
 
         return link;
@@ -50,18 +50,9 @@ public class LinkFactory {
         Bookmark bookmark = new Bookmark();
         bookmark.setBookmarkId(element.getAttribute("id"));
         bookmark.setName(element.getAttribute("name"));
-        bookmark.setElementPosition(newElementPosition(element));
+        bookmark.setElement(element.getAttribute("element"));
+        bookmark.setPosition(StringUtil.getInteger(element.getAttribute("position")));
 
         return bookmark;
-    }
-
-    public static ElementPosition newElementPosition(Element element) {
-        if (element == null) return null;
-
-        ElementPosition elementPosition = new ElementPosition();
-        elementPosition.setElement(element.getAttribute("element"));
-        elementPosition.setPosition(StringUtil.getInteger(element.getAttribute("position")));
-
-        return elementPosition;
     }
 }

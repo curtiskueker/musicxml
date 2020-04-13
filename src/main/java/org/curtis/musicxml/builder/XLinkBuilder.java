@@ -1,7 +1,6 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.link.Bookmark;
-import org.curtis.musicxml.link.ElementPosition;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.link.LinkAttributes;
 
@@ -18,7 +17,8 @@ public class XLinkBuilder extends OutputBuilder {
         xLinkBuilder.buildCloseElement();
         xLinkBuilder.append(XLinkBuilder.buildLinkAttributes(link.getLinkAttributes()));
         xLinkBuilder.buildAttribute("name", link.getName());
-        xLinkBuilder.append(XLinkBuilder.buildElementPosition(link.getElementPosition()));
+        xLinkBuilder.buildAttribute("element", link.getElement());
+        xLinkBuilder.buildAttribute("position", link.getPosition());
         xLinkBuilder.buildAttributes(DisplayBuilder.buildDisplay(link.getDisplay()));
         xLinkBuilder.buildEndElement("link");
 
@@ -49,18 +49,9 @@ public class XLinkBuilder extends OutputBuilder {
         xLinkBuilder.buildOpenElement("bookmark");
         xLinkBuilder.buildAttribute("id", bookmark.getBookmarkId());
         xLinkBuilder.buildAttribute("name", bookmark.getName());
-        xLinkBuilder.append(XLinkBuilder.buildElementPosition(bookmark.getElementPosition()));
+        xLinkBuilder.buildAttribute("element", bookmark.getElement());
+        xLinkBuilder.buildAttribute("position", bookmark.getPosition());
         xLinkBuilder.buildCloseEmptyElement();
-
-        return xLinkBuilder.stringBuilder.toString();
-    }
-
-    public static String buildElementPosition(ElementPosition elementPosition) {
-        if (elementPosition == null) return "";
-
-        XLinkBuilder xLinkBuilder = new XLinkBuilder();
-        xLinkBuilder.buildAttribute("element", elementPosition.getElement());
-        xLinkBuilder.buildAttribute("position", elementPosition.getPosition());
 
         return xLinkBuilder.stringBuilder.toString();
     }

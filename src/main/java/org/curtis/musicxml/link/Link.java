@@ -20,9 +20,10 @@ public class Link extends MusicData {
     private LinkAttributes linkAttributes;
     @Column
     private String name;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "element_position_id")
-    private ElementPosition elementPosition;
+    @Column
+    private String element;
+    @Column
+    private Integer position;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
@@ -50,12 +51,20 @@ public class Link extends MusicData {
         this.name = name;
     }
 
-    public ElementPosition getElementPosition() {
-        return elementPosition;
+    public String getElement() {
+        return element;
     }
 
-    public void setElementPosition(ElementPosition elementPosition) {
-        this.elementPosition = elementPosition;
+    public void setElement(String element) {
+        this.element = element;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public Display getDisplay() {

@@ -102,7 +102,7 @@ public class Note extends MusicDataElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "printout_id")
     private Printout printout;
-    @Column
+    @Column(name = "print_leger")
     @Type(type="yes_no")
     private Boolean printLeger;
     @Column(precision = 12, scale = 4)
