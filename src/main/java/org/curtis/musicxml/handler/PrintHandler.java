@@ -8,7 +8,6 @@ import org.curtis.musicxml.factory.LayoutFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.layout.Layout;
-import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -26,11 +25,7 @@ public class PrintHandler extends MusicDataHandler {
         Layout layout = LayoutFactory.newLayout(element);
 
         Element measureLayoutElement = XmlUtil.getChildElement(element, "measure-layout");
-        if (measureLayoutElement != null) {
-            MeasureLayout measureLayout = new MeasureLayout();
-            measureLayout.setMeasureDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(measureLayoutElement, "measure-distance")));
-            print.setMeasureLayout(measureLayout);
-        }
+        if (measureLayoutElement != null) print.setMeasureDistance(MathUtil.newBigDecimal(XmlUtil.getChildElementText(measureLayoutElement, "measure-distance")));
         Element measureNumberingElement = XmlUtil.getChildElement(element, "measure-numbering");
         print.setMeasureNumberingValue(FactoryUtil.enumValue(MeasureNumberingType.class, XmlUtil.getElementText(measureNumberingElement)));
         print.setMeasureNumberingDisplay(DisplayFactory.newDisplay(measureNumberingElement));

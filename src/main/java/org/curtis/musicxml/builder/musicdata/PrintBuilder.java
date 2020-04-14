@@ -3,7 +3,8 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.direction.MeasureNumberingType;
 import org.curtis.musicxml.direction.Print;
-import org.curtis.musicxml.layout.MeasureLayout;
+
+import java.math.BigDecimal;
 
 public class PrintBuilder extends MusicDataBuilder {
     private Print print;
@@ -24,10 +25,10 @@ public class PrintBuilder extends MusicDataBuilder {
         buildAttribute("page-number", print.getPageNumber());
         buildCloseElement();
         append(LayoutBuilder.buildLayout(print.getLayout()));
-        MeasureLayout measureLayout = print.getMeasureLayout();
-        if (measureLayout != null) {
+        BigDecimal measureDistance = print.getMeasureDistance();
+        if (measureDistance != null) {
             buildStartElement("measure-layout");
-            buildElementWithValue("measure-distance", measureLayout.getMeasureDistance());
+            buildElementWithValue("measure-distance", measureDistance);
             buildEndElement("measure-layout");
         }
         MeasureNumberingType measureNumberingValue = print.getMeasureNumberingValue();

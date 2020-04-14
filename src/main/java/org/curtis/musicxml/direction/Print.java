@@ -3,7 +3,6 @@ package org.curtis.musicxml.direction;
 import org.curtis.musicxml.common.NameDisplay;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.layout.Layout;
-import org.curtis.musicxml.layout.MeasureLayout;
 import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Type;
 
@@ -23,9 +22,8 @@ public class Print extends MusicDataElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "layout_id")
     private Layout layout;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "measure_layout_id")
-    private MeasureLayout measureLayout;
+    @Column(name = "measure_distance", precision = 12, scale = 4)
+    private BigDecimal measureDistance;
     @Enumerated(EnumType.STRING)
     @Column(name = "measure_numbering_value")
     private MeasureNumberingType measureNumberingValue;
@@ -63,12 +61,12 @@ public class Print extends MusicDataElement {
         this.layout = layout;
     }
 
-    public MeasureLayout getMeasureLayout() {
-        return measureLayout;
+    public BigDecimal getMeasureDistance() {
+        return measureDistance;
     }
 
-    public void setMeasureLayout(MeasureLayout measureLayout) {
-        this.measureLayout = measureLayout;
+    public void setMeasureDistance(BigDecimal measureDistance) {
+        this.measureDistance = measureDistance;
     }
 
     public MeasureNumberingType getMeasureNumberingValue() {
