@@ -1,6 +1,6 @@
 package org.curtis.musicxml.barline;
 
-public enum RepeatDirection {
+public enum BarlineRepeatDirection {
     BACKWARD,
     FORWARD
 }

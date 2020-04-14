@@ -50,14 +50,14 @@ public class Barline extends MusicDataElement {
     @JoinColumn(name = "barline_id")
     private List<Fermata> fermataList = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ending_id")
-    private Ending ending;
+    @JoinColumn(name = "barline_ending_id")
+    private BarlineEnding ending;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "repeat_id")
-    private Repeat repeat;
+    @JoinColumn(name = "barline_repeat_id")
+    private BarlineRepeat repeat;
     @Enumerated(EnumType.STRING)
-    @Column
-    private BarlineLocation location;
+    @Column(name = "barline_location")
+    private BarlineLocation barlineLocation;
     @Column
     private String segno;
     @Column
@@ -125,28 +125,28 @@ public class Barline extends MusicDataElement {
         this.fermataList = fermataList;
     }
 
-    public Ending getEnding() {
+    public BarlineEnding getEnding() {
         return ending;
     }
 
-    public void setEnding(Ending ending) {
+    public void setEnding(BarlineEnding ending) {
         this.ending = ending;
     }
 
-    public Repeat getRepeat() {
+    public BarlineRepeat getRepeat() {
         return repeat;
     }
 
-    public void setRepeat(Repeat repeat) {
+    public void setRepeat(BarlineRepeat repeat) {
         this.repeat = repeat;
     }
 
-    public BarlineLocation getLocation() {
-        return location;
+    public BarlineLocation getBarlineLocation() {
+        return barlineLocation;
     }
 
-    public void setLocation(BarlineLocation location) {
-        this.location = location;
+    public void setBarlineLocation(BarlineLocation barlineLocation) {
+        this.barlineLocation = barlineLocation;
     }
 
     public String getSegno() {

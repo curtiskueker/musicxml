@@ -15,15 +15,15 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ending")
-public class Ending extends DatabaseItem {
+@Table(name = "barline_ending")
+public class BarlineEnding extends DatabaseItem {
     @Column
     private String value;
     @Column(name = "ending_number")
     private String number;
     @Enumerated(EnumType.STRING)
     @Column(name = "ending_type")
-    private EndingType type;
+    private BarlineEndingType type;
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -37,7 +37,7 @@ public class Ending extends DatabaseItem {
     @Column(name = "text_y", precision = 12, scale = 4)
     private BigDecimal textY;
 
-    public Ending() {
+    public BarlineEnding() {
 
     }
 
@@ -57,11 +57,11 @@ public class Ending extends DatabaseItem {
         this.number = number;
     }
 
-    public EndingType getType() {
+    public BarlineEndingType getType() {
         return type;
     }
 
-    public void setType(EndingType type) {
+    public void setType(BarlineEndingType type) {
         this.type = type;
     }
 

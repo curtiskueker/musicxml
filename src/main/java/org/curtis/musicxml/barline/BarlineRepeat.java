@@ -10,25 +10,25 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "barline_repeat")
-public class Repeat extends DatabaseItem {
+public class BarlineRepeat extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
-    private RepeatDirection direction;
+    private BarlineRepeatDirection direction;
     @Column
     private Integer times;
     @Enumerated(EnumType.STRING)
     @Column
     private Winged winged;
 
-    public Repeat() {
+    public BarlineRepeat() {
 
     }
 
-    public RepeatDirection getDirection() {
+    public BarlineRepeatDirection getDirection() {
         return direction;
     }
 
-    public void setDirection(RepeatDirection direction) {
+    public void setDirection(BarlineRepeatDirection direction) {
         this.direction = direction;
     }
 

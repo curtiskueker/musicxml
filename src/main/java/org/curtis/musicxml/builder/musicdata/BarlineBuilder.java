@@ -2,8 +2,8 @@ package org.curtis.musicxml.builder.musicdata;
 
 import org.curtis.musicxml.barline.BarStyle;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.barline.Ending;
-import org.curtis.musicxml.barline.Repeat;
+import org.curtis.musicxml.barline.BarlineEnding;
+import org.curtis.musicxml.barline.BarlineRepeat;
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.display.Display;
@@ -24,7 +24,7 @@ public class BarlineBuilder extends MusicDataBuilder {
 
         buildOpenElement("barline");
         buildAttribute("id", barline.getElementId());
-        buildAttribute("location", barline.getLocation());
+        buildAttribute("location", barline.getBarlineLocation());
         buildAttribute("segno", barline.getSegno());
         buildAttribute("coda", barline.getCoda());
         buildAttribute("divisions", barline.getDivisions());
@@ -40,7 +40,7 @@ public class BarlineBuilder extends MusicDataBuilder {
         buildSegno(barline.getSegnoPrint());
         buildCoda(barline.getCodaPrint());
         for (Fermata fermata : barline.getFermataList()) buildFermata(fermata);
-        Ending ending = barline.getEnding();
+        BarlineEnding ending = barline.getEnding();
         if (ending != null) {
             Map<String, String> attributes = new HashMap<>();
             attributes.put("number", BuilderUtil.requiredValue(ending.getNumber()));
@@ -52,7 +52,7 @@ public class BarlineBuilder extends MusicDataBuilder {
             attributes.put("text-y", BuilderUtil.stringValue(ending.getTextY()));
             buildElementWithValueAndAttributes("ending", ending.getValue(), attributes);
         }
-        Repeat repeat = barline.getRepeat();
+        BarlineRepeat repeat = barline.getRepeat();
         if (repeat != null) {
             Map<String, String> attributes = new HashMap<>();
             attributes.put("direction", BuilderUtil.enumValue(repeat.getDirection()));

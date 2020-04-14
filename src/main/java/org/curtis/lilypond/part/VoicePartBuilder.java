@@ -6,8 +6,8 @@ import org.curtis.lilypond.musicdata.NoteBuilder;
 import org.curtis.lilypond.util.AttributesUtil;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.barline.Ending;
-import org.curtis.musicxml.barline.Repeat;
+import org.curtis.musicxml.barline.BarlineEnding;
+import org.curtis.musicxml.barline.BarlineRepeat;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.direction.Direction;
@@ -251,7 +251,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     previousNote = note;
                 } else if (musicData instanceof Barline) {
                     Barline barline = (Barline)musicData;
-                    Ending ending = barline.getEnding();
+                    BarlineEnding ending = barline.getEnding();
                     if (ending != null) {
                         switch (ending.getType()) {
                             case START:
@@ -326,7 +326,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         }
                     }
 
-                    Repeat repeat = barline.getRepeat();
+                    BarlineRepeat repeat = barline.getRepeat();
                     if (repeat != null) {
                         switch (repeat.getDirection()) {
                             case FORWARD:

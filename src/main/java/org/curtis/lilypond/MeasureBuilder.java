@@ -252,7 +252,7 @@ public class MeasureBuilder extends LilypondBuilder {
                 lastTuplet = null;
                 // hold onto the final barline until the very end
                 Barline barline = (Barline)musicData;
-                BarlineLocation barlineLocation = barline.getLocation();
+                BarlineLocation barlineLocation = barline.getBarlineLocation();
                 if (barlineLocation == null || barlineLocation == BarlineLocation.RIGHT) {
                     currentBarline = barline;
                     continue;

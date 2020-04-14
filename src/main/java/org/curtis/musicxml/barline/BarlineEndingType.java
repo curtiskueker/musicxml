@@ -1,6 +1,6 @@
 package org.curtis.musicxml.barline;
 
-public enum EndingType {
+public enum BarlineEndingType {
     START,
     STOP,
     DISCONTINUE

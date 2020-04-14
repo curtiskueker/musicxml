@@ -3,10 +3,10 @@ package org.curtis.musicxml.handler;
 import org.curtis.musicxml.barline.BarStyle;
 import org.curtis.musicxml.barline.Barline;
 import org.curtis.musicxml.barline.BarlineLocation;
-import org.curtis.musicxml.barline.Ending;
-import org.curtis.musicxml.barline.EndingType;
-import org.curtis.musicxml.barline.Repeat;
-import org.curtis.musicxml.barline.RepeatDirection;
+import org.curtis.musicxml.barline.BarlineEnding;
+import org.curtis.musicxml.barline.BarlineEndingType;
+import org.curtis.musicxml.barline.BarlineRepeat;
+import org.curtis.musicxml.barline.BarlineRepeatDirection;
 import org.curtis.musicxml.barline.Winged;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
@@ -31,7 +31,7 @@ public class BarlineHandler extends MusicDataHandler {
         Barline barline = new Barline();
         barline.setElementId(element.getAttribute("id"));
         barline.setEditorial(FormattingFactory.newEditorial(element));
-        barline.setLocation(FactoryUtil.enumValue(BarlineLocation.class, element.getAttribute("location")));
+        barline.setBarlineLocation(FactoryUtil.enumValue(BarlineLocation.class, element.getAttribute("location")));
         barline.setSegno(element.getAttribute("segno"));
         barline.setCoda(element.getAttribute("coda"));
         barline.setDivisions(MathUtil.newBigDecimal(element.getAttribute("divisions")));
@@ -60,10 +60,10 @@ public class BarlineHandler extends MusicDataHandler {
                     fermata.setBarline(barline);
                     break;
                 case "ending":
-                    Ending ending = new Ending();
+                    BarlineEnding ending = new BarlineEnding();
                     ending.setValue(XmlUtil.getElementText(barlineSubelement));
                     ending.setNumber(barlineSubelement.getAttribute("number"));
-                    ending.setType(FactoryUtil.enumValue(EndingType.class, barlineSubelement.getAttribute("type")));
+                    ending.setType(FactoryUtil.enumValue(BarlineEndingType.class, barlineSubelement.getAttribute("type")));
                     ending.setPrintObject(FormattingFactory.getPrintObject(barlineSubelement));
                     ending.setDisplay(DisplayFactory.newDisplay(barlineSubelement));
                     ending.setEndLength(MathUtil.newBigDecimal(barlineSubelement.getAttribute("end-length")));
@@ -72,8 +72,8 @@ public class BarlineHandler extends MusicDataHandler {
                     barline.setEnding(ending);
                     break;
                 case "repeat":
-                    Repeat repeat = new Repeat();
-                    repeat.setDirection(FactoryUtil.enumValue(RepeatDirection.class, barlineSubelement.getAttribute("direction")));
+                    BarlineRepeat repeat = new BarlineRepeat();
+                    repeat.setDirection(FactoryUtil.enumValue(BarlineRepeatDirection.class, barlineSubelement.getAttribute("direction")));
                     repeat.setTimes(StringUtil.getInteger(barlineSubelement.getAttribute("times")));
                     repeat.setWinged(FactoryUtil.enumValue(Winged.class, barlineSubelement.getAttribute("winged")));
                     barline.setRepeat(repeat);

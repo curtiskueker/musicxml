@@ -33,8 +33,8 @@
         <class>org.curtis.musicxml.attributes.time.TimeSignature</class>
         <class>org.curtis.musicxml.attributes.time.TimeSignatureType</class>
         <class>org.curtis.musicxml.barline.Barline</class>
-        <class>org.curtis.musicxml.barline.Ending</class>
-        <class>org.curtis.musicxml.barline.Repeat</class>
+        <class>org.curtis.musicxml.barline.BarlineEnding</class>
+        <class>org.curtis.musicxml.barline.BarlineRepeat</class>
         <class>org.curtis.musicxml.common.DashedFormatting</class>
         <class>org.curtis.musicxml.common.DisplayText</class>
         <class>org.curtis.musicxml.common.Level</class>

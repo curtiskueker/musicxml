@@ -3,17 +3,17 @@ package org.curtis.lilypond.musicdata;
 import org.curtis.lilypond.exception.BuildException;
 import org.curtis.musicxml.barline.BarStyle;
 import org.curtis.musicxml.barline.Barline;
-import org.curtis.musicxml.barline.Repeat;
-import org.curtis.musicxml.barline.RepeatDirection;
+import org.curtis.musicxml.barline.BarlineRepeat;
+import org.curtis.musicxml.barline.BarlineRepeatDirection;
 
 public class BarlineBuilder extends MusicDataBuilder {
     public StringBuilder buildBarline(Barline barline) throws BuildException {
-        Repeat repeat = barline.getRepeat();
-        RepeatDirection repeatDirection = repeat == null ? null : repeat.getDirection();
+        BarlineRepeat repeat = barline.getRepeat();
+        BarlineRepeatDirection repeatDirection = repeat == null ? null : repeat.getDirection();
 
         append(" \\bar \"");
 
-       if(repeatDirection == RepeatDirection.BACKWARD) {
+       if(repeatDirection == BarlineRepeatDirection.BACKWARD) {
             append(":");
         }
 
@@ -43,7 +43,7 @@ public class BarlineBuilder extends MusicDataBuilder {
             }
         }
 
-        if(repeatDirection == RepeatDirection.FORWARD) {
+        if(repeatDirection == BarlineRepeatDirection.FORWARD) {
             append(":");
         }
 
