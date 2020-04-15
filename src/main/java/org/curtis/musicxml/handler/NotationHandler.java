@@ -135,7 +135,6 @@ public class NotationHandler extends BaseHandler {
                 notation.setElementId(notationsSubelement.getAttribute("id"));
                 notation.setDisplay(DisplayFactory.newDisplay(notationsSubelement));
                 notationList.add(notation);
-                notation.setNotations(notations);
             }
         }
         notations.setNotations(notationList);

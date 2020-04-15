@@ -21,14 +21,13 @@ import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Chord;
-import org.curtis.musicxml.note.Dot;
 import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
-import org.curtis.musicxml.note.NoteType;
+import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Notehead;
 import org.curtis.musicxml.note.NoteheadType;
 import org.curtis.musicxml.note.Pitch;
@@ -141,7 +140,6 @@ public class NoteBuilder extends MusicDataBuilder {
         } else if (fullNoteType instanceof Rest) {
             Rest rest = (Rest)fullNoteType;
             Boolean measure = TypeUtil.getBoolean(rest.getMeasure());
-            NoteType noteType = note.getType();
             BigDecimal duration = note.getDuration();
             BigDecimal wholeMeasureDuration;
             try {
@@ -149,7 +147,7 @@ public class NoteBuilder extends MusicDataBuilder {
             } catch (TimeSignatureException e) {
                 throw new BuildException(e.getMessage());
             }
-            if(measure || noteType == null || MathUtil.equalTo(duration, wholeMeasureDuration)) {
+            if(measure || note.getNoteValue() == null || MathUtil.equalTo(duration, wholeMeasureDuration)) {
                 rest.setMeasure(true);
                 append("R");
             } else {
@@ -261,7 +259,6 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder noteDurationBuild() throws BuildException {
-        NoteType noteType = note.getType();
         FullNoteType fullNoteType = note.getFullNote().getFullNoteType();
         BigDecimal duration = note.getDuration();
         Tremolo tremolo = note.getTremolo();
@@ -270,7 +267,7 @@ public class NoteBuilder extends MusicDataBuilder {
                 append(MathUtil.truncate(MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks() + 2)));
             } else if (fullNoteType instanceof Rest && TypeUtil.getBoolean(((Rest)fullNoteType).getMeasure())) {
                 append(TimeSignatureUtil.getWholeMeasureRestRepresentation());
-            } else if (noteType != null) {
+            } else if (note.getNoteValue() != null) {
                 noteTypeValueBuild();
             } else if (MathUtil.isPositive(duration)) {
                 append(TimeSignatureUtil.getDurationRepresentationValue(duration));
@@ -284,10 +281,10 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder noteTypeValueBuild() {
-        NoteType noteType = note.getType();
-        if (noteType == null) return stringBuilder;
-        append(NoteUtil.getNoteTypeValue(noteType.getValue()));
-        for(Dot dot : note.getDots()) append(".");
+        NoteTypeValue noteTypeValue = note.getNoteValue();
+        if (noteTypeValue == null) return stringBuilder;
+        append(NoteUtil.getNoteTypeValue(noteTypeValue));
+        note.getDots().forEach(dot -> append("."));
 
         return stringBuilder;
     }

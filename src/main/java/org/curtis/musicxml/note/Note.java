@@ -1,6 +1,8 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.lilypond.util.TypeUtil;
+import org.curtis.musicxml.common.SymbolSize;
+import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;
@@ -22,6 +24,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -57,9 +61,12 @@ public class Note extends MusicDataElement {
     private Editorial editorial;
     @Column
     private String voice;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "type_id")
-    private NoteType type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "note_value")
+    private NoteTypeValue noteValue;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "note_size")
+    private SymbolSize noteSize;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id", nullable = false)
@@ -76,9 +83,10 @@ public class Note extends MusicDataElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "notehead_id")
     private Notehead notehead;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "notehead_text_id")
-    private NoteheadText noteheadText;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "note_id")
+    private List<TextDisplay> noteheadTextList = new ArrayList<>();
     @Column
     private Integer staff;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -197,12 +205,20 @@ public class Note extends MusicDataElement {
         this.voice = voice;
     }
 
-    public NoteType getType() {
-        return type;
+    public NoteTypeValue getNoteValue() {
+        return noteValue;
     }
 
-    public void setType(NoteType type) {
-        this.type = type;
+    public void setNoteValue(NoteTypeValue noteValue) {
+        this.noteValue = noteValue;
+    }
+
+    public SymbolSize getNoteSize() {
+        return noteSize;
+    }
+
+    public void setNoteSize(SymbolSize noteSize) {
+        this.noteSize = noteSize;
     }
 
     public List<Dot> getDots() {
@@ -245,12 +261,12 @@ public class Note extends MusicDataElement {
         this.notehead = notehead;
     }
 
-    public NoteheadText getNoteheadText() {
-        return noteheadText;
+    public List<TextDisplay> getNoteheadTextList() {
+        return noteheadTextList;
     }
 
-    public void setNoteheadText(NoteheadText noteheadText) {
-        this.noteheadText = noteheadText;
+    public void setNoteheadTextList(List<TextDisplay> noteheadTextList) {
+        this.noteheadTextList = noteheadTextList;
     }
 
     public Integer getStaff() {

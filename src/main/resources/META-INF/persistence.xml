@@ -162,8 +162,6 @@
         <class>org.curtis.musicxml.note.Notations</class>
         <class>org.curtis.musicxml.note.Note</class>
         <class>org.curtis.musicxml.note.Notehead</class>
-        <class>org.curtis.musicxml.note.NoteheadText</class>
-        <class>org.curtis.musicxml.note.NoteType</class>
         <class>org.curtis.musicxml.note.Pitch</class>
         <class>org.curtis.musicxml.note.Rest</class>
         <class>org.curtis.musicxml.note.Tie</class>

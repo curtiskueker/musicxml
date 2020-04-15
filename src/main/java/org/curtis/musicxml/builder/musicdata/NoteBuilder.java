@@ -13,9 +13,8 @@ import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
-import org.curtis.musicxml.note.NoteType;
+import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Notehead;
-import org.curtis.musicxml.note.NoteheadText;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Rest;
 import org.curtis.musicxml.note.Stem;
@@ -80,10 +79,8 @@ public class NoteBuilder extends MusicDataBuilder {
         buildElementWithAttribute("instrument", "id", note.getInstrument());
         buildEditorial(note.getEditorial());
         buildElementWithValue("voice", note.getVoice());
-        NoteType noteType = note.getType();
-        if (noteType != null) {
-            buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteType.getValue()), "size", noteType.getSize());
-        }
+        NoteTypeValue noteTypeValue = note.getNoteValue();
+        if (noteTypeValue != null) buildElementWithValueAndAttribute("type", BuilderUtil.noteTypeValue(noteTypeValue), "size", note.getNoteSize());
         for (Dot dot : note.getDots()) {
             buildElementWithOptionalAttributes("dot", DisplayBuilder.buildDisplay(dot.getDisplay()));
         }
@@ -116,14 +113,11 @@ public class NoteBuilder extends MusicDataBuilder {
             noteheadAttributes.put("smufl", notehead.getSmufl());
             buildElementWithValueAndAttributes("notehead", noteheadType, noteheadAttributes);
         }
-        NoteheadText noteheadText = note.getNoteheadText();
-        if (noteheadText != null) {
-            List<TextDisplay> textList = noteheadText.getTextList();
-            if (!textList.isEmpty()) {
-                buildStartElement("notehead-text");
-                for (TextDisplay text : textList) buildText(text);
-                buildEndElement("notehead_text");
-            }
+        List<TextDisplay> noteheadTextList = note.getNoteheadTextList();
+        if (!noteheadTextList.isEmpty()) {
+            buildStartElement("notehead-text");
+            for (TextDisplay text : noteheadTextList) buildText(text);
+            buildEndElement("notehead_text");
         }
         buildElementWithValue("staff", note.getStaff());
         List<Beam> beams = note.getBeams();

@@ -16,9 +16,7 @@ import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
-import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Notehead;
-import org.curtis.musicxml.note.NoteheadText;
 import org.curtis.musicxml.note.NoteheadType;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.Rest;
@@ -108,10 +106,8 @@ public class NoteHandler extends MusicDataHandler {
                     note.setInstrument(noteSubelement.getAttribute("id"));
                     break;
                 case "type":
-                    NoteType noteType = new NoteType();
-                    noteType.setValue(NoteFactory.newNoteTypeValue(noteSubelement));
-                    note.setType(noteType);
-                    noteType.setSize(FormattingFactory.newSymbolSize(noteSubelement));
+                    note.setNoteValue(NoteFactory.newNoteTypeValue(noteSubelement));
+                    note.setNoteSize(FormattingFactory.newSymbolSize(noteSubelement));
                     break;
                 case "dot":
                     Dot dot = new Dot();
@@ -150,12 +146,10 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "notehead-text":
                     List<Element> noteheadTextSubelements = XmlUtil.getChildElements(noteSubelement);
-                    NoteheadText noteheadText = new NoteheadText();
                     for(Element noteheadTextSubelement : noteheadTextSubelements) {
                         TextDisplay text = FormattingFactory.newTextDisplay(noteheadTextSubelement);
-                        if (text != null) noteheadText.getTextList().add(text);
+                        if (text != null) note.getNoteheadTextList().add(text);
                     }
-                    note.setNoteheadText(noteheadText);
                     break;
                 case "staff":
                     note.setStaff(StringUtil.getInteger(XmlUtil.getElementText(noteSubelement)));
