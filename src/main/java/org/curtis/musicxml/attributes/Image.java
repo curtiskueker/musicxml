@@ -1,14 +1,10 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.musicxml.direction.directiontype.DirectionType;
-import org.curtis.musicxml.display.Display;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 @Entity
@@ -22,9 +18,6 @@ public class Image extends DirectionType {
     private BigDecimal height;
     @Column(precision = 12, scale = 4)
     private BigDecimal width;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "display_id")
-    private Display display;
 
     public Image() {
 
@@ -60,15 +53,5 @@ public class Image extends DirectionType {
 
     public void setWidth(BigDecimal width) {
         this.width = width;
-    }
-
-    @Override
-    public Display getDisplay() {
-        return display;
-    }
-
-    @Override
-    public void setDisplay(Display display) {
-        this.display = display;
     }
 }
