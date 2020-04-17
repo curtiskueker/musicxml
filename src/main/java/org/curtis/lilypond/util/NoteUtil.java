@@ -1,7 +1,6 @@
 package org.curtis.lilypond.util;
 
 import org.curtis.musicxml.common.Printout;
-import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Rest;
@@ -97,9 +96,7 @@ public class NoteUtil {
         Printout printout = new Printout();
         printout.setPrintObject(false);
         note.setPrintout(printout);
-        FullNote fullNote = new FullNote();
-        fullNote.setFullNoteType(new Rest());
-        note.setFullNote(fullNote);
+        note.setNoteType(new Rest());
 
         return note;
     }

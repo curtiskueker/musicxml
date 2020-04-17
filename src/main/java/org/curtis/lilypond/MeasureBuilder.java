@@ -25,7 +25,6 @@ import org.curtis.musicxml.direction.harmony.Harmony;
 import org.curtis.musicxml.note.Backup;
 import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Forward;
-import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.note.TupletNotes;
 import org.curtis.musicxml.score.Measure;
@@ -160,11 +159,10 @@ public class MeasureBuilder extends LilypondBuilder {
             if(musicData instanceof Note) {
                 currentNote = (Note)musicData;
                 BigDecimal currentNoteDuration = currentNote.getDuration();
-                FullNote fullNote = currentNote.getFullNote();
                 String currentNoteVoice = currentNote.getVoice();
                 if (StringUtil.isEmpty(currentNoteVoice)) currentNoteVoice = "1";
 
-                OrderedGroup chordType = fullNote.getChordType();
+                OrderedGroup chordType = currentNote.getChordType();
                 if (!isChordNote(currentNote)) {
                     measureDuration = MathUtil.add(measureDuration, currentNoteDuration);
                     if (isCurrentVoice()) voiceDuration = MathUtil.add(voiceDuration, currentNoteDuration);
@@ -488,7 +486,7 @@ public class MeasureBuilder extends LilypondBuilder {
     }
 
     private boolean isChordNote(Note note) {
-        OrderedGroup chordType = note.getFullNote().getChordType();
+        OrderedGroup chordType = note.getChordType();
 
         return chordType != null && chordType != OrderedGroup.LAST;
     }

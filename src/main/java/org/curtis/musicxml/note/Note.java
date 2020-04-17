@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.lilypond.util.TypeUtil;
+import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.common.SymbolSize;
 import org.curtis.musicxml.common.TextDisplay;
 import org.curtis.musicxml.display.Editorial;
@@ -46,8 +47,11 @@ public class Note extends MusicDataElement {
     @Type(type="yes_no")
     private Boolean cue = false;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "full_note_id")
-    private FullNote fullNote;
+    @JoinColumn(name = "note_type_id")
+    private NoteType noteType;
+    @Column
+    @Type(type="yes_no")
+    private Boolean chord = false;
     @Column(precision = 12, scale = 4)
     private BigDecimal duration = MathUtil.ZERO;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -132,6 +136,9 @@ public class Note extends MusicDataElement {
     @Transient
     // used by lilypond
     private boolean changeStaff = false;
+    @Transient
+    // used by lilypond
+    private OrderedGroup chordType;
 
     public Note() {
 
@@ -157,12 +164,20 @@ public class Note extends MusicDataElement {
         this.cue = cue;
     }
 
-    public FullNote getFullNote() {
-        return fullNote;
+    public NoteType getNoteType() {
+        return noteType;
     }
 
-    public void setFullNote(FullNote fullNote) {
-        this.fullNote = fullNote;
+    public void setNoteType(NoteType noteType) {
+        this.noteType = noteType;
+    }
+
+    public Boolean isChord() {
+        return chord;
+    }
+
+    public void setChord(Boolean chord) {
+        this.chord = chord;
     }
 
     public BigDecimal getDuration() {
@@ -433,5 +448,13 @@ public class Note extends MusicDataElement {
 
     public void setChangeStaff() {
         this.changeStaff = true;
+    }
+
+    public OrderedGroup getChordType() {
+        return chordType;
+    }
+
+    public void setChordType(OrderedGroup chordType) {
+        this.chordType = chordType;
     }
 }

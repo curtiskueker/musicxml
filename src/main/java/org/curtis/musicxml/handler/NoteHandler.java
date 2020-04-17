@@ -7,12 +7,12 @@ import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
+import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamFan;
 import org.curtis.musicxml.note.Dot;
-import org.curtis.musicxml.note.FullNote;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
@@ -40,7 +40,7 @@ public class NoteHandler extends MusicDataHandler {
 
     public MusicData handle(Element element) {
         Note note = new Note();
-        FullNote fullNote = new FullNote();
+        NoteType noteType = null;
 
         note.setElementId(element.getAttribute("id"));
         note.setDisplay(DisplayFactory.newDisplay(element));
@@ -67,27 +67,27 @@ public class NoteHandler extends MusicDataHandler {
                     note.setGrace(grace);
                     break;
                 case "chord":
-                    fullNote.setChord(true);
+                    note.setChord(true);
                     break;
                 case "pitch":
                     Pitch pitch = new Pitch();
                     pitch.setStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "step")));
                     pitch.setAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(noteSubelement, "alter")));
                     pitch.setOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "octave")));
-                    fullNote.setFullNoteType(pitch);
+                    note.setNoteType(pitch);
                     break;
                 case "unpitched":
                     Unpitched unpitched = new Unpitched();
-                    unpitched.setDisplayStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
-                    unpitched.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
-                    fullNote.setFullNoteType(unpitched);
+                    unpitched.setStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
+                    unpitched.setOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
+                    note.setNoteType(unpitched);
                     break;
                 case "rest":
                     Rest rest = new Rest();
-                    rest.setDisplayStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
-                    rest.setDisplayOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
-                    fullNote.setFullNoteType(rest);
+                    rest.setStep(NoteFactory.newStep(XmlUtil.getChildElement(noteSubelement, "display-step")));
+                    rest.setOctave(StringUtil.getInteger(XmlUtil.getChildElementText(noteSubelement, "display-octave")));
                     rest.setMeasure(TypeUtil.getYesNo(noteSubelement.getAttribute("measure")));
+                    note.setNoteType(rest);
                     break;
                 case "duration":
                     note.setDuration(MathUtil.newBigDecimal(XmlUtil.getElementText(noteSubelement)));
@@ -181,7 +181,6 @@ public class NoteHandler extends MusicDataHandler {
             }
         }
 
-        note.setFullNote(fullNote);
         return note;
     }
 }

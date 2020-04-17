@@ -8,11 +8,10 @@ import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Dot;
-import org.curtis.musicxml.note.FullNote;
-import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Grace;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Notehead;
 import org.curtis.musicxml.note.Pitch;
@@ -68,7 +67,8 @@ public class NoteBuilder extends MusicDataBuilder {
             buildElementWithAttributes("grace", graceAttributes);
         }
         if (note.getCue()) buildElement("cue");
-        buildFullNote(note.getFullNote());
+        if (note.isChord()) buildElement("chord");
+        buildNoteType(note.getNoteType());
         if (grace == null) buildElementWithValue("duration", note.getDuration());
         for (Tie tie : note.getTies()) {
             Map<String, String> tieAttributes = new HashMap<>();
@@ -143,14 +143,12 @@ public class NoteBuilder extends MusicDataBuilder {
         return stringBuilder;
     }
 
-    private void buildFullNote(FullNote fullNote) {
-        if (fullNote == null) return;
+    private void buildNoteType(NoteType noteType) {
+        if (noteType == null) return;
 
-        if (fullNote.isChord()) buildElement("chord");
-        FullNoteType fullNoteType = fullNote.getFullNoteType();
-        if (fullNoteType instanceof Pitch) buildPitch((Pitch)fullNoteType);
-        else if (fullNoteType instanceof Unpitched) buildUnpitched((Unpitched)fullNoteType);
-        else if (fullNoteType instanceof Rest) buildRest((Rest)fullNoteType);
+        if (noteType instanceof Pitch) buildPitch((Pitch)noteType);
+        else if (noteType instanceof Unpitched) buildUnpitched((Unpitched)noteType);
+        else if (noteType instanceof Rest) buildRest((Rest)noteType);
     }
 
     private void buildPitch(Pitch pitch) {
@@ -163,8 +161,8 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private void buildUnpitched(Unpitched unpitched) {
         buildStartElement("unpitched");
-        buildElementWithValue("display-step", BuilderUtil.enumValue(unpitched.getDisplayStep()).toUpperCase());
-        buildElementWithValue("display-octave", unpitched.getDisplayOctave());
+        buildElementWithValue("display-step", BuilderUtil.enumValue(unpitched.getStep()).toUpperCase());
+        buildElementWithValue("display-octave", unpitched.getOctave());
         buildEndElement("unpitched");
     }
 
@@ -172,8 +170,8 @@ public class NoteBuilder extends MusicDataBuilder {
         buildOpenElement("rest");
         buildAttribute("measure",  rest.getMeasure());
         buildCloseElement();
-        buildElementWithValue("display-step", BuilderUtil.enumValue(rest.getDisplayStep()).toUpperCase());
-        buildElementWithValue("display-octave", rest.getDisplayOctave());
+        buildElementWithValue("display-step", BuilderUtil.enumValue(rest.getStep()).toUpperCase());
+        buildElementWithValue("display-octave", rest.getOctave());
         buildEndElement("rest");
     }
 

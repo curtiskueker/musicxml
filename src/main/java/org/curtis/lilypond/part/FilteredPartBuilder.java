@@ -23,7 +23,7 @@ public abstract class FilteredPartBuilder extends LilypondBuilder {
             if (divisions != null) currentDivisions = divisions;
         } else if (musicData instanceof Note) {
             Note note = (Note)musicData;
-            if (!note.getFullNote().isChord()) currentDuration = MathUtil.add(currentDuration, note.getDuration());
+            if (!note.isChord()) currentDuration = MathUtil.add(currentDuration, note.getDuration());
         } else if (musicData instanceof Backup) {
             Backup backup = (Backup)musicData;
             currentDuration = MathUtil.subtract(currentDuration, backup.getDuration());

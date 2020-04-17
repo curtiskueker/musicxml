@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("pitch")
-public class Pitch extends FullNoteType {
+public class Pitch extends NoteType {
     @Enumerated(EnumType.STRING)
     @Column
     private Step step;

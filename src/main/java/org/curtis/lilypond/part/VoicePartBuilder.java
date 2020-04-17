@@ -17,10 +17,9 @@ import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
-import org.curtis.musicxml.note.FullNote;
-import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.Pitch;
 import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
@@ -96,7 +95,6 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
                 if (musicData instanceof Note) {
                     Note note = (Note) musicData;
-                    FullNote fullNote = note.getFullNote();
 
                     String voice = note.getVoice();
                     if (StringUtil.isNotEmpty(voice)) measureVoices.add(voice);
@@ -173,14 +171,14 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                     }
 
                     if (!startTieAdded) {
-                        if (fullNote.isChord() && !tiedToNoteList.isEmpty()) {
+                        if (note.isChord() && !tiedToNoteList.isEmpty()) {
                             tiedToNoteList.add(note);
                             closedTiedNotes.add(note);
-                        } else if (!fullNote.isChord() && !tiedToNoteList.isEmpty()) {
+                        } else if (!note.isChord() && !tiedToNoteList.isEmpty()) {
                             processTies(tiedFromNoteList, tiedToNoteList, note);
-                        } else if (fullNote.isChord() && !tiedFromNoteList.isEmpty()) {
+                        } else if (note.isChord() && !tiedFromNoteList.isEmpty()) {
                             tiedFromNoteList.add(note);
-                        } else if (!fullNote.isChord() && !tiedFromNoteList.isEmpty()) {
+                        } else if (!note.isChord() && !tiedFromNoteList.isEmpty()) {
                             tiedToNoteList.add(note);
                             closedTiedNotes.add(note);
                         }
@@ -200,12 +198,12 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
                     // chord type
                     if (previousNote != null) {
-                        if (fullNote.isChord() && !previousNote.getFullNote().isChord()) {
-                            previousNote.getFullNote().setChordType(OrderedGroup.FIRST);
-                        } else if (fullNote.isChord() && previousNote.getFullNote().isChord()) {
-                            previousNote.getFullNote().setChordType(OrderedGroup.MIDDLE);
-                        } else if (!fullNote.isChord() && previousNote.getFullNote().isChord()) {
-                            previousNote.getFullNote().setChordType(OrderedGroup.LAST);
+                        if (note.isChord() && !previousNote.isChord()) {
+                            previousNote.setChordType(OrderedGroup.FIRST);
+                        } else if (note.isChord() && previousNote.isChord()) {
+                            previousNote.setChordType(OrderedGroup.MIDDLE);
+                        } else if (!note.isChord() && previousNote.isChord()) {
+                            previousNote.setChordType(OrderedGroup.LAST);
                         }
                     }
                     // tuplet type
@@ -224,7 +222,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 tupletsOn.put(voice, false);
                                 break;
                         }
-                    } else if (note.getFullNote().isChord() && previousNote.getFullNote().getChordType() != null && measureBuilder.getNoteTuplet(previousNote) == OrderedGroup.LAST) {
+                    } else if (note.isChord() && previousNote.getChordType() != null && measureBuilder.getNoteTuplet(previousNote) == OrderedGroup.LAST) {
                         // adjust end tuplet on chords
                         measureBuilder.setNoteTuplet(previousNote, OrderedGroup.MIDDLE);
                         measureBuilder.setNoteTuplet(note, OrderedGroup.LAST);
@@ -376,8 +374,8 @@ public class VoicePartBuilder extends FilteredPartBuilder {
             }
 
             // close last chord note at end of measure
-            if (previousNote != null && previousNote.getFullNote().isChord()) {
-                previousNote.getFullNote().setChordType(OrderedGroup.LAST);
+            if (previousNote != null && previousNote.isChord()) {
+                previousNote.setChordType(OrderedGroup.LAST);
             }
 
             if (previousMeasureBuilder != null && !hasEnding && isEndingRepeatBlock(previousMeasureBuilder) && isEndRepeatBlock(previousMeasureBuilder)) {
@@ -465,13 +463,13 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
     private boolean hasNoteMatch(List<Note> fromNoteList, List<Note> toNoteList) {
         for (Note fromNote :  fromNoteList) {
-            FullNoteType fromFullNoteType = fromNote.getFullNote().getFullNoteType();
-            if (!(fromFullNoteType instanceof Pitch)) continue;
-            Pitch fromPitch = (Pitch)fromFullNoteType;
+            NoteType fromNoteType = fromNote.getNoteType();
+            if (!(fromNoteType instanceof Pitch)) continue;
+            Pitch fromPitch = (Pitch)fromNoteType;
             for (Note toNote : toNoteList) {
-                FullNoteType toFullNoteType = toNote.getFullNote().getFullNoteType();
-                if (!(toFullNoteType instanceof Pitch)) continue;
-                Pitch toPitch = (Pitch)toFullNoteType;
+                NoteType toNoteType = toNote.getNoteType();
+                if (!(toNoteType instanceof Pitch)) continue;
+                Pitch toPitch = (Pitch)toNoteType;
                 if (fromPitch.getStep() == toPitch.getStep() && MathUtil.equalTo(fromPitch.getAlter(), toPitch.getAlter()) && fromPitch.getOctave().equals(toPitch.getOctave())) return true;
             }
         }

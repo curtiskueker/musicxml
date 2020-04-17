@@ -8,30 +8,30 @@ import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("unpitched")
-public class Unpitched extends FullNoteType {
+public class Unpitched extends NoteType {
     @Enumerated(EnumType.STRING)
-    @Column(name = "display_step")
-    private Step displayStep;
-    @Column(name = "display_octave")
-    private Integer displayOctave;
+    @Column(name = "step")
+    private Step step;
+    @Column(name = "octave")
+    private Integer octave;
 
     public Unpitched() {
 
     }
 
-    public Step getDisplayStep() {
-        return displayStep;
+    public Step getStep() {
+        return step;
     }
 
-    public void setDisplayStep(Step displayStep) {
-        this.displayStep = displayStep;
+    public void setStep(Step step) {
+        this.step = step;
     }
 
-    public Integer getDisplayOctave() {
-        return displayOctave;
+    public Integer getOctave() {
+        return octave;
     }
 
-    public void setDisplayOctave(Integer displayOctave) {
-        this.displayOctave = displayOctave;
+    public void setOctave(Integer octave) {
+        this.octave = octave;
     }
 }

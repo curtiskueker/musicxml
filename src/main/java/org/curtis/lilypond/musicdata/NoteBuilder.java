@@ -22,11 +22,10 @@ import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Chord;
 import org.curtis.musicxml.note.Forward;
-import org.curtis.musicxml.note.FullNote;
-import org.curtis.musicxml.note.FullNoteType;
 import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.Notations;
 import org.curtis.musicxml.note.Note;
+import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.curtis.musicxml.note.Notehead;
 import org.curtis.musicxml.note.NoteheadType;
@@ -116,13 +115,11 @@ public class NoteBuilder extends MusicDataBuilder {
             return stringBuilder;
         }
 
-        FullNote fullNote = note.getFullNote();
-        FullNoteType fullNoteType = fullNote.getFullNoteType();
-
-        if (fullNoteType instanceof Pitch) {
+        NoteType noteType = note.getNoteType();
+        if (noteType instanceof Pitch) {
             append(" ");
 
-            Pitch pitch = (Pitch)fullNoteType;
+            Pitch pitch = (Pitch)noteType;
             append(NoteUtil.getStep(pitch.getStep()));
             append(NoteUtil.getAlter(pitch.getAlter()));
 
@@ -133,12 +130,12 @@ public class NoteBuilder extends MusicDataBuilder {
                 LevelDisplay accidentalLevelDisplay = accidental.getLevelDisplay();
                 if (accidentalLevelDisplay != null && TypeUtil.getBoolean(accidentalLevelDisplay.getParentheses())) append("?");
             }
-        } else if (fullNoteType instanceof Unpitched) {
-            Unpitched unpitched = (Unpitched)fullNoteType;
-            append(NoteUtil.getStep(unpitched.getDisplayStep()));
-            pitchOctaveBuild(unpitched.getDisplayOctave());
-        } else if (fullNoteType instanceof Rest) {
-            Rest rest = (Rest)fullNoteType;
+        } else if (noteType instanceof Unpitched) {
+            Unpitched unpitched = (Unpitched)noteType;
+            append(NoteUtil.getStep(unpitched.getStep()));
+            pitchOctaveBuild(unpitched.getOctave());
+        } else if (noteType instanceof Rest) {
+            Rest rest = (Rest)noteType;
             Boolean measure = TypeUtil.getBoolean(rest.getMeasure());
             BigDecimal duration = note.getDuration();
             BigDecimal wholeMeasureDuration;
@@ -259,13 +256,13 @@ public class NoteBuilder extends MusicDataBuilder {
     }
 
     private StringBuilder noteDurationBuild() throws BuildException {
-        FullNoteType fullNoteType = note.getFullNote().getFullNoteType();
+        NoteType noteType = note.getNoteType();
         BigDecimal duration = note.getDuration();
         Tremolo tremolo = note.getTremolo();
         try {
             if (tremolo != null && (tremolo.getTremoloType() == TremoloType.START || tremolo.getTremoloType() == TremoloType.STOP)) {
                 append(MathUtil.truncate(MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks() + 2)));
-            } else if (fullNoteType instanceof Rest && TypeUtil.getBoolean(((Rest)fullNoteType).getMeasure())) {
+            } else if (noteType instanceof Rest && TypeUtil.getBoolean(((Rest)noteType).getMeasure())) {
                 append(TimeSignatureUtil.getWholeMeasureRestRepresentation());
             } else if (note.getNoteValue() != null) {
                 noteTypeValueBuild();
@@ -335,16 +332,13 @@ public class NoteBuilder extends MusicDataBuilder {
                     articulations.setArticulationList(articulationListCopy);
                 } else if (notation instanceof Fermata) {
                     if (note != null) {
-                        FullNote fullNote = note.getFullNote();
-                        if (fullNote != null) {
-                            FullNoteType fullNoteType = fullNote.getFullNoteType();
-                            if (fullNoteType != null) {
-                                if (fullNoteType instanceof Rest) {
-                                    Rest rest = (Rest)fullNoteType;
-                                    if (TypeUtil.getBoolean(rest.getMeasure())) {
-                                        Fermata fermata = (Fermata)notation;
-                                        fermata.setMarkup(true);
-                                    }
+                        NoteType noteType = note.getNoteType();
+                        if (noteType != null) {
+                            if (noteType instanceof Rest) {
+                                Rest rest = (Rest)noteType;
+                                if (TypeUtil.getBoolean(rest.getMeasure())) {
+                                    Fermata fermata = (Fermata)notation;
+                                    fermata.setMarkup(true);
                                 }
                             }
                         }
@@ -512,7 +506,7 @@ public class NoteBuilder extends MusicDataBuilder {
         for (NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
             Note note = noteBuilder.getNote();
-            OrderedGroup chordType = note.getFullNote().getChordType();
+            OrderedGroup chordType = note.getChordType();
             if (chordType == OrderedGroup.FIRST || chordType == OrderedGroup.SINGLETON) {
                 append(noteBuilder.preNoteBuild().toString());
             }
@@ -532,7 +526,7 @@ public class NoteBuilder extends MusicDataBuilder {
         for (NoteBuilder noteBuilder : noteBuilders) {
             noteBuilder.clear();
             Note note = noteBuilder.getNote();
-            OrderedGroup chordType = note.getFullNote().getChordType();
+            OrderedGroup chordType = note.getChordType();
             if (chordType == OrderedGroup.SINGLETON || chordType == OrderedGroup.LAST) {
                 append(noteBuilder.noteDurationBuild().toString());
             }
@@ -565,7 +559,7 @@ public class NoteBuilder extends MusicDataBuilder {
             for (NoteBuilder noteBuilder : noteBuilders) {
                 noteBuilder.clear();
                 Note note = noteBuilder.getNote();
-                OrderedGroup chordType = note.getFullNote().getChordType();
+                OrderedGroup chordType = note.getChordType();
                 if (chordType == OrderedGroup.FIRST || chordType == OrderedGroup.SINGLETON) {
                     noteBuilder.getDirections().clear();
                     noteBuilder.getDirections().addAll(directions);

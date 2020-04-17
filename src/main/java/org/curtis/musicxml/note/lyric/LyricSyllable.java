@@ -21,7 +21,7 @@ public class LyricSyllable extends DatabaseItem {
     @Column
     private Syllabic syllabic;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "text_data_id")
+    @JoinColumn(name = "lyric_text_data_id")
     private LyricTextData text;
 
     public LyricSyllable() {
