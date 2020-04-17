@@ -104,6 +104,7 @@
         <class>org.curtis.musicxml.direction.directiontype.percussion.StickLocation</class>
         <class>org.curtis.musicxml.direction.directiontype.percussion.Timpani</class>
         <class>org.curtis.musicxml.direction.directiontype.percussion.Wood</class>
+        <class>org.curtis.musicxml.direction.harmony.Barre</class>
         <class>org.curtis.musicxml.direction.harmony.Bass</class>
         <class>org.curtis.musicxml.direction.harmony.BassAlter</class>
         <class>org.curtis.musicxml.direction.harmony.BassStep</class>
@@ -128,6 +129,7 @@
         <class>org.curtis.musicxml.display.Footnote</class>
         <class>org.curtis.musicxml.display.Position</class>
         <class>org.curtis.musicxml.identity.Identification</class>
+        <class>org.curtis.musicxml.identity.IdentificationType</class>
         <class>org.curtis.musicxml.identity.Miscellaneous</class>
         <class>org.curtis.musicxml.identity.encoding.Encoder</class>
         <class>org.curtis.musicxml.identity.encoding.Encoding</class>
@@ -136,9 +138,11 @@
         <class>org.curtis.musicxml.identity.encoding.Software</class>
         <class>org.curtis.musicxml.identity.encoding.Supports</class>
         <class>org.curtis.musicxml.layout.Distance</class>
+        <class>org.curtis.musicxml.layout.Glyph</class>
         <class>org.curtis.musicxml.layout.Layout</class>
         <class>org.curtis.musicxml.layout.LineWidth</class>
         <class>org.curtis.musicxml.layout.NoteSize</class>
+        <class>org.curtis.musicxml.layout.OtherAppearance</class>
         <class>org.curtis.musicxml.layout.PageLayout</class>
         <class>org.curtis.musicxml.layout.PageMargins</class>
         <class>org.curtis.musicxml.layout.StaffLayout</class>
@@ -157,20 +161,24 @@
         <class>org.curtis.musicxml.note.FigurePart</class>
         <class>org.curtis.musicxml.note.Forward</class>
         <class>org.curtis.musicxml.note.Grace</class>
+        <class>org.curtis.musicxml.note.Line</class>
         <class>org.curtis.musicxml.note.Notations</class>
         <class>org.curtis.musicxml.note.Note</class>
         <class>org.curtis.musicxml.note.Notehead</class>
         <class>org.curtis.musicxml.note.NoteType</class>
         <class>org.curtis.musicxml.note.Pitch</class>
         <class>org.curtis.musicxml.note.Rest</class>
+        <class>org.curtis.musicxml.note.Stem</class>
         <class>org.curtis.musicxml.note.Tie</class>
         <class>org.curtis.musicxml.note.TimeModification</class>
+        <class>org.curtis.musicxml.note.Unpitched</class>
         <class>org.curtis.musicxml.note.lyric.Elision</class>
         <class>org.curtis.musicxml.note.lyric.Extend</class>
         <class>org.curtis.musicxml.note.lyric.Humming</class>
         <class>org.curtis.musicxml.note.lyric.Laughing</class>
         <class>org.curtis.musicxml.note.lyric.Lyric</class>
         <class>org.curtis.musicxml.note.lyric.LyricItem</class>
+        <class>org.curtis.musicxml.note.lyric.LyricSyllable</class>
         <class>org.curtis.musicxml.note.lyric.LyricText</class>
         <class>org.curtis.musicxml.note.lyric.LyricTextData</class>
         <class>org.curtis.musicxml.note.notation.AccidentalMark</class>
@@ -234,8 +242,8 @@
         <class>org.curtis.musicxml.note.notation.technical.BendSound</class>
         <class>org.curtis.musicxml.note.notation.technical.BendWithBar</class>
         <class>org.curtis.musicxml.note.notation.technical.BrassBend</class>
-        <class>org.curtis.musicxml.note.notation.technical.DownBow</class>
         <class>org.curtis.musicxml.note.notation.technical.DoubleTongue</class>
+        <class>org.curtis.musicxml.note.notation.technical.DownBow</class>
         <class>org.curtis.musicxml.note.notation.technical.Fingering</class>
         <class>org.curtis.musicxml.note.notation.technical.Fingernails</class>
         <class>org.curtis.musicxml.note.notation.technical.Flip</class>
@@ -244,6 +252,7 @@
         <class>org.curtis.musicxml.note.notation.technical.HalfMuted</class>
         <class>org.curtis.musicxml.note.notation.technical.HammerOn</class>
         <class>org.curtis.musicxml.note.notation.technical.Handbell</class>
+        <class>org.curtis.musicxml.note.notation.technical.HarmonClosed</class>
         <class>org.curtis.musicxml.note.notation.technical.Harmonic</class>
         <class>org.curtis.musicxml.note.notation.technical.HarmonMute</class>
         <class>org.curtis.musicxml.note.notation.technical.Heel</class>
@@ -263,10 +272,9 @@
         <class>org.curtis.musicxml.note.notation.technical.Toe</class>
         <class>org.curtis.musicxml.note.notation.technical.TripleTongue</class>
         <class>org.curtis.musicxml.note.notation.technical.UpBow</class>
-        <class>org.curtis.musicxml.note.Unpitched</class>
         <class>org.curtis.musicxml.score.Credit</class>
-        <class>org.curtis.musicxml.score.CreditImage</class>
         <class>org.curtis.musicxml.score.CreditDisplay</class>
+        <class>org.curtis.musicxml.score.CreditImage</class>
         <class>org.curtis.musicxml.score.CreditSymbol</class>
         <class>org.curtis.musicxml.score.CreditType</class>
         <class>org.curtis.musicxml.score.CreditWords</class>
@@ -286,6 +294,7 @@
         <class>org.curtis.musicxml.score.PartSymbol</class>
         <class>org.curtis.musicxml.score.Score</class>
         <class>org.curtis.musicxml.score.ScoreHeader</class>
+        <class>org.curtis.musicxml.score.ScoreName</class>
         <class>org.curtis.musicxml.score.ScorePart</class>
         <class>org.curtis.musicxml.score.ScorePartGroup</class>
         <class>org.curtis.musicxml.score.ScorePartMidi</class>
