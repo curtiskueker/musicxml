@@ -26,8 +26,8 @@ public class BeatUnit extends MetronomeMark {
     private Integer beatUnitDots = 0;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "beat_unit_parent_id", nullable = false)
-    private List<BeatUnitTied> beatUnitTieds = new ArrayList<>();
+    @JoinColumn(name = "beat_unit_tied_id"  )
+    private List<BeatUnit> beatUnitTieds = new ArrayList<>();
 
     public BeatUnit() {
 
@@ -49,11 +49,11 @@ public class BeatUnit extends MetronomeMark {
         this.beatUnitDots = beatUnitDots;
     }
 
-    public List<BeatUnitTied> getBeatUnitTieds() {
+    public List<BeatUnit> getBeatUnitTieds() {
         return beatUnitTieds;
     }
 
-    public void setBeatUnitTieds(List<BeatUnitTied> beatUnitTieds) {
+    public void setBeatUnitTieds(List<BeatUnit> beatUnitTieds) {
         this.beatUnitTieds = beatUnitTieds;
     }
 }

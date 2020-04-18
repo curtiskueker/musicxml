@@ -87,7 +87,6 @@
         <class>org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.NoteMetronome</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.BeatUnit</class>
-        <class>org.curtis.musicxml.direction.directiontype.metronome.BeatUnitTied</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeMark</class>
         <class>org.curtis.musicxml.direction.directiontype.metronome.MetronomeNote</class>

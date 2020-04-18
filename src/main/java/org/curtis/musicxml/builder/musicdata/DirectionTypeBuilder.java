@@ -30,7 +30,6 @@ import org.curtis.musicxml.direction.directiontype.Wedge;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatUnit;
-import org.curtis.musicxml.direction.directiontype.metronome.BeatUnitTied;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeMark;
@@ -185,9 +184,9 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     private void buildBeatUnit(BeatUnit beatUnit) {
         buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit.getBeatUnit()));
         for (int beatUnitDots = 1; beatUnitDots <= beatUnit.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
-        for (BeatUnitTied beatUnitTied : beatUnit.getBeatUnitTieds()) {
+        for (BeatUnit beatUnitTied : beatUnit.getBeatUnitTieds()) {
             buildStartElement("beat-unit-tied");
-            buildBeatUnit(beatUnitTied.getBeatUnit());
+            buildBeatUnit(beatUnitTied);
             buildEndElement("beat-unit-tied");
         }
     }

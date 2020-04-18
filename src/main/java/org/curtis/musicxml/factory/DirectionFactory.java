@@ -35,7 +35,6 @@ import org.curtis.musicxml.direction.directiontype.WedgeType;
 import org.curtis.musicxml.direction.directiontype.Words;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatMetronome;
 import org.curtis.musicxml.direction.directiontype.metronome.BeatUnit;
-import org.curtis.musicxml.direction.directiontype.metronome.BeatUnitTied;
 import org.curtis.musicxml.direction.directiontype.metronome.Metronome;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeBeam;
 import org.curtis.musicxml.direction.directiontype.metronome.MetronomeMark;
@@ -309,9 +308,7 @@ public class DirectionFactory {
                     beatUnit.setBeatUnitDots(beatUnitDots);
                     break;
                 case "beat-unit-tied":
-                    BeatUnitTied beatUnitTied = new BeatUnitTied();
-                    beatUnitTied.setBeatUnit(newBeatUnit(XmlUtil.getChildElements(element)));
-                    beatUnit.getBeatUnitTieds().add(beatUnitTied);
+                    beatUnit.getBeatUnitTieds().add(newBeatUnit(XmlUtil.getChildElements(element)));
                     break;
             }
         }
