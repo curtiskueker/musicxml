@@ -230,7 +230,6 @@ public class TechnicalHandler extends BaseHandler {
             if (technical != null) {
                 technical.setDisplay(DisplayFactory.newDisplay(technicalElement));
                 technicals.getTechnicals().add(technical);
-                technical.setTechnicals(technicals);
             }
         }
     }

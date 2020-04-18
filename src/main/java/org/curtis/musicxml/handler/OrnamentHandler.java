@@ -80,7 +80,6 @@ public class OrnamentHandler extends BaseHandler {
             if (ornament != null) {
                 ornament.setDisplay(DisplayFactory.newDisplay(ornamentElement));
                 ornaments.getOrnaments().add(ornament);
-                ornament.setOrnaments(ornaments);
             }
         }
         List<Element> accidentalMarkElements = XmlUtil.getChildElements(element, "accidental-mark");

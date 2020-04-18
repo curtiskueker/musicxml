@@ -1,7 +1,6 @@
 package org.curtis.musicxml.link;
 
 import org.curtis.musicxml.display.Display;
-import org.curtis.musicxml.score.CreditDisplay;
 import org.curtis.musicxml.score.MusicData;
 
 import javax.persistence.CascadeType;
@@ -9,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -27,9 +25,6 @@ public class Link extends MusicData {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
-    @ManyToOne
-    @JoinColumn(name = "credit_display_id")
-    private CreditDisplay creditDisplay;
 
     public Link() {
 
@@ -73,13 +68,5 @@ public class Link extends MusicData {
 
     public void setDisplay(Display display) {
         this.display = display;
-    }
-
-    public CreditDisplay getCreditDisplay() {
-        return creditDisplay;
-    }
-
-    public void setCreditDisplay(CreditDisplay creditDisplay) {
-        this.creditDisplay = creditDisplay;
     }
 }

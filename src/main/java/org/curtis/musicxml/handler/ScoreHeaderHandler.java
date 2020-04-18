@@ -177,15 +177,9 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 creditImage.setElementId(creditSubelement.getAttribute("id"));
                                 creditImage.setImage(DirectionFactory.newImage(creditSubelement));
                                 DisplayFactory.setFormattedDisplay(creditImage, creditSubelement);
-                                for (Link imageLink : currentLinks) {
-                                    imageLink.setCreditDisplay(creditImage);
-                                    creditImage.getLinks().add(imageLink);
-                                }
+                                for (Link imageLink : currentLinks) creditImage.getLinks().add(imageLink);
                                 currentLinks.clear();
-                                for (Bookmark imageBookmark : currentBookmarks) {
-                                    imageBookmark.setCreditDisplay(creditImage);
-                                    creditImage.getBookmarks().add(imageBookmark);
-                                }
+                                for (Bookmark imageBookmark : currentBookmarks) creditImage.getBookmarks().add(imageBookmark);
                                 currentBookmarks.clear();
                                 credit.getCreditDisplays().add(creditImage);
                                 break;
@@ -196,15 +190,9 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 TextFormat creditTextFormat = creditWords.getTextFormat();
                                 if (creditTextFormat == null) break;
                                 creditWords.setTextFormat(creditTextFormat);
-                                for (Link creditWordsLink : currentLinks) {
-                                    creditWordsLink.setCreditDisplay(creditWords);
-                                    creditWords.getLinks().add(creditWordsLink);
-                                }
+                                for (Link creditWordsLink : currentLinks) creditWords.getLinks().add(creditWordsLink);
                                 currentLinks.clear();
-                                for (Bookmark creditWordsBookmark : currentBookmarks) {
-                                    creditWordsBookmark.setCreditDisplay(creditWords);
-                                    creditWords.getBookmarks().add(creditWordsBookmark);
-                                }
+                                for (Bookmark creditWordsBookmark : currentBookmarks) creditWords.getBookmarks().add(creditWordsBookmark);
                                 currentBookmarks.clear();
                                 credit.getCreditDisplays().add(creditWords);
                                 break;
@@ -212,15 +200,9 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 CreditSymbol creditSymbol = new CreditSymbol();
                                 creditSymbol.setElementId(creditSubelement.getAttribute("id"));
                                 DisplayFactory.setFormattedDisplay(creditSymbol, creditSubelement);
-                                for (Link creditWordsLink : currentLinks) {
-                                    creditWordsLink.setCreditDisplay(creditSymbol);
-                                    creditSymbol.getLinks().add(creditWordsLink);
-                                }
+                                for (Link creditWordsLink : currentLinks) creditSymbol.getLinks().add(creditWordsLink);
                                 currentLinks.clear();
-                                for (Bookmark creditWordsBookmark : currentBookmarks) {
-                                    creditWordsBookmark.setCreditDisplay(creditSymbol);
-                                    creditSymbol.getBookmarks().add(creditWordsBookmark);
-                                }
+                                for (Bookmark creditWordsBookmark : currentBookmarks) creditSymbol.getBookmarks().add(creditWordsBookmark);
                                 currentBookmarks.clear();
                                 credit.getCreditDisplays().add(creditSymbol);
                                 break;
