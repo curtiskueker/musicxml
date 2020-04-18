@@ -26,7 +26,7 @@ public class BeatUnit extends MetronomeMark {
     private Integer beatUnitDots = 0;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "beat_unit_tied_id"  )
+    @JoinColumn(name = "beat_unit_tied_id")
     private List<BeatUnit> beatUnitTieds = new ArrayList<>();
 
     public BeatUnit() {
