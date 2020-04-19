@@ -20,7 +20,6 @@ import org.curtis.musicxml.note.notation.technical.Golpe;
 import org.curtis.musicxml.note.notation.technical.HalfMuted;
 import org.curtis.musicxml.note.notation.technical.Handbell;
 import org.curtis.musicxml.note.notation.technical.HandbellType;
-import org.curtis.musicxml.note.notation.technical.HarmonClosed;
 import org.curtis.musicxml.note.notation.technical.HarmonClosedLocation;
 import org.curtis.musicxml.note.notation.technical.HarmonClosedValue;
 import org.curtis.musicxml.note.notation.technical.HarmonMute;
@@ -214,10 +213,8 @@ public class TechnicalHandler extends BaseHandler {
                 case "harmon-mute":
                     HarmonMute harmonMute = new HarmonMute();
                     Element harmonClosedElement = XmlUtil.getChildElement(technicalElement, "harmon-closed");
-                    HarmonClosed harmonClosed = new HarmonClosed();
-                    harmonClosed.setValue(FactoryUtil.enumValue(HarmonClosedValue.class, XmlUtil.getElementText(harmonClosedElement)));
-                    harmonClosed.setLocation(FactoryUtil.enumValue(HarmonClosedLocation.class, harmonClosedElement.getAttribute("location")));
-                    harmonMute.setHarmonClosed(harmonClosed);
+                    harmonMute.setValue(FactoryUtil.enumValue(HarmonClosedValue.class, XmlUtil.getElementText(harmonClosedElement)));
+                    harmonMute.setLocation(FactoryUtil.enumValue(HarmonClosedLocation.class, harmonClosedElement.getAttribute("location")));
                     technical = harmonMute;
                     break;
                 case "other-technical":

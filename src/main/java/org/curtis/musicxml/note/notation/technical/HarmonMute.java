@@ -1,27 +1,38 @@
 package org.curtis.musicxml.note.notation.technical;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("harmon mute")
 public class HarmonMute extends Technical {
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "harmon_closed_id")
-    private HarmonClosed harmonClosed;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private HarmonClosedValue value;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private HarmonClosedLocation location;
 
     public HarmonMute() {
 
     }
 
-    public HarmonClosed getHarmonClosed() {
-        return harmonClosed;
+    public HarmonClosedValue getValue() {
+        return value;
     }
 
-    public void setHarmonClosed(HarmonClosed harmonClosed) {
-        this.harmonClosed = harmonClosed;
+    public void setValue(HarmonClosedValue value) {
+        this.value = value;
+    }
+
+    public HarmonClosedLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(HarmonClosedLocation location) {
+        this.location = location;
     }
 }

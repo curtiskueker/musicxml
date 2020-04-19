@@ -19,7 +19,6 @@ import org.curtis.musicxml.note.notation.technical.HalfMuted;
 import org.curtis.musicxml.note.notation.technical.HammerOn;
 import org.curtis.musicxml.note.notation.technical.HammerOnPullOff;
 import org.curtis.musicxml.note.notation.technical.Handbell;
-import org.curtis.musicxml.note.notation.technical.HarmonClosed;
 import org.curtis.musicxml.note.notation.technical.HarmonMute;
 import org.curtis.musicxml.note.notation.technical.Harmonic;
 import org.curtis.musicxml.note.notation.technical.HarmonicPitch;
@@ -263,8 +262,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
         buildOpenElement("harmon-mute");
         buildAttributes(DisplayBuilder.buildDisplay(harmonMute.getDisplay()));
         buildCloseElement();
-        HarmonClosed harmonClosed = harmonMute.getHarmonClosed();
-        buildElementWithValueAndAttribute("harmon-closed", BuilderUtil.enumValue(harmonClosed.getValue()), "location", BuilderUtil.enumValue(harmonClosed.getLocation()));
+        buildElementWithValueAndAttribute("harmon-closed", BuilderUtil.enumValue(harmonMute.getValue()), "location", BuilderUtil.enumValue(harmonMute.getLocation()));
         buildEndElement("harmon-mute");
     }
 

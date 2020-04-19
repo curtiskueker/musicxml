@@ -250,7 +250,6 @@
         <class>org.curtis.musicxml.note.notation.technical.HalfMuted</class>
         <class>org.curtis.musicxml.note.notation.technical.HammerOn</class>
         <class>org.curtis.musicxml.note.notation.technical.Handbell</class>
-        <class>org.curtis.musicxml.note.notation.technical.HarmonClosed</class>
         <class>org.curtis.musicxml.note.notation.technical.Harmonic</class>
         <class>org.curtis.musicxml.note.notation.technical.HarmonMute</class>
         <class>org.curtis.musicxml.note.notation.technical.Heel</class>
