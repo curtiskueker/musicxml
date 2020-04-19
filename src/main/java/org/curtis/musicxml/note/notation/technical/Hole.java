@@ -12,7 +12,7 @@ public class Hole extends Technical {
     @Column(name = "hole_type")
     private String holeType;
     @Enumerated(EnumType.STRING)
-    @Column(name = "hole_close_type")
+    @Column(name = "hole_closed_type")
     private HoleClosedType holeClosedType;
     @Enumerated(EnumType.STRING)
     @Column(name = "hole_closed_location")
