@@ -190,7 +190,6 @@
         <class>org.curtis.musicxml.note.notation.NonArpeggiate</class>
         <class>org.curtis.musicxml.note.notation.Notation</class>
         <class>org.curtis.musicxml.note.notation.Ornaments</class>
-        <class>org.curtis.musicxml.note.notation.OrnamentAccidental</class>
         <class>org.curtis.musicxml.note.notation.OtherNotation</class>
         <class>org.curtis.musicxml.note.notation.Slide</class>
         <class>org.curtis.musicxml.note.notation.Slur</class>

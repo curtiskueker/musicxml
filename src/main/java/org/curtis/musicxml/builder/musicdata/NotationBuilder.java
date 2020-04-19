@@ -12,7 +12,6 @@ import org.curtis.musicxml.note.notation.Fermata;
 import org.curtis.musicxml.note.notation.Glissando;
 import org.curtis.musicxml.note.notation.NonArpeggiate;
 import org.curtis.musicxml.note.notation.Notation;
-import org.curtis.musicxml.note.notation.OrnamentAccidental;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.OtherNotation;
 import org.curtis.musicxml.note.notation.Slide;
@@ -166,9 +165,7 @@ public class NotationBuilder extends MusicDataBuilder {
             OrnamentBuilder ornamentBuilder = new OrnamentBuilder(ornament);
             append(ornamentBuilder.build().toString());
         }
-        for (OrnamentAccidental ornamentAccidental : ornaments.getOrnamentAccidentals()) {
-            buildAccidentalMark(ornamentAccidental.getAccidentalMark());
-        }
+        for (AccidentalMark accidentalMark : ornaments.getAccidentalMarks()) buildAccidentalMark(accidentalMark);
         buildEndElement("ornaments");
     }
 
