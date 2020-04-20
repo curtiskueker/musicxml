@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction;
 
-import org.curtis.musicxml.common.NameDisplay;
+import org.curtis.musicxml.display.NameDisplay;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.layout.Layout;
 import org.curtis.musicxml.score.MusicDataElement;

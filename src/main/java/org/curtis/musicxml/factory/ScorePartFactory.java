@@ -2,8 +2,8 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
-import org.curtis.musicxml.common.NameDisplay;
-import org.curtis.musicxml.common.TextDisplay;
+import org.curtis.musicxml.display.NameDisplay;
+import org.curtis.musicxml.display.TextDisplay;
 import org.curtis.musicxml.common.play.Ipa;
 import org.curtis.musicxml.common.play.Mute;
 import org.curtis.musicxml.common.play.MuteType;

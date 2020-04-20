@@ -3,7 +3,7 @@ package org.curtis.musicxml.note;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.common.SymbolSize;
-import org.curtis.musicxml.common.TextDisplay;
+import org.curtis.musicxml.display.TextDisplay;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.play.Play;

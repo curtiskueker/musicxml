@@ -1,7 +1,6 @@
 package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.Level;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,8 +15,8 @@ public class Editorial extends DatabaseItem {
     @JoinColumn(name = "footnote_id")
     private Footnote footnote;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "level_id")
-    private Level level;
+    @JoinColumn(name = "editorial_level_id")
+    private EditorialLevel editorialLevel;
 
     public Editorial() {
 
@@ -31,11 +30,11 @@ public class Editorial extends DatabaseItem {
         this.footnote = footnote;
     }
 
-    public Level getLevel() {
-        return level;
+    public EditorialLevel getEditorialLevel() {
+        return editorialLevel;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
+    public void setEditorialLevel(EditorialLevel editorialLevel) {
+        this.editorialLevel = editorialLevel;
     }
 }

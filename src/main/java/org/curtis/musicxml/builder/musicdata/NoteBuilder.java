@@ -3,7 +3,7 @@ package org.curtis.musicxml.builder.musicdata;
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
-import org.curtis.musicxml.common.TextDisplay;
+import org.curtis.musicxml.display.TextDisplay;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
 import org.curtis.musicxml.note.BeamType;

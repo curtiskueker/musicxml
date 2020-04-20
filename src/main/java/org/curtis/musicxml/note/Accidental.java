@@ -1,7 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.common.LevelDisplay;
+import org.curtis.musicxml.display.LevelDisplay;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 

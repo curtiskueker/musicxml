@@ -9,7 +9,7 @@ import org.curtis.lilypond.util.PlacementBuildUtil;
 import org.curtis.lilypond.util.TimeSignatureUtil;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.LevelDisplay;
+import org.curtis.musicxml.display.LevelDisplay;
 import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.directiontype.DirectionType;

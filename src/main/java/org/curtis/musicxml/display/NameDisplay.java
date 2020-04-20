@@ -1,6 +1,7 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.display.TextDisplay;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;

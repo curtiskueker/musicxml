@@ -1,7 +1,7 @@
 package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.common.LevelDisplay;
+import org.curtis.musicxml.display.LevelDisplay;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.layout.SystemDivider;
 import org.curtis.musicxml.display.TextFormat;

@@ -1,6 +1,7 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.common.SymbolSize;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;

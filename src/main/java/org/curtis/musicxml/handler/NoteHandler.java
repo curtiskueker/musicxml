@@ -1,7 +1,7 @@
 package org.curtis.musicxml.handler;
 
 import org.curtis.musicxml.common.Connection;
-import org.curtis.musicxml.common.TextDisplay;
+import org.curtis.musicxml.display.TextDisplay;
 import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;

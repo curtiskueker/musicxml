@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
-import org.curtis.musicxml.common.LevelDisplay;
+import org.curtis.musicxml.display.LevelDisplay;
 import org.curtis.musicxml.note.AccidentalType;
 
 import javax.persistence.CascadeType;

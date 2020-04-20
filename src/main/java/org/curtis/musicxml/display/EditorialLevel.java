@@ -1,4 +1,4 @@
-package org.curtis.musicxml.common;
+package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
 import org.hibernate.annotations.Type;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "editorial_level")
-public class Level extends DatabaseItem {
+public class EditorialLevel extends DatabaseItem {
     @Column
     private String value;
     @Column
@@ -22,7 +22,7 @@ public class Level extends DatabaseItem {
     @JoinColumn(name = "level_display_id")
     private LevelDisplay levelDisplay;
 
-    public Level() {
+    public EditorialLevel() {
 
     }
 

@@ -36,14 +36,14 @@
         <class>org.curtis.musicxml.barline.BarlineEnding</class>
         <class>org.curtis.musicxml.barline.BarlineRepeat</class>
         <class>org.curtis.musicxml.common.DashedFormatting</class>
-        <class>org.curtis.musicxml.common.DisplayText</class>
-        <class>org.curtis.musicxml.common.Level</class>
-        <class>org.curtis.musicxml.common.LevelDisplay</class>
+        <class>org.curtis.musicxml.display.DisplayText</class>
+        <class>org.curtis.musicxml.display.EditorialLevel</class>
+        <class>org.curtis.musicxml.display.LevelDisplay</class>
         <class>org.curtis.musicxml.common.MidiDevice</class>
         <class>org.curtis.musicxml.common.MidiInstrument</class>
-        <class>org.curtis.musicxml.common.NameDisplay</class>
+        <class>org.curtis.musicxml.display.NameDisplay</class>
         <class>org.curtis.musicxml.common.Printout</class>
-        <class>org.curtis.musicxml.common.TextDisplay</class>
+        <class>org.curtis.musicxml.display.TextDisplay</class>
         <class>org.curtis.musicxml.common.XmlComment</class>
         <class>org.curtis.musicxml.common.play.Ipa</class>
         <class>org.curtis.musicxml.common.play.Mute</class>
@@ -151,7 +151,7 @@
         <class>org.curtis.musicxml.link.Link</class>
         <class>org.curtis.musicxml.link.LinkAttributes</class>
         <class>org.curtis.musicxml.note.Accidental</class>
-        <class>org.curtis.musicxml.note.AccidentalText</class>
+        <class>org.curtis.musicxml.display.AccidentalText</class>
         <class>org.curtis.musicxml.note.Backup</class>
         <class>org.curtis.musicxml.note.Beam</class>
         <class>org.curtis.musicxml.note.Dot</class>

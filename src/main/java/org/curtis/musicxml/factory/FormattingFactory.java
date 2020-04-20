@@ -1,14 +1,14 @@
 package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.common.DashedFormatting;
-import org.curtis.musicxml.common.DisplayText;
+import org.curtis.musicxml.display.DisplayText;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.display.EnclosureShape;
-import org.curtis.musicxml.common.Level;
-import org.curtis.musicxml.common.LevelDisplay;
+import org.curtis.musicxml.display.EditorialLevel;
+import org.curtis.musicxml.display.LevelDisplay;
 import org.curtis.musicxml.common.Printout;
 import org.curtis.musicxml.common.SymbolSize;
-import org.curtis.musicxml.common.TextDisplay;
+import org.curtis.musicxml.display.TextDisplay;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Footnote;
 import org.curtis.musicxml.layout.SystemDivider;
@@ -116,26 +116,26 @@ public class FormattingFactory {
         if (element == null) return null;
 
         Footnote footnote = DisplayFactory.newFootnote(XmlUtil.getChildElement(element, "footnote"));
-        Level level = newLevel(XmlUtil.getChildElement(element, "level"));
+        EditorialLevel editorialLevel = newEditorialLevel(XmlUtil.getChildElement(element, "level"));
 
-        if (footnote == null && level == null) return null;
+        if (footnote == null && editorialLevel == null) return null;
 
         Editorial editorial = new Editorial();
         editorial.setFootnote(footnote);
-        editorial.setLevel(level);
+        editorial.setEditorialLevel(editorialLevel);
 
         return editorial;
     }
 
-    private static Level newLevel(Element element) {
+    private static EditorialLevel newEditorialLevel(Element element) {
         if (element == null) return null;
 
-        Level level = new Level();
-        level.setValue(XmlUtil.getElementText(element));
-        level.setReference(TypeUtil.getYesNo(element.getAttribute("reference")));
-        level.setLevelDisplay(newLevelDisplay(element));
+        EditorialLevel editorialLevel = new EditorialLevel();
+        editorialLevel.setValue(XmlUtil.getElementText(element));
+        editorialLevel.setReference(TypeUtil.getYesNo(element.getAttribute("reference")));
+        editorialLevel.setLevelDisplay(newLevelDisplay(element));
 
-        return level;
+        return editorialLevel;
     }
 
     public static LevelDisplay newLevelDisplay(Element element) {

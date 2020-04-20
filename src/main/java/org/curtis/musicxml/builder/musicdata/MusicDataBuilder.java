@@ -6,14 +6,14 @@ import org.curtis.musicxml.builder.BaseBuilder;
 import org.curtis.musicxml.builder.DisplayBuilder;
 import org.curtis.musicxml.builder.FormattingBuilder;
 import org.curtis.musicxml.builder.BuilderUtil;
-import org.curtis.musicxml.common.DisplayText;
+import org.curtis.musicxml.display.DisplayText;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.common.Level;
+import org.curtis.musicxml.display.EditorialLevel;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
-import org.curtis.musicxml.common.NameDisplay;
-import org.curtis.musicxml.common.TextDisplay;
+import org.curtis.musicxml.display.NameDisplay;
+import org.curtis.musicxml.display.TextDisplay;
 import org.curtis.musicxml.common.play.Ipa;
 import org.curtis.musicxml.common.play.Mute;
 import org.curtis.musicxml.common.play.OtherPlay;
@@ -26,7 +26,7 @@ import org.curtis.musicxml.direction.directiontype.DynamicsMarking;
 import org.curtis.musicxml.direction.directiontype.Segno;
 import org.curtis.musicxml.display.FormattedDisplay;
 import org.curtis.musicxml.display.TextFormat;
-import org.curtis.musicxml.note.AccidentalText;
+import org.curtis.musicxml.display.AccidentalText;
 import org.curtis.musicxml.note.TimeModification;
 import org.curtis.musicxml.note.lyric.Extend;
 import org.curtis.musicxml.note.notation.Fermata;
@@ -66,7 +66,7 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         if (editorial == null) return;
 
         buildFormattedDisplay("footnote", editorial.getFootnote());
-        buildLevel(editorial.getLevel());
+        buildLevel(editorial.getEditorialLevel());
     }
 
     protected void buildFormattedDisplay(String elementName, FormattedDisplay formattedDisplay) {
@@ -89,13 +89,13 @@ public abstract class MusicDataBuilder extends BaseBuilder {
         } else buildElementWithAttributes(elementName, attributes);
     }
 
-    protected void buildLevel(Level level) {
-        if (level ==  null) return;
+    protected void buildLevel(EditorialLevel editorialLevel) {
+        if (editorialLevel ==  null) return;
 
         Map<String, String> attributes = new HashMap<>();
-        attributes.put("reference", BuilderUtil.yesOrNo(level.getReference()));
-        attributes.putAll(FormattingBuilder.buildLevelDisplay(level.getLevelDisplay()));
-        buildElementWithValueAndAttributes("level", level.getValue(), attributes);
+        attributes.put("reference", BuilderUtil.yesOrNo(editorialLevel.getReference()));
+        attributes.putAll(FormattingBuilder.buildLevelDisplay(editorialLevel.getLevelDisplay()));
+        buildElementWithValueAndAttributes("level", editorialLevel.getValue(), attributes);
     }
 
     protected void buildTuning(Tuning tuning) {

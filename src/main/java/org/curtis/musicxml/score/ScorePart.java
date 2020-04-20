@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.musicxml.common.NameDisplay;
+import org.curtis.musicxml.display.NameDisplay;
 import org.curtis.musicxml.identity.Identification;
 import org.curtis.musicxml.score.instrument.ScoreInstrument;
 import org.hibernate.annotations.Fetch;

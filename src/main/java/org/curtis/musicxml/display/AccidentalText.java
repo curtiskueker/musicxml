@@ -1,6 +1,6 @@
-package org.curtis.musicxml.note;
+package org.curtis.musicxml.display;
 
-import org.curtis.musicxml.common.TextDisplay;
+import org.curtis.musicxml.note.AccidentalType;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;

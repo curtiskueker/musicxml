@@ -2,7 +2,7 @@ package org.curtis.musicxml.factory;
 
 import org.curtis.musicxml.note.FigurePart;
 import org.curtis.musicxml.util.TypeUtil;
-import org.curtis.musicxml.note.AccidentalText;
+import org.curtis.musicxml.display.AccidentalText;
 import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.BeamType;
 import org.curtis.musicxml.note.Figure;
