@@ -3,13 +3,13 @@ package org.curtis.musicxml.bin;
 import org.curtis.database.DBException;
 import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
+import org.curtis.database.ItemOrderer;
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Measure;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.musicxml.score.Part;
-import org.curtis.musicxml.score.PartListItem;
 import org.curtis.musicxml.score.Score;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.util.FileUtil;
@@ -47,33 +47,15 @@ public class MusicXml2Db extends MusicXmlScript {
             score.setScoreName(scoreName);
 
             System.err.println("Creating database record...");
-            Integer partItemOrdering = 1;
-            for (PartListItem partListItem : score.getScoreHeader().getPartListItems()) {
-                partListItem.setOrdering(partItemOrdering);
-                partItemOrdering++;
-            }
 
-            Integer partOrdering = 1;
-            for (Part part : score.getParts()) {
-                part.setOrdering(partOrdering);
-                partOrdering++;
-                Integer measureOrdering = 1;
-                for (Measure measure : part.getMeasures()) {
-                    measure.setOrdering(measureOrdering);
-                    measureOrdering++;
-                }
-            }
-
+            ItemOrderer.orderScoreItems(score);
             dbTransaction.create(score);
 
             // MusicData created separately
             for (Part part : score.getParts()) {
                 for (Measure measure : part.getMeasures()) {
-                    Integer musicDataOrdering = 1;
                     for (MusicData musicData : measure.getMusicDataList()) {
                         musicData.setMeasure(measure);
-                        musicData.setOrdering(musicDataOrdering);
-                        musicDataOrdering++;
                         dbTransaction.create(musicData);
                     }
                 }
