@@ -1,6 +1,6 @@
 package org.curtis.musicxml.layout;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "distance")
-public class Distance extends DatabaseItem {
+public class Distance extends OrderedItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal value;
     @Column

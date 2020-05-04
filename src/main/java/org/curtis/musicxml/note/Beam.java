@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.database.DatabaseElement;
+import org.curtis.database.OrderedElement;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "beam")
-public class Beam extends DatabaseElement {
+public class Beam extends OrderedElement {
     @Enumerated(EnumType.STRING)
     @Column
     private BeamType type;

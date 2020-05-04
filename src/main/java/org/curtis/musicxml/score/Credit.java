@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseElement;
+import org.curtis.database.OrderedElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -10,20 +10,23 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "credit")
-public class Credit extends DatabaseElement {
+public class Credit extends OrderedElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "credit_id", nullable = false)
+    @OrderBy("ordering")
     private List<CreditType> creditTypes = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "credit_id", nullable = false)
+    @OrderBy("ordering")
     private List<CreditDisplay> creditDisplays = new ArrayList<>();
     @Column
     private Integer page;

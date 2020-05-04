@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.note.Step;
 
 import javax.persistence.Column;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "pedal_tuning")
-public class PedalTuning extends DatabaseItem {
+public class PedalTuning extends OrderedItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "pedal_step")
     private Step pedalStep;

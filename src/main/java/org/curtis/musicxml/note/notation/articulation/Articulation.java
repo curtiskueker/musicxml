@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.notation.articulation;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "articulation")
 @DiscriminatorColumn(name = "articulation_type")
-public abstract class Articulation extends DatabaseItem {
+public abstract class Articulation extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;

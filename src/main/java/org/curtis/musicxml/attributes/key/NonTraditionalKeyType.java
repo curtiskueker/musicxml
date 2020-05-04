@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.key;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.Step;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "non_traditional_key_type")
-public class NonTraditionalKeyType extends DatabaseItem {
+public class NonTraditionalKeyType extends OrderedItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "key_step")
     private Step keyStep;

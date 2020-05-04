@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.measure;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "except_voice")
-public class ExceptVoice extends DatabaseItem {
+public class ExceptVoice extends OrderedItem {
     @Column
     private String value;
 

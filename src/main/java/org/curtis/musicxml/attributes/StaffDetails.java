@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
@@ -13,13 +13,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "staff_details")
-public class StaffDetails extends DatabaseItem {
+public class StaffDetails extends OrderedItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "staff_type")
     private StaffType staffType;
@@ -28,6 +29,7 @@ public class StaffDetails extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "staff_details_id", nullable = false)
+    @OrderBy("ordering")
     private List<StaffTuning> staffTunings;
     @Column
     private Integer capo;

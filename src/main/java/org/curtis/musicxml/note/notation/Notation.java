@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.notation;
 
-import org.curtis.database.DatabaseElement;
+import org.curtis.database.OrderedElement;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "notation")
 @DiscriminatorColumn(name = "notation_type")
-public abstract class Notation extends DatabaseElement {
+public abstract class Notation extends OrderedElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;

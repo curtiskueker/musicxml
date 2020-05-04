@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.attributes.Tuning;
 
 import javax.persistence.CascadeType;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "accord")
-public class Accord extends DatabaseItem {
+public class Accord extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tuning_id")
     private Tuning tuning;

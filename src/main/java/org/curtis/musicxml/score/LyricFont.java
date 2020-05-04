@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.display.Font;
 
 import javax.persistence.CascadeType;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "lyric_font")
-public class LyricFont extends DatabaseItem {
+public class LyricFont extends OrderedItem {
     @Column(name = "lyric_font_number")
     private String number;
     @Column

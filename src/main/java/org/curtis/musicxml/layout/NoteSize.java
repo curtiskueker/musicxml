@@ -1,6 +1,6 @@
 package org.curtis.musicxml.layout;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "note_size")
-public class NoteSize extends DatabaseItem {
+public class NoteSize extends OrderedItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal value;
     @Enumerated(EnumType.STRING)

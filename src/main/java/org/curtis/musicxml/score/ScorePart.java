@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,14 +41,17 @@ public class ScorePart extends PartListItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "part_list_item_id", nullable = false)
+    @OrderBy("ordering")
     private List<ScorePartGroup> groups = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "part_list_item_id", nullable = false)
+    @OrderBy("ordering")
     private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "part_list_item_id", nullable = false)
+    @OrderBy("ordering")
     private List<ScorePartMidi> scorePartMidis = new ArrayList<>();
 
     public ScorePart() {

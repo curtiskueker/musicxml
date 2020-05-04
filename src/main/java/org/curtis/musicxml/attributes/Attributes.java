@@ -17,6 +17,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,12 @@ public class Attributes extends MusicData {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
+    @OrderBy("ordering")
     private List<Key> keys = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
+    @OrderBy("ordering")
     private List<Time> timeList = new ArrayList<>();
     @Column
     private Integer staves;
@@ -47,22 +50,27 @@ public class Attributes extends MusicData {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
+    @OrderBy("ordering")
     private List<Clef> clefs = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
+    @OrderBy("ordering")
     private List<StaffDetails> staffDetailsList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
+    @OrderBy("ordering")
     private List<Transpose> transpositions = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
+    @OrderBy("ordering")
     private List<Directive> directives = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "attributes_id", nullable = false)
+    @OrderBy("ordering")
     private List<MeasureStyle> measureStyles = new ArrayList<>();
 
     public Attributes() {

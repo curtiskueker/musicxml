@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "harmony_chord")
 @DiscriminatorColumn(name = "harmony_chord_type")
-public abstract class HarmonyChord extends DatabaseItem {
+public abstract class HarmonyChord extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "kind_id")
     private Kind kind;
@@ -34,6 +35,7 @@ public abstract class HarmonyChord extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "harmony_chord_id", nullable = false)
+    @OrderBy("ordering")
     private List<Degree> degrees = new ArrayList<>();
 
     public Kind getKind() {

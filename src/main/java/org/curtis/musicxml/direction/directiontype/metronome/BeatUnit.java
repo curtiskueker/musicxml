@@ -13,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class BeatUnit extends MetronomeMark {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "beat_unit_tied_id")
+    @OrderBy("ordering")
     private List<BeatUnit> beatUnitTieds = new ArrayList<>();
 
     public BeatUnit() {

@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "staff_tuning")
-public class StaffTuning extends DatabaseItem {
+public class StaffTuning extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tuning_id")
     private Tuning tuning;

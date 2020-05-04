@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "directive")
-public class Directive extends DatabaseItem {
+public class Directive extends OrderedItem {
     @Column
     private String value;
     @OneToOne(cascade = CascadeType.ALL)

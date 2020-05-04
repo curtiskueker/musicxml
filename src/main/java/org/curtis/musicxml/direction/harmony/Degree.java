@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "degree")
-public class Degree extends DatabaseItem {
+public class Degree extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "degree_value_id")
     private DegreeValue degreeValue;

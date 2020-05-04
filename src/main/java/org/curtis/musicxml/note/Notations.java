@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.database.DatabaseElement;
+import org.curtis.database.OrderedElement;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.note.notation.Notation;
 import org.hibernate.annotations.Fetch;
@@ -14,19 +14,21 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "notations")
-public class Notations extends DatabaseElement {
+public class Notations extends OrderedElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "notations_id")
+    @OrderBy("ordering")
     private List<Notation> notations = new ArrayList<>();
     @Column(name = "print_object")
     @Type(type="yes_no")

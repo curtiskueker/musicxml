@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.key;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "key_octave")
-public class KeyOctave extends DatabaseItem {
+public class KeyOctave extends OrderedItem {
     @Column
     private Integer octave;
     @Column(name = "key_octave_number")

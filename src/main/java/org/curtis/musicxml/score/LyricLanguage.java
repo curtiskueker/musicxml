@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "lyric_language")
-public class LyricLanguage extends DatabaseItem {
+public class LyricLanguage extends OrderedItem {
     @Column(name = "lyric_language_number")
     private String number;
     @Column

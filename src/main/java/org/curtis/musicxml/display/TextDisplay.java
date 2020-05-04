@@ -1,7 +1,5 @@
 package org.curtis.musicxml.display;
 
-import org.curtis.musicxml.display.FormattedDisplay;
-
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;

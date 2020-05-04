@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "score_part_group")
-public class ScorePartGroup extends DatabaseItem {
+public class ScorePartGroup extends OrderedItem {
     @Column(name = "group_name")
     private String group;
 

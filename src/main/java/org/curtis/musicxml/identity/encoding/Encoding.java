@@ -1,6 +1,6 @@
 package org.curtis.musicxml.identity.encoding;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -12,6 +12,6 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "encoding")
 @DiscriminatorColumn(name = "encoding_type")
-public abstract class Encoding extends DatabaseItem {
+public abstract class Encoding extends OrderedItem {
 
 }

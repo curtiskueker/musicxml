@@ -1,6 +1,6 @@
 package org.curtis.musicxml.identity;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "identification_type")
-public class IdentificationType extends DatabaseItem {
+public class IdentificationType extends OrderedItem {
     @Column(name = "id_name")
     private String idName;
     @Column(name = "id_value")

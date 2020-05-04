@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.note.notation.technical.Fingering;
 import org.curtis.musicxml.note.notation.technical.Fret;
 import org.curtis.musicxml.note.notation.technical.StringNumber;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "frame_note")
-public class FrameNote extends DatabaseItem {
+public class FrameNote extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "string_id")
     private StringNumber string;

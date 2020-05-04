@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "feature")
-public class Feature extends DatabaseItem {
+public class Feature extends OrderedItem {
     @Column
     private String value;
     @Column

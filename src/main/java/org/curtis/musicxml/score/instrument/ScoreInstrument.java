@@ -1,6 +1,6 @@
 package org.curtis.musicxml.score.instrument;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "score_instrument")
-public class ScoreInstrument extends DatabaseItem {
+public class ScoreInstrument extends OrderedItem {
     @Column(name = "instrument_name")
     private String instrumentName;
     @Column(name = "instrument_abbreviation")

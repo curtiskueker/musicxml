@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note.lyric;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "lyric_syllable")
-public class LyricSyllable extends DatabaseItem {
+public class LyricSyllable extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "elision_id")
     private Elision elision;

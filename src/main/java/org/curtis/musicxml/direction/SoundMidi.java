@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.common.MidiDevice;
 import org.curtis.musicxml.common.MidiInstrument;
 import org.curtis.musicxml.common.play.Play;
@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "sound_midi")
-public class SoundMidi extends DatabaseItem {
+public class SoundMidi extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "midi_device_id")
     private MidiDevice midiDevice;

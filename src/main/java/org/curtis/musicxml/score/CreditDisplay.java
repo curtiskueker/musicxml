@@ -15,6 +15,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,12 @@ public abstract class CreditDisplay extends FormattedDisplay {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "credit_display_id")
+    @OrderBy("ordering")
     private List<Link> links = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "credit_display_id")
+    @OrderBy("ordering")
     private List<Bookmark> bookmarks = new ArrayList<>();
     @Column(name = "element_id")
     private String elementId;

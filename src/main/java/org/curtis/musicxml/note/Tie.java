@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.common.Connection;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tie")
-public class Tie extends DatabaseItem {
+public class Tie extends OrderedItem {
     @Enumerated(EnumType.STRING)
     @Column
     private Connection type;

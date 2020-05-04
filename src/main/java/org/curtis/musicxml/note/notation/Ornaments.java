@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,12 @@ public class Ornaments extends Notation {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "ornaments_id")
+    @OrderBy("ordering")
     private List<Ornament> ornaments = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "ornaments_id")
+    @OrderBy("ordering")
     private List<AccidentalMark> accidentalMarks = new ArrayList<>();
     @Transient
     // used by lilypond

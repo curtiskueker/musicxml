@@ -1,6 +1,6 @@
 package org.curtis.musicxml.common.play;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -12,6 +12,6 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "play_type")
 @DiscriminatorColumn(name = "play_type_type")
-public abstract class PlayType extends DatabaseItem {
+public abstract class PlayType extends OrderedItem {
 
 }

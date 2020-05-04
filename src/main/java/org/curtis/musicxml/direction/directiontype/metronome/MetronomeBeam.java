@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.note.BeamType;
 
 import javax.persistence.Column;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "metronome_beam")
-public class MetronomeBeam extends DatabaseItem {
+public class MetronomeBeam extends OrderedItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "beam_type")
     private BeamType beamType;

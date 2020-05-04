@@ -1,6 +1,6 @@
 package org.curtis.musicxml.note;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.note.lyric.Extend;
 
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "figure")
-public class Figure extends DatabaseItem {
+public class Figure extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "prefix_id")
     private FigurePart prefix;

@@ -64,6 +64,7 @@ public class LayoutFactory {
                     Element systemDividersElement = XmlUtil.getChildElement(layoutSubelement, "system-dividers");
                     systemLayout.setLeftSystemDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(systemDividersElement, "left-divider")));
                     systemLayout.setRightSystemDivider(FormattingFactory.newSystemDivider(XmlUtil.getChildElement(systemDividersElement, "right-divider")));
+                    layout.setSystemLayout(systemLayout);
                     break;
                 case "staff-layout":
                     List<StaffLayout> staffLayouts = layout.getStaffLayouts();

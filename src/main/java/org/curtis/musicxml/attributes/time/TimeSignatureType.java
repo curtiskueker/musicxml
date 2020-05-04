@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.time;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "time_signature_type")
-public class TimeSignatureType extends DatabaseItem {
+public class TimeSignatureType extends OrderedItem {
     @Column
     private String beats;
     @Column(name = "beat_type")

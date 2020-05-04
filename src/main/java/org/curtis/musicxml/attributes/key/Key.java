@@ -1,6 +1,6 @@
 package org.curtis.musicxml.attributes.key;
 
-import org.curtis.database.DatabaseElement;
+import org.curtis.database.OrderedElement;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -16,6 +16,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,11 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "key_signature")
 @DiscriminatorColumn(name = "key_type")
-public abstract class Key extends DatabaseElement {
+public abstract class Key extends OrderedElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "key_id", nullable = false)
+    @OrderBy("ordering")
     private List<KeyOctave> keyOctaves = new ArrayList<>();
     @Column(name = "key_number")
     private Integer number;

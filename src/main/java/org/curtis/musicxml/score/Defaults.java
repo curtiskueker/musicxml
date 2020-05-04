@@ -19,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,22 +38,27 @@ public class Defaults extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
+    @OrderBy("ordering")
     private List<LineWidth> lineWidths = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
+    @OrderBy("ordering")
     private List<NoteSize> noteSizes = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
+    @OrderBy("ordering")
     private List<Distance> distances = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
+    @OrderBy("ordering")
     private List<Glyph> glyphs = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
+    @OrderBy("ordering")
     private List<OtherAppearance> otherAppearances = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "music_font_id")
@@ -63,10 +69,12 @@ public class Defaults extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
+    @OrderBy("ordering")
     private List<LyricFont> lyricFonts = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "defaults_id", nullable = false)
+    @OrderBy("ordering")
     private List<LyricLanguage> lyricLanguages = new ArrayList<>();
 
     public Defaults() {

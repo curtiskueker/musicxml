@@ -1,6 +1,6 @@
 package org.curtis.musicxml.direction.directiontype;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "dynamics_marking")
-public class DynamicsMarking extends DatabaseItem {
+public class DynamicsMarking extends OrderedItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "dynamics_type")
     private DynamicsType dynamicsType;

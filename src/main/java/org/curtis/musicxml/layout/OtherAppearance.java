@@ -1,6 +1,6 @@
 package org.curtis.musicxml.layout;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "other_appearance")
-public class OtherAppearance extends DatabaseItem {
+public class OtherAppearance extends OrderedItem {
     @Column
     private String value;
     @Column
