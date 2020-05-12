@@ -13,20 +13,17 @@ create sequence native start with 1 increment by 1;
 
     create table accord (
        id number(10,0) not null,
+        ordering number(10,0),
         string number(10,0),
         tuning_id number(10,0),
         scordatura_id number(10,0) not null,
         primary key (id)
     );
 
-    create table appearance (
-       id number(10,0) not null,
-        primary key (id)
-    );
-
     create table articulation (
        articulation_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         breath_mark_value varchar2(255),
         caesura_value varchar2(255),
         type varchar2(255),
@@ -35,6 +32,19 @@ create sequence native start with 1 increment by 1;
         display_id number(10,0),
         line_id number(10,0),
         articulations_id number(10,0) not null,
+        primary key (id)
+    );
+
+    create table barline_ending (
+       id number(10,0) not null,
+        end_length number(12,4),
+        ending_number varchar2(255),
+        print_object char(1),
+        text_x number(12,4),
+        text_y number(12,4),
+        ending_type varchar2(255),
+        value varchar2(255),
+        display_id number(10,0),
         primary key (id)
     );
 
@@ -79,6 +89,7 @@ create sequence native start with 1 increment by 1;
 
     create table beam (
        id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         fan varchar2(255),
         beam_number number(10,0),
@@ -89,19 +100,19 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table beat_unit_tied (
-       id number(10,0) not null,
-        beat_unit_tied_parent_id number(10,0),
-        beat_unit_parent_id number(10,0) not null,
-        primary key (id)
-    );
-
     create table bend_sound (
        id number(10,0) not null,
         accelerate char(1),
         beats number(12,4),
         first_beat number(12,4),
         last_beat number(12,4),
+        primary key (id)
+    );
+
+    create table bend_with_bar (
+       id number(10,0) not null,
+        value varchar2(255),
+        display_id number(10,0),
         primary key (id)
     );
 
@@ -116,15 +127,9 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table cancel (
-       id number(10,0) not null,
-        fifths number(10,0),
-        location varchar2(255),
-        primary key (id)
-    );
-
     create table clef (
        id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         additional char(1),
         after_barline char(1),
@@ -141,6 +146,7 @@ create sequence native start with 1 increment by 1;
 
     create table credit (
        id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         page number(10,0),
         score_header_id number(10,0) not null,
@@ -160,6 +166,7 @@ create sequence native start with 1 increment by 1;
 
     create table credit_type (
        id number(10,0) not null,
+        ordering number(10,0),
         type varchar2(255),
         credit_id number(10,0) not null,
         primary key (id)
@@ -174,16 +181,17 @@ create sequence native start with 1 increment by 1;
 
     create table defaults (
        id number(10,0) not null,
-        appearance_id number(10,0),
+        scaling_millimeters number(12,4),
+        scaling_tenths number(12,4),
         layout_id number(10,0),
         music_font_id number(10,0),
-        defaults_id number(10,0),
         word_font_id number(10,0),
         primary key (id)
     );
 
     create table degree (
        id number(10,0) not null,
+        ordering number(10,0),
         print_object char(1),
         degree_alter_id number(10,0),
         degree_type_id number(10,0),
@@ -227,6 +235,7 @@ create sequence native start with 1 increment by 1;
     create table direction_type (
        direction_type_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         enclosure varchar2(255),
         direction_type varchar2(255),
@@ -262,17 +271,18 @@ create sequence native start with 1 increment by 1;
         line_end varchar2(255),
         direction_type_size number(10,0),
         staff_divide_symbol varchar2(255),
-        direction_type_list_id number(10,0),
         display_id number(10,0),
         text_format_id number(10,0),
         dashed_formatting_id number(10,0),
         metronome_mark_1_id number(10,0),
         metronome_mark_2_id number(10,0),
+        direction_type_list_id number(10,0),
         primary key (id)
     );
 
     create table direction_type_list (
        id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         direction_id number(10,0),
         primary key (id)
@@ -280,6 +290,7 @@ create sequence native start with 1 increment by 1;
 
     create table directive (
        id number(10,0) not null,
+        ordering number(10,0),
         lang varchar2(255),
         value varchar2(255),
         display_id number(10,0),
@@ -300,14 +311,16 @@ create sequence native start with 1 increment by 1;
 
     create table distance (
        id number(10,0) not null,
+        ordering number(10,0),
         type varchar2(255),
         value number(12,4),
-        appearance_id number(10,0) not null,
+        defaults_id number(10,0) not null,
         primary key (id)
     );
 
     create table dot (
        id number(10,0) not null,
+        ordering number(10,0),
         display_id number(10,0),
         note_id number(10,0) not null,
         primary key (id)
@@ -315,6 +328,7 @@ create sequence native start with 1 increment by 1;
 
     create table dynamics_marking (
        id number(10,0) not null,
+        ordering number(10,0),
         dynamics_type varchar2(255),
         smufl varchar2(255),
         value varchar2(255),
@@ -324,8 +338,8 @@ create sequence native start with 1 increment by 1;
 
     create table editorial (
        id number(10,0) not null,
+        editorial_level_id number(10,0),
         footnote_id number(10,0),
-        level_id number(10,0),
         primary key (id)
     );
 
@@ -334,13 +348,6 @@ create sequence native start with 1 increment by 1;
         reference char(1),
         value varchar2(255),
         level_display_id number(10,0),
-        primary key (id)
-    );
-
-    create table element_position (
-       id number(10,0) not null,
-        element varchar2(255),
-        position number(10,0),
         primary key (id)
     );
 
@@ -355,6 +362,7 @@ create sequence native start with 1 increment by 1;
     create table encoding (
        encoding_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         attribute varchar2(255),
         element varchar2(255),
         supports_type char(1),
@@ -367,21 +375,9 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table ending (
-       id number(10,0) not null,
-        end_length number(12,4),
-        ending_number varchar2(255),
-        print_object char(1),
-        text_x number(12,4),
-        text_y number(12,4),
-        ending_type varchar2(255),
-        value varchar2(255),
-        display_id number(10,0),
-        primary key (id)
-    );
-
     create table except_voice (
        id number(10,0) not null,
+        ordering number(10,0),
         value varchar2(255),
         slash_group_id number(10,0),
         primary key (id)
@@ -389,6 +385,7 @@ create sequence native start with 1 increment by 1;
 
     create table feature (
        id number(10,0) not null,
+        ordering number(10,0),
         type varchar2(255),
         value varchar2(255),
         grouping_id number(10,0) not null,
@@ -397,12 +394,20 @@ create sequence native start with 1 increment by 1;
 
     create table figure (
        id number(10,0) not null,
+        ordering number(10,0),
         editorial_id number(10,0),
         extend_id number(10,0),
         figure_number_id number(10,0),
         prefix_id number(10,0),
         suffix_id number(10,0),
         figured_bass_id number(10,0) not null,
+        primary key (id)
+    );
+
+    create table figure_part (
+       id number(10,0) not null,
+        value varchar2(255),
+        display_id number(10,0),
         primary key (id)
     );
 
@@ -445,6 +450,7 @@ create sequence native start with 1 increment by 1;
 
     create table frame_note (
        id number(10,0) not null,
+        ordering number(10,0),
         barre_id number(10,0),
         fingering_id number(10,0),
         fret_id number(10,0),
@@ -453,30 +459,12 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table full_note (
-       id number(10,0) not null,
-        chord char(1),
-        full_note_type_id number(10,0),
-        primary key (id)
-    );
-
-    create table full_note_type (
-       full_note_type_name varchar2(31) not null,
-        id number(10,0) not null,
-        pitch_alter number(12,4),
-        octave number(10,0),
-        step varchar2(255),
-        display_octave number(10,0),
-        display_step varchar2(255),
-        measure char(1),
-        primary key (id)
-    );
-
     create table glyph (
        id number(10,0) not null,
+        ordering number(10,0),
         type varchar2(255),
         value varchar2(255),
-        appearance_id number(10,0) not null,
+        defaults_id number(10,0) not null,
         primary key (id)
     );
 
@@ -511,22 +499,17 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table harmon_closed (
-       id number(10,0) not null,
-        location varchar2(255),
-        value varchar2(255),
-        primary key (id)
-    );
-
     create table harmony_chord (
        harmony_chord_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
+        value varchar2(255),
         bass_id number(10,0),
         inversion_id number(10,0),
         kind_id number(10,0),
         root_alter_id number(10,0),
         root_step_id number(10,0),
-        function_id number(10,0),
+        display_id number(10,0),
         harmony_id number(10,0) not null,
         primary key (id)
     );
@@ -534,7 +517,16 @@ create sequence native start with 1 increment by 1;
     create table identification (
        id number(10,0) not null,
         source varchar2(255),
-        miscellaneous_id number(10,0),
+        primary key (id)
+    );
+
+    create table identification_type (
+       id number(10,0) not null,
+        ordering number(10,0),
+        id_name varchar2(255),
+        id_type varchar2(255),
+        id_value varchar2(255),
+        identification_id number(10,0),
         primary key (id)
     );
 
@@ -563,6 +555,7 @@ create sequence native start with 1 increment by 1;
 
     create table key_octave (
        id number(10,0) not null,
+        ordering number(10,0),
         cancel char(1),
         key_octave_number number(10,0),
         octave number(10,0),
@@ -573,13 +566,15 @@ create sequence native start with 1 increment by 1;
     create table key_signature (
        key_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         key_number number(10,0),
         print_object char(1),
+        cancel_fifths number(10,0),
+        cancel_location varchar2(255),
         fifths number(10,0),
         key_mode varchar2(255),
         display_id number(10,0),
-        cancel_id number(10,0),
         attributes_id number(10,0) not null,
         primary key (id)
     );
@@ -599,7 +594,7 @@ create sequence native start with 1 increment by 1;
     create table layout (
        id number(10,0) not null,
         page_layout_id number(10,0),
-        systemm_layout_id number(10,0),
+        system_layout_id number(10,0),
         primary key (id)
     );
 
@@ -622,9 +617,10 @@ create sequence native start with 1 increment by 1;
 
     create table line_width (
        id number(10,0) not null,
+        ordering number(10,0),
         line_width_type varchar2(255),
         value number(12,4),
-        appearance_id number(10,0) not null,
+        defaults_id number(10,0) not null,
         primary key (id)
     );
 
@@ -641,6 +637,7 @@ create sequence native start with 1 increment by 1;
 
     create table lyric (
        id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         end_line char(1),
         end_paragraph char(1),
@@ -658,6 +655,7 @@ create sequence native start with 1 increment by 1;
 
     create table lyric_font (
        id number(10,0) not null,
+        ordering number(10,0),
         name varchar2(255),
         lyric_font_number varchar2(255),
         font_id number(10,0),
@@ -676,6 +674,7 @@ create sequence native start with 1 increment by 1;
 
     create table lyric_language (
        id number(10,0) not null,
+        ordering number(10,0),
         lang varchar2(255),
         name varchar2(255),
         lyric_language_number varchar2(255),
@@ -685,9 +684,10 @@ create sequence native start with 1 increment by 1;
 
     create table lyric_syllable (
        id number(10,0) not null,
+        ordering number(10,0),
         syllabic varchar2(255),
         elision_id number(10,0),
-        text_data_id number(10,0),
+        lyric_text_data_id number(10,0),
         lyric_text_id number(10,0) not null,
         primary key (id)
     );
@@ -696,15 +696,6 @@ create sequence native start with 1 increment by 1;
        id number(10,0) not null,
         display_id number(10,0),
         text_format_id number(10,0),
-        primary key (id)
-    );
-
-    create table margins (
-       id number(10,0) not null,
-        bottom_margin number(12,4),
-        left_margin number(12,4),
-        right_margin number(12,4),
-        top_margin number(12,4),
         primary key (id)
     );
 
@@ -721,15 +712,10 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table measure_layout (
-       id number(10,0) not null,
-        measure_distance number(12,4),
-        primary key (id)
-    );
-
     create table measure_style (
        measure_style_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         measure_style_number number(10,0),
         use_symbols char(1),
@@ -746,6 +732,7 @@ create sequence native start with 1 increment by 1;
 
     create table metronome_beam (
        id number(10,0) not null,
+        ordering number(10,0),
         beam_type varchar2(255),
         metronome_beam_number number(10,0),
         metronome_note_id number(10,0) not null,
@@ -755,15 +742,18 @@ create sequence native start with 1 increment by 1;
     create table metronome_mark (
        metronome_mark_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         per_minute varchar2(255),
         beat_unit varchar2(255),
         beat_unit_dots number(10,0),
         display_id number(10,0),
+        beat_unit_tied_id number(10,0),
         primary key (id)
     );
 
     create table metronome_note (
        id number(10,0) not null,
+        ordering number(10,0),
         metronome_dots number(10,0),
         metronome_tied varchar2(255),
         metronome_type varchar2(255),
@@ -806,14 +796,10 @@ create sequence native start with 1 increment by 1;
 
     create table miscellaneous (
        id number(10,0) not null,
-        primary key (id)
-    );
-
-    create table miscellaneous_field (
-       id number(10,0) not null,
+        ordering number(10,0),
         name varchar2(255),
         value varchar2(255),
-        miscellaneous_id number(10,0) not null,
+        identification_id number(10,0) not null,
         primary key (id)
     );
 
@@ -848,8 +834,9 @@ create sequence native start with 1 increment by 1;
         staff number(10,0),
         type varchar2(255),
         bar_style varchar2(255),
-        location varchar2(255),
+        barline_location varchar2(255),
         blank_page number(10,0),
+        measure_distance number(12,4),
         measure_numbering_value varchar2(255),
         new_page char(1),
         new_system char(1),
@@ -858,13 +845,18 @@ create sequence native start with 1 increment by 1;
         grouping_number varchar2(255),
         number_of varchar2(255),
         bookmark_id varchar2(255),
+        element varchar2(255),
         name varchar2(255),
+        position number(10,0),
         voice varchar2(255),
         attack_length number(12,4),
+        chord char(1),
         cue char(1),
         end_dynamics number(12,4),
         instrument varchar2(255),
-        printLeger char(1),
+        note_size varchar2(255),
+        note_value varchar2(255),
+        print_leger char(1),
         release_length number(12,4),
         directive char(1),
         measure_id number(10,0),
@@ -875,27 +867,23 @@ create sequence native start with 1 increment by 1;
         part_symbol_id number(10,0),
         frame_id number(10,0),
         coda_id number(10,0),
-        ending_id number(10,0),
-        repeat_id number(10,0),
+        barline_ending_id number(10,0),
+        barline_repeat_id number(10,0),
         segno_id number(10,0),
         wavy_line_id number(10,0),
         layout_id number(10,0),
-        measure_layout_id number(10,0),
         part_abbreviation_display_id number(10,0),
         part_name_display_id number(10,0),
-        credit_display_id number(10,0),
-        element_position_id number(10,0),
         link_attributes_id number(10,0),
         accidental_id number(10,0),
-        full_note_id number(10,0),
         grace_id number(10,0),
+        note_type_id number(10,0),
         notehead_id number(10,0),
-        notehead_text_id number(10,0),
         play_id number(10,0),
         stem_id number(10,0),
         time_modification_id number(10,0),
-        type_id number(10,0),
         sound_id number(10,0),
+        credit_display_id number(10,0),
         primary key (id)
     );
 
@@ -907,17 +895,19 @@ create sequence native start with 1 increment by 1;
 
     create table non_traditional_key_type (
        id number(10,0) not null,
+        ordering number(10,0),
         key_accidental varchar2(255),
         key_accidental_smufl varchar2(255),
         key_alter number(12,4),
         key_step varchar2(255),
-        non_traditional_key_id number(10,0) not null,
+        key_id number(10,0) not null,
         primary key (id)
     );
 
     create table notation (
        notation_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         notation_number number(10,0),
         type_value varchar2(255),
@@ -936,20 +926,22 @@ create sequence native start with 1 increment by 1;
         tied_type varchar2(255),
         accidental_type varchar2(255),
         display_id number(10,0),
-        notations_id number(10,0),
         dashed_formatting_id number(10,0),
         bezier_id number(10,0),
         bend_sound_id number(10,0),
-        barline_id number(10,0),
         tuplet_actual_id number(10,0),
         tuplet_normal_id number(10,0),
         dynamics_id number(10,0),
         level_display_id number(10,0),
+        barline_id number(10,0),
+        ornaments_id number(10,0),
+        notations_id number(10,0),
         primary key (id)
     );
 
     create table notations (
        id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         print_object char(1),
         editorial_id number(10,0),
@@ -959,16 +951,20 @@ create sequence native start with 1 increment by 1;
 
     create table note_size (
        id number(10,0) not null,
+        ordering number(10,0),
         type varchar2(255),
         value number(12,4),
-        appearance_id number(10,0) not null,
+        defaults_id number(10,0) not null,
         primary key (id)
     );
 
     create table note_type (
-       id number(10,0) not null,
-        symbol_size varchar2(255),
-        note_type_size varchar2(255),
+       note_type_type varchar2(31) not null,
+        id number(10,0) not null,
+        pitch_alter number(12,4),
+        octave number(10,0),
+        step varchar2(255),
+        measure char(1),
         primary key (id)
     );
 
@@ -982,14 +978,10 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table notehead_text (
-       id number(10,0) not null,
-        primary key (id)
-    );
-
     create table ornament (
        ornament_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         smufl varchar2(255),
         value varchar2(255),
         slash char(1),
@@ -1001,24 +993,17 @@ create sequence native start with 1 increment by 1;
         departure varchar2(255),
         long_mordent char(1),
         display_id number(10,0),
-        ornaments_id number(10,0),
-        placement_text_id number(10,0),
         trill_sound_id number(10,0),
-        primary key (id)
-    );
-
-    create table ornament_accidental (
-       id number(10,0) not null,
-        accidental_mark_id number(10,0),
-        ornaments_id number(10,0) not null,
+        ornaments_id number(10,0),
         primary key (id)
     );
 
     create table other_appearance (
        id number(10,0) not null,
+        ordering number(10,0),
         type varchar2(255),
         value varchar2(255),
-        appearance_id number(10,0) not null,
+        defaults_id number(10,0) not null,
         primary key (id)
     );
 
@@ -1031,9 +1016,12 @@ create sequence native start with 1 increment by 1;
 
     create table page_margins (
        id number(10,0) not null,
+        bottom_margin number(12,4),
+        left_margin number(12,4),
         margin_type_key varchar2(255),
+        right_margin number(12,4),
+        top_margin number(12,4),
         type varchar2(255),
-        margins_id number(10,0),
         page_layout_id number(10,0) not null,
         primary key (id)
     );
@@ -1047,8 +1035,8 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table part_item (
-       part_item_type varchar2(31) not null,
+    create table part_list_item (
+       part_list_item_type varchar2(31) not null,
         id number(10,0) not null,
         ordering number(10,0),
         element_id varchar2(255),
@@ -1068,12 +1056,7 @@ create sequence native start with 1 increment by 1;
         part_abbreviation_display_id number(10,0),
         part_name_id number(10,0),
         part_name_display_id number(10,0),
-        part_list_id number(10,0) not null,
-        primary key (id)
-    );
-
-    create table part_list (
-       id number(10,0) not null,
+        score_header_id number(10,0) not null,
         primary key (id)
     );
 
@@ -1097,16 +1080,10 @@ create sequence native start with 1 increment by 1;
 
     create table pedal_tuning (
        id number(10,0) not null,
+        ordering number(10,0),
         pedal_alter number(12,4),
         pedal_step varchar2(255),
         harp_pedals_id number(10,0) not null,
-        primary key (id)
-    );
-
-    create table placement_text (
-       id number(10,0) not null,
-        value varchar2(255),
-        display_id number(10,0),
         primary key (id)
     );
 
@@ -1119,6 +1096,7 @@ create sequence native start with 1 increment by 1;
     create table play_type (
        play_type_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         value varchar2(255),
         type varchar2(255),
         play_id number(10,0),
@@ -1160,13 +1138,6 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table scaling (
-       id number(10,0) not null,
-        millimeters number(12,4),
-        tenths number(12,4),
-        primary key (id)
-    );
-
     create table score (
        id number(10,0) not null,
         score_name varchar2(255),
@@ -1181,35 +1152,37 @@ create sequence native start with 1 increment by 1;
         movement_title varchar2(255),
         defaults_id number(10,0),
         identification_id number(10,0),
-        part_list_id number(10,0),
         work_id number(10,0),
         primary key (id)
     );
 
     create table score_instrument (
        id number(10,0) not null,
+        ordering number(10,0),
         instrument_abbreviation varchar2(255),
         instrument_name varchar2(255),
         instrument_sound varchar2(255),
         score_instrument_id varchar2(255),
         instrument_type_id number(10,0),
         virtual_instrument_id number(10,0),
-        score_part_id number(10,0) not null,
+        part_list_item_id number(10,0) not null,
         primary key (id)
     );
 
     create table score_midi (
        id number(10,0) not null,
+        ordering number(10,0),
         midi_device_id number(10,0),
         midi_instrument_id number(10,0),
-        score_part_id number(10,0) not null,
+        part_list_item_id number(10,0) not null,
         primary key (id)
     );
 
     create table score_part_group (
        id number(10,0) not null,
+        ordering number(10,0),
         group_name varchar2(255),
-        score_part_id number(10,0) not null,
+        part_list_item_id number(10,0) not null,
         primary key (id)
     );
 
@@ -1222,6 +1195,7 @@ create sequence native start with 1 increment by 1;
 
     create table sound_midi (
        id number(10,0) not null,
+        ordering number(10,0),
         midi_device_id number(10,0),
         midi_instrument_id number(10,0),
         play_id number(10,0),
@@ -1231,6 +1205,7 @@ create sequence native start with 1 increment by 1;
 
     create table staff_details (
        id number(10,0) not null,
+        ordering number(10,0),
         capo number(10,0),
         staff_details_number number(10,0),
         print_object char(1),
@@ -1245,6 +1220,7 @@ create sequence native start with 1 increment by 1;
 
     create table staff_layout (
        id number(10,0) not null,
+        ordering number(10,0),
         staff_layout_number number(10,0),
         staff_distance number(12,4),
         layout_id number(10,0) not null,
@@ -1253,6 +1229,7 @@ create sequence native start with 1 increment by 1;
 
     create table staff_tuning (
        id number(10,0) not null,
+        ordering number(10,0),
         line number(10,0),
         tuning_id number(10,0),
         staff_details_id number(10,0) not null,
@@ -1266,24 +1243,10 @@ create sequence native start with 1 increment by 1;
         primary key (id)
     );
 
-    create table style_text (
-       id number(10,0) not null,
-        value varchar2(255),
-        display_id number(10,0),
-        primary key (id)
-    );
-
     create table system_divider (
        id number(10,0) not null,
         print_object char(1),
         display_id number(10,0),
-        primary key (id)
-    );
-
-    create table system_dividers (
-       id number(10,0) not null,
-        left_divider_id number(10,0),
-        right_divider_id number(10,0),
         primary key (id)
     );
 
@@ -1293,26 +1256,29 @@ create sequence native start with 1 increment by 1;
         right_margin number(12,4),
         system_distance number(12,4),
         top_system_distance number(12,4),
-        system_dividers_id number(10,0),
+        left_system_divider_id number(10,0),
+        right_system_divider_id number(10,0),
         primary key (id)
     );
 
     create table technical (
        technical_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         string_number number(10,0),
         alternate char(1),
         substitution char(1),
         value varchar2(255),
         notation_number number(10,0),
         notation_type varchar2(255),
+        location varchar2(255),
         smufl varchar2(255),
         arrow_direction varchar2(255),
         arrow_style varchar2(255),
         arrowhead char(1),
         circular_arrow varchar2(255),
         hole_closed_location varchar2(255),
-        hole_close_type varchar2(255),
+        hole_closed_type varchar2(255),
         hole_shape varchar2(255),
         hole_type varchar2(255),
         tap_hand varchar2(255),
@@ -1323,21 +1289,20 @@ create sequence native start with 1 increment by 1;
         harmonic_type varchar2(255),
         print_object char(1),
         display_id number(10,0),
-        technicals_id number(10,0),
-        harmon_closed_id number(10,0),
         bend_sound_id number(10,0),
         with_bar_id number(10,0),
+        technicals_id number(10,0),
         primary key (id)
     );
 
     create table text_display (
-       text_type varchar2(31) not null,
+       text_display_type varchar2(31) not null,
         id number(10,0) not null,
         accidental_type varchar2(255),
         smufl varchar2(255),
         display_id number(10,0),
         text_format_id number(10,0),
-        notehead_text_id number(10,0),
+        note_id number(10,0),
         name_display_id number(10,0),
         primary key (id)
     );
@@ -1361,6 +1326,7 @@ create sequence native start with 1 increment by 1;
 
     create table tie (
        id number(10,0) not null,
+        ordering number(10,0),
         time_only varchar2(255),
         type varchar2(255),
         note_id number(10,0) not null,
@@ -1370,6 +1336,7 @@ create sequence native start with 1 increment by 1;
     create table time (
        time_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         time_number number(10,0),
         print_object char(1),
@@ -1393,6 +1360,7 @@ create sequence native start with 1 increment by 1;
 
     create table time_signature_type (
        id number(10,0) not null,
+        ordering number(10,0),
         beat_type varchar2(255),
         beats varchar2(255),
         time_signature_id number(10,0) not null,
@@ -1401,6 +1369,7 @@ create sequence native start with 1 increment by 1;
 
     create table transpose (
        id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         chromatic number(12,4),
         diatonic number(10,0),
@@ -1433,6 +1402,7 @@ create sequence native start with 1 increment by 1;
 
     create table tuplet_dot (
        id number(10,0) not null,
+        ordering number(10,0),
         display_id number(10,0),
         tuplet_portion_id number(10,0) not null,
         primary key (id)
@@ -1456,16 +1426,6 @@ create sequence native start with 1 increment by 1;
        id number(10,0) not null,
         note_type_value varchar2(255),
         display_id number(10,0),
-        primary key (id)
-    );
-
-    create table typed_text (
-       id number(10,0) not null,
-        type varchar2(255),
-        value varchar2(255),
-        creator_id number(10,0),
-        relation_id number(10,0),
-        rights_id number(10,0),
         primary key (id)
     );
 
@@ -1532,6 +1492,11 @@ create sequence native start with 1 increment by 1;
        foreign key (articulations_id) 
        references notation;
 
+    alter table barline_ending 
+       add constraint FKmkus70yu4xa3xm09eke0ch7jh 
+       foreign key (display_id) 
+       references display;
+
     alter table barre 
        add constraint FKfympa43emgp0kyy1qqbrtqnow 
        foreign key (display_id) 
@@ -1567,15 +1532,10 @@ create sequence native start with 1 increment by 1;
        foreign key (note_id) 
        references music_data;
 
-    alter table beat_unit_tied 
-       add constraint FKbjm8lcptks4j06iky0ur8u15e 
-       foreign key (beat_unit_tied_parent_id) 
-       references metronome_mark;
-
-    alter table beat_unit_tied 
-       add constraint FK5pl5jidyehnc0ca9999sky4hk 
-       foreign key (beat_unit_parent_id) 
-       references metronome_mark;
+    alter table bend_with_bar 
+       add constraint FKmpp6255g41g09vgbu7edv7xqq 
+       foreign key (display_id) 
+       references display;
 
     alter table clef 
        add constraint FKa378tnca4yd6yylyai6yl86uf 
@@ -1618,11 +1578,6 @@ create sequence native start with 1 increment by 1;
        references credit;
 
     alter table defaults 
-       add constraint FKhmw7gcaplpxft7cdmaaxq2uhj 
-       foreign key (appearance_id) 
-       references appearance;
-
-    alter table defaults 
        add constraint FKnk0e1h034e5hlj8uhgig5g10a 
        foreign key (layout_id) 
        references layout;
@@ -1631,11 +1586,6 @@ create sequence native start with 1 increment by 1;
        add constraint FK4n3eyndu2jmqx38rt96qmq5c1 
        foreign key (music_font_id) 
        references font;
-
-    alter table defaults 
-       add constraint FKpm5m8ghf3bwgx0wwrbgh5r0qq 
-       foreign key (defaults_id) 
-       references scaling;
 
     alter table defaults 
        add constraint FKj7vt9gdahpixshdx5ca37lw9b 
@@ -1678,11 +1628,6 @@ create sequence native start with 1 increment by 1;
        references display;
 
     alter table direction_type 
-       add constraint FKg4bem6dw87egwlbf56tdtr3ae 
-       foreign key (direction_type_list_id) 
-       references direction_type_list;
-
-    alter table direction_type 
        add constraint FK77ibcdkbyqisesln0qu89w1k9 
        foreign key (display_id) 
        references display;
@@ -1706,6 +1651,11 @@ create sequence native start with 1 increment by 1;
        add constraint FKesly754x1a2cyws3u2mrwmrym 
        foreign key (metronome_mark_2_id) 
        references metronome_mark;
+
+    alter table direction_type 
+       add constraint FKg4bem6dw87egwlbf56tdtr3ae 
+       foreign key (direction_type_list_id) 
+       references direction_type_list;
 
     alter table direction_type_list 
        add constraint FKblbd4ond4mhyu4o5cd0blqrsm 
@@ -1733,9 +1683,9 @@ create sequence native start with 1 increment by 1;
        references position;
 
     alter table distance 
-       add constraint FKh7upf2u0uver0s5p0wbtug9y 
-       foreign key (appearance_id) 
-       references appearance;
+       add constraint FKsgkg2m74unfcqfelw001vgnkm 
+       foreign key (defaults_id) 
+       references defaults;
 
     alter table dot 
        add constraint FKj1btpaoyc9nvstpp5k8f06lj8 
@@ -1753,14 +1703,14 @@ create sequence native start with 1 increment by 1;
        references direction_type;
 
     alter table editorial 
+       add constraint FKt3v43sax3kgne3hjrfvtth5f9 
+       foreign key (editorial_level_id) 
+       references editorial_level;
+
+    alter table editorial 
        add constraint FKgd6ji3ihwlf2njs9w5gl6b550 
        foreign key (footnote_id) 
        references footnote;
-
-    alter table editorial 
-       add constraint FK1l4jxj9yu15r99y7n5tmpe483 
-       foreign key (level_id) 
-       references editorial_level;
 
     alter table editorial_level 
        add constraint FKjrho9g6v6tm3i5ervhove93oe 
@@ -1773,19 +1723,14 @@ create sequence native start with 1 increment by 1;
        references display;
 
     alter table encoding 
-       add constraint FK8l5bbf29jxhcjw32xffoh6lqe 
+       add constraint FKbght4fxs3rpny6i4fe9x8mlo6 
        foreign key (encoder_id) 
-       references typed_text;
+       references identification_type;
 
     alter table encoding 
        add constraint FKj8g0yqb3iyn82s4pfgrlolqvl 
        foreign key (identification_id) 
        references identification;
-
-    alter table ending 
-       add constraint FK9my78uy851yr2gddl0ihwrj21 
-       foreign key (display_id) 
-       references display;
 
     alter table except_voice 
        add constraint FKnm4i9hxd6b7xb19cqiywqya2e 
@@ -1808,24 +1753,29 @@ create sequence native start with 1 increment by 1;
        references lyric_item;
 
     alter table figure 
-       add constraint FKryuf4787pawpnahh3y02ux696 
+       add constraint FK6l2ti6mtpl8t7mxsltpevb1tf 
        foreign key (figure_number_id) 
-       references style_text;
+       references figure_part;
 
     alter table figure 
-       add constraint FKg1f1l3hcucqy1tq0rnugwkqo4 
+       add constraint FK6oc8s84xmcioxn4iyy21n4qnc 
        foreign key (prefix_id) 
-       references style_text;
+       references figure_part;
 
     alter table figure 
-       add constraint FKrn0kj7lltx4ttdghm8l0tyrtd 
+       add constraint FK26ov05q2kbutwjpnfot333dla 
        foreign key (suffix_id) 
-       references style_text;
+       references figure_part;
 
     alter table figure 
        add constraint FK7nar4w4ybmv0kjnvi9xc78r36 
        foreign key (figured_bass_id) 
        references music_data;
+
+    alter table figure_part 
+       add constraint FKhpc3q59ub4085gugob9osxwd 
+       foreign key (display_id) 
+       references display;
 
     alter table footnote 
        add constraint FKojw33aa3lklit05wgqekf3yxw 
@@ -1872,15 +1822,10 @@ create sequence native start with 1 increment by 1;
        foreign key (frame_id) 
        references frame;
 
-    alter table full_note 
-       add constraint FKlbq0kh1gpwj47gypadhfgdg7m 
-       foreign key (full_note_type_id) 
-       references full_note_type;
-
     alter table glyph 
-       add constraint FKo1nificvy6udwyn1oaws82a55 
-       foreign key (appearance_id) 
-       references appearance;
+       add constraint FK5ks4jwnpnle76p49yo2vgsyjw 
+       foreign key (defaults_id) 
+       references defaults;
 
     alter table group_barline 
        add constraint FKfig7m4m884wx19gesoojlgtg3 
@@ -1923,19 +1868,19 @@ create sequence native start with 1 increment by 1;
        references root_step;
 
     alter table harmony_chord 
-       add constraint FKmhu4kvcxq786un0fip9976x7p 
-       foreign key (function_id) 
-       references style_text;
+       add constraint FK75mm52mh18sryng7tvg559qsi 
+       foreign key (display_id) 
+       references display;
 
     alter table harmony_chord 
        add constraint FK19k6wkl43vtpscei2pbku2wdc 
        foreign key (harmony_id) 
        references music_data;
 
-    alter table identification 
-       add constraint FK2fo2yc59a55etdbajev56nak7 
-       foreign key (miscellaneous_id) 
-       references miscellaneous;
+    alter table identification_type 
+       add constraint FK8dm2m32nujxu57i8veecs1o5t 
+       foreign key (identification_id) 
+       references identification;
 
     alter table interchangeable 
        add constraint FKavstr6ajrdw305ahlh9tivfnn 
@@ -1958,11 +1903,6 @@ create sequence native start with 1 increment by 1;
        references display;
 
     alter table key_signature 
-       add constraint FK82qm60fbbgff6m3dn8txr0dko 
-       foreign key (cancel_id) 
-       references cancel;
-
-    alter table key_signature 
        add constraint FKddfd76kt7qik3tiygvjx249wx 
        foreign key (attributes_id) 
        references music_data;
@@ -1978,8 +1918,8 @@ create sequence native start with 1 increment by 1;
        references page_layout;
 
     alter table layout 
-       add constraint FK7smcened627hb3fwcsewg4gyv 
-       foreign key (systemm_layout_id) 
+       add constraint FK5j4eivsgxi1902g4inugxxyiu 
+       foreign key (system_layout_id) 
        references system_layout;
 
     alter table line 
@@ -1988,9 +1928,9 @@ create sequence native start with 1 increment by 1;
        references dashed_formatting;
 
     alter table line_width 
-       add constraint FKolk6o737efsh34fe1lbl3646t 
-       foreign key (appearance_id) 
-       references appearance;
+       add constraint FKnm9ykrmaj7ne7udju5pkqh711 
+       foreign key (defaults_id) 
+       references defaults;
 
     alter table lyric 
        add constraint FK3wlvu2d93tldinxvxu9omcly2 
@@ -2043,8 +1983,8 @@ create sequence native start with 1 increment by 1;
        references elision;
 
     alter table lyric_syllable 
-       add constraint FKc431ui8rpt5kwsckw8p0y80yc 
-       foreign key (text_data_id) 
+       add constraint FKtm9e8rxdx69n6w4nk8607ulx3 
+       foreign key (lyric_text_data_id) 
        references lyric_text_data;
 
     alter table lyric_syllable 
@@ -2092,6 +2032,11 @@ create sequence native start with 1 increment by 1;
        foreign key (display_id) 
        references display;
 
+    alter table metronome_mark 
+       add constraint FKydiwjgssa8pl1876nebaqob9 
+       foreign key (beat_unit_tied_id) 
+       references metronome_mark;
+
     alter table metronome_note 
        add constraint FK40x0x8qv6ynww6qot6dhgss 
        foreign key (metronome_tuplet_id) 
@@ -2112,10 +2057,10 @@ create sequence native start with 1 increment by 1;
        foreign key (time_modification_id) 
        references time_modification;
 
-    alter table miscellaneous_field 
-       add constraint FK3rpl04f3aqqmuymkscglp4yg0 
-       foreign key (miscellaneous_id) 
-       references miscellaneous;
+    alter table miscellaneous 
+       add constraint FKaka7w5pn26y9mnfj3dnj1kj22 
+       foreign key (identification_id) 
+       references identification;
 
     alter table music_data 
        add constraint FKtgso1241d1sdi5q4weg4982iw 
@@ -2158,13 +2103,13 @@ create sequence native start with 1 increment by 1;
        references direction_type;
 
     alter table music_data 
-       add constraint FK6nxn99o8j8pik2kry92d4xs60 
-       foreign key (ending_id) 
-       references ending;
+       add constraint FK1xuh8o8y3j2yly2pq0731gfi0 
+       foreign key (barline_ending_id) 
+       references barline_ending;
 
     alter table music_data 
-       add constraint FKn81inqqf1uecp9lrqpoece8pb 
-       foreign key (repeat_id) 
+       add constraint FKk45cufpuj53k5dnrp549yyilq 
+       foreign key (barline_repeat_id) 
        references barline_repeat;
 
     alter table music_data 
@@ -2183,11 +2128,6 @@ create sequence native start with 1 increment by 1;
        references layout;
 
     alter table music_data 
-       add constraint FKa1ma35y52cpfkiqv11j5fgi8p 
-       foreign key (measure_layout_id) 
-       references measure_layout;
-
-    alter table music_data 
        add constraint FKb1tvu3enlmm3de7txjuvnu3jf 
        foreign key (part_abbreviation_display_id) 
        references name_display;
@@ -2196,16 +2136,6 @@ create sequence native start with 1 increment by 1;
        add constraint FK5ukkyfjov39beuik27uge8dex 
        foreign key (part_name_display_id) 
        references name_display;
-
-    alter table music_data 
-       add constraint FKowu22dl3y19shmrdmjxok999l 
-       foreign key (credit_display_id) 
-       references credit_display;
-
-    alter table music_data 
-       add constraint FKs9hdr0f6wuyl1vc4o87odv54w 
-       foreign key (element_position_id) 
-       references element_position;
 
     alter table music_data 
        add constraint FK8l5ctbd1hibellcrcge7oob41 
@@ -2218,24 +2148,19 @@ create sequence native start with 1 increment by 1;
        references accidental;
 
     alter table music_data 
-       add constraint FKbr7vqgo6v4vt89fc0g38m427r 
-       foreign key (full_note_id) 
-       references full_note;
-
-    alter table music_data 
        add constraint FKi7rv04dyy4fqqa33kpdlniiet 
        foreign key (grace_id) 
        references grace;
 
     alter table music_data 
+       add constraint FK304olx85kcdy9jpoifffe2xcu 
+       foreign key (note_type_id) 
+       references note_type;
+
+    alter table music_data 
        add constraint FKlgqhcv9mhmdfto1nc6930m13x 
        foreign key (notehead_id) 
        references notehead;
-
-    alter table music_data 
-       add constraint FKevjnhly5dgfsfx45hltdyy60w 
-       foreign key (notehead_text_id) 
-       references notehead_text;
 
     alter table music_data 
        add constraint FKqx0mbshxroldy3h0rhnjuen96 
@@ -2253,29 +2178,24 @@ create sequence native start with 1 increment by 1;
        references time_modification;
 
     alter table music_data 
-       add constraint FKuctrlh56grlsxssco02op0ov 
-       foreign key (type_id) 
-       references note_type;
-
-    alter table music_data 
        add constraint FKex8und0d9f4odkobxomoq7ia4 
        foreign key (sound_id) 
        references music_data;
 
+    alter table music_data 
+       add constraint FKowu22dl3y19shmrdmjxok999l 
+       foreign key (credit_display_id) 
+       references credit_display;
+
     alter table non_traditional_key_type 
-       add constraint FKq72vcji3in5uw4f22rylm92y 
-       foreign key (non_traditional_key_id) 
+       add constraint FK2p06rp4qn3esdyyxwy1qrfyxc 
+       foreign key (key_id) 
        references key_signature;
 
     alter table notation 
        add constraint FK5j2otsml2aexns8nkdp708hys 
        foreign key (display_id) 
        references display;
-
-    alter table notation 
-       add constraint FK5r5gx0kjtp620dora5pb9b4bf 
-       foreign key (notations_id) 
-       references notations;
 
     alter table notation 
        add constraint FKmikst8yb146tli0w558f0goly 
@@ -2291,11 +2211,6 @@ create sequence native start with 1 increment by 1;
        add constraint FKge2o4tclmalr1xjsh6nlkbh0k 
        foreign key (bend_sound_id) 
        references bend_sound;
-
-    alter table notation 
-       add constraint FKjeqwla80mk04atqle9daqb3ov 
-       foreign key (barline_id) 
-       references music_data;
 
     alter table notation 
        add constraint FKql0hwi2lhw9s6bxg21efkac8r 
@@ -2317,6 +2232,21 @@ create sequence native start with 1 increment by 1;
        foreign key (level_display_id) 
        references level_display;
 
+    alter table notation 
+       add constraint FKjeqwla80mk04atqle9daqb3ov 
+       foreign key (barline_id) 
+       references music_data;
+
+    alter table notation 
+       add constraint FKej9qdi0k1jternmlnasa57ia0 
+       foreign key (ornaments_id) 
+       references notation;
+
+    alter table notation 
+       add constraint FK5r5gx0kjtp620dora5pb9b4bf 
+       foreign key (notations_id) 
+       references notations;
+
     alter table notations 
        add constraint FKg6a7ep34rh5lufsyo8ajv34nk 
        foreign key (editorial_id) 
@@ -2328,9 +2258,9 @@ create sequence native start with 1 increment by 1;
        references music_data;
 
     alter table note_size 
-       add constraint FKm5i756uip4c7k0iy0f4djb0u6 
-       foreign key (appearance_id) 
-       references appearance;
+       add constraint FKleil8snl2e6g62vbf47xe50bd 
+       foreign key (defaults_id) 
+       references defaults;
 
     alter table notehead 
        add constraint FKr01qgxcl50q2q6jlxpr70msij 
@@ -2343,39 +2273,19 @@ create sequence native start with 1 increment by 1;
        references display;
 
     alter table ornament 
-       add constraint FKnmqa6fuo6igfi4jv79gh6dwxs 
-       foreign key (ornaments_id) 
-       references notation;
-
-    alter table ornament 
-       add constraint FKoy2jywq7553xrg55v0fybhnsr 
-       foreign key (placement_text_id) 
-       references placement_text;
-
-    alter table ornament 
        add constraint FKicpik38a8cvj0yg8ke41uth0n 
        foreign key (trill_sound_id) 
        references trill_sound;
 
-    alter table ornament_accidental 
-       add constraint FKqtdjoc60gbgmlnwclvq7buffj 
-       foreign key (accidental_mark_id) 
-       references notation;
-
-    alter table ornament_accidental 
-       add constraint FKigbvliujgu40hsgvtaa8cxelg 
+    alter table ornament 
+       add constraint FKnmqa6fuo6igfi4jv79gh6dwxs 
        foreign key (ornaments_id) 
        references notation;
 
     alter table other_appearance 
-       add constraint FK29ytkk345jy90rk52hlodv2ux 
-       foreign key (appearance_id) 
-       references appearance;
-
-    alter table page_margins 
-       add constraint FK6lm9a1utyrw4gd9snues86pr4 
-       foreign key (margins_id) 
-       references margins;
+       add constraint FKe2844y956ch1vqlvhuq718eeo 
+       foreign key (defaults_id) 
+       references defaults;
 
     alter table page_margins 
        add constraint FKk1q1gu5u33a4xiasb9las6s1v 
@@ -2387,70 +2297,70 @@ create sequence native start with 1 increment by 1;
        foreign key (score_id) 
        references score;
 
-    alter table part_item 
-       add constraint FKalucdemf7gtwxkabxehmxcy3d 
+    alter table part_list_item 
+       add constraint FK4eo8dqyxosbwnt3jiwwvx314g 
        foreign key (editorial_id) 
        references editorial;
 
-    alter table part_item 
-       add constraint FK9lw931tmgclaam3v9gkwt25fi 
+    alter table part_list_item 
+       add constraint FKt278pnohp6vv89honw7jse266 
        foreign key (group_abbreviation_id) 
        references group_name;
 
-    alter table part_item 
-       add constraint FKbovai8x25y2ps84n9lrlcd8nl 
+    alter table part_list_item 
+       add constraint FK8uoyb6n01yikv0f0ntth464jf 
        foreign key (group_abbreviation_display_id) 
        references name_display;
 
-    alter table part_item 
-       add constraint FKifg0mcwm417gwjf0i8br3j4x5 
+    alter table part_list_item 
+       add constraint FK2gikyljpn4k8s5vkw8daln0ds 
        foreign key (group_barline_id) 
        references group_barline;
 
-    alter table part_item 
-       add constraint FK9768u4iaw2m3k87qrxilq31xh 
+    alter table part_list_item 
+       add constraint FKoc0ccefkc660lufjubq22i74u 
        foreign key (group_name_id) 
        references group_name;
 
-    alter table part_item 
-       add constraint FKcg98fbwsvme2njeruoj528l9d 
+    alter table part_list_item 
+       add constraint FKndqhx5uf7ioraxe58f40123te 
        foreign key (group_name_display_id) 
        references name_display;
 
-    alter table part_item 
-       add constraint FK9ny4awt5k7hbnyk2r8n0gmns7 
+    alter table part_list_item 
+       add constraint FKge6lxiwci7nkwb0rjepf4rv44 
        foreign key (group_symbol_id) 
        references group_symbol;
 
-    alter table part_item 
-       add constraint FK9saxlsbtludhbx3dfne85m8tc 
+    alter table part_list_item 
+       add constraint FKpkla7phyf2f6uolwei3w6jbsk 
        foreign key (identification_id) 
        references identification;
 
-    alter table part_item 
-       add constraint FKeecgjcbomb483vemger9sy0xn 
+    alter table part_list_item 
+       add constraint FKafc8pk6d4ug5blkpxxnwkrs0m 
        foreign key (part_abbreviation_id) 
        references part_name;
 
-    alter table part_item 
-       add constraint FK9x3js1vy2vxckjb2p6kh6vw7k 
+    alter table part_list_item 
+       add constraint FK3h2a88nd1y36i0b15mfqe38t4 
        foreign key (part_abbreviation_display_id) 
        references name_display;
 
-    alter table part_item 
-       add constraint FKb8wcr8kpm3vow4hciwepak1b0 
+    alter table part_list_item 
+       add constraint FKi6sn8j6i4nkmue6cfs68m5hde 
        foreign key (part_name_id) 
        references part_name;
 
-    alter table part_item 
-       add constraint FKwhb7j9b98a73gwwjir309qk4 
+    alter table part_list_item 
+       add constraint FKr6r5kkfar6nalujkyuluiqmip 
        foreign key (part_name_display_id) 
        references name_display;
 
-    alter table part_item 
-       add constraint FK2i5yk2l02xr0le5h3biidnk29 
-       foreign key (part_list_id) 
-       references part_list;
+    alter table part_list_item 
+       add constraint FKhurr7xlscap19a1ub0ggb8rf3 
+       foreign key (score_header_id) 
+       references score_header;
 
     alter table part_name 
        add constraint FK8w6uv4o5fbjq94cjtmr2r3ey6 
@@ -2466,11 +2376,6 @@ create sequence native start with 1 increment by 1;
        add constraint FKkvm1vni5oi78rbwmadfpcymb8 
        foreign key (harp_pedals_id) 
        references direction_type;
-
-    alter table placement_text 
-       add constraint FK9rjj7nwpivoe3h1dy647ekgiw 
-       foreign key (display_id) 
-       references display;
 
     alter table play_type 
        add constraint FKlqyvck4o1sx2npdvpvi2cr0iq 
@@ -2503,11 +2408,6 @@ create sequence native start with 1 increment by 1;
        references identification;
 
     alter table score_header 
-       add constraint FK6va9w87bq4hdy87wsytra1wfd 
-       foreign key (part_list_id) 
-       references part_list;
-
-    alter table score_header 
        add constraint FK5k1ou1a2c23hh1u41odt6nsj4 
        foreign key (work_id) 
        references work;
@@ -2523,9 +2423,9 @@ create sequence native start with 1 increment by 1;
        references virtual_instrument;
 
     alter table score_instrument 
-       add constraint FKcbyc4ag5k50ixryb3cttfavkn 
-       foreign key (score_part_id) 
-       references part_item;
+       add constraint FKd15sla0n5ngv0cfbgelkns4s 
+       foreign key (part_list_item_id) 
+       references part_list_item;
 
     alter table score_midi 
        add constraint FKcs9atgsafal12ewyjbh65wdx0 
@@ -2538,14 +2438,14 @@ create sequence native start with 1 increment by 1;
        references midi_instrument;
 
     alter table score_midi 
-       add constraint FK65xe1ho5kaux74963negok8vs 
-       foreign key (score_part_id) 
-       references part_item;
+       add constraint FKkseqi8id73lktf580eif75lfi 
+       foreign key (part_list_item_id) 
+       references part_list_item;
 
     alter table score_part_group 
-       add constraint FKq69u1jydxash60pa1hcgvhtnr 
-       foreign key (score_part_id) 
-       references part_item;
+       add constraint FKfo6822asqo0bmmjttjf8wy2gk 
+       foreign key (part_list_item_id) 
+       references part_list_item;
 
     alter table sound_midi 
        add constraint FKr95ayv8tlse4jeyg0xaidll9q 
@@ -2592,30 +2492,20 @@ create sequence native start with 1 increment by 1;
        foreign key (display_id) 
        references display;
 
-    alter table style_text 
-       add constraint FKck74ubo69ygoe7d4milqjlbpj 
-       foreign key (display_id) 
-       references display;
-
     alter table system_divider 
        add constraint FK6dqjq9npjicmhrnrs1aqyb8eu 
        foreign key (display_id) 
        references display;
 
-    alter table system_dividers 
-       add constraint FKr3lmv8t3a4lohruqmpx2uohps 
-       foreign key (left_divider_id) 
-       references system_divider;
-
-    alter table system_dividers 
-       add constraint FKllkl0vvbn97n4p7ud0blfi17i 
-       foreign key (right_divider_id) 
+    alter table system_layout 
+       add constraint FKppd150s8ma8ww63sx6ot49uq4 
+       foreign key (left_system_divider_id) 
        references system_divider;
 
     alter table system_layout 
-       add constraint FKoum2iw0o827holjk4avmetxpt 
-       foreign key (system_dividers_id) 
-       references system_dividers;
+       add constraint FKfey58twxxf9bx7y2sabmdtii8 
+       foreign key (right_system_divider_id) 
+       references system_divider;
 
     alter table technical 
        add constraint FK47clxoexh6shyk117acm8bnan 
@@ -2623,24 +2513,19 @@ create sequence native start with 1 increment by 1;
        references display;
 
     alter table technical 
-       add constraint FKk1p1j3espd2ej3cfk81elx7qd 
-       foreign key (technicals_id) 
-       references notation;
-
-    alter table technical 
-       add constraint FKba4ghcyirr73ueblh3hmenkk9 
-       foreign key (harmon_closed_id) 
-       references harmon_closed;
-
-    alter table technical 
        add constraint FKk2qoca6rp76q8da4xyyk8mpug 
        foreign key (bend_sound_id) 
        references bend_sound;
 
     alter table technical 
-       add constraint FKm76u1honwnfwuj1u3tx82fooj 
+       add constraint FKj0tk9y5lwir7dkgnr5t1aprvq 
        foreign key (with_bar_id) 
-       references placement_text;
+       references bend_with_bar;
+
+    alter table technical 
+       add constraint FKk1p1j3espd2ej3cfk81elx7qd 
+       foreign key (technicals_id) 
+       references notation;
 
     alter table text_display 
        add constraint FK35uy6rwu1j5poqmgoo0ft68vl 
@@ -2653,9 +2538,9 @@ create sequence native start with 1 increment by 1;
        references text_format;
 
     alter table text_display 
-       add constraint FKgcm9yg2bcd4ubd3a5dyxef50v 
-       foreign key (notehead_text_id) 
-       references notehead_text;
+       add constraint FKshp7l4vh73yjids8ba0xqvn6i 
+       foreign key (note_id) 
+       references music_data;
 
     alter table text_display 
        add constraint FKewbqxuv4t3j4je18bc13ni6je 
@@ -2721,21 +2606,6 @@ create sequence native start with 1 increment by 1;
        add constraint FK9rxhpn2trkuhy5i5s2yp9ogdy 
        foreign key (display_id) 
        references display;
-
-    alter table typed_text 
-       add constraint FKkug2adi648rr488ym15018bg8 
-       foreign key (creator_id) 
-       references identification;
-
-    alter table typed_text 
-       add constraint FK4jv08cd41ebir0ykptwfjm4iq 
-       foreign key (relation_id) 
-       references identification;
-
-    alter table typed_text 
-       add constraint FKp1jefy6hfcnocp0p0j2ymgtbf 
-       foreign key (rights_id) 
-       references identification;
 
     alter table work 
        add constraint FK3tuolhyyg0q9pw6ca6iqyk0at 
