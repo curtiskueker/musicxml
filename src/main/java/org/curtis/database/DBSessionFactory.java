@@ -166,6 +166,16 @@ public class DBSessionFactory {
         }
     }
 
+    public static void testDb() throws DBException {
+        try {
+            DBSessionFactory dbSessionFactory = new DBSessionFactory();
+            dbSessionFactory.instantiateSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DBException(e);
+        }
+    }
+
     public static void generateDbSchema(String fileLocation) throws DBException {
         try {
             DBSessionFactory dbSessionFactory = new DBSessionFactory();

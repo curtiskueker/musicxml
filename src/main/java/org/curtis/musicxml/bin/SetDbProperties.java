@@ -3,8 +3,8 @@ package org.curtis.musicxml.bin;
 import org.curtis.musicxml.exception.MusicXmlException;
 
 public class SetDbProperties extends MusicXmlScript {
-    SetProperties setProperties;
-    DatabaseExec databaseExec;
+    private SetProperties setProperties;
+    private DatabaseExec databaseExec;
 
     public SetDbProperties() {
 

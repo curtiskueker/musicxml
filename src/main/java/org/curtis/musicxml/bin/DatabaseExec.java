@@ -43,6 +43,7 @@ public class DatabaseExec extends MusicXmlScript {
                 System.err.println("Database tables created");
             }
             if (isTestDatabase()) {
+                DBSessionFactory.testDb();
                 System.err.println("Successful database connection test");
             }
             if (isGenerateSchema()) {
