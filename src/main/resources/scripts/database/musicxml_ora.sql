@@ -156,6 +156,7 @@ create sequence native start with 1 increment by 1;
     create table credit_display (
        credit_display_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         element_id varchar2(255),
         display_id number(10,0),
         text_format_id number(10,0),
@@ -430,6 +431,7 @@ create sequence native start with 1 increment by 1;
 
     create table footnote (
        id number(10,0) not null,
+        ordering number(10,0),
         display_id number(10,0),
         text_format_id number(10,0),
         primary key (id)
@@ -694,6 +696,7 @@ create sequence native start with 1 increment by 1;
 
     create table lyric_text_data (
        id number(10,0) not null,
+        ordering number(10,0),
         display_id number(10,0),
         text_format_id number(10,0),
         primary key (id)
@@ -1298,6 +1301,7 @@ create sequence native start with 1 increment by 1;
     create table text_display (
        text_display_type varchar2(31) not null,
         id number(10,0) not null,
+        ordering number(10,0),
         accidental_type varchar2(255),
         smufl varchar2(255),
         display_id number(10,0),

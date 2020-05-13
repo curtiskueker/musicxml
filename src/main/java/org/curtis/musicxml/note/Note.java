@@ -93,6 +93,7 @@ public class Note extends MusicDataElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "note_id")
+    @OrderBy("ordering")
     private List<TextDisplay> noteheadTextList = new ArrayList<>();
     @Column
     private Integer staff;

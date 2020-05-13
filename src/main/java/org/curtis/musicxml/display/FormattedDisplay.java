@@ -1,6 +1,6 @@
 package org.curtis.musicxml.display;
 
-import org.curtis.database.DatabaseItem;
+import org.curtis.database.OrderedItem;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
 @MappedSuperclass
-public abstract class FormattedDisplay extends DatabaseItem {
+public abstract class FormattedDisplay extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;

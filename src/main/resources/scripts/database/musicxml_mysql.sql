@@ -155,6 +155,7 @@
     create table credit_display (
        credit_display_type varchar(31) not null,
         id integer not null auto_increment,
+        ordering integer,
         element_id varchar(255),
         display_id integer,
         text_format_id integer,
@@ -429,6 +430,7 @@
 
     create table footnote (
        id integer not null auto_increment,
+        ordering integer,
         display_id integer,
         text_format_id integer,
         primary key (id)
@@ -693,6 +695,7 @@
 
     create table lyric_text_data (
        id integer not null auto_increment,
+        ordering integer,
         display_id integer,
         text_format_id integer,
         primary key (id)
@@ -1297,6 +1300,7 @@
     create table text_display (
        text_display_type varchar(31) not null,
         id integer not null auto_increment,
+        ordering integer,
         accidental_type varchar(255),
         smufl varchar(255),
         display_id integer,
