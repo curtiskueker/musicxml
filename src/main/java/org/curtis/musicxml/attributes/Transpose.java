@@ -20,7 +20,7 @@ public class Transpose extends OrderedElement {
     @Column
     @Type(type="yes_no")
     private Boolean doubled = false;
-    @Column(name = "transpose_number")
+    @Column(name = "staff_number")
     private Integer number;
 
     public Transpose() {

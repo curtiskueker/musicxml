@@ -1378,7 +1378,7 @@ create sequence native start with 1 increment by 1;
         chromatic number(12,4),
         diatonic number(10,0),
         doubled char(1),
-        transpose_number number(10,0),
+        staff_number number(10,0),
         octave_change number(10,0),
         attributes_id number(10,0) not null,
         primary key (id)

@@ -1377,7 +1377,7 @@
         chromatic decimal(12,4),
         diatonic integer,
         doubled char(1),
-        transpose_number integer,
+        staff_number integer,
         octave_change integer,
         attributes_id integer not null,
         primary key (id)
