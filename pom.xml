@@ -107,7 +107,7 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
-                    <exclude>musicxml/original/**</exclude>
+                    <exclude>xsd/3.0/**</exclude>
                     <exclude>scripts/**</exclude>
                 </excludes>
             </resource>
