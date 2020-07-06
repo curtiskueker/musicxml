@@ -676,7 +676,7 @@
                                                 <Insets right="10.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <Label fx:id="generateSchemaLabel" text="Generate Database Schema:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                        <Label fx:id="generateSchemaLabel" text="Generate Schema File:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                             <font>
                                                 <Font name="System Bold" size="14.0" />
                                             </font>

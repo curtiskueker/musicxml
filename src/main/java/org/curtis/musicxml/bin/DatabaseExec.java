@@ -31,6 +31,8 @@ public class DatabaseExec extends MusicXmlScript {
             }
             if (isGenerateSchema()) {
                 System.err.println("Generating database schema file ...");
+                if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Output file not selected.");
+
                 errorMessage = "Database schema file not generated: " + getOutputFile();
             }
 
