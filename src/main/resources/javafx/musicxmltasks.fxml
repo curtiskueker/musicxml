@@ -534,11 +534,11 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab fx:id="lyPdfSettingsTab" onSelectionChanged="#tabSelected" text="Lilypond/PDF">
+                <Tab fx:id="lyPdfSettingsTab" onSelectionChanged="#tabSelected" text="LilyPond/PDF">
                     <content>
                         <VBox fx:id="lyPdfBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
-                                <Label fx:id="lyPdfLabel" alignment="CENTER" contentDisplay="CENTER" text="Lilypond/PDF Settings">
+                                <Label fx:id="lyPdfLabel" alignment="CENTER" contentDisplay="CENTER" text="Lilypond/PDF Reader">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
@@ -546,9 +546,14 @@
                                         <Insets bottom="20.0" left="175.0" top="20.0" />
                                     </padding>
                                 </Label>
+                        <Label fx:id="lyPdfSubLabel" maxHeight="40.0" prefHeight="40.0" text="Set the LilyPond and PDF Reader program locations">
+                           <padding>
+                              <Insets bottom="20.0" left="130.0" />
+                           </padding>
+                        </Label>
                                 <GridPane fx:id="lyPdfPane" prefHeight="596.0" prefWidth="600.0">
                                     <children>
-                                        <Hyperlink fx:id="setLilypondLocationLink" onAction="#setLilypondLocation" text="Choose Lilypond location" GridPane.halignment="RIGHT">
+                                        <Hyperlink fx:id="setLilypondLocationLink" onAction="#setLilypondLocation" text="Choose LilyPond location:" GridPane.halignment="RIGHT">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>
@@ -557,7 +562,7 @@
                                             </GridPane.margin>
                                         </Hyperlink>
                                         <TextField fx:id="lilypondLocation" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-                                        <Hyperlink fx:id="setPdfLocationLink" layoutX="85.0" layoutY="71.0" onAction="#setPdfLocation" text="Choose PDF Reader location" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                        <Hyperlink fx:id="setPdfLocationLink" layoutX="85.0" layoutY="71.0" onAction="#setPdfLocation" text="Choose PDF Reader location:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>
