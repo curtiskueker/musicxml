@@ -8,7 +8,7 @@ public class TaskConstants {
 
     public static final String CONVERSION_TYPE_MUSICXML = "MusicXml File";
     public static final String CONVERSION_TYPE_DATABASE = "Database Record";
-    public static final String CONVERSION_TYPE_LILYPOND = "Lilypond File";
+    public static final String CONVERSION_TYPE_LILYPOND = "LilyPond File";
     public static final String CONVERSION_TYPE_PDF = "PDF File";
 
     public static final String OUTPUT_TO_CONSOLE = "To Console";

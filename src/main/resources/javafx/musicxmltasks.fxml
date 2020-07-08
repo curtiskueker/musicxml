@@ -10,16 +10,16 @@
     <children>
         <TabPane fx:id="taskTabs" prefHeight="700.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab fx:id="convertTab" onSelectionChanged="#tabSelected" text="Convert Files">
+                <Tab fx:id="convertTab" onSelectionChanged="#tabSelected" text="Convert">
                     <content>
                         <VBox fx:id="convertBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
-                                <Label fx:id="convertLabel" alignment="CENTER" contentDisplay="CENTER" text="Convert Files">
+                                <Label fx:id="convertLabel" alignment="CENTER" contentDisplay="CENTER" text="Convert">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
                                     <padding>
-                                        <Insets bottom="20.0" left="210.0" top="20.0" />
+                                        <Insets bottom="20.0" left="255.0" top="20.0" />
                                     </padding>
                                 </Label>
                                 <HBox fx:id="toFromLists" prefHeight="100.0" prefWidth="200.0">
@@ -233,7 +233,7 @@
                                                 </VBox>
                                                 <VBox fx:id="lyToBox" prefHeight="200.0" prefWidth="100.0" visible="false">
                                                     <children>
-                                                        <Label fx:id="lyToFileLabel" text="Lilypond Output File:">
+                                                        <Label fx:id="lyToFileLabel" text="LilyPond Output File:">
                                                             <font>
                                                                 <Font name="System Bold" size="14.0" />
                                                             </font>
@@ -241,7 +241,7 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </padding>
                                                         </Label>
-                                                        <Hyperlink fx:id="lyToFileLink" onAction="#chooseLyToFile" text="Choose Lilypond Output Filename">
+                                                        <Hyperlink fx:id="lyToFileLink" onAction="#chooseLyToFile" text="Choose LilyPond Output Filename">
                                                             <padding>
                                                                 <Insets left="10.0" />
                                                             </padding>
