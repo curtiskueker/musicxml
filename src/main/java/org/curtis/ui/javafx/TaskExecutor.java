@@ -73,6 +73,7 @@ public class TaskExecutor {
         InputHandler inputHandler = null;
         JavafxTaskInitializer taskInitializer = null;
         boolean isPropertiesSettingsUpdate = false;
+        boolean isLyPdfPropertiesUpdate = false;
         boolean isDbUpdate = false;
         boolean isOutputSettingsUpdate = false;
         switch (controlId) {
@@ -85,6 +86,7 @@ public class TaskExecutor {
                 taskInitializer = new LyPdfSettingsInitializer(taskForm);
                 inputHandler = new SetLyPdfPropertiesHandler();
                 isPropertiesSettingsUpdate = true;
+                isLyPdfPropertiesUpdate = true;
                 break;
             case FormNode.SAVE_OUTPUT_SETTINGS_BUTTON:
                 taskInitializer = new OutputSettingsInitializer(taskForm);
@@ -152,6 +154,7 @@ public class TaskExecutor {
                 musicXmlTask.execute();
 
                 if (isPropertiesSettingsUpdate) Platform.runLater(PropertiesHandler::addLocalPropertiesBundle);
+                if (isLyPdfPropertiesUpdate) Platform.runLater(() -> taskForm.handleLyPdfUpdates());
                 if (isDbUpdate) Platform.runLater(() -> {taskForm.handleDisplayUpdates();});
                 if (isOutputSettingsUpdate) Platform.runLater(() -> taskForm.resetOutputStream());
             }

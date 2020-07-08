@@ -145,6 +145,14 @@ public class ConvertFormHandler extends FormHandler {
         }
     }
 
+    public void showPdfBox() {
+        showToBox(PDF_TO_SELECTION.getValue());
+    }
+
+    public void showPdfOffBox() {
+        showToBox(PDF_TO_OFF_SELECTION.getValue());
+    }
+
     private void hideButton() {
         getExecuteButton().setVisible(false);
     }

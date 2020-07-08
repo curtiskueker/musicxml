@@ -239,6 +239,17 @@ public class TaskForm {
         convertFormHandler.initializeForm();
     }
 
+    public void handleLyPdfUpdates() {
+        String toSelection = getToSelection();
+        if (toSelection == null) return;
+
+        if (TaskConstants.CONVERSION_TYPE_PDF.equals(toSelection)) {
+            if (StringUtil.isEmpty(PropertiesHandler.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION))) convertFormHandler.showPdfOffBox();
+            else convertFormHandler.showPdfBox();
+            handlePdfReaderDisplay();
+        }
+    }
+
     public void handleDisplayUpdates() {
         handleResetScoreNames();
         handlePdfReaderDisplay();
