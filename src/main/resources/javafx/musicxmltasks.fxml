@@ -95,11 +95,22 @@
                                                 <Insets left="10.0" top="10.0" />
                                              </VBox.margin>
                                           </ComboBox>
-                                          <CheckBox fx:id="showSqlFrom" mnemonicParsing="false" onAction="#showSql" text="Show SQL">
-                                             <VBox.margin>
+                                          <HBox fx:id="showSqlFromBox" prefHeight="30.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="showSqlFrom" mnemonicParsing="false" onAction="#showSql" text="Show SQL" />
+                                                <Label fx:id="showSqlFromLabel" text="(redirect to file recommended)">
+                                                   <font>
+                                                      <Font size="11.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="4.0" top="3.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                             <padding>
                                                 <Insets left="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </CheckBox>
+                                             </padding>
+                                          </HBox>
                                           <CheckBox fx:id="scoreNameDelete" mnemonicParsing="false" onAction="#scoreNameDeleteChecked" prefWidth="250.0" text="Delete Score" visible="false">
                                              <VBox.margin>
                                                 <Insets left="10.0" top="10.0" />
@@ -224,11 +235,22 @@
                                                                 <Insets left="10.0" top="10.0" />
                                                             </VBox.margin>
                                                         </TextField>
-                                          <CheckBox fx:id="showSqlTo" mnemonicParsing="false" onAction="#showSql" text="Show SQL">
-                                             <VBox.margin>
+                                          <HBox fx:id="showSqlToBox" prefHeight="30.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="showSqlTo" mnemonicParsing="false" onAction="#showSql" text="Show SQL" />
+                                                <Label fx:id="showSqlToLabel" text="(redirect to file recommended)">
+                                                   <font>
+                                                      <Font size="11.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="4.0" top="3.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                             <padding>
                                                 <Insets left="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </CheckBox>
+                                             </padding>
+                                          </HBox>
                                                     </children>
                                                 </VBox>
                                                 <VBox fx:id="lyToBox" prefHeight="200.0" prefWidth="100.0" visible="false">
