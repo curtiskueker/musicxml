@@ -33,10 +33,14 @@ public class XmlUtil {
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
-            builder.setErrorHandler(new XmlErrorHandler());
+            XmlErrorHandler errorHandler = new XmlErrorHandler();
+            builder.setErrorHandler(errorHandler);
             builder.setEntityResolver(new XmlEntityResolver());
 
-            return builder.parse(new InputSource(new ByteArrayInputStream(xmlString.getBytes())));
+            Document document = builder.parse(new InputSource(new ByteArrayInputStream(xmlString.getBytes())));
+            if (errorHandler.hasErrors()) throw new XmlException(errorHandler.getErrors().toString());
+
+            return document;
         } catch (Exception e) {
             throw new XmlException(e.getMessage());
         }

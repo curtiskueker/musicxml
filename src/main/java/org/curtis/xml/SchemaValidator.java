@@ -33,9 +33,13 @@ public class SchemaValidator {
             Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(schemaLocation)));
             Source xmlFile = new StreamSource(new ByteArrayInputStream(documentElement.getBytes()));
             Validator validator = schema.newValidator();
+            XmlErrorHandler errorHandler = new XmlErrorHandler();
+            validator.setErrorHandler(errorHandler);
             validator.validate(xmlFile);
+
+            if (errorHandler.hasErrors()) throw new XmlException(errorHandler.getErrors().toString());
         } catch (Exception e) {
-            throw new XmlException(e);
+            throw new XmlException(e.getMessage());
         }
     }
 
