@@ -12,6 +12,8 @@ import java.io.ByteArrayInputStream;
 import java.util.Objects;
 
 public class SchemaValidator {
+    private static final String SCHEMA_LOCATION = "xsd/score.xsd";
+
     private static SchemaValidator instance;
 
     private SchemaValidator() {
@@ -27,10 +29,8 @@ public class SchemaValidator {
 
     public void validate(String documentElement) throws XmlException {
         try {
-            String schemaLocation = "xsd/3.1/score.xsd";
-
             SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-            Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(schemaLocation)));
+            Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(SCHEMA_LOCATION)));
             Source xmlFile = new StreamSource(new ByteArrayInputStream(documentElement.getBytes()));
             Validator validator = schema.newValidator();
             XmlErrorHandler errorHandler = new XmlErrorHandler();
