@@ -29,7 +29,7 @@ public class XmlErrorHandler implements ErrorHandler {
     }
 
     public StringBuilder getErrors() {
-        if (hasErrors()) errors.insert(0, "XML Error count: " + errorCount + "\n");
+        if (hasErrors()) errors.insert(0, "XML validation error count: " + errorCount + "\n");
         return errors;
     }
 
