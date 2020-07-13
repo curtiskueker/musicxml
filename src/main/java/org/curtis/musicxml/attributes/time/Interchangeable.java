@@ -1,15 +1,21 @@
 package org.curtis.musicxml.attributes.time;
 
 import org.curtis.database.DatabaseItem;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "interchangeable")
@@ -17,9 +23,11 @@ public class Interchangeable extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "time_relation")
     private TimeRelation timeRelation;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "time_signature_id")
-    private TimeSignature timeSignature;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "interchangeable_id", nullable = false)
+    @OrderBy("ordering")
+    private List<TimeSignatureType> timeSignatureList = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     @Column
     private TimeSymbol symbol;
@@ -39,12 +47,12 @@ public class Interchangeable extends DatabaseItem {
         this.timeRelation = timeRelation;
     }
 
-    public TimeSignature getTimeSignature() {
-        return timeSignature;
+    public List<TimeSignatureType> getTimeSignatureList() {
+        return timeSignatureList;
     }
 
-    public void setTimeSignature(TimeSignature timeSignature) {
-        this.timeSignature = timeSignature;
+    public void setTimeSignatureList(List<TimeSignatureType> timeSignatureList) {
+        this.timeSignatureList = timeSignatureList;
     }
 
     public TimeSymbol getSymbol() {

@@ -208,9 +208,7 @@ public class AttributesBuilder extends MusicDataBuilder {
     }
 
     private void buildTimeSignature(TimeSignature timeSignature) {
-        for (TimeSignatureType timeSignatureType : timeSignature.getTimeSignatureList()) {
-            buildTimeSignatureType(timeSignatureType);
-        }
+        for (TimeSignatureType timeSignatureType : timeSignature.getTimeSignatureList()) buildTimeSignatureType(timeSignatureType);
         Interchangeable interchangeable = timeSignature.getInterchangeable();
         if (interchangeable != null) {
             buildOpenElement("interchangeable");
@@ -218,10 +216,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             buildAttribute("separator", interchangeable.getSeparator());
             buildCloseElement();
             buildElementWithValue("time-relation", interchangeable.getTimeRelation());
-            TimeSignature interchangeableTimeSignature = interchangeable.getTimeSignature();
-            for (TimeSignatureType timeSignatureType : interchangeableTimeSignature.getTimeSignatureList()) {
-                buildTimeSignatureType(timeSignatureType);
-            }
+            for (TimeSignatureType timeSignatureType : interchangeable.getTimeSignatureList()) buildTimeSignatureType(timeSignatureType);
             buildEndElement("interchangeable");
         }
     }

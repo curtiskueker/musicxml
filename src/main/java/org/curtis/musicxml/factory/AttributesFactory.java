@@ -100,7 +100,7 @@ public class AttributesFactory {
         if (interchangeableElement != null) {
             Interchangeable interchangeable = new Interchangeable();
             interchangeable.setTimeRelation(FactoryUtil.enumValue(TimeRelation.class, XmlUtil.getChildElementText(interchangeableElement, "time-relation")));
-            interchangeable.setTimeSignature(newTimeSignature(interchangeableElement));
+            interchangeable.setTimeSignatureList(newTimeSignatureTypes(element));
             interchangeable.setSymbol(AttributesFactory.newTimeSymbol(interchangeableElement));
             interchangeable.setSeparator(AttributesFactory.newTimeSeparator(interchangeableElement));
             timeSignature.setInterchangeable(interchangeable);
