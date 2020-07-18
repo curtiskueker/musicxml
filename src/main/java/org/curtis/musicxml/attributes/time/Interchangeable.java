@@ -25,7 +25,7 @@ public class Interchangeable extends DatabaseItem {
     private TimeRelation timeRelation;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "interchangeable_id", nullable = false)
+    @JoinColumn(name = "interchangeable_id")
     @OrderBy("ordering")
     private List<TimeSignatureType> timeSignatureList = new ArrayList<>();
     @Enumerated(EnumType.STRING)

@@ -19,7 +19,7 @@ import java.util.List;
 public class TimeSignature extends Time {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "time_signature_id", nullable = false)
+    @JoinColumn(name = "time_signature_id")
     @OrderBy("ordering")
     private List<TimeSignatureType> timeSignatureList = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
