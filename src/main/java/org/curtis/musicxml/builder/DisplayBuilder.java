@@ -2,7 +2,6 @@ package org.curtis.musicxml.builder;
 
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Font;
-import org.curtis.musicxml.display.Position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,14 +15,10 @@ public class DisplayBuilder {
         Map<String, String> attributes = new HashMap<>();
         if (display == null) return attributes;
 
-        Position position = display.getPosition();
-        if (position != null) {
-            attributes.put("default-x", BuilderUtil.stringValue(position.getDefaultX()));
-            attributes.put("default-y", BuilderUtil.stringValue(position.getDefaultY()));
-            attributes.put("relative-x", BuilderUtil.stringValue(position.getRelativeX()));
-            attributes.put("relative-y", BuilderUtil.stringValue(position.getRelativeY()));
-        }
-
+        attributes.put("default-x", BuilderUtil.stringValue(display.getDefaultX()));
+        attributes.put("default-y", BuilderUtil.stringValue(display.getDefaultY()));
+        attributes.put("relative-x", BuilderUtil.stringValue(display.getRelativeX()));
+        attributes.put("relative-y", BuilderUtil.stringValue(display.getRelativeY()));
         attributes.put("placement", BuilderUtil.enumValue(display.getPlacement()));
         attributes.putAll(buildFont(display.getFont()));
         attributes.put("color", display.getColor());

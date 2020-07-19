@@ -9,7 +9,6 @@ import org.curtis.musicxml.display.Footnote;
 import org.curtis.musicxml.display.FormattedDisplay;
 import org.curtis.musicxml.display.Halign;
 import org.curtis.musicxml.display.Placement;
-import org.curtis.musicxml.display.Position;
 import org.curtis.musicxml.display.Valign;
 import org.curtis.util.MathUtil;
 import org.curtis.util.StringUtil;
@@ -25,29 +24,6 @@ public class DisplayFactory {
     public static Display newDisplay(Element element) {
         if (element == null) return null;
 
-        Position position = newPosition(element);
-        Placement placement = FactoryUtil.enumValue(Placement.class, element.getAttribute("placement"));
-        Font font = newFont(element);
-        String color = element.getAttribute("color");
-        Halign halign = FactoryUtil.enumValue(Halign.class, element.getAttribute("halign"));
-        Valign valign = FactoryUtil.enumValue(Valign.class, element.getAttribute("valign"));
-
-        if (position == null && placement == null && font == null && StringUtil.isEmpty(color) && halign == null && valign == null) return null;
-
-        Display display = new Display();
-        display.setPosition(position);
-        display.setPlacement(placement);
-        display.setFont(font);
-        display.setColor(color);
-        display.setHalign(halign);
-        display.setValign(valign);
-
-        return display;
-    }
-
-    private static Position newPosition(Element element) {
-        if(element == null) return null;
-
         BigDecimal defaultX = MathUtil.newBigDecimal(element.getAttribute("default-x"));
         BigDecimal defaultY = MathUtil.newBigDecimal(element.getAttribute("default-y"));
         BigDecimal relativeX = MathUtil.newBigDecimal(element.getAttribute("relative-x"));
@@ -58,16 +34,26 @@ public class DisplayFactory {
         if (invalidPositionValue(relativeX, "relative-x")) relativeX = null;
         if (invalidPositionValue(relativeY, "relative-y")) relativeY = null;
 
-        if (defaultX == null && defaultY == null && relativeX == null && relativeY == null) return null;
+        Placement placement = FactoryUtil.enumValue(Placement.class, element.getAttribute("placement"));
+        Font font = newFont(element);
+        String color = element.getAttribute("color");
+        Halign halign = FactoryUtil.enumValue(Halign.class, element.getAttribute("halign"));
+        Valign valign = FactoryUtil.enumValue(Valign.class, element.getAttribute("valign"));
 
-        Position position = new Position();
+        if (defaultX == null && defaultY == null && relativeX == null && relativeY == null && placement == null && font == null && StringUtil.isEmpty(color) && halign == null && valign == null) return null;
 
-        position.setDefaultX(defaultX);
-        position.setDefaultY(defaultY);
-        position.setRelativeX(relativeX);
-        position.setRelativeY(relativeY);
+        Display display = new Display();
+        display.setDefaultX(defaultX);
+        display.setDefaultY(defaultY);
+        display.setRelativeX(relativeX);
+        display.setRelativeY(relativeY);
+        display.setPlacement(placement);
+        display.setFont(font);
+        display.setColor(color);
+        display.setHalign(halign);
+        display.setValign(valign);
 
-        return position;
+        return display;
     }
 
     private static boolean invalidPositionValue(BigDecimal positionValue, String fieldName) {

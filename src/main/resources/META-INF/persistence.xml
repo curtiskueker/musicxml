@@ -126,7 +126,6 @@
         <class>org.curtis.musicxml.display.Editorial</class>
         <class>org.curtis.musicxml.display.Font</class>
         <class>org.curtis.musicxml.display.Footnote</class>
-        <class>org.curtis.musicxml.display.Position</class>
         <class>org.curtis.musicxml.identity.Identification</class>
         <class>org.curtis.musicxml.identity.IdentificationType</class>
         <class>org.curtis.musicxml.identity.Miscellaneous</class>
