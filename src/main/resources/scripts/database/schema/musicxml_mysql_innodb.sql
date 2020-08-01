@@ -301,11 +301,14 @@
     create table display (
        id integer not null auto_increment,
         color varchar(255),
+        default_x decimal(12,4),
+        default_y decimal(12,4),
         halign varchar(255),
         placement varchar(255),
+        relative_x decimal(12,4),
+        relative_y decimal(12,4),
         valign varchar(255),
         font_id integer,
-        position_id integer,
         primary key (id)
     ) engine=InnoDB;
 
@@ -543,7 +546,6 @@
         time_separator varchar(255),
         symbol varchar(255),
         time_relation varchar(255),
-        time_signature_id integer,
         primary key (id)
     ) engine=InnoDB;
 
@@ -1105,15 +1107,6 @@
         primary key (id)
     ) engine=InnoDB;
 
-    create table position (
-       id integer not null auto_increment,
-        default_x decimal(12,4),
-        default_y decimal(12,4),
-        relative_x decimal(12,4),
-        relative_y decimal(12,4),
-        primary key (id)
-    ) engine=InnoDB;
-
     create table printout (
        id integer not null auto_increment,
         print_dot char(1),
@@ -1366,7 +1359,8 @@
         ordering integer,
         beat_type varchar(255),
         beats varchar(255),
-        time_signature_id integer not null,
+        time_signature_id integer,
+        interchangeable_id integer,
         primary key (id)
     ) engine=InnoDB;
 
@@ -1680,11 +1674,6 @@
        foreign key (font_id) 
        references font (id);
 
-    alter table display 
-       add constraint FK2107b5khj7dpia54m5mlscu2h 
-       foreign key (position_id) 
-       references position (id);
-
     alter table distance 
        add constraint FKsgkg2m74unfcqfelw001vgnkm 
        foreign key (defaults_id) 
@@ -1884,11 +1873,6 @@
        add constraint FK8dm2m32nujxu57i8veecs1o5t 
        foreign key (identification_id) 
        references identification (id);
-
-    alter table interchangeable 
-       add constraint FKavstr6ajrdw305ahlh9tivfnn 
-       foreign key (time_signature_id) 
-       references time (id);
 
     alter table inversion 
        add constraint FK8wmswbqbiahcr1tbssadhs3d6 
@@ -2574,6 +2558,11 @@
        add constraint FK6m54smq3gfdesiu0t32o6s4wh 
        foreign key (time_signature_id) 
        references time (id);
+
+    alter table time_signature_type 
+       add constraint FKodjdjqe572b06ymjbjnyvvd4w 
+       foreign key (interchangeable_id) 
+       references interchangeable (id);
 
     alter table transpose 
        add constraint FKmxnumkuq4nsn7wpf9apuyftda 
