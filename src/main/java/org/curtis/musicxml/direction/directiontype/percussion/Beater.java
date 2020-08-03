@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 @DiscriminatorValue("beater")
 public class Beater extends Percussion {
     @Enumerated(EnumType.STRING)
-    @Column(name = "beater_value")
+    @Column(name = "direction_type")
     private BeaterValue beaterValue;
     @Enumerated(EnumType.STRING)
     @Column

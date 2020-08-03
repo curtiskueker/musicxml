@@ -12,9 +12,9 @@ import javax.persistence.Enumerated;
 @DiscriminatorValue("pedal")
 public class Pedal extends DirectionType {
     @Enumerated(EnumType.STRING)
-    @Column(name = "pedal_type")
+    @Column(name = "direction_type")
     private PedalType pedalType;
-    @Column(name = "pedal_number")
+    @Column(name = "direction_type_number")
     private Integer number;
     @Column
     @Type(type="yes_no")
