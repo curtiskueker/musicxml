@@ -1156,7 +1156,7 @@
         score_instrument_id varchar(255),
         instrument_type_id integer,
         virtual_instrument_id integer,
-        part_list_item_id integer not null,
+        score_part_id integer not null,
         primary key (id)
     ) engine=InnoDB;
 
@@ -1165,7 +1165,7 @@
         ordering integer,
         midi_device_id integer,
         midi_instrument_id integer,
-        part_list_item_id integer not null,
+        score_part_id integer not null,
         primary key (id)
     ) engine=InnoDB;
 
@@ -1173,7 +1173,7 @@
        id integer not null auto_increment,
         ordering integer,
         group_name varchar(255),
-        part_list_item_id integer not null,
+        score_part_id integer not null,
         primary key (id)
     ) engine=InnoDB;
 
@@ -2406,8 +2406,8 @@
        references virtual_instrument (id);
 
     alter table score_instrument 
-       add constraint FKd15sla0n5ngv0cfbgelkns4s 
-       foreign key (part_list_item_id) 
+       add constraint FK7snpsirjcgd5v53th65nrlpcb 
+       foreign key (score_part_id) 
        references part_list_item (id);
 
     alter table score_midi 
@@ -2421,13 +2421,13 @@
        references midi_instrument (id);
 
     alter table score_midi 
-       add constraint FKkseqi8id73lktf580eif75lfi 
-       foreign key (part_list_item_id) 
+       add constraint FKtctr4qp9udoiur2mnjsrixxva 
+       foreign key (score_part_id) 
        references part_list_item (id);
 
     alter table score_part_group 
-       add constraint FKfo6822asqo0bmmjttjf8wy2gk 
-       foreign key (part_list_item_id) 
+       add constraint FK1rxas1t6hh8j1iv29kyhii4ep 
+       foreign key (score_part_id) 
        references part_list_item (id);
 
     alter table sound_midi 

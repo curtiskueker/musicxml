@@ -40,17 +40,17 @@ public class ScorePart extends PartListItem {
     private NameDisplay partAbbreviationDisplay;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "part_list_item_id", nullable = false)
+    @JoinColumn(name = "score_part_id", nullable = false)
     @OrderBy("ordering")
     private List<ScorePartGroup> groups = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "part_list_item_id", nullable = false)
+    @JoinColumn(name = "score_part_id", nullable = false)
     @OrderBy("ordering")
     private List<ScoreInstrument> scoreInstruments = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "part_list_item_id", nullable = false)
+    @JoinColumn(name = "score_part_id", nullable = false)
     @OrderBy("ordering")
     private List<ScorePartMidi> scorePartMidis = new ArrayList<>();
 
