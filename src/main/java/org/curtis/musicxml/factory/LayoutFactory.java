@@ -44,9 +44,10 @@ public class LayoutFactory {
                         if (StringUtil.isEmpty(marginType)) marginType = "both";
                         MarginType marginTypeValue = FactoryUtil.enumValue(MarginType.class, marginType);
                         pageMargins.setType(marginTypeValue);
-                        pageMargins.setMarginTypeKey(marginTypeValue);
 
-                        pageMarginsMap.put(pageMargins.getType(), pageMargins);
+                        PageMargins previousPageMargins = pageMarginsMap.get(marginTypeValue);
+                        if (previousPageMargins != null) System.err.println("Warning: duplicate page-margins type: " + marginTypeValue);
+                        pageMarginsMap.put(marginTypeValue, pageMargins);
                     }
                     layout.setPageLayout(pageLayout);
                     break;

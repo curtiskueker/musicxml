@@ -28,7 +28,7 @@ public class PageLayout extends DatabaseItem {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "page_layout_id", nullable = false)
-    @MapKeyColumn(name = "margin_type_key")
+    @MapKeyColumn(name = "type")
     @MapKeyEnumerated(EnumType.STRING)
     private Map<MarginType, PageMargins> pageMargins = new HashMap<>();
 

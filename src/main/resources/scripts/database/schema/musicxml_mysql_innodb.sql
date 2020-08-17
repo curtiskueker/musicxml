@@ -1019,7 +1019,6 @@
        id integer not null auto_increment,
         bottom_margin decimal(12,4),
         left_margin decimal(12,4),
-        margin_type_key varchar(255),
         right_margin decimal(12,4),
         top_margin decimal(12,4),
         type varchar(255),

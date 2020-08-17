@@ -23,9 +23,6 @@ public class PageMargins extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column
     private MarginType type;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "margin_type_key")
-    private MarginType marginTypeKey;
 
     public PageMargins() {
 
@@ -69,13 +66,5 @@ public class PageMargins extends DatabaseItem {
 
     public void setType(MarginType type) {
         this.type = type;
-    }
-
-    public MarginType getMarginTypeKey() {
-        return marginTypeKey;
-    }
-
-    public void setMarginTypeKey(MarginType marginTypeKey) {
-        this.marginTypeKey = marginTypeKey;
     }
 }
