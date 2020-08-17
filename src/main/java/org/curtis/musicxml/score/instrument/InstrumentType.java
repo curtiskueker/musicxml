@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "instrument_type")
-@DiscriminatorColumn(name = "instrument_type")
+@DiscriminatorColumn(name = "instrument_type_type")
 public abstract class InstrumentType extends DatabaseItem {
 
 }

@@ -532,7 +532,7 @@
     ) engine=InnoDB;
 
     create table instrument_type (
-       instrument_type varchar(31) not null,
+       instrument_type_type varchar(31) not null,
         id integer not null auto_increment,
         value integer,
         primary key (id)
