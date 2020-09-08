@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("wavy line")
 public class WavyLine extends Ornament {
     @Enumerated(EnumType.STRING)
-    @Column(name = "connection_type")
     private Connection type;
     @Column(name = "wavy_line_number")
     private Integer number;

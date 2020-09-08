@@ -12,7 +12,7 @@ public class Tremolo extends Ornament {
     @Column(name = "tremolo_marks")
     private Integer tremoloMarks;
     @Enumerated(EnumType.STRING)
-    @Column(name = "tremolo_type")
+    @Column(name = "type")
     private TremoloType tremoloType = TremoloType.SINGLE;
     @Column
     private String smufl;
