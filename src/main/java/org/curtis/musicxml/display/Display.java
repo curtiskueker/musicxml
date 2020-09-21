@@ -1,12 +1,14 @@
 package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.HalignConverter;
+import org.curtis.musicxml.converter.PlacementConverter;
+import org.curtis.musicxml.converter.ValignConverter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,7 +25,7 @@ public class Display extends DatabaseItem {
     private BigDecimal relativeX;
     @Column(name = "relative_y", precision = 12, scale = 4)
     private BigDecimal relativeY;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PlacementConverter.class)
     @Column
     private Placement placement;
     @OneToOne(cascade = CascadeType.ALL)
@@ -31,10 +33,10 @@ public class Display extends DatabaseItem {
     private Font font;
     @Column
     private String color;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HalignConverter.class)
     @Column
     private Halign halign;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ValignConverter.class)
     @Column
     private Valign valign;
 

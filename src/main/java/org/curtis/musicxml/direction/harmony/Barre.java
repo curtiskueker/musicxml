@@ -2,13 +2,13 @@ package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "barre")
 public class Barre extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column
     private Connection type;
     @OneToOne(cascade = CascadeType.ALL)

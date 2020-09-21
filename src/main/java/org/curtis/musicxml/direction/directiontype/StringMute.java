@@ -1,15 +1,16 @@
 package org.curtis.musicxml.direction.directiontype;
 
+import org.curtis.musicxml.converter.StringMuteDirectionConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("string mute")
 public class StringMute extends DirectionType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StringMuteDirectionConverter.class)
     @Column(name = "direction_type")
     private StringMuteDirection type;
 

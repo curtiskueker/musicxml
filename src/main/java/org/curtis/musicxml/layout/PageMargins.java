@@ -1,11 +1,11 @@
 package org.curtis.musicxml.layout;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.MarginTypeConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -20,7 +20,7 @@ public class PageMargins extends DatabaseItem {
     private BigDecimal topMargin;
     @Column(name = "bottom_margin", precision = 12, scale = 4)
     private BigDecimal bottomMargin;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = MarginTypeConverter.class)
     @Column
     private MarginType type;
 

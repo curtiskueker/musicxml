@@ -1,22 +1,23 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
+import org.curtis.musicxml.converter.PrincipalVoiceSymbolConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("principal voice")
 public class PrincipalVoice extends DirectionType {
     @Column(name = "principal_voice")
     private String principalVoice;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column(name = "direction_type")
     private Connection type;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PrincipalVoiceSymbolConverter.class)
     @Column
     private PrincipalVoiceSymbol symbol;
 

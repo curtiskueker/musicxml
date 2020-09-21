@@ -1,20 +1,22 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.converter.HoleClosedLocationConverter;
+import org.curtis.musicxml.converter.HoleClosedTypeConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("hole")
 public class Hole extends Technical {
     @Column(name = "hole_type")
     private String holeType;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HoleClosedTypeConverter.class)
     @Column(name = "hole_closed_type")
     private HoleClosedType holeClosedType;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HoleClosedLocationConverter.class)
     @Column(name = "hole_closed_location")
     private HoleClosedLocation holeClosedLocation;
     @Column(name = "hole_shape")

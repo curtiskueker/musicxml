@@ -2,12 +2,12 @@ package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.SymbolSize;
+import org.curtis.musicxml.converter.SymbolSizeConverter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +19,7 @@ public class LevelDisplay extends DatabaseItem {
     @Column
     @Type(type="yes_no")
     private Boolean bracket;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SymbolSizeConverter.class)
     @Column(name = "symbol_size")
     private SymbolSize size;
 

@@ -1,17 +1,18 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.converter.TapHandConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("tap")
 public class Tap extends Technical {
     @Column
     private String value;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TapHandConverter.class)
     @Column(name = "tap_hand")
     private TapHand tapHand;
 

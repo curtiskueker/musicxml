@@ -1,17 +1,17 @@
 package org.curtis.musicxml.note.notation.technical;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
 
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class HammerOnPullOff extends Technical {
     @Column
     private String value;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column(name = "notation_type")
     private Connection type;
     @Column(name = "notation_number")

@@ -1,19 +1,19 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.StepConverter;
 import org.curtis.musicxml.note.Step;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "tuning")
 public class Tuning extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StepConverter.class)
     @Column(name = "tuning_step")
     private Step tuningStep;
     @Column(name = "tuning_alter", precision = 12, scale = 4)

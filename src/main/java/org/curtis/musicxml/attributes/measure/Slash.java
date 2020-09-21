@@ -1,14 +1,14 @@
 package org.curtis.musicxml.attributes.measure;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -18,7 +18,7 @@ public class Slash extends MeasureStyle {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "slash_group_id")
     private SlashGroup slashGroup;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column
     private Connection type;
     @Column(name = "use_dots")

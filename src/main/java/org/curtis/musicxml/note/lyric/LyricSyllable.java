@@ -1,12 +1,12 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.curtis.database.OrderedItem;
+import org.curtis.musicxml.converter.SyllabicConverter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,7 +17,7 @@ public class LyricSyllable extends OrderedItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "elision_id")
     private Elision elision;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SyllabicConverter.class)
     @Column
     private Syllabic syllabic;
     @OneToOne(cascade = CascadeType.ALL)

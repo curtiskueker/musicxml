@@ -1,14 +1,16 @@
 package org.curtis.musicxml.attributes.time;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.TimeRelationConverter;
+import org.curtis.musicxml.converter.TimeSeparatorConverter;
+import org.curtis.musicxml.converter.TimeSymbolConverter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -20,18 +22,18 @@ import java.util.List;
 @Entity
 @Table(name = "interchangeable")
 public class Interchangeable extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
     @Column(name = "time_relation")
+    @Convert(converter = TimeRelationConverter.class)
     private TimeRelation timeRelation;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "interchangeable_id")
     @OrderBy("ordering")
     private List<TimeSignatureType> timeSignatureList = new ArrayList<>();
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TimeSymbolConverter.class)
     @Column
     private TimeSymbol symbol;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TimeSeparatorConverter.class)
     @Column(name = "time_separator")
     private TimeSeparator separator;
 

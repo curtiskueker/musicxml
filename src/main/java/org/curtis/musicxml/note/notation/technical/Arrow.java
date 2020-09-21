@@ -1,26 +1,28 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.converter.ArrowDirectionConverter;
+import org.curtis.musicxml.converter.ArrowStyleConverter;
+import org.curtis.musicxml.converter.CircularArrowConverter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("arrow")
 public class Arrow extends Technical {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ArrowDirectionConverter.class)
     @Column(name = "arrow_direction")
     private ArrowDirection arrowDirection;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ArrowStyleConverter.class)
     @Column(name = "arrow_style")
     private ArrowStyle arrowStyle;
     @Column
     @Type(type="yes_no")
     private Boolean arrowhead = false;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = CircularArrowConverter.class)
     @Column(name = "circular_arrow")
     private CircularArrow circularArrow;
     @Column

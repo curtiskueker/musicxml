@@ -1,21 +1,24 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import org.curtis.musicxml.converter.StickMaterialConverter;
+import org.curtis.musicxml.converter.StickTypeConverter;
+import org.curtis.musicxml.converter.TipDirectionConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("stick")
 public class Stick extends Percussion {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StickTypeConverter.class)
     @Column(name = "stick_type")
     private StickType stickType;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StickMaterialConverter.class)
     @Column(name = "stick_material")
     private StickMaterial stickMaterial;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TipDirectionConverter.class)
     @Column
     private TipDirection tip;
 

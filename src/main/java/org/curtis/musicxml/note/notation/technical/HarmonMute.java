@@ -1,18 +1,20 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.converter.HarmonClosedLocationConverter;
+import org.curtis.musicxml.converter.HarmonClosedValueConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("harmon mute")
 public class HarmonMute extends Technical {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HarmonClosedValueConverter.class)
     @Column
     private HarmonClosedValue value;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HarmonClosedLocationConverter.class)
     @Column
     private HarmonClosedLocation location;
 

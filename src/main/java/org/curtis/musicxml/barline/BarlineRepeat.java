@@ -1,22 +1,23 @@
 package org.curtis.musicxml.barline;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.BarlineRepeatDirectionConverter;
+import org.curtis.musicxml.converter.WingedConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "barline_repeat")
 public class BarlineRepeat extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BarlineRepeatDirectionConverter.class)
     @Column
     private BarlineRepeatDirection direction;
     @Column
     private Integer times;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = WingedConverter.class)
     @Column
     private Winged winged;
 

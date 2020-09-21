@@ -1,15 +1,16 @@
 package org.curtis.musicxml.common.play;
 
+import org.curtis.musicxml.converter.SemiPitchedTypeConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("semi pitched")
 public class SemiPitched extends PlayType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SemiPitchedTypeConverter.class)
     @Column(name = "value")
     private SemiPitchedType semiPitchcedType;
 

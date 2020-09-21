@@ -1,11 +1,12 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.converter.BendTypeConverter;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 public class Bend extends Technical {
     @Column(name = "bend_alter", precision = 12, scale = 4)
     private BigDecimal bendAlter;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BendTypeConverter.class)
     @Column(name = "bend_type")
     private BendType bendType;
     @OneToOne(cascade = CascadeType.ALL)

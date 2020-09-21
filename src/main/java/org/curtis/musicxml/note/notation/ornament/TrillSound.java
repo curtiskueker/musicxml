@@ -1,25 +1,27 @@
 package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.StartNoteConverter;
+import org.curtis.musicxml.converter.TrillStepConverter;
+import org.curtis.musicxml.converter.TwoNoteTurnConverter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "trill_sound")
 public class TrillSound extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StartNoteConverter.class)
     @Column(name = "start_note")
     private StartNote startNote;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TrillStepConverter.class)
     @Column(name = "trill_step")
     private TrillStep trillStep;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TwoNoteTurnConverter.class)
     @Column(name = "two_note_turn")
     private TwoNoteTurn twoNoteTurn;
     @Column

@@ -2,15 +2,16 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.converter.ConnectionConverter;
+import org.curtis.musicxml.converter.LineTypeConverter;
 import org.curtis.musicxml.note.LineType;
 import org.curtis.musicxml.note.notation.technical.BendSound;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -19,12 +20,12 @@ import javax.persistence.OneToOne;
 public class Slide extends Notation {
     @Column
     private String value;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column(name = "type_value")
     private Connection type;
     @Column(name = "notation_number")
     private Integer number = 1;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LineTypeConverter.class)
     @Column(name = "line_type")
     private LineType lineType;
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,20 +1,21 @@
 package org.curtis.musicxml.note.notation.ornament;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("wavy line")
 public class WavyLine extends Ornament {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
+    @Column
     private Connection type;
     @Column(name = "wavy_line_number")
     private Integer number;

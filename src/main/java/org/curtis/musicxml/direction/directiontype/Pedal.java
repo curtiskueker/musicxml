@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.directiontype;
 
+import org.curtis.musicxml.converter.PedalTypeConverter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("pedal")
 public class Pedal extends DirectionType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PedalTypeConverter.class)
     @Column(name = "direction_type")
     private PedalType pedalType;
     @Column(name = "direction_type_number")

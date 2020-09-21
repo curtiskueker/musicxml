@@ -1,18 +1,19 @@
 package org.curtis.musicxml.attributes.key;
 
+import org.curtis.musicxml.converter.CancelLocationConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("traditional key")
 public class TraditionalKey extends Key {
     @Column(name = "cancel_fifths")
     private Integer cancelFifths;
-    @Enumerated(EnumType.STRING)
     @Column(name = "cancel_location")
+    @Convert(converter = CancelLocationConverter.class)
     private CancelLocation cancelLocation;
     @Column
     private Integer fifths;

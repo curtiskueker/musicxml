@@ -1,15 +1,16 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.converter.StepConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("unpitched")
 public class Unpitched extends NoteType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StepConverter.class)
     @Column(name = "step")
     private Step step;
     @Column(name = "octave")

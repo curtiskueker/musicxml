@@ -1,25 +1,26 @@
 package org.curtis.musicxml.attributes.key;
 
 import org.curtis.database.OrderedItem;
+import org.curtis.musicxml.converter.AccidentalTypeConverter;
+import org.curtis.musicxml.converter.StepConverter;
 import org.curtis.musicxml.note.AccidentalType;
 import org.curtis.musicxml.note.Step;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "non_traditional_key_type")
 public class NonTraditionalKeyType extends OrderedItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StepConverter.class)
     @Column(name = "key_step")
     private Step keyStep;
     @Column(name = "key_alter", precision = 12, scale = 4)
     private BigDecimal keyAlter;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = AccidentalTypeConverter.class)
     @Column(name = "key_accidental")
     private AccidentalType keyAccidental;
     @Column(name = "key_accidental_smufl")

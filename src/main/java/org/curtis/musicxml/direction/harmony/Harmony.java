@@ -1,5 +1,6 @@
 package org.curtis.musicxml.direction.harmony;
 
+import org.curtis.musicxml.converter.HarmonyTypeConverter;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.direction.DirectionOffset;
 import org.curtis.musicxml.display.Display;
@@ -10,10 +11,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -43,7 +43,7 @@ public class Harmony extends MusicDataElement {
     private Editorial editorial;
     @Column
     private Integer staff;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HarmonyTypeConverter.class)
     @Column
     private HarmonyType type;
     @Column(name = "print_object")

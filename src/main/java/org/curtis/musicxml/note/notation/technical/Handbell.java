@@ -1,15 +1,16 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.converter.HandbellTypeConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("handbell")
 public class Handbell extends Technical {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HandbellTypeConverter.class)
     @Column(name = "handbell_type")
     private HandbellType handbellType;
 

@@ -1,17 +1,17 @@
 package org.curtis.musicxml.note.notation.articulation;
 
+import org.curtis.musicxml.converter.SymbolDirectionConverter;
 import org.curtis.musicxml.display.SymbolDirection;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("strong accent")
 public class StrongAccent extends Articulation {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SymbolDirectionConverter.class)
     @Column
     private SymbolDirection type = SymbolDirection.UP;
 

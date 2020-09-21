@@ -1,16 +1,16 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.display.NameDisplay;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -41,7 +41,7 @@ public class PartGroup extends PartListItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column(name = "part_group_type")
     private Connection type;
     @Column(name = "part_group_number")

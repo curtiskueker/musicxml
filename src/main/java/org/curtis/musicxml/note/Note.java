@@ -3,6 +3,8 @@ package org.curtis.musicxml.note;
 import org.curtis.lilypond.util.TypeUtil;
 import org.curtis.musicxml.common.OrderedGroup;
 import org.curtis.musicxml.common.SymbolSize;
+import org.curtis.musicxml.converter.NoteTypeValueConverter;
+import org.curtis.musicxml.converter.SymbolSizeConverter;
 import org.curtis.musicxml.display.TextDisplay;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.common.Printout;
@@ -23,10 +25,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -67,10 +68,10 @@ public class Note extends MusicDataElement {
     private Editorial editorial;
     @Column
     private String voice;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = NoteTypeValueConverter.class)
     @Column(name = "note_value")
     private NoteTypeValue noteValue;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SymbolSizeConverter.class)
     @Column(name = "note_size")
     private SymbolSize noteSize;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

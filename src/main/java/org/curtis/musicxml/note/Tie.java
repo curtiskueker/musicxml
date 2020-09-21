@@ -3,17 +3,17 @@ package org.curtis.musicxml.note;
 import org.curtis.database.DatabaseItem;
 import org.curtis.database.OrderedItem;
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tie")
 public class Tie extends OrderedItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column
     private Connection type;
     @Column(name = "time_only")

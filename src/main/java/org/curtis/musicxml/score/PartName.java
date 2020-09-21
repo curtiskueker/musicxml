@@ -1,15 +1,15 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.HalignConverter;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Halign;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,7 +25,7 @@ public class PartName extends DatabaseItem {
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HalignConverter.class)
     @Column
     private Halign justify;
 

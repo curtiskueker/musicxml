@@ -1,15 +1,16 @@
 package org.curtis.musicxml.attributes;
 
 import org.curtis.database.OrderedItem;
+import org.curtis.musicxml.converter.ShowFretsConverter;
+import org.curtis.musicxml.converter.StaffTypeConverter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -21,8 +22,8 @@ import java.util.List;
 @Entity
 @Table(name = "staff_details")
 public class StaffDetails extends OrderedItem {
-    @Enumerated(EnumType.STRING)
     @Column(name = "staff_type")
+    @Convert(converter = StaffTypeConverter.class)
     private StaffType staffType;
     @Column(name = "staff_lines")
     private Integer staffLines;
@@ -37,8 +38,8 @@ public class StaffDetails extends OrderedItem {
     private BigDecimal staffSize;
     @Column(name = "staff_details_number")
     private Integer number;
-    @Enumerated(EnumType.STRING)
     @Column(name = "show_frets")
+    @Convert(converter = ShowFretsConverter.class)
     private ShowFrets showFrets;
     @Column(name = "print_object")
     @Type(type="yes_no")

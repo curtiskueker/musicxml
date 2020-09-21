@@ -1,20 +1,20 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.converter.OctaveShiftTypeConverter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("octave shift")
 public class OctaveShift extends DirectionType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = OctaveShiftTypeConverter.class)
     @Column(name = "direction_type")
     private OctaveShiftType type;
     @Column(name = "direction_type_number")

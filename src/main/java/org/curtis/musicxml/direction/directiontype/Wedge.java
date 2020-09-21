@@ -1,15 +1,16 @@
 package org.curtis.musicxml.direction.directiontype;
 
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.converter.LineTypeConverter;
+import org.curtis.musicxml.converter.WedgeTypeConverter;
 import org.curtis.musicxml.note.LineType;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("wedge")
 public class Wedge extends DirectionType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = WedgeTypeConverter.class)
     @Column(name = "direction_type")
     private WedgeType type;
     @Column(name = "direction_type_number")
@@ -27,7 +28,7 @@ public class Wedge extends DirectionType {
     @Column
     @Type(type="yes_no")
     private Boolean niente;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LineTypeConverter.class)
     @Column(name = "line_type")
     private LineType lineType;
     @OneToOne(cascade = CascadeType.ALL)

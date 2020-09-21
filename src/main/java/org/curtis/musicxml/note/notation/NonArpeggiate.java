@@ -1,17 +1,17 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.converter.ValignConverter;
 import org.curtis.musicxml.display.Valign;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("non arpeggiate")
 public class NonArpeggiate extends Notation {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ValignConverter.class)
     @Column(name = "type_value")
     private Valign type;
     @Column(name = "notation_number")

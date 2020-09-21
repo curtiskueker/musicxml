@@ -1,15 +1,17 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
+import org.curtis.musicxml.converter.LineShapeConverter;
+import org.curtis.musicxml.converter.ShowTupletConverter;
 import org.curtis.musicxml.note.LineShape;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -22,7 +24,7 @@ public class Tuplet extends Notation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tuplet_normal_id")
     private TupletPortion tupletNormal;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column(name = "type_value")
     private Connection type;
     @Column(name = "notation_number")
@@ -30,13 +32,13 @@ public class Tuplet extends Notation {
     @Column
     @Type(type="yes_no")
     private Boolean bracket;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ShowTupletConverter.class)
     @Column(name = "show_number")
     private ShowTuplet showNumber;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ShowTupletConverter.class)
     @Column(name = "show_type")
     private ShowTuplet showType;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LineShapeConverter.class)
     @Column(name = "line_shape")
     private LineShape lineShape;
 

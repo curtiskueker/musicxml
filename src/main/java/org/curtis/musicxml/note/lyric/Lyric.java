@@ -1,6 +1,7 @@
 package org.curtis.musicxml.note.lyric;
 
 import org.curtis.database.OrderedElement;
+import org.curtis.musicxml.converter.HalignConverter;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Halign;
@@ -10,9 +11,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -38,7 +38,7 @@ public class Lyric extends OrderedElement {
     private String number;
     @Column
     private String name;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HalignConverter.class)
     @Column
     private Halign justify;
     @OneToOne(cascade = CascadeType.ALL)

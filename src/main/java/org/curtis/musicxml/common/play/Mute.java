@@ -1,15 +1,16 @@
 package org.curtis.musicxml.common.play;
 
+import org.curtis.musicxml.converter.MuteTypeConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("mute")
 public class Mute extends PlayType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = MuteTypeConverter.class)
     @Column(name = "value")
     private MuteType muteType;
 

@@ -1,14 +1,14 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.HalignConverter;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.display.Halign;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,7 +21,7 @@ public class GroupName extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HalignConverter.class)
     @Column
     private Halign justify;
 

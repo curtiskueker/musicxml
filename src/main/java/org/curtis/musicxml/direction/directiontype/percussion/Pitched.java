@@ -1,15 +1,16 @@
 package org.curtis.musicxml.direction.directiontype.percussion;
 
+import org.curtis.musicxml.converter.PitchedTypeConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("pitched")
 public class Pitched extends Percussion {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PitchedTypeConverter.class)
     @Column(name = "direction_type")
     private PitchedType type;
     @Column

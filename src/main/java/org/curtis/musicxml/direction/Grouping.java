@@ -1,16 +1,16 @@
 package org.curtis.musicxml.direction;
 
 import org.curtis.musicxml.common.Connection;
+import org.curtis.musicxml.converter.ConnectionConverter;
 import org.curtis.musicxml.score.MusicDataElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -26,7 +26,7 @@ public class Grouping extends MusicDataElement {
     @JoinColumn(name = "grouping_id", nullable = false)
     @OrderBy("ordering")
     private List<Feature> features = new ArrayList<>();
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column
     private Connection type;
     @Column(name = "grouping_number")

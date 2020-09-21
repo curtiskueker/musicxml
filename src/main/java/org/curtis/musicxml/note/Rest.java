@@ -1,17 +1,17 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.converter.StepConverter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("rest")
 public class Rest extends NoteType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StepConverter.class)
     @Column(name = "step")
     private Step step;
     @Column(name = "octave")

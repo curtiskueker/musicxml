@@ -1,5 +1,6 @@
 package org.curtis.musicxml.direction;
 
+import org.curtis.musicxml.converter.MeasureNumberingTypeConverter;
 import org.curtis.musicxml.display.NameDisplay;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.layout.Layout;
@@ -8,10 +9,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
@@ -24,7 +24,7 @@ public class Print extends MusicDataElement {
     private Layout layout;
     @Column(name = "measure_distance", precision = 12, scale = 4)
     private BigDecimal measureDistance;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = MeasureNumberingTypeConverter.class)
     @Column(name = "measure_numbering_value")
     private MeasureNumberingType measureNumberingValue;
     @OneToOne(cascade = CascadeType.ALL)

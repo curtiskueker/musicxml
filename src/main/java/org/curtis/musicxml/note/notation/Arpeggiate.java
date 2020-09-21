@@ -1,19 +1,19 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.converter.SymbolDirectionConverter;
 import org.curtis.musicxml.display.SymbolDirection;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("arpeggiate")
 public class Arpeggiate extends Notation {
     @Column(name = "notation_number")
     private Integer number;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SymbolDirectionConverter.class)
     @Column
     private SymbolDirection direction;
 

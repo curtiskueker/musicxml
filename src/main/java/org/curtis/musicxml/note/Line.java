@@ -2,12 +2,14 @@ package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.converter.LineLengthConverter;
+import org.curtis.musicxml.converter.LineShapeConverter;
+import org.curtis.musicxml.converter.LineTypeConverter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,13 +17,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "line")
 public class Line extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LineShapeConverter.class)
     @Column(name = "line_shape")
     private LineShape lineShape;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LineTypeConverter.class)
     @Column(name = "line_type")
     private LineType lineType;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LineLengthConverter.class)
     @Column(name = "line_length")
     private LineLength lineLength;
     @OneToOne(cascade = CascadeType.ALL)

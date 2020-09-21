@@ -1,11 +1,11 @@
 package org.curtis.musicxml.note.notation.ornament;
 
+import org.curtis.musicxml.converter.PlacementConverter;
 import org.curtis.musicxml.display.Placement;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
@@ -13,10 +13,10 @@ public abstract class AbstractMordent extends PlacedTrillSound {
     @Column(name = "long_mordent")
     @Type(type="yes_no")
     private Boolean longMordent;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PlacementConverter.class)
     @Column
     private Placement approach;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PlacementConverter.class)
     @Column
     private Placement departure;
 

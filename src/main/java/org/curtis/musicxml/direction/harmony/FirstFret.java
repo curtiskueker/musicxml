@@ -1,12 +1,12 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.HalignConverter;
 import org.curtis.musicxml.display.Halign;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -16,7 +16,7 @@ public class FirstFret extends DatabaseItem {
     private Integer value;
     @Column
     private String text;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HalignConverter.class)
     @Column
     private Halign location;
 

@@ -1,20 +1,21 @@
 package org.curtis.musicxml.note.notation.technical;
 
+import org.curtis.musicxml.converter.HarmonicPitchConverter;
+import org.curtis.musicxml.converter.HarmonicTypeConverter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("harmonic")
 public class Harmonic extends Technical {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HarmonicTypeConverter.class)
     @Column(name = "harmonic_type")
     private HarmonicType harmonicType;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HarmonicPitchConverter.class)
     @Column(name = "harmonic_pitch")
     private HarmonicPitch harmonicPitch;
     @Column(name = "print_object")

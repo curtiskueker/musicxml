@@ -2,12 +2,13 @@ package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.builder.BuilderUtil;
+import org.curtis.musicxml.converter.FontStyleConverter;
+import org.curtis.musicxml.converter.FontWeightConverter;
 import org.curtis.util.MathUtil;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -16,12 +17,12 @@ import java.math.BigDecimal;
 public class Font extends DatabaseItem {
     @Column(name = "font_family")
     private String fontFamily;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = FontStyleConverter.class)
     @Column(name = "font_style")
     private FontStyle fontStyle;
     @Column(name = "font_size")
     private String fontSize;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = FontWeightConverter.class)
     @Column(name = "font_weight")
     private FontWeight fontWeight;
 

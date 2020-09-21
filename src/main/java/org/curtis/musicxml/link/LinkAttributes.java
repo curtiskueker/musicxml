@@ -1,11 +1,13 @@
 package org.curtis.musicxml.link;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.ActuateConverter;
+import org.curtis.musicxml.converter.LinkTypeConverter;
+import org.curtis.musicxml.converter.ShowConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -13,17 +15,17 @@ import javax.persistence.Table;
 public class LinkAttributes extends DatabaseItem {
     @Column
     private String href;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LinkTypeConverter.class)
     @Column
     private LinkType type = LinkType.SIMPLE;
     @Column(name = "link_role")
     private String role;
     @Column
     private String title;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ShowConverter.class)
     @Column(name = "link_show")
     private Show show = Show.REPLACE;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ActuateConverter.class)
     @Column
     private Actuate actuate = Actuate.ON_REQUEST;
 

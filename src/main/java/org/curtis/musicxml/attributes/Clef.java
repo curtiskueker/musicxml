@@ -2,14 +2,15 @@ package org.curtis.musicxml.attributes;
 
 import org.curtis.database.OrderedElement;
 import org.curtis.musicxml.common.SymbolSize;
+import org.curtis.musicxml.converter.ClefSignConverter;
+import org.curtis.musicxml.converter.SymbolSizeConverter;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "clef")
 public class Clef extends OrderedElement {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ClefSignConverter.class)
     @Column
     private ClefSign sign;
     @Column
@@ -29,7 +30,7 @@ public class Clef extends OrderedElement {
     @Column
     @Type(type="yes_no")
     private Boolean additional;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = SymbolSizeConverter.class)
     @Column(name = "symbol_size")
     private SymbolSize size;
     @Column(name = "after_barline")

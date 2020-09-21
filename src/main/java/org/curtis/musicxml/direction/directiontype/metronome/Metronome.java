@@ -1,17 +1,17 @@
 package org.curtis.musicxml.direction.directiontype.metronome;
 
+import org.curtis.musicxml.converter.HalignConverter;
 import org.curtis.musicxml.direction.directiontype.DirectionType;
 import org.curtis.musicxml.display.Halign;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class Metronome extends DirectionType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HalignConverter.class)
     @Column
     private Halign justify;
     @Column

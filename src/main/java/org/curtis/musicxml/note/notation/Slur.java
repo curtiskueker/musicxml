@@ -2,15 +2,17 @@ package org.curtis.musicxml.note.notation;
 
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.common.DashedFormatting;
+import org.curtis.musicxml.converter.ConnectionConverter;
+import org.curtis.musicxml.converter.LineTypeConverter;
+import org.curtis.musicxml.converter.OrientationConverter;
 import org.curtis.musicxml.display.Orientation;
 import org.curtis.musicxml.note.LineType;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -18,18 +20,18 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue("slur")
 public class Slur extends Notation {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConnectionConverter.class)
     @Column(name = "connection_type")
     private Connection connectionType;
     @Column(name = "notation_number")
     private Integer number;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = LineTypeConverter.class)
     @Column(name = "line_type")
     private LineType lineType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dashed_formatting_id")
     private DashedFormatting dashedFormatting;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = OrientationConverter.class)
     @Column
     private Orientation orientation;
     @OneToOne(cascade = CascadeType.ALL)

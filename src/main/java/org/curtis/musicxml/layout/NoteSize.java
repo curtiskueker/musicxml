@@ -1,11 +1,11 @@
 package org.curtis.musicxml.layout;
 
 import org.curtis.database.OrderedItem;
+import org.curtis.musicxml.converter.NoteSizeTypeConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class NoteSize extends OrderedItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal value;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = NoteSizeTypeConverter.class)
     @Column
     private NoteSizeType type;
 

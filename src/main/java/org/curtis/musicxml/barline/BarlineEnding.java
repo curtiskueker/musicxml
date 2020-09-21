@@ -1,14 +1,14 @@
 package org.curtis.musicxml.barline;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.BarlineEndingTypeConverter;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,7 +21,7 @@ public class BarlineEnding extends DatabaseItem {
     private String value;
     @Column(name = "ending_number")
     private String number;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BarlineEndingTypeConverter.class)
     @Column(name = "ending_type")
     private BarlineEndingType type;
     @Column(name = "print_object")

@@ -1,11 +1,11 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.NoteTypeValueConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +15,7 @@ public class TimeModification extends DatabaseItem {
     private Integer actualNotes;
     @Column(name = "normal_notes")
     private Integer normalNotes;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = NoteTypeValueConverter.class)
     @Column(name = "normal_type")
     private NoteTypeValue normalType;
     @Column(name = "normal_dots")

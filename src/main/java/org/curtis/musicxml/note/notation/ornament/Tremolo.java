@@ -1,17 +1,18 @@
 package org.curtis.musicxml.note.notation.ornament;
 
+import org.curtis.musicxml.converter.TremoloTypeConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("tremolo")
 public class Tremolo extends Ornament {
     @Column(name = "tremolo_marks")
     private Integer tremoloMarks;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TremoloTypeConverter.class)
     @Column(name = "type")
     private TremoloType tremoloType = TremoloType.SINGLE;
     @Column

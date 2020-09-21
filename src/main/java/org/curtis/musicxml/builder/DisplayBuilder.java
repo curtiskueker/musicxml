@@ -34,7 +34,7 @@ public class DisplayBuilder {
 
         attributes.put("font-family", font.getFontFamily());
         attributes.put("font-style", BuilderUtil.enumValue(font.getFontStyle()));
-        attributes.put("font-size", BuilderUtil.enumValue(font.getFontSize()));
+        attributes.put("font-size", font.getFontSize());
         attributes.put("font-weight", BuilderUtil.enumValue(font.getFontWeight()));
 
         return attributes;

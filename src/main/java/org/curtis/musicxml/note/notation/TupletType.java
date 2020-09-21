@@ -1,14 +1,14 @@
 package org.curtis.musicxml.note.notation;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.NoteTypeValueConverter;
 import org.curtis.musicxml.display.Display;
 import org.curtis.musicxml.note.NoteTypeValue;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tuplet_type")
 public class TupletType extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = NoteTypeValueConverter.class)
     @Column(name = "note_type_value")
     private NoteTypeValue noteTypeValue;
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,11 +1,13 @@
 package org.curtis.musicxml.display;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.EnclosureShapeConverter;
+import org.curtis.musicxml.converter.HalignConverter;
+import org.curtis.musicxml.converter.TextDirectionConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -14,7 +16,7 @@ import java.math.BigDecimal;
 public class TextFormat extends DatabaseItem {
     @Column
     private String value;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = HalignConverter.class)
     @Column
     private Halign justify;
     @Column
@@ -33,10 +35,10 @@ public class TextFormat extends DatabaseItem {
     private String lang;
     @Column(name = "space")
     private String space;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = TextDirectionConverter.class)
     @Column(name = "text_direction")
     private TextDirection textDirection;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = EnclosureShapeConverter.class)
     @Column
     private EnclosureShape enclosure;
 

@@ -1,21 +1,21 @@
 package org.curtis.musicxml.note.notation;
 
+import org.curtis.musicxml.converter.AccidentalTypeConverter;
 import org.curtis.musicxml.display.LevelDisplay;
 import org.curtis.musicxml.note.AccidentalType;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("accidental mark")
 public class AccidentalMark extends Notation {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = AccidentalTypeConverter.class)
     @Column(name = "accidental_type")
     private AccidentalType accidentalType;
     @OneToOne(cascade = CascadeType.ALL)

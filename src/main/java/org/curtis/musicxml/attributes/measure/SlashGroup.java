@@ -1,15 +1,15 @@
 package org.curtis.musicxml.attributes.measure;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.NoteTypeValueConverter;
 import org.curtis.musicxml.note.NoteTypeValue;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -21,7 +21,7 @@ import java.util.List;
 @Entity
 @Table(name = "slash_group")
 public class SlashGroup extends DatabaseItem {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = NoteTypeValueConverter.class)
     @Column(name = "slash_type")
     private NoteTypeValue slashType;
     @Column(name = "slash_dots")

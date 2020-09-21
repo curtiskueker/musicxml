@@ -1,13 +1,13 @@
 package org.curtis.musicxml.direction.harmony;
 
 import org.curtis.database.DatabaseItem;
+import org.curtis.musicxml.converter.DegreeSymbolConverter;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class DegreeValue extends DatabaseItem {
     @Column
     private Integer value;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = DegreeSymbolConverter.class)
     @Column
     private DegreeSymbol symbol;
     @Column

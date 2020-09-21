@@ -1,5 +1,7 @@
 package org.curtis.musicxml.barline;
 
+import org.curtis.musicxml.converter.BarStyleConverter;
+import org.curtis.musicxml.converter.BarlineLocationConverter;
 import org.curtis.musicxml.display.Editorial;
 import org.curtis.musicxml.direction.directiontype.Coda;
 import org.curtis.musicxml.direction.directiontype.Segno;
@@ -12,10 +14,9 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -28,7 +29,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("barline")
 public class Barline extends MusicDataElement {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BarStyleConverter.class)
     @Column(name = "bar_style")
     private BarStyle barStyle;
     @OneToOne(cascade = CascadeType.ALL)
@@ -57,7 +58,7 @@ public class Barline extends MusicDataElement {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "barline_repeat_id")
     private BarlineRepeat repeat;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BarlineLocationConverter.class)
     @Column(name = "barline_location")
     private BarlineLocation barlineLocation;
     @Column

@@ -1,16 +1,17 @@
 package org.curtis.musicxml.note;
 
+import org.curtis.musicxml.converter.StepConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("pitch")
 public class Pitch extends NoteType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StepConverter.class)
     @Column
     private Step step;
     @Column(name = "pitch_alter", precision = 12, scale = 4)

@@ -1,15 +1,16 @@
 package org.curtis.musicxml.direction.directiontype;
 
+import org.curtis.musicxml.converter.StaffDivideSymbolConverter;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("staff divide")
 public class StaffDivide extends DirectionType {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StaffDivideSymbolConverter.class)
     @Column(name = "staff_divide_symbol")
     private StaffDivideSymbol staffDivideSymbol;
 

@@ -1,17 +1,17 @@
 package org.curtis.musicxml.display;
 
+import org.curtis.musicxml.converter.AccidentalTypeConverter;
 import org.curtis.musicxml.note.AccidentalType;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 @DiscriminatorValue("accidental_text")
 public class AccidentalText extends TextDisplay {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = AccidentalTypeConverter.class)
     @Column(name = "accidental_type")
     private AccidentalType accidentalType;
     @Column

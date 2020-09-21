@@ -1,14 +1,15 @@
 package org.curtis.musicxml.note;
 
 import org.curtis.database.OrderedElement;
+import org.curtis.musicxml.converter.BeamFanConverter;
+import org.curtis.musicxml.converter.BeamTypeConverter;
 import org.curtis.musicxml.display.Display;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "beam")
 public class Beam extends OrderedElement {
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BeamTypeConverter.class)
     @Column
     private BeamType type;
     @Column(name = "beam_number")
@@ -24,7 +25,7 @@ public class Beam extends OrderedElement {
     @Column
     @Type(type="yes_no")
     private Boolean repeater;
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BeamFanConverter.class)
     @Column
     private BeamFan fan;
     @OneToOne(cascade = CascadeType.ALL)
