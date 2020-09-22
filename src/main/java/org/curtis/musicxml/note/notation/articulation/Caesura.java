@@ -10,19 +10,19 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("caesura")
 public class Caesura extends Articulation {
-    @Column(name = "caesura_value")
+    @Column
     @Convert(converter = CaesuraValueConverter.class)
-    private CaesuraValue caesuraValue;
+    private CaesuraValue value;
 
     public Caesura() {
 
     }
 
-    public CaesuraValue getCaesuraValue() {
-        return caesuraValue;
+    public CaesuraValue getValue() {
+        return value;
     }
 
-    public void setCaesuraValue(CaesuraValue caesuraValue) {
-        this.caesuraValue = caesuraValue;
+    public void setValue(CaesuraValue value) {
+        this.value = value;
     }
 }

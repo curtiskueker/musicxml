@@ -100,31 +100,10 @@ public class TechnicalBuilder extends MusicDataBuilder {
         buildAttribute("print-object",  harmonic.getPrintObject());
         buildAttributes(DisplayBuilder.buildDisplay(harmonic.getDisplay()));
         buildCloseElement();
-        HarmonicType harmonicType = harmonic.getHarmonicType();
-        if (harmonicType != null) {
-            switch (harmonicType) {
-                case NATURAL:
-                    buildElement("natural");
-                    break;
-                case ARTIFICIAL:
-                    buildElement("artificial");
-                    break;
-            }
-        }
+        HarmonicType harmonicType = harmonic.getType();
+        if (harmonicType != null) buildElement(harmonicType.toString().toLowerCase());
         HarmonicPitch harmonicPitch = harmonic.getHarmonicPitch();
-        if (harmonicPitch != null) {
-            switch (harmonicPitch) {
-                case BASE_PITCH:
-                    buildElement("base-pitch");
-                    break;
-                case TOUCHING_PITCH:
-                    buildElement("touching-pitch");
-                    break;
-                case SOUNDING_PITCH:
-                    buildElement("sounding-pitch");
-                    break;
-            }
-        }
+        if (harmonicPitch != null) buildElement(harmonicPitch.toString().toLowerCase().replace("_", "-"));
         buildEndElement("harmonic");
     }
 
@@ -173,17 +152,8 @@ public class TechnicalBuilder extends MusicDataBuilder {
         buildAttributes(buildBendSound(bend.getBendSound()));
         buildCloseElement();
         buildElementWithValue("bend-alter", bend.getBendAlter());
-        BendType bendType = bend.getBendType();
-        if (bendType != null) {
-            switch (bendType) {
-                case PRE_BEND:
-                    buildElement("pre-bend");
-                    break;
-                case RELEASE:
-                    buildElement("release");
-                    break;
-            }
-        }
+        BendType bendType = bend.getType();
+        if (bendType != null) buildElement(bendType.toString().toLowerCase().replace("_", "-"));
         BendWithBar withBar = bend.getWithBar();
         if (withBar != null) buildElementWithValueAndAttributes("with-bar", withBar.getValue(), DisplayBuilder.buildDisplay(withBar.getDisplay()));
         buildEndElement("bend");
@@ -210,9 +180,9 @@ public class TechnicalBuilder extends MusicDataBuilder {
         buildOpenElement("hole");
         buildAttributes(DisplayBuilder.buildDisplay(hole.getDisplay()));
         buildCloseElement();
-        String holeType = hole.getHoleType();
+        String holeType = hole.getType();
         if (StringUtil.isNotEmpty(holeType)) buildElementWithValue("hole-type", holeType);
-        buildElementWithValueAndAttribute("hole-closed", hole.getHoleClosedType(), "location", hole.getHoleClosedLocation());
+        buildElementWithValueAndAttribute("hole-closed", hole.getHoleClosed(), "location", hole.getHoleClosedLocation());
         String holeShape = hole.getHoleShape();
         if (StringUtil.isNotEmpty(holeShape)) buildElementWithValue("hole-shape", holeShape);
         buildEndElement("hole");

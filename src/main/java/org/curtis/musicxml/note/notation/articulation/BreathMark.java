@@ -10,19 +10,19 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("breath mark")
 public class BreathMark extends Articulation {
-    @Column(name = "breath_mark_value")
+    @Column
     @Convert(converter = BreathMarkTypeConverter.class)
-    private BreathMarkType breathMarkValue;
+    private BreathMarkType value;
 
     public BreathMark() {
 
     }
 
-    public BreathMarkType getBreathMarkValue() {
-        return breathMarkValue;
+    public BreathMarkType getValue() {
+        return value;
     }
 
-    public void setBreathMarkValue(BreathMarkType breathMarkValue) {
-        this.breathMarkValue = breathMarkValue;
+    public void setValue(BreathMarkType value) {
+        this.value = value;
     }
 }

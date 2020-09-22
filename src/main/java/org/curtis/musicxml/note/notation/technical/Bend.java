@@ -17,8 +17,8 @@ public class Bend extends Technical {
     @Column(name = "bend_alter", precision = 12, scale = 4)
     private BigDecimal bendAlter;
     @Convert(converter = BendTypeConverter.class)
-    @Column(name = "bend_type")
-    private BendType bendType;
+    @Column
+    private BendType type;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "with_bar_id")
     private BendWithBar withBar;
@@ -38,12 +38,12 @@ public class Bend extends Technical {
         this.bendAlter = bendAlter;
     }
 
-    public BendType getBendType() {
-        return bendType;
+    public BendType getType() {
+        return type;
     }
 
-    public void setBendType(BendType bendType) {
-        this.bendType = bendType;
+    public void setType(BendType type) {
+        this.type = type;
     }
 
     public BendWithBar getWithBar() {

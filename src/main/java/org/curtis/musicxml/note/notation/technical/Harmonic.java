@@ -13,8 +13,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("harmonic")
 public class Harmonic extends Technical {
     @Convert(converter = HarmonicTypeConverter.class)
-    @Column(name = "harmonic_type")
-    private HarmonicType harmonicType;
+    @Column
+    private HarmonicType type;
     @Convert(converter = HarmonicPitchConverter.class)
     @Column(name = "harmonic_pitch")
     private HarmonicPitch harmonicPitch;
@@ -26,12 +26,12 @@ public class Harmonic extends Technical {
 
     }
 
-    public HarmonicType getHarmonicType() {
-        return harmonicType;
+    public HarmonicType getType() {
+        return type;
     }
 
-    public void setHarmonicType(HarmonicType harmonicType) {
-        this.harmonicType = harmonicType;
+    public void setType(HarmonicType type) {
+        this.type = type;
     }
 
     public HarmonicPitch getHarmonicPitch() {

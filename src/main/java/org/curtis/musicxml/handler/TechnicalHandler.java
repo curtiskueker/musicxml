@@ -83,10 +83,10 @@ public class TechnicalHandler extends BaseHandler {
                         String harmonicElementName = harmonicElement.getTagName();
                         switch (harmonicElementName) {
                             case "natural":
-                                harmonic.setHarmonicType(HarmonicType.NATURAL);
+                                harmonic.setType(HarmonicType.NATURAL);
                                 break;
                             case "artificial":
-                                harmonic.setHarmonicType(HarmonicType.ARTIFICIAL);
+                                harmonic.setType(HarmonicType.ARTIFICIAL);
                                 break;
                             case "base-pitch":
                                 harmonic.setHarmonicPitch(HarmonicPitch.BASE_PITCH);
@@ -146,7 +146,7 @@ public class TechnicalHandler extends BaseHandler {
                     Bend bend = new Bend();
                     bend.setBendAlter(MathUtil.newBigDecimal(XmlUtil.getChildElementText(technicalElement, "bend-alter")));
                     List<Element> bendElements = XmlUtil.getChildElements(technicalElement);
-                    for (Element bendElement : bendElements) bend.setBendType(FactoryUtil.enumValue(BendType.class, bendElement.getTagName()));
+                    for (Element bendElement : bendElements) bend.setType(FactoryUtil.enumValue(BendType.class, bendElement.getTagName()));
                     bend.setWithBar(TechnicalFactory.newBendWithBar(XmlUtil.getChildElement(technicalElement, "with-bar")));
                     bend.setBendSound(TechnicalFactory.newBendSound(technicalElement));
                     technical = bend;
@@ -190,9 +190,9 @@ public class TechnicalHandler extends BaseHandler {
                     break;
                 case "hole":
                     Hole hole = new Hole();
-                    hole.setHoleType(XmlUtil.getChildElementText(technicalElement, "hole-type"));
+                    hole.setType(XmlUtil.getChildElementText(technicalElement, "hole-type"));
                     Element holeClosedElement = XmlUtil.getChildElement(technicalElement, "hole-closed");
-                    hole.setHoleClosedType(FactoryUtil.enumValue(HoleClosedType.class, XmlUtil.getElementText(holeClosedElement)));
+                    hole.setHoleClosed(FactoryUtil.enumValue(HoleClosedType.class, XmlUtil.getElementText(holeClosedElement)));
                     hole.setHoleClosedLocation(FactoryUtil.enumValue(HoleClosedLocation.class, holeClosedElement.getAttribute("location")));
                     technical = hole;
                     break;

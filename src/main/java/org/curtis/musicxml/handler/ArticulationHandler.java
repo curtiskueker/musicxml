@@ -97,12 +97,12 @@ public class ArticulationHandler extends BaseHandler {
                 case "breath-mark":
                     BreathMark breathMark = new BreathMark();
                     String breathMarkValue = XmlUtil.getElementText(articulationsSubelement);
-                    breathMark.setBreathMarkValue(FactoryUtil.enumValue(BreathMarkType.class, breathMarkValue));
+                    breathMark.setValue(FactoryUtil.enumValue(BreathMarkType.class, breathMarkValue));
                     articulation = breathMark;
                     break;
                 case "caesura":
                     Caesura caesura = new Caesura();
-                    caesura.setCaesuraValue(FactoryUtil.enumValue(CaesuraValue.class, XmlUtil.getElementText(articulationsSubelement)));
+                    caesura.setValue(FactoryUtil.enumValue(CaesuraValue.class, XmlUtil.getElementText(articulationsSubelement)));
                     articulation = caesura;
                     break;
                 case "stress":

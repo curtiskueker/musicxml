@@ -8,7 +8,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     public StringBuilder buildHarmonic(Harmonic harmonic) {
         if (!TypeUtil.getBooleanDefaultYes(harmonic.getPrintObject())) return stringBuilder;
 
-        HarmonicType harmonicType = harmonic.getHarmonicType();
+        HarmonicType harmonicType = harmonic.getType();
         if (harmonicType == null) append("\\flageolet");
         else append("\\harmonic");
 

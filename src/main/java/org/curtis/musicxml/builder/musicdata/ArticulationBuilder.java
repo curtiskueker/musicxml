@@ -105,11 +105,11 @@ public class ArticulationBuilder extends MusicDataBuilder {
     }
 
     private void buildBreathMark(BreathMark breathMark) {
-        buildElementWithValueAndAttributes("breath-mark", breathMark.getBreathMarkValue(), DisplayBuilder.buildDisplay(breathMark.getDisplay()));
+        buildElementWithValueAndAttributes("breath-mark", breathMark.getValue(), DisplayBuilder.buildDisplay(breathMark.getDisplay()));
     }
 
     private void buildCaesura(Caesura caesura) {
-        buildElementWithOptionalAttributes("caesura", DisplayBuilder.buildDisplay(caesura.getDisplay()));
+        buildElementWithValueAndAttributes("caesura", caesura.getValue(), DisplayBuilder.buildDisplay(caesura.getDisplay()));
     }
 
     private void buildStress(Stress stress) {

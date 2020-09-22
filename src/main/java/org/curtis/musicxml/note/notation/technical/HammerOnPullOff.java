@@ -12,7 +12,7 @@ public abstract class HammerOnPullOff extends Technical {
     @Column
     private String value;
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "notation_type")
+    @Column
     private Connection type;
     @Column(name = "notation_number")
     private Integer number = 1;

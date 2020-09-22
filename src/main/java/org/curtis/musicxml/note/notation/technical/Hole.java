@@ -11,13 +11,13 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("hole")
 public class Hole extends Technical {
-    @Column(name = "hole_type")
-    private String holeType;
+    @Column
+    private String type;
     @Convert(converter = HoleClosedTypeConverter.class)
-    @Column(name = "hole_closed_type")
-    private HoleClosedType holeClosedType;
+    @Column(name = "hole_closed")
+    private HoleClosedType holeClosed;
     @Convert(converter = HoleClosedLocationConverter.class)
-    @Column(name = "hole_closed_location")
+    @Column(name = "location")
     private HoleClosedLocation holeClosedLocation;
     @Column(name = "hole_shape")
     private String holeShape;
@@ -26,20 +26,20 @@ public class Hole extends Technical {
 
     }
 
-    public String getHoleType() {
-        return holeType;
+    public String getType() {
+        return type;
     }
 
-    public void setHoleType(String holeType) {
-        this.holeType = holeType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public HoleClosedType getHoleClosedType() {
-        return holeClosedType;
+    public HoleClosedType getHoleClosed() {
+        return holeClosed;
     }
 
-    public void setHoleClosedType(HoleClosedType holeClosedType) {
-        this.holeClosedType = holeClosedType;
+    public void setHoleClosed(HoleClosedType holeClosed) {
+        this.holeClosed = holeClosed;
     }
 
     public HoleClosedLocation getHoleClosedLocation() {
