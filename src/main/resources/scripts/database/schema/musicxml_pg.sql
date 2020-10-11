@@ -24,11 +24,9 @@ create sequence native start 1 increment 1;
        articulation_type varchar(31) not null,
         id int4 not null,
         ordering int4,
-        breath_mark_value varchar(255),
-        caesura_value varchar(255),
+        value varchar(255),
         type varchar(255),
         smufl varchar(255),
-        value varchar(255),
         display_id int4,
         line_id int4,
         articulations_id int4 not null,
@@ -251,13 +249,10 @@ create sequence native start 1 increment 1;
         value varchar(255),
         abbreviated char(1),
         line char(1),
-        pedal_number int4,
-        pedal_type varchar(255),
         sign char(1),
         height numeric(12, 4),
         source varchar(255),
         width numeric(12, 4),
-        beater_value varchar(255),
         tip varchar(255),
         justify varchar(255),
         parentheses char(1),
@@ -302,11 +297,14 @@ create sequence native start 1 increment 1;
     create table display (
        id int4 not null,
         color varchar(255),
+        default_x numeric(12, 4),
+        default_y numeric(12, 4),
         halign varchar(255),
         placement varchar(255),
+        relative_x numeric(12, 4),
+        relative_y numeric(12, 4),
         valign varchar(255),
         font_id int4,
-        position_id int4,
         primary key (id)
     );
 
@@ -533,7 +531,7 @@ create sequence native start 1 increment 1;
     );
 
     create table instrument_type (
-       instrument_type varchar(31) not null,
+       instrument_type_type varchar(31) not null,
         id int4 not null,
         value int4,
         primary key (id)
@@ -544,7 +542,6 @@ create sequence native start 1 increment 1;
         time_separator varchar(255),
         symbol varchar(255),
         time_relation varchar(255),
-        time_signature_id int4,
         primary key (id)
     );
 
@@ -989,9 +986,8 @@ create sequence native start 1 increment 1;
         value varchar(255),
         slash char(1),
         wavy_line_number int4,
-        connection_type varchar(255),
+        type varchar(255),
         tremolo_marks int4,
-        tremolo_type varchar(255),
         approach varchar(255),
         departure varchar(255),
         long_mordent char(1),
@@ -1021,7 +1017,6 @@ create sequence native start 1 increment 1;
        id int4 not null,
         bottom_margin numeric(12, 4),
         left_margin numeric(12, 4),
-        margin_type_key varchar(255),
         right_margin numeric(12, 4),
         top_margin numeric(12, 4),
         type varchar(255),
@@ -1106,15 +1101,6 @@ create sequence native start 1 increment 1;
         primary key (id)
     );
 
-    create table position (
-       id int4 not null,
-        default_x numeric(12, 4),
-        default_y numeric(12, 4),
-        relative_x numeric(12, 4),
-        relative_y numeric(12, 4),
-        primary key (id)
-    );
-
     create table printout (
        id int4 not null,
         print_dot char(1),
@@ -1168,7 +1154,7 @@ create sequence native start 1 increment 1;
         score_instrument_id varchar(255),
         instrument_type_id int4,
         virtual_instrument_id int4,
-        part_list_item_id int4 not null,
+        score_part_id int4 not null,
         primary key (id)
     );
 
@@ -1177,7 +1163,7 @@ create sequence native start 1 increment 1;
         ordering int4,
         midi_device_id int4,
         midi_instrument_id int4,
-        part_list_item_id int4 not null,
+        score_part_id int4 not null,
         primary key (id)
     );
 
@@ -1185,7 +1171,7 @@ create sequence native start 1 increment 1;
        id int4 not null,
         ordering int4,
         group_name varchar(255),
-        part_list_item_id int4 not null,
+        score_part_id int4 not null,
         primary key (id)
     );
 
@@ -1273,23 +1259,19 @@ create sequence native start 1 increment 1;
         substitution char(1),
         value varchar(255),
         notation_number int4,
-        notation_type varchar(255),
+        type varchar(255),
         location varchar(255),
         smufl varchar(255),
         arrow_direction varchar(255),
         arrow_style varchar(255),
         arrowhead char(1),
         circular_arrow varchar(255),
-        hole_closed_location varchar(255),
-        hole_closed_type varchar(255),
+        hole_closed varchar(255),
         hole_shape varchar(255),
-        hole_type varchar(255),
         tap_hand varchar(255),
         bend_alter numeric(12, 4),
-        bend_type varchar(255),
         handbell_type varchar(255),
         harmonic_pitch varchar(255),
-        harmonic_type varchar(255),
         print_object char(1),
         display_id int4,
         bend_sound_id int4,
@@ -1367,7 +1349,8 @@ create sequence native start 1 increment 1;
         ordering int4,
         beat_type varchar(255),
         beats varchar(255),
-        time_signature_id int4 not null,
+        time_signature_id int4,
+        interchangeable_id int4,
         primary key (id)
     );
 
@@ -1681,11 +1664,6 @@ create sequence native start 1 increment 1;
        foreign key (font_id) 
        references font;
 
-    alter table display 
-       add constraint FK2107b5khj7dpia54m5mlscu2h 
-       foreign key (position_id) 
-       references position;
-
     alter table distance 
        add constraint FKsgkg2m74unfcqfelw001vgnkm 
        foreign key (defaults_id) 
@@ -1885,11 +1863,6 @@ create sequence native start 1 increment 1;
        add constraint FK8dm2m32nujxu57i8veecs1o5t 
        foreign key (identification_id) 
        references identification;
-
-    alter table interchangeable 
-       add constraint FKavstr6ajrdw305ahlh9tivfnn 
-       foreign key (time_signature_id) 
-       references time;
 
     alter table inversion 
        add constraint FK8wmswbqbiahcr1tbssadhs3d6 
@@ -2427,8 +2400,8 @@ create sequence native start 1 increment 1;
        references virtual_instrument;
 
     alter table score_instrument 
-       add constraint FKd15sla0n5ngv0cfbgelkns4s 
-       foreign key (part_list_item_id) 
+       add constraint FK7snpsirjcgd5v53th65nrlpcb 
+       foreign key (score_part_id) 
        references part_list_item;
 
     alter table score_midi 
@@ -2442,13 +2415,13 @@ create sequence native start 1 increment 1;
        references midi_instrument;
 
     alter table score_midi 
-       add constraint FKkseqi8id73lktf580eif75lfi 
-       foreign key (part_list_item_id) 
+       add constraint FKtctr4qp9udoiur2mnjsrixxva 
+       foreign key (score_part_id) 
        references part_list_item;
 
     alter table score_part_group 
-       add constraint FKfo6822asqo0bmmjttjf8wy2gk 
-       foreign key (part_list_item_id) 
+       add constraint FK1rxas1t6hh8j1iv29kyhii4ep 
+       foreign key (score_part_id) 
        references part_list_item;
 
     alter table sound_midi 
@@ -2575,6 +2548,11 @@ create sequence native start 1 increment 1;
        add constraint FK6m54smq3gfdesiu0t32o6s4wh 
        foreign key (time_signature_id) 
        references time;
+
+    alter table time_signature_type 
+       add constraint FKodjdjqe572b06ymjbjnyvvd4w 
+       foreign key (interchangeable_id) 
+       references interchangeable;
 
     alter table transpose 
        add constraint FKmxnumkuq4nsn7wpf9apuyftda 
