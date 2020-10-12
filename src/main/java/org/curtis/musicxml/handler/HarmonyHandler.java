@@ -31,6 +31,7 @@ import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.TechnicalFactory;
+import org.curtis.musicxml.note.Step;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.score.MusicData;
 import org.curtis.util.MathUtil;
@@ -85,7 +86,7 @@ public class HarmonyHandler extends MusicDataHandler {
                     break;
                 case "kind":
                     Kind kind = new Kind();
-                    kind.setKindValue(FactoryUtil.enumValue(KindValue.class, XmlUtil.getElementText(harmonySubelement)));
+                    kind.setValue(FactoryUtil.enumValue(KindValue.class, XmlUtil.getElementText(harmonySubelement)));
                     kind.setUseSymbols(TypeUtil.getYesNo(harmonySubelement.getAttribute("use-symbols")));
                     kind.setText(harmonySubelement.getAttribute("text"));
                     kind.setStackDegrees(TypeUtil.getYesNo(harmonySubelement.getAttribute("stack-degrees")));
@@ -104,7 +105,7 @@ public class HarmonyHandler extends MusicDataHandler {
                     Bass bass = new Bass();
                     Element bassStepElement = XmlUtil.getChildElement(harmonySubelement, "bass-step");
                     BassStep bassStep = new BassStep();
-                    bassStep.setText(XmlUtil.getElementText(bassStepElement));
+                    bassStep.setStep(FactoryUtil.enumValue(Step.class, XmlUtil.getElementText(bassStepElement)));
                     bassStep.setText(bassStepElement.getAttribute("text"));
                     bassStep.setDisplay(DisplayFactory.newDisplay(bassStepElement));
                     bass.setBassStep(bassStep);

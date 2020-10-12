@@ -1,7 +1,7 @@
 package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
-import org.curtis.musicxml.converter.GroupBalineTypeConverter;
+import org.curtis.musicxml.converter.GroupBarlineTypeConverter;
 import org.curtis.musicxml.display.Display;
 
 import javax.persistence.CascadeType;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "group_barline")
 public class GroupBarline extends DatabaseItem {
-    @Convert(converter = GroupBalineTypeConverter.class)
+    @Convert(converter = GroupBarlineTypeConverter.class)
     @Column(name = "group_barline_type")
     private GroupBarlineType groupBarlineType;
     @OneToOne(cascade = CascadeType.ALL)

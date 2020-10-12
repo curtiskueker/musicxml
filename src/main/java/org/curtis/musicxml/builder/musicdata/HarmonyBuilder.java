@@ -44,7 +44,7 @@ public class HarmonyBuilder extends MusicDataBuilder {
             if (harmonyChord instanceof Root) buildRoot((Root)harmonyChord);
             else if (harmonyChord instanceof Function) buildFunction((Function)harmonyChord);
             Kind kind = harmonyChord.getKind();
-            String kindValue = BuilderUtil.enumValue(kind.getKindValue());
+            String kindValue = BuilderUtil.enumValue(kind.getValue());
             kindValue = kindValue.replace("neopolitan", "Neapolitan");
             kindValue = kindValue.replace("italian", "Italian");
             kindValue = kindValue.replace("french", "French");

@@ -291,7 +291,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         symbol = symbol.replace("nebenstimme", "Nebenstimme");
         attributes.put("symbol", symbol);
         attributes.putAll(DisplayBuilder.buildDisplay(principalVoice.getDisplay()));
-        buildElementWithValueAndAttributes("principal-voice", principalVoice.getPrincipalVoice(), attributes);
+        buildElementWithValueAndAttributes("principal-voice", principalVoice.getValue(), attributes);
     }
 
     private void buildAccordionRegistration(AccordionRegistration accordionRegistration) {

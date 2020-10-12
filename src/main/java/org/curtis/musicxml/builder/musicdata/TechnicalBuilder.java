@@ -201,7 +201,7 @@ public class TechnicalBuilder extends MusicDataBuilder {
     }
 
     private void buildHandbell(Handbell handbell) {
-        buildElementWithValueAndAttributes("handbell", BuilderUtil.enumValueWithSpaces(handbell.getHandbellType()), DisplayBuilder.buildDisplay(handbell.getDisplay()));
+        buildElementWithValueAndAttributes("handbell", BuilderUtil.enumValueWithSpaces(handbell.getValue()), DisplayBuilder.buildDisplay(handbell.getDisplay()));
     }
 
     private void buildBrassBend(BrassBend brassBend) {

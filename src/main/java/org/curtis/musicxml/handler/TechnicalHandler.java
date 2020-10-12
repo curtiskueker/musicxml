@@ -207,7 +207,7 @@ public class TechnicalHandler extends BaseHandler {
                 case "handbell":
                     Handbell handbell = new Handbell();
                     String handbellType = XmlUtil.getElementText(technicalElement);
-                    handbell.setHandbellType(FactoryUtil.enumValue(HandbellType.class, handbellType));
+                    handbell.setValue(FactoryUtil.enumValue(HandbellType.class, handbellType));
                     technical = handbell;
                     break;
                 case "harmon-mute":

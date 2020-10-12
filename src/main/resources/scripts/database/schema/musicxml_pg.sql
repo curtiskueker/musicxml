@@ -258,7 +258,6 @@ create sequence native start 1 increment 1;
         parentheses char(1),
         metronome_arrows char(1),
         metronome_relation varchar(255),
-        principal_voice varchar(255),
         symbol varchar(255),
         print_object char(1),
         stick_material varchar(255),
@@ -581,11 +580,11 @@ create sequence native start 1 increment 1;
     create table kind (
        id int4 not null,
         bracket_degrees char(1),
-        kind_value varchar(255),
         parentheses_degrees char(1),
         stack_degrees char(1),
         text varchar(255),
         use_symbols char(1),
+        value varchar(255),
         display_id int4,
         primary key (id)
     );
@@ -1270,7 +1269,6 @@ create sequence native start 1 increment 1;
         hole_shape varchar(255),
         tap_hand varchar(255),
         bend_alter numeric(12, 4),
-        handbell_type varchar(255),
         harmonic_pitch varchar(255),
         print_object char(1),
         display_id int4,

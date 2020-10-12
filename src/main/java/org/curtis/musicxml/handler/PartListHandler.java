@@ -56,18 +56,7 @@ public class PartListHandler extends BaseHandler {
                     Element groupBarlineElement = XmlUtil.getChildElement(partListSubelement, "group-barline");
                     if (groupBarlineElement != null) {
                         GroupBarline groupBarline = new GroupBarline();
-                        String groupBarlineValue = XmlUtil.getElementText(groupBarlineElement);
-                        switch (groupBarlineValue) {
-                            case "yes":
-                                groupBarline.setGroupBarlineType(GroupBarlineType.YES);
-                                break;
-                            case "no":
-                                groupBarline.setGroupBarlineType(GroupBarlineType.NO);
-                                break;
-                            case "Mensurstrich":
-                                groupBarline.setGroupBarlineType(GroupBarlineType.MENSURSTRICH);
-                                break;
-                        }
+                        groupBarline.setGroupBarlineType(FactoryUtil.enumValue(GroupBarlineType.class, XmlUtil.getElementText(groupBarlineElement)));
                         groupBarline.setDisplay(DisplayFactory.newDisplay(partListSubelement));
                         partGroup.setGroupBarline(groupBarline);
                     }

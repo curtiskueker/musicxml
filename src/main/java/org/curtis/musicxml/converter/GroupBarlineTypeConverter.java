@@ -4,8 +4,8 @@ import org.curtis.musicxml.score.GroupBarlineType;
 
 import javax.persistence.AttributeConverter;
 
-public class GroupBalineTypeConverter extends BaseConverter implements AttributeConverter<GroupBarlineType, String> {
-    public GroupBalineTypeConverter() {
+public class GroupBarlineTypeConverter extends BaseConverter implements AttributeConverter<GroupBarlineType, String> {
+    public GroupBarlineTypeConverter() {
 
     }
 

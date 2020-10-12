@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("principal voice")
 public class PrincipalVoice extends DirectionType {
-    @Column(name = "principal_voice")
-    private String principalVoice;
+    @Column
+    private String value;
     @Convert(converter = ConnectionConverter.class)
     @Column(name = "direction_type")
     private Connection type;
@@ -25,12 +25,12 @@ public class PrincipalVoice extends DirectionType {
 
     }
 
-    public String getPrincipalVoice() {
-        return principalVoice;
+    public String getValue() {
+        return value;
     }
 
-    public void setPrincipalVoice(String principalVoice) {
-        this.principalVoice = principalVoice;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Connection getType() {

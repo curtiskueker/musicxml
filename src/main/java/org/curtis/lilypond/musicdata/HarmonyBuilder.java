@@ -39,7 +39,7 @@ public class HarmonyBuilder extends MusicDataBuilder {
 
             Kind kind = harmonyChord.getKind();
             if (kind != null) {
-                KindValue kindValue = kind.getKindValue();
+                KindValue kindValue = kind.getValue();
                 switch (kindValue) {
                     case MINOR:
                         append(":m");

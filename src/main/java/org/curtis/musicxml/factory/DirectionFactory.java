@@ -209,7 +209,7 @@ public class DirectionFactory {
                 break;
             case "principal-voice":
                 PrincipalVoice principalVoice = new PrincipalVoice();
-                principalVoice.setPrincipalVoice(XmlUtil.getElementText(element));
+                principalVoice.setValue(XmlUtil.getElementText(element));
                 principalVoice.setType(FactoryUtil.enumValue(Connection.class, element.getAttribute("type")));
                 principalVoice.setSymbol(FactoryUtil.enumValue(PrincipalVoiceSymbol.class, element.getAttribute("symbol")));
                 directionType = principalVoice;

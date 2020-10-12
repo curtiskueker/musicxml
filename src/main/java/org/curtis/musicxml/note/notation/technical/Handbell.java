@@ -11,18 +11,18 @@ import javax.persistence.Entity;
 @DiscriminatorValue("handbell")
 public class Handbell extends Technical {
     @Convert(converter = HandbellTypeConverter.class)
-    @Column(name = "handbell_type")
-    private HandbellType handbellType;
+    @Column
+    private HandbellType value;
 
     public Handbell() {
 
     }
 
-    public HandbellType getHandbellType() {
-        return handbellType;
+    public HandbellType getValue() {
+        return value;
     }
 
-    public void setHandbellType(HandbellType handbellType) {
-        this.handbellType = handbellType;
+    public void setValue(HandbellType value) {
+        this.value = value;
     }
 }

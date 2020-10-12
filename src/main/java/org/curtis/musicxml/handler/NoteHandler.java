@@ -7,7 +7,6 @@ import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.FormattingFactory;
 import org.curtis.musicxml.factory.NoteFactory;
 import org.curtis.musicxml.factory.ScorePartFactory;
-import org.curtis.musicxml.note.NoteType;
 import org.curtis.musicxml.util.TypeUtil;
 import org.curtis.musicxml.note.Accidental;
 import org.curtis.musicxml.note.Beam;
@@ -40,7 +39,6 @@ public class NoteHandler extends MusicDataHandler {
 
     public MusicData handle(Element element) {
         Note note = new Note();
-        NoteType noteType = null;
 
         note.setElementId(element.getAttribute("id"));
         note.setDisplay(DisplayFactory.newDisplay(element));
@@ -135,10 +133,8 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "notehead":
                     Notehead notehead = new Notehead();
-                    String noteheadType = XmlUtil.getElementText(noteSubelement);
-                    notehead.setType(FactoryUtil.enumValue(NoteheadType.class, noteheadType));
-                    String filledNotehead = noteSubelement.getAttribute("filled");
-                    notehead.setFilled(TypeUtil.getYesNo(filledNotehead));
+                    notehead.setType(FactoryUtil.enumValue(NoteheadType.class, XmlUtil.getElementText(noteSubelement)));
+                    notehead.setFilled(TypeUtil.getYesNo(noteSubelement.getAttribute("filled")));
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
                     notehead.setDisplay(DisplayFactory.newDisplay(noteSubelement));
                     notehead.setSmufl(noteSubelement.getAttribute("smufl"));

@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Table(name = "kind")
 public class Kind extends DatabaseItem {
     @Convert(converter = KindValueConverter.class)
-    @Column(name = "kind_value")
-    private KindValue kindValue;
+    @Column
+    private KindValue value;
     @Column(name = "use_symbols")
     @Type(type="yes_no")
     private Boolean useSymbols;
@@ -41,12 +41,12 @@ public class Kind extends DatabaseItem {
 
     }
 
-    public KindValue getKindValue() {
-        return kindValue;
+    public KindValue getValue() {
+        return value;
     }
 
-    public void setKindValue(KindValue kindValue) {
-        this.kindValue = kindValue;
+    public void setValue(KindValue value) {
+        this.value = value;
     }
 
     public Boolean getUseSymbols() {
