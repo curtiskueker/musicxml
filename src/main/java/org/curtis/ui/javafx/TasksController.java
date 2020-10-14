@@ -121,7 +121,8 @@ public class TasksController {
 
     @FXML
     private void choosePdfToFile() {
-        taskForm.setChooseFileLocationInTextField(FormNode.PDF_TO_FILE, "No extension");
+
+        taskForm.setChooseFileLocationInTextField(FormNode.PDF_TO_FILE, "PDF Files (*.pdf)", "*.pdf");
     }
 
     @FXML

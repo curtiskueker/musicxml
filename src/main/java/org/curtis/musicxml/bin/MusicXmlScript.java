@@ -216,6 +216,7 @@ public abstract class MusicXmlScript {
 
     protected void convertLilypondToPdf(String lilypondNotation) throws MusicXmlException {
         if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Empty output filename.");
+        if (FileUtil.isPdfFileExtension(getOutputFile())) setOutputFile(getOutputFile().substring(0, getOutputFile().lastIndexOf(".")));
         System.err.println("Converting Lilypond notation to PDF File...");
         String lilypondLocation;
         try {

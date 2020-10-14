@@ -106,4 +106,12 @@ public class FileUtil {
     public static boolean isXmlFileExtension(String filename) {
         return getFileExtension(filename).equals("xml") || getFileExtension(filename).equals("musicxml");
     }
+
+    public static boolean isLyFileExtension(String filename) {
+        return getFileExtension(filename).equals("ly");
+    }
+
+    public static boolean isPdfFileExtension(String filename) {
+        return getFileExtension(filename).equals("pdf");
+    }
 }
