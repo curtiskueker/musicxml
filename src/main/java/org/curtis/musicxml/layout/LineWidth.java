@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 public class LineWidth extends OrderedItem {
     @Column(precision = 12, scale = 4)
     private BigDecimal value;
-    @Column(name = "line_width_type")
-    private String lineWidthType;
+    @Column
+    private String type;
 
     public LineWidth() {
 
@@ -27,11 +27,11 @@ public class LineWidth extends OrderedItem {
         this.value = value;
     }
 
-    public String getLineWidthType() {
-        return lineWidthType;
+    public String getType() {
+        return type;
     }
 
-    public void setLineWidthType(String lineWidthType) {
-        this.lineWidthType = lineWidthType;
+    public void setType(String type) {
+        this.type = type;
     }
 }

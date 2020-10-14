@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("supports")
 public class Supports extends Encoding {
-    @Column(name = "supports_type")
+    @Column
     @Type(type="yes_no")
     private Boolean type;
     @Column

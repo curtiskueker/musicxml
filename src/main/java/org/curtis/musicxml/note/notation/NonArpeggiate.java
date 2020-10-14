@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("non arpeggiate")
 public class NonArpeggiate extends Notation {
     @Convert(converter = ValignConverter.class)
-    @Column(name = "type_value")
+    @Column
     private Valign type;
     @Column(name = "notation_number")
     private Integer number;

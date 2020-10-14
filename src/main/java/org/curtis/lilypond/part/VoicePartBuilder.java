@@ -141,7 +141,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 if (slurNumber == null) slurNumber = 1;
                                 boolean isActiveSlur = activeVoiceSlurs.contains(slurNumber);
                                 int activeSlurCount = activeVoiceSlurs.size();
-                                switch (slur.getConnectionType()) {
+                                switch (slur.getType()) {
                                     case START:
                                         if (activeSlurCount > 1) {
                                             displayMeasureMessage(measure, "Maximum two active slurs exceeded");
@@ -162,7 +162,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                                 }
                             } else if (notation instanceof Tied) {
                                 Tied tied = (Tied)notation;
-                                if (tied.getTiedType() == TiedType.START && tiedFromNoteList.isEmpty()) {
+                                if (tied.getType() == TiedType.START && tiedFromNoteList.isEmpty()) {
                                     tiedFromNoteList.add(note);
                                     startTieAdded = true;
                                 }
@@ -452,7 +452,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
     private void processTies(List<Note> tiedFromNoteList, List<Note> tiedToNoteList, Note currentNote) {
         if (!hasNoteMatch(tiedFromNoteList, tiedToNoteList)) tiedFromNoteList.stream().flatMap(fromNote -> fromNote.getTieds().stream()).forEach(tied -> tied.setUnterminated(true));
         tiedFromNoteList.clear();
-        if (tiedToNoteList.stream().flatMap(toNote -> toNote.getTieds().stream()).anyMatch(tied -> tied.getTiedType() == TiedType.CONTINUE || tied.getTiedType() == TiedType.START)) {
+        if (tiedToNoteList.stream().flatMap(toNote -> toNote.getTieds().stream()).anyMatch(tied -> tied.getType() == TiedType.CONTINUE || tied.getType() == TiedType.START)) {
             tiedFromNoteList.addAll(tiedToNoteList);
             tiedToNoteList.clear();
             tiedToNoteList.add(currentNote);

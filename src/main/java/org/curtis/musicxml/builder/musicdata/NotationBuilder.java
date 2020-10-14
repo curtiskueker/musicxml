@@ -62,7 +62,7 @@ public class NotationBuilder extends MusicDataBuilder {
     private void buildTied(Tied tied) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("id", tied.getElementId());
-        attributes.put("type", BuilderUtil.enumValue(tied.getTiedType()));
+        attributes.put("type", BuilderUtil.enumValue(tied.getType()));
         attributes.put("number", BuilderUtil.stringValue(tied.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(tied.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(tied.getDashedFormatting()));
@@ -75,7 +75,7 @@ public class NotationBuilder extends MusicDataBuilder {
     private void buildSlur(Slur slur) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("id", slur.getElementId());
-        attributes.put("type", BuilderUtil.enumValue(slur.getConnectionType()));
+        attributes.put("type", BuilderUtil.enumValue(slur.getType()));
         attributes.put("number", BuilderUtil.stringValue(slur.getNumber()));
         attributes.put("line-type", BuilderUtil.enumValue(slur.getLineType()));
         attributes.putAll(FormattingBuilder.buildDashedFormatting(slur.getDashedFormatting()));
@@ -129,7 +129,7 @@ public class NotationBuilder extends MusicDataBuilder {
         TupletNumber tupletNumber = tupletPortion.getTupletNumber();
         if (tupletNumber != null) buildElementWithValueAndAttributes("tuplet-number", tupletNumber.getValue(), DisplayBuilder.buildDisplay(tupletNumber.getDisplay()));
         TupletType tupletType = tupletPortion.getTupletType();
-        if (tupletType != null) buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getNoteTypeValue()), DisplayBuilder.buildDisplay(tupletType.getDisplay()));
+        if (tupletType != null) buildElementWithValueAndAttributes("tuplet-type", BuilderUtil.noteTypeValue(tupletType.getValue()), DisplayBuilder.buildDisplay(tupletType.getDisplay()));
         for (TupletDot tupletDot : tupletPortion.getTupletDots()) buildElementWithOptionalAttributes("tuplet-dot", DisplayBuilder.buildDisplay(tupletDot.getDisplay()));
     }
 
@@ -218,7 +218,7 @@ public class NotationBuilder extends MusicDataBuilder {
         attributes.put("id", accidentalMark.getElementId());
         attributes.putAll(FormattingBuilder.buildLevelDisplay(accidentalMark.getLevelDisplay()));
         attributes.put("smufl", accidentalMark.getSmufl());
-        buildElementWithValueAndAttributes("accidental-mark", accidentalMark.getAccidentalType(), attributes);
+        buildElementWithValueAndAttributes("accidental-mark", accidentalMark.getValue(), attributes);
     }
 
     private void buildOtherNotation(OtherNotation otherNotation) {

@@ -145,7 +145,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     private void buildPedal(Pedal pedal) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("id", pedal.getElementId());
-        attributes.put("type", BuilderUtil.enumValue(pedal.getPedalType()));
+        attributes.put("type", BuilderUtil.enumValue(pedal.getType()));
         attributes.put("number", BuilderUtil.stringValue(pedal.getNumber()));
         attributes.put("line", BuilderUtil.yesOrNo(pedal.getLine()));
         attributes.put("sign", BuilderUtil.yesOrNo(pedal.getSign()));
@@ -326,11 +326,11 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildGlass(Glass glass) {
-        buildElementWithValueAndAttribute("glass", BuilderUtil.enumValueWithSpaces(glass.getType()), "smufl", glass.getSmufl());
+        buildElementWithValueAndAttribute("glass", BuilderUtil.enumValueWithSpaces(glass.getValue()), "smufl", glass.getSmufl());
     }
 
     private void buildMetal(Metal metal) {
-        String type = BuilderUtil.enumValueWithSpaces(metal.getType());
+        String type = BuilderUtil.enumValueWithSpaces(metal.getValue());
         type = type.replace("chinese cymbal", "Chinese cymbal");
         type = type.replace("high hat", "high-hat");
         type = type.replace("high hat cymbals", "high-hat cymbals");
@@ -339,17 +339,17 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildWood(Wood wood) {
-        String woodType = BuilderUtil.enumValueWithSpaces(wood.getType());
+        String woodType = BuilderUtil.enumValueWithSpaces(wood.getValue());
         woodType = woodType.replace("reco reco", "reco-reco");
         buildElementWithValue("wood", woodType);
     }
 
     private void buildPitched(Pitched pitched) {
-        buildElementWithValueAndAttribute("pitched", BuilderUtil.enumValueWithSpaces(pitched.getType()), "smufl", pitched.getSmufl());
+        buildElementWithValueAndAttribute("pitched", BuilderUtil.enumValueWithSpaces(pitched.getValue()), "smufl", pitched.getSmufl());
     }
 
     private void buildMembrane(Membrane membrane) {
-        String attributeValue = BuilderUtil.enumValueWithSpaces(membrane.getType());
+        String attributeValue = BuilderUtil.enumValueWithSpaces(membrane.getValue());
         if (StringUtil.isNotEmpty(attributeValue)) {
             attributeValue = attributeValue.replace("chinese tomtom", "Chinese tomtom");
             attributeValue = attributeValue.replace("indo american tomtom", "Indo-American tomtom");
@@ -360,7 +360,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildEffect(Effect effect) {
-        buildElementWithValue("effect", BuilderUtil.enumValueWithSpaces(effect.getType()));
+        buildElementWithValue("effect", BuilderUtil.enumValueWithSpaces(effect.getValue()));
     }
 
     private void buildTimpani() {
@@ -368,7 +368,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildBeater(Beater beater) {
-        buildElementWithValueAndAttribute("beater", beater.getBeaterValue(), "tip", beater.getTip());
+        buildElementWithValueAndAttribute("beater", beater.getValue(), "tip", beater.getTip());
     }
 
     private void buildStick(Stick stick) {
@@ -381,7 +381,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     }
 
     private void buildStickLocation(StickLocation stickLocation) {
-        buildElementWithValue("stick-location", BuilderUtil.enumValueWithSpaces(stickLocation.getType()));
+        buildElementWithValue("stick-location", BuilderUtil.enumValueWithSpaces(stickLocation.getValue()));
     }
 
     private void buildOtherPercussion(OtherPercussion otherPercussion) {
@@ -391,7 +391,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
     private void buildStaffDivide(StaffDivide staffDivide) {
         Map<String, String> attributes = new HashMap<>();
         attributes.put("id", staffDivide.getElementId());
-        attributes.put("type", BuilderUtil.enumValue(staffDivide.getStaffDivideSymbol()));
+        attributes.put("type", BuilderUtil.enumValue(staffDivide.getType()));
         attributes.putAll(DisplayBuilder.buildDisplay(staffDivide.getDisplay()));
         buildElementWithAttributes("staff-divide", attributes);
     }

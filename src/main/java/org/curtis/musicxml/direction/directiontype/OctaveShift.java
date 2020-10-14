@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("octave shift")
 public class OctaveShift extends DirectionType {
     @Convert(converter = OctaveShiftTypeConverter.class)
-    @Column(name = "direction_type")
+    @Column
     private OctaveShiftType type;
     @Column(name = "direction_type_number")
     private Integer number;

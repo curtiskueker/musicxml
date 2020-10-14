@@ -139,7 +139,7 @@ public class DirectionFactory {
                 break;
             case "pedal":
                 Pedal pedal = new Pedal();
-                pedal.setPedalType(FactoryUtil.enumValue(PedalType.class, element.getAttribute("type")));
+                pedal.setType(FactoryUtil.enumValue(PedalType.class, element.getAttribute("type")));
                 pedal.setNumber(StringUtil.getInteger(element.getAttribute("number")));
                 pedal.setLine(TypeUtil.getYesNo(element.getAttribute("line")));
                 pedal.setSign(TypeUtil.getYesNo(element.getAttribute("sign")));
@@ -228,7 +228,7 @@ public class DirectionFactory {
                 break;
             case "staff-divide":
                 StaffDivide staffDivide = new StaffDivide();
-                staffDivide.setStaffDivideSymbol(FactoryUtil.enumValue(StaffDivideSymbol.class, element.getAttribute("type")));
+                staffDivide.setType(FactoryUtil.enumValue(StaffDivideSymbol.class, element.getAttribute("type")));
                 directionType = staffDivide;
                 break;
             case "other-direction":
@@ -401,34 +401,34 @@ public class DirectionFactory {
         switch (elementName) {
             case "glass":
                 Glass glass = new Glass();
-                glass.setType(FactoryUtil.enumValue(GlassType.class, elementValue));
+                glass.setValue(FactoryUtil.enumValue(GlassType.class, elementValue));
                 glass.setSmufl(element.getAttribute("smufl"));
                 percussion = glass;
                 break;
             case "metal":
                 Metal metal = new Metal();
-                metal.setType(FactoryUtil.enumValue(MetalType.class, elementValue));
+                metal.setValue(FactoryUtil.enumValue(MetalType.class, elementValue));
                 percussion = metal;
                 break;
             case "wood":
                 Wood wood = new Wood();
-                wood.setType(FactoryUtil.enumValue(WoodType.class, elementValue));
+                wood.setValue(FactoryUtil.enumValue(WoodType.class, elementValue));
                 percussion = wood;
                 break;
             case "pitched":
                 Pitched pitched = new Pitched();
-                pitched.setType(FactoryUtil.enumValue(PitchedType.class, elementValue));
+                pitched.setValue(FactoryUtil.enumValue(PitchedType.class, elementValue));
                 pitched.setSmufl(element.getAttribute("smufl"));
                 percussion = pitched;
                 break;
             case "membrane":
                 Membrane membrane = new Membrane();
-                membrane.setType(FactoryUtil.enumValue(MembraneType.class, elementValue));
+                membrane.setValue(FactoryUtil.enumValue(MembraneType.class, elementValue));
                 percussion = membrane;
                 break;
             case "effect":
                 Effect effect = new Effect();
-                effect.setType(FactoryUtil.enumValue(EffectType.class, elementValue));
+                effect.setValue(FactoryUtil.enumValue(EffectType.class, elementValue));
                 percussion = effect;
                 break;
             case "timpani":
@@ -436,7 +436,7 @@ public class DirectionFactory {
                 break;
             case "beater":
                 Beater beater = new Beater();
-                beater.setBeaterValue(FactoryUtil.enumValue(BeaterValue.class, elementValue));
+                beater.setValue(FactoryUtil.enumValue(BeaterValue.class, elementValue));
                 beater.setTip(newTipDirection(element));
                 percussion = beater;
                 break;
@@ -450,7 +450,7 @@ public class DirectionFactory {
                 break;
             case "stick-location":
                 StickLocation stickLocation = new StickLocation();
-                stickLocation.setType(FactoryUtil.enumValue(StickLocationType.class, elementValue));
+                stickLocation.setValue(FactoryUtil.enumValue(StickLocationType.class, elementValue));
                 percussion = stickLocation;
                 break;
             case "other-percussion":

@@ -148,7 +148,7 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         if (defaults.hasAppearance()) {
             buildStartElement("appearance");
             for (LineWidth lineWidth : defaults.getLineWidths()) {
-                buildElementWithValueAndAttribute("line-width", lineWidth.getValue(), "type", BuilderUtil.requiredValue(lineWidth.getLineWidthType()));
+                buildElementWithValueAndAttribute("line-width", lineWidth.getValue(), "type", BuilderUtil.requiredValue(lineWidth.getType()));
             }
             for (NoteSize noteSize : defaults.getNoteSizes()) {
                 buildElementWithValueAndAttribute("note-size", noteSize.getValue(), "type", BuilderUtil.enumValue(noteSize.getType()));

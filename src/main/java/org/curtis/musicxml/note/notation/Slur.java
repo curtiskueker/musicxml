@@ -21,8 +21,8 @@ import javax.persistence.Transient;
 @DiscriminatorValue("slur")
 public class Slur extends Notation {
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "connection_type")
-    private Connection connectionType;
+    @Column
+    private Connection type;
     @Column(name = "notation_number")
     private Integer number;
     @Convert(converter = LineTypeConverter.class)
@@ -45,12 +45,12 @@ public class Slur extends Notation {
 
     }
 
-    public Connection getConnectionType() {
-        return connectionType;
+    public Connection getType() {
+        return type;
     }
 
-    public void setConnectionType(Connection connectionType) {
-        this.connectionType = connectionType;
+    public void setType(Connection type) {
+        this.type = type;
     }
 
     public Integer getNumber() {

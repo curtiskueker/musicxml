@@ -39,7 +39,7 @@
         print_object char(1),
         text_x decimal(12,4),
         text_y decimal(12,4),
-        ending_type varchar(255),
+        type varchar(255),
         value varchar(255),
         display_id integer,
         primary key (id)
@@ -236,7 +236,7 @@
         ordering integer,
         element_id varchar(255),
         enclosure varchar(255),
-        direction_type varchar(255),
+        value varchar(255),
         accordion_high char(1),
         accordion_low char(1),
         accordion_middle integer,
@@ -244,8 +244,8 @@
         niente char(1),
         direction_type_number integer,
         spread decimal(12,4),
+        type varchar(255),
         smufl varchar(255),
-        value varchar(255),
         abbreviated char(1),
         line char(1),
         sign char(1),
@@ -264,7 +264,6 @@
         end_length decimal(12,4),
         line_end varchar(255),
         direction_type_size integer,
-        staff_divide_symbol varchar(255),
         display_id integer,
         text_format_id integer,
         dashed_formatting_id integer,
@@ -362,7 +361,7 @@
         ordering integer,
         attribute varchar(255),
         element varchar(255),
-        supports_type char(1),
+        type char(1),
         value varchar(255),
         software varchar(255),
         encoding_date datetime,
@@ -615,7 +614,7 @@
     create table line_width (
        id integer not null auto_increment,
         ordering integer,
-        line_width_type varchar(255),
+        type varchar(255),
         value decimal(12,4),
         defaults_id integer not null,
         primary key (id)
@@ -765,7 +764,7 @@
        id integer not null auto_increment,
         bracket char(1),
         show_number varchar(255),
-        metronome_tuplet_type varchar(255),
+        type varchar(255),
         time_modification_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -908,12 +907,11 @@
         ordering integer,
         element_id varchar(255),
         notation_number integer,
-        type_value varchar(255),
+        type varchar(255),
         print_object char(1),
         smufl varchar(255),
         value varchar(255),
         line_type varchar(255),
-        connection_type varchar(255),
         orientation varchar(255),
         fermata_shape varchar(255),
         direction varchar(255),
@@ -921,8 +919,6 @@
         line_shape varchar(255),
         show_number varchar(255),
         show_type varchar(255),
-        tied_type varchar(255),
-        accidental_type varchar(255),
         display_id integer,
         dashed_formatting_id integer,
         bezier_id integer,
@@ -1038,7 +1034,7 @@
         element_id varchar(255),
         group_time char(1),
         part_group_number varchar(255),
-        part_group_type varchar(255),
+        type varchar(255),
         score_part_id varchar(255),
         editorial_id integer,
         group_abbreviation_id integer,
@@ -1408,7 +1404,7 @@
 
     create table tuplet_type (
        id integer not null auto_increment,
-        note_type_value varchar(255),
+        value varchar(255),
         display_id integer,
         primary key (id)
     ) engine=MyISAM;

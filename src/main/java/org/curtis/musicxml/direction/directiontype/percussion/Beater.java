@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("beater")
 public class Beater extends Percussion {
     @Convert(converter = BeaterValueConverter.class)
-    @Column(name = "direction_type")
-    private BeaterValue beaterValue;
+    @Column
+    private BeaterValue value;
     @Convert(converter = TipDirectionConverter.class)
     @Column
     private TipDirection tip;
@@ -22,12 +22,12 @@ public class Beater extends Percussion {
 
     }
 
-    public BeaterValue getBeaterValue() {
-        return beaterValue;
+    public BeaterValue getValue() {
+        return value;
     }
 
-    public void setBeaterValue(BeaterValue beaterValue) {
-        this.beaterValue = beaterValue;
+    public void setValue(BeaterValue value) {
+        this.value = value;
     }
 
     public TipDirection getTip() {

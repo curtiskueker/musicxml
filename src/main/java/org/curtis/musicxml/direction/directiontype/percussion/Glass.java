@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("glass")
 public class Glass extends Percussion {
     @Convert(converter = GlassTypeConverter.class)
-    @Column(name = "direction_type")
-    private GlassType type;
+    @Column
+    private GlassType value;
     @Column
     private String smufl;
 
@@ -20,12 +20,12 @@ public class Glass extends Percussion {
 
     }
 
-    public GlassType getType() {
-        return type;
+    public GlassType getValue() {
+        return value;
     }
 
-    public void setType(GlassType type) {
-        this.type = type;
+    public void setValue(GlassType value) {
+        this.value = value;
     }
 
     public String getSmufl() {

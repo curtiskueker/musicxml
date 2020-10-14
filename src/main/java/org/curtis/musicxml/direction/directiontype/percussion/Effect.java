@@ -11,18 +11,18 @@ import javax.persistence.Entity;
 @DiscriminatorValue("effect")
 public class Effect extends Percussion {
     @Convert(converter = EffectTypeConverter.class)
-    @Column(name = "direction_type")
-    private EffectType type;
+    @Column
+    private EffectType value;
 
     public Effect() {
 
     }
 
-    public EffectType getType() {
-        return type;
+    public EffectType getValue() {
+        return value;
     }
 
-    public void setType(EffectType type) {
-        this.type = type;
+    public void setValue(EffectType value) {
+        this.value = value;
     }
 }

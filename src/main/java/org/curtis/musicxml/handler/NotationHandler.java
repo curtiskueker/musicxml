@@ -45,7 +45,7 @@ public class NotationHandler extends BaseHandler {
             switch (notationsSubelement.getTagName()) {
                 case "tied":
                     Tied tied = new Tied();
-                    tied.setTiedType(FactoryUtil.enumValue(TiedType.class, notationsSubelement.getAttribute("type")));
+                    tied.setType(FactoryUtil.enumValue(TiedType.class, notationsSubelement.getAttribute("type")));
                     tied.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     tied.setLineType(NotationFactory.newLineType(notationsSubelement));
                     tied.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));
@@ -55,7 +55,7 @@ public class NotationHandler extends BaseHandler {
                     break;
                 case "slur":
                     Slur slur = new Slur();
-                    slur.setConnectionType(FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
+                    slur.setType(FactoryUtil.enumValue(Connection.class, notationsSubelement.getAttribute("type")));
                     slur.setNumber(StringUtil.getInteger(notationsSubelement.getAttribute("number")));
                     slur.setLineType(NotationFactory.newLineType(notationsSubelement));
                     slur.setDashedFormatting(FormattingFactory.newDashedFormatting(notationsSubelement));

@@ -13,8 +13,8 @@ public class Tremolo extends Ornament {
     @Column(name = "tremolo_marks")
     private Integer tremoloMarks;
     @Convert(converter = TremoloTypeConverter.class)
-    @Column(name = "type")
-    private TremoloType tremoloType = TremoloType.SINGLE;
+    @Column
+    private TremoloType type = TremoloType.SINGLE;
     @Column
     private String smufl;
 
@@ -30,12 +30,12 @@ public class Tremolo extends Ornament {
         this.tremoloMarks = tremoloMarks;
     }
 
-    public TremoloType getTremoloType() {
-        return tremoloType;
+    public TremoloType getType() {
+        return type;
     }
 
-    public void setTremoloType(TremoloType tremoloType) {
-        this.tremoloType = tremoloType;
+    public void setType(TremoloType type) {
+        this.type = type;
     }
 
     public String getSmufl() {

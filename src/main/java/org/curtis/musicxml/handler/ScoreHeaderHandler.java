@@ -88,7 +88,7 @@ public class ScoreHeaderHandler extends BaseHandler {
                                             List<LineWidth> lineWidths = defaults.getLineWidths();
                                             LineWidth lineWidth = new LineWidth();
                                             lineWidth.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(appearanceSubelement)));
-                                            lineWidth.setLineWidthType(appearanceSubelement.getAttribute("type"));
+                                            lineWidth.setType(appearanceSubelement.getAttribute("type"));
                                             lineWidths.add(lineWidth);
                                             break;
                                         case "note-size":

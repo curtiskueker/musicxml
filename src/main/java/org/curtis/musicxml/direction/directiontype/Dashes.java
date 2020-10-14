@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("dashes")
 public class Dashes extends DirectionType {
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "direction_type")
+    @Column
     private Connection type;
     @Column(name = "direction_type_number")
     private Integer number;

@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("string mute")
 public class StringMute extends DirectionType {
     @Convert(converter = StringMuteDirectionConverter.class)
-    @Column(name = "direction_type")
+    @Column
     private StringMuteDirection type;
 
     public StringMute() {

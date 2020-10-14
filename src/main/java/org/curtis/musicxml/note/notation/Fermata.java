@@ -16,7 +16,7 @@ public class Fermata extends Notation {
     @Convert(converter = FermataShapeConverter.class)
     private FermataShape fermataShape;
     @Convert(converter = FermataTypeConverter.class)
-    @Column(name = "type_value")
+    @Column
     private FermataType type;
     @Transient
     private boolean isMarkup = false;

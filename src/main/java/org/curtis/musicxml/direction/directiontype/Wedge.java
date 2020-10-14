@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @DiscriminatorValue("wedge")
 public class Wedge extends DirectionType {
     @Convert(converter = WedgeTypeConverter.class)
-    @Column(name = "direction_type")
+    @Column
     private WedgeType type;
     @Column(name = "direction_type_number")
     private Integer number;

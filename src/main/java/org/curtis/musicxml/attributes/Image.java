@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class Image extends DirectionType {
     @Column
     private String source;
-    @Column(name = "direction_type")
+    @Column
     private String type;
     @Column(precision = 12, scale = 4)
     private BigDecimal height;

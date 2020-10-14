@@ -11,18 +11,18 @@ import javax.persistence.Entity;
 @DiscriminatorValue("wood")
 public class Wood extends Percussion {
     @Convert(converter = WoodTypeConverter.class)
-    @Column(name = "direction_type")
-    private WoodType type;
+    @Column
+    private WoodType value;
 
     public Wood() {
 
     }
 
-    public WoodType getType() {
-        return type;
+    public WoodType getValue() {
+        return value;
     }
 
-    public void setType(WoodType type) {
-        this.type = type;
+    public void setValue(WoodType value) {
+        this.value = value;
     }
 }

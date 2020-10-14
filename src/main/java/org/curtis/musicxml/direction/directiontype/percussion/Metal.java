@@ -11,18 +11,18 @@ import javax.persistence.Entity;
 @DiscriminatorValue("metal")
 public class Metal extends Percussion {
     @Convert(converter = MetalTypeConverter.class)
-    @Column(name = "direction_type")
-    private MetalType type;
+    @Column
+    private MetalType value;
 
     public Metal() {
 
     }
 
-    public MetalType getType() {
-        return type;
+    public MetalType getValue() {
+        return value;
     }
 
-    public void setType(MetalType type) {
-        this.type = type;
+    public void setValue(MetalType value) {
+        this.value = value;
     }
 }

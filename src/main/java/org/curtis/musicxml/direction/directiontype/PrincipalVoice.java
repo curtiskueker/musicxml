@@ -15,7 +15,7 @@ public class PrincipalVoice extends DirectionType {
     @Column
     private String value;
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "direction_type")
+    @Column
     private Connection type;
     @Convert(converter = PrincipalVoiceSymbolConverter.class)
     @Column

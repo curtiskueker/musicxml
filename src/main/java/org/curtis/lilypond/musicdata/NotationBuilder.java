@@ -27,7 +27,7 @@ public class NotationBuilder extends MusicDataBuilder {
                 return stringBuilder;
         }
 
-        switch (tied.getTiedType()) {
+        switch (tied.getType()) {
             case START:
             case CONTINUE:
                 if (tied.isUnterminated()) throw new BuildException("Unterminated tie");
@@ -43,7 +43,7 @@ public class NotationBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildSlur(Slur slur) {
-        Connection connectionType = slur.getConnectionType();
+        Connection connectionType = slur.getType();
         SlurType slurType = slur.getSlurType();
         if (connectionType == Connection.START) append(PlacementBuildUtil.getPlacement(slur.getDisplay()));
         if (slurType == SlurType.PHRASING) append("\\");
@@ -117,7 +117,7 @@ public class NotationBuilder extends MusicDataBuilder {
 
     public StringBuilder buildAccidentalMark(AccidentalMark accidentalMark) {
         // NOTE: placeholder implementation
-        AccidentalType accidentalType = accidentalMark.getAccidentalType();
+        AccidentalType accidentalType = accidentalMark.getValue();
         if (accidentalType == null) return stringBuilder;
 
         String accidentalMarkup = null;

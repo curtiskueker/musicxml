@@ -15,7 +15,7 @@ public class OtherNotation extends Notation {
     @Column
     private String value;
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "type_value")
+    @Column
     private Connection type;
     @Column(name = "notation_number")
     private Integer number = 1;

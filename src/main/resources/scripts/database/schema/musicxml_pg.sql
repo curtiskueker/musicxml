@@ -40,7 +40,7 @@ create sequence native start 1 increment 1;
         print_object char(1),
         text_x numeric(12, 4),
         text_y numeric(12, 4),
-        ending_type varchar(255),
+        type varchar(255),
         value varchar(255),
         display_id int4,
         primary key (id)
@@ -237,7 +237,7 @@ create sequence native start 1 increment 1;
         ordering int4,
         element_id varchar(255),
         enclosure varchar(255),
-        direction_type varchar(255),
+        value varchar(255),
         accordion_high char(1),
         accordion_low char(1),
         accordion_middle int4,
@@ -245,8 +245,8 @@ create sequence native start 1 increment 1;
         niente char(1),
         direction_type_number int4,
         spread numeric(12, 4),
+        type varchar(255),
         smufl varchar(255),
-        value varchar(255),
         abbreviated char(1),
         line char(1),
         sign char(1),
@@ -265,7 +265,6 @@ create sequence native start 1 increment 1;
         end_length numeric(12, 4),
         line_end varchar(255),
         direction_type_size int4,
-        staff_divide_symbol varchar(255),
         display_id int4,
         text_format_id int4,
         dashed_formatting_id int4,
@@ -363,7 +362,7 @@ create sequence native start 1 increment 1;
         ordering int4,
         attribute varchar(255),
         element varchar(255),
-        supports_type char(1),
+        type char(1),
         value varchar(255),
         software varchar(255),
         encoding_date timestamp,
@@ -616,7 +615,7 @@ create sequence native start 1 increment 1;
     create table line_width (
        id int4 not null,
         ordering int4,
-        line_width_type varchar(255),
+        type varchar(255),
         value numeric(12, 4),
         defaults_id int4 not null,
         primary key (id)
@@ -766,7 +765,7 @@ create sequence native start 1 increment 1;
        id int4 not null,
         bracket char(1),
         show_number varchar(255),
-        metronome_tuplet_type varchar(255),
+        type varchar(255),
         time_modification_id int4,
         primary key (id)
     );
@@ -909,12 +908,11 @@ create sequence native start 1 increment 1;
         ordering int4,
         element_id varchar(255),
         notation_number int4,
-        type_value varchar(255),
+        type varchar(255),
         print_object char(1),
         smufl varchar(255),
         value varchar(255),
         line_type varchar(255),
-        connection_type varchar(255),
         orientation varchar(255),
         fermata_shape varchar(255),
         direction varchar(255),
@@ -922,8 +920,6 @@ create sequence native start 1 increment 1;
         line_shape varchar(255),
         show_number varchar(255),
         show_type varchar(255),
-        tied_type varchar(255),
-        accidental_type varchar(255),
         display_id int4,
         dashed_formatting_id int4,
         bezier_id int4,
@@ -1039,7 +1035,7 @@ create sequence native start 1 increment 1;
         element_id varchar(255),
         group_time char(1),
         part_group_number varchar(255),
-        part_group_type varchar(255),
+        type varchar(255),
         score_part_id varchar(255),
         editorial_id int4,
         group_abbreviation_id int4,
@@ -1409,7 +1405,7 @@ create sequence native start 1 increment 1;
 
     create table tuplet_type (
        id int4 not null,
-        note_type_value varchar(255),
+        value varchar(255),
         display_id int4,
         primary key (id)
     );

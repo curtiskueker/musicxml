@@ -42,7 +42,7 @@ public class PartGroup extends PartListItem {
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "part_group_type")
+    @Column
     private Connection type;
     @Column(name = "part_group_number")
     private String number = "1";

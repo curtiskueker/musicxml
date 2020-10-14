@@ -20,8 +20,8 @@ import javax.persistence.Transient;
 @DiscriminatorValue("tied")
 public class Tied extends Notation {
     @Convert(converter = TiedTypeConverter.class)
-    @Column(name = "tied_type")
-    private TiedType tiedType;
+    @Column
+    private TiedType type;
     @Column(name = "notation_number")
     private Integer number;
     @Convert(converter = LineTypeConverter.class)
@@ -47,12 +47,12 @@ public class Tied extends Notation {
 
     }
 
-    public TiedType getTiedType() {
-        return tiedType;
+    public TiedType getType() {
+        return type;
     }
 
-    public void setTiedType(TiedType tiedType) {
-        this.tiedType = tiedType;
+    public void setType(TiedType type) {
+        this.type = type;
     }
 
     public Integer getNumber() {

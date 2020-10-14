@@ -73,7 +73,7 @@ public class NotationFactory {
         Element tupletTypeElement = XmlUtil.getChildElement(tupletNumberElement, "tuplet-type");
         if (tupletTypeElement != null) {
             TupletType tupletType = new TupletType();
-            tupletType.setNoteTypeValue(NoteFactory.newNoteTypeValue(tupletTypeElement));
+            tupletType.setValue(NoteFactory.newNoteTypeValue(tupletTypeElement));
             tupletType.setDisplay(DisplayFactory.newDisplay(tupletTypeElement));
             tupletPortion.setTupletType(tupletType);
         }
@@ -132,7 +132,7 @@ public class NotationFactory {
         if (element == null) return null;
 
         AccidentalMark accidentalMark = new AccidentalMark();
-        accidentalMark.setAccidentalType(NoteFactory.newAccidentalType(element));
+        accidentalMark.setValue(NoteFactory.newAccidentalType(element));
         accidentalMark.setLevelDisplay(FormattingFactory.newLevelDisplay(element));
         accidentalMark.setDisplay(DisplayFactory.newDisplay(element));
         accidentalMark.setSmufl(element.getAttribute("smufl"));

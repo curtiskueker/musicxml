@@ -25,7 +25,7 @@ public class Tuplet extends Notation {
     @JoinColumn(name = "tuplet_normal_id")
     private TupletPortion tupletNormal;
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "type_value")
+    @Column
     private Connection type;
     @Column(name = "notation_number")
     private Integer number;

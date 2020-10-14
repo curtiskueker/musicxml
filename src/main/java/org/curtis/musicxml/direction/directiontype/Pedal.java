@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("pedal")
 public class Pedal extends DirectionType {
     @Convert(converter = PedalTypeConverter.class)
-    @Column(name = "direction_type")
-    private PedalType pedalType;
+    @Column
+    private PedalType type;
     @Column(name = "direction_type_number")
     private Integer number;
     @Column
@@ -30,12 +30,12 @@ public class Pedal extends DirectionType {
 
     }
 
-    public PedalType getPedalType() {
-        return pedalType;
+    public PedalType getType() {
+        return type;
     }
 
-    public void setPedalType(PedalType pedalType) {
-        this.pedalType = pedalType;
+    public void setType(PedalType type) {
+        this.type = type;
     }
 
     public Integer getNumber() {

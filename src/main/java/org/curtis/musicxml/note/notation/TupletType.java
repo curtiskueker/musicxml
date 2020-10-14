@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Table(name = "tuplet_type")
 public class TupletType extends DatabaseItem {
     @Convert(converter = NoteTypeValueConverter.class)
-    @Column(name = "note_type_value")
-    private NoteTypeValue noteTypeValue;
+    @Column
+    private NoteTypeValue value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
@@ -27,12 +27,12 @@ public class TupletType extends DatabaseItem {
 
     }
 
-    public NoteTypeValue getNoteTypeValue() {
-        return noteTypeValue;
+    public NoteTypeValue getValue() {
+        return value;
     }
 
-    public void setNoteTypeValue(NoteTypeValue noteTypeValue) {
-        this.noteTypeValue = noteTypeValue;
+    public void setValue(NoteTypeValue value) {
+        this.value = value;
     }
 
     public Display getDisplay() {

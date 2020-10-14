@@ -11,18 +11,18 @@ import javax.persistence.Entity;
 @DiscriminatorValue("membrane")
 public class Membrane extends Percussion {
     @Convert(converter = MembraneTypeConverter.class)
-    @Column(name = "direction_type")
-    private MembraneType type;
+    @Column
+    private MembraneType value;
 
     public Membrane() {
 
     }
 
-    public MembraneType getType() {
-        return type;
+    public MembraneType getValue() {
+        return value;
     }
 
-    public void setType(MembraneType type) {
-        this.type = type;
+    public void setValue(MembraneType value) {
+        this.value = value;
     }
 }

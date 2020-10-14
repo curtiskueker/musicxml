@@ -11,18 +11,18 @@ import javax.persistence.Entity;
 @DiscriminatorValue("staff divide")
 public class StaffDivide extends DirectionType {
     @Convert(converter = StaffDivideSymbolConverter.class)
-    @Column(name = "staff_divide_symbol")
-    private StaffDivideSymbol staffDivideSymbol;
+    @Column
+    private StaffDivideSymbol type;
 
     public StaffDivide() {
 
     }
 
-    public StaffDivideSymbol getStaffDivideSymbol() {
-        return staffDivideSymbol;
+    public StaffDivideSymbol getType() {
+        return type;
     }
 
-    public void setStaffDivideSymbol(StaffDivideSymbol staffDivideSymbol) {
-        this.staffDivideSymbol = staffDivideSymbol;
+    public void setType(StaffDivideSymbol type) {
+        this.type = type;
     }
 }

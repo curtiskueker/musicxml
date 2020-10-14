@@ -11,18 +11,18 @@ import javax.persistence.Entity;
 @DiscriminatorValue("stick location")
 public class StickLocation extends Percussion {
     @Convert(converter = StickLocationTypeConverter.class)
-    @Column(name = "direction_type")
-    private StickLocationType type;
+    @Column
+    private StickLocationType value;
 
     public StickLocation() {
 
     }
 
-    public StickLocationType getType() {
-        return type;
+    public StickLocationType getValue() {
+        return value;
     }
 
-    public void setType(StickLocationType type) {
-        this.type = type;
+    public void setValue(StickLocationType value) {
+        this.value = value;
     }
 }

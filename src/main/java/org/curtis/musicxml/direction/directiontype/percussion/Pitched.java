@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("pitched")
 public class Pitched extends Percussion {
     @Convert(converter = PitchedTypeConverter.class)
-    @Column(name = "direction_type")
-    private PitchedType type;
+    @Column
+    private PitchedType value;
     @Column
     private String smufl;
 
@@ -20,12 +20,12 @@ public class Pitched extends Percussion {
 
     }
 
-    public PitchedType getType() {
-        return type;
+    public PitchedType getValue() {
+        return value;
     }
 
-    public void setType(PitchedType type) {
-        this.type = type;
+    public void setValue(PitchedType value) {
+        this.value = value;
     }
 
     public String getSmufl() {

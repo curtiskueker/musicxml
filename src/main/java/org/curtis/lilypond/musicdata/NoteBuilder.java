@@ -177,7 +177,7 @@ public class NoteBuilder extends MusicDataBuilder {
         }
 
         Tremolo tremolo = note.getTremolo();
-        if (tremolo != null && tremolo.getTremoloType() == TremoloType.START) {
+        if (tremolo != null && tremolo.getType() == TremoloType.START) {
             append("\\repeat tremolo ");
             append(MathUtil.truncate(MathUtil.divide(note.getDuration(), MathUtil.divide(PartBuilder.CURRENT_ATTRIBUTES.getDivisions(), MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks())))));
             append(" { ");
@@ -210,7 +210,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
         List<Slur> slurs = note.getSlurs();
         for (Slur slur : slurs) {
-            Connection connectionType = slur.getConnectionType();
+            Connection connectionType = slur.getType();
             if (connectionType != Connection.START) continue;
 
             SlurType slurType = slur.getSlurType();
@@ -248,7 +248,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
     private StringBuilder postNoteBuild() throws BuildException {
         Tremolo tremolo = note.getTremolo();
-        if (tremolo != null && tremolo.getTremoloType() == TremoloType.STOP) {
+        if (tremolo != null && tremolo.getType() == TremoloType.STOP) {
             append(" } ");
         }
 
@@ -260,7 +260,7 @@ public class NoteBuilder extends MusicDataBuilder {
         BigDecimal duration = note.getDuration();
         Tremolo tremolo = note.getTremolo();
         try {
-            if (tremolo != null && (tremolo.getTremoloType() == TremoloType.START || tremolo.getTremoloType() == TremoloType.STOP)) {
+            if (tremolo != null && (tremolo.getType() == TremoloType.START || tremolo.getType() == TremoloType.STOP)) {
                 append(MathUtil.truncate(MathUtil.exp(MathUtil.newBigDecimal(2), tremolo.getTremoloMarks() + 2)));
             } else if (noteType instanceof Rest && TypeUtil.getBoolean(((Rest)noteType).getMeasure())) {
                 append(TimeSignatureUtil.getWholeMeasureRestRepresentation());
@@ -345,7 +345,7 @@ public class NoteBuilder extends MusicDataBuilder {
                     }
                 }
 
-                boolean isExecutableTiedNotation = notation instanceof Tied && ((Tied)notation).getTiedType() != TiedType.LET_RING;
+                boolean isExecutableTiedNotation = notation instanceof Tied && ((Tied)notation).getType() != TiedType.LET_RING;
                 if (isExecutableTiedNotation && tiedExecuted) continue;
 
                 MusicDataBuilder musicDataBuilder = new MusicDataBuilder(notation);

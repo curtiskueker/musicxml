@@ -22,7 +22,7 @@ public class BarlineEnding extends DatabaseItem {
     @Column(name = "ending_number")
     private String number;
     @Convert(converter = BarlineEndingTypeConverter.class)
-    @Column(name = "ending_type")
+    @Column
     private BarlineEndingType type;
     @Column(name = "print_object")
     @Type(type="yes_no")

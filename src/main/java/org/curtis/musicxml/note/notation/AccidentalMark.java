@@ -16,8 +16,8 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("accidental mark")
 public class AccidentalMark extends Notation {
     @Convert(converter = AccidentalTypeConverter.class)
-    @Column(name = "accidental_type")
-    private AccidentalType accidentalType;
+    @Column
+    private AccidentalType value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "level_display_id")
     private LevelDisplay levelDisplay;
@@ -28,12 +28,12 @@ public class AccidentalMark extends Notation {
 
     }
 
-    public AccidentalType getAccidentalType() {
-        return accidentalType;
+    public AccidentalType getValue() {
+        return value;
     }
 
-    public void setAccidentalType(AccidentalType accidentalType) {
-        this.accidentalType = accidentalType;
+    public void setValue(AccidentalType value) {
+        this.value = value;
     }
 
     public LevelDisplay getLevelDisplay() {

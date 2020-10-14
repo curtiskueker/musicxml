@@ -64,7 +64,7 @@ public class OrnamentBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder buildTremolo(Tremolo tremolo) {
-            switch (tremolo.getTremoloType()) {
+            switch (tremolo.getType()) {
                 case SINGLE:
                     Integer tremoloMarks = tremolo.getTremoloMarks();
                     if(tremoloMarks != null) {

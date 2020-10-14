@@ -23,7 +23,7 @@ public class MetronomeTuplet extends DatabaseItem {
     @JoinColumn(name = "time_modification_id")
     private TimeModification timeModification;
     @Convert(converter = ConnectionConverter.class)
-    @Column(name = "metronome_tuplet_type")
+    @Column
     private Connection type;
     @Column
     @Type(type="yes_no")
