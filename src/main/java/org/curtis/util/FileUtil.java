@@ -31,7 +31,7 @@ public class FileUtil {
             File file = new File(filename);
             return new FileWriter(file);
         } catch (IOException e) {
-            throw new FileException(e);
+            throw new FileException(e.getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ public class FileUtil {
             in.close();
             out.close();
         } catch (Exception e) {
-            throw new FileException(e);
+            throw new FileException(e.getMessage());
         }
     }
 

@@ -27,7 +27,7 @@ public class DBTransaction {
         try {
             transaction.commit();
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class DBTransaction {
         try {
             em.persist(object);
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ public class DBTransaction {
         try {
             em.remove(object);
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -61,7 +61,7 @@ public class DBTransaction {
         try {
             return em.find(classObject, id);
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ public class DBTransaction {
             if (results == null || results.isEmpty()) return null;
             return results.get(0);
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ public class DBTransaction {
             if (results == null || results.isEmpty()) return new ArrayList<>();
             return results;
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 

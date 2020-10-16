@@ -53,7 +53,7 @@ public class DeleteScore extends MusicXmlScript {
             System.err.println("Score " + score.getScoreName() + " deleted.");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         } finally {
             try {
                 MusicXmlUtil.getNewDbTransaction();

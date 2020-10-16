@@ -120,7 +120,7 @@ public class MusicXmlUtil {
             return stringWriter.toString();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            throw new XmlException(e);
+            throw new XmlException(e.getMessage());
         }
     }
 
@@ -136,7 +136,7 @@ public class MusicXmlUtil {
         try {
             return getDbTransaction().getObjectById(measureItemClass, measureItemId);
         } catch (DBException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
     }
 
@@ -227,7 +227,7 @@ public class MusicXmlUtil {
                     parentNode.insertBefore(commentNode, siblingNode);
                 } else parentNode.appendChild(commentNode);
             } catch (XPathExpressionException e) {
-                e.printStackTrace();
+                // skip
             }
         }
     }

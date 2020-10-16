@@ -59,7 +59,7 @@ public class SetProperties extends MusicXmlScript {
             MusicXmlUtil.clearDb();
             PropertiesHandler.addLocalPropertiesBundle();
         } catch (DBException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
     }
 

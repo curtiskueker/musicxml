@@ -142,8 +142,7 @@ public abstract class MusicXmlScript {
 
             return score;
         } catch (DBException e) {
-            e.printStackTrace();
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         }
     }
 
@@ -258,7 +257,7 @@ public abstract class MusicXmlScript {
                 return;
             }
         } catch (IOException e) {
-            throw new MusicXmlException(e);
+            throw new MusicXmlException(e.getMessage());
         } catch (InterruptedException e) {
             return;
         }

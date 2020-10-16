@@ -98,7 +98,7 @@ public class MeasureBuilder extends MusicDataBuilder {
                         break;
                 }
             } catch (MusicXmlException e) {
-                e.printStackTrace();
+                // skip
             }
             if (baseBuilder != null) append(baseBuilder.build().toString());
         }

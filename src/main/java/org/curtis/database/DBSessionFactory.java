@@ -1,3 +1,4 @@
+
 package org.curtis.database;
 
 import org.curtis.properties.PropertiesHandler;
@@ -125,7 +126,7 @@ public class DBSessionFactory {
                 instantiateSessionFactory();
                 if (!schemaValidated) throw new DBException("Error: Unable to create database tables");
             }
-            else throw new DBException(e);
+            else throw new DBException(e.getMessage());
         }
     }
 
@@ -141,7 +142,7 @@ public class DBSessionFactory {
             dbSessionFactory.instantiateSessionFactory();
             sessionFactory = dbSessionFactory;
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -161,8 +162,7 @@ public class DBSessionFactory {
             DBSessionFactory dbSessionFactory = new DBSessionFactory();
             dbSessionFactory.instantiateSessionFactory(true);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -171,8 +171,7 @@ public class DBSessionFactory {
             DBSessionFactory dbSessionFactory = new DBSessionFactory();
             dbSessionFactory.instantiateSessionFactory();
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -185,8 +184,7 @@ public class DBSessionFactory {
             dbSessionFactory.instantiateSessionFactory();
             FileUtil.moveFile(tempSchemaFile, fileLocation);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 
@@ -229,7 +227,7 @@ public class DBSessionFactory {
         try {
             return emf.createEntityManager();
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new DBException(e.getMessage());
         }
     }
 }

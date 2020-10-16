@@ -95,7 +95,7 @@ public class PropertiesHandler {
         try {
             propertyValue = getString(propertyName);
         } catch (PropertyException e) {
-            throw new RequiredPropertyNotFoundException(e);
+            throw new RequiredPropertyNotFoundException(e.getMessage());
         }
         return propertyValue;
     }

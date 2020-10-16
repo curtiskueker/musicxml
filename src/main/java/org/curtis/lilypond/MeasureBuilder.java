@@ -557,7 +557,6 @@ public class MeasureBuilder extends LilypondBuilder {
             append(TimeSignatureUtil.getWholeMeasureSpacerRepresentation());
         } catch (Exception e) {
             // skip
-            e.printStackTrace();
         }
     }
 

@@ -31,7 +31,6 @@ public abstract class BaseBuilder {
         }
         if (!DEBUG) return;
 
-        e.printStackTrace();
         System.err.println();
     }
 }
