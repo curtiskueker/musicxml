@@ -67,6 +67,8 @@ public class DBTransaction {
 
     public <T extends DatabaseItem> T find(Class<T> classType, String field, Object value) throws DBException {
         try {
+            em.clear();
+
             CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
             CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classType);
             Root<T> root = criteriaQuery.from(classType);
