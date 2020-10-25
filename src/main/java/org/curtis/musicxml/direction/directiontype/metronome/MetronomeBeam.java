@@ -13,8 +13,8 @@ import javax.persistence.Table;
 @Table(name = "metronome_beam")
 public class MetronomeBeam extends OrderedItem {
     @Convert(converter = BeamTypeConverter.class)
-    @Column(name = "beam_type")
-    private BeamType beamType;
+    @Column
+    private BeamType value;
     @Column(name = "metronome_beam_number")
     private Integer number = 1;
 
@@ -22,12 +22,12 @@ public class MetronomeBeam extends OrderedItem {
 
     }
 
-    public BeamType getBeamType() {
-        return beamType;
+    public BeamType getValue() {
+        return value;
     }
 
-    public void setBeamType(BeamType beamType) {
-        this.beamType = beamType;
+    public void setValue(BeamType value) {
+        this.value = value;
     }
 
     public Integer getNumber() {

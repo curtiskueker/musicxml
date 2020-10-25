@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @Table(name = "part_symbol")
 public class PartSymbol extends DatabaseItem {
     @Convert(converter = GroupSymbolTypeConverter.class)
-    @Column(name = "group_symbol_type")
-    private GroupSymbolType groupSymbolType;
+    @Column
+    private GroupSymbolType value;
     @Column(name = "top_staff")
     private Integer topStaff;
     @Column(name = "bottom_staff")
@@ -30,12 +30,12 @@ public class PartSymbol extends DatabaseItem {
 
     }
 
-    public GroupSymbolType getGroupSymbolType() {
-        return groupSymbolType;
+    public GroupSymbolType getValue() {
+        return value;
     }
 
-    public void setGroupSymbolType(GroupSymbolType groupSymbolType) {
-        this.groupSymbolType = groupSymbolType;
+    public void setValue(GroupSymbolType value) {
+        this.value = value;
     }
 
     public Integer getTopStaff() {

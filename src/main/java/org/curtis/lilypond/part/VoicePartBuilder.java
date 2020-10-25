@@ -232,7 +232,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
 
                     for (Beam beam : note.getBeams()) {
                         Integer beamNumber = beam.getNumber();
-                        switch (beam.getType()) {
+                        switch (beam.getValue()) {
                             case BEGIN:
                                 openBeams.put(beamNumber, beam);
                                 break;
@@ -242,7 +242,7 @@ public class VoicePartBuilder extends FilteredPartBuilder {
                         }
                     }
                     if (isNonBeamedNote(note)) {
-                        for (Beam beam : openBeams.values()) beam.setType(BeamType.NON_BEAMED);
+                        for (Beam beam : openBeams.values()) beam.setValue(BeamType.NON_BEAMED);
                         openBeams.clear();
                     }
 

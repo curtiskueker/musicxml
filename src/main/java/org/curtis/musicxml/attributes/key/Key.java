@@ -24,7 +24,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "key_signature")
-@DiscriminatorColumn(name = "key_type")
+@DiscriminatorColumn(name = "key_signature_type")
 public abstract class Key extends OrderedElement {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

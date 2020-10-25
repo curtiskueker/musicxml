@@ -1,10 +1,10 @@
 
     create table accidental (
        id integer not null auto_increment,
-        accidental_type varchar(255),
         cautionary char(1),
         editorial char(1),
         smufl varchar(255),
+        value varchar(255),
         display_id integer,
         level_display_id integer,
         primary key (id)
@@ -91,7 +91,7 @@
         fan varchar(255),
         beam_number integer,
         repeater char(1),
-        type varchar(255),
+        value varchar(255),
         display_id integer,
         note_id integer not null,
         primary key (id)
@@ -157,7 +157,9 @@
         element_id varchar(255),
         display_id integer,
         text_format_id integer,
+        link_id integer,
         image_id integer,
+        bookmark_id integer,
         credit_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -165,7 +167,7 @@
     create table credit_type (
        id integer not null auto_increment,
         ordering integer,
-        type varchar(255),
+        value varchar(255),
         credit_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -560,7 +562,7 @@
     ) engine=MyISAM;
 
     create table key_signature (
-       key_type varchar(31) not null,
+       key_signature_type varchar(31) not null,
         id integer not null auto_increment,
         ordering integer,
         element_id varchar(255),
@@ -730,8 +732,8 @@
     create table metronome_beam (
        id integer not null auto_increment,
         ordering integer,
-        beam_type varchar(255),
         metronome_beam_number integer,
+        value varchar(255),
         metronome_note_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -740,8 +742,7 @@
        metronome_mark_type varchar(31) not null,
         id integer not null auto_increment,
         ordering integer,
-        per_minute varchar(255),
-        beat_unit varchar(255),
+        value varchar(255),
         beat_unit_dots integer,
         display_id integer,
         beat_unit_tied_id integer,
@@ -868,9 +869,9 @@
         barline_repeat_id integer,
         segno_id integer,
         wavy_line_id integer,
+        abbreviation_display_id integer,
         layout_id integer,
-        part_abbreviation_display_id integer,
-        part_name_display_id integer,
+        name_display_id integer,
         link_attributes_id integer,
         accidental_id integer,
         grace_id integer,
@@ -880,7 +881,6 @@
         stem_id integer,
         time_modification_id integer,
         sound_id integer,
-        credit_display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
@@ -967,7 +967,7 @@
         filled char(1),
         parentheses char(1),
         smufl varchar(255),
-        type varchar(255),
+        value varchar(255),
         display_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -1031,23 +1031,20 @@
        part_list_item_type varchar(31) not null,
         id integer not null auto_increment,
         ordering integer,
-        element_id varchar(255),
         group_time char(1),
         part_group_number varchar(255),
         type varchar(255),
         score_part_id varchar(255),
+        abbreviation_display_id integer,
+        name_display_id integer,
         editorial_id integer,
         group_abbreviation_id integer,
-        group_abbreviation_display_id integer,
         group_barline_id integer,
         group_name_id integer,
-        group_name_display_id integer,
         group_symbol_id integer,
         identification_id integer,
         part_abbreviation_id integer,
-        part_abbreviation_display_id integer,
         part_name_id integer,
-        part_name_display_id integer,
         score_header_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -1064,8 +1061,8 @@
     create table part_symbol (
        id integer not null auto_increment,
         bottom_staff integer,
-        group_symbol_type varchar(255),
         top_staff integer,
+        value varchar(255),
         display_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -1108,15 +1105,15 @@
        id integer not null auto_increment,
         location varchar(255),
         print_object char(1),
-        semitones decimal(12,4),
+        value decimal(12,4),
         display_id integer,
         primary key (id)
     ) engine=MyISAM;
 
     create table root_step (
        id integer not null auto_increment,
-        step varchar(255),
         text varchar(255),
+        value varchar(255),
         display_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -1164,7 +1161,7 @@
     create table score_part_group (
        id integer not null auto_increment,
         ordering integer,
-        group_name varchar(255),
+        value varchar(255),
         score_part_id integer not null,
         primary key (id)
     ) engine=MyISAM;
@@ -1221,7 +1218,7 @@
 
     create table stem (
        id integer not null auto_increment,
-        type varchar(255),
+        value varchar(255),
         display_id integer,
         primary key (id)
     ) engine=MyISAM;
@@ -1543,9 +1540,19 @@
        references text_format (id);
 
     alter table credit_display 
+       add constraint FK1sjrk4e3klelgd1n9rnkcpg7e 
+       foreign key (link_id) 
+       references music_data (id);
+
+    alter table credit_display 
        add constraint FKmglmu9us8bs64gvpcg1o713v1 
        foreign key (image_id) 
        references direction_type (id);
+
+    alter table credit_display 
+       add constraint FK6rvt383psvoq0f6n4oy99w8x2 
+       foreign key (bookmark_id) 
+       references music_data (id);
 
     alter table credit_display 
        add constraint FKl8qfo2ls4vq6ydjvqm6gbsexk 
@@ -2093,18 +2100,18 @@
        references ornament (id);
 
     alter table music_data 
+       add constraint FKtlsr8kb6m39sf4opoqp48jwry 
+       foreign key (abbreviation_display_id) 
+       references name_display (id);
+
+    alter table music_data 
        add constraint FKqlptld1w9lk384q8o76ocxyjc 
        foreign key (layout_id) 
        references layout (id);
 
     alter table music_data 
-       add constraint FKb1tvu3enlmm3de7txjuvnu3jf 
-       foreign key (part_abbreviation_display_id) 
-       references name_display (id);
-
-    alter table music_data 
-       add constraint FK5ukkyfjov39beuik27uge8dex 
-       foreign key (part_name_display_id) 
+       add constraint FKi7iw8ov3345c2crn5moh1b3o2 
+       foreign key (name_display_id) 
        references name_display (id);
 
     alter table music_data 
@@ -2151,11 +2158,6 @@
        add constraint FKex8und0d9f4odkobxomoq7ia4 
        foreign key (sound_id) 
        references music_data (id);
-
-    alter table music_data 
-       add constraint FKowu22dl3y19shmrdmjxok999l 
-       foreign key (credit_display_id) 
-       references credit_display (id);
 
     alter table non_traditional_key_type 
        add constraint FK2p06rp4qn3esdyyxwy1qrfyxc 
@@ -2268,6 +2270,16 @@
        references score (id);
 
     alter table part_list_item 
+       add constraint FKa5yamdles87r887n1bo42swkj 
+       foreign key (abbreviation_display_id) 
+       references name_display (id);
+
+    alter table part_list_item 
+       add constraint FKov9bqg9jxq8spdjfurbs15o0d 
+       foreign key (name_display_id) 
+       references name_display (id);
+
+    alter table part_list_item 
        add constraint FK4eo8dqyxosbwnt3jiwwvx314g 
        foreign key (editorial_id) 
        references editorial (id);
@@ -2278,11 +2290,6 @@
        references group_name (id);
 
     alter table part_list_item 
-       add constraint FK8uoyb6n01yikv0f0ntth464jf 
-       foreign key (group_abbreviation_display_id) 
-       references name_display (id);
-
-    alter table part_list_item 
        add constraint FK2gikyljpn4k8s5vkw8daln0ds 
        foreign key (group_barline_id) 
        references group_barline (id);
@@ -2291,11 +2298,6 @@
        add constraint FKoc0ccefkc660lufjubq22i74u 
        foreign key (group_name_id) 
        references group_name (id);
-
-    alter table part_list_item 
-       add constraint FKndqhx5uf7ioraxe58f40123te 
-       foreign key (group_name_display_id) 
-       references name_display (id);
 
     alter table part_list_item 
        add constraint FKge6lxiwci7nkwb0rjepf4rv44 
@@ -2313,19 +2315,9 @@
        references part_name (id);
 
     alter table part_list_item 
-       add constraint FK3h2a88nd1y36i0b15mfqe38t4 
-       foreign key (part_abbreviation_display_id) 
-       references name_display (id);
-
-    alter table part_list_item 
        add constraint FKi6sn8j6i4nkmue6cfs68m5hde 
        foreign key (part_name_id) 
        references part_name (id);
-
-    alter table part_list_item 
-       add constraint FKr6r5kkfar6nalujkyuluiqmip 
-       foreign key (part_name_display_id) 
-       references name_display (id);
 
     alter table part_list_item 
        add constraint FKhurr7xlscap19a1ub0ggb8rf3 

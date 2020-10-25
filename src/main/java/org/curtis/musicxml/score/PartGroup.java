@@ -3,7 +3,6 @@ package org.curtis.musicxml.score;
 import org.curtis.musicxml.common.Connection;
 import org.curtis.musicxml.converter.ConnectionConverter;
 import org.curtis.musicxml.display.Editorial;
-import org.curtis.musicxml.display.NameDisplay;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -21,14 +20,8 @@ public class PartGroup extends PartListItem {
     @JoinColumn(name = "group_name_id")
     private GroupName groupName;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "group_name_display_id")
-    private NameDisplay groupNameDisplay;
-    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_abbreviation_id")
     private GroupName groupAbbreviation;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "group_abbreviation_display_id")
-    private NameDisplay groupAbbreviationDisplay;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_symbol_id")
     private GroupSymbol groupSymbol;
@@ -59,28 +52,12 @@ public class PartGroup extends PartListItem {
         this.groupName = groupName;
     }
 
-    public NameDisplay getGroupNameDisplay() {
-        return groupNameDisplay;
-    }
-
-    public void setGroupNameDisplay(NameDisplay groupNameDisplay) {
-        this.groupNameDisplay = groupNameDisplay;
-    }
-
     public GroupName getGroupAbbreviation() {
         return groupAbbreviation;
     }
 
     public void setGroupAbbreviation(GroupName groupAbbreviation) {
         this.groupAbbreviation = groupAbbreviation;
-    }
-
-    public NameDisplay getGroupAbbreviationDisplay() {
-        return groupAbbreviationDisplay;
-    }
-
-    public void setGroupAbbreviationDisplay(NameDisplay groupAbbreviationDisplay) {
-        this.groupAbbreviationDisplay = groupAbbreviationDisplay;
     }
 
     public GroupSymbol getGroupSymbol() {

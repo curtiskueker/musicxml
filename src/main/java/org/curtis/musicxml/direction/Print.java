@@ -31,11 +31,11 @@ public class Print extends MusicDataElement {
     @JoinColumn(name = "display_id")
     private Display measureNumberingDisplay;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "part_name_display_id")
-    private NameDisplay partNameDisplay;
+    @JoinColumn(name = "name_display_id")
+    private NameDisplay nameDisplay;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "part_abbreviation_display_id")
-    private NameDisplay partAbbreviationDisplay;
+    @JoinColumn(name = "abbreviation_display_id")
+    private NameDisplay abbreviationDisplay;
     @Column(name = "staff_spacing", precision = 12, scale = 4)
     private BigDecimal staffSpacing;
     @Column(name = "new_system")
@@ -85,20 +85,20 @@ public class Print extends MusicDataElement {
         this.measureNumberingDisplay = measureNumberingDisplay;
     }
 
-    public NameDisplay getPartNameDisplay() {
-        return partNameDisplay;
+    public NameDisplay getNameDisplay() {
+        return nameDisplay;
     }
 
-    public void setPartNameDisplay(NameDisplay partNameDisplay) {
-        this.partNameDisplay = partNameDisplay;
+    public void setNameDisplay(NameDisplay nameDisplay) {
+        this.nameDisplay = nameDisplay;
     }
 
-    public NameDisplay getPartAbbreviationDisplay() {
-        return partAbbreviationDisplay;
+    public NameDisplay getAbbreviationDisplay() {
+        return abbreviationDisplay;
     }
 
-    public void setPartAbbreviationDisplay(NameDisplay partAbbreviationDisplay) {
-        this.partAbbreviationDisplay = partAbbreviationDisplay;
+    public void setAbbreviationDisplay(NameDisplay abbreviationDisplay) {
+        this.abbreviationDisplay = abbreviationDisplay;
     }
 
     public BigDecimal getStaffSpacing() {

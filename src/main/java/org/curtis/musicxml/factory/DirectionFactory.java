@@ -300,7 +300,7 @@ public class DirectionFactory {
             String beatElementName = element.getTagName();
             switch (beatElementName) {
                 case "beat-unit":
-                    beatUnit.setBeatUnit(NoteFactory.newNoteTypeValue(element));
+                    beatUnit.setValue(NoteFactory.newNoteTypeValue(element));
                     break;
                 case "beat-unit-dot":
                     Integer beatUnitDots = beatUnit.getBeatUnitDots();
@@ -318,7 +318,7 @@ public class DirectionFactory {
 
     private static PerMinute newPerMinute(Element element) {
         PerMinute perMinute = new PerMinute();
-        perMinute.setPerMinute(XmlUtil.getElementText(element));
+        perMinute.setValue(XmlUtil.getElementText(element));
         perMinute.setDisplay(DisplayFactory.newDisplay(element));
 
         return perMinute;
@@ -349,7 +349,7 @@ public class DirectionFactory {
                             case "metronome-beam":
                                 List<MetronomeBeam> metronomeBeams = metronomeNote.getMetronomeBeams();
                                 MetronomeBeam metronomeBeam = new MetronomeBeam();
-                                metronomeBeam.setBeamType(NoteFactory.newBeamType(metronomeNoteElement));
+                                metronomeBeam.setValue(NoteFactory.newBeamType(metronomeNoteElement));
                                 Integer beamNumber = StringUtil.getInteger(metronomeNoteElement.getAttribute("number"));
                                 if (beamNumber != null) {
                                     metronomeBeam.setNumber(beamNumber);

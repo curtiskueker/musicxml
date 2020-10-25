@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Stem extends DatabaseItem {
     @Convert(converter = StemTypeConverter.class)
     @Column
-    private StemType type;
+    private StemType value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
@@ -26,12 +26,12 @@ public class Stem extends DatabaseItem {
 
     }
 
-    public StemType getType() {
-        return type;
+    public StemType getValue() {
+        return value;
     }
 
-    public void setType(StemType type) {
-        this.type = type;
+    public void setValue(StemType value) {
+        this.value = value;
     }
 
     public Display getDisplay() {

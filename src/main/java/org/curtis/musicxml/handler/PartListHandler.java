@@ -43,9 +43,9 @@ public class PartListHandler extends BaseHandler {
                     partGroup.setEditorial(FormattingFactory.newEditorial(partListSubelement));
                     partGroup.setNumber(partListSubelement.getAttribute("number"));
                     partGroup.setGroupName(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-name")));
-                    partGroup.setGroupNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-name-display")));
+                    partGroup.setNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-name-display")));
                     partGroup.setGroupAbbreviation(ScorePartFactory.newGroupName(XmlUtil.getChildElement(partListSubelement, "group-abbreviation")));
-                    partGroup.setGroupAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-abbreviation-display")));
+                    partGroup.setAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "group-abbreviation-display")));
                     Element groupSymbolElement = XmlUtil.getChildElement(partListSubelement, "group-symbol");
                     if (groupSymbolElement != null) {
                         GroupSymbol groupSymbol = new GroupSymbol();
@@ -68,13 +68,13 @@ public class PartListHandler extends BaseHandler {
                     scorePart.setScorePartId(partListSubelement.getAttribute("id"));
                     scorePart.setIdentification(IdentityFactory.newIdentification(XmlUtil.getChildElement(partListSubelement, "identification")));
                     scorePart.setPartName(ScorePartFactory.newPartName(XmlUtil.getChildElement(partListSubelement, "part-name")));
-                    scorePart.setPartNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-name-display")));
+                    scorePart.setNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-name-display")));
                     scorePart.setPartAbbreviation(ScorePartFactory.newPartName(XmlUtil.getChildElement(partListSubelement, "part-abbreviation")));
-                    scorePart.setPartAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-abbreviation-display")));
+                    scorePart.setAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(partListSubelement, "part-abbreviation-display")));
                     List<Element> groupElements = XmlUtil.getChildElements(partListSubelement, "group");
                     for (Element groupElement : groupElements) {
                         ScorePartGroup scorePartGroup = new ScorePartGroup();
-                        scorePartGroup.setGroup(XmlUtil.getElementText(groupElement));
+                        scorePartGroup.setValue(XmlUtil.getElementText(groupElement));
                         scorePart.getGroups().add(scorePartGroup);
                     }
                     List<Element> scoreInstrumentElements = XmlUtil.getChildElements(partListSubelement, "score-instrument");

@@ -176,13 +176,13 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
                 buildBeatUnit(beatUnit);
             } else if (metronomeMark instanceof PerMinute) {
                 PerMinute perMinute = (PerMinute)metronomeMark;
-                buildElementWithValueAndAttributes("per-minute", perMinute.getPerMinute(), DisplayBuilder.buildDisplay(perMinute.getDisplay()));
+                buildElementWithValueAndAttributes("per-minute", perMinute.getValue(), DisplayBuilder.buildDisplay(perMinute.getDisplay()));
             }
         }
     }
 
     private void buildBeatUnit(BeatUnit beatUnit) {
-        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit.getBeatUnit()));
+        buildElementWithValue("beat-unit", BuilderUtil.noteTypeValue(beatUnit.getValue()));
         for (int beatUnitDots = 1; beatUnitDots <= beatUnit.getBeatUnitDots(); beatUnitDots++) buildElement("beat-unit-dot");
         for (BeatUnit beatUnitTied : beatUnit.getBeatUnitTieds()) {
             buildStartElement("beat-unit-tied");
@@ -202,7 +202,7 @@ public class DirectionTypeBuilder extends MusicDataBuilder {
         buildElementWithValue("metronome-type", BuilderUtil.noteTypeValue(metronomeNote.getMetronomeType()));
         for (int metronomeDots = 1; metronomeDots <= metronomeNote.getMetronomeDots(); metronomeDots++) buildElement("metronome-dot");
         for (MetronomeBeam metronomeBeam : metronomeNote.getMetronomeBeams()) {
-            buildElementWithValueAndAttribute("metronome-beam", NoteBuilder.buildBeamType(metronomeBeam.getBeamType()), "number", metronomeBeam.getNumber());
+            buildElementWithValueAndAttribute("metronome-beam", NoteBuilder.buildBeamType(metronomeBeam.getValue()), "number", metronomeBeam.getNumber());
         }
         buildElementWithAttribute("metronome-tied", "type", BuilderUtil.enumValue(metronomeNote.getMetronomeTied()));
         MetronomeTuplet metronomeTuplet = metronomeNote.getMetronomeTuplet();

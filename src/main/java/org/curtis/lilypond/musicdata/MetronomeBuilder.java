@@ -19,9 +19,9 @@ public class MetronomeBuilder extends MusicDataBuilder {
 
         appendLine();
         append("\\tempo ");
-        append(NoteUtil.getNoteTypeValue(beatUnit1.getBeatUnit()));
+        append(NoteUtil.getNoteTypeValue(beatUnit1.getValue()));
         append(" = ");
-        append(perMinute.getPerMinute());
+        append(perMinute.getValue());
         appendLine();
 
         return stringBuilder;

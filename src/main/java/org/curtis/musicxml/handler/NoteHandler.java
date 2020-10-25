@@ -114,7 +114,7 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "accidental":
                     Accidental accidental = new Accidental();
-                    accidental.setAccidentalType(NoteFactory.newAccidentalType(noteSubelement));
+                    accidental.setValue(NoteFactory.newAccidentalType(noteSubelement));
                     accidental.setCautionary(TypeUtil.getYesNo(noteSubelement.getAttribute("cautionary")));
                     accidental.setEditorial(TypeUtil.getYesNo(noteSubelement.getAttribute("editorial")));
                     accidental.setLevelDisplay(FormattingFactory.newLevelDisplay(noteSubelement));
@@ -127,13 +127,13 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "stem":
                     Stem stem = new Stem();
-                    stem.setType(FactoryUtil.enumValue(StemType.class, XmlUtil.getElementText(noteSubelement)));
+                    stem.setValue(FactoryUtil.enumValue(StemType.class, XmlUtil.getElementText(noteSubelement)));
                     stem.setDisplay(DisplayFactory.newDisplay(noteSubelement));
                     note.setStem(stem);
                     break;
                 case "notehead":
                     Notehead notehead = new Notehead();
-                    notehead.setType(FactoryUtil.enumValue(NoteheadType.class, XmlUtil.getElementText(noteSubelement)));
+                    notehead.setValue(FactoryUtil.enumValue(NoteheadType.class, XmlUtil.getElementText(noteSubelement)));
                     notehead.setFilled(TypeUtil.getYesNo(noteSubelement.getAttribute("filled")));
                     notehead.setParentheses(TypeUtil.getYesNo(noteSubelement.getAttribute("parentheses")));
                     notehead.setDisplay(DisplayFactory.newDisplay(noteSubelement));
@@ -154,7 +154,7 @@ public class NoteHandler extends MusicDataHandler {
                     List<Beam> beams = note.getBeams();
                     Beam beam = new Beam();
                     beam.setElementId(noteSubelement.getAttribute("id"));
-                    beam.setType(NoteFactory.newBeamType(noteSubelement));
+                    beam.setValue(NoteFactory.newBeamType(noteSubelement));
                     beam.setNumber(StringUtil.getInteger(noteSubelement.getAttribute("number")));
                     beam.setRepeater(TypeUtil.getYesNo(noteSubelement.getAttribute("repeater")));
                     beam.setFan(FactoryUtil.enumValue(BeamFan.class, noteSubelement.getAttribute("fan")));

@@ -148,14 +148,14 @@ public class HarmonyBuilder extends MusicDataBuilder {
         Map<String, String> rootStepAttributes = new HashMap<>();
         rootStepAttributes.put("text", rootStep.getText());
         rootStepAttributes.putAll(DisplayBuilder.buildDisplay(rootStep.getDisplay()));
-        buildElementWithValueAndAttributes("root-step", BuilderUtil.enumValue(rootStep.getStep()).toUpperCase(), rootStepAttributes);
+        buildElementWithValueAndAttributes("root-step", BuilderUtil.enumValue(rootStep.getValue()).toUpperCase(), rootStepAttributes);
         RootAlter rootAlter = root.getRootAlter();
         if (rootAlter != null) {
             Map<String, String> rootAlterAttributes = new HashMap<>();
             rootAlterAttributes.put("print-object", BuilderUtil.yesOrNo(rootAlter.getPrintObject()));
             rootAlterAttributes.putAll(DisplayBuilder.buildDisplay(rootAlter.getDisplay()));
             rootAlterAttributes.put("location", BuilderUtil.enumValue(rootAlter.getLocation()));
-            buildElementWithValueAndAttributes("root-alter", rootAlter.getSemitones(), rootAlterAttributes);
+            buildElementWithValueAndAttributes("root-alter", rootAlter.getValue(), rootAlterAttributes);
         }
         buildEndElement("root");
     }

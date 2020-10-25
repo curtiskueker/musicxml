@@ -16,12 +16,12 @@ import org.curtis.musicxml.layout.Glyph;
 import org.curtis.musicxml.layout.LineWidth;
 import org.curtis.musicxml.layout.NoteSize;
 import org.curtis.musicxml.layout.OtherAppearance;
-import org.curtis.musicxml.link.Bookmark;
-import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.link.LinkAttributes;
 import org.curtis.musicxml.score.Credit;
+import org.curtis.musicxml.score.CreditBookmark;
 import org.curtis.musicxml.score.CreditDisplay;
 import org.curtis.musicxml.score.CreditImage;
+import org.curtis.musicxml.score.CreditLink;
 import org.curtis.musicxml.score.CreditSymbol;
 import org.curtis.musicxml.score.CreditType;
 import org.curtis.musicxml.score.CreditWords;
@@ -199,14 +199,16 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         buildAttribute("page", credit.getPage());
         buildCloseElement();
         for (CreditType creditType : credit.getCreditTypes()) {
-            buildElementWithValue("credit-type", creditType.getType());
+            buildElementWithValue("credit-type", creditType.getValue());
         }
         for (CreditDisplay creditDisplay : credit.getCreditDisplays()) {
-            for (Link link : creditDisplay.getLinks()) {
-                append(XLinkBuilder.buildLink(link));
+            if (creditDisplay instanceof CreditLink) {
+                CreditLink creditLink = (CreditLink) creditDisplay;
+                append(XLinkBuilder.buildLink(creditLink.getLink()));
             }
-            for (Bookmark bookmark : creditDisplay.getBookmarks()) {
-                append(XLinkBuilder.buildBookmark(bookmark));
+            if (creditDisplay instanceof CreditBookmark) {
+                CreditBookmark creditBookmark = (CreditBookmark)creditDisplay;
+                append(XLinkBuilder.buildBookmark(creditBookmark.getBookmark()));
             }
             if (creditDisplay instanceof CreditImage) {
                 CreditImage creditImage = (CreditImage)creditDisplay;
@@ -240,9 +242,9 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         buildAttribute("number", partGroup.getNumber());
         buildCloseElement();
         buildGroupName("group-name", partGroup.getGroupName());
-        buildNameDisplay("group-name-display", partGroup.getGroupNameDisplay());
+        buildNameDisplay("group-name-display", partGroup.getNameDisplay());
         buildGroupName("group-abbreviation", partGroup.getGroupAbbreviation());
-        buildNameDisplay("group-abbreviation-display", partGroup.getGroupAbbreviationDisplay());
+        buildNameDisplay("group-abbreviation-display", partGroup.getAbbreviationDisplay());
         GroupSymbol groupSymbol = partGroup.getGroupSymbol();
         if (groupSymbol != null) buildElementWithValueAndAttributes("group-symbol", groupSymbol.getGroupSymbolType(), DisplayBuilder.buildDisplay(groupSymbol.getDisplay()));
         GroupBarline groupBarline = partGroup.getGroupBarline();
@@ -270,11 +272,11 @@ public class ScoreHeaderBuilder extends MusicDataBuilder {
         buildCloseElement();
         buildIdentification(scorePart.getIdentification());
         buildPartName("part-name", scorePart.getPartName());
-        buildNameDisplay("part-name-display", scorePart.getPartNameDisplay());
+        buildNameDisplay("part-name-display", scorePart.getNameDisplay());
         buildPartName("part-abbreviation", scorePart.getPartAbbreviation());
-        buildNameDisplay("part-abbreviation-display", scorePart.getPartAbbreviationDisplay());
+        buildNameDisplay("part-abbreviation-display", scorePart.getAbbreviationDisplay());
         for (ScorePartGroup group : scorePart.getGroups()) {
-            buildElementWithValue("group", group.getGroup());
+            buildElementWithValue("group", group.getValue());
         }
         for (ScoreInstrument scoreInstrument : scorePart.getScoreInstruments()) {
             buildOpenElement("score-instrument");

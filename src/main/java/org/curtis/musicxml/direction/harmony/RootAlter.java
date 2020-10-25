@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @Table(name = "root_alter")
 public class RootAlter extends DatabaseItem {
     @Column(precision = 12, scale = 4)
-    private BigDecimal semitones;
+    private BigDecimal value;
     @Column(name = "print_object")
     @Type(type="yes_no")
     private Boolean printObject;
@@ -34,12 +34,12 @@ public class RootAlter extends DatabaseItem {
 
     }
 
-    public BigDecimal getSemitones() {
-        return semitones;
+    public BigDecimal getValue() {
+        return value;
     }
 
-    public void setSemitones(BigDecimal semitones) {
-        this.semitones = semitones;
+    public void setValue(BigDecimal value) {
+        this.value = value;
     }
 
     public Boolean getPrintObject() {

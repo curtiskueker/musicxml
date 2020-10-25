@@ -269,8 +269,10 @@
         <class>org.curtis.musicxml.note.notation.technical.TripleTongue</class>
         <class>org.curtis.musicxml.note.notation.technical.UpBow</class>
         <class>org.curtis.musicxml.score.Credit</class>
+        <class>org.curtis.musicxml.score.CreditBookmark</class>
         <class>org.curtis.musicxml.score.CreditDisplay</class>
         <class>org.curtis.musicxml.score.CreditImage</class>
+        <class>org.curtis.musicxml.score.CreditLink</class>
         <class>org.curtis.musicxml.score.CreditSymbol</class>
         <class>org.curtis.musicxml.score.CreditType</class>
         <class>org.curtis.musicxml.score.CreditWords</class>

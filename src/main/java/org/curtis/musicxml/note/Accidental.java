@@ -18,8 +18,8 @@ import javax.persistence.Table;
 @Table(name = "accidental")
 public class Accidental extends DatabaseItem {
     @Convert(converter = AccidentalTypeConverter.class)
-    @Column(name = "accidental_type")
-    private AccidentalType accidentalType;
+    @Column
+    private AccidentalType value;
     @Column
     @Type(type = "true_false")
     private Boolean cautionary;
@@ -39,12 +39,12 @@ public class Accidental extends DatabaseItem {
 
     }
 
-    public AccidentalType getAccidentalType() {
-        return accidentalType;
+    public AccidentalType getValue() {
+        return value;
     }
 
-    public void setAccidentalType(AccidentalType accidentalType) {
-        this.accidentalType = accidentalType;
+    public void setValue(AccidentalType value) {
+        this.value = value;
     }
 
     public Boolean getCautionary() {

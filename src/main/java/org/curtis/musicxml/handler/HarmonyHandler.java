@@ -62,14 +62,14 @@ public class HarmonyHandler extends MusicDataHandler {
                     Root root = new Root();
                     Element rootStepElement = XmlUtil.getChildElement(harmonySubelement, "root-step");
                     RootStep rootStep = new RootStep();
-                    rootStep.setStep(NoteFactory.newStep(rootStepElement));
+                    rootStep.setValue(NoteFactory.newStep(rootStepElement));
                     rootStep.setText(harmonySubelement.getAttribute("text"));
                     rootStep.setDisplay(DisplayFactory.newDisplay(harmonySubelement));
                     root.setRootStep(rootStep);
                     Element rootAlterElement = XmlUtil.getChildElement(harmonySubelement, "root-alter");
                     if(rootAlterElement != null) {
                         RootAlter rootAlter = new RootAlter();
-                        rootAlter.setSemitones(MathUtil.newBigDecimal(XmlUtil.getElementText(rootAlterElement)));
+                        rootAlter.setValue(MathUtil.newBigDecimal(XmlUtil.getElementText(rootAlterElement)));
                         rootAlter.setPrintObject(FormattingFactory.getPrintObject(rootAlterElement));
                         rootAlter.setDisplay(DisplayFactory.newDisplay(rootAlterElement));
                         rootAlter.setLocation(FactoryUtil.enumValue(Halign.class, rootAlterElement.getAttribute("location")));

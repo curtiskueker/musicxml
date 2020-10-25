@@ -9,18 +9,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "score_part_group")
 public class ScorePartGroup extends OrderedItem {
-    @Column(name = "group_name")
-    private String group;
+    @Column
+    private String value;
 
     public ScorePartGroup() {
 
     }
 
-    public String getGroup() {
-        return group;
+    public String getValue() {
+        return value;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setValue(String value) {
+        this.value = value;
     }
 }

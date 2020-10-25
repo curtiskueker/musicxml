@@ -92,7 +92,7 @@ public class NoteBuilder extends MusicDataBuilder {
             accidentalAttributes.putAll(FormattingBuilder.buildLevelDisplay(accidental.getLevelDisplay()));
             accidentalAttributes.putAll(DisplayBuilder.buildDisplay(accidental.getDisplay()));
             accidentalAttributes.put("smufl", accidental.getSmufl());
-            buildElementWithValueAndAttributes("accidental", accidental.getAccidentalType(), accidentalAttributes);
+            buildElementWithValueAndAttributes("accidental", accidental.getValue(), accidentalAttributes);
         }
         TimeModification timeModification = note.getTimeModification();
         if (timeModification != null) {
@@ -101,10 +101,10 @@ public class NoteBuilder extends MusicDataBuilder {
             buildEndElement("time-modification");
         }
         Stem stem = note.getStem();
-        if (stem != null) buildElementWithValueAndAttributes("stem", stem.getType(), DisplayBuilder.buildDisplay(stem.getDisplay()));
+        if (stem != null) buildElementWithValueAndAttributes("stem", stem.getValue(), DisplayBuilder.buildDisplay(stem.getDisplay()));
         Notehead notehead = note.getNotehead();
         if (notehead != null) {
-            String noteheadType = BuilderUtil.enumValueWithSpaces(notehead.getType());
+            String noteheadType = BuilderUtil.enumValueWithSpaces(notehead.getValue());
             noteheadType = noteheadType.replace("circle x", "circle-x");
             Map<String, String> noteheadAttributes = new HashMap<>();
             noteheadAttributes.put("filled", BuilderUtil.yesOrNo(notehead.getFilled()));
@@ -129,7 +129,7 @@ public class NoteBuilder extends MusicDataBuilder {
                 beamAttributes.put("repeater", BuilderUtil.yesOrNo(beam.getRepeater()));
                 beamAttributes.put("fan", BuilderUtil.enumValue(beam.getFan()));
                 beamAttributes.put("color", beam.getDisplay() == null ? null : beam.getDisplay().getColor());
-                buildElementWithValueAndAttributes("beam", buildBeamType(beam.getType()), beamAttributes);
+                buildElementWithValueAndAttributes("beam", buildBeamType(beam.getValue()), beamAttributes);
             }
         }
         List<Notations> notationsList = note.getNotationsList();

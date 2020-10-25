@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Notehead extends DatabaseItem {
     @Convert(converter = NoteheadTypeConverter.class)
     @Column
-    private NoteheadType type;
+    private NoteheadType value;
     @Column
     @Type(type="yes_no")
     private Boolean filled;
@@ -35,12 +35,12 @@ public class Notehead extends DatabaseItem {
 
     }
 
-    public NoteheadType getType() {
-        return type;
+    public NoteheadType getValue() {
+        return value;
     }
 
-    public void setType(NoteheadType type) {
-        this.type = type;
+    public void setValue(NoteheadType value) {
+        this.value = value;
     }
 
     public Boolean getFilled() {

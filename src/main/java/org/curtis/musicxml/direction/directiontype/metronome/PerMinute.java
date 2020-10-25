@@ -12,8 +12,8 @@ import javax.persistence.OneToOne;
 @Entity
 @DiscriminatorValue("per minute")
 public class PerMinute extends MetronomeMark {
-    @Column(name = "per_minute")
-    private String perMinute;
+    @Column
+    private String value;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "display_id")
     private Display display;
@@ -22,12 +22,12 @@ public class PerMinute extends MetronomeMark {
 
     }
 
-    public String getPerMinute() {
-        return perMinute;
+    public String getValue() {
+        return value;
     }
 
-    public void setPerMinute(String perMinute) {
-        this.perMinute = perMinute;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Display getDisplay() {

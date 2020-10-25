@@ -81,7 +81,7 @@ public class AttributesHandler extends MusicDataHandler {
                     break;
                 case "part-symbol":
                     PartSymbol partSymbol = new PartSymbol();
-                    partSymbol.setGroupSymbolType(AttributesFactory.newGroupSymbolType(attributeSubelement));
+                    partSymbol.setValue(AttributesFactory.newGroupSymbolType(attributeSubelement));
                     partSymbol.setTopStaff(StringUtil.getInteger(attributeSubelement.getAttribute("top-staff")));
                     partSymbol.setBottomStaff(StringUtil.getInteger(attributeSubelement.getAttribute("bottom-staff")));
                     partSymbol.setDisplay(DisplayFactory.newDisplay(attributeSubelement));

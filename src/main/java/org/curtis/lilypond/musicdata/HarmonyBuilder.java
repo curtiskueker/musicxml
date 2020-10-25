@@ -23,11 +23,11 @@ public class HarmonyBuilder extends MusicDataBuilder {
         for(HarmonyChord harmonyChord : harmonyChords) {
             if(harmonyChord instanceof Root) {
                 Root root = (Root)harmonyChord;
-                append(NoteUtil.getStep(root.getRootStep().getStep()));
+                append(NoteUtil.getStep(root.getRootStep().getValue()));
 
                 RootAlter rootAlter = root.getRootAlter();
                 if(rootAlter != null) {
-                    append(NoteUtil.getAlter(rootAlter.getSemitones()));
+                    append(NoteUtil.getAlter(rootAlter.getValue()));
                 }
             }
 

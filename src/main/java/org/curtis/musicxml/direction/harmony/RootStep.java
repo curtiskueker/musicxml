@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class RootStep extends DatabaseItem {
     @Convert(converter = StepConverter.class)
     @Column
-    private Step step;
+    private Step value;
     @Column
     private String text;
     @OneToOne(cascade = CascadeType.ALL)
@@ -29,12 +29,12 @@ public class RootStep extends DatabaseItem {
 
     }
 
-    public Step getStep() {
-        return step;
+    public Step getValue() {
+        return value;
     }
 
-    public void setStep(Step step) {
-        this.step = step;
+    public void setValue(Step value) {
+        this.value = value;
     }
 
     public String getText() {

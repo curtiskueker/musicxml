@@ -21,8 +21,8 @@ import java.util.List;
 @DiscriminatorValue("beat unit")
 public class BeatUnit extends MetronomeMark {
     @Convert(converter = NoteTypeValueConverter.class)
-    @Column(name = "beat_unit")
-    private NoteTypeValue beatUnit;
+    @Column
+    private NoteTypeValue value;
     @Column(name = "beat_unit_dots")
     private Integer beatUnitDots = 0;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -35,12 +35,12 @@ public class BeatUnit extends MetronomeMark {
 
     }
 
-    public NoteTypeValue getBeatUnit() {
-        return beatUnit;
+    public NoteTypeValue getValue() {
+        return value;
     }
 
-    public void setBeatUnit(NoteTypeValue beatUnit) {
-        this.beatUnit = beatUnit;
+    public void setValue(NoteTypeValue value) {
+        this.value = value;
     }
 
     public Integer getBeatUnitDots() {

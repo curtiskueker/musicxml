@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Beam extends OrderedElement {
     @Convert(converter = BeamTypeConverter.class)
     @Column
-    private BeamType type;
+    private BeamType value;
     @Column(name = "beam_number")
     private Integer number = 1;
     @Column
@@ -36,12 +36,12 @@ public class Beam extends OrderedElement {
 
     }
 
-    public BeamType getType() {
-        return type;
+    public BeamType getValue() {
+        return value;
     }
 
-    public void setType(BeamType type) {
-        this.type = type;
+    public void setValue(BeamType value) {
+        this.value = value;
     }
 
     public Integer getNumber() {

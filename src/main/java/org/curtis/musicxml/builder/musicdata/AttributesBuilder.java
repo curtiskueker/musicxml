@@ -80,7 +80,7 @@ public class AttributesBuilder extends MusicDataBuilder {
             partSymbolAttributes.put("top-staff", BuilderUtil.stringValue(partSymbol.getTopStaff()));
             partSymbolAttributes.put("bottom-staff", BuilderUtil.stringValue(partSymbol.getBottomStaff()));
             partSymbolAttributes.putAll(DisplayBuilder.buildDisplay(partSymbol.getDisplay()));
-            buildElementWithValueAndAttributes("part-symbol", partSymbol.getGroupSymbolType(), partSymbolAttributes);
+            buildElementWithValueAndAttributes("part-symbol", partSymbol.getValue(), partSymbolAttributes);
         }
         buildElementWithValue("instruments", attributes.getInstruments());
         for (Clef clef : attributes.getClefs()) {

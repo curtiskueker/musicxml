@@ -29,8 +29,8 @@ public class PrintHandler extends MusicDataHandler {
         Element measureNumberingElement = XmlUtil.getChildElement(element, "measure-numbering");
         print.setMeasureNumberingValue(FactoryUtil.enumValue(MeasureNumberingType.class, XmlUtil.getElementText(measureNumberingElement)));
         print.setMeasureNumberingDisplay(DisplayFactory.newDisplay(measureNumberingElement));
-        print.setPartNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-name-display")));
-        print.setPartAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-abbreviation-display")));
+        print.setNameDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-name-display")));
+        print.setAbbreviationDisplay(ScorePartFactory.newNameDisplay(XmlUtil.getChildElement(element, "part-abbreviation-display")));
 
         print.setStaffSpacing(MathUtil.newBigDecimal(element.getAttribute("staff-spacing")));
         print.setNewSystem(TypeUtil.getYesNo(element.getAttribute("new-system")));

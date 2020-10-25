@@ -18,7 +18,9 @@ import org.curtis.musicxml.layout.OtherAppearance;
 import org.curtis.musicxml.link.Bookmark;
 import org.curtis.musicxml.link.Link;
 import org.curtis.musicxml.score.Credit;
+import org.curtis.musicxml.score.CreditBookmark;
 import org.curtis.musicxml.score.CreditImage;
+import org.curtis.musicxml.score.CreditLink;
 import org.curtis.musicxml.score.CreditSymbol;
 import org.curtis.musicxml.score.CreditType;
 import org.curtis.musicxml.score.CreditWords;
@@ -33,7 +35,6 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreHeaderHandler extends BaseHandler {
@@ -154,33 +155,31 @@ public class ScoreHeaderHandler extends BaseHandler {
                     credit.setElementId(subelement.getAttribute("id"));
                     credit.setPage(StringUtil.getInteger(subelement.getAttribute("page")));
                     List<Element> creditSubelements = XmlUtil.getChildElements(subelement);
-                    List<Link> currentLinks = new ArrayList<>();
-                    List<Bookmark> currentBookmarks = new ArrayList<>();
                     for(Element creditSubelement : creditSubelements) {
                         String creditSubelementName = creditSubelement.getTagName();
                         switch (creditSubelementName) {
                             case "credit-type":
                                 CreditType creditType = new CreditType();
-                                creditType.setType(XmlUtil.getElementText(creditSubelement));
+                                creditType.setValue(XmlUtil.getElementText(creditSubelement));
                                 credit.getCreditTypes().add(creditType);
                                 break;
                             case "link":
+                                CreditLink creditLink = new CreditLink();
                                 Link link = LinkFactory.newLink(creditSubelement);
-                                currentLinks.add(link);
+                                creditLink.setLink(link);
+                                credit.getCreditDisplays().add(creditLink);
                                 break;
                             case "bookmark":
+                                CreditBookmark creditBookmark = new CreditBookmark();
                                 Bookmark bookmark = LinkFactory.newBookmark(creditSubelement);
-                                currentBookmarks.add(bookmark);
+                                creditBookmark.setBookmark(bookmark);
+                                credit.getCreditDisplays().add(creditBookmark);
                                 break;
                             case "credit-image":
                                 CreditImage creditImage = new CreditImage();
                                 creditImage.setElementId(creditSubelement.getAttribute("id"));
                                 creditImage.setImage(DirectionFactory.newImage(creditSubelement));
                                 DisplayFactory.setFormattedDisplay(creditImage, creditSubelement);
-                                for (Link imageLink : currentLinks) creditImage.getLinks().add(imageLink);
-                                currentLinks.clear();
-                                for (Bookmark imageBookmark : currentBookmarks) creditImage.getBookmarks().add(imageBookmark);
-                                currentBookmarks.clear();
                                 credit.getCreditDisplays().add(creditImage);
                                 break;
                             case "credit-words":
@@ -190,20 +189,12 @@ public class ScoreHeaderHandler extends BaseHandler {
                                 TextFormat creditTextFormat = creditWords.getTextFormat();
                                 if (creditTextFormat == null) break;
                                 creditWords.setTextFormat(creditTextFormat);
-                                for (Link creditWordsLink : currentLinks) creditWords.getLinks().add(creditWordsLink);
-                                currentLinks.clear();
-                                for (Bookmark creditWordsBookmark : currentBookmarks) creditWords.getBookmarks().add(creditWordsBookmark);
-                                currentBookmarks.clear();
                                 credit.getCreditDisplays().add(creditWords);
                                 break;
                             case "credit-symbol":
                                 CreditSymbol creditSymbol = new CreditSymbol();
                                 creditSymbol.setElementId(creditSubelement.getAttribute("id"));
                                 DisplayFactory.setFormattedDisplay(creditSymbol, creditSubelement);
-                                for (Link creditWordsLink : currentLinks) creditSymbol.getLinks().add(creditWordsLink);
-                                currentLinks.clear();
-                                for (Bookmark creditWordsBookmark : currentBookmarks) creditSymbol.getBookmarks().add(creditWordsBookmark);
-                                currentBookmarks.clear();
                                 credit.getCreditDisplays().add(creditSymbol);
                                 break;
                         }

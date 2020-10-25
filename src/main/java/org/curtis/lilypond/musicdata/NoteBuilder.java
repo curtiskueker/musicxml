@@ -185,7 +185,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
         Stem stem = note.getStem();
         if(stem != null) {
-            StemType stemType = stem.getType();
+            StemType stemType = stem.getValue();
             switch (stemType) {
                 case DOWN:
                     append("\\stemDown ");
@@ -198,7 +198,7 @@ public class NoteBuilder extends MusicDataBuilder {
 
         Notehead notehead = note.getNotehead();
         if (notehead != null) {
-            NoteheadType noteheadType = notehead.getType();
+            NoteheadType noteheadType = notehead.getValue();
             if (noteheadType != null) {
                 switch (noteheadType) {
                     case CROSS:
@@ -362,7 +362,7 @@ public class NoteBuilder extends MusicDataBuilder {
         List<Beam> beams = note.getBeams();
         for (Beam beam : beams) {
             Integer beamNumber = beam.getNumber();
-            BeamType beamType = beam.getType();
+            BeamType beamType = beam.getValue();
             switch (beamType) {
                 case BEGIN:
                     if(CURRENT_BEAMS.isEmpty()) {
