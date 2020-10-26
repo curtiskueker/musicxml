@@ -2,10 +2,10 @@ create sequence native start 1 increment 1;
 
     create table accidental (
        id int4 not null,
-        accidental_type varchar(255),
         cautionary char(1),
         editorial char(1),
         smufl varchar(255),
+        value varchar(255),
         display_id int4,
         level_display_id int4,
         primary key (id)
@@ -92,7 +92,7 @@ create sequence native start 1 increment 1;
         fan varchar(255),
         beam_number int4,
         repeater char(1),
-        type varchar(255),
+        value varchar(255),
         display_id int4,
         note_id int4 not null,
         primary key (id)
@@ -158,7 +158,9 @@ create sequence native start 1 increment 1;
         element_id varchar(255),
         display_id int4,
         text_format_id int4,
+        link_id int4,
         image_id int4,
+        bookmark_id int4,
         credit_id int4 not null,
         primary key (id)
     );
@@ -166,7 +168,7 @@ create sequence native start 1 increment 1;
     create table credit_type (
        id int4 not null,
         ordering int4,
-        type varchar(255),
+        value varchar(255),
         credit_id int4 not null,
         primary key (id)
     );
@@ -561,7 +563,7 @@ create sequence native start 1 increment 1;
     );
 
     create table key_signature (
-       key_type varchar(31) not null,
+       key_signature_type varchar(31) not null,
         id int4 not null,
         ordering int4,
         element_id varchar(255),
@@ -731,8 +733,8 @@ create sequence native start 1 increment 1;
     create table metronome_beam (
        id int4 not null,
         ordering int4,
-        beam_type varchar(255),
         metronome_beam_number int4,
+        value varchar(255),
         metronome_note_id int4 not null,
         primary key (id)
     );
@@ -741,8 +743,7 @@ create sequence native start 1 increment 1;
        metronome_mark_type varchar(31) not null,
         id int4 not null,
         ordering int4,
-        per_minute varchar(255),
-        beat_unit varchar(255),
+        value varchar(255),
         beat_unit_dots int4,
         display_id int4,
         beat_unit_tied_id int4,
@@ -869,9 +870,9 @@ create sequence native start 1 increment 1;
         barline_repeat_id int4,
         segno_id int4,
         wavy_line_id int4,
+        abbreviation_display_id int4,
         layout_id int4,
-        part_abbreviation_display_id int4,
-        part_name_display_id int4,
+        name_display_id int4,
         link_attributes_id int4,
         accidental_id int4,
         grace_id int4,
@@ -881,7 +882,6 @@ create sequence native start 1 increment 1;
         stem_id int4,
         time_modification_id int4,
         sound_id int4,
-        credit_display_id int4,
         primary key (id)
     );
 
@@ -968,7 +968,7 @@ create sequence native start 1 increment 1;
         filled char(1),
         parentheses char(1),
         smufl varchar(255),
-        type varchar(255),
+        value varchar(255),
         display_id int4,
         primary key (id)
     );
@@ -1032,23 +1032,20 @@ create sequence native start 1 increment 1;
        part_list_item_type varchar(31) not null,
         id int4 not null,
         ordering int4,
-        element_id varchar(255),
         group_time char(1),
         part_group_number varchar(255),
         type varchar(255),
         score_part_id varchar(255),
+        abbreviation_display_id int4,
+        name_display_id int4,
         editorial_id int4,
         group_abbreviation_id int4,
-        group_abbreviation_display_id int4,
         group_barline_id int4,
         group_name_id int4,
-        group_name_display_id int4,
         group_symbol_id int4,
         identification_id int4,
         part_abbreviation_id int4,
-        part_abbreviation_display_id int4,
         part_name_id int4,
-        part_name_display_id int4,
         score_header_id int4 not null,
         primary key (id)
     );
@@ -1065,8 +1062,8 @@ create sequence native start 1 increment 1;
     create table part_symbol (
        id int4 not null,
         bottom_staff int4,
-        group_symbol_type varchar(255),
         top_staff int4,
+        value varchar(255),
         display_id int4,
         primary key (id)
     );
@@ -1109,15 +1106,15 @@ create sequence native start 1 increment 1;
        id int4 not null,
         location varchar(255),
         print_object char(1),
-        semitones numeric(12, 4),
+        value numeric(12, 4),
         display_id int4,
         primary key (id)
     );
 
     create table root_step (
        id int4 not null,
-        step varchar(255),
         text varchar(255),
+        value varchar(255),
         display_id int4,
         primary key (id)
     );
@@ -1165,7 +1162,7 @@ create sequence native start 1 increment 1;
     create table score_part_group (
        id int4 not null,
         ordering int4,
-        group_name varchar(255),
+        value varchar(255),
         score_part_id int4 not null,
         primary key (id)
     );
@@ -1222,7 +1219,7 @@ create sequence native start 1 increment 1;
 
     create table stem (
        id int4 not null,
-        type varchar(255),
+        value varchar(255),
         display_id int4,
         primary key (id)
     );
@@ -1544,9 +1541,19 @@ create sequence native start 1 increment 1;
        references text_format;
 
     alter table credit_display 
+       add constraint FK1sjrk4e3klelgd1n9rnkcpg7e 
+       foreign key (link_id) 
+       references music_data;
+
+    alter table credit_display 
        add constraint FKmglmu9us8bs64gvpcg1o713v1 
        foreign key (image_id) 
        references direction_type;
+
+    alter table credit_display 
+       add constraint FK6rvt383psvoq0f6n4oy99w8x2 
+       foreign key (bookmark_id) 
+       references music_data;
 
     alter table credit_display 
        add constraint FKl8qfo2ls4vq6ydjvqm6gbsexk 
@@ -2094,18 +2101,18 @@ create sequence native start 1 increment 1;
        references ornament;
 
     alter table music_data 
+       add constraint FKtlsr8kb6m39sf4opoqp48jwry 
+       foreign key (abbreviation_display_id) 
+       references name_display;
+
+    alter table music_data 
        add constraint FKqlptld1w9lk384q8o76ocxyjc 
        foreign key (layout_id) 
        references layout;
 
     alter table music_data 
-       add constraint FKb1tvu3enlmm3de7txjuvnu3jf 
-       foreign key (part_abbreviation_display_id) 
-       references name_display;
-
-    alter table music_data 
-       add constraint FK5ukkyfjov39beuik27uge8dex 
-       foreign key (part_name_display_id) 
+       add constraint FKi7iw8ov3345c2crn5moh1b3o2 
+       foreign key (name_display_id) 
        references name_display;
 
     alter table music_data 
@@ -2152,11 +2159,6 @@ create sequence native start 1 increment 1;
        add constraint FKex8und0d9f4odkobxomoq7ia4 
        foreign key (sound_id) 
        references music_data;
-
-    alter table music_data 
-       add constraint FKowu22dl3y19shmrdmjxok999l 
-       foreign key (credit_display_id) 
-       references credit_display;
 
     alter table non_traditional_key_type 
        add constraint FK2p06rp4qn3esdyyxwy1qrfyxc 
@@ -2269,6 +2271,16 @@ create sequence native start 1 increment 1;
        references score;
 
     alter table part_list_item 
+       add constraint FKa5yamdles87r887n1bo42swkj 
+       foreign key (abbreviation_display_id) 
+       references name_display;
+
+    alter table part_list_item 
+       add constraint FKov9bqg9jxq8spdjfurbs15o0d 
+       foreign key (name_display_id) 
+       references name_display;
+
+    alter table part_list_item 
        add constraint FK4eo8dqyxosbwnt3jiwwvx314g 
        foreign key (editorial_id) 
        references editorial;
@@ -2279,11 +2291,6 @@ create sequence native start 1 increment 1;
        references group_name;
 
     alter table part_list_item 
-       add constraint FK8uoyb6n01yikv0f0ntth464jf 
-       foreign key (group_abbreviation_display_id) 
-       references name_display;
-
-    alter table part_list_item 
        add constraint FK2gikyljpn4k8s5vkw8daln0ds 
        foreign key (group_barline_id) 
        references group_barline;
@@ -2292,11 +2299,6 @@ create sequence native start 1 increment 1;
        add constraint FKoc0ccefkc660lufjubq22i74u 
        foreign key (group_name_id) 
        references group_name;
-
-    alter table part_list_item 
-       add constraint FKndqhx5uf7ioraxe58f40123te 
-       foreign key (group_name_display_id) 
-       references name_display;
 
     alter table part_list_item 
        add constraint FKge6lxiwci7nkwb0rjepf4rv44 
@@ -2314,19 +2316,9 @@ create sequence native start 1 increment 1;
        references part_name;
 
     alter table part_list_item 
-       add constraint FK3h2a88nd1y36i0b15mfqe38t4 
-       foreign key (part_abbreviation_display_id) 
-       references name_display;
-
-    alter table part_list_item 
        add constraint FKi6sn8j6i4nkmue6cfs68m5hde 
        foreign key (part_name_id) 
        references part_name;
-
-    alter table part_list_item 
-       add constraint FKr6r5kkfar6nalujkyuluiqmip 
-       foreign key (part_name_display_id) 
-       references name_display;
 
     alter table part_list_item 
        add constraint FKhurr7xlscap19a1ub0ggb8rf3 
