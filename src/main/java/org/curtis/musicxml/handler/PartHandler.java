@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public class PartHandler extends BaseHandler {
+public class PartHandler implements ScoreElementHandler {
     private List<Part> parts;
 
     public PartHandler(List<Part> parts) {

@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class PartListHandler extends BaseHandler {
+public class PartListHandler implements ScoreElementHandler {
     private List<PartListItem> partListItems;
 
     public PartListHandler(List<PartListItem> partListItems) {

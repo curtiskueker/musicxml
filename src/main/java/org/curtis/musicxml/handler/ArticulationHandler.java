@@ -5,6 +5,7 @@ import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.note.notation.Articulations;
+import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.articulation.Accent;
 import org.curtis.musicxml.note.notation.articulation.Articulation;
 import org.curtis.musicxml.note.notation.articulation.BreathMark;
@@ -30,23 +31,9 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class ArticulationHandler extends BaseHandler {
-    private Articulations articulations;
-
-    public ArticulationHandler() {
-
-    }
-
-    public Articulations getArticulations() {
-        return articulations;
-    }
-
-    public void setArticulations(Articulations articulations) {
-        this.articulations = articulations;
-    }
-
-    public void handle(Element element) {
-        articulations = new Articulations();
+public class ArticulationHandler implements NotationHandler {
+    public Notation handle(Element element) {
+        Articulations articulations = new Articulations();
         List<Element> articulationsSubelements = XmlUtil.getChildElements(element);
         for(Element articulationsSubelement : articulationsSubelements) {
             Articulation articulation = null;
@@ -126,5 +113,7 @@ public class ArticulationHandler extends BaseHandler {
                 articulations.getArticulationList().add(articulation);
             }
         }
+
+        return articulations;
     }
 }

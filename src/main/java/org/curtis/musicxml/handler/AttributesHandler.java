@@ -33,10 +33,7 @@ import org.w3c.dom.Element;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class AttributesHandler extends MusicDataHandler {
-    public AttributesHandler() {
-    }
-
+public class AttributesHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Attributes attributes = new Attributes();
 

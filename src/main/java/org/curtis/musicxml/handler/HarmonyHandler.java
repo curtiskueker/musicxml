@@ -41,11 +41,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class HarmonyHandler extends MusicDataHandler {
-    public HarmonyHandler() {
-
-    }
-
+public class HarmonyHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Harmony harmony = new Harmony();
 

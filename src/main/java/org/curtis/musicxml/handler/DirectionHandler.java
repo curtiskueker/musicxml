@@ -14,11 +14,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class DirectionHandler extends MusicDataHandler {
-    public DirectionHandler() {
-
-    }
-
+public class DirectionHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Direction direction = new Direction();
 

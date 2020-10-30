@@ -32,11 +32,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class NoteHandler extends MusicDataHandler {
-    public NoteHandler() {
-
-    }
-
+public class NoteHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Note note = new Note();
 
@@ -55,6 +51,7 @@ public class NoteHandler extends MusicDataHandler {
 
         List<Element> noteSubelements = XmlUtil.getChildElements(element);
         for(Element noteSubelement : noteSubelements) {
+            ScoreElementHandler handler = null;
             switch (noteSubelement.getTagName()) {
                 case "grace":
                     Grace grace = new Grace();
@@ -163,18 +160,17 @@ public class NoteHandler extends MusicDataHandler {
                     break;
                 case "notations":
                     List<Notations> notationsList = note.getNotationsList();
-                    NotationHandler notationHandler = new NotationHandler(notationsList);
-                    notationHandler.handle(noteSubelement);
+                    handler = new NotationsHandler(notationsList);
                     break;
                 case "lyric":
                     List<Lyric> lyrics = note.getLyrics();
-                    LyricHandler lyricHandler = new LyricHandler(lyrics);
-                    lyricHandler.handle(noteSubelement);
+                    handler = new LyricHandler(lyrics);
                     break;
                 case "play":
                     note.setPlay(ScorePartFactory.newPlay(noteSubelement));
                     break;
             }
+            if (handler != null) handler.handle(noteSubelement);
         }
 
         return note;

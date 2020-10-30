@@ -7,11 +7,7 @@ import org.curtis.util.MathUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
-public class BackupHandler extends MusicDataHandler {
-    public BackupHandler() {
-
-    }
-
+public class BackupHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Backup backup = new Backup();
 

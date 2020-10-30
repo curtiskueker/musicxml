@@ -11,11 +11,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class GroupingHandler extends MusicDataHandler {
-    public GroupingHandler() {
-
-    }
-
+public class GroupingHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Grouping grouping = new Grouping();
         grouping.setElementId(element.getAttribute("id"));

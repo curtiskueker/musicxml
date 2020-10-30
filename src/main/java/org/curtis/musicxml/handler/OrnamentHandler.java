@@ -4,6 +4,7 @@ import org.curtis.musicxml.factory.DisplayFactory;
 import org.curtis.musicxml.factory.FactoryUtil;
 import org.curtis.musicxml.factory.NotationFactory;
 import org.curtis.musicxml.factory.OrnamentFactory;
+import org.curtis.musicxml.note.notation.Notation;
 import org.curtis.musicxml.note.notation.Ornaments;
 import org.curtis.musicxml.note.notation.ornament.Ornament;
 import org.curtis.musicxml.note.notation.ornament.OtherOrnament;
@@ -16,24 +17,10 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class OrnamentHandler extends BaseHandler {
-    private Ornaments ornaments;
-
-    public OrnamentHandler() {
-
-    }
-
-    public Ornaments getOrnaments() {
-        return ornaments;
-    }
-
-    public void setOrnaments(Ornaments ornaments) {
-        this.ornaments = ornaments;
-    }
-
-    public void handle(Element element) {
+public class OrnamentHandler implements NotationHandler {
+    public Notation handle(Element element) {
         List<Element> ornamentElements = XmlUtil.getChildElements(element);
-        ornaments = new Ornaments();
+        Ornaments ornaments = new Ornaments();
         Ornament ornament = null;
         for(Element ornamentElement : ornamentElements) {
             String ornamentElementName = ornamentElement.getTagName();
@@ -82,5 +69,7 @@ public class OrnamentHandler extends BaseHandler {
         }
         List<Element> accidentalMarkElements = XmlUtil.getChildElements(element, "accidental-mark");
         for (Element accidentalMarkElement : accidentalMarkElements) ornaments.getAccidentalMarks().add(NotationFactory.newAccidentalMark(accidentalMarkElement));
+
+        return ornaments;
     }
 }

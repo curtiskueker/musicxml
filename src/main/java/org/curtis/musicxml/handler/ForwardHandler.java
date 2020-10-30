@@ -8,11 +8,7 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
-public class ForwardHandler extends MusicDataHandler {
-    public ForwardHandler() {
-
-    }
-
+public class ForwardHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Forward forward = new Forward();
 

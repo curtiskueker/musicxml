@@ -14,11 +14,7 @@ import org.curtis.util.StringUtil;
 import org.curtis.xml.XmlUtil;
 import org.w3c.dom.Element;
 
-public class PrintHandler extends MusicDataHandler {
-    public PrintHandler() {
-
-    }
-
+public class PrintHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Print print = new Print();
         print.setElementId(element.getAttribute("id"));

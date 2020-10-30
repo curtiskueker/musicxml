@@ -22,11 +22,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class BarlineHandler extends MusicDataHandler {
-    public BarlineHandler() {
-
-    }
-
+public class BarlineHandler implements MusicDataHandler {
     public MusicData handle(Element element) {
         Barline barline = new Barline();
         barline.setElementId(element.getAttribute("id"));

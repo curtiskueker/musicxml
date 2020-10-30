@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.curtis.musicxml.util.MusicXmlUtil.DEBUG;
 
-public class MeasureHandler extends BaseHandler {
+public class MeasureHandler implements ScoreElementHandler {
     private List<Measure> measures;
 
     public MeasureHandler(List<Measure> measures) {
@@ -36,50 +36,42 @@ public class MeasureHandler extends BaseHandler {
         List<Element> measureSubelements = XmlUtil.getChildElements(element);
 
         for (Element measureSubelement : measureSubelements) {
+            MusicDataHandler handler = null;
             MusicData musicData = null;
             String elementName = measureSubelement.getTagName();
             switch (elementName) {
                 case "note":
-                    NoteHandler noteHandler = new NoteHandler();
-                    musicData = noteHandler.handle(measureSubelement);
+                    handler = new NoteHandler();
                     break;
                 case "backup":
-                    BackupHandler backupHandler = new BackupHandler();
-                    musicData = backupHandler.handle(measureSubelement);
+                    handler = new BackupHandler();
                     break;
                 case "forward":
-                    ForwardHandler forwardHandler = new ForwardHandler();
-                    musicData = forwardHandler.handle(measureSubelement);
+                    handler = new ForwardHandler();
                     break;
                 case "direction":
-                    DirectionHandler directionHandler = new DirectionHandler();
-                    musicData = directionHandler.handle(measureSubelement);
+                    handler = new DirectionHandler();
                     break;
                 case "attributes":
-                    AttributesHandler attributesHandler = new AttributesHandler();
-                    musicData = attributesHandler.handle(measureSubelement);
+                    handler = new AttributesHandler();
                     break;
                 case "harmony":
-                    HarmonyHandler harmonyHandler = new HarmonyHandler();
-                    musicData = harmonyHandler.handle(measureSubelement);
+                    handler = new HarmonyHandler();
                     break;
                 case "figured-bass":
                     musicData = NoteFactory.newFiguredBass(measureSubelement);
                     break;
                 case "print":
-                    PrintHandler printHandler = new PrintHandler();
-                    musicData = printHandler.handle(measureSubelement);
+                    handler = new PrintHandler();
                     break;
                 case "sound":
                     musicData = DirectionFactory.newSound(measureSubelement);
                     break;
                 case "barline":
-                    BarlineHandler barlineHandler = new BarlineHandler();
-                    musicData = barlineHandler.handle(measureSubelement);
+                    handler = new BarlineHandler();
                     break;
                 case "grouping":
-                    GroupingHandler groupingHandler = new GroupingHandler();
-                    musicData = groupingHandler.handle(measureSubelement);
+                    handler = new GroupingHandler();
                     break;
                 case "link":
                     musicData = LinkFactory.newLink(measureSubelement);
@@ -89,6 +81,7 @@ public class MeasureHandler extends BaseHandler {
                     break;
             }
 
+            if (handler != null) musicData = handler.handle(measureSubelement);
             if(musicData != null) {
                 musicDataList.add(musicData);
                 musicData.setMeasure(measure);
