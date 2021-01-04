@@ -153,7 +153,7 @@ public class TaskExecutor {
                 MusicXmlTask musicXmlTask = new MusicXmlTask(taskInitializer, inputHandler);
                 musicXmlTask.execute();
 
-                if (isPropertiesSettingsUpdate) Platform.runLater(PropertiesHandler::addLocalPropertiesBundle);
+                if (isPropertiesSettingsUpdate) Platform.runLater(PropertiesHandler::addLocalProperties);
                 if (isLyPdfPropertiesUpdate) Platform.runLater(() -> taskForm.handleLyPdfUpdates());
                 if (isDbUpdate) Platform.runLater(() -> {taskForm.handleDisplayUpdates();});
                 if (isOutputSettingsUpdate) Platform.runLater(() -> taskForm.resetOutputStream());

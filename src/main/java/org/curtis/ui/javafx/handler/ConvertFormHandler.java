@@ -85,7 +85,7 @@ public class ConvertFormHandler extends FormHandler {
         if (toSelection == null) showToBox("");
         else {
             if (toSelection == PDF_TO_SELECTION) {
-                PropertiesHandler.addLocalPropertiesBundle();
+                PropertiesHandler.addLocalProperties();
                 if (StringUtil.isEmpty(PropertiesHandler.getOptionalProperty(PropertiesConstants.LILYPOND_LOCATION))) toSelection = PDF_TO_OFF_SELECTION;
                 else taskForm.handlePdfReaderDisplay();
             }

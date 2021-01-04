@@ -4,6 +4,7 @@ import org.curtis.database.DBException;
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.properties.EncryptionHandler;
 import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.ui.task.TaskConstants;
@@ -38,7 +39,7 @@ public class SetProperties extends MusicXmlScript {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_USERNAME, username));
-        stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_PASSWORD, password));
+        stringBuilder.append(getEncodedPropertyString(prefix + PropertiesConstants.DB_PASSWORD, password));
         stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_NAME, databaseName));
         stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_SERVER, server));
         stringBuilder.append(getPropertyString(prefix + PropertiesConstants.DB_TYPE, databaseType));
@@ -50,17 +51,25 @@ public class SetProperties extends MusicXmlScript {
         stringBuilder.append(getPropertyString(PropertiesConstants.SQL_OUTPUT_LOCATION, sqlOutputLocation));
 
         try {
-            FileUtil.stringToFile(stringBuilder.toString(), PropertiesHandler.PROPERTIES_FILENAME + ".properties");
+            FileUtil.stringToFile(stringBuilder.toString(), PropertiesHandler.LOCAL_PROPERTIES_FILENAME);
         } catch (FileException e) {
             throw new MusicXmlException(e.getMessage());
         }
 
         try {
             MusicXmlUtil.clearDb();
-            PropertiesHandler.addLocalPropertiesBundle();
+            PropertiesHandler.addLocalProperties();
         } catch (DBException e) {
             throw new MusicXmlException(e.getMessage());
         }
+    }
+
+    private String getEncodedPropertyString(String propertyName, String propertyValue) {
+        if (StringUtil.isEmpty(propertyValue)) return "";
+
+        if (!PropertiesHandler.isEncryptedProperty(propertyValue)) propertyValue = EncryptionHandler.getInstance().getEncryptedValue(propertyValue);
+
+        return getPropertyString(propertyName, propertyValue);
     }
 
     private String getPropertyString(String propertyName, String propertyValue) {

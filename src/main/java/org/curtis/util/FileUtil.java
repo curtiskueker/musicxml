@@ -17,7 +17,7 @@ public class FileUtil {
 
     }
 
-    public static File openFile(String filename) throws FileException {
+    public static File getFile(String filename) throws FileException {
         if (StringUtil.isEmpty(filename)) throw new FileException("Filename is empty");
 
         File file = new File(filename);
@@ -72,7 +72,7 @@ public class FileUtil {
     }
 
     public static void moveFile(String source, String destination) throws FileException {
-        File fromFile = openFile(source);
+        File fromFile = getFile(source);
         File toFile = new File(destination);
         copyFile(fromFile, toFile);
         if (!fromFile.delete()) throw new FileException("Temp file not deleted.");

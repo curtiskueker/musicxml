@@ -13,7 +13,7 @@ import java.util.Objects;
 public class TasksApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        PropertiesHandler.addLocalPropertiesBundle();
+        PropertiesHandler.addLocalProperties();
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("javafx/musicxmltasks.fxml")));
         Parent root = loader.load();
         primaryStage.setTitle(TaskConstants.TASKS_TITLE);

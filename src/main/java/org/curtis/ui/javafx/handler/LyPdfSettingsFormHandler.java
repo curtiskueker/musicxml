@@ -11,7 +11,7 @@ public class LyPdfSettingsFormHandler extends FormHandler {
     }
 
     public void initializeForm() {
-        PropertiesHandler.addLocalPropertiesBundle();
+        PropertiesHandler.addLocalProperties();
         taskForm.getTextField(FormNode.LILYPOND_LOCATION).setText(PropertiesHandler.getOptionalProperty(PropertiesConstants.getDisplayProperty(PropertiesConstants.LILYPOND_LOCATION)));
         taskForm.getTextField(FormNode.PDF_LOCATION).setText(PropertiesHandler.getOptionalProperty(PropertiesConstants.getDisplayProperty(PropertiesConstants.PDF_LOCATION)));
     }

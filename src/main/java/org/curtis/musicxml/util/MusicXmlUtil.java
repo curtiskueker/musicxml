@@ -76,8 +76,8 @@ public class MusicXmlUtil {
     public static DBTransaction getDbTransaction() throws DBException {
         if (sessionFactory == null) {
             PropertiesHandler.setPrefix(PropertiesConstants.PROPERTIES_PREFIX);
-            PropertiesHandler.addPropertiesFile("properties/database");
-            PropertiesHandler.addLocalPropertiesBundle();
+            PropertiesHandler.addDatabaseProperties();
+            PropertiesHandler.addLocalProperties();
 
             sessionFactory = DBSessionFactory.getInstance();
         }

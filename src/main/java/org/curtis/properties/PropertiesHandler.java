@@ -3,51 +3,51 @@ package org.curtis.properties;
 import org.curtis.util.StringUtil;
 
 import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.Properties;
 
 public class PropertiesHandler {
-    private static Map<String, ResourceBundle> bundles = new HashMap<>();
+    private static Map<String, Properties> propertiesFiles = new HashMap<>();
     private static String prefix = null;
     private static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
-    private static String PROPERTIES_BUNDLE = "musicxml";
-    public static String PROPERTIES_FILENAME = PROPERTIES_DIRECTORY + "/" + PROPERTIES_BUNDLE;
+    private static String LOCAL_PROPERTIES_FILE = "musicxml.properties";
+    public static String LOCAL_PROPERTIES_FILENAME = PROPERTIES_DIRECTORY + "/" + LOCAL_PROPERTIES_FILE;
+    private static final String LOCAL_PROPERTIES_NAME = "local properties";
+    private static final String DATABASE_PROPERTIES_NAME = "database properties";
+    protected static String KEY_FILENAME = PROPERTIES_DIRECTORY + "/.key";
 
-
-    public static void addPropertiesFile(String filename) throws PropertyFileNotFoundException {
-        if (filename == null) {
-            throw new IllegalArgumentException("addPropertiesFile(): filename is null");
-        }
-
-        filename = trimPropertiesFilename(filename);
-        // Add the property file to the Map
-        // If added already, return
-        if (hasPropertiesFile(filename)) {
-            return;
-        }
-
+    public static void addLocalProperties() {
         try {
-            ResourceBundle bundle = ResourceBundle.getBundle(filename);
-            bundles.put(filename, bundle);
-        } catch (MissingResourceException e) {
-            throw new PropertyFileNotFoundException("addPropertiesFile(): File " + filename + " not found");
+            File localPropertiesFile = new File(LOCAL_PROPERTIES_FILENAME);
+            if (!localPropertiesFile.exists()) return;
+
+            addProperties(LOCAL_PROPERTIES_NAME, new FileInputStream(LOCAL_PROPERTIES_FILENAME));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 
-    public static void addLocalPropertiesBundle() {
+    public static void addDatabaseProperties() {
+        if (propertiesFiles.get(DATABASE_PROPERTIES_NAME) != null) return;
+
         try {
-            File file = new File(PROPERTIES_DIRECTORY);
-            URL[] urls = {file.toURI().toURL()};
-            ClassLoader loader = new URLClassLoader(urls);
-            ResourceBundle bundle = ResourceBundle.getBundle(PROPERTIES_BUNDLE, Locale.getDefault(), loader);
-            bundles.put(PROPERTIES_BUNDLE, bundle);
+            InputStream inputStream = PropertiesHandler.class.getClassLoader().getResourceAsStream("properties/database.properties");
+            addProperties(DATABASE_PROPERTIES_NAME, inputStream);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+        }
+    }
+
+    private static void addProperties(String propertiesName, InputStream inputStream) throws PropertyFileNotFoundException {
+        try {
+            Properties properties = EncryptionHandler.getInstance().getProperties(inputStream);
+            propertiesFiles.put(propertiesName, properties);
+        } catch (IOException e) {
+            throw new PropertyFileNotFoundException("Add Properties: " + propertiesName + " not added");
         }
     }
 
@@ -62,28 +62,22 @@ public class PropertiesHandler {
 
         String propertyValue;
 
-        for (String bundleName : bundles.keySet()) {
-            ResourceBundle resourceBundle = bundles.get(bundleName);
-
+        for (Properties propertiesFile : propertiesFiles.values()) {
             // find property with prefix first
             try {
-                propertyValue = resourceBundle.getString(prefix + "." + propertyName);
-
-                return propertyValue;
-            } catch (MissingResourceException e) {
-                //Ignore
+                propertyValue = propertiesFile.getProperty(prefix + "." + propertyName);
+                if (propertyValue != null) return propertyValue;
+            } catch (Exception e) {
+                throw new PropertyException(e.getMessage());
             }
         }
 
-        for (String bundleName : bundles.keySet()) {
-            ResourceBundle resourceBundle = bundles.get(bundleName);
-
+        for (Properties propertiesFile : propertiesFiles.values()) {
             try {
-                propertyValue = resourceBundle.getString(propertyName);
-
-                return propertyValue;
-            } catch (MissingResourceException e) {
-                //Ignore
+                propertyValue = propertiesFile.getProperty(propertyName);
+                if (propertyValue != null) return propertyValue;
+            } catch (Exception e) {
+                throw new PropertyException(e.getMessage());
             }
         }
 
@@ -116,22 +110,9 @@ public class PropertiesHandler {
         return propertyValue.equals("1") || Boolean.parseBoolean(propertyValue);
     }
 
-    public static String trimPropertiesFilename(String filename) {
-        int index = filename.indexOf(".properties");
-        if (index != -1) {
-            filename = filename.substring(0, index);
-        }
+    public static boolean isEncryptedProperty(String propertyName) {
+        if (StringUtil.isEmpty(propertyName)) return false;
 
-        return filename;
-    }
-
-    public static boolean hasPropertiesFile(String filename) {
-        if (filename == null) {
-            return false;
-        } else {
-            trimPropertiesFilename(filename);
-
-            return bundles.get(filename) != null;
-        }
+        return propertyName.startsWith("ENC(");
     }
 }

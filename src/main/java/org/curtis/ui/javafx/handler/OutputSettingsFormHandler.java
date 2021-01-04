@@ -12,7 +12,7 @@ public class OutputSettingsFormHandler extends FormHandler {
     }
 
     public void initializeForm() {
-        PropertiesHandler.addLocalPropertiesBundle();
+        PropertiesHandler.addLocalProperties();
 
         taskForm.setSelectList(FormNode.TASK_OUTPUT_TYPE, TaskConstants.OUTPUT_TYPES, PropertiesHandler.getOptionalProperty(PropertiesConstants.TASK_OUTPUT_TYPE));
         taskForm.getTextField(FormNode.TASK_OUTPUT_LOCATION).setText(PropertiesHandler.getOptionalProperty(PropertiesConstants.getDisplayProperty(PropertiesConstants.TASK_OUTPUT_LOCATION)));
