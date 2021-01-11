@@ -219,6 +219,7 @@ public abstract class MusicXmlScript {
         System.err.println("Converting Lilypond notation to PDF File...");
         String lilypondLocation;
         try {
+            PropertiesHandler.addLocalProperties();
             lilypondLocation = PropertiesHandler.getString(PropertiesConstants.LILYPOND_LOCATION);
         } catch (PropertyException e) {
             throw new MusicXmlException("Lilypond Location not set");

@@ -23,7 +23,7 @@ public class MusicXml2Ly extends MusicXmlScript {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
             musicXml2Ly.setArgs(args);

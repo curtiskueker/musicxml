@@ -57,7 +57,7 @@ public class DatabaseExec extends MusicXmlScript {
         }
     }
 
-    public boolean isTestDatabase() {
+    private boolean isTestDatabase() {
         return testDatabase;
     }
 
@@ -65,7 +65,7 @@ public class DatabaseExec extends MusicXmlScript {
         this.testDatabase = testDatabase;
     }
 
-    public boolean isCreateDatabase() {
+    private boolean isCreateDatabase() {
         return createDatabase;
     }
 
@@ -73,7 +73,7 @@ public class DatabaseExec extends MusicXmlScript {
         this.createDatabase = createDatabase;
     }
 
-    public boolean isGenerateSchema() {
+    private boolean isGenerateSchema() {
         return generateSchema;
     }
 
@@ -81,36 +81,11 @@ public class DatabaseExec extends MusicXmlScript {
         this.generateSchema = generateSchema;
     }
 
-    public boolean isResetDbProperties() {
+    private boolean isResetDbProperties() {
         return resetDbProperties;
     }
 
     public void setResetDbProperties(boolean resetDbProperties) {
         this.resetDbProperties = resetDbProperties;
-    }
-
-    public static void main(String[] args) {
-        DatabaseExec databaseExec = new DatabaseExec();
-        for (String arg : args) {
-            if (arg.startsWith("SCHEMA_FILE=")) {
-                String schemaFile = arg.replace("SCHEMA_FILE=", "");
-                databaseExec.setGenerateSchema(StringUtil.isNotEmpty(schemaFile));
-                databaseExec.setOutputFile(schemaFile);
-            } else if (arg.equals("CREATE_DATABASE")) {
-                databaseExec.setCreateDatabase(true);
-            } else if (arg.equals("TEST_DATABASE")) {
-                databaseExec.setTestDatabase(true);
-            }
-        }
-
-        try {
-            databaseExec.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Fatal exception: " + e.getMessage());
-        } catch (Throwable e){
-            e.printStackTrace();
-        } finally {
-            System.exit(0);
-        }
     }
 }

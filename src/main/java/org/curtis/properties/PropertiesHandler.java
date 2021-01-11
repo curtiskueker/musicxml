@@ -64,21 +64,13 @@ public class PropertiesHandler {
 
         for (Properties propertiesFile : propertiesFiles.values()) {
             // find property with prefix first
-            try {
-                propertyValue = propertiesFile.getProperty(prefix + "." + propertyName);
-                if (propertyValue != null) return propertyValue;
-            } catch (Exception e) {
-                throw new PropertyException(e.getMessage());
-            }
+            propertyValue = propertiesFile.getProperty(prefix + "." + propertyName);
+            if (propertyValue != null) return propertyValue;
         }
 
         for (Properties propertiesFile : propertiesFiles.values()) {
-            try {
-                propertyValue = propertiesFile.getProperty(propertyName);
-                if (propertyValue != null) return propertyValue;
-            } catch (Exception e) {
-                throw new PropertyException(e.getMessage());
-            }
+            propertyValue = propertiesFile.getProperty(propertyName);
+            if (propertyValue != null) return propertyValue;
         }
 
         throw new PropertyException("Property not found: " + propertyName);

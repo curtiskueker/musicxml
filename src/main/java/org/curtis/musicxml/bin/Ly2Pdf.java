@@ -12,4 +12,18 @@ public class Ly2Pdf extends MusicXmlScript {
         MusicXmlUtil.INCLUDE_BREAKS = true;
         convertLilypondToPdf();
     }
+
+    public static void main(String[] args) {
+        try {
+            Ly2Pdf ly2Pdf = new Ly2Pdf();
+            ly2Pdf.setArgs(args);
+            ly2Pdf.execute();
+        } catch (MusicXmlException e) {
+            System.err.println("Fatal exception: " + e.getMessage());
+        } catch (Throwable e){
+            e.printStackTrace();
+        } finally {
+            System.exit(0);
+        }
+    }
 }

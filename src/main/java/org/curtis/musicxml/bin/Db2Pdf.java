@@ -18,4 +18,18 @@ public class Db2Pdf extends MusicXmlScript {
             throw new MusicXmlException(e.getMessage());
         }
     }
+
+    public static void main(String[] args) {
+        try {
+            Db2Pdf db2Pdf = new Db2Pdf();
+            db2Pdf.setArgs(args);
+            db2Pdf.execute();
+        } catch (MusicXmlException e) {
+            System.err.println("Fatal exception: " + e.getMessage());
+        } catch (Throwable e){
+            e.printStackTrace();
+        } finally {
+            System.exit(0);
+        }
+    }
 }

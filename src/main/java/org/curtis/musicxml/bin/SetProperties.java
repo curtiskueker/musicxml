@@ -136,35 +136,4 @@ public class SetProperties extends MusicXmlScript {
     public void setSqlOutputLocation(String sqlOutputLocation) {
         this.sqlOutputLocation = sqlOutputLocation;
     }
-
-    public static void main(String[] args) {
-        SetProperties setProperties = new SetProperties();
-        for (String arg : args) {
-            if (arg.startsWith("USERNAME=")) {
-                setProperties.setUsername(arg.replace("USERNAME=", ""));
-            } else if (arg.startsWith("PASSWORD=")) {
-                setProperties.setPassword(arg.replace("PASSWORD=", ""));
-            } else if (arg.startsWith("DATABASE=")) {
-                setProperties.setDatabaseName(arg.replace("DATABASE=", ""));
-            } else if (arg.startsWith("SERVER=")) {
-                setProperties.setServer(arg.replace("SERVER=", ""));
-            } else if (arg.startsWith("DATABASE_TYPE=")) {
-                setProperties.setDatabaseType(arg.replace("DATABASE_TYPE=", ""));
-            } else if (arg.startsWith("LILYPOND=")) {
-                setProperties.setLilypondLocation(arg.replace("LILYPOND=", ""));
-            } else if (arg.startsWith("PDF_READER=")) {
-                setProperties.setPdfReaderLocation(arg.replace("PDF_READER=", ""));
-            }
-        }
-
-        try {
-            setProperties.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Fatal exception: " + e.getMessage());
-        } catch (Throwable e){
-            e.printStackTrace();
-        } finally {
-            System.exit(0);
-        }
-    }
 }
