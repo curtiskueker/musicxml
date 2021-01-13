@@ -7,7 +7,7 @@ import org.curtis.util.StringUtil;
 public class Db2Ly extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Empty output filename");
-        if (!FileUtil.isLyFileExtension(getOutputFile())) setOutputFile(getOutputFile() + ".ly");
+        if (!isStdOut() && !FileUtil.isLyFileExtension(getOutputFile())) setOutputFile(getOutputFile() + ".ly");
 
         setSkipComments(true);
         outputLilypondResultsToFile(getScoreFromDb());

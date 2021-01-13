@@ -43,6 +43,7 @@ public abstract class MusicXmlScript {
     private Boolean openPdf = false;
 
     private static final int COMMENTS_THRESHOLD = 250;
+    private static final String STDOUT = "STDOUT";
 
     public Integer getScoreId() {
         return scoreId;
@@ -98,6 +99,10 @@ public abstract class MusicXmlScript {
 
     public void setOpenPdf(Boolean openPdf) {
         this.openPdf = openPdf;
+    }
+
+    protected boolean isStdOut() {
+        return StringUtil.nullToString(getOutputFile()).equals(STDOUT);
     }
 
     public abstract void execute() throws MusicXmlException;
@@ -202,7 +207,8 @@ public abstract class MusicXmlScript {
     protected void outputResultsToFile(String results) throws MusicXmlException {
         System.err.println("Creating Output File...");
         try {
-            if (CompressedXmlUtil.isCompressedFile(getOutputFile())) CompressedXmlUtil.saveCompressedFile(getOutputFile(), getZippedFile(), results);
+            if (isStdOut()) System.out.print(results);
+            else if (CompressedXmlUtil.isCompressedFile(getOutputFile())) CompressedXmlUtil.saveCompressedFile(getOutputFile(), getZippedFile(), results);
             else FileUtil.stringToFile(results, getOutputFile());
         } catch (FileException e) {
             throw new MusicXmlException(e.getMessage());
