@@ -45,6 +45,11 @@ public abstract class MusicXmlScript {
     private static final int COMMENTS_THRESHOLD = 250;
     private static final String STDOUT = "STDOUT";
 
+    static {
+        // Scripts don't display sql statements
+        PropertiesHandler.SHOW_SQL = false;
+    }
+
     public Integer getScoreId() {
         return scoreId;
     }

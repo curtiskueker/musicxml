@@ -16,8 +16,14 @@ public class PropertiesHandler {
     private static String PROPERTIES_DIRECTORY = System.getProperty("user.home") + "/.musicxml";
     private static String LOCAL_PROPERTIES_FILE = "musicxml.properties";
     public static String LOCAL_PROPERTIES_FILENAME = PROPERTIES_DIRECTORY + "/" + LOCAL_PROPERTIES_FILE;
+
+    private static final String DATABASE_PROPERTIES_FILE = "properties/database.properties";
+    public static boolean SHOW_SQL = true;
+    private static final String SHOW_SQL_ON_FILE = "properties/show_sql_on.properties";
+    private static final String SHOW_SQL_OFF_FILE = "properties/show_sql_off.properties";
     private static final String LOCAL_PROPERTIES_NAME = "local properties";
     private static final String DATABASE_PROPERTIES_NAME = "database properties";
+
     protected static String KEY_FILENAME = PROPERTIES_DIRECTORY + "/.key";
 
     public static void addLocalProperties() {
@@ -34,9 +40,16 @@ public class PropertiesHandler {
     public static void addDatabaseProperties() {
         if (propertiesFiles.get(DATABASE_PROPERTIES_NAME) != null) return;
 
+        addPropertiesResource(DATABASE_PROPERTIES_NAME, DATABASE_PROPERTIES_FILE);
+
+        String showSqlFile = SHOW_SQL ? SHOW_SQL_ON_FILE : SHOW_SQL_OFF_FILE;
+        addPropertiesResource("SHOW_SQL", showSqlFile);
+    }
+
+    private static void addPropertiesResource(String resourceName, String resourceFile) {
         try {
-            InputStream inputStream = PropertiesHandler.class.getClassLoader().getResourceAsStream("properties/database.properties");
-            addProperties(DATABASE_PROPERTIES_NAME, inputStream);
+            InputStream inputStream = PropertiesHandler.class.getClassLoader().getResourceAsStream(resourceFile);
+            addProperties(resourceName, inputStream);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
