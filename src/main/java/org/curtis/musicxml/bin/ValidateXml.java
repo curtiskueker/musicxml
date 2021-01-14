@@ -10,27 +10,17 @@ import org.w3c.dom.Document;
 import java.io.File;
 
 public class ValidateXml extends MusicXmlScript {
-    private String xmlFileLocation;
-
     public ValidateXml() {
 
     }
 
-    public String getXmlFileLocation() {
-        return xmlFileLocation;
-    }
-
-    public void setXmlFileLocation(String xmlFileLocation) {
-        this.xmlFileLocation = xmlFileLocation;
-    }
-
     public void execute() throws MusicXmlException {
         try {
-            if (StringUtil.isEmpty(getXmlFileLocation())) throw new MusicXmlException("XML filename is required.");
+            if (StringUtil.isEmpty(getInputFile())) throw new MusicXmlException("XML filename is required.");
 
             System.err.println("Validating XML file...");
 
-            File inputFile = new File(getXmlFileLocation());
+            File inputFile = new File(getInputFile());
             if (!inputFile.isFile()) throw new MusicXmlException("Unknown file: " + inputFile.getAbsolutePath());
 
             Document xmlDocument = XmlUtil.fileToDocument(inputFile);
@@ -40,5 +30,21 @@ public class ValidateXml extends MusicXmlScript {
         } catch (XmlException e) {
             throw new MusicXmlException(e.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        try {
+            ValidateXml validateXml = new ValidateXml();
+            validateXml.setOutputFileNotRequired();
+            validateXml.setArgs(args);
+            validateXml.execute();
+        } catch (MusicXmlException e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
+        } catch (Throwable e){
+            e.printStackTrace();
+            System.exit(1);
+        }
+        System.exit(0);
     }
 }

@@ -41,6 +41,7 @@ public abstract class MusicXmlScript {
     private Boolean skipComments = false;
     private String zippedFile;
     private Boolean openPdf = false;
+    private Boolean outputFileRequired = true;
 
     private static final int COMMENTS_THRESHOLD = 250;
     private static final String STDOUT = "STDOUT";
@@ -110,6 +111,14 @@ public abstract class MusicXmlScript {
         return StringUtil.nullToString(getOutputFile()).equals(STDOUT);
     }
 
+    protected void setOutputFileNotRequired() {
+        outputFileRequired = false;
+    }
+
+    protected boolean outputFileRequired() {
+        return outputFileRequired;
+    }
+
     public abstract void execute() throws MusicXmlException;
 
     protected void setArgs(String[] args) throws MusicXmlException {
@@ -132,7 +141,7 @@ public abstract class MusicXmlScript {
             }
         }
 
-        if (StringUtil.isEmpty(getOutputFile())) {
+        if (outputFileRequired() && StringUtil.isEmpty(getOutputFile())) {
             throw new MusicXmlException("Output file not indicated");
         }
     }

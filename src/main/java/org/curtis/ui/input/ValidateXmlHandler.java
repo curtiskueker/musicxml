@@ -12,7 +12,7 @@ public class ValidateXmlHandler extends InputHandler {
     @Override
     public MusicXmlScript transferInputToTask(TaskInitializer taskInitializer) {
         ValidateXml validateXml = new ValidateXml();
-        validateXml.setXmlFileLocation(taskInitializer.getText("xmlFile"));
+        validateXml.setInputFile(taskInitializer.getText("xmlFile"));
 
         return validateXml;
     }

@@ -74,7 +74,7 @@ public class MusicXml2Db extends MusicXmlScript {
     public static void main(String[] args) {
         try {
             MusicXml2Db musicXmlDb = new MusicXml2Db();
-            musicXmlDb.setOutputFile("NONE");
+            musicXmlDb.setOutputFileNotRequired();
             musicXmlDb.setArgs(args);
             musicXmlDb.execute();
         } catch (MusicXmlException e) {
