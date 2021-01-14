@@ -19,11 +19,12 @@ public class Ly2Pdf extends MusicXmlScript {
             ly2Pdf.setArgs(args);
             ly2Pdf.execute();
         } catch (MusicXmlException e) {
-            System.err.println("Fatal exception: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
         } catch (Throwable e){
             e.printStackTrace();
-        } finally {
-            System.exit(0);
+            System.exit(1);
         }
+        System.exit(0);
     }
 }

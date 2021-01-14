@@ -26,11 +26,12 @@ public class MusicXml2Pdf extends MusicXmlScript {
             musicXml2Pdf.setArgs(args);
             musicXml2Pdf.execute();
         } catch (MusicXmlException e) {
-            System.err.println("Fatal exception: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
         } catch (Throwable e){
             e.printStackTrace();
-        } finally {
-            System.exit(0);
+            System.exit(1);
         }
+        System.exit(0);
     }
 }

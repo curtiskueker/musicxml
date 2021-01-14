@@ -78,11 +78,12 @@ public class MusicXml2Db extends MusicXmlScript {
             musicXmlDb.setArgs(args);
             musicXmlDb.execute();
         } catch (MusicXmlException e) {
-            System.err.println("Fatal exception: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            System.exit(0);
+            System.exit(1);
         }
+        System.exit(0);
     }
 }

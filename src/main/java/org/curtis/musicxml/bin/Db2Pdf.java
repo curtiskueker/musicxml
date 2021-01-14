@@ -25,11 +25,12 @@ public class Db2Pdf extends MusicXmlScript {
             db2Pdf.setArgs(args);
             db2Pdf.execute();
         } catch (MusicXmlException e) {
-            System.err.println("Fatal exception: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
         } catch (Throwable e){
             e.printStackTrace();
-        } finally {
-            System.exit(0);
+            System.exit(1);
         }
+        System.exit(0);
     }
 }
