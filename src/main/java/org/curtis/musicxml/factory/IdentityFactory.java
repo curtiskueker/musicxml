@@ -47,6 +47,7 @@ public class IdentityFactory {
                             case "encoder":
                                 Encoder encoder = new Encoder();
                                 encoder.setIdentificationType(newIdentificationType(encodingSubelement.getTagName(), encodingSubelement));
+                                encodings.add(encoder);
                                 break;
                             case "software":
                                 Software software = new Software();
