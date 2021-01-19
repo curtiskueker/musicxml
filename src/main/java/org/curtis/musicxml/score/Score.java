@@ -22,6 +22,9 @@ import java.util.List;
 @Table(name = "score", uniqueConstraints = @UniqueConstraint(columnNames = "score_name"))
 public class Score extends DatabaseItem {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "score_declaration_id")
+    private ScoreDeclaration scoreDeclaration;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "score_header_id")
     private ScoreHeader scoreHeader = new ScoreHeader();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -40,6 +43,14 @@ public class Score extends DatabaseItem {
 
     public Score() {
 
+    }
+
+    public ScoreDeclaration getScoreDeclaration() {
+        return scoreDeclaration;
+    }
+
+    public void setScoreDeclaration(ScoreDeclaration scoreDeclaration) {
+        this.scoreDeclaration = scoreDeclaration;
     }
 
     public ScoreHeader getScoreHeader() {

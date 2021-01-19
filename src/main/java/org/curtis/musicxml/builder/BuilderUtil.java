@@ -53,17 +53,6 @@ public class BuilderUtil {
         if (booleanValue == null) return "";
         return booleanValue ? "yes" : "no";
     }
-
-    public static String getDocumentDeclaration() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
-        builder.append("\n");
-        builder.append("<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML 3.0 Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">");
-        builder.append("\n");
-
-        return builder.toString();
-    }
-
     public static String requiredValue(String value) {
         return StringUtil.isEmpty(value) ? REQUIRED_ATTRIBUTE : value;
     }

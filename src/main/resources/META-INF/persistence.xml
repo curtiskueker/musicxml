@@ -291,11 +291,14 @@
         <class>org.curtis.musicxml.score.PartName</class>
         <class>org.curtis.musicxml.score.PartSymbol</class>
         <class>org.curtis.musicxml.score.Score</class>
+        <class>org.curtis.musicxml.score.ScoreDeclaration</class>
+        <class>org.curtis.musicxml.score.ScoreDoctype</class>
         <class>org.curtis.musicxml.score.ScoreHeader</class>
         <class>org.curtis.musicxml.score.ScoreName</class>
         <class>org.curtis.musicxml.score.ScorePart</class>
         <class>org.curtis.musicxml.score.ScorePartGroup</class>
         <class>org.curtis.musicxml.score.ScorePartMidi</class>
+        <class>org.curtis.musicxml.score.ScoreXmlDeclaration</class>
         <class>org.curtis.musicxml.score.Work</class>
         <class>org.curtis.musicxml.score.instrument.Ensemble</class>
         <class>org.curtis.musicxml.score.instrument.InstrumentType</class>

@@ -5,6 +5,7 @@ import org.curtis.database.DBSessionFactory;
 import org.curtis.database.DBTransaction;
 import org.curtis.musicxml.attributes.Attributes;
 import org.curtis.musicxml.barline.Barline;
+import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.XmlComment;
 import org.curtis.musicxml.direction.Direction;
 import org.curtis.musicxml.direction.Grouping;
@@ -20,7 +21,11 @@ import org.curtis.musicxml.note.Forward;
 import org.curtis.musicxml.note.Note;
 import org.curtis.musicxml.score.MeasureItem;
 import org.curtis.musicxml.score.MusicData;
+import org.curtis.musicxml.score.Score;
+import org.curtis.musicxml.score.ScoreDeclaration;
+import org.curtis.musicxml.score.ScoreDoctype;
 import org.curtis.musicxml.score.ScoreName;
+import org.curtis.musicxml.score.ScoreXmlDeclaration;
 import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
 import org.curtis.util.StringUtil;
@@ -95,7 +100,7 @@ public class MusicXmlUtil {
         DBSessionFactory.clearSessionFactory();
     }
 
-    public static String getFormattedXml(Document document) throws XmlException {
+    public static String getFormattedXml(Document document, Score score) throws XmlException {
         try {
             document.normalize();
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -108,11 +113,26 @@ public class MusicXmlUtil {
                 node.getParentNode().removeChild(node);
             }
 
+            ScoreDeclaration scoreDeclaration = score.getScoreDeclaration();
+            ScoreXmlDeclaration scoreXmlDeclaration = scoreDeclaration == null ? null : scoreDeclaration.getScoreXmlDeclaration();
+            ScoreDoctype scoreDoctype = scoreDeclaration == null ? null : scoreDeclaration.getScoreDoctype();
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             transformerFactory.setAttribute("indent-number", 4);
             Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+
+            if (scoreXmlDeclaration == null) transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            else {
+                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+                if (StringUtil.isNotEmpty(scoreXmlDeclaration.getVersion())) transformer.setOutputProperty(OutputKeys.VERSION, scoreXmlDeclaration.getVersion());
+                if (StringUtil.isNotEmpty(scoreXmlDeclaration.getEncoding())) transformer.setOutputProperty(OutputKeys.ENCODING, scoreXmlDeclaration.getEncoding());
+                if (scoreXmlDeclaration.getStandalone() != null) transformer.setOutputProperty(OutputKeys.STANDALONE, BuilderUtil.yesOrNo(scoreXmlDeclaration.getStandalone()));
+            }
+            if (scoreDoctype != null) {
+                if (StringUtil.isNotEmpty(scoreDoctype.getPublicId())) transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, scoreDoctype.getPublicId());
+                if (StringUtil.isNotEmpty(scoreDoctype.getSystemId())) transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, scoreDoctype.getSystemId());
+            }
+
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
             StringWriter stringWriter = new StringWriter();

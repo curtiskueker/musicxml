@@ -171,6 +171,7 @@ public abstract class MusicXmlScript {
         SchemaValidator.getInstance().validate(xmlDocument);
 
         ScoreHandler scoreHandler = new ScoreHandler();
+        scoreHandler.handleDeclaration(xmlDocument);
         scoreHandler.handle(xmlDocument.getDocumentElement());
         if (!getSkipComments()) scoreHandler.getScore().setXmlComments(MusicXmlUtil.getXmlComments(xmlDocument));
 
@@ -197,12 +198,12 @@ public abstract class MusicXmlScript {
                 if (scoreComments.size() > COMMENTS_THRESHOLD) MusicXmlUtil.setXmlCommentsByWalk(document, scoreComments);
                 else MusicXmlUtil.setXmlCommentsByXpath(document, scoreComments);
             }
-            results = MusicXmlUtil.getFormattedXml(document);
+            return MusicXmlUtil.getFormattedXml(document, score);
         } catch (Exception e) {
             // skip, use results above
         }
 
-        return BuilderUtil.getDocumentDeclaration() + results;
+        return results;
     }
 
     protected String getLilypondFromScore(Score score) throws BuildException {
