@@ -4,7 +4,6 @@ import org.curtis.database.DBException;
 import org.curtis.exception.FileException;
 import org.curtis.lilypond.ScoreBuilder;
 import org.curtis.lilypond.exception.BuildException;
-import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.musicxml.common.XmlComment;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
@@ -45,11 +44,6 @@ public abstract class MusicXmlScript {
 
     private static final int COMMENTS_THRESHOLD = 250;
     private static final String STDOUT = "STDOUT";
-
-    static {
-        // Scripts don't display sql statements
-        PropertiesHandler.SHOW_SQL = false;
-    }
 
     public Integer getScoreId() {
         return scoreId;
@@ -122,6 +116,8 @@ public abstract class MusicXmlScript {
     public abstract void execute() throws MusicXmlException;
 
     protected void setArgs(String[] args) throws MusicXmlException {
+        PropertiesHandler.SHOW_SQL = false;
+
         for (String arg : args) {
             if (arg.startsWith("SCORE_ID=")) {
                 String scoreId = arg.replace("SCORE_ID=", "");
