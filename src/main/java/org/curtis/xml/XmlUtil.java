@@ -1,5 +1,7 @@
 package org.curtis.xml;
 
+import org.curtis.musicxml.builder.BuilderUtil;
+import org.curtis.util.StringUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -9,16 +11,21 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +61,38 @@ public class XmlUtil {
             else return stringToDocument(readXmlToString(new FileReader(xmlFile)));
         } catch (IOException e) {
             throw new XmlException(e.getMessage());
+        }
+    }
+
+    public static Document transformDocument(Document document, String xsltFile) throws XmlException {
+        try {
+            InputStream xslFileStream = ClassLoader.getSystemResourceAsStream(xsltFile);
+
+            TransformerFactory factory = TransformerFactory.newInstance();
+            StreamSource xslStreamSource = new StreamSource(xslFileStream);
+            Transformer transformer = factory.newTransformer(xslStreamSource);
+
+            String xmlVersion = document.getXmlVersion();
+            String xmlEncoding = document.getXmlEncoding();
+            if (StringUtil.isEmpty(xmlVersion) && StringUtil.isEmpty(xmlEncoding)) transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            else {
+                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+                if (StringUtil.isNotEmpty(xmlVersion)) transformer.setOutputProperty(OutputKeys.VERSION, xmlVersion);
+                if (StringUtil.isNotEmpty(xmlEncoding)) transformer.setOutputProperty(OutputKeys.ENCODING, xmlEncoding);
+                transformer.setOutputProperty(OutputKeys.STANDALONE, BuilderUtil.yesOrNo(document.getXmlStandalone()));
+            }
+            if (document.getDoctype() != null) {
+                transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, document.getDoctype().getPublicId());
+                transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, document.getDoctype().getSystemId());
+            }
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            StringWriter stringWriter = new StringWriter();
+            transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
+
+            return stringToDocument(stringWriter.toString());
+        } catch (TransformerException e) {
+            throw new XmlException(e);
         }
     }
 

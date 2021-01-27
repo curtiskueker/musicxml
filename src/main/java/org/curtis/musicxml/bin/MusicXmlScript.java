@@ -8,6 +8,7 @@ import org.curtis.musicxml.common.XmlComment;
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.handler.ScoreHandler;
 import org.curtis.musicxml.score.Score;
+import org.curtis.musicxml.score.ScoreType;
 import org.curtis.musicxml.util.MusicXmlUtil;
 import org.curtis.properties.PropertiesHandler;
 import org.curtis.properties.PropertiesConstants;
@@ -163,13 +164,28 @@ public abstract class MusicXmlScript {
 
     protected ScoreHandler handleXmlScoreFile(File xmlFile) throws XmlException {
         System.err.println("Converting XML file to Score...");
-        Document xmlDocument = XmlUtil.fileToDocument(xmlFile);
-        SchemaValidator.getInstance().validate(xmlDocument);
+        Document document = XmlUtil.fileToDocument(xmlFile);
+        SchemaValidator.getInstance().validate(document);
 
         ScoreHandler scoreHandler = new ScoreHandler();
-        scoreHandler.handleDeclaration(xmlDocument);
-        scoreHandler.handle(xmlDocument.getDocumentElement());
-        if (!getSkipComments()) scoreHandler.getScore().setXmlComments(MusicXmlUtil.getXmlComments(xmlDocument));
+        scoreHandler.handleDeclaration(document);
+
+        ScoreType scoreType;
+        switch (document.getDocumentElement().getTagName()) {
+            case MusicXmlUtil.SCORE_PARTWISE:
+                scoreType = ScoreType.PARTWISE;
+                break;
+            case MusicXmlUtil.SCORE_TIMEWISE:
+                scoreType = ScoreType.TIMEWISE;
+                document = XmlUtil.transformDocument(document, "xsl/timepart.xsl");
+                break;
+            default:
+                throw new XmlException("Unrecognized root element: " + document.getDocumentElement().getTagName());
+        }
+
+        scoreHandler.handle(document.getDocumentElement());
+        scoreHandler.getScore().setScoreType(scoreType);
+        if (!getSkipComments()) scoreHandler.getScore().setXmlComments(MusicXmlUtil.getXmlComments(document));
 
         return scoreHandler;
     }
@@ -183,6 +199,7 @@ public abstract class MusicXmlScript {
             System.err.println("Validating results...");
             SchemaValidator.getInstance().validate(results);
         } catch (XmlException e) {
+            e.printStackTrace();
             System.err.println(e.getMessage());
         }
 
@@ -194,8 +211,13 @@ public abstract class MusicXmlScript {
                 if (scoreComments.size() > COMMENTS_THRESHOLD) MusicXmlUtil.setXmlCommentsByWalk(document, scoreComments);
                 else MusicXmlUtil.setXmlCommentsByXpath(document, scoreComments);
             }
+
+            if (score.getScoreType() == ScoreType.TIMEWISE) document = XmlUtil.transformDocument(document, "xsl/parttime.xsl");
+
             return MusicXmlUtil.getFormattedXml(document, score);
         } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
             // skip, use results above
         }
 

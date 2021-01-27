@@ -3,6 +3,10 @@ package org.curtis.musicxml.builder;
 import org.curtis.musicxml.builder.musicdata.MusicDataBuilder;
 import org.curtis.musicxml.score.Part;
 import org.curtis.musicxml.score.Score;
+import org.curtis.musicxml.score.ScoreDeclaration;
+import org.curtis.musicxml.score.ScoreDoctype;
+import org.curtis.musicxml.score.ScoreXmlDeclaration;
+import org.curtis.util.StringUtil;
 
 public class ScoreBuilder extends MusicDataBuilder {
     private Score score;
@@ -12,6 +16,8 @@ public class ScoreBuilder extends MusicDataBuilder {
     }
 
     public StringBuilder build() {
+        buildDocumentDeclaration();
+
         buildOpenElement("score-partwise");
         buildAttribute("version", score.getVersion());
         buildCloseElement();
@@ -27,5 +33,44 @@ public class ScoreBuilder extends MusicDataBuilder {
         buildEndElement("score-partwise");
 
         return stringBuilder;
+    }
+
+    private void buildDocumentDeclaration() {
+        ScoreDeclaration scoreDeclaration = score.getScoreDeclaration();
+        if (scoreDeclaration == null) return;
+
+        ScoreXmlDeclaration scoreXmlDeclaration = scoreDeclaration.getScoreXmlDeclaration();
+        if (scoreXmlDeclaration != null) {
+            append("<?xml ");
+
+            String version = scoreXmlDeclaration.getVersion();
+            if (StringUtil.isNotEmpty(version)) {
+                append("version=\"");
+                append(version);
+                append("\" ");
+            }
+
+            String encoding = scoreXmlDeclaration.getEncoding();
+            if (StringUtil.isNotEmpty(encoding)) {
+                append("encoding=\"");
+                append(encoding);
+                append("\" ");
+            }
+
+            append("standalone=\"");
+            append(BuilderUtil.yesOrNo(scoreXmlDeclaration.getStandalone()));
+            append("\"?>");
+            append("\n");
+        }
+
+        ScoreDoctype scoreDoctype = scoreDeclaration.getScoreDoctype();
+        if (scoreDoctype != null) {
+            append("<!DOCTYPE score-partwise PUBLIC \"");
+            append(scoreDoctype.getPublicId());
+            append("\" \"");
+            append(scoreDoctype.getSystemId());
+            append("\">");
+            append("\n");
+        }
     }
 }

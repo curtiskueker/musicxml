@@ -55,6 +55,10 @@ import java.util.stream.Collectors;
 
 public class MusicXmlUtil {
     private static DBSessionFactory sessionFactory;
+
+    public static final String SCORE_PARTWISE = "score-partwise";
+    public static final String SCORE_TIMEWISE = "score-timewise";
+
     public static Boolean DEBUG = false;
     public static Boolean INCLUDE_BREAKS = false;
 
@@ -126,7 +130,7 @@ public class MusicXmlUtil {
                 transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
                 if (StringUtil.isNotEmpty(scoreXmlDeclaration.getVersion())) transformer.setOutputProperty(OutputKeys.VERSION, scoreXmlDeclaration.getVersion());
                 if (StringUtil.isNotEmpty(scoreXmlDeclaration.getEncoding())) transformer.setOutputProperty(OutputKeys.ENCODING, scoreXmlDeclaration.getEncoding());
-                if (scoreXmlDeclaration.getStandalone() != null) transformer.setOutputProperty(OutputKeys.STANDALONE, BuilderUtil.yesOrNo(scoreXmlDeclaration.getStandalone()));
+                transformer.setOutputProperty(OutputKeys.STANDALONE, BuilderUtil.yesOrNo(scoreXmlDeclaration.getStandalone()));
             }
             if (scoreDoctype != null) {
                 if (StringUtil.isNotEmpty(scoreDoctype.getPublicId())) transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, scoreDoctype.getPublicId());

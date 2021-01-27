@@ -8,6 +8,8 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -40,6 +42,9 @@ public class Score extends DatabaseItem {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "score_id", nullable = false)
     private List<XmlComment> xmlComments = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    @Column(name = "score_type")
+    private ScoreType scoreType;
 
     public Score() {
 
@@ -91,5 +96,13 @@ public class Score extends DatabaseItem {
 
     public void setXmlComments(List<XmlComment> xmlComments) {
         this.xmlComments = xmlComments;
+    }
+
+    public ScoreType getScoreType() {
+        return scoreType;
+    }
+
+    public void setScoreType(ScoreType scoreType) {
+        this.scoreType = scoreType;
     }
 }
