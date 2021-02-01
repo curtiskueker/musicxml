@@ -73,4 +73,16 @@ public class ScoreBuilder extends MusicDataBuilder {
             append("\n");
         }
     }
+
+    public String getEncoding() {
+        if (score == null) return null;
+
+        ScoreDeclaration scoreDeclaration = score.getScoreDeclaration();
+        if (scoreDeclaration == null) return null;
+
+        ScoreXmlDeclaration scoreXmlDeclaration = scoreDeclaration.getScoreXmlDeclaration();
+        if (scoreXmlDeclaration == null) return null;
+
+        return scoreXmlDeclaration.getEncoding();
+    }
 }

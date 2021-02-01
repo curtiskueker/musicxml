@@ -1,14 +1,11 @@
 package org.curtis.xml;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.ByteArrayInputStream;
 import java.util.Objects;
 
 public class SchemaValidator {
@@ -27,24 +24,18 @@ public class SchemaValidator {
         return instance;
     }
 
-    public void validate(String documentElement) throws XmlException {
+    public void validate(Document document) throws XmlException {
         try {
             SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
             Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(SCHEMA_LOCATION)));
-            Source xmlFile = new StreamSource(new ByteArrayInputStream(documentElement.getBytes()));
             Validator validator = schema.newValidator();
             XmlErrorHandler errorHandler = new XmlErrorHandler();
             validator.setErrorHandler(errorHandler);
-            validator.validate(xmlFile);
+            validator.validate(new DOMSource(document));
 
             if (errorHandler.hasErrors()) throw new XmlException(errorHandler.getErrors().toString());
         } catch (Exception e) {
             throw new XmlException(e.getMessage());
         }
-    }
-
-    public void validate(Document document) throws XmlException {
-        Element documentElement = document.getDocumentElement();
-        validate(XmlUtil.elementToString(documentElement));
     }
 }

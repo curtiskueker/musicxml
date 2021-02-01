@@ -196,16 +196,18 @@ public abstract class MusicXmlScript {
         String results = scoreBuilder.build().toString();
 
         try {
-            System.err.println("Validating results...");
-            SchemaValidator.getInstance().validate(results);
-        } catch (XmlException e) {
-            e.printStackTrace();
-            System.err.println(e.getMessage());
-        }
+            String encoding = scoreBuilder.getEncoding();
+            byte[] resultBytes = StringUtil.isEmpty(encoding) ? results.getBytes(StandardCharsets.UTF_8) : results.getBytes(encoding);
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(resultBytes)));
 
-        try {
+            try {
+                System.err.println("Validating results...");
+                SchemaValidator.getInstance().validate(document);
+            } catch (XmlException e) {
+                e.printStackTrace();
+            }
+
             System.err.println("Formatting results...");
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(results.getBytes(StandardCharsets.UTF_8))));
             if (!getSkipComments()) {
                 List<XmlComment> scoreComments = score.getXmlComments();
                 if (scoreComments.size() > COMMENTS_THRESHOLD) MusicXmlUtil.setXmlCommentsByWalk(document, scoreComments);
@@ -217,8 +219,6 @@ public abstract class MusicXmlScript {
             return MusicXmlUtil.getFormattedXml(document, score);
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getMessage());
-            // skip, use results above
         }
 
         return results;
