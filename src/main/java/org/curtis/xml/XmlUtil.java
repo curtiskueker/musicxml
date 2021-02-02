@@ -39,6 +39,7 @@ public class XmlUtil {
 
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             XmlErrorHandler errorHandler = new XmlErrorHandler();
             builder.setErrorHandler(errorHandler);

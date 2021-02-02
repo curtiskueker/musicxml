@@ -198,7 +198,9 @@ public abstract class MusicXmlScript {
         try {
             String encoding = scoreBuilder.getEncoding();
             byte[] resultBytes = StringUtil.isEmpty(encoding) ? results.getBytes(StandardCharsets.UTF_8) : results.getBytes(encoding);
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(resultBytes)));
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            builderFactory.setNamespaceAware(true);
+            Document document = builderFactory.newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(resultBytes)));
 
             try {
                 System.err.println("Validating results...");
