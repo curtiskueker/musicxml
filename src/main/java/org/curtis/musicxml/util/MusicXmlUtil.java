@@ -45,7 +45,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.StringWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -129,7 +130,7 @@ public class MusicXmlUtil {
             else {
                 transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
                 if (StringUtil.isNotEmpty(scoreXmlDeclaration.getVersion())) transformer.setOutputProperty(OutputKeys.VERSION, scoreXmlDeclaration.getVersion());
-                if (StringUtil.isNotEmpty(scoreXmlDeclaration.getEncoding())) transformer.setOutputProperty(OutputKeys.ENCODING, scoreXmlDeclaration.getEncoding());
+                transformer.setOutputProperty(OutputKeys.ENCODING, score.getEncoding().name());
                 transformer.setOutputProperty(OutputKeys.STANDALONE, BuilderUtil.yesOrNo(scoreXmlDeclaration.getStandalone()));
             }
             if (scoreDoctype != null) {
@@ -139,9 +140,11 @@ public class MusicXmlUtil {
 
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-            StringWriter stringWriter = new StringWriter();
-            transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
-            return stringWriter.toString();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            StreamResult streamResult = new StreamResult(new OutputStreamWriter(outputStream, score.getEncoding()));
+            transformer.transform(new DOMSource(document), streamResult);
+            byte[] outputBytes = outputStream.toByteArray();
+            return new String(outputBytes, score.getEncoding());
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new XmlException(e.getMessage());

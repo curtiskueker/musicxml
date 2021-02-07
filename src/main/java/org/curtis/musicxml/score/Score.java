@@ -2,6 +2,7 @@ package org.curtis.musicxml.score;
 
 import org.curtis.database.DatabaseItem;
 import org.curtis.musicxml.common.XmlComment;
+import org.curtis.util.StringUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -17,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +48,8 @@ public class Score extends DatabaseItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "score_type")
     private ScoreType scoreType;
+
+    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     public Score() {
 
@@ -104,5 +109,17 @@ public class Score extends DatabaseItem {
 
     public void setScoreType(ScoreType scoreType) {
         this.scoreType = scoreType;
+    }
+
+    public Charset getEncoding() {
+        if (scoreDeclaration == null) return DEFAULT_CHARSET;
+
+        ScoreXmlDeclaration scoreXmlDeclaration = scoreDeclaration.getScoreXmlDeclaration();
+        if (scoreXmlDeclaration == null) return DEFAULT_CHARSET;
+
+        String encoding = scoreXmlDeclaration.getEncoding();
+        if (StringUtil.isEmpty(encoding)) return DEFAULT_CHARSET;
+
+        return Charset.forName(encoding);
     }
 }

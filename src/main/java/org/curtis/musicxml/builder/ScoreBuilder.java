@@ -8,6 +8,8 @@ import org.curtis.musicxml.score.ScoreDoctype;
 import org.curtis.musicxml.score.ScoreXmlDeclaration;
 import org.curtis.util.StringUtil;
 
+import java.nio.charset.Charset;
+
 public class ScoreBuilder extends MusicDataBuilder {
     private Score score;
 
@@ -74,15 +76,9 @@ public class ScoreBuilder extends MusicDataBuilder {
         }
     }
 
-    public String getEncoding() {
-        if (score == null) return null;
+    public Charset getEncoding() {
+        if (score == null) return Score.DEFAULT_CHARSET;
 
-        ScoreDeclaration scoreDeclaration = score.getScoreDeclaration();
-        if (scoreDeclaration == null) return null;
-
-        ScoreXmlDeclaration scoreXmlDeclaration = scoreDeclaration.getScoreXmlDeclaration();
-        if (scoreXmlDeclaration == null) return null;
-
-        return scoreXmlDeclaration.getEncoding();
+        return score.getEncoding();
     }
 }

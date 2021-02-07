@@ -1,6 +1,7 @@
 package org.curtis.util;
 
 import org.curtis.exception.FileException;
+import org.curtis.musicxml.score.Score;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,6 +38,10 @@ public class FileUtil {
     }
 
     public static void stringToFile(String input, String filename) throws FileException {
+        stringToFile(input, filename, Score.DEFAULT_CHARSET);
+    }
+
+    public static void stringToFile(String input, String filename, Charset charset) throws FileException {
         if (input == null) throw new FileException("File input is empty");
 
         File file = new File(filename);
@@ -54,7 +60,7 @@ public class FileUtil {
                 }
             }
 
-            fileWriter = new FileWriter(file);
+            fileWriter = new FileWriter(file, charset);
 
             fileWriter.write(input);
         } catch (IOException e) {

@@ -29,7 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,8 +196,7 @@ public abstract class MusicXmlScript {
         String results = scoreBuilder.build().toString();
 
         try {
-            String encoding = scoreBuilder.getEncoding();
-            byte[] resultBytes = StringUtil.isEmpty(encoding) ? results.getBytes(StandardCharsets.UTF_8) : results.getBytes(encoding);
+            byte[] resultBytes = results.getBytes(scoreBuilder.getEncoding());
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             builderFactory.setNamespaceAware(true);
             Document document = builderFactory.newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(resultBytes)));
@@ -240,11 +239,15 @@ public abstract class MusicXmlScript {
     }
 
     protected void outputResultsToFile(String results) throws MusicXmlException {
+        outputResultsToFile(results, Score.DEFAULT_CHARSET);
+    }
+
+    protected void outputResultsToFile(String results, Charset charset) throws MusicXmlException {
         System.err.println("Creating Output File...");
         try {
             if (isStdOut()) System.out.print(results);
             else if (CompressedXmlUtil.isCompressedFile(getOutputFile())) CompressedXmlUtil.saveCompressedFile(getOutputFile(), getZippedFile(), results);
-            else FileUtil.stringToFile(results, getOutputFile());
+            else FileUtil.stringToFile(results, getOutputFile(), charset);
         } catch (FileException e) {
             throw new MusicXmlException(e.getMessage());
         }
