@@ -2,6 +2,7 @@ package org.curtis.xml;
 
 import org.w3c.dom.Document;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -26,7 +27,7 @@ public class SchemaValidator {
 
     public void validate(Document document) throws XmlException {
         try {
-            SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = schemaFactory.newSchema(Objects.requireNonNull(getClass().getClassLoader().getResource(SCHEMA_LOCATION)));
             Validator validator = schema.newValidator();
             XmlErrorHandler errorHandler = new XmlErrorHandler();

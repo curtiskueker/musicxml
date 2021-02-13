@@ -199,6 +199,7 @@ public abstract class MusicXmlScript {
             byte[] resultBytes = results.getBytes(scoreBuilder.getEncoding());
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             builderFactory.setNamespaceAware(true);
+            builderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             Document document = builderFactory.newDocumentBuilder().parse(new InputSource(new ByteArrayInputStream(resultBytes)));
 
             try {
