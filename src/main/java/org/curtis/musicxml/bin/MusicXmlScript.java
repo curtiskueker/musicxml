@@ -37,6 +37,7 @@ public abstract class MusicXmlScript {
     private Integer scoreId;
     private String outputFile;
     private String inputFile;
+    private String compareFile;
     private String scoreName;
     private Boolean skipComments = false;
     private String zippedFile;
@@ -68,6 +69,14 @@ public abstract class MusicXmlScript {
 
     public void setInputFile(String inputFile) {
         this.inputFile = inputFile;
+    }
+
+    public String getCompareFile() {
+        return compareFile;
+    }
+
+    public void setCompareFile(String compareFile) {
+        this.compareFile = compareFile;
     }
 
     public String getScoreName() {
@@ -127,6 +136,10 @@ public abstract class MusicXmlScript {
                 setOutputFile(arg.replace("OUTPUT_FILE=", ""));
             } else if (arg.startsWith("INPUT_FILE=")) {
                 setInputFile(arg.replace("INPUT_FILE=", ""));
+            } else if (arg.startsWith("ZIPPED_FILE=")) {
+                setZippedFile(arg.replace("ZIPPED_FILE=", ""));
+            } else if (arg.startsWith("COMPARE_FILE=")) {
+                setCompareFile(arg.replace("COMPARE_FILE=", ""));
             } else if (arg.equals("DEBUG")) {
                 MusicXmlUtil.DEBUG = true;
             } else if (arg.equals("INCLUDE_BREAKS")) {

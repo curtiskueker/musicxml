@@ -2,6 +2,7 @@ package org.curtis.util;
 
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.score.Score;
+import org.curtis.xml.CompressedXmlUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,16 +44,10 @@ public class FileUtil {
     }
 
     public static void stringToFile(String input, String filename, Charset charset) throws FileException {
-        if (input == null) throw new FileException("File input is empty");
+        if (StringUtil.isEmpty(input)) throw new FileException("File input is empty");
 
         File file = new File(filename);
-        FileWriter fileWriter = null;
-
-        try {
-            file.getParentFile().mkdir();
-        } catch (Exception e) {
-            // ignore attempt to create directory, if it fails
-        }
+        OutputStreamWriter outputStreamWriter = null;
 
         try {
             if (!file.exists()) {
@@ -60,16 +56,15 @@ public class FileUtil {
                 }
             }
 
-            fileWriter = new FileWriter(file, charset);
-
-            fileWriter.write(input);
+            outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file), charset);
+            outputStreamWriter.write(input);
         } catch (IOException e) {
             throw new FileException(e.getMessage());
         } finally {
             try {
-                if (fileWriter != null) {
-                    fileWriter.flush();
-                    fileWriter.close();
+                if (outputStreamWriter != null) {
+                    outputStreamWriter.flush();
+                    outputStreamWriter.close();
                 }
             } catch (IOException e) {
                 //
@@ -111,6 +106,10 @@ public class FileUtil {
 
     public static boolean isXmlFileExtension(String filename) {
         return getFileExtension(filename).equals("xml") || getFileExtension(filename).equals("musicxml");
+    }
+
+    public static boolean isMusicXmlFileExtension(String filename) {
+        return isXmlFileExtension(filename) || CompressedXmlUtil.isCompressedFile(filename);
     }
 
     public static boolean isLyFileExtension(String filename) {

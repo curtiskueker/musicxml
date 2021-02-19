@@ -13,6 +13,7 @@ public class MusicXml2Ly extends MusicXmlScript {
     public void execute() throws MusicXmlException {
         try {
             if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Empty output filename");
+            if (!FileUtil.isMusicXmlFileExtension(getInputFile())) throw new MusicXmlException("Invalid input file extension");
             if (!isStdOut() && !FileUtil.isLyFileExtension(getOutputFile())) setOutputFile(getOutputFile() + ".ly");
             File xmlFile = FileUtil.getFile(getInputFile());
             setSkipComments(true);

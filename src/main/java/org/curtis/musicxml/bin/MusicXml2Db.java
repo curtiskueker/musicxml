@@ -20,6 +20,8 @@ import java.io.File;
 
 public class MusicXml2Db extends MusicXmlScript {
     public void execute() throws MusicXmlException {
+        if (!FileUtil.isMusicXmlFileExtension(getInputFile())) throw new MusicXmlException("Invalid input file extension");
+
         File inputFile;
         try {
             inputFile = FileUtil.getFile(getInputFile());

@@ -11,7 +11,7 @@ public class Db2MusicXml extends MusicXmlScript {
         if (StringUtil.isEmpty(getOutputFile())) throw new MusicXmlException("Empty output filename");
         if (CompressedXmlUtil.isCompressedFile(getOutputFile()) && !FileUtil.isXmlFileExtension(getZippedFile()))
             throw new MusicXmlException("Zipped filename must have .xml or .musicxml extension");
-        else if (!isStdOut() && !FileUtil.isXmlFileExtension(getOutputFile())) setOutputFile(getOutputFile() + ".xml");
+        else if (!isStdOut() && !FileUtil.isMusicXmlFileExtension(getOutputFile())) setOutputFile(getOutputFile() + ".xml");
 
         Score score = getScoreFromDb();
         String results = getXmlResults(score);

@@ -2,6 +2,7 @@ package org.curtis.musicxml.bin;
 
 import org.curtis.musicxml.exception.MusicXmlException;
 import org.curtis.musicxml.util.MusicXmlUtil;
+import org.curtis.util.FileUtil;
 
 import java.io.File;
 
@@ -11,6 +12,8 @@ public class MusicXml2Pdf extends MusicXmlScript {
     }
 
     public void execute() throws MusicXmlException {
+        if (!FileUtil.isMusicXmlFileExtension(getInputFile())) throw new MusicXmlException("Invalid input file extension");
+
         try {
             setSkipComments(true);
             MusicXmlUtil.INCLUDE_BREAKS = true;

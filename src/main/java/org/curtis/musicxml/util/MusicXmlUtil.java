@@ -38,6 +38,7 @@ import org.w3c.dom.ProcessingInstruction;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -122,9 +123,7 @@ public class MusicXmlUtil {
             ScoreXmlDeclaration scoreXmlDeclaration = scoreDeclaration == null ? null : scoreDeclaration.getScoreXmlDeclaration();
             ScoreDoctype scoreDoctype = scoreDeclaration == null ? null : scoreDeclaration.getScoreDoctype();
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            transformerFactory.setAttribute("indent-number", 4);
-            Transformer transformer = transformerFactory.newTransformer();
+            Transformer transformer = getFormattedTransformer();
 
             if (scoreXmlDeclaration == null) transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             else {
@@ -138,8 +137,6 @@ public class MusicXmlUtil {
                 if (StringUtil.isNotEmpty(scoreDoctype.getSystemId())) transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, scoreDoctype.getSystemId());
             }
 
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             StreamResult streamResult = new StreamResult(new OutputStreamWriter(outputStream, score.getEncoding()));
             transformer.transform(new DOMSource(document), streamResult);
@@ -147,6 +144,19 @@ public class MusicXmlUtil {
             return new String(outputBytes, score.getEncoding());
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            throw new XmlException(e.getMessage());
+        }
+    }
+
+    public static Transformer getFormattedTransformer() throws XmlException {
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", 4);
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            return transformer;
+        } catch (TransformerConfigurationException e) {
             throw new XmlException(e.getMessage());
         }
     }
