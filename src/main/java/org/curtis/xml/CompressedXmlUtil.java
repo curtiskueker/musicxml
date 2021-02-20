@@ -9,7 +9,6 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -38,7 +37,7 @@ public class CompressedXmlUtil {
             ZipEntry containerEntry = zipFile.getEntry(CONTAINER_FILENAME);
             if (containerEntry == null) throw new XmlException("Container file META-INF/container.xml not found in file " + zippedFilename);
 
-            String containerFileContents = XmlUtil.readXmlToString(new InputStreamReader(zipFile.getInputStream(containerEntry)));
+            String containerFileContents = XmlUtil.readXmlToString(zipFile.getInputStream(containerEntry));
             Document containerDocument = XmlUtil.stringToDocument(containerFileContents);
             List<Element> rootfileElements = XmlUtil.getChildElements(containerDocument.getDocumentElement(), ROOTFILE_ELEMENT);
             if (rootfileElements.isEmpty()) throw new XmlException("rootfile element not found in container file " + CONTAINER_FILENAME);
@@ -56,7 +55,7 @@ public class CompressedXmlUtil {
             ZipEntry xmlEntry = zipFile.getEntry(xmlFilename);
             if (xmlEntry == null) throw new XmlException("Xml file " + xmlFilename + " not found in zip file " + zippedFilename);
 
-            String xmlFileContents = XmlUtil.readXmlToString(new InputStreamReader(zipFile.getInputStream(xmlEntry)));
+            String xmlFileContents = XmlUtil.readXmlToString(zipFile.getInputStream(xmlEntry));
             return XmlUtil.stringToDocument(xmlFileContents);
         } catch (IOException e) {
             throw new XmlException(e.getMessage());

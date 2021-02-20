@@ -1,5 +1,8 @@
 package org.curtis.xml;
 
+import org.apache.commons.io.ByteOrderMark;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
 import org.curtis.musicxml.builder.BuilderUtil;
 import org.curtis.util.StringUtil;
 import org.w3c.dom.Document;
@@ -21,11 +24,11 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +62,7 @@ public class XmlUtil {
 
         try {
             if (CompressedXmlUtil.isCompressedFile(xmlFile.getName())) return CompressedXmlUtil.getCompressedDocument(xmlFile);
-            else return stringToDocument(readXmlToString(new FileReader(xmlFile)));
+            else return stringToDocument(readXmlToString(new FileInputStream(xmlFile)));
         } catch (IOException e) {
             throw new XmlException(e.getMessage());
         }
@@ -97,23 +100,17 @@ public class XmlUtil {
         }
     }
 
-    public static String readXmlToString(Reader reader) throws XmlException {
-        StringBuilder xmlStringBuilder = new StringBuilder();
+    public static String readXmlToString(InputStream inputStream) throws XmlException {
+        BOMInputStream bomInputStream = new BOMInputStream(inputStream, false,
+                ByteOrderMark.UTF_8,
+                ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE,
+                ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE);
 
         try {
-            int ch;
-            boolean inProlog = true;
-            while ((ch = reader.read()) != -1) {
-                char c = (char)ch;
-                if (c == '<') inProlog = false;
-                if (inProlog) continue;
-                xmlStringBuilder.append(c);
-            }
+            return IOUtils.toString(bomInputStream, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new XmlException(e.getMessage());
         }
-
-        return xmlStringBuilder.toString();
     }
 
     public static String elementToString(Element element) throws XmlException {
