@@ -24,17 +24,7 @@ public class MusicXml2Pdf extends MusicXmlScript {
     }
 
     public static void main(String[] args) {
-        try {
-            MusicXml2Pdf musicXml2Pdf = new MusicXml2Pdf();
-            musicXml2Pdf.setArgs(args);
-            musicXml2Pdf.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        } catch (Throwable e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        System.exit(0);
+        MusicXml2Pdf musicXml2Pdf = new MusicXml2Pdf();
+        musicXml2Pdf.executeScript(args);
     }
 }

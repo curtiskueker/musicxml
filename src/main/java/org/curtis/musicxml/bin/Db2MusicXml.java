@@ -19,17 +19,7 @@ public class Db2MusicXml extends MusicXmlScript {
     }
 
     public static void main(String[] args) {
-        try {
-            Db2MusicXml db2MusicXml = new Db2MusicXml();
-            db2MusicXml.setArgs(args);
-            db2MusicXml.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        } catch (Throwable e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        System.exit(0);
+        Db2MusicXml db2MusicXml = new Db2MusicXml();
+        db2MusicXml.executeScript(args);
     }
 }

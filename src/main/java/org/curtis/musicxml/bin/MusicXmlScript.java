@@ -123,6 +123,21 @@ public abstract class MusicXmlScript {
         return outputFileRequired;
     }
 
+    protected void executeScript(String[] args) {
+        try {
+            setArgs(args);
+            execute();
+            System.err.println("Script finished successfully");
+        } catch (MusicXmlException e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
+        } catch (Throwable e){
+            e.printStackTrace();
+            System.exit(1);
+        }
+        System.exit(0);
+    }
+
     public abstract void execute() throws MusicXmlException;
 
     protected void setArgs(String[] args) throws MusicXmlException {

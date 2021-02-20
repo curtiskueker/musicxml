@@ -14,17 +14,7 @@ public class Ly2Pdf extends MusicXmlScript {
     }
 
     public static void main(String[] args) {
-        try {
-            Ly2Pdf ly2Pdf = new Ly2Pdf();
-            ly2Pdf.setArgs(args);
-            ly2Pdf.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        } catch (Throwable e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        System.exit(0);
+        Ly2Pdf ly2Pdf = new Ly2Pdf();
+        ly2Pdf.executeScript(args);
     }
 }

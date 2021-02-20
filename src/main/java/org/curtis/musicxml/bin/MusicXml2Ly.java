@@ -25,17 +25,7 @@ public class MusicXml2Ly extends MusicXmlScript {
     }
 
     public static void main(String[] args) {
-        try {
-            MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
-            musicXml2Ly.setArgs(args);
-            musicXml2Ly.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        } catch (Throwable e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        System.exit(0);
+        MusicXml2Ly musicXml2Ly = new MusicXml2Ly();
+        musicXml2Ly.executeScript(args);
     }
 }

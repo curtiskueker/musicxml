@@ -33,18 +33,8 @@ public class ValidateXml extends MusicXmlScript {
     }
 
     public static void main(String[] args) {
-        try {
-            ValidateXml validateXml = new ValidateXml();
-            validateXml.setOutputFileNotRequired();
-            validateXml.setArgs(args);
-            validateXml.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        } catch (Throwable e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        System.exit(0);
+        ValidateXml validateXml = new ValidateXml();
+        validateXml.setOutputFileNotRequired();
+        validateXml.executeScript(args);
     }
 }

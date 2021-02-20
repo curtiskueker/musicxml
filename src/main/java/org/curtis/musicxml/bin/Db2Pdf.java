@@ -20,17 +20,7 @@ public class Db2Pdf extends MusicXmlScript {
     }
 
     public static void main(String[] args) {
-        try {
-            Db2Pdf db2Pdf = new Db2Pdf();
-            db2Pdf.setArgs(args);
-            db2Pdf.execute();
-        } catch (MusicXmlException e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(1);
-        } catch (Throwable e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        System.exit(0);
+        Db2Pdf db2Pdf = new Db2Pdf();
+        db2Pdf.executeScript(args);
     }
 }
