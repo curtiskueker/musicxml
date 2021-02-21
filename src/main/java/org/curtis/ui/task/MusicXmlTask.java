@@ -20,6 +20,7 @@ public class MusicXmlTask {
 
     public void execute() throws TaskException {
         MusicXmlScript musicXmlScript = inputHandler.transferInputToTask(taskInitializer);
+        if (musicXmlScript == null) throw new TaskException("Task not selected");
 
         try {
             musicXmlScript.execute();

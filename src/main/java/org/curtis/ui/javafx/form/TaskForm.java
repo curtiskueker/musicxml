@@ -170,6 +170,11 @@ public class TaskForm {
         convertFormHandler.setScoreNameFrom();
     }
 
+    public void showCompressXml(boolean isVisible) {
+        getNode(FormNode.CHOOSE_COMPRESS_LOCATION).setVisible(isVisible);
+        getNode(FormNode.COMPRESS_LOCATION).setVisible(isVisible);
+    }
+
     public void showSql(String controlName) {
         boolean checkboxOn = checkboxOn(controlName);
 

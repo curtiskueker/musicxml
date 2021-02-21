@@ -2,7 +2,6 @@ package org.curtis.util;
 
 import org.curtis.exception.FileException;
 import org.curtis.musicxml.score.Score;
-import org.curtis.xml.CompressedXmlUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -108,8 +107,12 @@ public class FileUtil {
         return getFileExtension(filename).equals("xml") || getFileExtension(filename).equals("musicxml");
     }
 
+    public static boolean isCompressedMusicXmlFileExtension(String filename) {
+        return getFileExtension(filename).equals("mxl");
+    }
+
     public static boolean isMusicXmlFileExtension(String filename) {
-        return isXmlFileExtension(filename) || CompressedXmlUtil.isCompressedFile(filename);
+        return isXmlFileExtension(filename) || isCompressedMusicXmlFileExtension(filename);
     }
 
     public static boolean isLyFileExtension(String filename) {

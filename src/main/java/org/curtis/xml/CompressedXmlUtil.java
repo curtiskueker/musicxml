@@ -9,6 +9,8 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -22,10 +24,6 @@ public class CompressedXmlUtil {
 
     private CompressedXmlUtil() {
 
-    }
-
-    public static boolean isCompressedFile(String filename) {
-        return FileUtil.getFileExtension(filename).equals("mxl");
     }
 
     public static Document getCompressedDocument(File zippedFile) throws XmlException {
@@ -66,6 +64,8 @@ public class CompressedXmlUtil {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
             ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+            Path zippedPath = Paths.get(zippedFilename);
+            zippedFilename = zippedPath.getFileName().toString();
 
             Document containerDocument = XmlUtil.stringToDocument(CONTAINER_TEMPLATE);
             Element containerElement = containerDocument.getDocumentElement();

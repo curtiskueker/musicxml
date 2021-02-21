@@ -43,12 +43,17 @@ public class FormNode {
     public static final String LILYPOND_LOCATION = "lilypondLocation";
     public static final String PDF_LOCATION = "pdfLocation";
     public static final String VALIDATE_LOCATION = "validateLocation";
+    public static final String COMPRESS_LOCATION = "compressLocation";
+    public static final String CHOOSE_COMPRESS_LOCATION = "chooseCompressLocationLink";
 
     public static final String OPEN_PDF = "openPdf";
     public static final String OPEN_PDF_LABEL_1 = "openPdfLabel1";
     public static final String OPEN_PDF_LABEL_2 = "openPdfLabel2";
     public static final String OPEN_PDF_LABEL_3 = "openPdfLabel3";
     public static final String DELETE_SCORE_LABEL_2 = "deleteScoreLabel2";
+
+    public static final String VALIDATE_XML_SELECTION = "validateXmlSelection";
+    public static final String COMPRESS_XML_SELECTION = "compressXmlSelection";
 
     public static final String DB_USERNAME = "dbUsername";
     public static final String DB_PASSWORD = "dbPassword";

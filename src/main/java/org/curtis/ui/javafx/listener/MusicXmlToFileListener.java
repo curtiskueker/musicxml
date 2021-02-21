@@ -5,7 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.VBox;
 import org.curtis.ui.javafx.form.FormNode;
 import org.curtis.ui.javafx.form.TaskForm;
-import org.curtis.xml.CompressedXmlUtil;
+import org.curtis.util.FileUtil;
 
 public class MusicXmlToFileListener implements ChangeListener<String> {
     private TaskForm taskForm;
@@ -23,6 +23,6 @@ public class MusicXmlToFileListener implements ChangeListener<String> {
 
     @Override
     public void changed(ObservableValue<? extends String> observableValue, String fromValue, String toValue) {
-        musicXmlToZippedBox.setVisible(CompressedXmlUtil.isCompressedFile(toValue));
+        musicXmlToZippedBox.setVisible(FileUtil.isCompressedMusicXmlFileExtension(toValue));
     }
 }

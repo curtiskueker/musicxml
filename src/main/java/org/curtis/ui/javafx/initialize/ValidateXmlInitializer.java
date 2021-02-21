@@ -9,6 +9,9 @@ public class ValidateXmlInitializer extends JavafxTaskInitializer {
     }
 
     public void initializeNodeMap() {
-        nodeMap.put("xmlFile", taskForm.getNode(FormNode.VALIDATE_LOCATION));
+        nodeMap.put("validateXmlSelection", taskForm.getNode(FormNode.VALIDATE_XML_SELECTION));
+        nodeMap.put("compressXmlSelection", taskForm.getNode(FormNode.COMPRESS_XML_SELECTION));
+        nodeMap.put("validateXmlFile", taskForm.getNode(FormNode.VALIDATE_LOCATION));
+        nodeMap.put("compressXmlFile", taskForm.getNode(FormNode.COMPRESS_LOCATION));
     }
 }

@@ -111,12 +111,12 @@ public class TasksController {
 
     @FXML
     private void chooseMusicXmlToFile() {
-        taskForm.setChooseFileLocationInTextField(FormNode.MUSICXML_TO_FILE, "Music XML Files (*.xml*, *.musicxml, *.mxl)", "*.xml*", "*.musicxml", "*.mxl");
+        taskForm.setChooseFileLocationInTextField(FormNode.MUSICXML_TO_FILE, "MusicXML Files (*.xml*, *.musicxml, *.mxl)", "*.xml*", "*.musicxml", "*.mxl");
     }
 
     @FXML
     private void chooseLyToFile() {
-        taskForm.setChooseFileLocationInTextField(FormNode.LY_TO_FILE, "Lilypond Files (*.ly)", "*.ly");
+        taskForm.setChooseFileLocationInTextField(FormNode.LY_TO_FILE, "LilyPond Files (*.ly)", "*.ly");
     }
 
     @FXML
@@ -138,6 +138,21 @@ public class TasksController {
     @FXML
     private void setValidateLocation() {
         taskForm.setOpenFileLocationInTextField(FormNode.VALIDATE_LOCATION);
+    }
+
+    @FXML
+    private void setCompressLocation() {
+        taskForm.setChooseFileLocationInTextField(FormNode.COMPRESS_LOCATION, "Compressed MusicXML Files (*.mxl)", "*.mxl");
+    }
+
+    @FXML
+    private void validateXmlSelection() {
+        taskForm.showCompressXml(false);
+    }
+
+    @FXML
+    private void compressXmlSelection() {
+        taskForm.showCompressXml(true);
     }
 
     @FXML

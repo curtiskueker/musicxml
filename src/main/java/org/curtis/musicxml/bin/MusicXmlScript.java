@@ -275,7 +275,7 @@ public abstract class MusicXmlScript {
         System.err.println("Creating Output File...");
         try {
             if (isStdOut()) System.out.print(results);
-            else if (CompressedXmlUtil.isCompressedFile(getOutputFile())) CompressedXmlUtil.saveCompressedFile(getOutputFile(), getZippedFile(), results);
+            else if (FileUtil.isCompressedMusicXmlFileExtension(getOutputFile())) CompressedXmlUtil.saveCompressedFile(getOutputFile(), getZippedFile(), results);
             else FileUtil.stringToFile(results, getOutputFile(), charset);
         } catch (FileException e) {
             throw new MusicXmlException(e.getMessage());

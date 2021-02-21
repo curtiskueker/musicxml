@@ -4,6 +4,7 @@ import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.curtis.musicxml.builder.BuilderUtil;
+import org.curtis.util.FileUtil;
 import org.curtis.util.StringUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -61,7 +62,7 @@ public class XmlUtil {
         if (xmlFile == null) throw new XmlException("Invalid file");
 
         try {
-            if (CompressedXmlUtil.isCompressedFile(xmlFile.getName())) return CompressedXmlUtil.getCompressedDocument(xmlFile);
+            if (FileUtil.isCompressedMusicXmlFileExtension(xmlFile.getName())) return CompressedXmlUtil.getCompressedDocument(xmlFile);
             else return stringToDocument(readXmlToString(new FileInputStream(xmlFile)));
         } catch (IOException e) {
             throw new XmlException(e.getMessage());

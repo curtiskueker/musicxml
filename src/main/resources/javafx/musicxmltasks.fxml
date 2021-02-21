@@ -415,26 +415,32 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab fx:id="validateTab" onSelectionChanged="#tabSelected" text="Validate XML">
+                <Tab fx:id="validateTab" onSelectionChanged="#tabSelected" text="Validate/Compress XML">
                     <content>
                         <VBox fx:id="validateBox" prefHeight="200.0" prefWidth="100.0">
                             <children>
-                                <Label fx:id="validateLabel" alignment="CENTER" contentDisplay="CENTER" text="Validate MusicXML File">
+                                <Label fx:id="validateLabel" alignment="CENTER" contentDisplay="CENTER" text="Validate/Compress MusicXML File">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
                                     <padding>
-                                        <Insets bottom="20.0" left="170.0" top="20.0" />
+                                        <Insets bottom="20.0" left="100.0" top="20.0" />
                                     </padding>
                                 </Label>
-                        <Label fx:id="validateSubLabel" maxHeight="40.0" prefHeight="40.0" text="Validate a MusicXML file against the MusicXML 3.1 schema">
-                           <padding>
-                              <Insets bottom="20.0" left="110.0" />
-                           </padding>
-                        </Label>
                                 <GridPane fx:id="validatePane" prefHeight="596.0" prefWidth="600.0">
                                     <children>
-                                        <Hyperlink fx:id="validateLocationLink" onAction="#setValidateLocation" text="Choose MusicXML file" GridPane.halignment="RIGHT">
+                              <RadioButton fx:id="validateXmlSelection" mnemonicParsing="false" onAction="#validateXmlSelection" text="Validate a MusicXML file against the MusicXML 3.1 schema" GridPane.columnSpan="2147483647">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="validateCompressSelection" />
+                                 </toggleGroup>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="100.0" />
+                                 </padding>
+                              </RadioButton>
+                                        <Hyperlink fx:id="chooseValidateLocationLink" onAction="#setValidateLocation" text="Choose MusicXML file" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>
@@ -442,15 +448,32 @@
                                                 <Insets right="10.0" />
                                             </GridPane.margin>
                                         </Hyperlink>
-                                        <TextField fx:id="validateLocation" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-                                        <Button fx:id="executeValidate" mnemonicParsing="false" onAction="#buttonPressed" text="Validate" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                        <TextField fx:id="validateLocation" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                                        <Button fx:id="executeValidate" mnemonicParsing="false" onAction="#buttonPressed" text="Execute" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                              <RadioButton fx:id="compressXmlSelection" mnemonicParsing="false" onAction="#compressXmlSelection" text="Compress a MusicXML file (.mxl)" toggleGroup="$validateCompressSelection" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+                                 <padding>
+                                    <Insets left="100.0" />
+                                 </padding>
+                              </RadioButton>
+                              <Hyperlink fx:id="chooseCompressLocationLink" onAction="#setCompressLocation" text="Choose compressed MusicXML file" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </Hyperlink>
+                              <TextField fx:id="compressLocation" maxWidth="300.0" prefWidth="300.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     </children>
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
                                     <rowConstraints>
+                              <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                 </GridPane>

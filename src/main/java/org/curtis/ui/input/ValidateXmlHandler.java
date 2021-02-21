@@ -1,5 +1,6 @@
 package org.curtis.ui.input;
 
+import org.curtis.musicxml.bin.CompressXml;
 import org.curtis.musicxml.bin.MusicXmlScript;
 import org.curtis.musicxml.bin.ValidateXml;
 import org.curtis.ui.task.TaskInitializer;
@@ -11,9 +12,14 @@ public class ValidateXmlHandler extends InputHandler {
 
     @Override
     public MusicXmlScript transferInputToTask(TaskInitializer taskInitializer) {
-        ValidateXml validateXml = new ValidateXml();
-        validateXml.setInputFile(taskInitializer.getText("xmlFile"));
+        MusicXmlScript musicXmlScript;
+        if (taskInitializer.isSelected("validateXmlSelection")) musicXmlScript = new ValidateXml();
+        else if (taskInitializer.isSelected("compressXmlSelection")) musicXmlScript = new CompressXml();
+        else return null;
 
-        return validateXml;
+        musicXmlScript.setInputFile(taskInitializer.getText("validateXmlFile"));
+        musicXmlScript.setOutputFile(taskInitializer.getText("compressXmlFile"));
+
+        return musicXmlScript;
     }
 }

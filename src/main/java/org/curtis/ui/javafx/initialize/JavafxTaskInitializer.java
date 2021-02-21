@@ -3,6 +3,7 @@ package org.curtis.ui.javafx.initialize;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextInputControl;
 import org.curtis.ui.javafx.form.TaskForm;
 import org.curtis.ui.task.TaskInitializer;
@@ -30,10 +31,10 @@ public abstract class JavafxTaskInitializer implements TaskInitializer {
     public boolean isSelected(String nodeName) {
         Node node = nodeMap.get(nodeName);
         if (node == null) return false;
-        if (!(node instanceof CheckBox)) return false;
 
-        CheckBox checkBox = (CheckBox)node;
-        return checkBox.isSelected();
+        if (node instanceof CheckBox) return ((CheckBox)node).isSelected();
+        else if (node instanceof RadioButton) return ((RadioButton)node).isSelected();
+        else return false;
     }
 
     public String getDirectoryLocation(String nodeName) {
